@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -67,8 +67,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, object>> additionalCopyOptions = default;
-            Optional<IDictionary<string, object>> additionalFormatOptions = default;
+            IDictionary<string, object> additionalCopyOptions = default;
+            IDictionary<string, object> additionalFormatOptions = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -124,14 +124,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SnowflakeExportCopyCommand(type, additionalProperties, Optional.ToDictionary(additionalCopyOptions), Optional.ToDictionary(additionalFormatOptions));
+            return new SnowflakeExportCopyCommand(type, additionalProperties, additionalCopyOptions ?? new ChangeTrackingDictionary<string, object>(), additionalFormatOptions ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class SnowflakeExportCopyCommandConverter : JsonConverter<SnowflakeExportCopyCommand>
         {
             public override void Write(Utf8JsonWriter writer, SnowflakeExportCopyCommand model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SnowflakeExportCopyCommand>(model);
             }
             public override SnowflakeExportCopyCommand Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

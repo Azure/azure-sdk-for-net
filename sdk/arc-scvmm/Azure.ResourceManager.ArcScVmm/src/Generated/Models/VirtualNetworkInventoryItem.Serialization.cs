@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkInventoryItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkInventoryItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkInventoryItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkInventoryItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 return null;
             }
             InventoryType inventoryType = default;
-            Optional<string> managedResourceId = default;
-            Optional<string> uuid = default;
-            Optional<string> inventoryItemName = default;
-            Optional<string> provisioningState = default;
+            string managedResourceId = default;
+            string uuid = default;
+            string inventoryItemName = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkInventoryItem(inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new VirtualNetworkInventoryItem(
+                inventoryType,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkInventoryItem>.Write(ModelReaderWriterOptions options)
@@ -138,7 +144,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkInventoryItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkInventoryItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeVirtualNetworkInventoryItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkInventoryItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkInventoryItem)} does not support reading '{options.Format}' format.");
             }
         }
 

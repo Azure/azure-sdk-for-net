@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseFileInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseFileInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<string> id = default;
-            Optional<string> logicalName = default;
-            Optional<string> physicalFullName = default;
-            Optional<string> restoreFullName = default;
-            Optional<DatabaseFileType> fileType = default;
-            Optional<double> sizeMB = default;
+            string databaseName = default;
+            string id = default;
+            string logicalName = default;
+            string physicalFullName = default;
+            string restoreFullName = default;
+            DatabaseFileType? fileType = default;
+            double? sizeMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseFileInfo(databaseName.Value, id.Value, logicalName.Value, physicalFullName.Value, restoreFullName.Value, Optional.ToNullable(fileType), Optional.ToNullable(sizeMB), serializedAdditionalRawData);
+            return new DatabaseFileInfo(
+                databaseName,
+                id,
+                logicalName,
+                physicalFullName,
+                restoreFullName,
+                fileType,
+                sizeMB,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseFileInfo>.Write(ModelReaderWriterOptions options)
@@ -171,7 +179,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +195,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeDatabaseFileInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

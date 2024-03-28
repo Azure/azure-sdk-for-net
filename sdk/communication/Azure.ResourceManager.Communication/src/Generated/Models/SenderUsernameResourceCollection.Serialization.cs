@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Communication.Models
             var format = options.Format == "W" ? ((IPersistableModel<SenderUsernameResourceCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SenderUsernameResourceCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SenderUsernameResourceCollection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Communication.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SenderUsernameResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Communication.Models
             var format = options.Format == "W" ? ((IPersistableModel<SenderUsernameResourceCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SenderUsernameResourceCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SenderUsernameResourceCollection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SenderUsernameResourceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SenderUsernameResourceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Communication.Models
                     List<SenderUsernameResourceData> array = new List<SenderUsernameResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SenderUsernameResourceData.DeserializeSenderUsernameResourceData(item));
+                        array.Add(SenderUsernameResourceData.DeserializeSenderUsernameResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SenderUsernameResourceCollection(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SenderUsernameResourceCollection(value ?? new ChangeTrackingList<SenderUsernameResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SenderUsernameResourceCollection>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Communication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SenderUsernameResourceCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SenderUsernameResourceCollection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Communication.Models
                         return DeserializeSenderUsernameResourceCollection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SenderUsernameResourceCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SenderUsernameResourceCollection)} does not support reading '{options.Format}' format.");
             }
         }
 

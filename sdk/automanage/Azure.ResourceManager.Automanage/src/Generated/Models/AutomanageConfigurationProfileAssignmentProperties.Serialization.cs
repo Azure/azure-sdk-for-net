@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automanage.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomanageConfigurationProfileAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Automanage.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomanageConfigurationProfileAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> configurationProfile = default;
-            Optional<ResourceIdentifier> targetId = default;
-            Optional<string> status = default;
+            ResourceIdentifier configurationProfile = default;
+            ResourceIdentifier targetId = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageConfigurationProfileAssignmentProperties(configurationProfile.Value, targetId.Value, status.Value, serializedAdditionalRawData);
+            return new AutomanageConfigurationProfileAssignmentProperties(configurationProfile, targetId, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomanageConfigurationProfileAssignmentProperties>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Automanage.Models
                         return DeserializeAutomanageConfigurationProfileAssignmentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

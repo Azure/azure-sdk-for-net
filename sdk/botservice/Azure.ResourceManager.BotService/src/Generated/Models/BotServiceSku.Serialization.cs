@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotServiceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotServiceSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotServiceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotServiceSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             BotServiceSkuName name = default;
-            Optional<BotServiceSkuTier> tier = default;
+            BotServiceSkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotServiceSku(name, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new BotServiceSku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServiceSku>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotServiceSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeBotServiceSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotServiceSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceSku)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownChaosExperimentAction(document.RootElement, options);
+            return DeserializeChaosExperimentAction(document.RootElement, options);
         }
 
         internal static UnknownChaosExperimentAction DeserializeUnknownChaosExperimentAction(JsonElement element, ModelReaderWriterOptions options = null)
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownChaosExperimentAction(document.RootElement, options);
+                        return DeserializeChaosExperimentAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support reading '{options.Format}' format.");
             }
         }
 

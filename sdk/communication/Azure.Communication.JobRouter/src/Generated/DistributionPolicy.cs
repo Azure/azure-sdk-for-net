@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Policy governing how jobs are distributed to workers. </summary>
     public partial class DistributionPolicy
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DistributionPolicy"/>. </summary>
         internal DistributionPolicy()
         {
@@ -23,14 +55,20 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of a distribution policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="offerExpiresAfter"> Number of seconds after which any offers created under this policy will be expired. </param>
-        /// <param name="mode"> Mode governing the specific distribution method. </param>
-        internal DistributionPolicy(ETag eTag, string id, string name, TimeSpan? offerExpiresAfter, DistributionMode mode)
+        /// <param name="mode">
+        /// Mode governing the specific distribution method.
+        /// Please note <see cref="DistributionMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DistributionPolicy(ETag eTag, string id, string name, TimeSpan? offerExpiresAfter, DistributionMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ETag = eTag;
             Id = id;
             Name = name;
             OfferExpiresAfter = offerExpiresAfter;
             Mode = mode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Id of a distribution policy. </summary>
         public string Id { get; }

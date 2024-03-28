@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputePublicIPAddressSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputePublicIPAddressSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputePublicIPAddressSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputePublicIPAddressSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputePublicIPAddressSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputePublicIPAddressSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ComputePublicIPAddressSkuName> name = default;
-            Optional<ComputePublicIPAddressSkuTier> tier = default;
+            ComputePublicIPAddressSkuName? name = default;
+            ComputePublicIPAddressSkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputePublicIPAddressSku(Optional.ToNullable(name), Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new ComputePublicIPAddressSku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputePublicIPAddressSku>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputePublicIPAddressSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputePublicIPAddressSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeComputePublicIPAddressSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputePublicIPAddressSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputePublicIPAddressSku)} does not support reading '{options.Format}' format.");
             }
         }
 

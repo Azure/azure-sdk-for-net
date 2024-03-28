@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.GuestConfiguration;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -27,7 +26,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <returns> A new <see cref="GuestConfiguration.GuestConfigurationAssignmentData"/> instance for mocking. </returns>
         public static GuestConfigurationAssignmentData GuestConfigurationAssignmentData(ResourceIdentifier id = null, string name = null, AzureLocation? location = null, ResourceType? resourceType = null, SystemData systemData = null, GuestConfigurationAssignmentProperties properties = null)
         {
-            return new GuestConfigurationAssignmentData(id, name, location, resourceType, systemData, properties);
+            return new GuestConfigurationAssignmentData(
+                id,
+                name,
+                location,
+                resourceType,
+                systemData,
+                serializedAdditionalRawData: null,
+                properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationAssignmentProperties"/>. </summary>
@@ -48,7 +54,20 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         {
             vmssVmList ??= new List<GuestConfigurationVmssVmInfo>();
 
-            return new GuestConfigurationAssignmentProperties(targetResourceId, guestConfiguration, complianceStatus, lastComplianceStatusCheckedOn, latestReportId, parameterHash, latestAssignmentReport, context, assignmentHash, provisioningState, resourceType, vmssVmList?.ToList());
+            return new GuestConfigurationAssignmentProperties(
+                targetResourceId,
+                guestConfiguration,
+                complianceStatus,
+                lastComplianceStatusCheckedOn,
+                latestReportId,
+                parameterHash,
+                latestAssignmentReport,
+                context,
+                assignmentHash,
+                provisioningState,
+                resourceType,
+                vmssVmList?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationNavigation"/>. </summary>
@@ -69,7 +88,19 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             configurationParameters ??= new List<GuestConfigurationParameter>();
             configurationProtectedParameters ??= new List<GuestConfigurationParameter>();
 
-            return new GuestConfigurationNavigation(kind, name, version, contentUri, contentHash, assignmentType, assignmentSource, contentType, configurationParameters?.ToList(), configurationProtectedParameters?.ToList(), configurationSetting);
+            return new GuestConfigurationNavigation(
+                kind,
+                name,
+                version,
+                contentUri,
+                contentHash,
+                assignmentType,
+                assignmentSource,
+                contentType,
+                configurationParameters?.ToList(),
+                configurationProtectedParameters?.ToList(),
+                configurationSetting,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LcmConfigurationSetting"/>. </summary>
@@ -82,7 +113,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <returns> A new <see cref="Models.LcmConfigurationSetting"/> instance for mocking. </returns>
         public static LcmConfigurationSetting LcmConfigurationSetting(LcmConfigurationMode? configurationMode = null, bool? isModuleOverwriteAllowed = null, ActionAfterReboot? actionAfterReboot = null, float? refreshFrequencyInMins = null, bool? rebootIfNeeded = null, float? configurationModeFrequencyInMins = null)
         {
-            return new LcmConfigurationSetting(configurationMode, isModuleOverwriteAllowed, actionAfterReboot, refreshFrequencyInMins, rebootIfNeeded, configurationModeFrequencyInMins);
+            return new LcmConfigurationSetting(
+                configurationMode,
+                isModuleOverwriteAllowed,
+                actionAfterReboot,
+                refreshFrequencyInMins,
+                rebootIfNeeded,
+                configurationModeFrequencyInMins,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationAssignmentReportInfo"/>. </summary>
@@ -100,7 +138,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         {
             resources ??= new List<AssignmentReportResourceInfo>();
 
-            return new GuestConfigurationAssignmentReportInfo(id, reportId, assignment, vm, startOn, endOn, complianceStatus, operationType, resources?.ToList());
+            return new GuestConfigurationAssignmentReportInfo(
+                id,
+                reportId,
+                assignment,
+                vm,
+                startOn,
+                endOn,
+                complianceStatus,
+                operationType,
+                resources?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationAssignmentInfo"/>. </summary>
@@ -109,7 +157,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <returns> A new <see cref="Models.GuestConfigurationAssignmentInfo"/> instance for mocking. </returns>
         public static GuestConfigurationAssignmentInfo GuestConfigurationAssignmentInfo(string name = null, GuestConfigurationInfo configuration = null)
         {
-            return new GuestConfigurationAssignmentInfo(name, configuration);
+            return new GuestConfigurationAssignmentInfo(name, configuration, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationInfo"/>. </summary>
@@ -118,7 +166,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <returns> A new <see cref="Models.GuestConfigurationInfo"/> instance for mocking. </returns>
         public static GuestConfigurationInfo GuestConfigurationInfo(string name = null, string version = null)
         {
-            return new GuestConfigurationInfo(name, version);
+            return new GuestConfigurationInfo(name, version, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationVmInfo"/>. </summary>
@@ -127,7 +175,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <returns> A new <see cref="Models.GuestConfigurationVmInfo"/> instance for mocking. </returns>
         public static GuestConfigurationVmInfo GuestConfigurationVmInfo(ResourceIdentifier id = null, Guid? uuid = null)
         {
-            return new GuestConfigurationVmInfo(id, uuid);
+            return new GuestConfigurationVmInfo(id, uuid, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssignmentReportResourceInfo"/>. </summary>
@@ -140,7 +188,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         {
             reasons ??= new List<AssignmentReportResourceComplianceReason>();
 
-            return new AssignmentReportResourceInfo(complianceStatus, assignmentResourceSettingName, reasons?.ToList(), properties);
+            return new AssignmentReportResourceInfo(complianceStatus, assignmentResourceSettingName, reasons?.ToList(), properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssignmentReportResourceComplianceReason"/>. </summary>
@@ -149,7 +197,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <returns> A new <see cref="Models.AssignmentReportResourceComplianceReason"/> instance for mocking. </returns>
         public static AssignmentReportResourceComplianceReason AssignmentReportResourceComplianceReason(string phrase = null, string code = null)
         {
-            return new AssignmentReportResourceComplianceReason(phrase, code);
+            return new AssignmentReportResourceComplianceReason(phrase, code, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationVmssVmInfo"/>. </summary>
@@ -161,7 +209,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <returns> A new <see cref="Models.GuestConfigurationVmssVmInfo"/> instance for mocking. </returns>
         public static GuestConfigurationVmssVmInfo GuestConfigurationVmssVmInfo(Guid? vmId = null, ResourceIdentifier vmResourceId = null, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = null, Guid? latestReportId = null, DateTimeOffset? lastComplianceCheckedOn = null)
         {
-            return new GuestConfigurationVmssVmInfo(vmId, vmResourceId, complianceStatus, latestReportId, lastComplianceCheckedOn);
+            return new GuestConfigurationVmssVmInfo(
+                vmId,
+                vmResourceId,
+                complianceStatus,
+                latestReportId,
+                lastComplianceCheckedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationResourceData"/>. </summary>
@@ -173,7 +227,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <returns> A new <see cref="Models.GuestConfigurationResourceData"/> instance for mocking. </returns>
         public static GuestConfigurationResourceData GuestConfigurationResourceData(ResourceIdentifier id = null, string name = null, AzureLocation? location = null, ResourceType? resourceType = null, SystemData systemData = null)
         {
-            return new GuestConfigurationResourceData(id, name, location, resourceType, systemData);
+            return new GuestConfigurationResourceData(
+                id,
+                name,
+                location,
+                resourceType,
+                systemData,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationAssignmentReport"/>. </summary>
@@ -183,7 +243,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <returns> A new <see cref="Models.GuestConfigurationAssignmentReport"/> instance for mocking. </returns>
         public static GuestConfigurationAssignmentReport GuestConfigurationAssignmentReport(ResourceIdentifier id = null, string name = null, GuestConfigurationAssignmentReportProperties properties = null)
         {
-            return new GuestConfigurationAssignmentReport(id, name, properties);
+            return new GuestConfigurationAssignmentReport(id, name, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationAssignmentReportProperties"/>. </summary>
@@ -198,7 +258,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <returns> A new <see cref="Models.GuestConfigurationAssignmentReportProperties"/> instance for mocking. </returns>
         public static GuestConfigurationAssignmentReportProperties GuestConfigurationAssignmentReportProperties(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = null, Guid? reportId = null, GuestConfigurationAssignmentInfo assignment = null, GuestConfigurationVmInfo vm = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, GuestConfigurationAssignmentReportDetails details = null, string vmssResourceId = null)
         {
-            return new GuestConfigurationAssignmentReportProperties(complianceStatus, reportId, assignment, vm, startOn, endOn, details, vmssResourceId);
+            return new GuestConfigurationAssignmentReportProperties(
+                complianceStatus,
+                reportId,
+                assignment,
+                vm,
+                startOn,
+                endOn,
+                details,
+                vmssResourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationAssignmentReportDetails"/>. </summary>
@@ -213,7 +282,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         {
             resources ??= new List<AssignmentReportResourceInfo>();
 
-            return new GuestConfigurationAssignmentReportDetails(complianceStatus, startOn, endOn, jobId, operationType, resources?.ToList());
+            return new GuestConfigurationAssignmentReportDetails(
+                complianceStatus,
+                startOn,
+                endOn,
+                jobId,
+                operationType,
+                resources?.ToList(),
+                serializedAdditionalRawData: null);
         }
     }
 }

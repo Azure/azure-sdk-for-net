@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorEndpointFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorEndpointFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorEndpointFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Items)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectionMonitorEndpointFilterItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorEndpointFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorEndpointFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorEndpointFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ConnectionMonitorEndpointFilterType> type = default;
-            Optional<IList<ConnectionMonitorEndpointFilterItem>> items = default;
+            ConnectionMonitorEndpointFilterType? type = default;
+            IList<ConnectionMonitorEndpointFilterItem> items = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectionMonitorEndpointFilterItem> array = new List<ConnectionMonitorEndpointFilterItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionMonitorEndpointFilterItem.DeserializeConnectionMonitorEndpointFilterItem(item));
+                        array.Add(ConnectionMonitorEndpointFilterItem.DeserializeConnectionMonitorEndpointFilterItem(item, options));
                     }
                     items = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorEndpointFilter(Optional.ToNullable(type), Optional.ToList(items), serializedAdditionalRawData);
+            return new ConnectionMonitorEndpointFilter(type, items ?? new ChangeTrackingList<ConnectionMonitorEndpointFilterItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorEndpointFilter>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorEndpointFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorEndpointFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectionMonitorEndpointFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorEndpointFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorEndpointFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

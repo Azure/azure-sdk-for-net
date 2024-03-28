@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingPlanInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal);
+                writer.WriteObjectValue<BillingBenefitsPrice>(PricingCurrencyTotal, options);
             }
             if (Optional.IsDefined(StartOn))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteStartArray();
                 foreach (var item in Transactions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SavingsPlanOrderPaymentDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingPlanInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> nextPaymentDueDate = default;
-            Optional<IList<SavingsPlanOrderPaymentDetail>> transactions = default;
+            BillingBenefitsPrice pricingCurrencyTotal = default;
+            DateTimeOffset? startDate = default;
+            DateTimeOffset? nextPaymentDueDate = default;
+            IList<SavingsPlanOrderPaymentDetail> transactions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
+                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startDate"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     List<SavingsPlanOrderPaymentDetail> array = new List<SavingsPlanOrderPaymentDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanOrderPaymentDetail.DeserializeSavingsPlanOrderPaymentDetail(item));
+                        array.Add(SavingsPlanOrderPaymentDetail.DeserializeSavingsPlanOrderPaymentDetail(item, options));
                     }
                     transactions = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), Optional.ToList(transactions), serializedAdditionalRawData);
+            return new BillingPlanInformation(pricingCurrencyTotal, startDate, nextPaymentDueDate, transactions ?? new ChangeTrackingList<SavingsPlanOrderPaymentDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingPlanInformation>.Write(ModelReaderWriterOptions options)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeBillingPlanInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

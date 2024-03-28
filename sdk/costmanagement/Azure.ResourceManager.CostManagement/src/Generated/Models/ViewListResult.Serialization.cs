@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ViewListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ViewListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ViewListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CostManagementViewData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ViewListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ViewListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ViewListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CostManagementViewData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CostManagementViewData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<CostManagementViewData> array = new List<CostManagementViewData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CostManagementViewData.DeserializeCostManagementViewData(item));
+                        array.Add(CostManagementViewData.DeserializeCostManagementViewData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ViewListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ViewListResult(value ?? new ChangeTrackingList<CostManagementViewData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ViewListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ViewListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ViewListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeViewListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ViewListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ViewListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(MeterDetails))
             {
                 writer.WritePropertyName("meterDetails"u8);
-                writer.WriteObjectValue(MeterDetails);
+                writer.WriteObjectValue<ConsumptionMeterDetails>(MeterDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> billingPeriodId = default;
-            Optional<Guid> meterId = default;
-            Optional<ConsumptionMeterDetails> meterDetails = default;
-            Optional<string> unitOfMeasure = default;
-            Optional<decimal> includedQuantity = default;
-            Optional<string> partNumber = default;
-            Optional<decimal> unitPrice = default;
-            Optional<string> currencyCode = default;
-            Optional<string> offerId = default;
+            ResourceIdentifier billingPeriodId = default;
+            Guid? meterId = default;
+            ConsumptionMeterDetails meterDetails = default;
+            string unitOfMeasure = default;
+            decimal? includedQuantity = default;
+            string partNumber = default;
+            decimal? unitPrice = default;
+            string currencyCode = default;
+            string offerId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    meterDetails = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property.Value);
+                    meterDetails = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unitOfMeasure"u8))
@@ -193,7 +193,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PriceSheetProperties(billingPeriodId.Value, Optional.ToNullable(meterId), meterDetails.Value, unitOfMeasure.Value, Optional.ToNullable(includedQuantity), partNumber.Value, Optional.ToNullable(unitPrice), currencyCode.Value, offerId.Value, serializedAdditionalRawData);
+            return new PriceSheetProperties(
+                billingPeriodId,
+                meterId,
+                meterDetails,
+                unitOfMeasure,
+                includedQuantity,
+                partNumber,
+                unitPrice,
+                currencyCode,
+                offerId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PriceSheetProperties>.Write(ModelReaderWriterOptions options)
@@ -205,7 +215,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +231,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializePriceSheetProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -19,10 +19,10 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 return null;
             }
-            Optional<int> directoriesSuccessful = default;
-            Optional<int> filesSuccessful = default;
-            Optional<int> failureCount = default;
-            Optional<IReadOnlyList<AclFailedEntry>> failedEntries = default;
+            int? directoriesSuccessful = default;
+            int? filesSuccessful = default;
+            int? failureCount = default;
+            IReadOnlyList<AclFailedEntry> failedEntries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directoriesSuccessful"u8))
@@ -67,7 +67,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new SetAccessControlRecursiveResponse(Optional.ToNullable(directoriesSuccessful), Optional.ToNullable(filesSuccessful), Optional.ToNullable(failureCount), Optional.ToList(failedEntries));
+            return new SetAccessControlRecursiveResponse(directoriesSuccessful, filesSuccessful, failureCount, failedEntries ?? new ChangeTrackingList<AclFailedEntry>());
         }
     }
 }

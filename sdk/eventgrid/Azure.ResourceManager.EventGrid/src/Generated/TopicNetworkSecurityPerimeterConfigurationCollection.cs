@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
@@ -174,7 +172,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual AsyncPageable<NetworkSecurityPerimeterConfigurationData> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData, _networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "TopicNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(e), _networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "TopicNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +197,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Pageable<NetworkSecurityPerimeterConfigurationData> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData, _networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "TopicNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(e), _networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "TopicNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

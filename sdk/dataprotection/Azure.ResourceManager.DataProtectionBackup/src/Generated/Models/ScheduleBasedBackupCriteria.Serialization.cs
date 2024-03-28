@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduleBasedBackupCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleBasedBackupCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleBasedBackupCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DaysOfMonth)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataProtectionBackupDay>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduleBasedBackupCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleBasedBackupCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleBasedBackupCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IList<BackupAbsoluteMarker>> absoluteCriteria = default;
-            Optional<IList<DataProtectionBackupDay>> daysOfMonth = default;
-            Optional<IList<DataProtectionBackupDayOfWeek>> daysOfTheWeek = default;
-            Optional<IList<DataProtectionBackupMonth>> monthsOfYear = default;
-            Optional<IList<DateTimeOffset>> scheduleTimes = default;
-            Optional<IList<DataProtectionBackupWeekNumber>> weeksOfTheMonth = default;
+            IList<BackupAbsoluteMarker> absoluteCriteria = default;
+            IList<DataProtectionBackupDay> daysOfMonth = default;
+            IList<DataProtectionBackupDayOfWeek> daysOfTheWeek = default;
+            IList<DataProtectionBackupMonth> monthsOfYear = default;
+            IList<DateTimeOffset> scheduleTimes = default;
+            IList<DataProtectionBackupWeekNumber> weeksOfTheMonth = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupDay> array = new List<DataProtectionBackupDay>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupDay.DeserializeDataProtectionBackupDay(item));
+                        array.Add(DataProtectionBackupDay.DeserializeDataProtectionBackupDay(item, options));
                     }
                     daysOfMonth = array;
                     continue;
@@ -232,7 +232,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduleBasedBackupCriteria(objectType, serializedAdditionalRawData, Optional.ToList(absoluteCriteria), Optional.ToList(daysOfMonth), Optional.ToList(daysOfTheWeek), Optional.ToList(monthsOfYear), Optional.ToList(scheduleTimes), Optional.ToList(weeksOfTheMonth));
+            return new ScheduleBasedBackupCriteria(
+                objectType,
+                serializedAdditionalRawData,
+                absoluteCriteria ?? new ChangeTrackingList<BackupAbsoluteMarker>(),
+                daysOfMonth ?? new ChangeTrackingList<DataProtectionBackupDay>(),
+                daysOfTheWeek ?? new ChangeTrackingList<DataProtectionBackupDayOfWeek>(),
+                monthsOfYear ?? new ChangeTrackingList<DataProtectionBackupMonth>(),
+                scheduleTimes ?? new ChangeTrackingList<DateTimeOffset>(),
+                weeksOfTheMonth ?? new ChangeTrackingList<DataProtectionBackupWeekNumber>());
         }
 
         BinaryData IPersistableModel<ScheduleBasedBackupCriteria>.Write(ModelReaderWriterOptions options)
@@ -244,7 +252,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleBasedBackupCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleBasedBackupCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -260,7 +268,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeScheduleBasedBackupCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleBasedBackupCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleBasedBackupCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

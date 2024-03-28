@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerHttpGet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerHttpGet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerHttpGet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpHeaders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerHttpHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerHttpGet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerHttpGet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerHttpGet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> path = default;
+            string path = default;
             int port = default;
-            Optional<ContainerHttpGetScheme> scheme = default;
-            Optional<IList<ContainerHttpHeader>> httpHeaders = default;
+            ContainerHttpGetScheme? scheme = default;
+            IList<ContainerHttpHeader> httpHeaders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerHttpHeader> array = new List<ContainerHttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerHttpHeader.DeserializeContainerHttpHeader(item));
+                        array.Add(ContainerHttpHeader.DeserializeContainerHttpHeader(item, options));
                     }
                     httpHeaders = array;
                     continue;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerHttpGet(path.Value, port, Optional.ToNullable(scheme), Optional.ToList(httpHeaders), serializedAdditionalRawData);
+            return new ContainerHttpGet(path, port, scheme, httpHeaders ?? new ChangeTrackingList<ContainerHttpHeader>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerHttpGet>.Write(ModelReaderWriterOptions options)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerHttpGet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerHttpGet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerHttpGet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerHttpGet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerHttpGet)} does not support reading '{options.Format}' format.");
             }
         }
 

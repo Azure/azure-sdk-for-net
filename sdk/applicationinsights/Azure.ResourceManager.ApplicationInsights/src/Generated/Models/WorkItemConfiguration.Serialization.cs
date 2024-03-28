@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkItemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkItemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> connectorId = default;
-            Optional<string> configDisplayName = default;
-            Optional<bool> isDefault = default;
-            Optional<string> id = default;
-            Optional<string> configProperties = default;
+            string connectorId = default;
+            string configDisplayName = default;
+            bool? isDefault = default;
+            string id = default;
+            string configProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,131 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkItemConfiguration(connectorId.Value, configDisplayName.Value, Optional.ToNullable(isDefault), id.Value, configProperties.Value, serializedAdditionalRawData);
+            return new WorkItemConfiguration(
+                connectorId,
+                configDisplayName,
+                isDefault,
+                id,
+                configProperties,
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectorId), out propertyOverride);
+            if (Optional.IsDefined(ConnectorId) || hasPropertyOverride)
+            {
+                builder.Append("  ConnectorId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ConnectorId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConnectorId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConnectorId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigDisplayName), out propertyOverride);
+            if (Optional.IsDefined(ConfigDisplayName) || hasPropertyOverride)
+            {
+                builder.Append("  ConfigDisplayName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ConfigDisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConfigDisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConfigDisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefault), out propertyOverride);
+            if (Optional.IsDefined(IsDefault) || hasPropertyOverride)
+            {
+                builder.Append("  IsDefault: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDefault.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  Id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigProperties), out propertyOverride);
+            if (Optional.IsDefined(ConfigProperties) || hasPropertyOverride)
+            {
+                builder.Append("  ConfigProperties: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ConfigProperties.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConfigProperties}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConfigProperties}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<WorkItemConfiguration>.Write(ModelReaderWriterOptions options)
@@ -144,8 +269,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +288,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeWorkItemConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

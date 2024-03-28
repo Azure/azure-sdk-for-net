@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AtaExternalSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtaExternalSecuritySolution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AtaExternalSecuritySolution)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<AtaSolutionProperties>(Properties, options);
             }
             if (Kind != null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AtaExternalSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtaExternalSecuritySolution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AtaExternalSecuritySolution)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AtaSolutionProperties> properties = default;
+            AtaSolutionProperties properties = default;
             ExternalSecuritySolutionKind? kind = default;
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    properties = AtaSolutionProperties.DeserializeAtaSolutionProperties(property.Value);
+                    properties = AtaSolutionProperties.DeserializeAtaSolutionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtaExternalSecuritySolution(id, name, type, systemData.Value, kind, Optional.ToNullable(location), serializedAdditionalRawData, properties.Value);
+            return new AtaExternalSecuritySolution(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                location,
+                serializedAdditionalRawData,
+                properties);
         }
 
         BinaryData IPersistableModel<AtaExternalSecuritySolution>.Write(ModelReaderWriterOptions options)
@@ -185,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AtaExternalSecuritySolution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AtaExternalSecuritySolution)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +209,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAtaExternalSecuritySolution(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtaExternalSecuritySolution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AtaExternalSecuritySolution)} does not support reading '{options.Format}' format.");
             }
         }
 

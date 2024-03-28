@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDefaultAuthorizationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowedPrincipals))
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
-                writer.WriteObjectValue(AllowedPrincipals);
+                writer.WriteObjectValue<ContainerAppAllowedPrincipals>(AllowedPrincipals, options);
             }
             if (Optional.IsCollectionDefined(AllowedApplications))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDefaultAuthorizationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppAllowedPrincipals> allowedPrincipals = default;
-            Optional<IList<string>> allowedApplications = default;
+            ContainerAppAllowedPrincipals allowedPrincipals = default;
+            IList<string> allowedApplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    allowedPrincipals = ContainerAppAllowedPrincipals.DeserializeContainerAppAllowedPrincipals(property.Value);
+                    allowedPrincipals = ContainerAppAllowedPrincipals.DeserializeContainerAppAllowedPrincipals(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowedApplications"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDefaultAuthorizationPolicy(allowedPrincipals.Value, Optional.ToList(allowedApplications), serializedAdditionalRawData);
+            return new ContainerAppDefaultAuthorizationPolicy(allowedPrincipals, allowedApplications ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDefaultAuthorizationPolicy>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppDefaultAuthorizationPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

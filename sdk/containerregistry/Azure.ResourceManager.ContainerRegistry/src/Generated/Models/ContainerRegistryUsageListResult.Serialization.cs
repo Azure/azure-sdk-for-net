@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryUsageListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryUsageListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerRegistryUsage>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryUsageListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryUsageListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerRegistryUsage>> value = default;
+            IReadOnlyList<ContainerRegistryUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryUsage> array = new List<ContainerRegistryUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryUsage.DeserializeContainerRegistryUsage(item));
+                        array.Add(ContainerRegistryUsage.DeserializeContainerRegistryUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryUsageListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ContainerRegistryUsageListResult(value ?? new ChangeTrackingList<ContainerRegistryUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryUsageListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryUsageListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryUsageListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryUsageListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryUsageListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryUsageListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

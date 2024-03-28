@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "continuous": return ChaosContinuousAction.DeserializeChaosContinuousAction(element);
-                    case "delay": return ChaosDelayAction.DeserializeChaosDelayAction(element);
-                    case "discrete": return ChaosDiscreteAction.DeserializeChaosDiscreteAction(element);
+                    case "continuous": return ChaosContinuousAction.DeserializeChaosContinuousAction(element, options);
+                    case "delay": return ChaosDelayAction.DeserializeChaosDelayAction(element, options);
+                    case "discrete": return ChaosDiscreteAction.DeserializeChaosDiscreteAction(element, options);
                 }
             }
-            return UnknownChaosExperimentAction.DeserializeUnknownChaosExperimentAction(element);
+            return UnknownChaosExperimentAction.DeserializeUnknownChaosExperimentAction(element, options);
         }
 
         BinaryData IPersistableModel<ChaosExperimentAction>.Write(ModelReaderWriterOptions options)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         return DeserializeChaosExperimentAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support reading '{options.Format}' format.");
             }
         }
 

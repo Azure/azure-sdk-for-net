@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DenylistCustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DenylistCustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IList<string> denylistValues = default;
-            Optional<SecurityValueType> valueType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            SecurityValueType? valueType = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DenylistCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, Optional.ToNullable(valueType), denylistValues);
+            return new DenylistCustomAlertRule(
+                displayName,
+                description,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                valueType,
+                denylistValues);
         }
 
         BinaryData IPersistableModel<DenylistCustomAlertRule>.Write(ModelReaderWriterOptions options)
@@ -157,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDenylistCustomAlertRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support reading '{options.Format}' format.");
             }
         }
 

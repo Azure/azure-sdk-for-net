@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementBackendPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<BackendProperties>(Properties, options);
             }
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<BackendCredentialsContract>(Credentials, options);
             }
             if (Optional.IsDefined(Proxy))
             {
                 writer.WritePropertyName("proxy"u8);
-                writer.WriteObjectValue(Proxy);
+                writer.WriteObjectValue<BackendProxyContract>(Proxy, options);
             }
             if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue(Tls);
+                writer.WriteObjectValue<BackendTlsProperties>(Tls, options);
             }
             if (Optional.IsDefined(Uri))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementBackendPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<Uri> resourceId = default;
-            Optional<BackendProperties> properties = default;
-            Optional<BackendCredentialsContract> credentials = default;
-            Optional<BackendProxyContract> proxy = default;
-            Optional<BackendTlsProperties> tls = default;
-            Optional<Uri> uri = default;
-            Optional<BackendProtocol> protocol = default;
+            string title = default;
+            string description = default;
+            Uri resourceId = default;
+            BackendProperties properties = default;
+            BackendCredentialsContract credentials = default;
+            BackendProxyContract proxy = default;
+            BackendTlsProperties tls = default;
+            Uri uri = default;
+            BackendProtocol? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            properties = BackendProperties.DeserializeBackendProperties(property0.Value);
+                            properties = BackendProperties.DeserializeBackendProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("credentials"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            credentials = BackendCredentialsContract.DeserializeBackendCredentialsContract(property0.Value);
+                            credentials = BackendCredentialsContract.DeserializeBackendCredentialsContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("proxy"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            proxy = BackendProxyContract.DeserializeBackendProxyContract(property0.Value);
+                            proxy = BackendProxyContract.DeserializeBackendProxyContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("tls"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            tls = BackendTlsProperties.DeserializeBackendTlsProperties(property0.Value);
+                            tls = BackendTlsProperties.DeserializeBackendTlsProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("url"u8))
@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementBackendPatch(title.Value, description.Value, resourceId.Value, properties.Value, credentials.Value, proxy.Value, tls.Value, uri.Value, Optional.ToNullable(protocol), serializedAdditionalRawData);
+            return new ApiManagementBackendPatch(
+                title,
+                description,
+                resourceId,
+                properties,
+                credentials,
+                proxy,
+                tls,
+                uri,
+                protocol,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementBackendPatch>.Write(ModelReaderWriterOptions options)
@@ -228,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementBackendPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

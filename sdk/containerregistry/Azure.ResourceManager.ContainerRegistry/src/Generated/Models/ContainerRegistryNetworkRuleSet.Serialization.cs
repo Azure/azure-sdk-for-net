@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryNetworkRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryNetworkRuleSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerRegistryIPRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryNetworkRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryNetworkRuleSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryNetworkRuleDefaultAction defaultAction = default;
-            Optional<IList<ContainerRegistryIPRule>> ipRules = default;
+            IList<ContainerRegistryIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryIPRule> array = new List<ContainerRegistryIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryIPRule.DeserializeContainerRegistryIPRule(item));
+                        array.Add(ContainerRegistryIPRule.DeserializeContainerRegistryIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryNetworkRuleSet(defaultAction, Optional.ToList(ipRules), serializedAdditionalRawData);
+            return new ContainerRegistryNetworkRuleSet(defaultAction, ipRules ?? new ChangeTrackingList<ContainerRegistryIPRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryNetworkRuleSet>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryNetworkRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryNetworkRuleSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryNetworkRuleSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryNetworkRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryNetworkRuleSet)} does not support reading '{options.Format}' format.");
             }
         }
 

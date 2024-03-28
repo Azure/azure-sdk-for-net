@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputePlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputePlan)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputePlan)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputePlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputePlan)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputePlan)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> publisher = default;
-            Optional<string> product = default;
-            Optional<string> promotionCode = default;
+            string name = default;
+            string publisher = default;
+            string product = default;
+            string promotionCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputePlan(name.Value, publisher.Value, product.Value, promotionCode.Value, serializedAdditionalRawData);
+            return new ComputePlan(name, publisher, product, promotionCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputePlan>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputePlan)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputePlan)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeComputePlan(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputePlan)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputePlan)} does not support reading '{options.Format}' format.");
             }
         }
 

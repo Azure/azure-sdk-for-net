@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The UnknownActivity. </summary>
+    /// <summary> Unknown version of Activity. </summary>
     internal partial class UnknownActivity : Activity
     {
         /// <summary> Initializes a new instance of <see cref="UnknownActivity"/>. </summary>

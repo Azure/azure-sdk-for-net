@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -40,15 +40,21 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="validStartOn"> Certificate Validity start Date time. </param>
         /// <param name="validEndOn"> Certificate Validity End Date time. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="globalAcsNamespace"> ACS namespace name - tenant for our service. </param>
         /// <param name="globalAcsHostName"> Acs mgmt host name to connect to. </param>
         /// <param name="globalAcsRPRealm"> Global ACS namespace RP realm. </param>
-        internal ResourceCertificateAndAcsDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, string globalAcsNamespace, string globalAcsHostName, string globalAcsRPRealm) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn)
+        internal ResourceCertificateAndAcsDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string globalAcsNamespace, string globalAcsHostName, string globalAcsRPRealm) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, serializedAdditionalRawData)
         {
             GlobalAcsNamespace = globalAcsNamespace;
             GlobalAcsHostName = globalAcsHostName;
             GlobalAcsRPRealm = globalAcsRPRealm;
             AuthType = authType ?? "AccessControlService";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateAndAcsDetails"/> for deserialization. </summary>
+        internal ResourceCertificateAndAcsDetails()
+        {
         }
 
         /// <summary> ACS namespace name - tenant for our service. </summary>

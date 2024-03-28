@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<CertificateConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteObjectValue(Certificate);
+                writer.WriteObjectValue<CertificateInformation>(Certificate, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<CertificateConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> encodedCertificate = default;
-            Optional<string> certificatePassword = default;
+            string encodedCertificate = default;
+            string certificatePassword = default;
             CertificateConfigurationStoreName storeName = default;
-            Optional<CertificateInformation> certificate = default;
+            CertificateInformation certificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    certificate = CertificateInformation.DeserializeCertificateInformation(property.Value);
+                    certificate = CertificateInformation.DeserializeCertificateInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateConfiguration(encodedCertificate.Value, certificatePassword.Value, storeName, certificate.Value, serializedAdditionalRawData);
+            return new CertificateConfiguration(encodedCertificate, certificatePassword, storeName, certificate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateConfiguration>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CertificateConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeCertificateConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertificateConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

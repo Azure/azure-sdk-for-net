@@ -5,14 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class ArtifactAccessCredential
+    [PersistableModelProxy(typeof(UnknownArtifactAccessCredential))]
+    public partial class ArtifactAccessCredential : IUtf8JsonSerializable, IJsonModel<ArtifactAccessCredential>
     {
-        internal static ArtifactAccessCredential DeserializeArtifactAccessCredential(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArtifactAccessCredential>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ArtifactAccessCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactAccessCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArtifactAccessCredential)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("credentialType"u8);
+            writer.WriteStringValue(CredentialType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ArtifactAccessCredential IJsonModel<ArtifactAccessCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactAccessCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArtifactAccessCredential)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArtifactAccessCredential(document.RootElement, options);
+        }
+
+        internal static ArtifactAccessCredential DeserializeArtifactAccessCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,11 +70,42 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureContainerRegistryScopedToken": return AzureContainerRegistryScopedTokenCredential.DeserializeAzureContainerRegistryScopedTokenCredential(element);
-                    case "AzureStorageAccountToken": return AzureStorageAccountCredential.DeserializeAzureStorageAccountCredential(element);
+                    case "AzureContainerRegistryScopedToken": return AzureContainerRegistryScopedTokenCredential.DeserializeAzureContainerRegistryScopedTokenCredential(element, options);
+                    case "AzureStorageAccountToken": return AzureStorageAccountCredential.DeserializeAzureStorageAccountCredential(element, options);
                 }
             }
-            return UnknownArtifactAccessCredential.DeserializeUnknownArtifactAccessCredential(element);
+            return UnknownArtifactAccessCredential.DeserializeUnknownArtifactAccessCredential(element, options);
         }
+
+        BinaryData IPersistableModel<ArtifactAccessCredential>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactAccessCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ArtifactAccessCredential)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ArtifactAccessCredential IPersistableModel<ArtifactAccessCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactAccessCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArtifactAccessCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArtifactAccessCredential)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArtifactAccessCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

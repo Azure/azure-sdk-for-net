@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,15 +131,15 @@ namespace Azure.ResourceManager.Confluent.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> publisher = default;
-            Optional<string> product = default;
-            Optional<string> plan = default;
-            Optional<string> licenseTextLink = default;
-            Optional<string> privacyPolicyLink = default;
-            Optional<DateTimeOffset> retrieveDatetime = default;
-            Optional<string> signature = default;
-            Optional<bool> accepted = default;
+            SystemData systemData = default;
+            string publisher = default;
+            string product = default;
+            string plan = default;
+            string licenseTextLink = default;
+            string privacyPolicyLink = default;
+            DateTimeOffset? retrieveDatetime = default;
+            string signature = default;
+            bool? accepted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,7 +234,20 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentAgreement(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted), serializedAdditionalRawData);
+            return new ConfluentAgreement(
+                id,
+                name,
+                type,
+                systemData,
+                publisher,
+                product,
+                plan,
+                licenseTextLink,
+                privacyPolicyLink,
+                retrieveDatetime,
+                signature,
+                accepted,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentAgreement>.Write(ModelReaderWriterOptions options)
@@ -246,7 +259,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -262,7 +275,7 @@ namespace Azure.ResourceManager.Confluent.Models
                         return DeserializeConfluentAgreement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support reading '{options.Format}' format.");
             }
         }
 

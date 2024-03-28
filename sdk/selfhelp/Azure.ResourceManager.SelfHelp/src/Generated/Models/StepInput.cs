@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Details of step input. </summary>
     public partial class StepInput
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="StepInput"/>. </summary>
         internal StepInput()
         {
@@ -29,7 +61,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="selectedOptionValue"> Text of response that was selected. </param>
         /// <param name="responseValidationProperties"> Troubleshooter step input response validation properties. </param>
         /// <param name="responseOptions"></param>
-        internal StepInput(string questionId, string questionType, string questionContent, QuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IReadOnlyList<ResponseConfig> responseOptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StepInput(string questionId, string questionType, string questionContent, QuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IReadOnlyList<ResponseConfig> responseOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QuestionId = questionId;
             QuestionType = questionType;
@@ -40,6 +73,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             SelectedOptionValue = selectedOptionValue;
             ResponseValidationProperties = responseValidationProperties;
             ResponseOptions = responseOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Use Index as QuestionId. </summary>

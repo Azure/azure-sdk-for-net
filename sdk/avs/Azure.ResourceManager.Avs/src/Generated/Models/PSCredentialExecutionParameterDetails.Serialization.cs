@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<PSCredentialExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<PSCredentialExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
+            string username = default;
+            string password = default;
             string name = default;
             ScriptExecutionParameterType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PSCredentialExecutionParameterDetails(name, type, serializedAdditionalRawData, username.Value, password.Value);
+            return new PSCredentialExecutionParameterDetails(name, type, serializedAdditionalRawData, username, password);
         }
 
         BinaryData IPersistableModel<PSCredentialExecutionParameterDetails>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializePSCredentialExecutionParameterDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

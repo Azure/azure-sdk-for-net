@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosContinuousAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosContinuousAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosContinuousAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStartArray();
             foreach (var item in Parameters)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ChaosKeyValuePair>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("selectorId"u8);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosContinuousAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosContinuousAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosContinuousAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosKeyValuePair> array = new List<ChaosKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosKeyValuePair.DeserializeChaosKeyValuePair(item));
+                        array.Add(ChaosKeyValuePair.DeserializeChaosKeyValuePair(item, options));
                     }
                     parameters = array;
                     continue;
@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosContinuousAction(type, name, serializedAdditionalRawData, duration, parameters, selectorId);
+            return new ChaosContinuousAction(
+                type,
+                name,
+                serializedAdditionalRawData,
+                duration,
+                parameters,
+                selectorId);
         }
 
         BinaryData IPersistableModel<ChaosContinuousAction>.Write(ModelReaderWriterOptions options)
@@ -136,7 +142,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosContinuousAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosContinuousAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +158,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         return DeserializeChaosContinuousAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosContinuousAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosContinuousAction)} does not support reading '{options.Format}' format.");
             }
         }
 

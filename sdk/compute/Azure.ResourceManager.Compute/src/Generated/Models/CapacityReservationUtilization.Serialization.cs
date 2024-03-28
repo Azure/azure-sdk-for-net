@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationUtilization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationUtilization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> currentCapacity = default;
-            Optional<IReadOnlyList<SubResource>> virtualMachinesAllocated = default;
+            int? currentCapacity = default;
+            IReadOnlyList<SubResource> virtualMachinesAllocated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationUtilization(Optional.ToNullable(currentCapacity), Optional.ToList(virtualMachinesAllocated), serializedAdditionalRawData);
+            return new CapacityReservationUtilization(currentCapacity, virtualMachinesAllocated ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityReservationUtilization>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCapacityReservationUtilization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support reading '{options.Format}' format.");
             }
         }
 

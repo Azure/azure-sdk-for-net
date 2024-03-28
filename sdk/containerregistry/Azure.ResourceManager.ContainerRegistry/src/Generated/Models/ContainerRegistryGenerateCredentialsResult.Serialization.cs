@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryGenerateCredentialsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryGenerateCredentialsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryGenerateCredentialsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Passwords)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerRegistryTokenPassword>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryGenerateCredentialsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryGenerateCredentialsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryGenerateCredentialsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<IReadOnlyList<ContainerRegistryTokenPassword>> passwords = default;
+            string username = default;
+            IReadOnlyList<ContainerRegistryTokenPassword> passwords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTokenPassword> array = new List<ContainerRegistryTokenPassword>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTokenPassword.DeserializeContainerRegistryTokenPassword(item));
+                        array.Add(ContainerRegistryTokenPassword.DeserializeContainerRegistryTokenPassword(item, options));
                     }
                     passwords = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryGenerateCredentialsResult(username.Value, Optional.ToList(passwords), serializedAdditionalRawData);
+            return new ContainerRegistryGenerateCredentialsResult(username, passwords ?? new ChangeTrackingList<ContainerRegistryTokenPassword>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryGenerateCredentialsResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryGenerateCredentialsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryGenerateCredentialsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryGenerateCredentialsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryGenerateCredentialsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryGenerateCredentialsResult)} does not support reading '{options.Format}' format.");
             }
         }
 

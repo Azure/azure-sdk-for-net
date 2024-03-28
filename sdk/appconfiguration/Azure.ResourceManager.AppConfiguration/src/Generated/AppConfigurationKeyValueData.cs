@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -100,29 +99,37 @@ namespace Azure.ResourceManager.AppConfiguration
         /// The primary identifier of a key-value.
         /// The key is used in unison with the label to uniquely identify a key-value.
         /// </summary>
+        [WirePath("properties.key")]
         public string Key { get; }
         /// <summary>
         /// A value used to group key-values.
         /// The label is used in unison with the key to uniquely identify a key-value.
         /// </summary>
+        [WirePath("properties.label")]
         public string Label { get; }
         /// <summary> The value of the key-value. </summary>
+        [WirePath("properties.value")]
         public string Value { get; set; }
         /// <summary>
         /// The content type of the key-value's value.
         /// Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </summary>
+        [WirePath("properties.contentType")]
         public string ContentType { get; set; }
         /// <summary> An ETag indicating the state of a key-value within a configuration store. </summary>
+        [WirePath("properties.eTag")]
         public ETag? ETag { get; }
         /// <summary> The last time a modifying operation was performed on the given key-value. </summary>
+        [WirePath("properties.lastModified")]
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary>
         /// A value indicating whether the key-value is locked.
         /// A locked key-value may not be modified until it is unlocked.
         /// </summary>
+        [WirePath("properties.locked")]
         public bool? IsLocked { get; }
         /// <summary> A dictionary of tags that can help identify what a key-value may be applicable for. </summary>
+        [WirePath("properties.tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceSwapListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceSwapListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceSwapListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CloudServiceSwapData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceSwapListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceSwapListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceSwapListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CloudServiceSwapData>> value = default;
+            IReadOnlyList<CloudServiceSwapData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<CloudServiceSwapData> array = new List<CloudServiceSwapData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceSwapData.DeserializeCloudServiceSwapData(item));
+                        array.Add(CloudServiceSwapData.DeserializeCloudServiceSwapData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceSwapListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CloudServiceSwapListResult(value ?? new ChangeTrackingList<CloudServiceSwapData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceSwapListResult>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceSwapListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceSwapListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeCloudServiceSwapListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceSwapListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceSwapListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

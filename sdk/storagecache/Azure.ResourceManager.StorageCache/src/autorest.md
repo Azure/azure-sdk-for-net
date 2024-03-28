@@ -18,6 +18,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
+use-model-reader-writer: true
 
 rename-mapping:
   Cache.properties.mountAddresses: -|ip-address
@@ -72,7 +73,7 @@ rename-mapping:
   Nfs3Target.verificationTimer: VerificationDelayInSeconds
   Nfs3Target.writeBackTimer: WriteBackDelayInSeconds
   BlobNfsTarget.verificationTimer: VerificationDelayInSeconds
-  BlobNfsTarget.writeBackTimer: WriteBackDelayInSeconds  
+  BlobNfsTarget.writeBackTimer: WriteBackDelayInSeconds
 
 format-by-name-rules:
   'tenantId': 'uuid'

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<SensorIntegration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SensorIntegration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SensorIntegration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(ProvisioningInfo))
             {
                 writer.WritePropertyName("provisioningInfo"u8);
-                writer.WriteObjectValue(ProvisioningInfo);
+                writer.WriteObjectValue<ErrorResponse>(ProvisioningInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<SensorIntegration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SensorIntegration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SensorIntegration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<string> enabled = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ErrorResponse> provisioningInfo = default;
+            string enabled = default;
+            ProvisioningState? provisioningState = default;
+            ErrorResponse provisioningInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    provisioningInfo = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    provisioningInfo = ErrorResponse.DeserializeErrorResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensorIntegration(enabled.Value, Optional.ToNullable(provisioningState), provisioningInfo.Value, serializedAdditionalRawData);
+            return new SensorIntegration(enabled, provisioningState, provisioningInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensorIntegration>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SensorIntegration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SensorIntegration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                         return DeserializeSensorIntegration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SensorIntegration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SensorIntegration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiContactInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiContactInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiContactInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiContactInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiContactInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiContactInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> uri = default;
-            Optional<string> email = default;
+            string name = default;
+            Uri uri = default;
+            string email = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiContactInformation(name.Value, uri.Value, email.Value, serializedAdditionalRawData);
+            return new ApiContactInformation(name, uri, email, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiContactInformation>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiContactInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiContactInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiContactInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiContactInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiContactInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

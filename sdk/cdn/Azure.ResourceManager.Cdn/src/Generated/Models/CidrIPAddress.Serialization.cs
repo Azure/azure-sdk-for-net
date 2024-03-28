@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CidrIPAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CidrIPAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CidrIPAddress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CidrIPAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CidrIPAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CidrIPAddress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> baseIPAddress = default;
-            Optional<int> prefixLength = default;
+            string baseIPAddress = default;
+            int? prefixLength = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CidrIPAddress(baseIPAddress.Value, Optional.ToNullable(prefixLength), serializedAdditionalRawData);
+            return new CidrIPAddress(baseIPAddress, prefixLength, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CidrIPAddress>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CidrIPAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CidrIPAddress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeCidrIPAddress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CidrIPAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CidrIPAddress)} does not support reading '{options.Format}' format.");
             }
         }
 

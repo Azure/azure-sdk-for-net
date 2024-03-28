@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GcpParentOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GcpParentOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IList<string>> excludedProjectNumbers = default;
-            Optional<string> serviceAccountEmailAddress = default;
-            Optional<string> workloadIdentityProviderId = default;
-            Optional<string> organizationName = default;
+            IList<string> excludedProjectNumbers = default;
+            string serviceAccountEmailAddress = default;
+            string workloadIdentityProviderId = default;
+            string organizationName = default;
             OrganizationMembershipType organizationMembershipType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +140,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GcpParentOrganizationalInfo(organizationMembershipType, serializedAdditionalRawData, Optional.ToList(excludedProjectNumbers), serviceAccountEmailAddress.Value, workloadIdentityProviderId.Value, organizationName.Value);
+            return new GcpParentOrganizationalInfo(
+                organizationMembershipType,
+                serializedAdditionalRawData,
+                excludedProjectNumbers ?? new ChangeTrackingList<string>(),
+                serviceAccountEmailAddress,
+                workloadIdentityProviderId,
+                organizationName);
         }
 
         BinaryData IPersistableModel<GcpParentOrganizationalInfo>.Write(ModelReaderWriterOptions options)
@@ -152,7 +158,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeGcpParentOrganizationalInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

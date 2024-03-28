@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBIndexingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in IncludedPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBIncludedPath>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ExcludedPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBExcludedPath>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
-                        writer.WriteObjectValue(item0);
+                        writer.WriteObjectValue<CosmosDBCompositePath>(item0, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in SpatialIndexes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpatialSpec>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBIndexingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,12 +126,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<bool> automatic = default;
-            Optional<CosmosDBIndexingMode> indexingMode = default;
-            Optional<IList<CosmosDBIncludedPath>> includedPaths = default;
-            Optional<IList<CosmosDBExcludedPath>> excludedPaths = default;
-            Optional<IList<IList<CosmosDBCompositePath>>> compositeIndexes = default;
-            Optional<IList<SpatialSpec>> spatialIndexes = default;
+            bool? automatic = default;
+            CosmosDBIndexingMode? indexingMode = default;
+            IList<CosmosDBIncludedPath> includedPaths = default;
+            IList<CosmosDBExcludedPath> excludedPaths = default;
+            IList<IList<CosmosDBCompositePath>> compositeIndexes = default;
+            IList<SpatialSpec> spatialIndexes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBIncludedPath> array = new List<CosmosDBIncludedPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBIncludedPath.DeserializeCosmosDBIncludedPath(item));
+                        array.Add(CosmosDBIncludedPath.DeserializeCosmosDBIncludedPath(item, options));
                     }
                     includedPaths = array;
                     continue;
@@ -175,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBExcludedPath> array = new List<CosmosDBExcludedPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBExcludedPath.DeserializeCosmosDBExcludedPath(item));
+                        array.Add(CosmosDBExcludedPath.DeserializeCosmosDBExcludedPath(item, options));
                     }
                     excludedPaths = array;
                     continue;
@@ -198,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<CosmosDBCompositePath> array0 = new List<CosmosDBCompositePath>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(CosmosDBCompositePath.DeserializeCosmosDBCompositePath(item0));
+                                array0.Add(CosmosDBCompositePath.DeserializeCosmosDBCompositePath(item0, options));
                             }
                             array.Add(array0);
                         }
@@ -215,7 +217,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<SpatialSpec> array = new List<SpatialSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpatialSpec.DeserializeSpatialSpec(item));
+                        array.Add(SpatialSpec.DeserializeSpatialSpec(item, options));
                     }
                     spatialIndexes = array;
                     continue;
@@ -226,7 +228,156 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBIndexingPolicy(Optional.ToNullable(automatic), Optional.ToNullable(indexingMode), Optional.ToList(includedPaths), Optional.ToList(excludedPaths), Optional.ToList(compositeIndexes), Optional.ToList(spatialIndexes), serializedAdditionalRawData);
+            return new CosmosDBIndexingPolicy(
+                automatic,
+                indexingMode,
+                includedPaths ?? new ChangeTrackingList<CosmosDBIncludedPath>(),
+                excludedPaths ?? new ChangeTrackingList<CosmosDBExcludedPath>(),
+                compositeIndexes ?? new ChangeTrackingList<IList<CosmosDBCompositePath>>(),
+                spatialIndexes ?? new ChangeTrackingList<SpatialSpec>(),
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAutomatic), out propertyOverride);
+            if (Optional.IsDefined(IsAutomatic) || hasPropertyOverride)
+            {
+                builder.Append("  automatic: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsAutomatic.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IndexingMode), out propertyOverride);
+            if (Optional.IsDefined(IndexingMode) || hasPropertyOverride)
+            {
+                builder.Append("  indexingMode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{IndexingMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedPaths), out propertyOverride);
+            if (Optional.IsCollectionDefined(IncludedPaths) || hasPropertyOverride)
+            {
+                if (IncludedPaths.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  includedPaths: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in IncludedPaths)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  includedPaths: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludedPaths), out propertyOverride);
+            if (Optional.IsCollectionDefined(ExcludedPaths) || hasPropertyOverride)
+            {
+                if (ExcludedPaths.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  excludedPaths: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ExcludedPaths)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  excludedPaths: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompositeIndexes), out propertyOverride);
+            if (Optional.IsCollectionDefined(CompositeIndexes) || hasPropertyOverride)
+            {
+                if (CompositeIndexes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  compositeIndexes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in CompositeIndexes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine("[");
+                            foreach (var item0 in item)
+                            {
+                                BicepSerializationHelpers.AppendChildObject(builder, item0, options, 4, true, "  compositeIndexes: ");
+                            }
+                            builder.AppendLine("  ]");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SpatialIndexes), out propertyOverride);
+            if (Optional.IsCollectionDefined(SpatialIndexes) || hasPropertyOverride)
+            {
+                if (SpatialIndexes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  spatialIndexes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SpatialIndexes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  spatialIndexes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CosmosDBIndexingPolicy>.Write(ModelReaderWriterOptions options)
@@ -237,8 +388,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -254,7 +407,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBIndexingPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

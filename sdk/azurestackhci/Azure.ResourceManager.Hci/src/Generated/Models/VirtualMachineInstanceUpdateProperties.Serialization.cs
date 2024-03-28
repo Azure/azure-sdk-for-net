@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstanceUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstanceUpdateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue<HardwareProfileUpdate>(HardwareProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<StorageProfileUpdate>(StorageProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<NetworkProfileUpdate>(NetworkProfile, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<OSProfileUpdate>(OSProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstanceUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstanceUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<HardwareProfileUpdate> hardwareProfile = default;
-            Optional<StorageProfileUpdate> storageProfile = default;
-            Optional<NetworkProfileUpdate> networkProfile = default;
-            Optional<OSProfileUpdate> osProfile = default;
+            HardwareProfileUpdate hardwareProfile = default;
+            StorageProfileUpdate storageProfile = default;
+            NetworkProfileUpdate networkProfile = default;
+            OSProfileUpdate osProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HardwareProfileUpdate.DeserializeHardwareProfileUpdate(property.Value);
+                    hardwareProfile = HardwareProfileUpdate.DeserializeHardwareProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property.Value);
+                    storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkProfile"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    networkProfile = NetworkProfileUpdate.DeserializeNetworkProfileUpdate(property.Value);
+                    networkProfile = NetworkProfileUpdate.DeserializeNetworkProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfileUpdate.DeserializeOSProfileUpdate(property.Value);
+                    osProfile = OSProfileUpdate.DeserializeOSProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstanceUpdateProperties(hardwareProfile.Value, storageProfile.Value, networkProfile.Value, osProfile.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstanceUpdateProperties(hardwareProfile, storageProfile, networkProfile, osProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstanceUpdateProperties>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstanceUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstanceUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeVirtualMachineInstanceUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstanceUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstanceUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in BaseImageDependencies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerRegistryBaseImageDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTaskStepProperties(document.RootElement, options);
+            return DeserializeContainerRegistryTaskStepProperties(document.RootElement, options);
         }
 
         internal static UnknownTaskStepProperties DeserializeUnknownTaskStepProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryTaskStepType type = "Unknown";
-            Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
-            Optional<string> contextPath = default;
-            Optional<string> contextAccessToken = default;
+            IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies = default;
+            string contextPath = default;
+            string contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryBaseImageDependency> array = new List<ContainerRegistryBaseImageDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item));
+                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item, options));
                     }
                     baseImageDependencies = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownTaskStepProperties(type, Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData);
+            return new UnknownTaskStepProperties(type, baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(), contextPath, contextAccessToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskStepProperties>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTaskStepProperties(document.RootElement, options);
+                        return DeserializeContainerRegistryTaskStepProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

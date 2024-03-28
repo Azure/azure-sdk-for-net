@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxHeavyAccountCopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxHeavyAccountCopyLogDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxHeavyAccountCopyLogDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxHeavyAccountCopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxHeavyAccountCopyLogDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxHeavyAccountCopyLogDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<IReadOnlyList<string>> copyLogLink = default;
-            Optional<IReadOnlyList<string>> copyVerboseLogLink = default;
+            string accountName = default;
+            IReadOnlyList<string> copyLogLink = default;
+            IReadOnlyList<string> copyVerboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxHeavyAccountCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, accountName.Value, Optional.ToList(copyLogLink), Optional.ToList(copyVerboseLogLink));
+            return new DataBoxHeavyAccountCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, accountName, copyLogLink ?? new ChangeTrackingList<string>(), copyVerboseLogLink ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<DataBoxHeavyAccountCopyLogDetails>.Write(ModelReaderWriterOptions options)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxHeavyAccountCopyLogDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxHeavyAccountCopyLogDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxHeavyAccountCopyLogDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxHeavyAccountCopyLogDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxHeavyAccountCopyLogDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

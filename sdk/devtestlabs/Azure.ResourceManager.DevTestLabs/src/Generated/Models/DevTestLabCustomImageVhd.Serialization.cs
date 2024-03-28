@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCustomImageVhd>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCustomImageVhd)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCustomImageVhd)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCustomImageVhd>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCustomImageVhd)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCustomImageVhd)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> imageName = default;
-            Optional<bool> sysPrep = default;
+            string imageName = default;
+            bool? sysPrep = default;
             DevTestLabCustomImageOSType osType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCustomImageVhd(imageName.Value, Optional.ToNullable(sysPrep), osType, serializedAdditionalRawData);
+            return new DevTestLabCustomImageVhd(imageName, sysPrep, osType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCustomImageVhd>.Write(ModelReaderWriterOptions options)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCustomImageVhd)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCustomImageVhd)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabCustomImageVhd(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCustomImageVhd)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCustomImageVhd)} does not support reading '{options.Format}' format.");
             }
         }
 

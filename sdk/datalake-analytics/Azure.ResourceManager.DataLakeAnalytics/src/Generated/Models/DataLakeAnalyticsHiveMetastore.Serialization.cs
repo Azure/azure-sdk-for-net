@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsHiveMetastore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsHiveMetastore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> serverUri = default;
-            Optional<string> databaseName = default;
-            Optional<string> runtimeVersion = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<NestedResourceProvisioningState> nestedResourceProvisioningState = default;
+            SystemData systemData = default;
+            Uri serverUri = default;
+            string databaseName = default;
+            string runtimeVersion = default;
+            string userName = default;
+            string password = default;
+            NestedResourceProvisioningState? nestedResourceProvisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsHiveMetastore(id, name, type, systemData.Value, serverUri.Value, databaseName.Value, runtimeVersion.Value, userName.Value, password.Value, Optional.ToNullable(nestedResourceProvisioningState), serializedAdditionalRawData);
+            return new DataLakeAnalyticsHiveMetastore(
+                id,
+                name,
+                type,
+                systemData,
+                serverUri,
+                databaseName,
+                runtimeVersion,
+                userName,
+                password,
+                nestedResourceProvisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsHiveMetastore>.Write(ModelReaderWriterOptions options)
@@ -224,7 +235,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -240,7 +251,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         return DeserializeDataLakeAnalyticsHiveMetastore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskRestorePointAttributes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskRestorePointAttributes)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<RestorePointEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(SourceDiskRestorePoint))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskRestorePointAttributes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskRestorePointAttributes)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<RestorePointEncryption> encryption = default;
-            Optional<WritableSubResource> sourceDiskRestorePoint = default;
-            Optional<ResourceIdentifier> id = default;
+            RestorePointEncryption encryption = default;
+            WritableSubResource sourceDiskRestorePoint = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = RestorePointEncryption.DeserializeRestorePointEncryption(property.Value);
+                    encryption = RestorePointEncryption.DeserializeRestorePointEncryption(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDiskRestorePoint"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskRestorePointAttributes(id.Value, serializedAdditionalRawData, encryption.Value, sourceDiskRestorePoint);
+            return new DiskRestorePointAttributes(id, serializedAdditionalRawData, encryption, sourceDiskRestorePoint);
         }
 
         BinaryData IPersistableModel<DiskRestorePointAttributes>.Write(ModelReaderWriterOptions options)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskRestorePointAttributes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskRestorePointAttributes)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDiskRestorePointAttributes(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskRestorePointAttributes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskRestorePointAttributes)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> serverPlatform = default;
-            Optional<string> serverName = default;
-            Optional<string> serverVersion = default;
-            Optional<string> serverEdition = default;
-            Optional<string> serverOperatingSystemVersion = default;
-            Optional<int> serverDatabaseCount = default;
+            string serverPlatform = default;
+            string serverName = default;
+            string serverVersion = default;
+            string serverEdition = default;
+            string serverOperatingSystemVersion = default;
+            int? serverDatabaseCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerProperties(serverPlatform.Value, serverName.Value, serverVersion.Value, serverEdition.Value, serverOperatingSystemVersion.Value, Optional.ToNullable(serverDatabaseCount), serializedAdditionalRawData);
+            return new ServerProperties(
+                serverPlatform,
+                serverName,
+                serverVersion,
+                serverEdition,
+                serverOperatingSystemVersion,
+                serverDatabaseCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerProperties>.Write(ModelReaderWriterOptions options)
@@ -156,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeServerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

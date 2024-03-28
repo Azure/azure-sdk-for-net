@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Defender))
             {
                 writer.WritePropertyName("defender"u8);
-                writer.WriteObjectValue(Defender);
+                writer.WriteObjectValue<ManagedClusterSecurityProfileDefender>(Defender, options);
             }
             if (Optional.IsDefined(AzureKeyVaultKms))
             {
                 writer.WritePropertyName("azureKeyVaultKms"u8);
-                writer.WriteObjectValue(AzureKeyVaultKms);
+                writer.WriteObjectValue<ManagedClusterSecurityProfileKeyVaultKms>(AzureKeyVaultKms, options);
             }
             if (Optional.IsDefined(WorkloadIdentity))
             {
                 writer.WritePropertyName("workloadIdentity"u8);
-                writer.WriteObjectValue(WorkloadIdentity);
+                writer.WriteObjectValue<ManagedClusterSecurityProfileWorkloadIdentity>(WorkloadIdentity, options);
             }
             if (Optional.IsDefined(ImageCleaner))
             {
                 writer.WritePropertyName("imageCleaner"u8);
-                writer.WriteObjectValue(ImageCleaner);
+                writer.WriteObjectValue<ManagedClusterSecurityProfileImageCleaner>(ImageCleaner, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterSecurityProfileDefender> defender = default;
-            Optional<ManagedClusterSecurityProfileKeyVaultKms> azureKeyVaultKms = default;
-            Optional<ManagedClusterSecurityProfileWorkloadIdentity> workloadIdentity = default;
-            Optional<ManagedClusterSecurityProfileImageCleaner> imageCleaner = default;
+            ManagedClusterSecurityProfileDefender defender = default;
+            ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = default;
+            ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity = default;
+            ManagedClusterSecurityProfileImageCleaner imageCleaner = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    defender = ManagedClusterSecurityProfileDefender.DeserializeManagedClusterSecurityProfileDefender(property.Value);
+                    defender = ManagedClusterSecurityProfileDefender.DeserializeManagedClusterSecurityProfileDefender(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureKeyVaultKms"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    azureKeyVaultKms = ManagedClusterSecurityProfileKeyVaultKms.DeserializeManagedClusterSecurityProfileKeyVaultKms(property.Value);
+                    azureKeyVaultKms = ManagedClusterSecurityProfileKeyVaultKms.DeserializeManagedClusterSecurityProfileKeyVaultKms(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workloadIdentity"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    workloadIdentity = ManagedClusterSecurityProfileWorkloadIdentity.DeserializeManagedClusterSecurityProfileWorkloadIdentity(property.Value);
+                    workloadIdentity = ManagedClusterSecurityProfileWorkloadIdentity.DeserializeManagedClusterSecurityProfileWorkloadIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("imageCleaner"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    imageCleaner = ManagedClusterSecurityProfileImageCleaner.DeserializeManagedClusterSecurityProfileImageCleaner(property.Value);
+                    imageCleaner = ManagedClusterSecurityProfileImageCleaner.DeserializeManagedClusterSecurityProfileImageCleaner(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterSecurityProfile(defender.Value, azureKeyVaultKms.Value, workloadIdentity.Value, imageCleaner.Value, serializedAdditionalRawData);
+            return new ManagedClusterSecurityProfile(defender, azureKeyVaultKms, workloadIdentity, imageCleaner, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterSecurityProfile>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterSecurityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

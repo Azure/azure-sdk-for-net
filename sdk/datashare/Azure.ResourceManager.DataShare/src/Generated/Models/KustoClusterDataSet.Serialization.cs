@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoClusterDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoClusterDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoClusterDataSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoClusterDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoClusterDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoClusterDataSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataSetId = default;
+            SystemData systemData = default;
+            Guid? dataSetId = default;
             ResourceIdentifier kustoClusterResourceId = default;
-            Optional<AzureLocation> location = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            AzureLocation? location = default;
+            DataShareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoClusterDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(dataSetId), kustoClusterResourceId, Optional.ToNullable(location), Optional.ToNullable(provisioningState));
+            return new KustoClusterDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                dataSetId,
+                kustoClusterResourceId,
+                location,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<KustoClusterDataSet>.Write(ModelReaderWriterOptions options)
@@ -211,7 +221,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoClusterDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoClusterDataSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +237,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeKustoClusterDataSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoClusterDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoClusterDataSet)} does not support reading '{options.Format}' format.");
             }
         }
 

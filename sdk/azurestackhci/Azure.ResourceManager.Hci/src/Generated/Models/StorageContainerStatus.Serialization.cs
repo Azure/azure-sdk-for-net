@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageContainerStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageContainerStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageContainerStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
-                writer.WriteObjectValue(ProvisioningStatus);
+                writer.WriteObjectValue<StorageContainerStatusProvisioningStatus>(ProvisioningStatus, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageContainerStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageContainerStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageContainerStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<long> availableSizeMB = default;
-            Optional<long> containerSizeMB = default;
-            Optional<StorageContainerStatusProvisioningStatus> provisioningStatus = default;
+            string errorCode = default;
+            string errorMessage = default;
+            long? availableSizeMB = default;
+            long? containerSizeMB = default;
+            StorageContainerStatusProvisioningStatus provisioningStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = StorageContainerStatusProvisioningStatus.DeserializeStorageContainerStatusProvisioningStatus(property.Value);
+                    provisioningStatus = StorageContainerStatusProvisioningStatus.DeserializeStorageContainerStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageContainerStatus(errorCode.Value, errorMessage.Value, Optional.ToNullable(availableSizeMB), Optional.ToNullable(containerSizeMB), provisioningStatus.Value, serializedAdditionalRawData);
+            return new StorageContainerStatus(
+                errorCode,
+                errorMessage,
+                availableSizeMB,
+                containerSizeMB,
+                provisioningStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageContainerStatus>.Write(ModelReaderWriterOptions options)
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageContainerStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageContainerStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeStorageContainerStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageContainerStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageContainerStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

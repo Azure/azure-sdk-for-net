@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KnowledgeStoreTableProjectionSelector>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Objects)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KnowledgeStoreObjectProjectionSelector>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Files)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KnowledgeStoreFileProjectionSelector>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -55,9 +55,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<KnowledgeStoreTableProjectionSelector>> tables = default;
-            Optional<IList<KnowledgeStoreObjectProjectionSelector>> objects = default;
-            Optional<IList<KnowledgeStoreFileProjectionSelector>> files = default;
+            IList<KnowledgeStoreTableProjectionSelector> tables = default;
+            IList<KnowledgeStoreObjectProjectionSelector> objects = default;
+            IList<KnowledgeStoreFileProjectionSelector> files = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"u8))
@@ -103,7 +103,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KnowledgeStoreProjection(Optional.ToList(tables), Optional.ToList(objects), Optional.ToList(files));
+            return new KnowledgeStoreProjection(tables ?? new ChangeTrackingList<KnowledgeStoreTableProjectionSelector>(), objects ?? new ChangeTrackingList<KnowledgeStoreObjectProjectionSelector>(), files ?? new ChangeTrackingList<KnowledgeStoreFileProjectionSelector>());
         }
     }
 }

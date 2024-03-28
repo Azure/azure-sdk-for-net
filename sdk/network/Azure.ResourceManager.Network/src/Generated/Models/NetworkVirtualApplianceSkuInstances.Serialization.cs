@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceSkuInstances>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuInstances)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuInstances)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceSkuInstances>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuInstances)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuInstances)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> scaleUnit = default;
-            Optional<int> instanceCount = default;
+            string scaleUnit = default;
+            int? instanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkVirtualApplianceSkuInstances(scaleUnit.Value, Optional.ToNullable(instanceCount), serializedAdditionalRawData);
+            return new NetworkVirtualApplianceSkuInstances(scaleUnit, instanceCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkVirtualApplianceSkuInstances>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuInstances)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuInstances)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkVirtualApplianceSkuInstances(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuInstances)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuInstances)} does not support reading '{options.Format}' format.");
             }
         }
 

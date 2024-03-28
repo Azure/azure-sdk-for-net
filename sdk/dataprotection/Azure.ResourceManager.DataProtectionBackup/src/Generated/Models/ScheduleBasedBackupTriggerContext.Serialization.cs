@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduleBasedBackupTriggerContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleBasedBackupTriggerContext)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleBasedBackupTriggerContext)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule);
+            writer.WriteObjectValue<DataProtectionBackupSchedule>(Schedule, options);
             writer.WritePropertyName("taggingCriteria"u8);
             writer.WriteStartArray();
             foreach (var item in TaggingCriteriaList)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataProtectionBackupTaggingCriteria>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("objectType"u8);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduleBasedBackupTriggerContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleBasedBackupTriggerContext)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleBasedBackupTriggerContext)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("schedule"u8))
                 {
-                    schedule = DataProtectionBackupSchedule.DeserializeDataProtectionBackupSchedule(property.Value);
+                    schedule = DataProtectionBackupSchedule.DeserializeDataProtectionBackupSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("taggingCriteria"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupTaggingCriteria> array = new List<DataProtectionBackupTaggingCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupTaggingCriteria.DeserializeDataProtectionBackupTaggingCriteria(item));
+                        array.Add(DataProtectionBackupTaggingCriteria.DeserializeDataProtectionBackupTaggingCriteria(item, options));
                     }
                     taggingCriteria = array;
                     continue;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleBasedBackupTriggerContext)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleBasedBackupTriggerContext)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeScheduleBasedBackupTriggerContext(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleBasedBackupTriggerContext)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleBasedBackupTriggerContext)} does not support reading '{options.Format}' format.");
             }
         }
 

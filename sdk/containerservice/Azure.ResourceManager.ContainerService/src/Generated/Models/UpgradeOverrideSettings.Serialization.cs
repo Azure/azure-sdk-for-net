@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpgradeOverrideSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeOverrideSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpgradeOverrideSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpgradeOverrideSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeOverrideSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpgradeOverrideSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> forceUpgrade = default;
-            Optional<DateTimeOffset> until = default;
+            bool? forceUpgrade = default;
+            DateTimeOffset? until = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpgradeOverrideSettings(Optional.ToNullable(forceUpgrade), Optional.ToNullable(until), serializedAdditionalRawData);
+            return new UpgradeOverrideSettings(forceUpgrade, until, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpgradeOverrideSettings>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeOverrideSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpgradeOverrideSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeUpgradeOverrideSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeOverrideSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpgradeOverrideSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

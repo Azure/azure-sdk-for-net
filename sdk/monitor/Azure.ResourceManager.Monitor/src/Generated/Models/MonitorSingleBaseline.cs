@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The baseline values for a single sensitivity value. </summary>
     public partial class MonitorSingleBaseline
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MonitorSingleBaseline"/>. </summary>
         /// <param name="sensitivity"> the sensitivity of the baseline. </param>
         /// <param name="lowThresholds"> The low thresholds of the baseline. </param>
@@ -34,11 +65,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="sensitivity"> the sensitivity of the baseline. </param>
         /// <param name="lowThresholds"> The low thresholds of the baseline. </param>
         /// <param name="highThresholds"> The high thresholds of the baseline. </param>
-        internal MonitorSingleBaseline(MonitorBaselineSensitivity sensitivity, IReadOnlyList<double> lowThresholds, IReadOnlyList<double> highThresholds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorSingleBaseline(MonitorBaselineSensitivity sensitivity, IReadOnlyList<double> lowThresholds, IReadOnlyList<double> highThresholds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sensitivity = sensitivity;
             LowThresholds = lowThresholds;
             HighThresholds = highThresholds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorSingleBaseline"/> for deserialization. </summary>
+        internal MonitorSingleBaseline()
+        {
         }
 
         /// <summary> the sensitivity of the baseline. </summary>

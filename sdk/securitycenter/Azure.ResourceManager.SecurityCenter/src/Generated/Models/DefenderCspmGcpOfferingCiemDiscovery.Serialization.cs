@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmGcpOfferingCiemDiscovery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmGcpOfferingCiemDiscovery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> workloadIdentityProviderId = default;
-            Optional<string> serviceAccountEmailAddress = default;
-            Optional<string> azureActiveDirectoryAppName = default;
+            string workloadIdentityProviderId = default;
+            string serviceAccountEmailAddress = default;
+            string azureActiveDirectoryAppName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderCspmGcpOfferingCiemDiscovery(workloadIdentityProviderId.Value, serviceAccountEmailAddress.Value, azureActiveDirectoryAppName.Value, serializedAdditionalRawData);
+            return new DefenderCspmGcpOfferingCiemDiscovery(workloadIdentityProviderId, serviceAccountEmailAddress, azureActiveDirectoryAppName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderCspmGcpOfferingCiemDiscovery>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDefenderCspmGcpOfferingCiemDiscovery(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedSecurityRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedSecurityRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedSecurityRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedSecurityRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<SecurityTrafficDirection> direction = default;
-            Optional<int> destinationPort = default;
-            Optional<IList<SecurityTransportProtocol>> protocols = default;
-            Optional<IList<string>> ipAddresses = default;
+            string name = default;
+            SecurityTrafficDirection? direction = default;
+            int? destinationPort = default;
+            IList<SecurityTransportProtocol> protocols = default;
+            IList<string> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedSecurityRule(name.Value, Optional.ToNullable(direction), Optional.ToNullable(destinationPort), Optional.ToList(protocols), Optional.ToList(ipAddresses), serializedAdditionalRawData);
+            return new RecommendedSecurityRule(
+                name,
+                direction,
+                destinationPort,
+                protocols ?? new ChangeTrackingList<SecurityTransportProtocol>(),
+                ipAddresses ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedSecurityRule>.Write(ModelReaderWriterOptions options)
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedSecurityRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedSecurityRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +199,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeRecommendedSecurityRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedSecurityRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedSecurityRule)} does not support reading '{options.Format}' format.");
             }
         }
 

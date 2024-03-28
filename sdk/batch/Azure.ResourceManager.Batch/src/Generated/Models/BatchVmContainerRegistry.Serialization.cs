@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchVmContainerRegistry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityReference"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ComputeNodeIdentityReference>(Identity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchVmContainerRegistry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> registryServer = default;
-            Optional<ComputeNodeIdentityReference> identityReference = default;
+            string username = default;
+            string password = default;
+            string registryServer = default;
+            ComputeNodeIdentityReference identityReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value);
+                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmContainerRegistry(username.Value, password.Value, registryServer.Value, identityReference.Value, serializedAdditionalRawData);
+            return new BatchVmContainerRegistry(username, password, registryServer, identityReference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmContainerRegistry>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchVmContainerRegistry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support reading '{options.Format}' format.");
             }
         }
 

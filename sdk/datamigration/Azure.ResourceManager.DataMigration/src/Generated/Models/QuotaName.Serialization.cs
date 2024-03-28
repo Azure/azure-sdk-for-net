@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaName)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> localizedValue = default;
-            Optional<string> value = default;
+            string localizedValue = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaName(localizedValue.Value, value.Value, serializedAdditionalRawData);
+            return new QuotaName(localizedValue, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaName>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaName)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeQuotaName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaName)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents a server to be updated. </summary>
     public partial class PostgreSqlFlexibleServerPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPatch"/>. </summary>
         public PostgreSqlFlexibleServerPatch()
         {
@@ -35,7 +68,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="createMode"> The mode to update a new PostgreSQL server. </param>
         /// <param name="replicationRole"> Replication role of the server. </param>
         /// <param name="network"> Network properties of a server. These are required to be passed only in case if server is a private access server. </param>
-        internal PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, IDictionary<string, string> tags, AzureLocation? location, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServerNetwork network)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, IDictionary<string, string> tags, AzureLocation? location, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServerNetwork network, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Identity = identity;
@@ -52,37 +86,53 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             CreateMode = createMode;
             ReplicationRole = replicationRole;
             Network = network;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The SKU (pricing tier) of the server. </summary>
+        [WirePath("sku")]
         public PostgreSqlFlexibleServerSku Sku { get; set; }
         /// <summary> Describes the identity of the application. </summary>
+        [WirePath("identity")]
         public PostgreSqlFlexibleServerUserAssignedIdentity Identity { get; set; }
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The location the resource resides in. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The password of the administrator login. </summary>
+        [WirePath("properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
         /// <summary> PostgreSQL Server version. </summary>
+        [WirePath("properties.version")]
         public PostgreSqlFlexibleServerVersion? Version { get; set; }
         /// <summary> Storage properties of a server. </summary>
+        [WirePath("properties.storage")]
         public PostgreSqlFlexibleServerStorage Storage { get; set; }
         /// <summary> Backup properties of a server. </summary>
+        [WirePath("properties.backup")]
         public PostgreSqlFlexibleServerBackupProperties Backup { get; set; }
         /// <summary> High availability properties of a server. </summary>
+        [WirePath("properties.highAvailability")]
         public PostgreSqlFlexibleServerHighAvailability HighAvailability { get; set; }
         /// <summary> Maintenance window properties of a server. </summary>
+        [WirePath("properties.maintenanceWindow")]
         public PostgreSqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
         /// <summary> AuthConfig properties of a server. </summary>
+        [WirePath("properties.authConfig")]
         public PostgreSqlFlexibleServerAuthConfig AuthConfig { get; set; }
         /// <summary> Data encryption properties of a server. </summary>
+        [WirePath("properties.dataEncryption")]
         public PostgreSqlFlexibleServerDataEncryption DataEncryption { get; set; }
         /// <summary> The mode to update a new PostgreSQL server. </summary>
+        [WirePath("properties.createMode")]
         public PostgreSqlFlexibleServerCreateModeForUpdate? CreateMode { get; set; }
         /// <summary> Replication role of the server. </summary>
+        [WirePath("properties.replicationRole")]
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
         /// <summary> Network properties of a server. These are required to be passed only in case if server is a private access server. </summary>
+        [WirePath("properties.network")]
         public PostgreSqlFlexibleServerNetwork Network { get; set; }
     }
 }

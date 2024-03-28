@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapabilityTypeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilityTypeListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapabilityTypeListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChaosCapabilityTypeData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapabilityTypeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilityTypeListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapabilityTypeListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,8 +86,8 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ChaosCapabilityTypeData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ChaosCapabilityTypeData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosCapabilityTypeData> array = new List<ChaosCapabilityTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosCapabilityTypeData.DeserializeChaosCapabilityTypeData(item));
+                        array.Add(ChaosCapabilityTypeData.DeserializeChaosCapabilityTypeData(item, options));
                     }
                     value = array;
                     continue;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapabilityTypeListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CapabilityTypeListResult(value ?? new ChangeTrackingList<ChaosCapabilityTypeData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapabilityTypeListResult>.Write(ModelReaderWriterOptions options)
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapabilityTypeListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapabilityTypeListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         return DeserializeCapabilityTypeListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapabilityTypeListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapabilityTypeListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

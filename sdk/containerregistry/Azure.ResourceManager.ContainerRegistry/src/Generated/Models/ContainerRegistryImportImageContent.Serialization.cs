@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImportImageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryImportImageContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryImportImageContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue<ContainerRegistryImportSource>(Source, options);
             if (Optional.IsCollectionDefined(TargetTags))
             {
                 writer.WritePropertyName("targetTags"u8);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImportImageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryImportImageContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryImportImageContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryImportSource source = default;
-            Optional<IList<string>> targetTags = default;
-            Optional<IList<string>> untaggedTargetRepositories = default;
-            Optional<ContainerRegistryImportMode> mode = default;
+            IList<string> targetTags = default;
+            IList<string> untaggedTargetRepositories = default;
+            ContainerRegistryImportMode? mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = ContainerRegistryImportSource.DeserializeContainerRegistryImportSource(property.Value);
+                    source = ContainerRegistryImportSource.DeserializeContainerRegistryImportSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetTags"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryImportImageContent(source, Optional.ToList(targetTags), Optional.ToList(untaggedTargetRepositories), Optional.ToNullable(mode), serializedAdditionalRawData);
+            return new ContainerRegistryImportImageContent(source, targetTags ?? new ChangeTrackingList<string>(), untaggedTargetRepositories ?? new ChangeTrackingList<string>(), mode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryImportImageContent>.Write(ModelReaderWriterOptions options)
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryImportImageContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryImportImageContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryImportImageContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryImportImageContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryImportImageContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> An update history of the ImmutabilityPolicy of a blob container. </summary>
     public partial class UpdateHistoryEntry
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="UpdateHistoryEntry"/>. </summary>
         internal UpdateHistoryEntry()
         {
@@ -26,7 +59,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="upn"> Returns the User Principal Name of the user who updated the ImmutabilityPolicy. </param>
         /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
         /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </param>
-        internal UpdateHistoryEntry(ImmutabilityPolicyUpdateType? updateType, int? immutabilityPeriodSinceCreationInDays, DateTimeOffset? timestamp, string objectIdentifier, Guid? tenantId, string upn, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateHistoryEntry(ImmutabilityPolicyUpdateType? updateType, int? immutabilityPeriodSinceCreationInDays, DateTimeOffset? timestamp, string objectIdentifier, Guid? tenantId, string upn, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UpdateType = updateType;
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
@@ -36,23 +70,32 @@ namespace Azure.ResourceManager.Storage.Models
             Upn = upn;
             AllowProtectedAppendWrites = allowProtectedAppendWrites;
             AllowProtectedAppendWritesAll = allowProtectedAppendWritesAll;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ImmutabilityPolicy update type of a blob container, possible values include: put, lock and extend. </summary>
+        [WirePath("update")]
         public ImmutabilityPolicyUpdateType? UpdateType { get; }
         /// <summary> The immutability period for the blobs in the container since the policy creation, in days. </summary>
+        [WirePath("immutabilityPeriodSinceCreationInDays")]
         public int? ImmutabilityPeriodSinceCreationInDays { get; }
         /// <summary> Returns the date and time the ImmutabilityPolicy was updated. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
         /// <summary> Returns the Object ID of the user who updated the ImmutabilityPolicy. </summary>
+        [WirePath("objectIdentifier")]
         public string ObjectIdentifier { get; }
         /// <summary> Returns the Tenant ID that issued the token for the user who updated the ImmutabilityPolicy. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
         /// <summary> Returns the User Principal Name of the user who updated the ImmutabilityPolicy. </summary>
+        [WirePath("upn")]
         public string Upn { get; }
         /// <summary> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </summary>
+        [WirePath("allowProtectedAppendWrites")]
         public bool? AllowProtectedAppendWrites { get; }
         /// <summary> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </summary>
+        [WirePath("allowProtectedAppendWritesAll")]
         public bool? AllowProtectedAppendWritesAll { get; }
     }
 }

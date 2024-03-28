@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> hostPoolArmPath = default;
-            Optional<bool> scalingPlanEnabled = default;
+            ResourceIdentifier hostPoolArmPath = default;
+            bool? scalingPlanEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingHostPoolReference(hostPoolArmPath.Value, Optional.ToNullable(scalingPlanEnabled), serializedAdditionalRawData);
+            return new ScalingHostPoolReference(hostPoolArmPath, scalingPlanEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingHostPoolReference>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeScalingHostPoolReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionGradesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionGradesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> gradeName = default;
-            Optional<int> minScoreThreshold = default;
-            Optional<int> maxScoreThreshold = default;
+            string gradeName = default;
+            int? minScoreThreshold = default;
+            int? maxScoreThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionGradesItem(gradeName.Value, Optional.ToNullable(minScoreThreshold), Optional.ToNullable(maxScoreThreshold), serializedAdditionalRawData);
+            return new PredictionGradesItem(gradeName, minScoreThreshold, maxScoreThreshold, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionGradesItem>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializePredictionGradesItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support reading '{options.Format}' format.");
             }
         }
 

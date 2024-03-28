@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceLifeCycle>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("deleteAfter"u8);
-            writer.WriteObjectValue(DeleteAfter);
+            writer.WriteObjectValue<DataProtectionBackupDeleteSetting>(DeleteAfter, options);
             writer.WritePropertyName("sourceDataStore"u8);
-            writer.WriteObjectValue(SourceDataStore);
+            writer.WriteObjectValue<DataStoreInfoBase>(SourceDataStore, options);
             if (Optional.IsCollectionDefined(TargetDataStoreCopySettings))
             {
                 writer.WritePropertyName("targetDataStoreCopySettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetDataStoreCopySettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TargetCopySetting>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceLifeCycle>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,19 +80,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             DataProtectionBackupDeleteSetting deleteAfter = default;
             DataStoreInfoBase sourceDataStore = default;
-            Optional<IList<TargetCopySetting>> targetDataStoreCopySettings = default;
+            IList<TargetCopySetting> targetDataStoreCopySettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deleteAfter"u8))
                 {
-                    deleteAfter = DataProtectionBackupDeleteSetting.DeserializeDataProtectionBackupDeleteSetting(property.Value);
+                    deleteAfter = DataProtectionBackupDeleteSetting.DeserializeDataProtectionBackupDeleteSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDataStore"u8))
                 {
-                    sourceDataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value);
+                    sourceDataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetDataStoreCopySettings"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<TargetCopySetting> array = new List<TargetCopySetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetCopySetting.DeserializeTargetCopySetting(item));
+                        array.Add(TargetCopySetting.DeserializeTargetCopySetting(item, options));
                     }
                     targetDataStoreCopySettings = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceLifeCycle(deleteAfter, sourceDataStore, Optional.ToList(targetDataStoreCopySettings), serializedAdditionalRawData);
+            return new SourceLifeCycle(deleteAfter, sourceDataStore, targetDataStoreCopySettings ?? new ChangeTrackingList<TargetCopySetting>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceLifeCycle>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeSourceLifeCycle(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support reading '{options.Format}' format.");
             }
         }
 

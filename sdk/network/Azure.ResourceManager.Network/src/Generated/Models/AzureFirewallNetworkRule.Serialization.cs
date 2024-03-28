@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFirewallNetworkRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFirewallNetworkRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFirewallNetworkRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFirewallNetworkRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,15 +144,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<IList<AzureFirewallNetworkRuleProtocol>> protocols = default;
-            Optional<IList<string>> sourceAddresses = default;
-            Optional<IList<string>> destinationAddresses = default;
-            Optional<IList<string>> destinationPorts = default;
-            Optional<IList<string>> destinationFqdns = default;
-            Optional<IList<string>> sourceIPGroups = default;
-            Optional<IList<string>> destinationIPGroups = default;
+            string name = default;
+            string description = default;
+            IList<AzureFirewallNetworkRuleProtocol> protocols = default;
+            IList<string> sourceAddresses = default;
+            IList<string> destinationAddresses = default;
+            IList<string> destinationPorts = default;
+            IList<string> destinationFqdns = default;
+            IList<string> sourceIPGroups = default;
+            IList<string> destinationIPGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -271,7 +271,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallNetworkRule(name.Value, description.Value, Optional.ToList(protocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(destinationFqdns), Optional.ToList(sourceIPGroups), Optional.ToList(destinationIPGroups), serializedAdditionalRawData);
+            return new AzureFirewallNetworkRule(
+                name,
+                description,
+                protocols ?? new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>(),
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                destinationAddresses ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                destinationFqdns ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                destinationIPGroups ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallNetworkRule>.Write(ModelReaderWriterOptions options)
@@ -283,7 +293,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureFirewallNetworkRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFirewallNetworkRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -299,7 +309,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAzureFirewallNetworkRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureFirewallNetworkRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFirewallNetworkRule)} does not support reading '{options.Format}' format.");
             }
         }
 

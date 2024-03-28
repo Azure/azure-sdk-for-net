@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureQueryStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCaptureQueryStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCaptureQueryStatusResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureQueryStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCaptureQueryStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCaptureQueryStatusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<DateTimeOffset> captureStartTime = default;
-            Optional<PcStatus> packetCaptureStatus = default;
-            Optional<string> stopReason = default;
-            Optional<IReadOnlyList<PcError>> packetCaptureError = default;
+            string name = default;
+            string id = default;
+            DateTimeOffset? captureStartTime = default;
+            PcStatus? packetCaptureStatus = default;
+            string stopReason = default;
+            IReadOnlyList<PcError> packetCaptureError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureQueryStatusResult(name.Value, id.Value, Optional.ToNullable(captureStartTime), Optional.ToNullable(packetCaptureStatus), stopReason.Value, Optional.ToList(packetCaptureError), serializedAdditionalRawData);
+            return new PacketCaptureQueryStatusResult(
+                name,
+                id,
+                captureStartTime,
+                packetCaptureStatus,
+                stopReason,
+                packetCaptureError ?? new ChangeTrackingList<PcError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureQueryStatusResult>.Write(ModelReaderWriterOptions options)
@@ -174,7 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PacketCaptureQueryStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCaptureQueryStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -190,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePacketCaptureQueryStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PacketCaptureQueryStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCaptureQueryStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 

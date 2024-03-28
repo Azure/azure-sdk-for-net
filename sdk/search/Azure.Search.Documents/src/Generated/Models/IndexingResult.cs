@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Status of an indexing operation for a single document. </summary>
@@ -17,11 +14,8 @@ namespace Azure.Search.Documents.Models
         /// <param name="key"> The key of a document that was in the indexing request. </param>
         /// <param name="succeeded"> A value indicating whether the indexing operation succeeded for the document identified by the key. </param>
         /// <param name="status"> The status code of the indexing operation. Possible values include: 200 for a successful update or delete, 201 for successful document creation, 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         internal IndexingResult(string key, bool succeeded, int status)
         {
-            Argument.AssertNotNull(key, nameof(key));
-
             Key = key;
             Succeeded = succeeded;
             Status = status;

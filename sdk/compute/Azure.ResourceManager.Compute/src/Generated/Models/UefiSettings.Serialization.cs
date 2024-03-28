@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UefiSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UefiSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UefiSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UefiSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UefiSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UefiSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> secureBootEnabled = default;
-            Optional<bool> vTpmEnabled = default;
+            bool? secureBootEnabled = default;
+            bool? vTpmEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UefiSettings(Optional.ToNullable(secureBootEnabled), Optional.ToNullable(vTpmEnabled), serializedAdditionalRawData);
+            return new UefiSettings(secureBootEnabled, vTpmEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UefiSettings>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UefiSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UefiSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeUefiSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UefiSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UefiSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

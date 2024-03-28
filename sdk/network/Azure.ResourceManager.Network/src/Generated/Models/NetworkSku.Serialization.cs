@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<BastionHostSkuName> name = default;
+            BastionHostSkuName? name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSku(Optional.ToNullable(name), serializedAdditionalRawData);
+            return new NetworkSku(name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSku>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSku)} does not support reading '{options.Format}' format.");
             }
         }
 

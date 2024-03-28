@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxAccountCredentialDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxAccountCredentialDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxAccountCredentialDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareCredentialDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ShareCredentialDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxAccountCredentialDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxAccountCredentialDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxAccountCredentialDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<DataAccountType> dataAccountType = default;
-            Optional<string> accountConnectionString = default;
-            Optional<IReadOnlyList<ShareCredentialDetails>> shareCredentialDetails = default;
+            string accountName = default;
+            DataAccountType? dataAccountType = default;
+            string accountConnectionString = default;
+            IReadOnlyList<ShareCredentialDetails> shareCredentialDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<ShareCredentialDetails> array = new List<ShareCredentialDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ShareCredentialDetails.DeserializeShareCredentialDetails(item));
+                        array.Add(Models.ShareCredentialDetails.DeserializeShareCredentialDetails(item, options));
                     }
                     shareCredentialDetails = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxAccountCredentialDetails(accountName.Value, Optional.ToNullable(dataAccountType), accountConnectionString.Value, Optional.ToList(shareCredentialDetails), serializedAdditionalRawData);
+            return new DataBoxAccountCredentialDetails(accountName, dataAccountType, accountConnectionString, shareCredentialDetails ?? new ChangeTrackingList<ShareCredentialDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxAccountCredentialDetails>.Write(ModelReaderWriterOptions options)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxAccountCredentialDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxAccountCredentialDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxAccountCredentialDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxAccountCredentialDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxAccountCredentialDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

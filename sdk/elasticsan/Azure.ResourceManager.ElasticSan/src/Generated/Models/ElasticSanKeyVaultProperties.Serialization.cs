@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanKeyVaultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanKeyVaultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<string> currentVersionedKeyIdentifier = default;
-            Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
-            Optional<DateTimeOffset> currentVersionedKeyExpirationTimestamp = default;
+            string keyName = default;
+            string keyVersion = default;
+            Uri keyVaultUri = default;
+            string currentVersionedKeyIdentifier = default;
+            DateTimeOffset? lastKeyRotationTimestamp = default;
+            DateTimeOffset? currentVersionedKeyExpirationTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanKeyVaultProperties(keyName.Value, keyVersion.Value, keyVaultUri.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp), Optional.ToNullable(currentVersionedKeyExpirationTimestamp), serializedAdditionalRawData);
+            return new ElasticSanKeyVaultProperties(
+                keyName,
+                keyVersion,
+                keyVaultUri,
+                currentVersionedKeyIdentifier,
+                lastKeyRotationTimestamp,
+                currentVersionedKeyExpirationTimestamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanKeyVaultProperties>.Write(ModelReaderWriterOptions options)
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanKeyVaultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         return DeserializeElasticSanKeyVaultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanKeyVaultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

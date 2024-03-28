@@ -16,7 +16,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            writer.WriteObjectValue<EndpointBase>(Endpoint);
+            writer.WritePropertyName("methodName"u8);
+            writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
@@ -33,7 +35,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             EndpointBase endpoint = default;
             string methodName = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoint"u8))
@@ -52,7 +54,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifDeviceGetRequest(methodName, apiVersion.Value, endpoint);
+            return new OnvifDeviceGetRequest(methodName, apiVersion, endpoint);
         }
     }
 }

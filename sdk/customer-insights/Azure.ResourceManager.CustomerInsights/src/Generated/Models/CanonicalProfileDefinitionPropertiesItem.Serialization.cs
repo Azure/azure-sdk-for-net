@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<CanonicalProfileDefinitionPropertiesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<CanonicalProfileDefinitionPropertiesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> profileName = default;
-            Optional<string> profilePropertyName = default;
-            Optional<int> rank = default;
-            Optional<CanonicalPropertyValueType> type = default;
-            Optional<string> value = default;
+            string profileName = default;
+            string profilePropertyName = default;
+            int? rank = default;
+            CanonicalPropertyValueType? type = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CanonicalProfileDefinitionPropertiesItem(profileName.Value, profilePropertyName.Value, Optional.ToNullable(rank), Optional.ToNullable(type), value.Value, serializedAdditionalRawData);
+            return new CanonicalProfileDefinitionPropertiesItem(
+                profileName,
+                profilePropertyName,
+                rank,
+                type,
+                value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CanonicalProfileDefinitionPropertiesItem>.Write(ModelReaderWriterOptions options)
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeCanonicalProfileDefinitionPropertiesItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support reading '{options.Format}' format.");
             }
         }
 

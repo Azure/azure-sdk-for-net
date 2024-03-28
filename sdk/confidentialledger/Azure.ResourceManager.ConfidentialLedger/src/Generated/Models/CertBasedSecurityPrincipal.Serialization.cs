@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             var format = options.Format == "W" ? ((IPersistableModel<CertBasedSecurityPrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertBasedSecurityPrincipal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertBasedSecurityPrincipal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             var format = options.Format == "W" ? ((IPersistableModel<CertBasedSecurityPrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertBasedSecurityPrincipal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertBasedSecurityPrincipal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<string> cert = default;
-            Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
+            string cert = default;
+            ConfidentialLedgerRoleName? ledgerRoleName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertBasedSecurityPrincipal(cert.Value, Optional.ToNullable(ledgerRoleName), serializedAdditionalRawData);
+            return new CertBasedSecurityPrincipal(cert, ledgerRoleName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertBasedSecurityPrincipal>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CertBasedSecurityPrincipal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertBasedSecurityPrincipal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         return DeserializeCertBasedSecurityPrincipal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertBasedSecurityPrincipal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertBasedSecurityPrincipal)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorUsage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("limit"u8);
             writer.WriteNumberValue(Limit);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue(Name);
+            writer.WriteObjectValue<FrontDoorUsageResourceName>(Name, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             FrontDoorUsageUnit unit = default;
             long currentValue = default;
             long limit = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = FrontDoorUsageResourceName.DeserializeFrontDoorUsageResourceName(property.Value);
+                    name = FrontDoorUsageResourceName.DeserializeFrontDoorUsageResourceName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorUsage(id.Value, unit, currentValue, limit, name, serializedAdditionalRawData);
+            return new FrontDoorUsage(
+                id,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorUsage>.Write(ModelReaderWriterOptions options)
@@ -133,7 +139,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeFrontDoorUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorUsage)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -6,17 +6,36 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryManagedVirtualNetworkProperties : IUtf8JsonSerializable
+    public partial class DataFactoryManagedVirtualNetworkProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryManagedVirtualNetworkProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryManagedVirtualNetworkProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFactoryManagedVirtualNetworkProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryManagedVirtualNetworkProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(VnetId))
+            {
+                writer.WritePropertyName("vNetId"u8);
+                writer.WriteStringValue(VnetId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Alias))
+            {
+                writer.WritePropertyName("alias"u8);
+                writer.WriteStringValue(Alias);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -32,14 +51,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryManagedVirtualNetworkProperties DeserializeDataFactoryManagedVirtualNetworkProperties(JsonElement element)
+        DataFactoryManagedVirtualNetworkProperties IJsonModel<DataFactoryManagedVirtualNetworkProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryManagedVirtualNetworkProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryManagedVirtualNetworkProperties(document.RootElement, options);
+        }
+
+        internal static DataFactoryManagedVirtualNetworkProperties DeserializeDataFactoryManagedVirtualNetworkProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Guid> vnetId = default;
-            Optional<string> @alias = default;
+            Guid? vnetId = default;
+            string @alias = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -61,7 +94,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryManagedVirtualNetworkProperties(Optional.ToNullable(vnetId), @alias.Value, additionalProperties);
+            return new DataFactoryManagedVirtualNetworkProperties(vnetId, @alias, additionalProperties);
         }
+
+        BinaryData IPersistableModel<DataFactoryManagedVirtualNetworkProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryManagedVirtualNetworkProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataFactoryManagedVirtualNetworkProperties IPersistableModel<DataFactoryManagedVirtualNetworkProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFactoryManagedVirtualNetworkProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryManagedVirtualNetworkProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFactoryManagedVirtualNetworkProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

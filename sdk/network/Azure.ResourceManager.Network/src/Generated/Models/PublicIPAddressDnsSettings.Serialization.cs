@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> domainNameLabel = default;
-            Optional<PublicIPAddressDnsSettingsDomainNameLabelScope> domainNameLabelScope = default;
-            Optional<string> fqdn = default;
-            Optional<string> reverseFqdn = default;
+            string domainNameLabel = default;
+            PublicIPAddressDnsSettingsDomainNameLabelScope? domainNameLabelScope = default;
+            string fqdn = default;
+            string reverseFqdn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicIPAddressDnsSettings(domainNameLabel.Value, Optional.ToNullable(domainNameLabelScope), fqdn.Value, reverseFqdn.Value, serializedAdditionalRawData);
+            return new PublicIPAddressDnsSettings(domainNameLabel, domainNameLabelScope, fqdn, reverseFqdn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublicIPAddressDnsSettings>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePublicIPAddressDnsSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

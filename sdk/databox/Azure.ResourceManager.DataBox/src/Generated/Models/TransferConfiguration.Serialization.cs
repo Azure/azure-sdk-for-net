@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransferConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(TransferFilterDetails))
             {
                 writer.WritePropertyName("transferFilterDetails"u8);
-                writer.WriteObjectValue(TransferFilterDetails);
+                writer.WriteObjectValue<TransferConfigurationTransferFilterDetails>(TransferFilterDetails, options);
             }
             if (Optional.IsDefined(TransferAllDetails))
             {
                 writer.WritePropertyName("transferAllDetails"u8);
-                writer.WriteObjectValue(TransferAllDetails);
+                writer.WriteObjectValue<TransferConfigurationTransferAllDetails>(TransferAllDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransferConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             TransferConfigurationType transferConfigurationType = default;
-            Optional<TransferConfigurationTransferFilterDetails> transferFilterDetails = default;
-            Optional<TransferConfigurationTransferAllDetails> transferAllDetails = default;
+            TransferConfigurationTransferFilterDetails transferFilterDetails = default;
+            TransferConfigurationTransferAllDetails transferAllDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transferFilterDetails = TransferConfigurationTransferFilterDetails.DeserializeTransferConfigurationTransferFilterDetails(property.Value);
+                    transferFilterDetails = TransferConfigurationTransferFilterDetails.DeserializeTransferConfigurationTransferFilterDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("transferAllDetails"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transferAllDetails = TransferConfigurationTransferAllDetails.DeserializeTransferConfigurationTransferAllDetails(property.Value);
+                    transferAllDetails = TransferConfigurationTransferAllDetails.DeserializeTransferConfigurationTransferAllDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferConfiguration(transferConfigurationType, transferFilterDetails.Value, transferAllDetails.Value, serializedAdditionalRawData);
+            return new TransferConfiguration(transferConfigurationType, transferFilterDetails, transferAllDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferConfiguration>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TransferConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeTransferConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransferConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<LatLongPairAbbreviated> topLeftPoint = default;
-            Optional<LatLongPairAbbreviated> btmRightPoint = default;
+            LatLongPairAbbreviated topLeftPoint = default;
+            LatLongPairAbbreviated btmRightPoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("topLeftPoint"u8))
@@ -41,7 +40,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new BoundingBox(topLeftPoint.Value, btmRightPoint.Value);
+            return new BoundingBox(topLeftPoint, btmRightPoint);
         }
     }
 }

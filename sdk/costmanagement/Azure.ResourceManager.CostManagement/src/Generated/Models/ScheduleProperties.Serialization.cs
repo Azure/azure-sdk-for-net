@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             ScheduleFrequency frequency = default;
-            Optional<int> hourOfDay = default;
-            Optional<IList<ScheduledActionDaysOfWeek>> daysOfWeek = default;
-            Optional<IList<ScheduledActionWeeksOfMonth>> weeksOfMonth = default;
-            Optional<int> dayOfMonth = default;
+            int? hourOfDay = default;
+            IList<ScheduledActionDaysOfWeek> daysOfWeek = default;
+            IList<ScheduledActionWeeksOfMonth> weeksOfMonth = default;
+            int? dayOfMonth = default;
             DateTimeOffset startDate = default;
             DateTimeOffset endDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduleProperties(frequency, Optional.ToNullable(hourOfDay), Optional.ToList(daysOfWeek), Optional.ToList(weeksOfMonth), Optional.ToNullable(dayOfMonth), startDate, endDate, serializedAdditionalRawData);
+            return new ScheduleProperties(
+                frequency,
+                hourOfDay,
+                daysOfWeek ?? new ChangeTrackingList<ScheduledActionDaysOfWeek>(),
+                weeksOfMonth ?? new ChangeTrackingList<ScheduledActionWeeksOfMonth>(),
+                dayOfMonth,
+                startDate,
+                endDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduleProperties>.Write(ModelReaderWriterOptions options)
@@ -190,7 +198,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +214,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeScheduleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

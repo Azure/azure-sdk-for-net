@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleCollectionAppliesToGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkManagerSecurityGroupItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkConfigurationGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Custom": return EffectiveSecurityAdminRule.DeserializeEffectiveSecurityAdminRule(element);
-                    case "Default": return EffectiveDefaultSecurityAdminRule.DeserializeEffectiveDefaultSecurityAdminRule(element);
+                    case "Custom": return EffectiveSecurityAdminRule.DeserializeEffectiveSecurityAdminRule(element, options);
+                    case "Default": return EffectiveDefaultSecurityAdminRule.DeserializeEffectiveDefaultSecurityAdminRule(element, options);
                 }
             }
-            return UnknownEffectiveBaseSecurityAdminRule.DeserializeUnknownEffectiveBaseSecurityAdminRule(element);
+            return UnknownEffectiveBaseSecurityAdminRule.DeserializeUnknownEffectiveBaseSecurityAdminRule(element, options);
         }
 
         BinaryData IPersistableModel<EffectiveBaseSecurityAdminRule>.Write(ModelReaderWriterOptions options)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeEffectiveBaseSecurityAdminRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QueryFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Or)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QueryFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                writer.WriteObjectValue<QueryComparisonExpression>(Dimensions, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                writer.WriteObjectValue<QueryComparisonExpression>(Tags, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IList<QueryFilter>> and = default;
-            Optional<IList<QueryFilter>> or = default;
-            Optional<QueryComparisonExpression> dimensions = default;
-            Optional<QueryComparisonExpression> tags = default;
+            IList<QueryFilter> and = default;
+            IList<QueryFilter> or = default;
+            QueryComparisonExpression dimensions = default;
+            QueryComparisonExpression tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<QueryFilter> array = new List<QueryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeQueryFilter(item));
+                        array.Add(DeserializeQueryFilter(item, options));
                     }
                     and = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<QueryFilter> array = new List<QueryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeQueryFilter(item));
+                        array.Add(DeserializeQueryFilter(item, options));
                     }
                     or = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    dimensions = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value);
+                    dimensions = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    tags = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value);
+                    tags = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryFilter(Optional.ToList(and), Optional.ToList(or), dimensions.Value, tags.Value, serializedAdditionalRawData);
+            return new QueryFilter(and ?? new ChangeTrackingList<QueryFilter>(), or ?? new ChangeTrackingList<QueryFilter>(), dimensions, tags, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryFilter>.Write(ModelReaderWriterOptions options)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeQueryFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

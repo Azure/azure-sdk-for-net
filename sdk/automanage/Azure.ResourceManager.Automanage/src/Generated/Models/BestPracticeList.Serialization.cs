@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Automanage.Models
             var format = options.Format == "W" ? ((IPersistableModel<BestPracticeList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BestPracticeList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BestPracticeList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomanageBestPracticeData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Automanage.Models
             var format = options.Format == "W" ? ((IPersistableModel<BestPracticeList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BestPracticeList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BestPracticeList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomanageBestPracticeData>> value = default;
+            IReadOnlyList<AutomanageBestPracticeData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     List<AutomanageBestPracticeData> array = new List<AutomanageBestPracticeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(item));
+                        array.Add(AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BestPracticeList(Optional.ToList(value), serializedAdditionalRawData);
+            return new BestPracticeList(value ?? new ChangeTrackingList<AutomanageBestPracticeData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BestPracticeList>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BestPracticeList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BestPracticeList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.Automanage.Models
                         return DeserializeBestPracticeList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BestPracticeList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BestPracticeList)} does not support reading '{options.Format}' format.");
             }
         }
 

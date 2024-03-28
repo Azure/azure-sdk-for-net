@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<UnencryptedCredentialsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnencryptedCredentialsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnencryptedCredentialsList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UnencryptedCredentials>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<UnencryptedCredentialsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnencryptedCredentialsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnencryptedCredentialsList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<UnencryptedCredentials>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<UnencryptedCredentials> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<UnencryptedCredentials> array = new List<UnencryptedCredentials>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UnencryptedCredentials.DeserializeUnencryptedCredentials(item));
+                        array.Add(UnencryptedCredentials.DeserializeUnencryptedCredentials(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnencryptedCredentialsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new UnencryptedCredentialsList(value ?? new ChangeTrackingList<UnencryptedCredentials>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnencryptedCredentialsList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UnencryptedCredentialsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnencryptedCredentialsList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeUnencryptedCredentialsList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UnencryptedCredentialsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnencryptedCredentialsList)} does not support reading '{options.Format}' format.");
             }
         }
 

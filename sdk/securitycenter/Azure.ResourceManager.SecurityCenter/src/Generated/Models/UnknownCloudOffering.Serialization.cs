@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterCloudOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterCloudOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCloudOffering(document.RootElement, options);
+            return DeserializeSecurityCenterCloudOffering(document.RootElement, options);
         }
 
         internal static UnknownCloudOffering DeserializeUnknownCloudOffering(JsonElement element, ModelReaderWriterOptions options = null)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             OfferingType offeringType = "Unknown";
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownCloudOffering(offeringType, description.Value, serializedAdditionalRawData);
+            return new UnknownCloudOffering(offeringType, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterCloudOffering>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCloudOffering(document.RootElement, options);
+                        return DeserializeSecurityCenterCloudOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support reading '{options.Format}' format.");
             }
         }
 

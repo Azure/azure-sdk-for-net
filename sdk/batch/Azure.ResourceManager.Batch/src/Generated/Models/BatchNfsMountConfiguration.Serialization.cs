@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchNfsMountConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchNfsMountConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchNfsMountConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchNfsMountConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchNfsMountConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchNfsMountConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             string source = default;
             string relativeMountPath = default;
-            Optional<string> mountOptions = default;
+            string mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchNfsMountConfiguration(source, relativeMountPath, mountOptions.Value, serializedAdditionalRawData);
+            return new BatchNfsMountConfiguration(source, relativeMountPath, mountOptions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchNfsMountConfiguration>.Write(ModelReaderWriterOptions options)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchNfsMountConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchNfsMountConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchNfsMountConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchNfsMountConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchNfsMountConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

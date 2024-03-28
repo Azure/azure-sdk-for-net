@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallCustomRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in MatchConditions)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MatchCondition>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(GroupByUserSession))
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupByUserSession)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GroupByUserSession>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallCustomRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,15 +112,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ETag> etag = default;
+            string name = default;
+            ETag? etag = default;
             int priority = default;
-            Optional<WebApplicationFirewallState> state = default;
-            Optional<ApplicationGatewayFirewallRateLimitDuration> rateLimitDuration = default;
-            Optional<int> rateLimitThreshold = default;
+            WebApplicationFirewallState? state = default;
+            ApplicationGatewayFirewallRateLimitDuration? rateLimitDuration = default;
+            int? rateLimitThreshold = default;
             WebApplicationFirewallRuleType ruleType = default;
             IList<MatchCondition> matchConditions = default;
-            Optional<IList<GroupByUserSession>> groupByUserSession = default;
+            IList<GroupByUserSession> groupByUserSession = default;
             WebApplicationFirewallAction action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<MatchCondition> array = new List<MatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchCondition.DeserializeMatchCondition(item));
+                        array.Add(MatchCondition.DeserializeMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -197,7 +196,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<GroupByUserSession> array = new List<GroupByUserSession>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.GroupByUserSession.DeserializeGroupByUserSession(item));
+                        array.Add(Models.GroupByUserSession.DeserializeGroupByUserSession(item, options));
                     }
                     groupByUserSession = array;
                     continue;
@@ -213,7 +212,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebApplicationFirewallCustomRule(name.Value, Optional.ToNullable(etag), priority, Optional.ToNullable(state), Optional.ToNullable(rateLimitDuration), Optional.ToNullable(rateLimitThreshold), ruleType, matchConditions, Optional.ToList(groupByUserSession), action, serializedAdditionalRawData);
+            return new WebApplicationFirewallCustomRule(
+                name,
+                etag,
+                priority,
+                state,
+                rateLimitDuration,
+                rateLimitThreshold,
+                ruleType,
+                matchConditions,
+                groupByUserSession ?? new ChangeTrackingList<GroupByUserSession>(),
+                action,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebApplicationFirewallCustomRule>.Write(ModelReaderWriterOptions options)
@@ -225,7 +235,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -241,7 +251,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeWebApplicationFirewallCustomRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support reading '{options.Format}' format.");
             }
         }
 

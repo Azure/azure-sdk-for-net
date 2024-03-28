@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Attestation.Models
             var format = options.Format == "W" ? ((IPersistableModel<JsonWebKeySet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 writer.WriteStartArray();
                 foreach (var item in Keys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<JsonWebKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Attestation.Models
             var format = options.Format == "W" ? ((IPersistableModel<JsonWebKeySet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<IList<JsonWebKey>> keys = default;
+            IList<JsonWebKey> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     List<JsonWebKey> array = new List<JsonWebKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonWebKey.DeserializeJsonWebKey(item));
+                        array.Add(JsonWebKey.DeserializeJsonWebKey(item, options));
                     }
                     keys = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JsonWebKeySet(Optional.ToList(keys), serializedAdditionalRawData);
+            return new JsonWebKeySet(keys ?? new ChangeTrackingList<JsonWebKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JsonWebKeySet>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Attestation.Models
                         return DeserializeJsonWebKeySet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support reading '{options.Format}' format.");
             }
         }
 

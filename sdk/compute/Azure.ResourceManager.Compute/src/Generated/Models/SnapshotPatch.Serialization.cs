@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SnapshotSku>(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsGroup);
+                writer.WriteObjectValue<EncryptionSettingsGroup>(EncryptionSettingsGroup, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<DiskEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities);
+                writer.WriteObjectValue<SupportedCapabilities>(SupportedCapabilities, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,18 +133,18 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<SnapshotSku> sku = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<int> diskSizeGB = default;
-            Optional<EncryptionSettingsGroup> encryptionSettingsGroup = default;
-            Optional<DiskEncryption> encryption = default;
-            Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<ResourceIdentifier> diskAccessId = default;
-            Optional<bool> supportsHibernation = default;
-            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<DataAccessAuthMode> dataAccessAuthMode = default;
-            Optional<SupportedCapabilities> supportedCapabilities = default;
+            IDictionary<string, string> tags = default;
+            SnapshotSku sku = default;
+            SupportedOperatingSystemType? osType = default;
+            int? diskSizeGB = default;
+            EncryptionSettingsGroup encryptionSettingsGroup = default;
+            DiskEncryption encryption = default;
+            NetworkAccessPolicy? networkAccessPolicy = default;
+            ResourceIdentifier diskAccessId = default;
+            bool? supportsHibernation = default;
+            DiskPublicNetworkAccess? publicNetworkAccess = default;
+            DataAccessAuthMode? dataAccessAuthMode = default;
+            SupportedCapabilities supportedCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = SnapshotSku.DeserializeSnapshotSku(property.Value);
+                    sku = SnapshotSku.DeserializeSnapshotSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value);
+                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value);
+                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkAccessPolicy"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value);
+                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
                             continue;
                         }
                     }
@@ -280,7 +280,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotPatch(Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(osType), Optional.ToNullable(diskSizeGB), encryptionSettingsGroup.Value, encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(dataAccessAuthMode), supportedCapabilities.Value, serializedAdditionalRawData);
+            return new SnapshotPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                osType,
+                diskSizeGB,
+                encryptionSettingsGroup,
+                encryption,
+                networkAccessPolicy,
+                diskAccessId,
+                supportsHibernation,
+                publicNetworkAccess,
+                dataAccessAuthMode,
+                supportedCapabilities,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotPatch>.Write(ModelReaderWriterOptions options)
@@ -292,7 +305,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +321,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeSnapshotPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

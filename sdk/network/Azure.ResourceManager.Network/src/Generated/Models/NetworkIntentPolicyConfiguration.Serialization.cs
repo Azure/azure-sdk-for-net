@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkIntentPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkIntentPolicyConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkIntentPolicyConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(SourceNetworkIntentPolicy))
             {
                 writer.WritePropertyName("sourceNetworkIntentPolicy"u8);
-                writer.WriteObjectValue(SourceNetworkIntentPolicy);
+                writer.WriteObjectValue<NetworkIntentPolicy>(SourceNetworkIntentPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkIntentPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkIntentPolicyConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkIntentPolicyConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> networkIntentPolicyName = default;
-            Optional<NetworkIntentPolicy> sourceNetworkIntentPolicy = default;
+            string networkIntentPolicyName = default;
+            NetworkIntentPolicy sourceNetworkIntentPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    sourceNetworkIntentPolicy = NetworkIntentPolicy.DeserializeNetworkIntentPolicy(property.Value);
+                    sourceNetworkIntentPolicy = NetworkIntentPolicy.DeserializeNetworkIntentPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkIntentPolicyConfiguration(networkIntentPolicyName.Value, sourceNetworkIntentPolicy.Value, serializedAdditionalRawData);
+            return new NetworkIntentPolicyConfiguration(networkIntentPolicyName, sourceNetworkIntentPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkIntentPolicyConfiguration>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkIntentPolicyConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkIntentPolicyConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkIntentPolicyConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkIntentPolicyConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkIntentPolicyConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

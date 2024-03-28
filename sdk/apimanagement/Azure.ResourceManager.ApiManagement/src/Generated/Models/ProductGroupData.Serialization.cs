@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<bool> builtIn = default;
-            Optional<ApiManagementGroupType> type0 = default;
-            Optional<string> externalId = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            bool? builtIn = default;
+            ApiManagementGroupType? type0 = default;
+            string externalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductGroupData(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(builtIn), Optional.ToNullable(type0), externalId.Value, serializedAdditionalRawData);
+            return new ProductGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                description,
+                builtIn,
+                type0,
+                externalId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductGroupData>.Write(ModelReaderWriterOptions options)
@@ -213,7 +223,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProductGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +239,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeProductGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProductGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

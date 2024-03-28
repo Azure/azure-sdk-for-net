@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResponseContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponseContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Representations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RepresentationContract>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ParameterContract>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResponseContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponseContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             int statusCode = default;
-            Optional<string> description = default;
-            Optional<IList<RepresentationContract>> representations = default;
-            Optional<IList<ParameterContract>> headers = default;
+            string description = default;
+            IList<RepresentationContract> representations = default;
+            IList<ParameterContract> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<RepresentationContract> array = new List<RepresentationContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RepresentationContract.DeserializeRepresentationContract(item));
+                        array.Add(RepresentationContract.DeserializeRepresentationContract(item, options));
                     }
                     representations = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ParameterContract> array = new List<ParameterContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParameterContract.DeserializeParameterContract(item));
+                        array.Add(ParameterContract.DeserializeParameterContract(item, options));
                     }
                     headers = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResponseContract(statusCode, description.Value, Optional.ToList(representations), Optional.ToList(headers), serializedAdditionalRawData);
+            return new ResponseContract(statusCode, description, representations ?? new ChangeTrackingList<RepresentationContract>(), headers ?? new ChangeTrackingList<ParameterContract>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResponseContract>.Write(ModelReaderWriterOptions options)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResponseContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponseContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeResponseContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponseContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponseContract)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
@@ -26,10 +26,16 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="StopFinishDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="stop"> The token sequence that the model terminated with. </param>
-        internal StopFinishDetails(string type, string stop) : base(type)
+        internal StopFinishDetails(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string stop) : base(type, serializedAdditionalRawData)
         {
             Stop = stop;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StopFinishDetails"/> for deserialization. </summary>
+        internal StopFinishDetails()
+        {
         }
 
         /// <summary> The token sequence that the model terminated with. </summary>

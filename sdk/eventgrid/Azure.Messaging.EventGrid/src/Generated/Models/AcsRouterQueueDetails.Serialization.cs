@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -19,9 +18,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyDictionary<string, string>> labels = default;
+            string id = default;
+            string name = default;
+            IReadOnlyDictionary<string, string> labels = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,7 +48,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterQueueDetails(id.Value, name.Value, Optional.ToDictionary(labels));
+            return new AcsRouterQueueDetails(id, name, labels ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

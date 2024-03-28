@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeKubernetesRoleNetwork)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeKubernetesRoleNetwork)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(CniConfig))
             {
                 writer.WritePropertyName("cniConfig"u8);
-                writer.WriteObjectValue(CniConfig);
+                writer.WriteObjectValue<CniConfig>(CniConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LoadBalancerConfig))
             {
                 writer.WritePropertyName("loadBalancerConfig"u8);
-                writer.WriteObjectValue(LoadBalancerConfig);
+                writer.WriteObjectValue<DataBoxEdgeLoadBalancerConfig>(LoadBalancerConfig, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeKubernetesRoleNetwork)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeKubernetesRoleNetwork)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<CniConfig> cniConfig = default;
-            Optional<DataBoxEdgeLoadBalancerConfig> loadBalancerConfig = default;
+            CniConfig cniConfig = default;
+            DataBoxEdgeLoadBalancerConfig loadBalancerConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    cniConfig = CniConfig.DeserializeCniConfig(property.Value);
+                    cniConfig = CniConfig.DeserializeCniConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("loadBalancerConfig"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    loadBalancerConfig = DataBoxEdgeLoadBalancerConfig.DeserializeDataBoxEdgeLoadBalancerConfig(property.Value);
+                    loadBalancerConfig = DataBoxEdgeLoadBalancerConfig.DeserializeDataBoxEdgeLoadBalancerConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesRoleNetwork(cniConfig.Value, loadBalancerConfig.Value, serializedAdditionalRawData);
+            return new EdgeKubernetesRoleNetwork(cniConfig, loadBalancerConfig, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesRoleNetwork>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleNetwork)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleNetwork)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeKubernetesRoleNetwork(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleNetwork)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleNetwork)} does not support reading '{options.Format}' format.");
             }
         }
 

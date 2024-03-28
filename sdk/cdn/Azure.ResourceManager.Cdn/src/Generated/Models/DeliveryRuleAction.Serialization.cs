@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeliveryRuleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeliveryRuleAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeliveryRuleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeliveryRuleAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,18 +70,18 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CacheExpiration": return DeliveryRuleCacheExpirationAction.DeserializeDeliveryRuleCacheExpirationAction(element);
-                    case "CacheKeyQueryString": return DeliveryRuleCacheKeyQueryStringAction.DeserializeDeliveryRuleCacheKeyQueryStringAction(element);
-                    case "ModifyRequestHeader": return DeliveryRuleRequestHeaderAction.DeserializeDeliveryRuleRequestHeaderAction(element);
-                    case "ModifyResponseHeader": return DeliveryRuleResponseHeaderAction.DeserializeDeliveryRuleResponseHeaderAction(element);
-                    case "OriginGroupOverride": return OriginGroupOverrideAction.DeserializeOriginGroupOverrideAction(element);
-                    case "RouteConfigurationOverride": return DeliveryRuleRouteConfigurationOverrideAction.DeserializeDeliveryRuleRouteConfigurationOverrideAction(element);
-                    case "UrlRedirect": return UriRedirectAction.DeserializeUriRedirectAction(element);
-                    case "UrlRewrite": return UriRewriteAction.DeserializeUriRewriteAction(element);
-                    case "UrlSigning": return UriSigningAction.DeserializeUriSigningAction(element);
+                    case "CacheExpiration": return DeliveryRuleCacheExpirationAction.DeserializeDeliveryRuleCacheExpirationAction(element, options);
+                    case "CacheKeyQueryString": return DeliveryRuleCacheKeyQueryStringAction.DeserializeDeliveryRuleCacheKeyQueryStringAction(element, options);
+                    case "ModifyRequestHeader": return DeliveryRuleRequestHeaderAction.DeserializeDeliveryRuleRequestHeaderAction(element, options);
+                    case "ModifyResponseHeader": return DeliveryRuleResponseHeaderAction.DeserializeDeliveryRuleResponseHeaderAction(element, options);
+                    case "OriginGroupOverride": return OriginGroupOverrideAction.DeserializeOriginGroupOverrideAction(element, options);
+                    case "RouteConfigurationOverride": return DeliveryRuleRouteConfigurationOverrideAction.DeserializeDeliveryRuleRouteConfigurationOverrideAction(element, options);
+                    case "UrlRedirect": return UriRedirectAction.DeserializeUriRedirectAction(element, options);
+                    case "UrlRewrite": return UriRewriteAction.DeserializeUriRewriteAction(element, options);
+                    case "UrlSigning": return UriSigningAction.DeserializeUriSigningAction(element, options);
                 }
             }
-            return UnknownDeliveryRuleAction.DeserializeUnknownDeliveryRuleAction(element);
+            return UnknownDeliveryRuleAction.DeserializeUnknownDeliveryRuleAction(element, options);
         }
 
         BinaryData IPersistableModel<DeliveryRuleAction>.Write(ModelReaderWriterOptions options)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeliveryRuleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeliveryRuleAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeDeliveryRuleAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeliveryRuleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeliveryRuleAction)} does not support reading '{options.Format}' format.");
             }
         }
 

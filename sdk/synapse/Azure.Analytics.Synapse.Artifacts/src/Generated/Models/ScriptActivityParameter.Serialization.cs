@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<object>(Name);
             }
             if (Optional.IsDefined(Type))
             {
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value);
+                writer.WriteObjectValue<object>(Value);
             }
             if (Optional.IsDefined(Direction))
             {
@@ -52,11 +52,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> name = default;
-            Optional<ScriptActivityParameterType> type = default;
-            Optional<object> value = default;
-            Optional<ScriptActivityParameterDirection> direction = default;
-            Optional<int> size = default;
+            object name = default;
+            ScriptActivityParameterType? type = default;
+            object value = default;
+            ScriptActivityParameterDirection? direction = default;
+            int? size = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -105,14 +105,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ScriptActivityParameter(name.Value, Optional.ToNullable(type), value.Value, Optional.ToNullable(direction), Optional.ToNullable(size));
+            return new ScriptActivityParameter(name, type, value, direction, size);
         }
 
         internal partial class ScriptActivityParameterConverter : JsonConverter<ScriptActivityParameter>
         {
             public override void Write(Utf8JsonWriter writer, ScriptActivityParameter model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ScriptActivityParameter>(model);
             }
             public override ScriptActivityParameter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

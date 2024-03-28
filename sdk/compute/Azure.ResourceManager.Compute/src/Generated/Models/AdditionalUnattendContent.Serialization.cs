@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdditionalUnattendContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdditionalUnattendContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<PassName> passName = default;
-            Optional<ComponentName> componentName = default;
-            Optional<SettingName> settingName = default;
-            Optional<string> content = default;
+            PassName? passName = default;
+            ComponentName? componentName = default;
+            SettingName? settingName = default;
+            string content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalUnattendContent(Optional.ToNullable(passName), Optional.ToNullable(componentName), Optional.ToNullable(settingName), content.Value, serializedAdditionalRawData);
+            return new AdditionalUnattendContent(passName, componentName, settingName, content, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalUnattendContent>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeAdditionalUnattendContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support reading '{options.Format}' format.");
             }
         }
 

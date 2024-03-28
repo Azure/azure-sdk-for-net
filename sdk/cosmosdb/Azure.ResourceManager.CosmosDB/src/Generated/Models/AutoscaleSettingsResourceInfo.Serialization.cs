@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingsResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AutoUpgradePolicy))
             {
                 writer.WritePropertyName("autoUpgradePolicy"u8);
-                writer.WriteObjectValue(AutoUpgradePolicy);
+                writer.WriteObjectValue<AutoUpgradePolicyResourceInfo>(AutoUpgradePolicy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TargetMaxThroughput))
             {
@@ -61,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingsResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,8 +79,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             int maxThroughput = default;
-            Optional<AutoUpgradePolicyResourceInfo> autoUpgradePolicy = default;
-            Optional<int> targetMaxThroughput = default;
+            AutoUpgradePolicyResourceInfo autoUpgradePolicy = default;
+            int? targetMaxThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    autoUpgradePolicy = AutoUpgradePolicyResourceInfo.DeserializeAutoUpgradePolicyResourceInfo(property.Value);
+                    autoUpgradePolicy = AutoUpgradePolicyResourceInfo.DeserializeAutoUpgradePolicyResourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetMaxThroughput"u8))
@@ -112,7 +114,83 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettingsResourceInfo(maxThroughput, autoUpgradePolicy.Value, Optional.ToNullable(targetMaxThroughput), serializedAdditionalRawData);
+            return new AutoscaleSettingsResourceInfo(maxThroughput, autoUpgradePolicy, targetMaxThroughput, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxThroughput), out propertyOverride);
+            builder.Append("  maxThroughput: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"{MaxThroughput}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoUpgradePolicy), out propertyOverride);
+            if (Optional.IsDefined(AutoUpgradePolicy) || hasPropertyOverride)
+            {
+                builder.Append("  autoUpgradePolicy: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, AutoUpgradePolicy, options, 2, false, "  autoUpgradePolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetMaxThroughput), out propertyOverride);
+            if (Optional.IsDefined(TargetMaxThroughput) || hasPropertyOverride)
+            {
+                builder.Append("  targetMaxThroughput: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{TargetMaxThroughput.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "AutoUpgradeThroughputPolicy":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("ThroughputPolicy", item.Value);
+                        bicepOptions.PropertyOverrides.Add(AutoUpgradePolicy, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
         }
 
         BinaryData IPersistableModel<AutoscaleSettingsResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -123,8 +201,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +220,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeAutoscaleSettingsResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCachePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementCachePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementCachePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCachePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementCachePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementCachePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> connectionString = default;
-            Optional<string> useFromLocation = default;
-            Optional<Uri> resourceId = default;
+            string description = default;
+            string connectionString = default;
+            string useFromLocation = default;
+            Uri resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementCachePatch(description.Value, connectionString.Value, useFromLocation.Value, resourceId.Value, serializedAdditionalRawData);
+            return new ApiManagementCachePatch(description, connectionString, useFromLocation, resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementCachePatch>.Write(ModelReaderWriterOptions options)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementCachePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementCachePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementCachePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementCachePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementCachePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

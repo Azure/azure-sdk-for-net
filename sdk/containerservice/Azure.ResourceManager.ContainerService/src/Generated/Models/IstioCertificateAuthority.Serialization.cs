@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioCertificateAuthority>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioCertificateAuthority)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioCertificateAuthority)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Plugin))
             {
                 writer.WritePropertyName("plugin"u8);
-                writer.WriteObjectValue(Plugin);
+                writer.WriteObjectValue<IstioPluginCertificateAuthority>(Plugin, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioCertificateAuthority>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioCertificateAuthority)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioCertificateAuthority)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IstioPluginCertificateAuthority> plugin = default;
+            IstioPluginCertificateAuthority plugin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    plugin = IstioPluginCertificateAuthority.DeserializeIstioPluginCertificateAuthority(property.Value);
+                    plugin = IstioPluginCertificateAuthority.DeserializeIstioPluginCertificateAuthority(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IstioCertificateAuthority(plugin.Value, serializedAdditionalRawData);
+            return new IstioCertificateAuthority(plugin, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IstioCertificateAuthority>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IstioCertificateAuthority)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioCertificateAuthority)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeIstioCertificateAuthority(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IstioCertificateAuthority)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioCertificateAuthority)} does not support reading '{options.Format}' format.");
             }
         }
 

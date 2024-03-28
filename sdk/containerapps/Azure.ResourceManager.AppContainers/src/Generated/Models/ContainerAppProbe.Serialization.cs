@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppProbe>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
-                writer.WriteObjectValue(HttpGet);
+                writer.WriteObjectValue<ContainerAppHttpRequestInfo>(HttpGet, options);
             }
             if (Optional.IsDefined(InitialDelaySeconds))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(TcpSocket))
             {
                 writer.WritePropertyName("tcpSocket"u8);
-                writer.WriteObjectValue(TcpSocket);
+                writer.WriteObjectValue<ContainerAppTcpSocketRequestInfo>(TcpSocket, options);
             }
             if (Optional.IsDefined(TerminationGracePeriodSeconds))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppProbe>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> failureThreshold = default;
-            Optional<ContainerAppHttpRequestInfo> httpGet = default;
-            Optional<int> initialDelaySeconds = default;
-            Optional<int> periodSeconds = default;
-            Optional<int> successThreshold = default;
-            Optional<ContainerAppTcpSocketRequestInfo> tcpSocket = default;
-            Optional<long> terminationGracePeriodSeconds = default;
-            Optional<int> timeoutSeconds = default;
-            Optional<ContainerAppProbeType> type = default;
+            int? failureThreshold = default;
+            ContainerAppHttpRequestInfo httpGet = default;
+            int? initialDelaySeconds = default;
+            int? periodSeconds = default;
+            int? successThreshold = default;
+            ContainerAppTcpSocketRequestInfo tcpSocket = default;
+            long? terminationGracePeriodSeconds = default;
+            int? timeoutSeconds = default;
+            ContainerAppProbeType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    httpGet = ContainerAppHttpRequestInfo.DeserializeContainerAppHttpRequestInfo(property.Value);
+                    httpGet = ContainerAppHttpRequestInfo.DeserializeContainerAppHttpRequestInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("initialDelaySeconds"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    tcpSocket = ContainerAppTcpSocketRequestInfo.DeserializeContainerAppTcpSocketRequestInfo(property.Value);
+                    tcpSocket = ContainerAppTcpSocketRequestInfo.DeserializeContainerAppTcpSocketRequestInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("terminationGracePeriodSeconds"u8))
@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppProbe(Optional.ToNullable(failureThreshold), httpGet.Value, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(successThreshold), tcpSocket.Value, Optional.ToNullable(terminationGracePeriodSeconds), Optional.ToNullable(timeoutSeconds), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new ContainerAppProbe(
+                failureThreshold,
+                httpGet,
+                initialDelaySeconds,
+                periodSeconds,
+                successThreshold,
+                tcpSocket,
+                terminationGracePeriodSeconds,
+                timeoutSeconds,
+                type,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppProbe>.Write(ModelReaderWriterOptions options)
@@ -221,7 +231,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +247,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppProbe(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support reading '{options.Format}' format.");
             }
         }
 

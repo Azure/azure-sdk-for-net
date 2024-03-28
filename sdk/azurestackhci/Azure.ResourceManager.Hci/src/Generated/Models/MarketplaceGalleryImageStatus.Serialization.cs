@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceGalleryImageStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
-                writer.WriteObjectValue(ProvisioningStatus);
+                writer.WriteObjectValue<MarketplaceGalleryImageStatusProvisioningStatus>(ProvisioningStatus, options);
             }
             if (Optional.IsDefined(DownloadStatus))
             {
                 writer.WritePropertyName("downloadStatus"u8);
-                writer.WriteObjectValue(DownloadStatus);
+                writer.WriteObjectValue<MarketplaceGalleryImageStatusDownloadStatus>(DownloadStatus, options);
             }
             if (Optional.IsDefined(ProgressPercentage))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceGalleryImageStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<MarketplaceGalleryImageStatusProvisioningStatus> provisioningStatus = default;
-            Optional<MarketplaceGalleryImageStatusDownloadStatus> downloadStatus = default;
-            Optional<long> progressPercentage = default;
+            string errorCode = default;
+            string errorMessage = default;
+            MarketplaceGalleryImageStatusProvisioningStatus provisioningStatus = default;
+            MarketplaceGalleryImageStatusDownloadStatus downloadStatus = default;
+            long? progressPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = MarketplaceGalleryImageStatusProvisioningStatus.DeserializeMarketplaceGalleryImageStatusProvisioningStatus(property.Value);
+                    provisioningStatus = MarketplaceGalleryImageStatusProvisioningStatus.DeserializeMarketplaceGalleryImageStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("downloadStatus"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    downloadStatus = MarketplaceGalleryImageStatusDownloadStatus.DeserializeMarketplaceGalleryImageStatusDownloadStatus(property.Value);
+                    downloadStatus = MarketplaceGalleryImageStatusDownloadStatus.DeserializeMarketplaceGalleryImageStatusDownloadStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("progressPercentage"u8))
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceGalleryImageStatus(errorCode.Value, errorMessage.Value, provisioningStatus.Value, downloadStatus.Value, Optional.ToNullable(progressPercentage), serializedAdditionalRawData);
+            return new MarketplaceGalleryImageStatus(
+                errorCode,
+                errorMessage,
+                provisioningStatus,
+                downloadStatus,
+                progressPercentage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceGalleryImageStatus>.Write(ModelReaderWriterOptions options)
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeMarketplaceGalleryImageStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

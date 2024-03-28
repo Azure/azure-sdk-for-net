@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.AppComplianceAutomation;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
@@ -26,7 +25,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="AppComplianceAutomation.ReportResourceData"/> instance for mocking. </returns>
         public static ReportResourceData ReportResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReportProperties properties = null)
         {
-            return new ReportResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new ReportResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ReportProperties"/>. </summary>
@@ -52,7 +57,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             subscriptions ??= new List<string>();
             resources ??= new List<ResourceMetadata>();
 
-            return new ReportProperties(id, status, tenantId, reportName, offerGuid, timeZone, triggerOn, nextTriggerOn, lastTriggerOn, subscriptions?.ToList(), resources?.ToList(), complianceStatusM365 != null ? new ReportComplianceStatus(complianceStatusM365, serializedAdditionalRawData: null) : null, provisioningState, serializedAdditionalRawData: null);
+            return new ReportProperties(
+                id,
+                status,
+                tenantId,
+                reportName,
+                offerGuid,
+                timeZone,
+                triggerOn,
+                nextTriggerOn,
+                lastTriggerOn,
+                subscriptions?.ToList(),
+                resources?.ToList(),
+                complianceStatusM365 != null ? new ReportComplianceStatus(complianceStatusM365, serializedAdditionalRawData: null) : null,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OverviewStatus"/>. </summary>
@@ -74,7 +93,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="AppComplianceAutomation.SnapshotResourceData"/> instance for mocking. </returns>
         public static SnapshotResourceData SnapshotResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SnapshotProperties properties = null)
         {
-            return new SnapshotResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new SnapshotResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SnapshotProperties"/>. </summary>
@@ -90,7 +115,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             complianceResults ??= new List<ComplianceResult>();
 
-            return new SnapshotProperties(id, snapshotName, createdOn, provisioningState, reportProperties, reportSystemData, complianceResults?.ToList(), serializedAdditionalRawData: null);
+            return new SnapshotProperties(
+                id,
+                snapshotName,
+                createdOn,
+                provisioningState,
+                reportProperties,
+                reportSystemData,
+                complianceResults?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComplianceResult"/>. </summary>
@@ -144,7 +177,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             assessments ??= new List<Assessment>();
 
-            return new Control(controlId, controlShortName, controlFullName, controlType, controlDescription, controlDescriptionHyperLink, controlStatus, assessments?.ToList(), serializedAdditionalRawData: null);
+            return new Control(
+                controlId,
+                controlShortName,
+                controlFullName,
+                controlType,
+                controlDescription,
+                controlDescriptionHyperLink,
+                controlStatus,
+                assessments?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Assessment"/>. </summary>
@@ -160,7 +202,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             resourceList ??= new List<AssessmentResourceContent>();
 
-            return new Assessment(name, severity, description, remediation, isPass, policyId, resourceList?.ToList(), serializedAdditionalRawData: null);
+            return new Assessment(
+                name,
+                severity,
+                description,
+                remediation,
+                isPass,
+                policyId,
+                resourceList?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssessmentResourceContent"/>. </summary>
@@ -226,7 +276,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.ComplianceReportItem"/> instance for mocking. </returns>
         public static ComplianceReportItem ComplianceReportItem(string categoryName = null, string controlId = null, string controlName = null, ControlType? controlType = null, ComplianceState? complianceState = null, string policyId = null, string policyDisplayName = null, string policyDescription = null, string subscriptionId = null, string resourceGroup = null, string resourceType = null, string resourceId = null, string statusChangeDate = null)
         {
-            return new ComplianceReportItem(categoryName, controlId, controlName, controlType, complianceState, policyId, policyDisplayName, policyDescription, subscriptionId, resourceGroup, resourceType, resourceId, statusChangeDate, serializedAdditionalRawData: null);
+            return new ComplianceReportItem(
+                categoryName,
+                controlId,
+                controlName,
+                controlType,
+                complianceState,
+                policyId,
+                policyDisplayName,
+                policyDescription,
+                subscriptionId,
+                resourceGroup,
+                resourceType,
+                resourceId,
+                statusChangeDate,
+                serializedAdditionalRawData: null);
         }
     }
 }

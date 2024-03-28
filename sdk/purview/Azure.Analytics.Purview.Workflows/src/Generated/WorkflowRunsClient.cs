@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -139,15 +138,15 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("orderby", orderby, true);
             }
-            if (runStatuses != null && Optional.IsCollectionDefined(runStatuses))
+            if (runStatuses != null && !(runStatuses is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("runStatuses", runStatuses, ",", true);
             }
-            if (workflowIds != null && Optional.IsCollectionDefined(workflowIds))
+            if (workflowIds != null && !(workflowIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("workflowIds", workflowIds, ",", true);
             }
-            if (requestors != null && Optional.IsCollectionDefined(requestors))
+            if (requestors != null && !(requestors is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 uri.AppendQueryDelimited("requestors", requestors, ",", true);
             }

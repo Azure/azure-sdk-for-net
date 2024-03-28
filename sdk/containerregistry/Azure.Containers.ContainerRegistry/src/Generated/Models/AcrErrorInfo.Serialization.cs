@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -18,9 +17,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<object> detail = default;
+            string code = default;
+            string message = default;
+            object detail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -43,7 +42,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new AcrErrorInfo(code.Value, message.Value, detail.Value);
+            return new AcrErrorInfo(code, message, detail);
         }
     }
 }

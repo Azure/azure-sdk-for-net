@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<PriceSheetResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PriceSheetResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PriceSheetResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Pricesheets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PriceSheetProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Download))
             {
                 writer.WritePropertyName("download"u8);
-                writer.WriteObjectValue(Download);
+                writer.WriteObjectValue<ConsumptionMeterDetails>(Download, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<PriceSheetResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PriceSheetResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PriceSheetResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,15 +124,15 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<PriceSheetProperties>> pricesheets = default;
-            Optional<string> nextLink = default;
-            Optional<ConsumptionMeterDetails> download = default;
+            SystemData systemData = default;
+            IReadOnlyList<PriceSheetProperties> pricesheets = default;
+            string nextLink = default;
+            ConsumptionMeterDetails download = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +202,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<PriceSheetProperties> array = new List<PriceSheetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PriceSheetProperties.DeserializePriceSheetProperties(item));
+                                array.Add(PriceSheetProperties.DeserializePriceSheetProperties(item, options));
                             }
                             pricesheets = array;
                             continue;
@@ -219,7 +218,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            download = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property0.Value);
+                            download = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property0.Value, options);
                             continue;
                         }
                     }
@@ -231,7 +230,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PriceSheetResult(id, name, type, systemData.Value, Optional.ToList(pricesheets), nextLink.Value, download.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new PriceSheetResult(
+                id,
+                name,
+                type,
+                systemData,
+                pricesheets ?? new ChangeTrackingList<PriceSheetProperties>(),
+                nextLink,
+                download,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PriceSheetResult>.Write(ModelReaderWriterOptions options)
@@ -243,7 +252,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PriceSheetResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PriceSheetResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +268,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializePriceSheetResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PriceSheetResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PriceSheetResult)} does not support reading '{options.Format}' format.");
             }
         }
 

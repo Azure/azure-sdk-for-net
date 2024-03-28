@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<HopLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HopLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HopLink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectivityIssueInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<HopLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HopLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HopLink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> nextHopId = default;
-            Optional<string> linkType = default;
-            Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
-            Optional<IReadOnlyDictionary<string, string>> context = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<long> roundTripTimeMin = default;
-            Optional<long> roundTripTimeAvg = default;
-            Optional<long> roundTripTimeMax = default;
+            string nextHopId = default;
+            string linkType = default;
+            IReadOnlyList<ConnectivityIssueInfo> issues = default;
+            IReadOnlyDictionary<string, string> context = default;
+            ResourceIdentifier resourceId = default;
+            long? roundTripTimeMin = default;
+            long? roundTripTimeAvg = default;
+            long? roundTripTimeMax = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectivityIssueInfo> array = new List<ConnectivityIssueInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item));
+                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item, options));
                     }
                     issues = array;
                     continue;
@@ -222,7 +222,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HopLink(nextHopId.Value, linkType.Value, Optional.ToList(issues), Optional.ToDictionary(context), resourceId.Value, Optional.ToNullable(roundTripTimeMin), Optional.ToNullable(roundTripTimeAvg), Optional.ToNullable(roundTripTimeMax), serializedAdditionalRawData);
+            return new HopLink(
+                nextHopId,
+                linkType,
+                issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(),
+                context ?? new ChangeTrackingDictionary<string, string>(),
+                resourceId,
+                roundTripTimeMin,
+                roundTripTimeAvg,
+                roundTripTimeMax,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HopLink>.Write(ModelReaderWriterOptions options)
@@ -234,7 +243,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HopLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HopLink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -250,7 +259,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeHopLink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HopLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HopLink)} does not support reading '{options.Format}' format.");
             }
         }
 

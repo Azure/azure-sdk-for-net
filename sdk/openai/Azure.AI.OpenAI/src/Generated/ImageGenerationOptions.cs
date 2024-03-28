@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
     /// <summary> Represents the request data used to generate images. </summary>
     public partial class ImageGenerationOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ImageGenerationOptions"/>. </summary>
         /// <param name="prompt"> A description of the desired images. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
@@ -49,7 +81,8 @@ namespace Azure.AI.OpenAI
         /// Only configurable with dall-e-3 models.
         /// </param>
         /// <param name="user"> A unique identifier representing your end-user, which can help to monitor and detect abuse. </param>
-        internal ImageGenerationOptions(string deploymentName, string prompt, int? imageCount, ImageSize? size, ImageGenerationResponseFormat? responseFormat, ImageGenerationQuality? quality, ImageGenerationStyle? style, string user)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageGenerationOptions(string deploymentName, string prompt, int? imageCount, ImageSize? size, ImageGenerationResponseFormat? responseFormat, ImageGenerationQuality? quality, ImageGenerationStyle? style, string user, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeploymentName = deploymentName;
             Prompt = prompt;
@@ -59,6 +92,7 @@ namespace Azure.AI.OpenAI
             Quality = quality;
             Style = style;
             User = user;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

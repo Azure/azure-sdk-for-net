@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlMITaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToTargetSqlMITaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlMITaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlMITaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToTargetSqlMITaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlMITaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServerBrandVersion = default;
-            Optional<IReadOnlyList<string>> logins = default;
-            Optional<IReadOnlyList<string>> agentJobs = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            string id = default;
+            string targetServerVersion = default;
+            string targetServerBrandVersion = default;
+            IReadOnlyList<string> logins = default;
+            IReadOnlyList<string> agentJobs = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -182,7 +182,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToTargetSqlMITaskOutput(id.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(logins), Optional.ToList(agentJobs), Optional.ToList(validationErrors), serializedAdditionalRawData);
+            return new ConnectToTargetSqlMITaskOutput(
+                id,
+                targetServerVersion,
+                targetServerBrandVersion,
+                logins ?? new ChangeTrackingList<string>(),
+                agentJobs ?? new ChangeTrackingList<string>(),
+                validationErrors ?? new ChangeTrackingList<ReportableException>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToTargetSqlMITaskOutput>.Write(ModelReaderWriterOptions options)
@@ -194,7 +201,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetSqlMITaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToTargetSqlMITaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -210,7 +217,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectToTargetSqlMITaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetSqlMITaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToTargetSqlMITaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

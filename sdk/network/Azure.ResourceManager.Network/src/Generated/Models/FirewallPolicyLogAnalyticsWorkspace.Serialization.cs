@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyLogAnalyticsWorkspace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsWorkspace)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsWorkspace)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyLogAnalyticsWorkspace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsWorkspace)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsWorkspace)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> region = default;
-            Optional<WritableSubResource> workspaceId = default;
+            string region = default;
+            WritableSubResource workspaceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyLogAnalyticsWorkspace(region.Value, workspaceId, serializedAdditionalRawData);
+            return new FirewallPolicyLogAnalyticsWorkspace(region, workspaceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyLogAnalyticsWorkspace>.Write(ModelReaderWriterOptions options)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsWorkspace)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsWorkspace)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFirewallPolicyLogAnalyticsWorkspace(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsWorkspace)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsWorkspace)} does not support reading '{options.Format}' format.");
             }
         }
 

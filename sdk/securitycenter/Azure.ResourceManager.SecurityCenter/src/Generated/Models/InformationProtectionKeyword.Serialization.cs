@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> pattern = default;
-            Optional<bool> custom = default;
-            Optional<bool> canBeNumeric = default;
-            Optional<bool> excluded = default;
+            string pattern = default;
+            bool? custom = default;
+            bool? canBeNumeric = default;
+            bool? excluded = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InformationProtectionKeyword(pattern.Value, Optional.ToNullable(custom), Optional.ToNullable(canBeNumeric), Optional.ToNullable(excluded), serializedAdditionalRawData);
+            return new InformationProtectionKeyword(pattern, custom, canBeNumeric, excluded, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InformationProtectionKeyword>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeInformationProtectionKeyword(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support reading '{options.Format}' format.");
             }
         }
 

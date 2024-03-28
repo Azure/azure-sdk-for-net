@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastDataset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,20 +34,20 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<ForecastDatasetConfiguration>(Configuration, options);
             }
             writer.WritePropertyName("aggregation"u8);
             writer.WriteStartObject();
             foreach (var item in Aggregation)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<ForecastAggregation>(item.Value, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<ForecastFilter>(Filter, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastDataset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<GranularityType> granularity = default;
-            Optional<ForecastDatasetConfiguration> configuration = default;
+            GranularityType? granularity = default;
+            ForecastDatasetConfiguration configuration = default;
             IDictionary<string, ForecastAggregation> aggregation = default;
-            Optional<ForecastFilter> filter = default;
+            ForecastFilter filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = ForecastDatasetConfiguration.DeserializeForecastDatasetConfiguration(property.Value);
+                    configuration = ForecastDatasetConfiguration.DeserializeForecastDatasetConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aggregation"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     Dictionary<string, ForecastAggregation> dictionary = new Dictionary<string, ForecastAggregation>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ForecastAggregation.DeserializeForecastAggregation(property0.Value));
+                        dictionary.Add(property0.Name, ForecastAggregation.DeserializeForecastAggregation(property0.Value, options));
                     }
                     aggregation = dictionary;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    filter = ForecastFilter.DeserializeForecastFilter(property.Value);
+                    filter = ForecastFilter.DeserializeForecastFilter(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastDataset(Optional.ToNullable(granularity), configuration.Value, aggregation, filter.Value, serializedAdditionalRawData);
+            return new ForecastDataset(granularity, configuration, aggregation, filter, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastDataset>.Write(ModelReaderWriterOptions options)
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ForecastDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastDataset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeForecastDataset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ForecastDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastDataset)} does not support reading '{options.Format}' format.");
             }
         }
 

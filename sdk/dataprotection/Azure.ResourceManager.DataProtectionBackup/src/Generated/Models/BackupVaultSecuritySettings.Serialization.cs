@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupVaultSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(SoftDeleteSettings))
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
-                writer.WriteObjectValue(SoftDeleteSettings);
+                writer.WriteObjectValue<BackupVaultSoftDeleteSettings>(SoftDeleteSettings, options);
             }
             if (Optional.IsDefined(ImmutabilitySettings))
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
-                writer.WriteObjectValue(ImmutabilitySettings);
+                writer.WriteObjectValue<ImmutabilitySettings>(ImmutabilitySettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupVaultSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<BackupVaultSoftDeleteSettings> softDeleteSettings = default;
-            Optional<ImmutabilitySettings> immutabilitySettings = default;
+            BackupVaultSoftDeleteSettings softDeleteSettings = default;
+            ImmutabilitySettings immutabilitySettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    softDeleteSettings = BackupVaultSoftDeleteSettings.DeserializeBackupVaultSoftDeleteSettings(property.Value);
+                    softDeleteSettings = BackupVaultSoftDeleteSettings.DeserializeBackupVaultSoftDeleteSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("immutabilitySettings"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value);
+                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupVaultSecuritySettings(softDeleteSettings.Value, immutabilitySettings.Value, serializedAdditionalRawData);
+            return new BackupVaultSecuritySettings(softDeleteSettings, immutabilitySettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupVaultSecuritySettings>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupVaultSecuritySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

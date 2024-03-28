@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Maintenance;
 using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
@@ -1021,7 +1018,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1059,7 +1056,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1093,7 +1090,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1127,7 +1124,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1535,7 +1532,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdatesByParent", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MaintenanceUpdate.DeserializeMaintenanceUpdate(e), UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdatesByParent", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1573,7 +1570,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdatesByParent", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MaintenanceUpdate.DeserializeMaintenanceUpdate(e), UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdatesByParent", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1607,7 +1604,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MaintenanceUpdate.DeserializeMaintenanceUpdate(e), UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1641,7 +1638,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MaintenanceUpdate.DeserializeMaintenanceUpdate(e), UpdatesClientDiagnostics, Pipeline, "MockableMaintenanceResourceGroupResource.GetUpdates", "value", null, cancellationToken);
         }
     }
 }

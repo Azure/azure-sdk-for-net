@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleOverride)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleOverride)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ruleId = default;
-            Optional<ManagedRuleEnabledState> state = default;
-            Optional<RuleMatchActionType> action = default;
+            ManagedRuleEnabledState? state = default;
+            RuleMatchActionType? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleOverride(ruleId, Optional.ToNullable(state), Optional.ToNullable(action), serializedAdditionalRawData);
+            return new ManagedRuleOverride(ruleId, state, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleOverride>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleOverride)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeManagedRuleOverride(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleOverride)} does not support reading '{options.Format}' format.");
             }
         }
 

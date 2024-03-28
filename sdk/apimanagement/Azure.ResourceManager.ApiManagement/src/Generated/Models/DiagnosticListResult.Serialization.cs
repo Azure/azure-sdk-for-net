@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiagnosticContractData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,9 +84,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DiagnosticContractData>> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DiagnosticContractData> value = default;
+            long? count = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<DiagnosticContractData> array = new List<DiagnosticContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticContractData.DeserializeDiagnosticContractData(item));
+                        array.Add(DiagnosticContractData.DeserializeDiagnosticContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new DiagnosticListResult(value ?? new ChangeTrackingList<DiagnosticContractData>(), count, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticListResult>.Write(ModelReaderWriterOptions options)
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeDiagnosticListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceUploadDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceUploadDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceUploadDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceUploadDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceUploadDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceUploadDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Uri> uploadUrl = default;
-            Optional<string> relativePath = default;
+            Uri uploadUrl = default;
+            string relativePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceUploadDefinition(uploadUrl.Value, relativePath.Value, serializedAdditionalRawData);
+            return new SourceUploadDefinition(uploadUrl, relativePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceUploadDefinition>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SourceUploadDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceUploadDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeSourceUploadDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceUploadDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceUploadDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

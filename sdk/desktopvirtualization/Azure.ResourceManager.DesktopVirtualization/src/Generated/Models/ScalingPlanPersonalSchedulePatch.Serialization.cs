@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPersonalSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteObjectValue(RampUpStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(RampUpStartTime, options);
             }
             if (Optional.IsDefined(RampUpAutoStartHosts))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteObjectValue(PeakStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(PeakStartTime, options);
             }
             if (Optional.IsDefined(PeakStartVmOnConnect))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteObjectValue(RampDownStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(RampDownStartTime, options);
             }
             if (Optional.IsDefined(RampDownStartVmOnConnect))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteObjectValue(OffPeakStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(OffPeakStartTime, options);
             }
             if (Optional.IsDefined(OffPeakStartVmOnConnect))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPersonalSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -202,32 +202,32 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IList<DesktopVirtualizationDayOfWeek>> daysOfWeek = default;
-            Optional<ScalingActionTime> rampUpStartTime = default;
-            Optional<StartupBehavior> rampUpAutoStartHosts = default;
-            Optional<SetStartVmOnConnect> rampUpStartVmOnConnect = default;
-            Optional<SessionHandlingOperation> rampUpActionOnDisconnect = default;
-            Optional<int> rampUpMinutesToWaitOnDisconnect = default;
-            Optional<SessionHandlingOperation> rampUpActionOnLogoff = default;
-            Optional<int> rampUpMinutesToWaitOnLogoff = default;
-            Optional<ScalingActionTime> peakStartTime = default;
-            Optional<SetStartVmOnConnect> peakStartVmOnConnect = default;
-            Optional<SessionHandlingOperation> peakActionOnDisconnect = default;
-            Optional<int> peakMinutesToWaitOnDisconnect = default;
-            Optional<SessionHandlingOperation> peakActionOnLogoff = default;
-            Optional<int> peakMinutesToWaitOnLogoff = default;
-            Optional<ScalingActionTime> rampDownStartTime = default;
-            Optional<SetStartVmOnConnect> rampDownStartVmOnConnect = default;
-            Optional<SessionHandlingOperation> rampDownActionOnDisconnect = default;
-            Optional<int> rampDownMinutesToWaitOnDisconnect = default;
-            Optional<SessionHandlingOperation> rampDownActionOnLogoff = default;
-            Optional<int> rampDownMinutesToWaitOnLogoff = default;
-            Optional<ScalingActionTime> offPeakStartTime = default;
-            Optional<SetStartVmOnConnect> offPeakStartVmOnConnect = default;
-            Optional<SessionHandlingOperation> offPeakActionOnDisconnect = default;
-            Optional<int> offPeakMinutesToWaitOnDisconnect = default;
-            Optional<SessionHandlingOperation> offPeakActionOnLogoff = default;
-            Optional<int> offPeakMinutesToWaitOnLogoff = default;
+            IList<DesktopVirtualizationDayOfWeek> daysOfWeek = default;
+            ScalingActionTime rampUpStartTime = default;
+            StartupBehavior? rampUpAutoStartHosts = default;
+            SetStartVmOnConnect? rampUpStartVmOnConnect = default;
+            SessionHandlingOperation? rampUpActionOnDisconnect = default;
+            int? rampUpMinutesToWaitOnDisconnect = default;
+            SessionHandlingOperation? rampUpActionOnLogoff = default;
+            int? rampUpMinutesToWaitOnLogoff = default;
+            ScalingActionTime peakStartTime = default;
+            SetStartVmOnConnect? peakStartVmOnConnect = default;
+            SessionHandlingOperation? peakActionOnDisconnect = default;
+            int? peakMinutesToWaitOnDisconnect = default;
+            SessionHandlingOperation? peakActionOnLogoff = default;
+            int? peakMinutesToWaitOnLogoff = default;
+            ScalingActionTime rampDownStartTime = default;
+            SetStartVmOnConnect? rampDownStartVmOnConnect = default;
+            SessionHandlingOperation? rampDownActionOnDisconnect = default;
+            int? rampDownMinutesToWaitOnDisconnect = default;
+            SessionHandlingOperation? rampDownActionOnLogoff = default;
+            int? rampDownMinutesToWaitOnLogoff = default;
+            ScalingActionTime offPeakStartTime = default;
+            SetStartVmOnConnect? offPeakStartVmOnConnect = default;
+            SessionHandlingOperation? offPeakActionOnDisconnect = default;
+            int? offPeakMinutesToWaitOnDisconnect = default;
+            SessionHandlingOperation? offPeakActionOnLogoff = default;
+            int? offPeakMinutesToWaitOnLogoff = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rampUpAutoStartHosts"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peakStartVMOnConnect"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rampDownStartVMOnConnect"u8))
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("offPeakStartVMOnConnect"u8))
@@ -489,7 +489,34 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingPlanPersonalSchedulePatch(Optional.ToList(daysOfWeek), rampUpStartTime.Value, Optional.ToNullable(rampUpAutoStartHosts), Optional.ToNullable(rampUpStartVmOnConnect), Optional.ToNullable(rampUpActionOnDisconnect), Optional.ToNullable(rampUpMinutesToWaitOnDisconnect), Optional.ToNullable(rampUpActionOnLogoff), Optional.ToNullable(rampUpMinutesToWaitOnLogoff), peakStartTime.Value, Optional.ToNullable(peakStartVmOnConnect), Optional.ToNullable(peakActionOnDisconnect), Optional.ToNullable(peakMinutesToWaitOnDisconnect), Optional.ToNullable(peakActionOnLogoff), Optional.ToNullable(peakMinutesToWaitOnLogoff), rampDownStartTime.Value, Optional.ToNullable(rampDownStartVmOnConnect), Optional.ToNullable(rampDownActionOnDisconnect), Optional.ToNullable(rampDownMinutesToWaitOnDisconnect), Optional.ToNullable(rampDownActionOnLogoff), Optional.ToNullable(rampDownMinutesToWaitOnLogoff), offPeakStartTime.Value, Optional.ToNullable(offPeakStartVmOnConnect), Optional.ToNullable(offPeakActionOnDisconnect), Optional.ToNullable(offPeakMinutesToWaitOnDisconnect), Optional.ToNullable(offPeakActionOnLogoff), Optional.ToNullable(offPeakMinutesToWaitOnLogoff), serializedAdditionalRawData);
+            return new ScalingPlanPersonalSchedulePatch(
+                daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>(),
+                rampUpStartTime,
+                rampUpAutoStartHosts,
+                rampUpStartVmOnConnect,
+                rampUpActionOnDisconnect,
+                rampUpMinutesToWaitOnDisconnect,
+                rampUpActionOnLogoff,
+                rampUpMinutesToWaitOnLogoff,
+                peakStartTime,
+                peakStartVmOnConnect,
+                peakActionOnDisconnect,
+                peakMinutesToWaitOnDisconnect,
+                peakActionOnLogoff,
+                peakMinutesToWaitOnLogoff,
+                rampDownStartTime,
+                rampDownStartVmOnConnect,
+                rampDownActionOnDisconnect,
+                rampDownMinutesToWaitOnDisconnect,
+                rampDownActionOnLogoff,
+                rampDownMinutesToWaitOnLogoff,
+                offPeakStartTime,
+                offPeakStartVmOnConnect,
+                offPeakActionOnDisconnect,
+                offPeakMinutesToWaitOnDisconnect,
+                offPeakActionOnLogoff,
+                offPeakMinutesToWaitOnLogoff,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingPlanPersonalSchedulePatch>.Write(ModelReaderWriterOptions options)
@@ -501,7 +528,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -517,7 +544,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeScalingPlanPersonalSchedulePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

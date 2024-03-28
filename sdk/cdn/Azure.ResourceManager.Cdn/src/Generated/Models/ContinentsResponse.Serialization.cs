@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContinentsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContinentsResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContinentsResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Continents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContinentsResponseContinentsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in CountryOrRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContinentsResponseCountryOrRegionsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContinentsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContinentsResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContinentsResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContinentsResponseContinentsItem>> continents = default;
-            Optional<IReadOnlyList<ContinentsResponseCountryOrRegionsItem>> countryOrRegions = default;
+            IReadOnlyList<ContinentsResponseContinentsItem> continents = default;
+            IReadOnlyList<ContinentsResponseCountryOrRegionsItem> countryOrRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ContinentsResponseContinentsItem> array = new List<ContinentsResponseContinentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContinentsResponseContinentsItem.DeserializeContinentsResponseContinentsItem(item));
+                        array.Add(ContinentsResponseContinentsItem.DeserializeContinentsResponseContinentsItem(item, options));
                     }
                     continents = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ContinentsResponseCountryOrRegionsItem> array = new List<ContinentsResponseCountryOrRegionsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContinentsResponseCountryOrRegionsItem.DeserializeContinentsResponseCountryOrRegionsItem(item));
+                        array.Add(ContinentsResponseCountryOrRegionsItem.DeserializeContinentsResponseCountryOrRegionsItem(item, options));
                     }
                     countryOrRegions = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContinentsResponse(Optional.ToList(continents), Optional.ToList(countryOrRegions), serializedAdditionalRawData);
+            return new ContinentsResponse(continents ?? new ChangeTrackingList<ContinentsResponseContinentsItem>(), countryOrRegions ?? new ChangeTrackingList<ContinentsResponseCountryOrRegionsItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContinentsResponse>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContinentsResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContinentsResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeContinentsResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContinentsResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContinentsResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

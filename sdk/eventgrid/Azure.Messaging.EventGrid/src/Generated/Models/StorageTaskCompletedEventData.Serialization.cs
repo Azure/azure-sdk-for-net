@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,11 +20,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<StorageTaskCompletedStatus> status = default;
-            Optional<DateTimeOffset> completedDateTime = default;
-            Optional<string> taskExecutionId = default;
-            Optional<string> taskName = default;
-            Optional<Uri> summaryReportBlobUrl = default;
+            StorageTaskCompletedStatus? status = default;
+            DateTimeOffset? completedDateTime = default;
+            string taskExecutionId = default;
+            string taskName = default;
+            Uri summaryReportBlobUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -66,7 +65,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageTaskCompletedEventData(Optional.ToNullable(status), Optional.ToNullable(completedDateTime), taskExecutionId.Value, taskName.Value, summaryReportBlobUrl.Value);
+            return new StorageTaskCompletedEventData(status, completedDateTime, taskExecutionId, taskName, summaryReportBlobUrl);
         }
 
         internal partial class StorageTaskCompletedEventDataConverter : JsonConverter<StorageTaskCompletedEventData>

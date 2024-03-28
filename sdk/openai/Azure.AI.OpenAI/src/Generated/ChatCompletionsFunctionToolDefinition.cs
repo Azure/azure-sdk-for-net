@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
@@ -26,8 +26,9 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="function"> The function definition details for the function tool. </param>
-        internal ChatCompletionsFunctionToolDefinition(string type, FunctionDefinition function) : base(type)
+        internal ChatCompletionsFunctionToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, FunctionDefinition function) : base(type, serializedAdditionalRawData)
         {
             Function = function;
         }

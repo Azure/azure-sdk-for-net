@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevOpsRepositoryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevOpsRepositoryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevOpsRepositoryProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ActionableRemediation))
             {
                 writer.WritePropertyName("actionableRemediation"u8);
-                writer.WriteObjectValue(ActionableRemediation);
+                writer.WriteObjectValue<ActionableRemediation>(ActionableRemediation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevOpsRepositoryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevOpsRepositoryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevOpsRepositoryProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> provisioningStatusMessage = default;
-            Optional<DateTimeOffset> provisioningStatusUpdateTimeUtc = default;
-            Optional<DevOpsProvisioningState> provisioningState = default;
-            Optional<string> parentOrgName = default;
-            Optional<string> parentProjectName = default;
-            Optional<string> repoId = default;
-            Optional<Uri> repoUrl = default;
-            Optional<string> visibility = default;
-            Optional<ResourceOnboardingState> onboardingState = default;
-            Optional<ActionableRemediation> actionableRemediation = default;
+            string provisioningStatusMessage = default;
+            DateTimeOffset? provisioningStatusUpdateTimeUtc = default;
+            DevOpsProvisioningState? provisioningState = default;
+            string parentOrgName = default;
+            string parentProjectName = default;
+            string repoId = default;
+            Uri repoUrl = default;
+            string visibility = default;
+            ResourceOnboardingState? onboardingState = default;
+            ActionableRemediation actionableRemediation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value);
+                    actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -204,7 +204,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevOpsRepositoryProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), parentOrgName.Value, parentProjectName.Value, repoId.Value, repoUrl.Value, visibility.Value, Optional.ToNullable(onboardingState), actionableRemediation.Value, serializedAdditionalRawData);
+            return new DevOpsRepositoryProperties(
+                provisioningStatusMessage,
+                provisioningStatusUpdateTimeUtc,
+                provisioningState,
+                parentOrgName,
+                parentProjectName,
+                repoId,
+                repoUrl,
+                visibility,
+                onboardingState,
+                actionableRemediation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevOpsRepositoryProperties>.Write(ModelReaderWriterOptions options)
@@ -216,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevOpsRepositoryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevOpsRepositoryProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +243,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDevOpsRepositoryProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevOpsRepositoryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevOpsRepositoryProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

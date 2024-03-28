@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -21,8 +21,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
-        internal NetworkFabricIPCommunityPatch(IDictionary<string, string> tags, IList<IPCommunityRule> ipCommunityRules) : base(tags)
+        internal NetworkFabricIPCommunityPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IPCommunityRule> ipCommunityRules) : base(tags, serializedAdditionalRawData)
         {
             IPCommunityRules = ipCommunityRules;
         }

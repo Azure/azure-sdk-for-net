@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImageList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImageList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabGalleryImage>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImageList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImageList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevTestLabGalleryImage>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DevTestLabGalleryImage> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabGalleryImage> array = new List<DevTestLabGalleryImage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage(item));
+                        array.Add(DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GalleryImageList(value ?? new ChangeTrackingList<DevTestLabGalleryImage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImageList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeGalleryImageList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImageList)} does not support reading '{options.Format}' format.");
             }
         }
 

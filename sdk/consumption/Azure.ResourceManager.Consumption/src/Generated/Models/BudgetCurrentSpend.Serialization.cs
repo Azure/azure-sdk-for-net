@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<BudgetCurrentSpend>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BudgetCurrentSpend)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BudgetCurrentSpend)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<BudgetCurrentSpend>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BudgetCurrentSpend)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BudgetCurrentSpend)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<decimal> amount = default;
-            Optional<string> unit = default;
+            decimal? amount = default;
+            string unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BudgetCurrentSpend(Optional.ToNullable(amount), unit.Value, serializedAdditionalRawData);
+            return new BudgetCurrentSpend(amount, unit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BudgetCurrentSpend>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BudgetCurrentSpend)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BudgetCurrentSpend)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeBudgetCurrentSpend(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BudgetCurrentSpend)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BudgetCurrentSpend)} does not support reading '{options.Format}' format.");
             }
         }
 

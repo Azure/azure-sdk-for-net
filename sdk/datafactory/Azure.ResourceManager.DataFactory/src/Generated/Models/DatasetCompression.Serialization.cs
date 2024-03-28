@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DatasetCompression : IUtf8JsonSerializable
+    public partial class DatasetCompression : IUtf8JsonSerializable, IJsonModel<DatasetCompression>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetCompression>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatasetCompression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetCompression>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatasetCompression)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             JsonSerializer.Serialize(writer, DatasetCompressionType);
@@ -40,14 +49,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DatasetCompression DeserializeDatasetCompression(JsonElement element)
+        DatasetCompression IJsonModel<DatasetCompression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetCompression>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatasetCompression)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatasetCompression(document.RootElement, options);
+        }
+
+        internal static DatasetCompression DeserializeDatasetCompression(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataFactoryElement<string> type = default;
-            Optional<DataFactoryElement<string>> level = default;
+            DataFactoryElement<string> level = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -69,7 +92,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetCompression(type, level.Value, additionalProperties);
+            return new DatasetCompression(type, level, additionalProperties);
         }
+
+        BinaryData IPersistableModel<DatasetCompression>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetCompression>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DatasetCompression)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DatasetCompression IPersistableModel<DatasetCompression>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetCompression>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatasetCompression(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatasetCompression)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatasetCompression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

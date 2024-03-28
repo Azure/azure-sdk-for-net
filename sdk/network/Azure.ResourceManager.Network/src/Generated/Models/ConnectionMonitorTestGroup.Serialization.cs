@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorTestGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorTestGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorTestGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorTestGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorTestGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorTestGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string name = default;
-            Optional<bool> disable = default;
+            bool? disable = default;
             IList<string> testConfigurations = default;
             IList<string> sources = default;
             IList<string> destinations = default;
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorTestGroup(name, Optional.ToNullable(disable), testConfigurations, sources, destinations, serializedAdditionalRawData);
+            return new ConnectionMonitorTestGroup(
+                name,
+                disable,
+                testConfigurations,
+                sources,
+                destinations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorTestGroup>.Write(ModelReaderWriterOptions options)
@@ -163,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorTestGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorTestGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectionMonitorTestGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorTestGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorTestGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

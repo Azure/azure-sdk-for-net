@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchEnvironmentSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchEnvironmentSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchEnvironmentSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchEnvironmentSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchEnvironmentSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchEnvironmentSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             string name = default;
-            Optional<string> value = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchEnvironmentSetting(name, value.Value, serializedAdditionalRawData);
+            return new BatchEnvironmentSetting(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchEnvironmentSetting>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchEnvironmentSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchEnvironmentSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchEnvironmentSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchEnvironmentSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchEnvironmentSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

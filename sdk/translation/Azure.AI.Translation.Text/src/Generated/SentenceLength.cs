@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> An object returning sentence boundaries in the input and output texts. </summary>
     public partial class SentenceLength
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SentenceLength"/>. </summary>
         /// <param name="srcSentLen">
         /// An integer array representing the lengths of the sentences in the input text.
@@ -43,10 +74,17 @@ namespace Azure.AI.Translation.Text
         /// An integer array representing the lengths of the sentences in the translated text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
-        internal SentenceLength(IReadOnlyList<int> srcSentLen, IReadOnlyList<int> transSentLen)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SentenceLength(IReadOnlyList<int> srcSentLen, IReadOnlyList<int> transSentLen, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SrcSentLen = srcSentLen;
             TransSentLen = transSentLen;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentenceLength"/> for deserialization. </summary>
+        internal SentenceLength()
+        {
         }
 
         /// <summary>

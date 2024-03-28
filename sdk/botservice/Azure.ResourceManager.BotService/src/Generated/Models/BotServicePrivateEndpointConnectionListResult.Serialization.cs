@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotServicePrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotServicePrivateEndpointConnectionListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServicePrivateEndpointConnectionListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BotServicePrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotServicePrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotServicePrivateEndpointConnectionListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServicePrivateEndpointConnectionListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BotServicePrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<BotServicePrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotServicePrivateEndpointConnectionData> array = new List<BotServicePrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotServicePrivateEndpointConnectionData.DeserializeBotServicePrivateEndpointConnectionData(item));
+                        array.Add(BotServicePrivateEndpointConnectionData.DeserializeBotServicePrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotServicePrivateEndpointConnectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new BotServicePrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<BotServicePrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServicePrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotServicePrivateEndpointConnectionListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServicePrivateEndpointConnectionListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeBotServicePrivateEndpointConnectionListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotServicePrivateEndpointConnectionListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServicePrivateEndpointConnectionListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

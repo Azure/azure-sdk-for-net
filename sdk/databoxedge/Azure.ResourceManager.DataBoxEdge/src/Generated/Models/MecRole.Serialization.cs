@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<MecRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MecRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MecRole)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString);
+                writer.WriteObjectValue<AsymmetricEncryptedSecret>(ConnectionString, options);
             }
             if (Optional.IsDefined(ControllerEndpoint))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<MecRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MecRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MecRole)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AsymmetricEncryptedSecret> connectionString = default;
-            Optional<string> controllerEndpoint = default;
-            Optional<string> resourceUniqueId = default;
-            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
+            SystemData systemData = default;
+            AsymmetricEncryptedSecret connectionString = default;
+            string controllerEndpoint = default;
+            string resourceUniqueId = default;
+            DataBoxEdgeRoleStatus? roleStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            connectionString = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value);
+                            connectionString = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("controllerEndpoint"u8))
@@ -198,7 +198,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MecRole(id, name, type, systemData.Value, kind, serializedAdditionalRawData, connectionString.Value, controllerEndpoint.Value, resourceUniqueId.Value, Optional.ToNullable(roleStatus));
+            return new MecRole(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                connectionString,
+                controllerEndpoint,
+                resourceUniqueId,
+                roleStatus);
         }
 
         BinaryData IPersistableModel<MecRole>.Write(ModelReaderWriterOptions options)
@@ -210,7 +220,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MecRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MecRole)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +236,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeMecRole(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MecRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MecRole)} does not support reading '{options.Format}' format.");
             }
         }
 

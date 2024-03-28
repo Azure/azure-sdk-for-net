@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<PlacementPolicyState> state = default;
-            Optional<IList<ResourceIdentifier>> vmMembers = default;
-            Optional<IList<string>> hostMembers = default;
-            Optional<VmHostPlacementPolicyAffinityStrength> affinityStrength = default;
-            Optional<AzureHybridBenefitType> azureHybridBenefitType = default;
+            PlacementPolicyState? state = default;
+            IList<ResourceIdentifier> vmMembers = default;
+            IList<string> hostMembers = default;
+            VmHostPlacementPolicyAffinityStrength? affinityStrength = default;
+            AzureHybridBenefitType? azureHybridBenefitType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,13 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlacementPolicyPatch(Optional.ToNullable(state), Optional.ToList(vmMembers), Optional.ToList(hostMembers), Optional.ToNullable(affinityStrength), Optional.ToNullable(azureHybridBenefitType), serializedAdditionalRawData);
+            return new PlacementPolicyPatch(
+                state,
+                vmMembers ?? new ChangeTrackingList<ResourceIdentifier>(),
+                hostMembers ?? new ChangeTrackingList<string>(),
+                affinityStrength,
+                azureHybridBenefitType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlacementPolicyPatch>.Write(ModelReaderWriterOptions options)
@@ -208,7 +214,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +230,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializePlacementPolicyPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

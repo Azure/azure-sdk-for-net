@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpotRestorePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpotRestorePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpotRestorePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpotRestorePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpotRestorePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpotRestorePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> restoreTimeout = default;
+            bool? enabled = default;
+            string restoreTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpotRestorePolicy(Optional.ToNullable(enabled), restoreTimeout.Value, serializedAdditionalRawData);
+            return new SpotRestorePolicy(enabled, restoreTimeout, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpotRestorePolicy>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpotRestorePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpotRestorePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeSpotRestorePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpotRestorePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpotRestorePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

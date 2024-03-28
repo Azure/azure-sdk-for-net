@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessPolicyVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyVirtualMachine)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyVirtualMachine)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in Ports)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<JitNetworkAccessPortRule>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(PublicIPAddress))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessPolicyVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyVirtualMachine)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyVirtualMachine)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             ResourceIdentifier id = default;
             IList<JitNetworkAccessPortRule> ports = default;
-            Optional<string> publicIPAddress = default;
+            string publicIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessPortRule> array = new List<JitNetworkAccessPortRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessPortRule.DeserializeJitNetworkAccessPortRule(item));
+                        array.Add(JitNetworkAccessPortRule.DeserializeJitNetworkAccessPortRule(item, options));
                     }
                     ports = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessPolicyVirtualMachine(id, ports, publicIPAddress.Value, serializedAdditionalRawData);
+            return new JitNetworkAccessPolicyVirtualMachine(id, ports, publicIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessPolicyVirtualMachine>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessPolicyVirtualMachine)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitNetworkAccessPolicyVirtualMachine)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeJitNetworkAccessPolicyVirtualMachine(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessPolicyVirtualMachine)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitNetworkAccessPolicyVirtualMachine)} does not support reading '{options.Format}' format.");
             }
         }
 

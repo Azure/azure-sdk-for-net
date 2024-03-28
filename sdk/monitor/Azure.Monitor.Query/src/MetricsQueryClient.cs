@@ -12,7 +12,7 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// The <see cref="MetricsQueryClient"/> allows you to query the Azure Monitor Metrics service.
+    /// The <see cref="MetricsQueryClient"/> allows you to query the Azure Monitor Metrics service for a single Azure resource.
     /// </summary>
     public class MetricsQueryClient
     {
@@ -24,8 +24,10 @@ namespace Azure.Monitor.Query
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsQueryClient"/>. Uses the default 'https://management.azure.com' endpoint.
-        /// <code snippet="Snippet:CreateMetricsClient" language="csharp">
+        /// Creates an instance of <see cref="MetricsQueryClient"/> for Azure Public Cloud usage. Uses the default 'https://management.azure.com' endpoint.
+        /// To access an Azure sovereign cloud, use the following constructor overload:
+        /// <see cref="MetricsQueryClient.MetricsQueryClient(TokenCredential, MetricsQueryClientOptions)"/>
+        /// <code snippet="Snippet:CreateMetricsQueryClient" language="csharp">
         /// var client = new MetricsQueryClient(new DefaultAzureCredential());
         /// </code>
         /// </summary>
@@ -35,34 +37,40 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsQueryClient"/>. Uses the default 'https://management.azure.com' endpoint.
+        /// Creates an instance of <see cref="MetricsQueryClient"/> for Azure Public Cloud usage. Uses the default 'https://management.azure.com' endpoint, unless <see cref="MetricsQueryClientOptions.Audience"/> is set to an Azure sovereign cloud.
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to as client configuration.</param>
-        public MetricsQueryClient(TokenCredential credential, MetricsQueryClientOptions options) : this(_defaultEndpoint, credential, options)
+        /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to use as client configuration.</param>
+        public MetricsQueryClient(TokenCredential credential, MetricsQueryClientOptions options) : this(string.IsNullOrEmpty(options.Audience?.ToString()) ? _defaultEndpoint : new Uri(options.Audience.ToString()), credential, options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsQueryClient"/>.
+        /// Creates an instance of <see cref="MetricsQueryClient"/> for the Azure cloud represented by <paramref name="endpoint"/>.
         /// </summary>
-        /// <param name="endpoint">The resource manager service endpoint to use. For example <c>https://management.azure.com/</c> for public cloud.</param>
+        /// <param name="endpoint">The Azure Resource Manager service endpoint to use. Some examples include:
+        /// <list type="bullet">
+        ///     <item><c>https://management.usgovcloudapi.net</c> for Azure US Government Cloud</item>
+        ///     <item><c>https://management.chinacloudapi.cn</c> for Azure China Cloud</item>
+        /// </list>
+        /// </param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to as client configuration.</param>
+        /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to use as client configuration.</param>
         public MetricsQueryClient(Uri endpoint, TokenCredential credential, MetricsQueryClientOptions options = null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new MetricsQueryClientOptions();
+            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? MetricsQueryAudience.AzurePublicCloud : options.Audience)}";
+            authorizationScope += "//.default";
+            var scopes = new List<string> { authorizationScope };
 
             _clientDiagnostics = new ClientDiagnostics(options);
-
-            var scope = $"{endpoint.AbsoluteUri}/.default";
 
             Endpoint = endpoint;
 
             var pipeline = HttpPipelineBuilder.Build(options,
-                new BearerTokenAuthenticationPolicy(credential, scope));
+                new BearerTokenAuthenticationPolicy(credential, scopes));
 
             _metricDefinitionsClient = new MetricDefinitionsRestClient(_clientDiagnostics, pipeline, endpoint);
             _metricsRestClient = new MetricsRestClient(_clientDiagnostics, pipeline, endpoint);
@@ -90,7 +98,7 @@ namespace Azure.Monitor.Query
         ///
         /// Response&lt;MetricsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     resourceId,
-        ///     new[] { &quot;AvailabilityRate_Query&quot;, &quot;Query Count&quot; }
+        ///     new[] { &quot;Average_% Free Space&quot;, &quot;Average_% Used Space&quot; }
         /// );
         ///
         /// foreach (MetricResult metric in results.Value.Metrics)
@@ -151,7 +159,7 @@ namespace Azure.Monitor.Query
         ///
         /// Response&lt;MetricsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     resourceId,
-        ///     new[] { &quot;AvailabilityRate_Query&quot;, &quot;Query Count&quot; }
+        ///     new[] { &quot;Average_% Free Space&quot;, &quot;Average_% Used Space&quot; }
         /// );
         ///
         /// foreach (MetricResult metric in results.Value.Metrics)

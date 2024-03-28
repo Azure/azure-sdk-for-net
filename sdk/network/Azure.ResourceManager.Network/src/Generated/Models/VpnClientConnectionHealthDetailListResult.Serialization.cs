@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealthDetailListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetailListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetailListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VpnClientConnectionHealthDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealthDetailListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetailListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetailListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VpnClientConnectionHealthDetail>> value = default;
+            IReadOnlyList<VpnClientConnectionHealthDetail> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VpnClientConnectionHealthDetail> array = new List<VpnClientConnectionHealthDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VpnClientConnectionHealthDetail.DeserializeVpnClientConnectionHealthDetail(item));
+                        array.Add(VpnClientConnectionHealthDetail.DeserializeVpnClientConnectionHealthDetail(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientConnectionHealthDetailListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new VpnClientConnectionHealthDetailListResult(value ?? new ChangeTrackingList<VpnClientConnectionHealthDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientConnectionHealthDetailListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetailListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetailListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVpnClientConnectionHealthDetailListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetailListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetailListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

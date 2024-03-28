@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -19,9 +18,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<int> segmentsSucceeded = default;
-            Optional<int> segmentsFailed = default;
+            DateTimeOffset? timestamp = default;
+            int? segmentsSucceeded = default;
+            int? segmentsFailed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -52,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsSmsDeliveryAttemptProperties(Optional.ToNullable(timestamp), Optional.ToNullable(segmentsSucceeded), Optional.ToNullable(segmentsFailed));
+            return new AcsSmsDeliveryAttemptProperties(timestamp, segmentsSucceeded, segmentsFailed);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AllSavingsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AllSavingsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AllSavingsList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AllSavingsBenefitDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AllSavingsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AllSavingsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AllSavingsList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AllSavingsBenefitDetails>> value = default;
-            Optional<Uri> nextLink = default;
+            IReadOnlyList<AllSavingsBenefitDetails> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<AllSavingsBenefitDetails> array = new List<AllSavingsBenefitDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(item));
+                        array.Add(AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(item, options));
                     }
                     value = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AllSavingsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AllSavingsList(value ?? new ChangeTrackingList<AllSavingsBenefitDetails>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AllSavingsList>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AllSavingsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AllSavingsList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeAllSavingsList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AllSavingsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AllSavingsList)} does not support reading '{options.Format}' format.");
             }
         }
 

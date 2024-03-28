@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -43,7 +42,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureAIDocumentIntelligenceClientOptions())
+        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
@@ -51,7 +50,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIDocumentIntelligenceClientOptions())
+        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
@@ -60,11 +59,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential, AzureAIDocumentIntelligenceClientOptions options)
+        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureAIDocumentIntelligenceClientOptions();
+            options ??= new DocumentIntelligenceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
@@ -78,11 +77,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential, AzureAIDocumentIntelligenceClientOptions options)
+        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureAIDocumentIntelligenceClientOptions();
+            options ??= new DocumentIntelligenceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
@@ -403,11 +402,11 @@ namespace Azure.AI.DocumentIntelligence
             {
                 uri.AppendQuery("stringIndexType", stringIndexType, true);
             }
-            if (features != null && Optional.IsCollectionDefined(features))
+            if (features != null && !(features is ChangeTrackingList<DocumentAnalysisFeature> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
-            if (queryFields != null && Optional.IsCollectionDefined(queryFields))
+            if (queryFields != null && !(queryFields is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("queryFields", queryFields, ",", true);
             }

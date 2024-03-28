@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ElasticSanVirtualNetworkRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<IList<ElasticSanVirtualNetworkRule>> virtualNetworkRules = default;
+            IList<ElasticSanVirtualNetworkRule> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanVirtualNetworkRule> array = new List<ElasticSanVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanVirtualNetworkRule.DeserializeElasticSanVirtualNetworkRule(item));
+                        array.Add(ElasticSanVirtualNetworkRule.DeserializeElasticSanVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRules = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkRuleSet(Optional.ToList(virtualNetworkRules), serializedAdditionalRawData);
+            return new NetworkRuleSet(virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkRuleSet>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         return DeserializeNetworkRuleSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier);
+                writer.WriteObjectValue<GalleryIdentifier>(Identifier, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SharingProfile))
             {
                 writer.WritePropertyName("sharingProfile"u8);
-                writer.WriteObjectValue(SharingProfile);
+                writer.WriteObjectValue<SharingProfile>(SharingProfile, options);
             }
             if (Optional.IsDefined(SoftDeletePolicy))
             {
                 writer.WritePropertyName("softDeletePolicy"u8);
-                writer.WriteObjectValue(SoftDeletePolicy);
+                writer.WriteObjectValue<SoftDeletePolicy>(SoftDeletePolicy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SharingStatus))
             {
                 writer.WritePropertyName("sharingStatus"u8);
-                writer.WriteObjectValue(SharingStatus);
+                writer.WriteObjectValue<SharingStatus>(SharingStatus, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<GalleryIdentifier> identifier = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<SharingProfile> sharingProfile = default;
-            Optional<SoftDeletePolicy> softDeletePolicy = default;
-            Optional<SharingStatus> sharingStatus = default;
+            SystemData systemData = default;
+            string description = default;
+            GalleryIdentifier identifier = default;
+            GalleryProvisioningState? provisioningState = default;
+            SharingProfile sharingProfile = default;
+            SoftDeletePolicy softDeletePolicy = default;
+            SharingStatus sharingStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            identifier = GalleryIdentifier.DeserializeGalleryIdentifier(property0.Value);
+                            identifier = GalleryIdentifier.DeserializeGalleryIdentifier(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            sharingProfile = SharingProfile.DeserializeSharingProfile(property0.Value);
+                            sharingProfile = SharingProfile.DeserializeSharingProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("softDeletePolicy"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            softDeletePolicy = SoftDeletePolicy.DeserializeSoftDeletePolicy(property0.Value);
+                            softDeletePolicy = SoftDeletePolicy.DeserializeSoftDeletePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sharingStatus"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            sharingStatus = SharingStatus.DeserializeSharingStatus(property0.Value);
+                            sharingStatus = SharingStatus.DeserializeSharingStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryPatch(id, name, type, systemData.Value, description.Value, identifier.Value, Optional.ToNullable(provisioningState), sharingProfile.Value, softDeletePolicy.Value, sharingStatus.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new GalleryPatch(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                identifier,
+                provisioningState,
+                sharingProfile,
+                softDeletePolicy,
+                sharingStatus,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryPatch>.Write(ModelReaderWriterOptions options)
@@ -262,7 +274,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -278,7 +290,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

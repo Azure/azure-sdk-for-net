@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPlacementPolicyProperties(document.RootElement, options);
+            return DeserializePlacementPolicyProperties(document.RootElement, options);
         }
 
         internal static UnknownPlacementPolicyProperties DeserializeUnknownPlacementPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             PlacementPolicyType type = "Unknown";
-            Optional<PlacementPolicyState> state = default;
-            Optional<string> displayName = default;
-            Optional<PlacementPolicyProvisioningState> provisioningState = default;
+            PlacementPolicyState? state = default;
+            string displayName = default;
+            PlacementPolicyProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new UnknownPlacementPolicyProperties(type, state, displayName, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlacementPolicyProperties>.Write(ModelReaderWriterOptions options)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPlacementPolicyProperties(document.RootElement, options);
+                        return DeserializePlacementPolicyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

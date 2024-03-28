@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigServerSettingsValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigServerSettingsValidateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigServerSettingsValidateResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConfigServerSettingsErrorRecord>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigServerSettingsValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigServerSettingsValidateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigServerSettingsValidateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<bool> isValid = default;
-            Optional<IReadOnlyList<ConfigServerSettingsErrorRecord>> details = default;
+            bool? isValid = default;
+            IReadOnlyList<ConfigServerSettingsErrorRecord> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<ConfigServerSettingsErrorRecord> array = new List<ConfigServerSettingsErrorRecord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigServerSettingsErrorRecord.DeserializeConfigServerSettingsErrorRecord(item));
+                        array.Add(ConfigServerSettingsErrorRecord.DeserializeConfigServerSettingsErrorRecord(item, options));
                     }
                     details = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigServerSettingsValidateResult(Optional.ToNullable(isValid), Optional.ToList(details), serializedAdditionalRawData);
+            return new ConfigServerSettingsValidateResult(isValid, details ?? new ChangeTrackingList<ConfigServerSettingsErrorRecord>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigServerSettingsValidateResult>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigServerSettingsValidateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigServerSettingsValidateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeConfigServerSettingsValidateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigServerSettingsValidateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigServerSettingsValidateResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<DiskSku>(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsGroup);
+                writer.WriteObjectValue<EncryptionSettingsGroup>(EncryptionSettingsGroup, options);
             }
             if (Optional.IsDefined(DiskIopsReadWrite))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<DiskEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                writer.WriteObjectValue<DiskPurchasePlan>(PurchasePlan, options);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities);
+                writer.WriteObjectValue<SupportedCapabilities>(SupportedCapabilities, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PropertyUpdatesInProgress))
             {
                 writer.WritePropertyName("propertyUpdatesInProgress"u8);
-                writer.WriteObjectValue(PropertyUpdatesInProgress);
+                writer.WriteObjectValue<PropertyUpdatesInProgress>(PropertyUpdatesInProgress, options);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,28 +183,28 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<DiskSku> sku = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<int> diskSizeGB = default;
-            Optional<EncryptionSettingsGroup> encryptionSettingsGroup = default;
-            Optional<long> diskIOPSReadWrite = default;
-            Optional<long> diskMBpsReadWrite = default;
-            Optional<long> diskIOPSReadOnly = default;
-            Optional<long> diskMBpsReadOnly = default;
-            Optional<int> maxShares = default;
-            Optional<DiskEncryption> encryption = default;
-            Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<ResourceIdentifier> diskAccessId = default;
-            Optional<string> tier = default;
-            Optional<bool> burstingEnabled = default;
-            Optional<DiskPurchasePlan> purchasePlan = default;
-            Optional<SupportedCapabilities> supportedCapabilities = default;
-            Optional<PropertyUpdatesInProgress> propertyUpdatesInProgress = default;
-            Optional<bool> supportsHibernation = default;
-            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<DataAccessAuthMode> dataAccessAuthMode = default;
-            Optional<bool> optimizedForFrequentAttach = default;
+            IDictionary<string, string> tags = default;
+            DiskSku sku = default;
+            SupportedOperatingSystemType? osType = default;
+            int? diskSizeGB = default;
+            EncryptionSettingsGroup encryptionSettingsGroup = default;
+            long? diskIOPSReadWrite = default;
+            long? diskMBpsReadWrite = default;
+            long? diskIOPSReadOnly = default;
+            long? diskMBpsReadOnly = default;
+            int? maxShares = default;
+            DiskEncryption encryption = default;
+            NetworkAccessPolicy? networkAccessPolicy = default;
+            ResourceIdentifier diskAccessId = default;
+            string tier = default;
+            bool? burstingEnabled = default;
+            DiskPurchasePlan purchasePlan = default;
+            SupportedCapabilities supportedCapabilities = default;
+            PropertyUpdatesInProgress propertyUpdatesInProgress = default;
+            bool? supportsHibernation = default;
+            DiskPublicNetworkAccess? publicNetworkAccess = default;
+            DataAccessAuthMode? dataAccessAuthMode = default;
+            bool? optimizedForFrequentAttach = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = DiskSku.DeserializeDiskSku(property.Value);
+                    sku = DiskSku.DeserializeDiskSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value);
+                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("diskIOPSReadWrite"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value);
+                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkAccessPolicy"u8))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value);
+                            purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportedCapabilities"u8))
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value);
+                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("propertyUpdatesInProgress"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            propertyUpdatesInProgress = PropertyUpdatesInProgress.DeserializePropertyUpdatesInProgress(property0.Value);
+                            propertyUpdatesInProgress = PropertyUpdatesInProgress.DeserializePropertyUpdatesInProgress(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportsHibernation"u8))
@@ -426,7 +426,30 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDiskPatch(Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(osType), Optional.ToNullable(diskSizeGB), encryptionSettingsGroup.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(diskIOPSReadOnly), Optional.ToNullable(diskMBpsReadOnly), Optional.ToNullable(maxShares), encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, tier.Value, Optional.ToNullable(burstingEnabled), purchasePlan.Value, supportedCapabilities.Value, propertyUpdatesInProgress.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(dataAccessAuthMode), Optional.ToNullable(optimizedForFrequentAttach), serializedAdditionalRawData);
+            return new ManagedDiskPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                osType,
+                diskSizeGB,
+                encryptionSettingsGroup,
+                diskIOPSReadWrite,
+                diskMBpsReadWrite,
+                diskIOPSReadOnly,
+                diskMBpsReadOnly,
+                maxShares,
+                encryption,
+                networkAccessPolicy,
+                diskAccessId,
+                tier,
+                burstingEnabled,
+                purchasePlan,
+                supportedCapabilities,
+                propertyUpdatesInProgress,
+                supportsHibernation,
+                publicNetworkAccess,
+                dataAccessAuthMode,
+                optimizedForFrequentAttach,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDiskPatch>.Write(ModelReaderWriterOptions options)
@@ -438,7 +461,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -454,7 +477,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeManagedDiskPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

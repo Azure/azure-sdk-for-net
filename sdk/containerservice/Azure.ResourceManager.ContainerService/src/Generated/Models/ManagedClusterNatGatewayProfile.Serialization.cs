@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterNatGatewayProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedOutboundIPProfile))
             {
                 writer.WritePropertyName("managedOutboundIPProfile"u8);
-                writer.WriteObjectValue(ManagedOutboundIPProfile);
+                writer.WriteObjectValue<ManagedClusterManagedOutboundIPProfile>(ManagedOutboundIPProfile, options);
             }
             if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterNatGatewayProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterManagedOutboundIPProfile> managedOutboundIPProfile = default;
-            Optional<IList<WritableSubResource>> effectiveOutboundIPs = default;
-            Optional<int> idleTimeoutInMinutes = default;
+            ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = default;
+            IList<WritableSubResource> effectiveOutboundIPs = default;
+            int? idleTimeoutInMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    managedOutboundIPProfile = ManagedClusterManagedOutboundIPProfile.DeserializeManagedClusterManagedOutboundIPProfile(property.Value);
+                    managedOutboundIPProfile = ManagedClusterManagedOutboundIPProfile.DeserializeManagedClusterManagedOutboundIPProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("effectiveOutboundIPs"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile.Value, Optional.ToList(effectiveOutboundIPs), Optional.ToNullable(idleTimeoutInMinutes), serializedAdditionalRawData);
+            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile, effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(), idleTimeoutInMinutes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterNatGatewayProfile>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterNatGatewayProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

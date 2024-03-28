@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleResourceFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleResourceFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleResourceFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleResourceFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleResourceFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleResourceFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> roleName = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string roleName = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleResourceFormat(id, name, type, systemData.Value, roleName.Value, description.Value, serializedAdditionalRawData);
+            return new RoleResourceFormat(
+                id,
+                name,
+                type,
+                systemData,
+                roleName,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleResourceFormat>.Write(ModelReaderWriterOptions options)
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoleResourceFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleResourceFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +195,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeRoleResourceFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleResourceFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleResourceFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

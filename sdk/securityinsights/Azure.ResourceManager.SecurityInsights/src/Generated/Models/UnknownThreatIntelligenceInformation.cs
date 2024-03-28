@@ -5,14 +5,14 @@
 
 #nullable disable
 
-using Azure;
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The UnknownThreatIntelligenceInformation. </summary>
+    /// <summary> Unknown version of ThreatIntelligenceInformation. </summary>
     internal partial class UnknownThreatIntelligenceInformation : SecurityInsightsThreatIntelligenceIndicatorBaseData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownThreatIntelligenceInformation"/>. </summary>
@@ -22,9 +22,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal UnknownThreatIntelligenceInformation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceInnerKind kind, ETag? etag) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownThreatIntelligenceInformation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceInnerKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownThreatIntelligenceInformation"/> for deserialization. </summary>
+        internal UnknownThreatIntelligenceInformation()
+        {
         }
     }
 }

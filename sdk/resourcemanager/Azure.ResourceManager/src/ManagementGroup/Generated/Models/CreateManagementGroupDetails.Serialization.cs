@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<CreateManagementGroupDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateManagementGroupDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateManagementGroupDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
-                writer.WriteObjectValue(Parent);
+                writer.WriteObjectValue<ManagementGroupParentCreateOptions>(Parent, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<CreateManagementGroupDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateManagementGroupDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateManagementGroupDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<int> version = default;
-            Optional<DateTimeOffset> updatedTime = default;
-            Optional<string> updatedBy = default;
-            Optional<ManagementGroupParentCreateOptions> parent = default;
+            int? version = default;
+            DateTimeOffset? updatedTime = default;
+            string updatedBy = default;
+            ManagementGroupParentCreateOptions parent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     {
                         continue;
                     }
-                    parent = ManagementGroupParentCreateOptions.DeserializeManagementGroupParentCreateOptions(property.Value);
+                    parent = ManagementGroupParentCreateOptions.DeserializeManagementGroupParentCreateOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreateManagementGroupDetails(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, serializedAdditionalRawData);
+            return new CreateManagementGroupDetails(version, updatedTime, updatedBy, parent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreateManagementGroupDetails>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CreateManagementGroupDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateManagementGroupDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                         return DeserializeCreateManagementGroupDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateManagementGroupDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateManagementGroupDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

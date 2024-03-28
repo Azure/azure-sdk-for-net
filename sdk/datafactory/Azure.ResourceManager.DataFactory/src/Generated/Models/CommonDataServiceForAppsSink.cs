@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySinkType = copySinkType ?? "CommonDataServiceForAppsSink";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsSink"/> for deserialization. </summary>
+        internal CommonDataServiceForAppsSink()
+        {
+        }
+
         /// <summary> The write behavior for the operation. </summary>
         public DynamicsSinkWriteBehavior WriteBehavior { get; set; }
         /// <summary> The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean). </summary>

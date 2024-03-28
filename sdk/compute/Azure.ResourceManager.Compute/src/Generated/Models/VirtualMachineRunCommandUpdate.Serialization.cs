@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<VirtualMachineRunCommandScriptSource>(Source, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunCommandInputParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunCommandInputParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OutputBlobManagedIdentity))
             {
                 writer.WritePropertyName("outputBlobManagedIdentity"u8);
-                writer.WriteObjectValue(OutputBlobManagedIdentity);
+                writer.WriteObjectValue<RunCommandManagedIdentity>(OutputBlobManagedIdentity, options);
             }
             if (Optional.IsDefined(ErrorBlobManagedIdentity))
             {
                 writer.WritePropertyName("errorBlobManagedIdentity"u8);
-                writer.WriteObjectValue(ErrorBlobManagedIdentity);
+                writer.WriteObjectValue<RunCommandManagedIdentity>(ErrorBlobManagedIdentity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<VirtualMachineRunCommandInstanceView>(InstanceView, options);
             }
             if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,21 +158,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<VirtualMachineRunCommandScriptSource> source = default;
-            Optional<IList<RunCommandInputParameter>> parameters = default;
-            Optional<IList<RunCommandInputParameter>> protectedParameters = default;
-            Optional<bool> asyncExecution = default;
-            Optional<string> runAsUser = default;
-            Optional<string> runAsPassword = default;
-            Optional<int> timeoutInSeconds = default;
-            Optional<Uri> outputBlobUri = default;
-            Optional<Uri> errorBlobUri = default;
-            Optional<RunCommandManagedIdentity> outputBlobManagedIdentity = default;
-            Optional<RunCommandManagedIdentity> errorBlobManagedIdentity = default;
-            Optional<string> provisioningState = default;
-            Optional<VirtualMachineRunCommandInstanceView> instanceView = default;
-            Optional<bool> treatFailureAsDeploymentFailure = default;
+            IDictionary<string, string> tags = default;
+            VirtualMachineRunCommandScriptSource source = default;
+            IList<RunCommandInputParameter> parameters = default;
+            IList<RunCommandInputParameter> protectedParameters = default;
+            bool? asyncExecution = default;
+            string runAsUser = default;
+            string runAsPassword = default;
+            int? timeoutInSeconds = default;
+            Uri outputBlobUri = default;
+            Uri errorBlobUri = default;
+            RunCommandManagedIdentity outputBlobManagedIdentity = default;
+            RunCommandManagedIdentity errorBlobManagedIdentity = default;
+            string provisioningState = default;
+            VirtualMachineRunCommandInstanceView instanceView = default;
+            bool? treatFailureAsDeploymentFailure = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            source = VirtualMachineRunCommandScriptSource.DeserializeVirtualMachineRunCommandScriptSource(property0.Value);
+                            source = VirtualMachineRunCommandScriptSource.DeserializeVirtualMachineRunCommandScriptSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                             }
                             parameters = array;
                             continue;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                             }
                             protectedParameters = array;
                             continue;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            outputBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value);
+                            outputBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("errorBlobManagedIdentity"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            errorBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value);
+                            errorBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            instanceView = VirtualMachineRunCommandInstanceView.DeserializeVirtualMachineRunCommandInstanceView(property0.Value);
+                            instanceView = VirtualMachineRunCommandInstanceView.DeserializeVirtualMachineRunCommandInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("treatFailureAsDeploymentFailure"u8))
@@ -333,7 +333,23 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineRunCommandUpdate(Optional.ToDictionary(tags), serializedAdditionalRawData, source.Value, Optional.ToList(parameters), Optional.ToList(protectedParameters), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, outputBlobManagedIdentity.Value, errorBlobManagedIdentity.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(treatFailureAsDeploymentFailure));
+            return new VirtualMachineRunCommandUpdate(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                source,
+                parameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                asyncExecution,
+                runAsUser,
+                runAsPassword,
+                timeoutInSeconds,
+                outputBlobUri,
+                errorBlobUri,
+                outputBlobManagedIdentity,
+                errorBlobManagedIdentity,
+                provisioningState,
+                instanceView,
+                treatFailureAsDeploymentFailure);
         }
 
         BinaryData IPersistableModel<VirtualMachineRunCommandUpdate>.Write(ModelReaderWriterOptions options)
@@ -345,7 +361,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -361,7 +377,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineRunCommandUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryOverrideTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerRegistryRunArgument>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerRegistryTaskOverridableValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryOverrideTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> contextPath = default;
-            Optional<string> file = default;
-            Optional<IList<ContainerRegistryRunArgument>> arguments = default;
-            Optional<string> target = default;
-            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
-            Optional<string> updateTriggerToken = default;
+            string contextPath = default;
+            string file = default;
+            IList<ContainerRegistryRunArgument> arguments = default;
+            string target = default;
+            IList<ContainerRegistryTaskOverridableValue> values = default;
+            string updateTriggerToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryRunArgument> array = new List<ContainerRegistryRunArgument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item));
+                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item, options));
                     }
                     arguments = array;
                     continue;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTaskOverridableValue> array = new List<ContainerRegistryTaskOverridableValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item));
+                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item, options));
                     }
                     values = array;
                     continue;
@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryOverrideTaskStepProperties(contextPath.Value, file.Value, Optional.ToList(arguments), target.Value, Optional.ToList(values), updateTriggerToken.Value, serializedAdditionalRawData);
+            return new ContainerRegistryOverrideTaskStepProperties(
+                contextPath,
+                file,
+                arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(),
+                target,
+                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(),
+                updateTriggerToken,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryOverrideTaskStepProperties>.Write(ModelReaderWriterOptions options)
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +203,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryOverrideTaskStepProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

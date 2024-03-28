@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<APIKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(APIKeyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(APIKeyContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<APIKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(APIKeyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(APIKeyContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<string>> linkedReadProperties = default;
-            Optional<IList<string>> linkedWriteProperties = default;
+            string name = default;
+            IList<string> linkedReadProperties = default;
+            IList<string> linkedWriteProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new APIKeyContent(name.Value, Optional.ToList(linkedReadProperties), Optional.ToList(linkedWriteProperties), serializedAdditionalRawData);
+            return new APIKeyContent(name, linkedReadProperties ?? new ChangeTrackingList<string>(), linkedWriteProperties ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<APIKeyContent>.Write(ModelReaderWriterOptions options)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(APIKeyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(APIKeyContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeAPIKeyContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(APIKeyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(APIKeyContent)} does not support reading '{options.Format}' format.");
             }
         }
 

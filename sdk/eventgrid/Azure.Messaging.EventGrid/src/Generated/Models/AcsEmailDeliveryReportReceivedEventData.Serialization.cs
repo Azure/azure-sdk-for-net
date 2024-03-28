@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,12 +20,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> sender = default;
-            Optional<string> recipient = default;
-            Optional<string> messageId = default;
-            Optional<AcsEmailDeliveryReportStatus> status = default;
-            Optional<AcsEmailDeliveryReportStatusDetails> deliveryStatusDetails = default;
-            Optional<DateTimeOffset> deliveryAttemptTimeStamp = default;
+            string sender = default;
+            string recipient = default;
+            string messageId = default;
+            AcsEmailDeliveryReportStatus? status = default;
+            AcsEmailDeliveryReportStatusDetails deliveryStatusDetails = default;
+            DateTimeOffset? deliveryAttemptTimeStamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sender"u8))
@@ -72,7 +71,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsEmailDeliveryReportReceivedEventData(sender.Value, recipient.Value, messageId.Value, Optional.ToNullable(status), deliveryStatusDetails.Value, Optional.ToNullable(deliveryAttemptTimeStamp));
+            return new AcsEmailDeliveryReportReceivedEventData(
+                sender,
+                recipient,
+                messageId,
+                status,
+                deliveryStatusDetails,
+                deliveryAttemptTimeStamp);
         }
 
         internal partial class AcsEmailDeliveryReportReceivedEventDataConverter : JsonConverter<AcsEmailDeliveryReportReceivedEventData>

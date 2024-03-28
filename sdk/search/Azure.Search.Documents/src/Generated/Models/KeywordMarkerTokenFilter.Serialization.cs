@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> keywords = default;
-            Optional<bool> ignoreCase = default;
+            bool? ignoreCase = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -77,7 +77,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KeywordMarkerTokenFilter(odataType, name, keywords, Optional.ToNullable(ignoreCase));
+            return new KeywordMarkerTokenFilter(odataType, name, keywords, ignoreCase);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobDataSetMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobDataSetMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobDataSetMapping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobDataSetMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobDataSetMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobDataSetMapping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string containerName = default;
             Guid dataSetId = default;
-            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
+            DataSetMappingStatus? dataSetMappingStatus = default;
             string filePath = default;
-            Optional<DataShareOutputType> outputType = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            DataShareOutputType? outputType = default;
+            DataShareProvisioningState? provisioningState = default;
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
@@ -239,7 +239,22 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, containerName, dataSetId, Optional.ToNullable(dataSetMappingStatus), filePath, Optional.ToNullable(outputType), Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            return new BlobDataSetMapping(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                containerName,
+                dataSetId,
+                dataSetMappingStatus,
+                filePath,
+                outputType,
+                provisioningState,
+                resourceGroup,
+                storageAccountName,
+                subscriptionId);
         }
 
         BinaryData IPersistableModel<BlobDataSetMapping>.Write(ModelReaderWriterOptions options)
@@ -251,7 +266,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BlobDataSetMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobDataSetMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -267,7 +282,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeBlobDataSetMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlobDataSetMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobDataSetMapping)} does not support reading '{options.Format}' format.");
             }
         }
 

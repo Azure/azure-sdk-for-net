@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> ignoreHostname = default;
-            Optional<string> ignoreSignature = default;
+            string ignoreHostname = default;
+            string ignoreSignature = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ignoreHostname"u8))
@@ -49,7 +49,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new TlsValidationOptions(ignoreHostname.Value, ignoreSignature.Value);
+            return new TlsValidationOptions(ignoreHostname, ignoreSignature);
         }
     }
 }

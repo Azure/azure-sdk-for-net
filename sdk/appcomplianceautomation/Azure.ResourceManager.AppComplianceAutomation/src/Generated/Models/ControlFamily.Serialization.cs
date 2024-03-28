@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ControlFamily>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControlFamily)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControlFamily)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in Controls)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Control>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ControlFamily>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControlFamily)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControlFamily)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> familyName = default;
-            Optional<ControlFamilyType> familyType = default;
-            Optional<ControlFamilyStatus> familyStatus = default;
-            Optional<IReadOnlyList<Control>> controls = default;
+            string familyName = default;
+            ControlFamilyType? familyType = default;
+            ControlFamilyStatus? familyStatus = default;
+            IReadOnlyList<Control> controls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<Control> array = new List<Control>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Control.DeserializeControl(item));
+                        array.Add(Control.DeserializeControl(item, options));
                     }
                     controls = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControlFamily(familyName.Value, Optional.ToNullable(familyType), Optional.ToNullable(familyStatus), Optional.ToList(controls), serializedAdditionalRawData);
+            return new ControlFamily(familyName, familyType, familyStatus, controls ?? new ChangeTrackingList<Control>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControlFamily>.Write(ModelReaderWriterOptions options)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ControlFamily)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControlFamily)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeControlFamily(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ControlFamily)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControlFamily)} does not support reading '{options.Format}' format.");
             }
         }
 

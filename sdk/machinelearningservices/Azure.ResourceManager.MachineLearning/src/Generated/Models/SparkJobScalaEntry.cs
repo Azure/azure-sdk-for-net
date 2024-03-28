@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,11 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="SparkJobScalaEntry"/>. </summary>
         /// <param name="sparkJobEntryType"> [Required] Type of the job's entry point. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="className"> [Required] Scala class name used as entry point. </param>
-        internal SparkJobScalaEntry(SparkJobEntryType sparkJobEntryType, string className) : base(sparkJobEntryType)
+        internal SparkJobScalaEntry(SparkJobEntryType sparkJobEntryType, IDictionary<string, BinaryData> serializedAdditionalRawData, string className) : base(sparkJobEntryType, serializedAdditionalRawData)
         {
             ClassName = className;
             SparkJobEntryType = sparkJobEntryType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkJobScalaEntry"/> for deserialization. </summary>
+        internal SparkJobScalaEntry()
+        {
         }
 
         /// <summary> [Required] Scala class name used as entry point. </summary>

@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Rendering
 {
@@ -18,8 +18,8 @@ namespace Azure.Maps.Rendering
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<object> info = default;
+            string type = default;
+            object info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -37,7 +37,7 @@ namespace Azure.Maps.Rendering
                     continue;
                 }
             }
-            return new ErrorAdditionalInfo(type.Value, info.Value);
+            return new ErrorAdditionalInfo(type, info);
         }
     }
 }

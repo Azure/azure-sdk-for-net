@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RecurrencePeriod))
             {
                 writer.WritePropertyName("recurrencePeriod"u8);
-                writer.WriteObjectValue(RecurrencePeriod);
+                writer.WriteObjectValue<ExportRecurrencePeriod>(RecurrencePeriod, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ExportScheduleStatusType> status = default;
-            Optional<ExportScheduleRecurrenceType> recurrence = default;
-            Optional<ExportRecurrencePeriod> recurrencePeriod = default;
+            ExportScheduleStatusType? status = default;
+            ExportScheduleRecurrenceType? recurrence = default;
+            ExportRecurrencePeriod recurrencePeriod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    recurrencePeriod = ExportRecurrencePeriod.DeserializeExportRecurrencePeriod(property.Value);
+                    recurrencePeriod = ExportRecurrencePeriod.DeserializeExportRecurrencePeriod(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportSchedule(Optional.ToNullable(status), Optional.ToNullable(recurrence), recurrencePeriod.Value, serializedAdditionalRawData);
+            return new ExportSchedule(status, recurrence, recurrencePeriod, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportSchedule>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeExportSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

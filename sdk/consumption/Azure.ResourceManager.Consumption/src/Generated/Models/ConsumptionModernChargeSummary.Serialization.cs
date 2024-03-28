@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,17 +74,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(AzureCharges))
             {
                 writer.WritePropertyName("azureCharges"u8);
-                writer.WriteObjectValue(AzureCharges);
+                writer.WriteObjectValue<ConsumptionAmount>(AzureCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
             {
                 writer.WritePropertyName("chargesBilledSeparately"u8);
-                writer.WriteObjectValue(ChargesBilledSeparately);
+                writer.WriteObjectValue<ConsumptionAmount>(ChargesBilledSeparately, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
             {
                 writer.WritePropertyName("marketplaceCharges"u8);
-                writer.WriteObjectValue(MarketplaceCharges);
+                writer.WriteObjectValue<ConsumptionAmount>(MarketplaceCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
             {
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,22 +151,22 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             ChargeSummaryKind kind = default;
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> billingPeriodId = default;
-            Optional<string> usageStart = default;
-            Optional<string> usageEnd = default;
-            Optional<ConsumptionAmount> azureCharges = default;
-            Optional<ConsumptionAmount> chargesBilledSeparately = default;
-            Optional<ConsumptionAmount> marketplaceCharges = default;
-            Optional<string> billingAccountId = default;
-            Optional<string> billingProfileId = default;
-            Optional<string> invoiceSectionId = default;
-            Optional<string> customerId = default;
-            Optional<bool> isInvoiced = default;
+            SystemData systemData = default;
+            string billingPeriodId = default;
+            string usageStart = default;
+            string usageEnd = default;
+            ConsumptionAmount azureCharges = default;
+            ConsumptionAmount chargesBilledSeparately = default;
+            ConsumptionAmount marketplaceCharges = default;
+            string billingAccountId = default;
+            string billingProfileId = default;
+            string invoiceSectionId = default;
+            string customerId = default;
+            bool? isInvoiced = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,7 +239,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            azureCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            azureCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("chargesBilledSeparately"u8))
@@ -249,7 +248,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            chargesBilledSeparately = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            chargesBilledSeparately = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("marketplaceCharges"u8))
@@ -258,7 +257,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            marketplaceCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            marketplaceCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("billingAccountId"u8))
@@ -299,7 +298,25 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionModernChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag), serializedAdditionalRawData, billingPeriodId.Value, usageStart.Value, usageEnd.Value, azureCharges.Value, chargesBilledSeparately.Value, marketplaceCharges.Value, billingAccountId.Value, billingProfileId.Value, invoiceSectionId.Value, customerId.Value, Optional.ToNullable(isInvoiced));
+            return new ConsumptionModernChargeSummary(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                eTag,
+                serializedAdditionalRawData,
+                billingPeriodId,
+                usageStart,
+                usageEnd,
+                azureCharges,
+                chargesBilledSeparately,
+                marketplaceCharges,
+                billingAccountId,
+                billingProfileId,
+                invoiceSectionId,
+                customerId,
+                isInvoiced);
         }
 
         BinaryData IPersistableModel<ConsumptionModernChargeSummary>.Write(ModelReaderWriterOptions options)
@@ -311,7 +328,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -327,7 +344,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionModernChargeSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

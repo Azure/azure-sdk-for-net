@@ -80,7 +80,7 @@ namespace Azure.Containers.ContainerRegistry
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -91,18 +91,18 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<DateTimeOffset> orgOpencontainersImageCreated = default;
-            Optional<string> orgOpencontainersImageAuthors = default;
-            Optional<Uri> orgOpencontainersImageUrl = default;
-            Optional<Uri> orgOpencontainersImageDocumentation = default;
-            Optional<Uri> orgOpencontainersImageSource = default;
-            Optional<string> orgOpencontainersImageVersion = default;
-            Optional<string> orgOpencontainersImageRevision = default;
-            Optional<string> orgOpencontainersImageVendor = default;
-            Optional<string> orgOpencontainersImageLicenses = default;
-            Optional<string> orgOpencontainersImageRefName = default;
-            Optional<string> orgOpencontainersImageTitle = default;
-            Optional<string> orgOpencontainersImageDescription = default;
+            DateTimeOffset? orgOpencontainersImageCreated = default;
+            string orgOpencontainersImageAuthors = default;
+            Uri orgOpencontainersImageUrl = default;
+            Uri orgOpencontainersImageDocumentation = default;
+            Uri orgOpencontainersImageSource = default;
+            string orgOpencontainersImageVersion = default;
+            string orgOpencontainersImageRevision = default;
+            string orgOpencontainersImageVendor = default;
+            string orgOpencontainersImageLicenses = default;
+            string orgOpencontainersImageRefName = default;
+            string orgOpencontainersImageTitle = default;
+            string orgOpencontainersImageDescription = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,20 @@ namespace Azure.Containers.ContainerRegistry
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OciAnnotations(Optional.ToNullable(orgOpencontainersImageCreated), orgOpencontainersImageAuthors.Value, orgOpencontainersImageUrl.Value, orgOpencontainersImageDocumentation.Value, orgOpencontainersImageSource.Value, orgOpencontainersImageVersion.Value, orgOpencontainersImageRevision.Value, orgOpencontainersImageVendor.Value, orgOpencontainersImageLicenses.Value, orgOpencontainersImageRefName.Value, orgOpencontainersImageTitle.Value, orgOpencontainersImageDescription.Value, additionalProperties);
+            return new OciAnnotations(
+                orgOpencontainersImageCreated,
+                orgOpencontainersImageAuthors,
+                orgOpencontainersImageUrl,
+                orgOpencontainersImageDocumentation,
+                orgOpencontainersImageSource,
+                orgOpencontainersImageVersion,
+                orgOpencontainersImageRevision,
+                orgOpencontainersImageVendor,
+                orgOpencontainersImageLicenses,
+                orgOpencontainersImageRefName,
+                orgOpencontainersImageTitle,
+                orgOpencontainersImageDescription,
+                additionalProperties);
         }
     }
 }

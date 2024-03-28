@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<CostManagementAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition);
+                writer.WriteObjectValue<AlertPropertiesDefinition>(Definition, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                writer.WriteObjectValue<AlertPropertiesDetails>(Details, options);
             }
             if (Optional.IsDefined(CostEntityId))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<CostManagementAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,17 +122,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<AlertPropertiesDefinition> definition = default;
-            Optional<string> description = default;
-            Optional<CostManagementAlertSource> source = default;
-            Optional<AlertPropertiesDetails> details = default;
-            Optional<string> costEntityId = default;
-            Optional<CostManagementAlertStatus> status = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> closeTime = default;
-            Optional<DateTimeOffset> modificationTime = default;
-            Optional<string> statusModificationUserName = default;
-            Optional<DateTimeOffset> statusModificationTime = default;
+            AlertPropertiesDefinition definition = default;
+            string description = default;
+            CostManagementAlertSource? source = default;
+            AlertPropertiesDetails details = default;
+            string costEntityId = default;
+            CostManagementAlertStatus? status = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? closeTime = default;
+            DateTimeOffset? modificationTime = default;
+            string statusModificationUserName = default;
+            DateTimeOffset? statusModificationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            definition = AlertPropertiesDefinition.DeserializeAlertPropertiesDefinition(property0.Value);
+                            definition = AlertPropertiesDefinition.DeserializeAlertPropertiesDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            details = AlertPropertiesDetails.DeserializeAlertPropertiesDetails(property0.Value);
+                            details = AlertPropertiesDetails.DeserializeAlertPropertiesDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("costEntityId"u8))
@@ -242,7 +242,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementAlertPatch(definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(closeTime), Optional.ToNullable(modificationTime), statusModificationUserName.Value, Optional.ToNullable(statusModificationTime), serializedAdditionalRawData);
+            return new CostManagementAlertPatch(
+                definition,
+                description,
+                source,
+                details,
+                costEntityId,
+                status,
+                creationTime,
+                closeTime,
+                modificationTime,
+                statusModificationUserName,
+                statusModificationTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementAlertPatch>.Write(ModelReaderWriterOptions options)
@@ -254,7 +266,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -270,7 +282,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeCostManagementAlertPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementAlertPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

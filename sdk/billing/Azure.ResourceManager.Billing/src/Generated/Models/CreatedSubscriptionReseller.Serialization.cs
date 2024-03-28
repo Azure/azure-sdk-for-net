@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<CreatedSubscriptionReseller>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreatedSubscriptionReseller)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CreatedSubscriptionReseller)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<CreatedSubscriptionReseller>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreatedSubscriptionReseller)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CreatedSubscriptionReseller)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<string> resellerId = default;
-            Optional<string> description = default;
+            string resellerId = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreatedSubscriptionReseller(resellerId.Value, description.Value, serializedAdditionalRawData);
+            return new CreatedSubscriptionReseller(resellerId, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreatedSubscriptionReseller>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Billing.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CreatedSubscriptionReseller)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreatedSubscriptionReseller)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Billing.Models
                         return DeserializeCreatedSubscriptionReseller(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreatedSubscriptionReseller)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreatedSubscriptionReseller)} does not support reading '{options.Format}' format.");
             }
         }
 

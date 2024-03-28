@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestAgentInstallStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestAgentInstallStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,11 +94,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> vmUuid = default;
-            Optional<StatusType> status = default;
-            Optional<DateTimeOffset> lastStatusChange = default;
-            Optional<string> agentVersion = default;
-            Optional<IReadOnlyList<ResponseError>> errorDetails = default;
+            string vmUuid = default;
+            StatusType? status = default;
+            DateTimeOffset? lastStatusChange = default;
+            string agentVersion = default;
+            IReadOnlyList<ResponseError> errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +151,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestAgentInstallStatus(vmUuid.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), agentVersion.Value, Optional.ToList(errorDetails), serializedAdditionalRawData);
+            return new GuestAgentInstallStatus(
+                vmUuid,
+                status,
+                lastStatusChange,
+                agentVersion,
+                errorDetails ?? new ChangeTrackingList<ResponseError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestAgentInstallStatus>.Write(ModelReaderWriterOptions options)
@@ -164,7 +169,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +185,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeGuestAgentInstallStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

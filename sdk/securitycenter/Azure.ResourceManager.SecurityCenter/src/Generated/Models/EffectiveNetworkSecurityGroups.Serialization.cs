@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityGroups>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroups)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroups)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityGroups>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroups)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroups)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> networkInterface = default;
-            Optional<IList<string>> networkSecurityGroups = default;
+            string networkInterface = default;
+            IList<string> networkSecurityGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveNetworkSecurityGroups(networkInterface.Value, Optional.ToList(networkSecurityGroups), serializedAdditionalRawData);
+            return new EffectiveNetworkSecurityGroups(networkInterface, networkSecurityGroups ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveNetworkSecurityGroups>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroups)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroups)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeEffectiveNetworkSecurityGroups(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroups)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroups)} does not support reading '{options.Format}' format.");
             }
         }
 

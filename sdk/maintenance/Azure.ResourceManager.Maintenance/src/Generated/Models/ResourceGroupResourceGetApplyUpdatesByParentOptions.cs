@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
@@ -36,6 +35,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             ResourceType = resourceType;
             ResourceName = resourceName;
             ApplyUpdateName = applyUpdateName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceGetApplyUpdatesByParentOptions"/> for deserialization. </summary>
+        internal ResourceGroupResourceGetApplyUpdatesByParentOptions()
+        {
         }
 
         /// <summary> Resource provider name. </summary>

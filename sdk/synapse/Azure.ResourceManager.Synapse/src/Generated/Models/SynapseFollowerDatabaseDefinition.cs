@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A class representing follower database request. </summary>
     public partial class SynapseFollowerDatabaseDefinition
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SynapseFollowerDatabaseDefinition"/>. </summary>
         /// <param name="kustoPoolResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
@@ -30,11 +63,18 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="kustoPoolResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
         /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>
-        internal SynapseFollowerDatabaseDefinition(ResourceIdentifier kustoPoolResourceId, string attachedDatabaseConfigurationName, string databaseName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseFollowerDatabaseDefinition(ResourceIdentifier kustoPoolResourceId, string attachedDatabaseConfigurationName, string databaseName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KustoPoolResourceId = kustoPoolResourceId;
             AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;
             DatabaseName = databaseName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseFollowerDatabaseDefinition"/> for deserialization. </summary>
+        internal SynapseFollowerDatabaseDefinition()
+        {
         }
 
         /// <summary> Resource id of the cluster that follows a database owned by this cluster. </summary>

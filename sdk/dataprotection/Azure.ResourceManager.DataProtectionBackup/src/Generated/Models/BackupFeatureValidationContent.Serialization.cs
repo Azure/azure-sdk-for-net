@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupFeatureValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupFeatureValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupFeatureValidationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupFeatureValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupFeatureValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupFeatureValidationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<BackupSupportedFeatureType> featureType = default;
-            Optional<string> featureName = default;
+            BackupSupportedFeatureType? featureType = default;
+            string featureName = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupFeatureValidationContent(objectType, serializedAdditionalRawData, Optional.ToNullable(featureType), featureName.Value);
+            return new BackupFeatureValidationContent(objectType, serializedAdditionalRawData, featureType, featureName);
         }
 
         BinaryData IPersistableModel<BackupFeatureValidationContent>.Write(ModelReaderWriterOptions options)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupFeatureValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupFeatureValidationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupFeatureValidationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupFeatureValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupFeatureValidationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

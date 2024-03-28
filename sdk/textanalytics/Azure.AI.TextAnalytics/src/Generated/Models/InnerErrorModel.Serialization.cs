@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror);
+                writer.WriteObjectValue<InnerErrorModel>(Innererror);
             }
             writer.WriteEndObject();
         }
@@ -52,9 +52,9 @@ namespace Azure.AI.TextAnalytics.Models
             }
             InnerErrorCode code = default;
             string message = default;
-            Optional<IDictionary<string, string>> details = default;
-            Optional<string> target = default;
-            Optional<InnerErrorModel> innererror = default;
+            IDictionary<string, string> details = default;
+            string target = default;
+            InnerErrorModel innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -96,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new InnerErrorModel(code, message, Optional.ToDictionary(details), target.Value, innererror.Value);
+            return new InnerErrorModel(code, message, details ?? new ChangeTrackingDictionary<string, string>(), target, innererror);
         }
     }
 }

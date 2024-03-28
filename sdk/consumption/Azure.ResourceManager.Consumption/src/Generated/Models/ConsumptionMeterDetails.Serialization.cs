@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> meterName = default;
-            Optional<string> meterCategory = default;
-            Optional<string> meterSubCategory = default;
-            Optional<string> unit = default;
-            Optional<string> meterLocation = default;
-            Optional<decimal> totalIncludedQuantity = default;
-            Optional<decimal> pretaxStandardRate = default;
-            Optional<string> serviceName = default;
-            Optional<string> serviceTier = default;
+            string meterName = default;
+            string meterCategory = default;
+            string meterSubCategory = default;
+            string unit = default;
+            string meterLocation = default;
+            decimal? totalIncludedQuantity = default;
+            decimal? pretaxStandardRate = default;
+            string serviceName = default;
+            string serviceTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionMeterDetails(meterName.Value, meterCategory.Value, meterSubCategory.Value, unit.Value, meterLocation.Value, Optional.ToNullable(totalIncludedQuantity), Optional.ToNullable(pretaxStandardRate), serviceName.Value, serviceTier.Value, serializedAdditionalRawData);
+            return new ConsumptionMeterDetails(
+                meterName,
+                meterCategory,
+                meterSubCategory,
+                unit,
+                meterLocation,
+                totalIncludedQuantity,
+                pretaxStandardRate,
+                serviceName,
+                serviceTier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionMeterDetails>.Write(ModelReaderWriterOptions options)
@@ -193,7 +203,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +219,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionMeterDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionMeterDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

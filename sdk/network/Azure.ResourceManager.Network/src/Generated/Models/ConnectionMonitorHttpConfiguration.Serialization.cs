@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorHttpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorHttpConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorHttpConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkWatcherHttpHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorHttpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorHttpConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorHttpConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<NetworkHttpConfigurationMethod> method = default;
-            Optional<string> path = default;
-            Optional<IList<NetworkWatcherHttpHeader>> requestHeaders = default;
-            Optional<IList<string>> validStatusCodeRanges = default;
-            Optional<bool> preferHTTPS = default;
+            int? port = default;
+            NetworkHttpConfigurationMethod? method = default;
+            string path = default;
+            IList<NetworkWatcherHttpHeader> requestHeaders = default;
+            IList<string> validStatusCodeRanges = default;
+            bool? preferHTTPS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkWatcherHttpHeader> array = new List<NetworkWatcherHttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item));
+                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item, options));
                     }
                     requestHeaders = array;
                     continue;
@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorHttpConfiguration(Optional.ToNullable(port), Optional.ToNullable(method), path.Value, Optional.ToList(requestHeaders), Optional.ToList(validStatusCodeRanges), Optional.ToNullable(preferHTTPS), serializedAdditionalRawData);
+            return new ConnectionMonitorHttpConfiguration(
+                port,
+                method,
+                path,
+                requestHeaders ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(),
+                validStatusCodeRanges ?? new ChangeTrackingList<string>(),
+                preferHTTPS,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorHttpConfiguration>.Write(ModelReaderWriterOptions options)
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorHttpConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorHttpConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +215,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectionMonitorHttpConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorHttpConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorHttpConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

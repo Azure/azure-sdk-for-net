@@ -5,13 +5,46 @@
 
 #nullable disable
 
-using System.Net;
+using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines load balancer frontend IP configuration properties. </summary>
     public partial class LoadBalancerFrontendIPConfigurationResourceSettings
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="LoadBalancerFrontendIPConfigurationResourceSettings"/>. </summary>
         public LoadBalancerFrontendIPConfigurationResourceSettings()
         {
@@ -19,20 +52,22 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerFrontendIPConfigurationResourceSettings"/>. </summary>
         /// <param name="name"> Gets or sets the frontend IP configuration name. </param>
-        /// <param name="privateIPAddress">
+        /// <param name="privateIPAddressStringValue">
         /// Gets or sets the IP address of the Load Balancer.This is only specified if a specific
         /// private IP address shall be allocated from the subnet specified in subnetRef.
         /// </param>
         /// <param name="privateIPAllocationMethod"> Gets or sets PrivateIP allocation method (Static/Dynamic). </param>
         /// <param name="subnet"> Defines reference to subnet. </param>
         /// <param name="zones"> Gets or sets the csv list of zones. </param>
-        internal LoadBalancerFrontendIPConfigurationResourceSettings(string name, IPAddress privateIPAddress, string privateIPAllocationMethod, SubnetReferenceInfo subnet, string zones)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancerFrontendIPConfigurationResourceSettings(string name, string privateIPAddressStringValue, string privateIPAllocationMethod, SubnetReferenceInfo subnet, string zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            PrivateIPAddress = privateIPAddress;
+            PrivateIPAddressStringValue = privateIPAddressStringValue;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
             Zones = zones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the frontend IP configuration name. </summary>
@@ -41,7 +76,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// Gets or sets the IP address of the Load Balancer.This is only specified if a specific
         /// private IP address shall be allocated from the subnet specified in subnetRef.
         /// </summary>
-        public IPAddress PrivateIPAddress { get; set; }
+        public string PrivateIPAddressStringValue { get; set; }
         /// <summary> Gets or sets PrivateIP allocation method (Static/Dynamic). </summary>
         public string PrivateIPAllocationMethod { get; set; }
         /// <summary> Defines reference to subnet. </summary>

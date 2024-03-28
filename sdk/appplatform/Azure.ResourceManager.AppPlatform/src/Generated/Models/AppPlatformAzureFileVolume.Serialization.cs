@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAzureFileVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformAzureFileVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformAzureFileVolume)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAzureFileVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformAzureFileVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformAzureFileVolume)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             string shareName = default;
             UnderlyingResourceType type = default;
             string mountPath = default;
-            Optional<bool> readOnly = default;
-            Optional<IList<string>> mountOptions = default;
+            bool? readOnly = default;
+            IList<string> mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformAzureFileVolume(type, mountPath, Optional.ToNullable(readOnly), Optional.ToList(mountOptions), serializedAdditionalRawData, shareName);
+            return new AppPlatformAzureFileVolume(
+                type,
+                mountPath,
+                readOnly,
+                mountOptions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                shareName);
         }
 
         BinaryData IPersistableModel<AppPlatformAzureFileVolume>.Write(ModelReaderWriterOptions options)
@@ -150,7 +156,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformAzureFileVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformAzureFileVolume)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +172,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformAzureFileVolume(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformAzureFileVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformAzureFileVolume)} does not support reading '{options.Format}' format.");
             }
         }
 

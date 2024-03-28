@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProfileEnumValidValuesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProfileEnumValidValuesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<int> value = default;
-            Optional<IDictionary<string, string>> localizedValueNames = default;
+            int? value = default;
+            IDictionary<string, string> localizedValueNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProfileEnumValidValuesFormat(Optional.ToNullable(value), Optional.ToDictionary(localizedValueNames), serializedAdditionalRawData);
+            return new ProfileEnumValidValuesFormat(value, localizedValueNames ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProfileEnumValidValuesFormat>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeProfileEnumValidValuesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

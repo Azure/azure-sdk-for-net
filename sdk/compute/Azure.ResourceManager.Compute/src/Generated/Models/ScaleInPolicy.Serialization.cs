@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScaleInPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScaleInPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScaleInPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScaleInPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScaleInPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScaleInPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<VirtualMachineScaleSetScaleInRule>> rules = default;
-            Optional<bool> forceDeletion = default;
+            IList<VirtualMachineScaleSetScaleInRule> rules = default;
+            bool? forceDeletion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScaleInPolicy(Optional.ToList(rules), Optional.ToNullable(forceDeletion), serializedAdditionalRawData);
+            return new ScaleInPolicy(rules ?? new ChangeTrackingList<VirtualMachineScaleSetScaleInRule>(), forceDeletion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScaleInPolicy>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScaleInPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScaleInPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeScaleInPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScaleInPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScaleInPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

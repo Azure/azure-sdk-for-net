@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataTypeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataTypeListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataTypeListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataProductDataType>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataTypeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataTypeListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataTypeListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 return null;
             }
             IReadOnlyList<DataProductDataType> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<DataProductDataType> array = new List<DataProductDataType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProductDataType.DeserializeDataProductDataType(item));
+                        array.Add(DataProductDataType.DeserializeDataProductDataType(item, options));
                     }
                     value = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTypeListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new DataTypeListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTypeListResult>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataTypeListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataTypeListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                         return DeserializeDataTypeListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataTypeListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataTypeListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

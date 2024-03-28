@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppHttpScaleRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppHttpScaleRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppHttpScaleRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Auth)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppScaleRuleAuth>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppHttpScaleRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppHttpScaleRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppHttpScaleRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
+            IDictionary<string, string> metadata = default;
+            IList<ContainerAppScaleRuleAuth> auth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppScaleRuleAuth> array = new List<ContainerAppScaleRuleAuth>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppScaleRuleAuth.DeserializeContainerAppScaleRuleAuth(item));
+                        array.Add(ContainerAppScaleRuleAuth.DeserializeContainerAppScaleRuleAuth(item, options));
                     }
                     auth = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppHttpScaleRule(Optional.ToDictionary(metadata), Optional.ToList(auth), serializedAdditionalRawData);
+            return new ContainerAppHttpScaleRule(metadata ?? new ChangeTrackingDictionary<string, string>(), auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppHttpScaleRule>.Write(ModelReaderWriterOptions options)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppHttpScaleRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppHttpScaleRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppHttpScaleRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppHttpScaleRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppHttpScaleRule)} does not support reading '{options.Format}' format.");
             }
         }
 

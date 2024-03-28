@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptExecutionsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptExecutionsList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptExecutionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptExecutionsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptExecutionsList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScriptExecutionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ScriptExecutionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<ScriptExecutionData> array = new List<ScriptExecutionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptExecutionData.DeserializeScriptExecutionData(item));
+                        array.Add(ScriptExecutionData.DeserializeScriptExecutionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptExecutionsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ScriptExecutionsList(value ?? new ChangeTrackingList<ScriptExecutionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptExecutionsList>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScriptExecutionsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptExecutionsList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeScriptExecutionsList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScriptExecutionsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptExecutionsList)} does not support reading '{options.Format}' format.");
             }
         }
 

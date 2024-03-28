@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -20,9 +19,9 @@ namespace Azure.AI.FormRecognizer.Models
                 return null;
             }
             int page = default;
-            Optional<int?> clusterId = default;
-            Optional<IReadOnlyList<KeyValuePair>> keyValuePairs = default;
-            Optional<IReadOnlyList<DataTable>> tables = default;
+            int? clusterId = default;
+            IReadOnlyList<KeyValuePair> keyValuePairs = default;
+            IReadOnlyList<DataTable> tables = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("page"u8))
@@ -69,7 +68,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new PageResult(page, Optional.ToNullable(clusterId), Optional.ToList(keyValuePairs), Optional.ToList(tables));
+            return new PageResult(page, clusterId, keyValuePairs ?? new ChangeTrackingList<KeyValuePair>(), tables ?? new ChangeTrackingList<DataTable>());
         }
     }
 }

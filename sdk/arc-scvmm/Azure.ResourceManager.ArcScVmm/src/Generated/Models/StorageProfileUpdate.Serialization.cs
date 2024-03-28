@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualDiskUpdate>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<IList<VirtualDiskUpdate>> disks = default;
+            IList<VirtualDiskUpdate> disks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<VirtualDiskUpdate> array = new List<VirtualDiskUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualDiskUpdate.DeserializeVirtualDiskUpdate(item));
+                        array.Add(VirtualDiskUpdate.DeserializeVirtualDiskUpdate(item, options));
                     }
                     disks = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageProfileUpdate(Optional.ToList(disks), serializedAdditionalRawData);
+            return new StorageProfileUpdate(disks ?? new ChangeTrackingList<VirtualDiskUpdate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageProfileUpdate>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeStorageProfileUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

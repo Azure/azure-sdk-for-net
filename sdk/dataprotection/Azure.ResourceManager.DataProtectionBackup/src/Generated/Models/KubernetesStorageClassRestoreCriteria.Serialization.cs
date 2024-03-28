@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesStorageClassRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesStorageClassRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> selectedStorageClassName = default;
-            Optional<string> provisioner = default;
+            string selectedStorageClassName = default;
+            string provisioner = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesStorageClassRestoreCriteria(objectType, serializedAdditionalRawData, selectedStorageClassName.Value, provisioner.Value);
+            return new KubernetesStorageClassRestoreCriteria(objectType, serializedAdditionalRawData, selectedStorageClassName, provisioner);
         }
 
         BinaryData IPersistableModel<KubernetesStorageClassRestoreCriteria>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeKubernetesStorageClassRestoreCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmApplyArtifactsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabVmApplyArtifactsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabVmApplyArtifactsContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabArtifactInstallInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmApplyArtifactsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabVmApplyArtifactsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabVmApplyArtifactsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IList<DevTestLabArtifactInstallInfo>> artifacts = default;
+            IList<DevTestLabArtifactInstallInfo> artifacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabArtifactInstallInfo> array = new List<DevTestLabArtifactInstallInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabArtifactInstallInfo.DeserializeDevTestLabArtifactInstallInfo(item));
+                        array.Add(DevTestLabArtifactInstallInfo.DeserializeDevTestLabArtifactInstallInfo(item, options));
                     }
                     artifacts = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabVmApplyArtifactsContent(Optional.ToList(artifacts), serializedAdditionalRawData);
+            return new DevTestLabVmApplyArtifactsContent(artifacts ?? new ChangeTrackingList<DevTestLabArtifactInstallInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabVmApplyArtifactsContent>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabVmApplyArtifactsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabVmApplyArtifactsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabVmApplyArtifactsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabVmApplyArtifactsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabVmApplyArtifactsContent)} does not support reading '{options.Format}' format.");
             }
         }
 

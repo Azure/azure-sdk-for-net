@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupVaultSoftDeleteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupVaultSoftDeleteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<BackupVaultSoftDeleteState> state = default;
-            Optional<double> retentionDurationInDays = default;
+            BackupVaultSoftDeleteState? state = default;
+            double? retentionDurationInDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupVaultSoftDeleteSettings(Optional.ToNullable(state), Optional.ToNullable(retentionDurationInDays), serializedAdditionalRawData);
+            return new BackupVaultSoftDeleteSettings(state, retentionDurationInDays, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupVaultSoftDeleteSettings>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupVaultSoftDeleteSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

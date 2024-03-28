@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceRoleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceRoleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceRoleProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CloudServiceRoleProfileProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceRoleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceRoleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceRoleProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<CloudServiceRoleProfileProperties>> roles = default;
+            IList<CloudServiceRoleProfileProperties> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceRoleProfileProperties> array = new List<CloudServiceRoleProfileProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceRoleProfileProperties.DeserializeCloudServiceRoleProfileProperties(item));
+                        array.Add(CloudServiceRoleProfileProperties.DeserializeCloudServiceRoleProfileProperties(item, options));
                     }
                     roles = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceRoleProfile(Optional.ToList(roles), serializedAdditionalRawData);
+            return new CloudServiceRoleProfile(roles ?? new ChangeTrackingList<CloudServiceRoleProfileProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceRoleProfile>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceRoleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceRoleProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCloudServiceRoleProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceRoleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceRoleProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

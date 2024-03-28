@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -19,11 +18,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<int> activeSeriesCount = default;
-            Optional<int> allSeriesCount = default;
-            Optional<int> metricsCount = default;
-            Optional<int> dataFeedCount = default;
+            DateTimeOffset? timestamp = default;
+            int? activeSeriesCount = default;
+            int? allSeriesCount = default;
+            int? metricsCount = default;
+            int? dataFeedCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -72,7 +71,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new UsageStats(Optional.ToNullable(timestamp), Optional.ToNullable(activeSeriesCount), Optional.ToNullable(allSeriesCount), Optional.ToNullable(metricsCount), Optional.ToNullable(dataFeedCount));
+            return new UsageStats(timestamp, activeSeriesCount, allSeriesCount, metricsCount, dataFeedCount);
         }
     }
 }

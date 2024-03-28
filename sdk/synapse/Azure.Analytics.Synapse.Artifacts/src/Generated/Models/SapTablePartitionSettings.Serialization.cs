@@ -21,22 +21,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
-                writer.WriteObjectValue(PartitionColumnName);
+                writer.WriteObjectValue<object>(PartitionColumnName);
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
-                writer.WriteObjectValue(PartitionUpperBound);
+                writer.WriteObjectValue<object>(PartitionUpperBound);
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
-                writer.WriteObjectValue(PartitionLowerBound);
+                writer.WriteObjectValue<object>(PartitionLowerBound);
             }
             if (Optional.IsDefined(MaxPartitionsNumber))
             {
                 writer.WritePropertyName("maxPartitionsNumber"u8);
-                writer.WriteObjectValue(MaxPartitionsNumber);
+                writer.WriteObjectValue<object>(MaxPartitionsNumber);
             }
             writer.WriteEndObject();
         }
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> partitionColumnName = default;
-            Optional<object> partitionUpperBound = default;
-            Optional<object> partitionLowerBound = default;
-            Optional<object> maxPartitionsNumber = default;
+            object partitionColumnName = default;
+            object partitionUpperBound = default;
+            object partitionLowerBound = default;
+            object maxPartitionsNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"u8))
@@ -90,14 +90,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SapTablePartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value, maxPartitionsNumber.Value);
+            return new SapTablePartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound, maxPartitionsNumber);
         }
 
         internal partial class SapTablePartitionSettingsConverter : JsonConverter<SapTablePartitionSettings>
         {
             public override void Write(Utf8JsonWriter writer, SapTablePartitionSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SapTablePartitionSettings>(model);
             }
             public override SapTablePartitionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecretVolumeItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ContainerAppStorageType> storageType = default;
-            Optional<string> storageName = default;
-            Optional<IList<SecretVolumeItem>> secrets = default;
-            Optional<string> mountOptions = default;
+            string name = default;
+            ContainerAppStorageType? storageType = default;
+            string storageName = default;
+            IList<SecretVolumeItem> secrets = default;
+            string mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<SecretVolumeItem> array = new List<SecretVolumeItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecretVolumeItem.DeserializeSecretVolumeItem(item));
+                        array.Add(SecretVolumeItem.DeserializeSecretVolumeItem(item, options));
                     }
                     secrets = array;
                     continue;
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppVolume(name.Value, Optional.ToNullable(storageType), storageName.Value, Optional.ToList(secrets), mountOptions.Value, serializedAdditionalRawData);
+            return new ContainerAppVolume(
+                name,
+                storageType,
+                storageName,
+                secrets ?? new ChangeTrackingList<SecretVolumeItem>(),
+                mountOptions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppVolume>.Write(ModelReaderWriterOptions options)
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +181,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppVolume(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support reading '{options.Format}' format.");
             }
         }
 

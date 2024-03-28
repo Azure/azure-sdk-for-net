@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupTriggerContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupTriggerContext)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupTriggerContext)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupTriggerContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupTriggerContext)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupTriggerContext)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AdhocBasedTriggerContext": return AdhocBasedBackupTriggerContext.DeserializeAdhocBasedBackupTriggerContext(element);
-                    case "ScheduleBasedTriggerContext": return ScheduleBasedBackupTriggerContext.DeserializeScheduleBasedBackupTriggerContext(element);
+                    case "AdhocBasedTriggerContext": return AdhocBasedBackupTriggerContext.DeserializeAdhocBasedBackupTriggerContext(element, options);
+                    case "ScheduleBasedTriggerContext": return ScheduleBasedBackupTriggerContext.DeserializeScheduleBasedBackupTriggerContext(element, options);
                 }
             }
-            return UnknownTriggerContext.DeserializeUnknownTriggerContext(element);
+            return UnknownTriggerContext.DeserializeUnknownTriggerContext(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupTriggerContext>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupTriggerContext)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupTriggerContext)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionBackupTriggerContext(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupTriggerContext)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupTriggerContext)} does not support reading '{options.Format}' format.");
             }
         }
 

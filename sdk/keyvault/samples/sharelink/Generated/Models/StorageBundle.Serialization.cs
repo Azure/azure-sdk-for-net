@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -19,13 +18,13 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> resourceId = default;
-            Optional<string> activeKeyName = default;
-            Optional<bool> autoRegenerateKey = default;
-            Optional<string> regenerationPeriod = default;
-            Optional<StorageAccountAttributes> attributes = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            string id = default;
+            string resourceId = default;
+            string activeKeyName = default;
+            bool? autoRegenerateKey = default;
+            string regenerationPeriod = default;
+            StorageAccountAttributes attributes = default;
+            IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -81,7 +80,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new StorageBundle(id.Value, resourceId.Value, activeKeyName.Value, Optional.ToNullable(autoRegenerateKey), regenerationPeriod.Value, attributes.Value, Optional.ToDictionary(tags));
+            return new StorageBundle(
+                id,
+                resourceId,
+                activeKeyName,
+                autoRegenerateKey,
+                regenerationPeriod,
+                attributes,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

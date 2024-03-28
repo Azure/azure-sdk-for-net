@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlowSourceSetting>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -38,14 +38,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(DatasetParameters))
             {
                 writer.WritePropertyName("datasetParameters"u8);
-                writer.WriteObjectValue(DatasetParameters);
+                writer.WriteObjectValue<object>(DatasetParameters);
             }
             writer.WriteEndObject();
         }
@@ -56,9 +56,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<DataFlowSourceSetting>> sourceSettings = default;
-            Optional<IDictionary<string, object>> parameters = default;
-            Optional<object> datasetParameters = default;
+            IList<DataFlowSourceSetting> sourceSettings = default;
+            IDictionary<string, object> parameters = default;
+            object datasetParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceSettings"u8))
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowDebugPackageDebugSettings(Optional.ToList(sourceSettings), Optional.ToDictionary(parameters), datasetParameters.Value);
+            return new DataFlowDebugPackageDebugSettings(sourceSettings ?? new ChangeTrackingList<DataFlowSourceSetting>(), parameters ?? new ChangeTrackingDictionary<string, object>(), datasetParameters);
         }
     }
 }

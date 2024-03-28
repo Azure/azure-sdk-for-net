@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> The artifact's platform, consisting of operating system and architecture. </summary>
@@ -15,11 +12,8 @@ namespace Azure.Containers.ContainerRegistry
     {
         /// <summary> Initializes a new instance of <see cref="ArtifactManifestPlatform"/>. </summary>
         /// <param name="digest"> Manifest digest. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
         internal ArtifactManifestPlatform(string digest)
         {
-            Argument.AssertNotNull(digest, nameof(digest));
-
             Digest = digest;
         }
 

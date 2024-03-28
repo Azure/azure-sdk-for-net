@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressInstructionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressInstructionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> communicationInstruction = default;
+            string communicationInstruction = default;
             DataCenterAddressType dataCenterAddressType = default;
-            Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
-            Optional<AzureLocation> dataCenterAzureLocation = default;
+            IReadOnlyList<string> supportedCarriersForReturnShipment = default;
+            AzureLocation? dataCenterAzureLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCenterAddressInstructionResult(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation), serializedAdditionalRawData, communicationInstruction.Value);
+            return new DataCenterAddressInstructionResult(dataCenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), dataCenterAzureLocation, serializedAdditionalRawData, communicationInstruction);
         }
 
         BinaryData IPersistableModel<DataCenterAddressInstructionResult>.Write(ModelReaderWriterOptions options)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataCenterAddressInstructionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCenterAddressInstructionResult)} does not support reading '{options.Format}' format.");
             }
         }
 

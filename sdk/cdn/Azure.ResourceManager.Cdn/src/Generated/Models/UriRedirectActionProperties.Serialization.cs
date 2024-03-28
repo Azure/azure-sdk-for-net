@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<UriRedirectActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<UriRedirectActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             UriRedirectActionType typeName = default;
             RedirectType redirectType = default;
-            Optional<DestinationProtocol> destinationProtocol = default;
-            Optional<string> customPath = default;
-            Optional<string> customHostname = default;
-            Optional<string> customQueryString = default;
-            Optional<string> customFragment = default;
+            DestinationProtocol? destinationProtocol = default;
+            string customPath = default;
+            string customHostname = default;
+            string customQueryString = default;
+            string customFragment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UriRedirectActionProperties(typeName, redirectType, Optional.ToNullable(destinationProtocol), customPath.Value, customHostname.Value, customQueryString.Value, customFragment.Value, serializedAdditionalRawData);
+            return new UriRedirectActionProperties(
+                typeName,
+                redirectType,
+                destinationProtocol,
+                customPath,
+                customHostname,
+                customQueryString,
+                customFragment,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UriRedirectActionProperties>.Write(ModelReaderWriterOptions options)
@@ -161,7 +169,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +185,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeUriRedirectActionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UriRedirectActionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

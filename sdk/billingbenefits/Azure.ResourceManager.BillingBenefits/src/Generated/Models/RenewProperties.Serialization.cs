@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<RenewProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RenewProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RenewProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(PurchaseProperties))
             {
                 writer.WritePropertyName("purchaseProperties"u8);
-                writer.WriteObjectValue(PurchaseProperties);
+                writer.WriteObjectValue<BillingBenefitsPurchaseContent>(PurchaseProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<RenewProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RenewProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RenewProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<BillingBenefitsPurchaseContent> purchaseProperties = default;
+            BillingBenefitsPurchaseContent purchaseProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    purchaseProperties = BillingBenefitsPurchaseContent.DeserializeBillingBenefitsPurchaseContent(property.Value);
+                    purchaseProperties = BillingBenefitsPurchaseContent.DeserializeBillingBenefitsPurchaseContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RenewProperties(purchaseProperties.Value, serializedAdditionalRawData);
+            return new RenewProperties(purchaseProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RenewProperties>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RenewProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RenewProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeRenewProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RenewProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RenewProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

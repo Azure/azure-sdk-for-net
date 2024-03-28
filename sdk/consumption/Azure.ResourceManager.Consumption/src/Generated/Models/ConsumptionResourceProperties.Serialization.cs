@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionResourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> appliedScopes = default;
-            Optional<float> onDemandRate = default;
-            Optional<string> product = default;
-            Optional<string> region = default;
-            Optional<float> reservationRate = default;
-            Optional<string> resourceType = default;
+            IReadOnlyList<string> appliedScopes = default;
+            float? onDemandRate = default;
+            string product = default;
+            string region = default;
+            float? reservationRate = default;
+            string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionResourceProperties(Optional.ToList(appliedScopes), Optional.ToNullable(onDemandRate), product.Value, region.Value, Optional.ToNullable(reservationRate), resourceType.Value, serializedAdditionalRawData);
+            return new ConsumptionResourceProperties(
+                appliedScopes ?? new ChangeTrackingList<string>(),
+                onDemandRate,
+                product,
+                region,
+                reservationRate,
+                resourceType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionResourceProperties>.Write(ModelReaderWriterOptions options)
@@ -174,7 +181,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -190,7 +197,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

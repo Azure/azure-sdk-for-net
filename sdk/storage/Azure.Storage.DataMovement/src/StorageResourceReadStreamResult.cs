@@ -44,7 +44,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceItemProperties properties)
         {
             Content = content;
-            ContentLength = range.Length;
+            ContentLength = range != default ? range.Length : 0;
             ResourceLength = properties.ResourceLength;
             ETag = properties.ETag;
         }

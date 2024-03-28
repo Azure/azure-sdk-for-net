@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceCapacityInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceCapacityInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceCapacityInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ClusterStorageCapacityInfo))
             {
                 writer.WritePropertyName("clusterStorageCapacityInfo"u8);
-                writer.WriteObjectValue(ClusterStorageCapacityInfo);
+                writer.WriteObjectValue<EdgeClusterStorageViewInfo>(ClusterStorageCapacityInfo, options);
             }
             if (Optional.IsDefined(ClusterComputeCapacityInfo))
             {
                 writer.WritePropertyName("clusterComputeCapacityInfo"u8);
-                writer.WriteObjectValue(ClusterComputeCapacityInfo);
+                writer.WriteObjectValue<EdgeClusterCapacityViewInfo>(ClusterComputeCapacityInfo, options);
             }
             if (Optional.IsCollectionDefined(NodeCapacityInfos))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 foreach (var item in NodeCapacityInfos)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<HostCapacity>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceCapacityInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceCapacityInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceCapacityInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> timeStamp = default;
-            Optional<EdgeClusterStorageViewInfo> clusterStorageCapacityInfo = default;
-            Optional<EdgeClusterCapacityViewInfo> clusterComputeCapacityInfo = default;
-            Optional<IDictionary<string, HostCapacity>> nodeCapacityInfos = default;
+            SystemData systemData = default;
+            DateTimeOffset? timeStamp = default;
+            EdgeClusterStorageViewInfo clusterStorageCapacityInfo = default;
+            EdgeClusterCapacityViewInfo clusterComputeCapacityInfo = default;
+            IDictionary<string, HostCapacity> nodeCapacityInfos = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            clusterStorageCapacityInfo = EdgeClusterStorageViewInfo.DeserializeEdgeClusterStorageViewInfo(property0.Value);
+                            clusterStorageCapacityInfo = EdgeClusterStorageViewInfo.DeserializeEdgeClusterStorageViewInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterComputeCapacityInfo"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            clusterComputeCapacityInfo = EdgeClusterCapacityViewInfo.DeserializeEdgeClusterCapacityViewInfo(property0.Value);
+                            clusterComputeCapacityInfo = EdgeClusterCapacityViewInfo.DeserializeEdgeClusterCapacityViewInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("nodeCapacityInfos"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             Dictionary<string, HostCapacity> dictionary = new Dictionary<string, HostCapacity>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, HostCapacity.DeserializeHostCapacity(property1.Value));
+                                dictionary.Add(property1.Name, HostCapacity.DeserializeHostCapacity(property1.Value, options));
                             }
                             nodeCapacityInfos = dictionary;
                             continue;
@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceCapacityInfo(id, name, type, systemData.Value, Optional.ToNullable(timeStamp), clusterStorageCapacityInfo.Value, clusterComputeCapacityInfo.Value, Optional.ToDictionary(nodeCapacityInfos), serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceCapacityInfo(
+                id,
+                name,
+                type,
+                systemData,
+                timeStamp,
+                clusterStorageCapacityInfo,
+                clusterComputeCapacityInfo,
+                nodeCapacityInfos ?? new ChangeTrackingDictionary<string, HostCapacity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceCapacityInfo>.Write(ModelReaderWriterOptions options)
@@ -221,7 +230,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceCapacityInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceCapacityInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +246,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeDeviceCapacityInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceCapacityInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceCapacityInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

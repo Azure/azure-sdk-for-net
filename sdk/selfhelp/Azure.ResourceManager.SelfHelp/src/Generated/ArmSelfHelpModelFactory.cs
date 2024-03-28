@@ -8,10 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -25,7 +23,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.SelfHelpNameAvailabilityResult"/> instance for mocking. </returns>
         public static SelfHelpNameAvailabilityResult SelfHelpNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new SelfHelpNameAvailabilityResult(isNameAvailable, reason, message);
+            return new SelfHelpNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelp.SelfHelpDiagnosticData"/>. </summary>
@@ -45,7 +43,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
             insights ??= new List<SelfHelpDiagnosticInvocation>();
             diagnostics ??= new List<SelfHelpDiagnosticInfo>();
 
-            return new SelfHelpDiagnosticData(id, name, resourceType, systemData, globalParameters, insights?.ToList(), acceptedOn, provisioningState, diagnostics?.ToList());
+            return new SelfHelpDiagnosticData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                globalParameters,
+                insights?.ToList(),
+                acceptedOn,
+                provisioningState,
+                diagnostics?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpDiagnosticInfo"/>. </summary>
@@ -58,7 +66,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             insights ??= new List<SelfHelpDiagnosticInsight>();
 
-            return new SelfHelpDiagnosticInfo(solutionId, status, insights?.ToList(), error);
+            return new SelfHelpDiagnosticInfo(solutionId, status, insights?.ToList(), error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpError"/>. </summary>
@@ -71,7 +79,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             details ??= new List<SelfHelpError>();
 
-            return new SelfHelpError(code, errorType, message, details?.ToList());
+            return new SelfHelpError(code, errorType, message, details?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpSolutionMetadata"/>. </summary>
@@ -85,7 +93,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             solutions ??= new List<SolutionMetadataProperties>();
 
-            return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, solutions?.ToList());
+            return new SelfHelpSolutionMetadata(
+                id,
+                name,
+                resourceType,
+                systemData,
+                solutions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SolutionMetadataProperties"/>. </summary>
@@ -98,7 +112,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             requiredInputs ??= new List<string>();
 
-            return new SolutionMetadataProperties(solutionId, solutionType, description, requiredInputs?.ToList());
+            return new SolutionMetadataProperties(solutionId, solutionType, description, requiredInputs?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelp.SolutionResourceData"/>. </summary>
@@ -110,7 +124,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="SelfHelp.SolutionResourceData"/> instance for mocking. </returns>
         public static SolutionResourceData SolutionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SolutionResourceProperties properties = null)
         {
-            return new SolutionResourceData(id, name, resourceType, systemData, properties);
+            return new SolutionResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelp.TroubleshooterResourceData"/>. </summary>
@@ -128,7 +148,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
             parameters ??= new Dictionary<string, string>();
             steps ??= new List<SelfHelpStep>();
 
-            return new TroubleshooterResourceData(id, name, resourceType, systemData, solutionId, parameters, provisioningState, steps?.ToList());
+            return new TroubleshooterResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                solutionId,
+                parameters,
+                provisioningState,
+                steps?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpStep"/>. </summary>
@@ -150,7 +179,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
             inputs ??= new List<StepInput>();
             insights ??= new List<SelfHelpDiagnosticInsight>();
 
-            return new SelfHelpStep(id, title, description, guidance, executionStatus, executionStatusDescription, stepType, isLastStep, inputs?.ToList(), automatedCheckResults, insights?.ToList(), error);
+            return new SelfHelpStep(
+                id,
+                title,
+                description,
+                guidance,
+                executionStatus,
+                executionStatusDescription,
+                stepType,
+                isLastStep,
+                inputs?.ToList(),
+                automatedCheckResults,
+                insights?.ToList(),
+                error,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StepInput"/>. </summary>
@@ -168,7 +210,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             responseOptions ??= new List<ResponseConfig>();
 
-            return new StepInput(questionId, questionType, questionContent, questionContentType, responseHint, recommendedOption, selectedOptionValue, responseValidationProperties, responseOptions?.ToList());
+            return new StepInput(
+                questionId,
+                questionType,
+                questionContent,
+                questionContentType,
+                responseHint,
+                recommendedOption,
+                selectedOptionValue,
+                responseValidationProperties,
+                responseOptions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResponseValidationProperties"/>. </summary>
@@ -179,7 +231,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.ResponseValidationProperties"/> instance for mocking. </returns>
         public static ResponseValidationProperties ResponseValidationProperties(string regex = null, bool? isRequired = null, string validationErrorMessage = null, long? maxLength = null)
         {
-            return new ResponseValidationProperties(regex, isRequired, validationErrorMessage, maxLength);
+            return new ResponseValidationProperties(regex, isRequired, validationErrorMessage, maxLength, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResponseConfig"/>. </summary>
@@ -188,7 +240,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.ResponseConfig"/> instance for mocking. </returns>
         public static ResponseConfig ResponseConfig(string key = null, string value = null)
         {
-            return new ResponseConfig(key, value);
+            return new ResponseConfig(key, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomatedCheckResult"/>. </summary>
@@ -197,7 +249,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.AutomatedCheckResult"/> instance for mocking. </returns>
         public static AutomatedCheckResult AutomatedCheckResult(string result = null, AutomatedCheckResultType? resultType = null)
         {
-            return new AutomatedCheckResult(result, resultType);
+            return new AutomatedCheckResult(result, resultType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestartTroubleshooterResult"/>. </summary>
@@ -205,7 +257,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.RestartTroubleshooterResult"/> instance for mocking. </returns>
         public static RestartTroubleshooterResult RestartTroubleshooterResult(string troubleshooterResourceName = null)
         {
-            return new RestartTroubleshooterResult(troubleshooterResourceName);
+            return new RestartTroubleshooterResult(troubleshooterResourceName, serializedAdditionalRawData: null);
         }
     }
 }

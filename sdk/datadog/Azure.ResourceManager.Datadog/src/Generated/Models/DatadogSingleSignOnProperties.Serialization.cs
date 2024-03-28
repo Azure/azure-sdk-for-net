@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogSingleSignOnProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogSingleSignOnProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogSingleSignOnProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogSingleSignOnProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogSingleSignOnProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<SingleSignOnState> singleSignOnState = default;
-            Optional<string> enterpriseAppId = default;
-            Optional<Uri> singleSignOnUrl = default;
+            ProvisioningState? provisioningState = default;
+            SingleSignOnState? singleSignOnState = default;
+            string enterpriseAppId = default;
+            Uri singleSignOnUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogSingleSignOnProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value, serializedAdditionalRawData);
+            return new DatadogSingleSignOnProperties(provisioningState, singleSignOnState, enterpriseAppId, singleSignOnUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogSingleSignOnProperties>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogSingleSignOnProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogSingleSignOnProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeDatadogSingleSignOnProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogSingleSignOnProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogSingleSignOnProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             UriRewriteActionType typeName = default;
             string sourcePattern = default;
             string destination = default;
-            Optional<bool> preserveUnmatchedPath = default;
+            bool? preserveUnmatchedPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UriRewriteActionProperties(typeName, sourcePattern, destination, Optional.ToNullable(preserveUnmatchedPath), serializedAdditionalRawData);
+            return new UriRewriteActionProperties(typeName, sourcePattern, destination, preserveUnmatchedPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UriRewriteActionProperties>.Write(ModelReaderWriterOptions options)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeUriRewriteActionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

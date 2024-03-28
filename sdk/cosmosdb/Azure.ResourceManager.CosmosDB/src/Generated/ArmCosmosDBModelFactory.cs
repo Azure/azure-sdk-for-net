@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -74,9 +72,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="customerManagedKeyStatus"> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </param>
         /// <param name="enablePriorityBasedExecution"> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </param>
         /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
+        /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBAccountData"/> instance for mocking. </returns>
-        public static CosmosDBAccountData CosmosDBAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBAccountKind? kind = null, string provisioningState = null, string documentEndpoint = null, CosmosDBAccountOfferType? databaseAccountOfferType = null, IEnumerable<CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = null, bool? enableAutomaticFailover = null, ConsistencyPolicy consistencyPolicy = null, IEnumerable<CosmosDBAccountCapability> capabilities = null, IEnumerable<CosmosDBAccountLocation> writeLocations = null, IEnumerable<CosmosDBAccountLocation> readLocations = null, IEnumerable<CosmosDBAccountLocation> locations = null, IEnumerable<CosmosDBFailoverPolicy> failoverPolicies = null, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = null, IEnumerable<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections = null, bool? enableMultipleWriteLocations = null, bool? enableCassandraConnector = null, ConnectorOffer? connectorOffer = null, bool? disableKeyBasedMetadataWriteAccess = null, Uri keyVaultKeyUri = null, string defaultIdentity = null, CosmosDBPublicNetworkAccess? publicNetworkAccess = null, bool? isFreeTierEnabled = null, CosmosDBServerVersion? apiServerVersion = null, bool? isAnalyticalStorageEnabled = null, AnalyticalStorageSchemaType? analyticalStorageSchemaType = null, Guid? instanceId = null, CosmosDBAccountCreateMode? createMode = null, CosmosDBAccountRestoreParameters restoreParameters = null, CosmosDBAccountBackupPolicy backupPolicy = null, IEnumerable<CosmosDBAccountCorsPolicy> cors = null, NetworkAclBypass? networkAclBypass = null, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = null, EnableFullTextQuery? diagnosticLogEnableFullTextQuery = null, bool? disableLocalAuth = null, int? capacityTotalThroughputLimit = null, bool? enableMaterializedViews = null, DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = null, bool? enableBurstCapacity = null, CosmosDBMinimalTlsVersion? minimalTlsVersion = null, CustomerManagedKeyStatus? customerManagedKeyStatus = null, bool? enablePriorityBasedExecution = null, DefaultPriorityLevel? defaultPriorityLevel = null, ManagedServiceIdentity identity = null)
+        public static CosmosDBAccountData CosmosDBAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBAccountKind? kind = null, string provisioningState = null, string documentEndpoint = null, CosmosDBAccountOfferType? databaseAccountOfferType = null, IEnumerable<CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = null, bool? enableAutomaticFailover = null, ConsistencyPolicy consistencyPolicy = null, IEnumerable<CosmosDBAccountCapability> capabilities = null, IEnumerable<CosmosDBAccountLocation> writeLocations = null, IEnumerable<CosmosDBAccountLocation> readLocations = null, IEnumerable<CosmosDBAccountLocation> locations = null, IEnumerable<CosmosDBFailoverPolicy> failoverPolicies = null, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = null, IEnumerable<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections = null, bool? enableMultipleWriteLocations = null, bool? enableCassandraConnector = null, ConnectorOffer? connectorOffer = null, bool? disableKeyBasedMetadataWriteAccess = null, Uri keyVaultKeyUri = null, string defaultIdentity = null, CosmosDBPublicNetworkAccess? publicNetworkAccess = null, bool? isFreeTierEnabled = null, CosmosDBServerVersion? apiServerVersion = null, bool? isAnalyticalStorageEnabled = null, AnalyticalStorageSchemaType? analyticalStorageSchemaType = null, Guid? instanceId = null, CosmosDBAccountCreateMode? createMode = null, CosmosDBAccountRestoreParameters restoreParameters = null, CosmosDBAccountBackupPolicy backupPolicy = null, IEnumerable<CosmosDBAccountCorsPolicy> cors = null, NetworkAclBypass? networkAclBypass = null, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = null, EnableFullTextQuery? diagnosticLogEnableFullTextQuery = null, bool? disableLocalAuth = null, int? capacityTotalThroughputLimit = null, bool? enableMaterializedViews = null, DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = null, bool? enableBurstCapacity = null, CosmosDBMinimalTlsVersion? minimalTlsVersion = null, string customerManagedKeyStatus = null, bool? enablePriorityBasedExecution = null, DefaultPriorityLevel? defaultPriorityLevel = null, bool? enablePerRegionPerPartitionAutoscale = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
             ipRules ??= new List<CosmosDBIPAddressOrRange>();
@@ -90,7 +89,60 @@ namespace Azure.ResourceManager.CosmosDB.Models
             cors ??= new List<CosmosDBAccountCorsPolicy>();
             networkAclBypassResourceIds ??= new List<ResourceIdentifier>();
 
-            return new CosmosDBAccountData(id, name, resourceType, systemData, tags, location, kind, provisioningState, documentEndpoint, databaseAccountOfferType, ipRules?.ToList(), isVirtualNetworkFilterEnabled, enableAutomaticFailover, consistencyPolicy, capabilities?.ToList(), writeLocations?.ToList(), readLocations?.ToList(), locations?.ToList(), failoverPolicies?.ToList(), virtualNetworkRules?.ToList(), privateEndpointConnections?.ToList(), enableMultipleWriteLocations, enableCassandraConnector, connectorOffer, disableKeyBasedMetadataWriteAccess, keyVaultKeyUri, defaultIdentity, publicNetworkAccess, isFreeTierEnabled, apiServerVersion != null ? new ApiProperties(apiServerVersion, serializedAdditionalRawData: null) : null, isAnalyticalStorageEnabled, analyticalStorageSchemaType != null ? new AnalyticalStorageConfiguration(analyticalStorageSchemaType, serializedAdditionalRawData: null) : null, instanceId, createMode, restoreParameters, backupPolicy, cors?.ToList(), networkAclBypass, networkAclBypassResourceIds?.ToList(), diagnosticLogEnableFullTextQuery != null ? new DiagnosticLogSettings(diagnosticLogEnableFullTextQuery, serializedAdditionalRawData: null) : null, disableLocalAuth, capacityTotalThroughputLimit != null ? new CosmosDBAccountCapacity(capacityTotalThroughputLimit, serializedAdditionalRawData: null) : null, enableMaterializedViews, keysMetadata, enablePartitionMerge, enableBurstCapacity, minimalTlsVersion, customerManagedKeyStatus, enablePriorityBasedExecution, defaultPriorityLevel, identity, serializedAdditionalRawData: null);
+            return new CosmosDBAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                kind,
+                provisioningState,
+                documentEndpoint,
+                databaseAccountOfferType,
+                ipRules?.ToList(),
+                isVirtualNetworkFilterEnabled,
+                enableAutomaticFailover,
+                consistencyPolicy,
+                capabilities?.ToList(),
+                writeLocations?.ToList(),
+                readLocations?.ToList(),
+                locations?.ToList(),
+                failoverPolicies?.ToList(),
+                virtualNetworkRules?.ToList(),
+                privateEndpointConnections?.ToList(),
+                enableMultipleWriteLocations,
+                enableCassandraConnector,
+                connectorOffer,
+                disableKeyBasedMetadataWriteAccess,
+                keyVaultKeyUri,
+                defaultIdentity,
+                publicNetworkAccess,
+                isFreeTierEnabled,
+                apiServerVersion != null ? new ApiProperties(apiServerVersion, serializedAdditionalRawData: null) : null,
+                isAnalyticalStorageEnabled,
+                analyticalStorageSchemaType != null ? new AnalyticalStorageConfiguration(analyticalStorageSchemaType, serializedAdditionalRawData: null) : null,
+                instanceId,
+                createMode,
+                restoreParameters,
+                backupPolicy,
+                cors?.ToList(),
+                networkAclBypass,
+                networkAclBypassResourceIds?.ToList(),
+                diagnosticLogEnableFullTextQuery != null ? new DiagnosticLogSettings(diagnosticLogEnableFullTextQuery, serializedAdditionalRawData: null) : null,
+                disableLocalAuth,
+                capacityTotalThroughputLimit != null ? new CosmosDBAccountCapacity(capacityTotalThroughputLimit, serializedAdditionalRawData: null) : null,
+                enableMaterializedViews,
+                keysMetadata,
+                enablePartitionMerge,
+                enableBurstCapacity,
+                minimalTlsVersion,
+                customerManagedKeyStatus,
+                enablePriorityBasedExecution,
+                defaultPriorityLevel,
+                enablePerRegionPerPartitionAutoscale,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBAccountLocation"/>. </summary>
@@ -103,7 +155,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBAccountLocation"/> instance for mocking. </returns>
         public static CosmosDBAccountLocation CosmosDBAccountLocation(string id = null, AzureLocation? locationName = null, string documentEndpoint = null, string provisioningState = null, int? failoverPriority = null, bool? isZoneRedundant = null)
         {
-            return new CosmosDBAccountLocation(id, locationName, documentEndpoint, provisioningState, failoverPriority, isZoneRedundant, serializedAdditionalRawData: null);
+            return new CosmosDBAccountLocation(
+                id,
+                locationName,
+                documentEndpoint,
+                provisioningState,
+                failoverPriority,
+                isZoneRedundant,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBFailoverPolicy"/>. </summary>
@@ -128,7 +187,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="CosmosDB.CosmosDBPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static CosmosDBPrivateEndpointConnectionData CosmosDBPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, CosmosDBPrivateLinkServiceConnectionStateProperty connectionState = null, string groupId = null, string provisioningState = null)
         {
-            return new CosmosDBPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? new PrivateEndpointProperty(privateEndpointId, serializedAdditionalRawData: null) : null, connectionState, groupId, provisioningState, serializedAdditionalRawData: null);
+            return new CosmosDBPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? new PrivateEndpointProperty(privateEndpointId, serializedAdditionalRawData: null) : null,
+                connectionState,
+                groupId,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBPrivateLinkServiceConnectionStateProperty"/>. </summary>
@@ -193,8 +261,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="customerManagedKeyStatus"> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </param>
         /// <param name="enablePriorityBasedExecution"> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </param>
         /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
+        /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </param>
         /// <returns> A new <see cref="Models.CosmosDBAccountPatch"/> instance for mocking. </returns>
-        public static CosmosDBAccountPatch CosmosDBAccountPatch(IDictionary<string, string> tags = null, AzureLocation? location = null, ManagedServiceIdentity identity = null, ConsistencyPolicy consistencyPolicy = null, IEnumerable<CosmosDBAccountLocation> locations = null, IEnumerable<CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = null, bool? enableAutomaticFailover = null, IEnumerable<CosmosDBAccountCapability> capabilities = null, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = null, bool? enableMultipleWriteLocations = null, bool? enableCassandraConnector = null, ConnectorOffer? connectorOffer = null, bool? disableKeyBasedMetadataWriteAccess = null, Uri keyVaultKeyUri = null, string defaultIdentity = null, CosmosDBPublicNetworkAccess? publicNetworkAccess = null, bool? isFreeTierEnabled = null, CosmosDBServerVersion? apiServerVersion = null, bool? isAnalyticalStorageEnabled = null, AnalyticalStorageSchemaType? analyticalStorageSchemaType = null, CosmosDBAccountBackupPolicy backupPolicy = null, IEnumerable<CosmosDBAccountCorsPolicy> cors = null, NetworkAclBypass? networkAclBypass = null, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = null, EnableFullTextQuery? diagnosticLogEnableFullTextQuery = null, bool? disableLocalAuth = null, int? capacityTotalThroughputLimit = null, bool? enableMaterializedViews = null, DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = null, bool? enableBurstCapacity = null, CosmosDBMinimalTlsVersion? minimalTlsVersion = null, CustomerManagedKeyStatus? customerManagedKeyStatus = null, bool? enablePriorityBasedExecution = null, DefaultPriorityLevel? defaultPriorityLevel = null)
+        public static CosmosDBAccountPatch CosmosDBAccountPatch(IDictionary<string, string> tags = null, AzureLocation? location = null, ManagedServiceIdentity identity = null, ConsistencyPolicy consistencyPolicy = null, IEnumerable<CosmosDBAccountLocation> locations = null, IEnumerable<CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = null, bool? enableAutomaticFailover = null, IEnumerable<CosmosDBAccountCapability> capabilities = null, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = null, bool? enableMultipleWriteLocations = null, bool? enableCassandraConnector = null, ConnectorOffer? connectorOffer = null, bool? disableKeyBasedMetadataWriteAccess = null, Uri keyVaultKeyUri = null, string defaultIdentity = null, CosmosDBPublicNetworkAccess? publicNetworkAccess = null, bool? isFreeTierEnabled = null, CosmosDBServerVersion? apiServerVersion = null, bool? isAnalyticalStorageEnabled = null, AnalyticalStorageSchemaType? analyticalStorageSchemaType = null, CosmosDBAccountBackupPolicy backupPolicy = null, IEnumerable<CosmosDBAccountCorsPolicy> cors = null, NetworkAclBypass? networkAclBypass = null, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = null, EnableFullTextQuery? diagnosticLogEnableFullTextQuery = null, bool? disableLocalAuth = null, int? capacityTotalThroughputLimit = null, bool? enableMaterializedViews = null, DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = null, bool? enableBurstCapacity = null, CosmosDBMinimalTlsVersion? minimalTlsVersion = null, string customerManagedKeyStatus = null, bool? enablePriorityBasedExecution = null, DefaultPriorityLevel? defaultPriorityLevel = null, bool? enablePerRegionPerPartitionAutoscale = null)
         {
             tags ??= new Dictionary<string, string>();
             locations ??= new List<CosmosDBAccountLocation>();
@@ -204,7 +273,45 @@ namespace Azure.ResourceManager.CosmosDB.Models
             cors ??= new List<CosmosDBAccountCorsPolicy>();
             networkAclBypassResourceIds ??= new List<ResourceIdentifier>();
 
-            return new CosmosDBAccountPatch(tags, location, identity, consistencyPolicy, locations?.ToList(), ipRules?.ToList(), isVirtualNetworkFilterEnabled, enableAutomaticFailover, capabilities?.ToList(), virtualNetworkRules?.ToList(), enableMultipleWriteLocations, enableCassandraConnector, connectorOffer, disableKeyBasedMetadataWriteAccess, keyVaultKeyUri, defaultIdentity, publicNetworkAccess, isFreeTierEnabled, apiServerVersion != null ? new ApiProperties(apiServerVersion, serializedAdditionalRawData: null) : null, isAnalyticalStorageEnabled, analyticalStorageSchemaType != null ? new AnalyticalStorageConfiguration(analyticalStorageSchemaType, serializedAdditionalRawData: null) : null, backupPolicy, cors?.ToList(), networkAclBypass, networkAclBypassResourceIds?.ToList(), diagnosticLogEnableFullTextQuery != null ? new DiagnosticLogSettings(diagnosticLogEnableFullTextQuery, serializedAdditionalRawData: null) : null, disableLocalAuth, capacityTotalThroughputLimit != null ? new CosmosDBAccountCapacity(capacityTotalThroughputLimit, serializedAdditionalRawData: null) : null, enableMaterializedViews, keysMetadata, enablePartitionMerge, enableBurstCapacity, minimalTlsVersion, customerManagedKeyStatus, enablePriorityBasedExecution, defaultPriorityLevel, serializedAdditionalRawData: null);
+            return new CosmosDBAccountPatch(
+                tags,
+                location,
+                identity,
+                consistencyPolicy,
+                locations?.ToList(),
+                ipRules?.ToList(),
+                isVirtualNetworkFilterEnabled,
+                enableAutomaticFailover,
+                capabilities?.ToList(),
+                virtualNetworkRules?.ToList(),
+                enableMultipleWriteLocations,
+                enableCassandraConnector,
+                connectorOffer,
+                disableKeyBasedMetadataWriteAccess,
+                keyVaultKeyUri,
+                defaultIdentity,
+                publicNetworkAccess,
+                isFreeTierEnabled,
+                apiServerVersion != null ? new ApiProperties(apiServerVersion, serializedAdditionalRawData: null) : null,
+                isAnalyticalStorageEnabled,
+                analyticalStorageSchemaType != null ? new AnalyticalStorageConfiguration(analyticalStorageSchemaType, serializedAdditionalRawData: null) : null,
+                backupPolicy,
+                cors?.ToList(),
+                networkAclBypass,
+                networkAclBypassResourceIds?.ToList(),
+                diagnosticLogEnableFullTextQuery != null ? new DiagnosticLogSettings(diagnosticLogEnableFullTextQuery, serializedAdditionalRawData: null) : null,
+                disableLocalAuth,
+                capacityTotalThroughputLimit != null ? new CosmosDBAccountCapacity(capacityTotalThroughputLimit, serializedAdditionalRawData: null) : null,
+                enableMaterializedViews,
+                keysMetadata,
+                enablePartitionMerge,
+                enableBurstCapacity,
+                minimalTlsVersion,
+                customerManagedKeyStatus,
+                enablePriorityBasedExecution,
+                defaultPriorityLevel,
+                enablePerRegionPerPartitionAutoscale,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBAccountCreateOrUpdateContent"/>. </summary>
@@ -255,9 +362,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="customerManagedKeyStatus"> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </param>
         /// <param name="enablePriorityBasedExecution"> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </param>
         /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
+        /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="Models.CosmosDBAccountCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static CosmosDBAccountCreateOrUpdateContent CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBAccountKind? kind = null, ConsistencyPolicy consistencyPolicy = null, IEnumerable<CosmosDBAccountLocation> locations = null, CosmosDBAccountOfferType databaseAccountOfferType = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = null, bool? enableAutomaticFailover = null, IEnumerable<CosmosDBAccountCapability> capabilities = null, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = null, bool? enableMultipleWriteLocations = null, bool? enableCassandraConnector = null, ConnectorOffer? connectorOffer = null, bool? disableKeyBasedMetadataWriteAccess = null, Uri keyVaultKeyUri = null, string defaultIdentity = null, CosmosDBPublicNetworkAccess? publicNetworkAccess = null, bool? isFreeTierEnabled = null, CosmosDBServerVersion? apiServerVersion = null, bool? isAnalyticalStorageEnabled = null, AnalyticalStorageSchemaType? analyticalStorageSchemaType = null, CosmosDBAccountCreateMode? createMode = null, CosmosDBAccountBackupPolicy backupPolicy = null, IEnumerable<CosmosDBAccountCorsPolicy> cors = null, NetworkAclBypass? networkAclBypass = null, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = null, EnableFullTextQuery? diagnosticLogEnableFullTextQuery = null, bool? disableLocalAuth = null, CosmosDBAccountRestoreParameters restoreParameters = null, int? capacityTotalThroughputLimit = null, bool? enableMaterializedViews = null, DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = null, bool? enableBurstCapacity = null, CosmosDBMinimalTlsVersion? minimalTlsVersion = null, CustomerManagedKeyStatus? customerManagedKeyStatus = null, bool? enablePriorityBasedExecution = null, DefaultPriorityLevel? defaultPriorityLevel = null, ManagedServiceIdentity identity = null)
+        public static CosmosDBAccountCreateOrUpdateContent CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBAccountKind? kind = null, ConsistencyPolicy consistencyPolicy = null, IEnumerable<CosmosDBAccountLocation> locations = null, CosmosDBAccountOfferType databaseAccountOfferType = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = null, bool? enableAutomaticFailover = null, IEnumerable<CosmosDBAccountCapability> capabilities = null, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = null, bool? enableMultipleWriteLocations = null, bool? enableCassandraConnector = null, ConnectorOffer? connectorOffer = null, bool? disableKeyBasedMetadataWriteAccess = null, Uri keyVaultKeyUri = null, string defaultIdentity = null, CosmosDBPublicNetworkAccess? publicNetworkAccess = null, bool? isFreeTierEnabled = null, CosmosDBServerVersion? apiServerVersion = null, bool? isAnalyticalStorageEnabled = null, AnalyticalStorageSchemaType? analyticalStorageSchemaType = null, CosmosDBAccountCreateMode? createMode = null, CosmosDBAccountBackupPolicy backupPolicy = null, IEnumerable<CosmosDBAccountCorsPolicy> cors = null, NetworkAclBypass? networkAclBypass = null, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = null, EnableFullTextQuery? diagnosticLogEnableFullTextQuery = null, bool? disableLocalAuth = null, CosmosDBAccountRestoreParameters restoreParameters = null, int? capacityTotalThroughputLimit = null, bool? enableMaterializedViews = null, DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = null, bool? enableBurstCapacity = null, CosmosDBMinimalTlsVersion? minimalTlsVersion = null, string customerManagedKeyStatus = null, bool? enablePriorityBasedExecution = null, DefaultPriorityLevel? defaultPriorityLevel = null, bool? enablePerRegionPerPartitionAutoscale = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
             locations ??= new List<CosmosDBAccountLocation>();
@@ -267,7 +375,53 @@ namespace Azure.ResourceManager.CosmosDB.Models
             cors ??= new List<CosmosDBAccountCorsPolicy>();
             networkAclBypassResourceIds ??= new List<ResourceIdentifier>();
 
-            return new CosmosDBAccountCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, kind, consistencyPolicy, locations?.ToList(), databaseAccountOfferType, ipRules?.ToList(), isVirtualNetworkFilterEnabled, enableAutomaticFailover, capabilities?.ToList(), virtualNetworkRules?.ToList(), enableMultipleWriteLocations, enableCassandraConnector, connectorOffer, disableKeyBasedMetadataWriteAccess, keyVaultKeyUri, defaultIdentity, publicNetworkAccess, isFreeTierEnabled, apiServerVersion != null ? new ApiProperties(apiServerVersion, serializedAdditionalRawData: null) : null, isAnalyticalStorageEnabled, analyticalStorageSchemaType != null ? new AnalyticalStorageConfiguration(analyticalStorageSchemaType, serializedAdditionalRawData: null) : null, createMode, backupPolicy, cors?.ToList(), networkAclBypass, networkAclBypassResourceIds?.ToList(), diagnosticLogEnableFullTextQuery != null ? new DiagnosticLogSettings(diagnosticLogEnableFullTextQuery, serializedAdditionalRawData: null) : null, disableLocalAuth, restoreParameters, capacityTotalThroughputLimit != null ? new CosmosDBAccountCapacity(capacityTotalThroughputLimit, serializedAdditionalRawData: null) : null, enableMaterializedViews, keysMetadata, enablePartitionMerge, enableBurstCapacity, minimalTlsVersion, customerManagedKeyStatus, enablePriorityBasedExecution, defaultPriorityLevel, identity, serializedAdditionalRawData: null);
+            return new CosmosDBAccountCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                kind,
+                consistencyPolicy,
+                locations?.ToList(),
+                databaseAccountOfferType,
+                ipRules?.ToList(),
+                isVirtualNetworkFilterEnabled,
+                enableAutomaticFailover,
+                capabilities?.ToList(),
+                virtualNetworkRules?.ToList(),
+                enableMultipleWriteLocations,
+                enableCassandraConnector,
+                connectorOffer,
+                disableKeyBasedMetadataWriteAccess,
+                keyVaultKeyUri,
+                defaultIdentity,
+                publicNetworkAccess,
+                isFreeTierEnabled,
+                apiServerVersion != null ? new ApiProperties(apiServerVersion, serializedAdditionalRawData: null) : null,
+                isAnalyticalStorageEnabled,
+                analyticalStorageSchemaType != null ? new AnalyticalStorageConfiguration(analyticalStorageSchemaType, serializedAdditionalRawData: null) : null,
+                createMode,
+                backupPolicy,
+                cors?.ToList(),
+                networkAclBypass,
+                networkAclBypassResourceIds?.ToList(),
+                diagnosticLogEnableFullTextQuery != null ? new DiagnosticLogSettings(diagnosticLogEnableFullTextQuery, serializedAdditionalRawData: null) : null,
+                disableLocalAuth,
+                restoreParameters,
+                capacityTotalThroughputLimit != null ? new CosmosDBAccountCapacity(capacityTotalThroughputLimit, serializedAdditionalRawData: null) : null,
+                enableMaterializedViews,
+                keysMetadata,
+                enablePartitionMerge,
+                enableBurstCapacity,
+                minimalTlsVersion,
+                customerManagedKeyStatus,
+                enablePriorityBasedExecution,
+                defaultPriorityLevel,
+                enablePerRegionPerPartitionAutoscale,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBAccountKeyList"/>. </summary>
@@ -322,7 +476,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             metricValues ??= new List<CosmosDBMetricValue>();
 
-            return new CosmosDBBaseMetric(startOn, endOn, timeGrain, unit, name, metricValues?.ToList(), serializedAdditionalRawData: null);
+            return new CosmosDBBaseMetric(
+                startOn,
+                endOn,
+                timeGrain,
+                unit,
+                name,
+                metricValues?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBMetricName"/>. </summary>
@@ -344,7 +505,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBMetricValue"/> instance for mocking. </returns>
         public static CosmosDBMetricValue CosmosDBMetricValue(int? count = null, double? average = null, double? maximum = null, double? minimum = null, DateTimeOffset? timestamp = null, double? total = null)
         {
-            return new CosmosDBMetricValue(count, average, maximum, minimum, timestamp, total, serializedAdditionalRawData: null);
+            return new CosmosDBMetricValue(
+                count,
+                average,
+                maximum,
+                minimum,
+                timestamp,
+                total,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBPercentileMetric"/>. </summary>
@@ -359,7 +527,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             metricValues ??= new List<PercentileMetricValue>();
 
-            return new CosmosDBPercentileMetric(startOn, endOn, timeGrain, unit, name, metricValues?.ToList(), serializedAdditionalRawData: null);
+            return new CosmosDBPercentileMetric(
+                startOn,
+                endOn,
+                timeGrain,
+                unit,
+                name,
+                metricValues?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PercentileMetricValue"/>. </summary>
@@ -379,7 +554,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.PercentileMetricValue"/> instance for mocking. </returns>
         public static PercentileMetricValue PercentileMetricValue(int? count = null, double? average = null, double? maximum = null, double? minimum = null, DateTimeOffset? timestamp = null, double? total = null, double? p10 = null, double? p25 = null, double? p50 = null, double? p75 = null, double? p90 = null, double? p95 = null, double? p99 = null)
         {
-            return new PercentileMetricValue(count, average, maximum, minimum, timestamp, total, serializedAdditionalRawData: null, p10, p25, p50, p75, p90, p95, p99);
+            return new PercentileMetricValue(
+                count,
+                average,
+                maximum,
+                minimum,
+                timestamp,
+                total,
+                serializedAdditionalRawData: null,
+                p10,
+                p25,
+                p50,
+                p75,
+                p90,
+                p95,
+                p99);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PartitionMetric"/>. </summary>
@@ -396,7 +585,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             metricValues ??= new List<CosmosDBMetricValue>();
 
-            return new PartitionMetric(startOn, endOn, timeGrain, unit, name, metricValues?.ToList(), serializedAdditionalRawData: null, partitionId, partitionKeyRangeId);
+            return new PartitionMetric(
+                startOn,
+                endOn,
+                timeGrain,
+                unit,
+                name,
+                metricValues?.ToList(),
+                serializedAdditionalRawData: null,
+                partitionId,
+                partitionKeyRangeId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBBaseUsage"/>. </summary>
@@ -408,7 +606,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBBaseUsage"/> instance for mocking. </returns>
         public static CosmosDBBaseUsage CosmosDBBaseUsage(CosmosDBMetricUnitType? unit = null, CosmosDBMetricName name = null, string quotaPeriod = null, long? limit = null, long? currentValue = null)
         {
-            return new CosmosDBBaseUsage(unit, name, quotaPeriod, limit, currentValue, serializedAdditionalRawData: null);
+            return new CosmosDBBaseUsage(
+                unit,
+                name,
+                quotaPeriod,
+                limit,
+                currentValue,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PartitionUsage"/>. </summary>
@@ -422,7 +626,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.PartitionUsage"/> instance for mocking. </returns>
         public static PartitionUsage PartitionUsage(CosmosDBMetricUnitType? unit = null, CosmosDBMetricName name = null, string quotaPeriod = null, long? limit = null, long? currentValue = null, Guid? partitionId = null, string partitionKeyRangeId = null)
         {
-            return new PartitionUsage(unit, name, quotaPeriod, limit, currentValue, serializedAdditionalRawData: null, partitionId, partitionKeyRangeId);
+            return new PartitionUsage(
+                unit,
+                name,
+                quotaPeriod,
+                limit,
+                currentValue,
+                serializedAdditionalRawData: null,
+                partitionId,
+                partitionKeyRangeId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBMetricDefinition"/>. </summary>
@@ -436,7 +648,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             metricAvailabilities ??= new List<CosmosDBMetricAvailability>();
 
-            return new CosmosDBMetricDefinition(metricAvailabilities?.ToList(), primaryAggregationType, unit, resourceId, name, serializedAdditionalRawData: null);
+            return new CosmosDBMetricDefinition(
+                metricAvailabilities?.ToList(),
+                primaryAggregationType,
+                unit,
+                resourceId,
+                name,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBMetricAvailability"/>. </summary>
@@ -463,7 +681,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GraphResourceGetResultData(id, name, resourceType, systemData, tags, location, resourceId != null ? ResourceManagerModelFactory.WritableSubResource(resourceId) : null, options, identity, serializedAdditionalRawData: null);
+            return new GraphResourceGetResultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resourceId != null ? ResourceManagerModelFactory.WritableSubResource(resourceId) : null,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GraphResourceGetResultCreateOrUpdateContent"/>. </summary>
@@ -481,7 +709,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GraphResourceGetResultCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resourceId != null ? ResourceManagerModelFactory.WritableSubResource(resourceId) : null, options, identity, serializedAdditionalRawData: null);
+            return new GraphResourceGetResultCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resourceId != null ? ResourceManagerModelFactory.WritableSubResource(resourceId) : null,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlDatabaseData"/>. </summary>
@@ -499,7 +737,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBSqlDatabaseData(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CosmosDBSqlDatabaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedCosmosDBSqlDatabaseResourceInfo"/>. </summary>
@@ -514,7 +762,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.ExtendedCosmosDBSqlDatabaseResourceInfo"/> instance for mocking. </returns>
         public static ExtendedCosmosDBSqlDatabaseResourceInfo ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, string colls = null, string users = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
-            return new ExtendedCosmosDBSqlDatabaseResourceInfo(databaseName, restoreParameters, createMode, serializedAdditionalRawData: null, colls, users, rid, timestamp, etag);
+            return new ExtendedCosmosDBSqlDatabaseResourceInfo(
+                databaseName,
+                restoreParameters,
+                createMode,
+                serializedAdditionalRawData: null,
+                colls,
+                users,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBSqlDatabaseCreateOrUpdateContent"/>. </summary>
@@ -532,7 +789,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBSqlDatabaseCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CosmosDBSqlDatabaseCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.ThroughputSettingData"/>. </summary>
@@ -549,7 +816,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ThroughputSettingData(id, name, resourceType, systemData, tags, location, resource, identity, serializedAdditionalRawData: null);
+            return new ThroughputSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedThroughputSettingsResourceInfo"/>. </summary>
@@ -565,7 +841,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.ExtendedThroughputSettingsResourceInfo"/> instance for mocking. </returns>
         public static ExtendedThroughputSettingsResourceInfo ExtendedThroughputSettingsResourceInfo(int? throughput = null, AutoscaleSettingsResourceInfo autoscaleSettings = null, string minimumThroughput = null, string offerReplacePending = null, string instantMaximumThroughput = null, string softAllowedMaximumThroughput = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
-            return new ExtendedThroughputSettingsResourceInfo(throughput, autoscaleSettings, minimumThroughput, offerReplacePending, instantMaximumThroughput, softAllowedMaximumThroughput, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new ExtendedThroughputSettingsResourceInfo(
+                throughput,
+                autoscaleSettings,
+                minimumThroughput,
+                offerReplacePending,
+                instantMaximumThroughput,
+                softAllowedMaximumThroughput,
+                serializedAdditionalRawData: null,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ThroughputSettingsResourceInfo"/>. </summary>
@@ -578,7 +864,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.ThroughputSettingsResourceInfo"/> instance for mocking. </returns>
         public static ThroughputSettingsResourceInfo ThroughputSettingsResourceInfo(int? throughput = null, AutoscaleSettingsResourceInfo autoscaleSettings = null, string minimumThroughput = null, string offerReplacePending = null, string instantMaximumThroughput = null, string softAllowedMaximumThroughput = null)
         {
-            return new ThroughputSettingsResourceInfo(throughput, autoscaleSettings, minimumThroughput, offerReplacePending, instantMaximumThroughput, softAllowedMaximumThroughput, serializedAdditionalRawData: null);
+            return new ThroughputSettingsResourceInfo(
+                throughput,
+                autoscaleSettings,
+                minimumThroughput,
+                offerReplacePending,
+                instantMaximumThroughput,
+                softAllowedMaximumThroughput,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutoscaleSettingsResourceInfo"/>. </summary>
@@ -605,7 +898,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ThroughputSettingsUpdateData(id, name, resourceType, systemData, tags, location, resource, identity, serializedAdditionalRawData: null);
+            return new ThroughputSettingsUpdateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlClientEncryptionKeyData"/>. </summary>
@@ -617,7 +919,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="CosmosDB.CosmosDBSqlClientEncryptionKeyData"/> instance for mocking. </returns>
         public static CosmosDBSqlClientEncryptionKeyData CosmosDBSqlClientEncryptionKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBSqlClientEncryptionKeyProperties resource = null)
         {
-            return new CosmosDBSqlClientEncryptionKeyData(id, name, resourceType, systemData, resource, serializedAdditionalRawData: null);
+            return new CosmosDBSqlClientEncryptionKeyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resource,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBSqlClientEncryptionKeyProperties"/>. </summary>
@@ -631,7 +939,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBSqlClientEncryptionKeyProperties"/> instance for mocking. </returns>
         public static CosmosDBSqlClientEncryptionKeyProperties CosmosDBSqlClientEncryptionKeyProperties(string id = null, string encryptionAlgorithm = null, byte[] wrappedDataEncryptionKey = null, CosmosDBKeyWrapMetadata keyWrapMetadata = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
-            return new CosmosDBSqlClientEncryptionKeyProperties(id, encryptionAlgorithm, wrappedDataEncryptionKey, keyWrapMetadata, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new CosmosDBSqlClientEncryptionKeyProperties(
+                id,
+                encryptionAlgorithm,
+                wrappedDataEncryptionKey,
+                keyWrapMetadata,
+                serializedAdditionalRawData: null,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlContainerData"/>. </summary>
@@ -649,7 +965,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBSqlContainerData(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CosmosDBSqlContainerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedCosmosDBSqlContainerResourceInfo"/>. </summary>
@@ -664,15 +990,33 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="materializedViewDefinition"> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </param>
+        /// <param name="computedProperties"> List of computed properties. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <returns> A new <see cref="Models.ExtendedCosmosDBSqlContainerResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedCosmosDBSqlContainerResourceInfo ExtendedCosmosDBSqlContainerResourceInfo(string containerName = null, CosmosDBIndexingPolicy indexingPolicy = null, CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = null, IEnumerable<CosmosDBUniqueKey> uniqueKeys = null, ConflictResolutionPolicy conflictResolutionPolicy = null, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = null, long? analyticalStorageTtl = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, MaterializedViewDefinition materializedViewDefinition = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        public static ExtendedCosmosDBSqlContainerResourceInfo ExtendedCosmosDBSqlContainerResourceInfo(string containerName = null, CosmosDBIndexingPolicy indexingPolicy = null, CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = null, IEnumerable<CosmosDBUniqueKey> uniqueKeys = null, ConflictResolutionPolicy conflictResolutionPolicy = null, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = null, long? analyticalStorageTtl = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, MaterializedViewDefinition materializedViewDefinition = null, IEnumerable<ComputedProperty> computedProperties = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
             uniqueKeys ??= new List<CosmosDBUniqueKey>();
+            computedProperties ??= new List<ComputedProperty>();
 
-            return new ExtendedCosmosDBSqlContainerResourceInfo(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList(), serializedAdditionalRawData: null) : null, conflictResolutionPolicy, clientEncryptionPolicy, analyticalStorageTtl, restoreParameters, createMode, materializedViewDefinition, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new ExtendedCosmosDBSqlContainerResourceInfo(
+                containerName,
+                indexingPolicy,
+                partitionKey,
+                defaultTtl,
+                uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList(), serializedAdditionalRawData: null) : null,
+                conflictResolutionPolicy,
+                clientEncryptionPolicy,
+                analyticalStorageTtl,
+                restoreParameters,
+                createMode,
+                materializedViewDefinition,
+                computedProperties?.ToList(),
+                serializedAdditionalRawData: null,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBContainerPartitionKey"/>. </summary>
@@ -713,7 +1057,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBSqlContainerCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CosmosDBSqlContainerCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PhysicalPartitionStorageInfoCollection"/>. </summary>
@@ -750,7 +1104,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             tags ??= new Dictionary<string, string>();
             resourcePhysicalPartitionIds ??= new List<WritableSubResource>();
 
-            return new RetrieveThroughputParameters(id, name, resourceType, systemData, tags, location, resourcePhysicalPartitionIds != null ? new RetrieveThroughputPropertiesResource(resourcePhysicalPartitionIds?.ToList(), serializedAdditionalRawData: null) : null, identity, serializedAdditionalRawData: null);
+            return new RetrieveThroughputParameters(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resourcePhysicalPartitionIds != null ? new RetrieveThroughputPropertiesResource(resourcePhysicalPartitionIds?.ToList(), serializedAdditionalRawData: null) : null,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PhysicalPartitionThroughputInfoResult"/>. </summary>
@@ -768,7 +1131,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             tags ??= new Dictionary<string, string>();
             resourcePhysicalPartitionThroughputInfo ??= new List<PhysicalPartitionThroughputInfoResource>();
 
-            return new PhysicalPartitionThroughputInfoResult(id, name, resourceType, systemData, tags, location, resourcePhysicalPartitionThroughputInfo != null ? new PhysicalPartitionThroughputInfoResultPropertiesResource(resourcePhysicalPartitionThroughputInfo?.ToList(), serializedAdditionalRawData: null) : null, identity, serializedAdditionalRawData: null);
+            return new PhysicalPartitionThroughputInfoResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resourcePhysicalPartitionThroughputInfo != null ? new PhysicalPartitionThroughputInfoResultPropertiesResource(resourcePhysicalPartitionThroughputInfo?.ToList(), serializedAdditionalRawData: null) : null,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedistributeThroughputParameters"/>. </summary>
@@ -785,7 +1157,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new RedistributeThroughputParameters(id, name, resourceType, systemData, tags, location, resource, identity, serializedAdditionalRawData: null);
+            return new RedistributeThroughputParameters(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlStoredProcedureData"/>. </summary>
@@ -802,7 +1183,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBSqlStoredProcedureData(id, name, resourceType, systemData, tags, location, resource, identity, serializedAdditionalRawData: null);
+            return new CosmosDBSqlStoredProcedureData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedCosmosDBSqlStoredProcedureResourceInfo"/>. </summary>
@@ -814,7 +1204,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.ExtendedCosmosDBSqlStoredProcedureResourceInfo"/> instance for mocking. </returns>
         public static ExtendedCosmosDBSqlStoredProcedureResourceInfo ExtendedCosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName = null, string body = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
-            return new ExtendedCosmosDBSqlStoredProcedureResourceInfo(storedProcedureName, body, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new ExtendedCosmosDBSqlStoredProcedureResourceInfo(
+                storedProcedureName,
+                body,
+                serializedAdditionalRawData: null,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBSqlStoredProcedureCreateOrUpdateContent"/>. </summary>
@@ -832,7 +1228,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBSqlStoredProcedureCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CosmosDBSqlStoredProcedureCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlUserDefinedFunctionData"/>. </summary>
@@ -849,7 +1255,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBSqlUserDefinedFunctionData(id, name, resourceType, systemData, tags, location, resource, identity, serializedAdditionalRawData: null);
+            return new CosmosDBSqlUserDefinedFunctionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo"/>. </summary>
@@ -861,7 +1276,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo"/> instance for mocking. </returns>
         public static ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(string functionName = null, string body = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
-            return new ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(functionName, body, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(
+                functionName,
+                body,
+                serializedAdditionalRawData: null,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent"/>. </summary>
@@ -879,7 +1300,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlTriggerData"/>. </summary>
@@ -896,7 +1327,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBSqlTriggerData(id, name, resourceType, systemData, tags, location, resource, identity, serializedAdditionalRawData: null);
+            return new CosmosDBSqlTriggerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedCosmosDBSqlTriggerResourceInfo"/>. </summary>
@@ -910,7 +1350,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.ExtendedCosmosDBSqlTriggerResourceInfo"/> instance for mocking. </returns>
         public static ExtendedCosmosDBSqlTriggerResourceInfo ExtendedCosmosDBSqlTriggerResourceInfo(string triggerName = null, string body = null, CosmosDBSqlTriggerType? triggerType = null, CosmosDBSqlTriggerOperation? triggerOperation = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
-            return new ExtendedCosmosDBSqlTriggerResourceInfo(triggerName, body, triggerType, triggerOperation, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new ExtendedCosmosDBSqlTriggerResourceInfo(
+                triggerName,
+                body,
+                triggerType,
+                triggerOperation,
+                serializedAdditionalRawData: null,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBSqlTriggerCreateOrUpdateContent"/>. </summary>
@@ -928,7 +1376,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBSqlTriggerCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CosmosDBSqlTriggerCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.MongoDBDatabaseData"/>. </summary>
@@ -946,7 +1404,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MongoDBDatabaseData(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new MongoDBDatabaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedMongoDBDatabaseResourceInfo"/>. </summary>
@@ -959,7 +1427,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.ExtendedMongoDBDatabaseResourceInfo"/> instance for mocking. </returns>
         public static ExtendedMongoDBDatabaseResourceInfo ExtendedMongoDBDatabaseResourceInfo(string databaseName = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
-            return new ExtendedMongoDBDatabaseResourceInfo(databaseName, restoreParameters, createMode, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new ExtendedMongoDBDatabaseResourceInfo(
+                databaseName,
+                restoreParameters,
+                createMode,
+                serializedAdditionalRawData: null,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MongoDBDatabaseCreateOrUpdateContent"/>. </summary>
@@ -977,7 +1452,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MongoDBDatabaseCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new MongoDBDatabaseCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.MongoDBCollectionData"/>. </summary>
@@ -995,7 +1480,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MongoDBCollectionData(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new MongoDBCollectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedMongoDBCollectionResourceInfo"/>. </summary>
@@ -1014,7 +1509,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             shardKey ??= new Dictionary<string, string>();
             indexes ??= new List<MongoDBIndex>();
 
-            return new ExtendedMongoDBCollectionResourceInfo(collectionName, shardKey, indexes?.ToList(), analyticalStorageTtl, restoreParameters, createMode, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new ExtendedMongoDBCollectionResourceInfo(
+                collectionName,
+                shardKey,
+                indexes?.ToList(),
+                analyticalStorageTtl,
+                restoreParameters,
+                createMode,
+                serializedAdditionalRawData: null,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MongoDBCollectionCreateOrUpdateContent"/>. </summary>
@@ -1032,7 +1537,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MongoDBCollectionCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new MongoDBCollectionCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBTableData"/>. </summary>
@@ -1050,7 +1565,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBTableData(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CosmosDBTableData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBTablePropertiesResource"/>. </summary>
@@ -1063,7 +1588,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBTablePropertiesResource"/> instance for mocking. </returns>
         public static CosmosDBTablePropertiesResource CosmosDBTablePropertiesResource(string tableName = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
-            return new CosmosDBTablePropertiesResource(tableName, restoreParameters, createMode, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new CosmosDBTablePropertiesResource(
+                tableName,
+                restoreParameters,
+                createMode,
+                serializedAdditionalRawData: null,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBTableCreateOrUpdateContent"/>. </summary>
@@ -1081,7 +1613,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBTableCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CosmosDBTableCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CassandraKeyspaceData"/>. </summary>
@@ -1099,7 +1641,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CassandraKeyspaceData(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CassandraKeyspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedCassandraKeyspaceResourceInfo"/>. </summary>
@@ -1128,7 +1680,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CassandraKeyspaceCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resourceKeyspaceName != null ? new CassandraKeyspaceResourceInfo(resourceKeyspaceName, serializedAdditionalRawData: null) : null, options, identity, serializedAdditionalRawData: null);
+            return new CassandraKeyspaceCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resourceKeyspaceName != null ? new CassandraKeyspaceResourceInfo(resourceKeyspaceName, serializedAdditionalRawData: null) : null,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CassandraTableData"/>. </summary>
@@ -1146,7 +1708,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CassandraTableData(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CassandraTableData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedCassandraTableResourceInfo"/>. </summary>
@@ -1160,7 +1732,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.ExtendedCassandraTableResourceInfo"/> instance for mocking. </returns>
         public static ExtendedCassandraTableResourceInfo ExtendedCassandraTableResourceInfo(string tableName = null, int? defaultTtl = null, CassandraSchema schema = null, int? analyticalStorageTtl = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
-            return new ExtendedCassandraTableResourceInfo(tableName, defaultTtl, schema, analyticalStorageTtl, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new ExtendedCassandraTableResourceInfo(
+                tableName,
+                defaultTtl,
+                schema,
+                analyticalStorageTtl,
+                serializedAdditionalRawData: null,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraTableCreateOrUpdateContent"/>. </summary>
@@ -1178,7 +1758,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CassandraTableCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CassandraTableCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.GremlinDatabaseData"/>. </summary>
@@ -1196,7 +1786,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GremlinDatabaseData(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new GremlinDatabaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedGremlinDatabaseResourceInfo"/>. </summary>
@@ -1209,7 +1809,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.ExtendedGremlinDatabaseResourceInfo"/> instance for mocking. </returns>
         public static ExtendedGremlinDatabaseResourceInfo ExtendedGremlinDatabaseResourceInfo(string databaseName = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
-            return new ExtendedGremlinDatabaseResourceInfo(databaseName, restoreParameters, createMode, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new ExtendedGremlinDatabaseResourceInfo(
+                databaseName,
+                restoreParameters,
+                createMode,
+                serializedAdditionalRawData: null,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GremlinDatabaseCreateOrUpdateContent"/>. </summary>
@@ -1227,7 +1834,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GremlinDatabaseCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new GremlinDatabaseCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.GremlinGraphData"/>. </summary>
@@ -1245,7 +1862,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GremlinGraphData(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new GremlinGraphData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedGremlinGraphResourceInfo"/>. </summary>
@@ -1266,7 +1893,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             uniqueKeys ??= new List<CosmosDBUniqueKey>();
 
-            return new ExtendedGremlinGraphResourceInfo(graphName, indexingPolicy, partitionKey, defaultTtl, uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList(), serializedAdditionalRawData: null) : null, conflictResolutionPolicy, analyticalStorageTtl, restoreParameters, createMode, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new ExtendedGremlinGraphResourceInfo(
+                graphName,
+                indexingPolicy,
+                partitionKey,
+                defaultTtl,
+                uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList(), serializedAdditionalRawData: null) : null,
+                conflictResolutionPolicy,
+                analyticalStorageTtl,
+                restoreParameters,
+                createMode,
+                serializedAdditionalRawData: null,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GremlinGraphCreateOrUpdateContent"/>. </summary>
@@ -1284,7 +1924,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GremlinGraphCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new GremlinGraphCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBLocationData"/>. </summary>
@@ -1296,7 +1946,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="CosmosDB.CosmosDBLocationData"/> instance for mocking. </returns>
         public static CosmosDBLocationData CosmosDBLocationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBLocationProperties properties = null)
         {
-            return new CosmosDBLocationData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new CosmosDBLocationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBLocationProperties"/>. </summary>
@@ -1311,7 +1967,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             backupStorageRedundancies ??= new List<CosmosDBBackupStorageRedundancy>();
 
-            return new CosmosDBLocationProperties(doesSupportAvailabilityZone, isResidencyRestricted, backupStorageRedundancies?.ToList(), isSubscriptionRegionAccessAllowedForRegular, isSubscriptionRegionAccessAllowedForAz, status, serializedAdditionalRawData: null);
+            return new CosmosDBLocationProperties(
+                doesSupportAvailabilityZone,
+                isResidencyRestricted,
+                backupStorageRedundancies?.ToList(),
+                isSubscriptionRegionAccessAllowedForRegular,
+                isSubscriptionRegionAccessAllowedForAz,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CassandraViewGetResultData"/>. </summary>
@@ -1329,7 +1992,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CassandraViewGetResultData(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CassandraViewGetResultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraViewGetPropertiesResource"/>. </summary>
@@ -1341,7 +2014,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CassandraViewGetPropertiesResource"/> instance for mocking. </returns>
         public static CassandraViewGetPropertiesResource CassandraViewGetPropertiesResource(string id = null, string viewDefinition = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
-            return new CassandraViewGetPropertiesResource(id, viewDefinition, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new CassandraViewGetPropertiesResource(
+                id,
+                viewDefinition,
+                serializedAdditionalRawData: null,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraViewGetResultCreateOrUpdateContent"/>. </summary>
@@ -1359,7 +2038,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CassandraViewGetResultCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resource, options, identity, serializedAdditionalRawData: null);
+            return new CassandraViewGetResultCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                options,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataTransferJobGetResultCreateOrUpdateContent"/>. </summary>
@@ -1371,7 +2060,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.DataTransferJobGetResultCreateOrUpdateContent"/> instance for mocking. </returns>
         public static DataTransferJobGetResultCreateOrUpdateContent DataTransferJobGetResultCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataTransferJobProperties properties = null)
         {
-            return new DataTransferJobGetResultCreateOrUpdateContent(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new DataTransferJobGetResultCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataTransferJobProperties"/>. </summary>
@@ -1379,12 +2074,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="source">
         /// Source DataStore details
         /// Please note <see cref="DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
+        /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="BaseCosmosDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
         /// </param>
         /// <param name="destination">
         /// Destination DataStore details
         /// Please note <see cref="DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
+        /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="BaseCosmosDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
         /// </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="processedCount"> Processed Count. </param>
@@ -1392,10 +2087,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="lastUpdatedUtcOn"> Last Updated Time (ISO-8601 format). </param>
         /// <param name="workerCount"> Worker count. </param>
         /// <param name="error"> Error response for Faulted job. </param>
+        /// <param name="duration"> Total Duration of Job. </param>
+        /// <param name="mode"> Mode of job execution. </param>
         /// <returns> A new <see cref="Models.DataTransferJobProperties"/> instance for mocking. </returns>
-        public static DataTransferJobProperties DataTransferJobProperties(string jobName = null, DataTransferDataSourceSink source = null, DataTransferDataSourceSink destination = null, string status = null, long? processedCount = null, long? totalCount = null, DateTimeOffset? lastUpdatedUtcOn = null, int? workerCount = null, ErrorResponse error = null)
+        public static DataTransferJobProperties DataTransferJobProperties(string jobName = null, DataTransferDataSourceSink source = null, DataTransferDataSourceSink destination = null, string status = null, long? processedCount = null, long? totalCount = null, DateTimeOffset? lastUpdatedUtcOn = null, int? workerCount = null, ErrorResponse error = null, TimeSpan? duration = null, DataTransferJobMode? mode = null)
         {
-            return new DataTransferJobProperties(jobName, source, destination, status, processedCount, totalCount, lastUpdatedUtcOn, workerCount, error, serializedAdditionalRawData: null);
+            return new DataTransferJobProperties(
+                jobName,
+                source,
+                destination,
+                status,
+                processedCount,
+                totalCount,
+                lastUpdatedUtcOn,
+                workerCount,
+                error,
+                duration,
+                mode,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.DataTransferJobGetResultData"/>. </summary>
@@ -1407,12 +2116,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="source">
         /// Source DataStore details
         /// Please note <see cref="DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
+        /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="BaseCosmosDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
         /// </param>
         /// <param name="destination">
         /// Destination DataStore details
         /// Please note <see cref="DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
+        /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="BaseCosmosDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
         /// </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="processedCount"> Processed Count. </param>
@@ -1420,10 +2129,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="lastUpdatedUtcOn"> Last Updated Time (ISO-8601 format). </param>
         /// <param name="workerCount"> Worker count. </param>
         /// <param name="error"> Error response for Faulted job. </param>
+        /// <param name="duration"> Total Duration of Job. </param>
+        /// <param name="mode"> Mode of job execution. </param>
         /// <returns> A new <see cref="CosmosDB.DataTransferJobGetResultData"/> instance for mocking. </returns>
-        public static DataTransferJobGetResultData DataTransferJobGetResultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string jobName = null, DataTransferDataSourceSink source = null, DataTransferDataSourceSink destination = null, string status = null, long? processedCount = null, long? totalCount = null, DateTimeOffset? lastUpdatedUtcOn = null, int? workerCount = null, ErrorResponse error = null)
+        public static DataTransferJobGetResultData DataTransferJobGetResultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string jobName = null, DataTransferDataSourceSink source = null, DataTransferDataSourceSink destination = null, string status = null, long? processedCount = null, long? totalCount = null, DateTimeOffset? lastUpdatedUtcOn = null, int? workerCount = null, ErrorResponse error = null, TimeSpan? duration = null, DataTransferJobMode? mode = null)
         {
-            return new DataTransferJobGetResultData(id, name, resourceType, systemData, jobName, source, destination, status, processedCount, totalCount, lastUpdatedUtcOn, workerCount, error, serializedAdditionalRawData: null);
+            return new DataTransferJobGetResultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                jobName,
+                source,
+                destination,
+                status,
+                processedCount,
+                totalCount,
+                lastUpdatedUtcOn,
+                workerCount,
+                error,
+                duration,
+                mode,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CassandraClusterData"/>. </summary>
@@ -1440,7 +2167,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CassandraClusterData(id, name, resourceType, systemData, tags, location, properties, identity, serializedAdditionalRawData: null);
+            return new CassandraClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterProperties"/>. </summary>
@@ -1453,11 +2189,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="initialCassandraAdminPassword"> Initial password for clients connecting as admin to the cluster. Should be changed after cluster creation. Returns null on GET. This field only applies when the authenticationMethod field is 'Cassandra'. </param>
         /// <param name="prometheusEndpointIPAddress"> Hostname or IP address where the Prometheus endpoint containing data about the managed Cassandra nodes can be reached. </param>
         /// <param name="isRepairEnabled"> Should automatic repairs run on this cluster? If omitted, this is true, and should stay true unless you are running a hybrid cluster where you are already doing your own repairs. </param>
+        /// <param name="autoReplicate"> The form of AutoReplicate that is being used by this cluster. </param>
         /// <param name="clientCertificates"> List of TLS certificates used to authorize clients connecting to the cluster. All connections are TLS encrypted whether clientCertificates is set or not, but if clientCertificates is set, the managed Cassandra cluster will reject all connections not bearing a TLS client certificate that can be validated from one or more of the public certificates in this property. </param>
         /// <param name="externalGossipCertificates"> List of TLS certificates used to authorize gossip from unmanaged data centers. The TLS certificates of all nodes in unmanaged data centers must be verifiable using one of the certificates provided in this property. </param>
         /// <param name="gossipCertificates"> List of TLS certificates that unmanaged nodes must trust for gossip with managed nodes. All managed nodes will present TLS client certificates that are verifiable using one of the certificates provided in this property. </param>
         /// <param name="externalSeedNodes"> List of IP addresses of seed nodes in unmanaged data centers. These will be added to the seed node lists of all managed nodes. </param>
         /// <param name="seedNodes"> List of IP addresses of seed nodes in the managed data centers. These should be added to the seed node lists of all unmanaged nodes. </param>
+        /// <param name="externalDataCenters"> List of the data center names for unmanaged data centers in this cluster to be included in auto-replication. </param>
         /// <param name="hoursBetweenBackups"> (Deprecated) Number of hours to wait between taking a backup of the cluster. </param>
         /// <param name="isDeallocated"> Whether the cluster and associated data centers has been deallocated. </param>
         /// <param name="isCassandraAuditLoggingEnabled"> Whether Cassandra audit logging is enabled. </param>
@@ -1465,18 +2203,49 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="provisionError"> Error related to resource provisioning. </param>
         /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
         /// <param name="backupSchedules"> List of backup schedules that define when you want to back up your data. </param>
+        /// <param name="scheduledEventStrategy"> How the nodes in the cluster react to scheduled events. </param>
+        /// <param name="azureConnectionMethod"> How to connect to the azure services needed for running the cluster. </param>
+        /// <param name="privateLinkResourceId"> If the Connection Method is Vpn, this is the Id of the private link resource that the datacenters need to connect to. </param>
         /// <returns> A new <see cref="Models.CassandraClusterProperties"/> instance for mocking. </returns>
-        public static CassandraClusterProperties CassandraClusterProperties(CassandraProvisioningState? provisioningState = null, string restoreFromBackupId = null, ResourceIdentifier delegatedManagementSubnetId = null, string cassandraVersion = null, string clusterNameOverride = null, CassandraAuthenticationMethod? authenticationMethod = null, string initialCassandraAdminPassword = null, string prometheusEndpointIPAddress = null, bool? isRepairEnabled = null, IEnumerable<CassandraCertificate> clientCertificates = null, IEnumerable<CassandraCertificate> externalGossipCertificates = null, IEnumerable<CassandraCertificate> gossipCertificates = null, IEnumerable<CassandraDataCenterSeedNode> externalSeedNodes = null, IEnumerable<CassandraDataCenterSeedNode> seedNodes = null, int? hoursBetweenBackups = null, bool? isDeallocated = null, bool? isCassandraAuditLoggingEnabled = null, CassandraClusterType? clusterType = null, CassandraError provisionError = null, IEnumerable<string> extensions = null, IEnumerable<CassandraClusterBackupSchedule> backupSchedules = null)
+        public static CassandraClusterProperties CassandraClusterProperties(CassandraProvisioningState? provisioningState = null, string restoreFromBackupId = null, ResourceIdentifier delegatedManagementSubnetId = null, string cassandraVersion = null, string clusterNameOverride = null, CassandraAuthenticationMethod? authenticationMethod = null, string initialCassandraAdminPassword = null, string prometheusEndpointIPAddress = null, bool? isRepairEnabled = null, AutoReplicate? autoReplicate = null, IEnumerable<CassandraCertificate> clientCertificates = null, IEnumerable<CassandraCertificate> externalGossipCertificates = null, IEnumerable<CassandraCertificate> gossipCertificates = null, IEnumerable<CassandraDataCenterSeedNode> externalSeedNodes = null, IEnumerable<CassandraDataCenterSeedNode> seedNodes = null, IEnumerable<string> externalDataCenters = null, int? hoursBetweenBackups = null, bool? isDeallocated = null, bool? isCassandraAuditLoggingEnabled = null, CassandraClusterType? clusterType = null, CassandraError provisionError = null, IEnumerable<string> extensions = null, IEnumerable<CassandraClusterBackupSchedule> backupSchedules = null, ScheduledEventStrategy? scheduledEventStrategy = null, AzureConnectionType? azureConnectionMethod = null, string privateLinkResourceId = null)
         {
             clientCertificates ??= new List<CassandraCertificate>();
             externalGossipCertificates ??= new List<CassandraCertificate>();
             gossipCertificates ??= new List<CassandraCertificate>();
             externalSeedNodes ??= new List<CassandraDataCenterSeedNode>();
             seedNodes ??= new List<CassandraDataCenterSeedNode>();
+            externalDataCenters ??= new List<string>();
             extensions ??= new List<string>();
             backupSchedules ??= new List<CassandraClusterBackupSchedule>();
 
-            return new CassandraClusterProperties(provisioningState, restoreFromBackupId, delegatedManagementSubnetId, cassandraVersion, clusterNameOverride, authenticationMethod, initialCassandraAdminPassword, prometheusEndpointIPAddress != null ? new CassandraDataCenterSeedNode(prometheusEndpointIPAddress, serializedAdditionalRawData: null) : null, isRepairEnabled, clientCertificates?.ToList(), externalGossipCertificates?.ToList(), gossipCertificates?.ToList(), externalSeedNodes?.ToList(), seedNodes?.ToList(), hoursBetweenBackups, isDeallocated, isCassandraAuditLoggingEnabled, clusterType, provisionError, extensions?.ToList(), backupSchedules?.ToList(), serializedAdditionalRawData: null);
+            return new CassandraClusterProperties(
+                provisioningState,
+                restoreFromBackupId,
+                delegatedManagementSubnetId,
+                cassandraVersion,
+                clusterNameOverride,
+                authenticationMethod,
+                initialCassandraAdminPassword,
+                prometheusEndpointIPAddress != null ? new CassandraDataCenterSeedNode(prometheusEndpointIPAddress, serializedAdditionalRawData: null) : null,
+                isRepairEnabled,
+                autoReplicate,
+                clientCertificates?.ToList(),
+                externalGossipCertificates?.ToList(),
+                gossipCertificates?.ToList(),
+                externalSeedNodes?.ToList(),
+                seedNodes?.ToList(),
+                externalDataCenters?.ToList(),
+                hoursBetweenBackups,
+                isDeallocated,
+                isCassandraAuditLoggingEnabled,
+                clusterType,
+                provisionError,
+                extensions?.ToList(),
+                backupSchedules?.ToList(),
+                scheduledEventStrategy,
+                azureConnectionMethod,
+                privateLinkResourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraCommandPostBody"/>. </summary>
@@ -1490,7 +2259,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             arguments ??= new Dictionary<string, string>();
 
-            return new CassandraCommandPostBody(command, arguments, host, cassandraStopStart, allowWrite, serializedAdditionalRawData: null);
+            return new CassandraCommandPostBody(
+                command,
+                arguments,
+                host,
+                cassandraStopStart,
+                allowWrite,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraCommandOutput"/>. </summary>
@@ -1499,6 +2274,34 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CassandraCommandOutput CassandraCommandOutput(string commandOutput = null)
         {
             return new CassandraCommandOutput(commandOutput, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterCommand"/>. </summary>
+        /// <param name="command"> The command which should be run. </param>
+        /// <param name="commandId"> The unique id of command. </param>
+        /// <param name="arguments"> The arguments for the command to be run. </param>
+        /// <param name="host"> IP address of the cassandra host to run the command on. </param>
+        /// <param name="isAdmin"> Whether command has admin privileges. </param>
+        /// <param name="shouldStopCassandraBeforeStart"> If true, stops cassandra before executing the command and then start it again. </param>
+        /// <param name="isReadWrite"> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </param>
+        /// <param name="result"> Result output of the command. </param>
+        /// <param name="status"> Status of the command. </param>
+        /// <param name="outputFile"> The name of the file where the result is written. </param>
+        /// <returns> A new <see cref="Models.CassandraClusterCommand"/> instance for mocking. </returns>
+        public static CassandraClusterCommand CassandraClusterCommand(string command = null, string commandId = null, BinaryData arguments = null, string host = null, bool? isAdmin = null, bool? shouldStopCassandraBeforeStart = null, bool? isReadWrite = null, string result = null, CommandStatus? status = null, string outputFile = null)
+        {
+            return new CassandraClusterCommand(
+                command,
+                commandId,
+                arguments,
+                host,
+                isAdmin,
+                shouldStopCassandraBeforeStart,
+                isReadWrite,
+                result,
+                status,
+                outputFile,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterBackupResourceInfo"/>. </summary>
@@ -1510,7 +2313,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CassandraClusterBackupResourceInfo"/> instance for mocking. </returns>
         public static CassandraClusterBackupResourceInfo CassandraClusterBackupResourceInfo(string backupId = null, CassandraClusterBackupState? backupState = null, DateTimeOffset? backupStartTimestamp = null, DateTimeOffset? backupStopTimestamp = null, DateTimeOffset? backupExpiryTimestamp = null)
         {
-            return new CassandraClusterBackupResourceInfo(backupId, backupState, backupStartTimestamp, backupStopTimestamp, backupExpiryTimestamp, serializedAdditionalRawData: null);
+            return new CassandraClusterBackupResourceInfo(
+                backupId,
+                backupState,
+                backupStartTimestamp,
+                backupStopTimestamp,
+                backupExpiryTimestamp,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CassandraDataCenterData"/>. </summary>
@@ -1522,7 +2331,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="CosmosDB.CassandraDataCenterData"/> instance for mocking. </returns>
         public static CassandraDataCenterData CassandraDataCenterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CassandraDataCenterProperties properties = null)
         {
-            return new CassandraDataCenterData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new CassandraDataCenterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraDataCenterProperties"/>. </summary>
@@ -1541,12 +2356,30 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="authenticationMethodLdapProperties"> Ldap authentication method properties. This feature is in preview. </param>
         /// <param name="deallocated"> Whether the data center has been deallocated. </param>
         /// <param name="provisionError"> Error related to resource provisioning. </param>
+        /// <param name="privateEndpointIPAddress"> Ip of the VPN Endpoint for this data center. </param>
         /// <returns> A new <see cref="Models.CassandraDataCenterProperties"/> instance for mocking. </returns>
-        public static CassandraDataCenterProperties CassandraDataCenterProperties(CassandraProvisioningState? provisioningState = null, AzureLocation? dataCenterLocation = null, ResourceIdentifier delegatedSubnetId = null, int? nodeCount = null, IEnumerable<CassandraDataCenterSeedNode> seedNodes = null, string base64EncodedCassandraYamlFragment = null, Uri managedDiskCustomerKeyUri = null, Uri backupStorageCustomerKeyUri = null, string sku = null, string diskSku = null, int? diskCapacity = null, bool? doesSupportAvailabilityZone = null, AuthenticationMethodLdapProperties authenticationMethodLdapProperties = null, bool? deallocated = null, CassandraError provisionError = null)
+        public static CassandraDataCenterProperties CassandraDataCenterProperties(CassandraProvisioningState? provisioningState = null, AzureLocation? dataCenterLocation = null, ResourceIdentifier delegatedSubnetId = null, int? nodeCount = null, IEnumerable<CassandraDataCenterSeedNode> seedNodes = null, string base64EncodedCassandraYamlFragment = null, Uri managedDiskCustomerKeyUri = null, Uri backupStorageCustomerKeyUri = null, string sku = null, string diskSku = null, int? diskCapacity = null, bool? doesSupportAvailabilityZone = null, AuthenticationMethodLdapProperties authenticationMethodLdapProperties = null, bool? deallocated = null, CassandraError provisionError = null, string privateEndpointIPAddress = null)
         {
             seedNodes ??= new List<CassandraDataCenterSeedNode>();
 
-            return new CassandraDataCenterProperties(provisioningState, dataCenterLocation, delegatedSubnetId, nodeCount, seedNodes?.ToList(), base64EncodedCassandraYamlFragment, managedDiskCustomerKeyUri, backupStorageCustomerKeyUri, sku, diskSku, diskCapacity, doesSupportAvailabilityZone, authenticationMethodLdapProperties, deallocated, provisionError, serializedAdditionalRawData: null);
+            return new CassandraDataCenterProperties(
+                provisioningState,
+                dataCenterLocation,
+                delegatedSubnetId,
+                nodeCount,
+                seedNodes?.ToList(),
+                base64EncodedCassandraYamlFragment,
+                managedDiskCustomerKeyUri,
+                backupStorageCustomerKeyUri,
+                sku,
+                diskSku,
+                diskCapacity,
+                doesSupportAvailabilityZone,
+                authenticationMethodLdapProperties,
+                deallocated,
+                provisionError,
+                privateEndpointIPAddress,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterPublicStatus"/>. </summary>
@@ -1562,7 +2395,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             errors ??= new List<CassandraError>();
             dataCenters ??= new List<CassandraClusterPublicStatusDataCentersItem>();
 
-            return new CassandraClusterPublicStatus(etag, reaperStatus, connectionErrors?.ToList(), errors?.ToList(), dataCenters?.ToList(), serializedAdditionalRawData: null);
+            return new CassandraClusterPublicStatus(
+                etag,
+                reaperStatus,
+                connectionErrors?.ToList(),
+                errors?.ToList(),
+                dataCenters?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraReaperStatus"/>. </summary>
@@ -1587,7 +2426,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CassandraConnectionError"/> instance for mocking. </returns>
         public static CassandraConnectionError CassandraConnectionError(CassandraConnectionState? connectionState = null, string ipFrom = null, string ipTo = null, int? port = null, string exception = null)
         {
-            return new CassandraConnectionError(connectionState, ipFrom, ipTo, port, exception, serializedAdditionalRawData: null);
+            return new CassandraConnectionError(
+                connectionState,
+                ipFrom,
+                ipTo,
+                port,
+                exception,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterPublicStatusDataCentersItem"/>. </summary>
@@ -1627,7 +2472,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tokens ??= new List<string>();
 
-            return new CassandraClusterDataCenterNodeItem(address, state, status, cassandraProcessStatus, load, tokens?.ToList(), size, hostId, rack, timestamp, diskUsedKB, diskFreeKB, memoryUsedKB, memoryBuffersAndCachedKB, memoryFreeKB, memoryTotalKB, cpuUsage, isLatestModel, serializedAdditionalRawData: null);
+            return new CassandraClusterDataCenterNodeItem(
+                address,
+                state,
+                status,
+                cassandraProcessStatus,
+                load,
+                tokens?.ToList(),
+                size,
+                hostId,
+                rack,
+                timestamp,
+                diskUsedKB,
+                diskFreeKB,
+                memoryUsedKB,
+                memoryBuffersAndCachedKB,
+                memoryFreeKB,
+                memoryTotalKB,
+                cpuUsage,
+                isLatestModel,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.MongoClusterData"/>. </summary>
@@ -1653,7 +2517,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
             tags ??= new Dictionary<string, string>();
             nodeGroupSpecs ??= new List<NodeGroupSpec>();
 
-            return new MongoClusterData(id, name, resourceType, systemData, tags, location, createMode, restoreParameters, administratorLogin, administratorLoginPassword, serverVersion, connectionString, earliestRestoreTime, provisioningState, clusterStatus, nodeGroupSpecs?.ToList(), serializedAdditionalRawData: null);
+            return new MongoClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                createMode,
+                restoreParameters,
+                administratorLogin,
+                administratorLoginPassword,
+                serverVersion,
+                connectionString,
+                earliestRestoreTime,
+                provisioningState,
+                clusterStatus,
+                nodeGroupSpecs?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MongoClusterPatch"/>. </summary>
@@ -1674,7 +2555,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             tags ??= new Dictionary<string, string>();
             nodeGroupSpecs ??= new List<NodeGroupSpec>();
 
-            return new MongoClusterPatch(tags, createMode, restoreParameters, administratorLogin, administratorLoginPassword, serverVersion, connectionString, earliestRestoreTime, provisioningState, clusterStatus, nodeGroupSpecs?.ToList(), serializedAdditionalRawData: null);
+            return new MongoClusterPatch(
+                tags,
+                createMode,
+                restoreParameters,
+                administratorLogin,
+                administratorLoginPassword,
+                serverVersion,
+                connectionString,
+                earliestRestoreTime,
+                provisioningState,
+                clusterStatus,
+                nodeGroupSpecs?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBFirewallRuleData"/>. </summary>
@@ -1688,7 +2581,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="CosmosDB.CosmosDBFirewallRuleData"/> instance for mocking. </returns>
         public static CosmosDBFirewallRuleData CosmosDBFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBProvisioningState? provisioningState = null, string startIPAddress = null, string endIPAddress = null)
         {
-            return new CosmosDBFirewallRuleData(id, name, resourceType, systemData, provisioningState, startIPAddress, endIPAddress, serializedAdditionalRawData: null);
+            return new CosmosDBFirewallRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CheckCosmosDBNameAvailabilityResponse"/>. </summary>
@@ -1736,7 +2637,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             privileges ??= new List<MongoDBPrivilege>();
             roles ??= new List<MongoDBRole>();
 
-            return new MongoDBRoleDefinitionData(id, name, resourceType, systemData, roleName, roleDefinitionType, databaseName, privileges?.ToList(), roles?.ToList(), serializedAdditionalRawData: null);
+            return new MongoDBRoleDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                roleName,
+                roleDefinitionType,
+                databaseName,
+                privileges?.ToList(),
+                roles?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.MongoDBUserDefinitionData"/>. </summary>
@@ -1755,7 +2666,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             roles ??= new List<MongoDBRole>();
 
-            return new MongoDBUserDefinitionData(id, name, resourceType, systemData, userName, password, databaseName, customData, roles?.ToList(), mechanisms, serializedAdditionalRawData: null);
+            return new MongoDBUserDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                userName,
+                password,
+                databaseName,
+                customData,
+                roles?.ToList(),
+                mechanisms,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBPrivateLinkResourceData"/>. </summary>
@@ -1772,7 +2694,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new CosmosDBPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new CosmosDBPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlRoleDefinitionData"/>. </summary>
@@ -1790,7 +2720,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             assignableScopes ??= new List<string>();
             permissions ??= new List<CosmosDBSqlRolePermission>();
 
-            return new CosmosDBSqlRoleDefinitionData(id, name, resourceType, systemData, roleName, roleDefinitionType, assignableScopes?.ToList(), permissions?.ToList(), serializedAdditionalRawData: null);
+            return new CosmosDBSqlRoleDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                roleName,
+                roleDefinitionType,
+                assignableScopes?.ToList(),
+                permissions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlRoleAssignmentData"/>. </summary>
@@ -1804,7 +2743,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="CosmosDB.CosmosDBSqlRoleAssignmentData"/> instance for mocking. </returns>
         public static CosmosDBSqlRoleAssignmentData CosmosDBSqlRoleAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier roleDefinitionId = null, string scope = null, Guid? principalId = null)
         {
-            return new CosmosDBSqlRoleAssignmentData(id, name, resourceType, systemData, roleDefinitionId, scope, principalId, serializedAdditionalRawData: null);
+            return new CosmosDBSqlRoleAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                roleDefinitionId,
+                scope,
+                principalId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.RestorableCosmosDBAccountData"/>. </summary>
@@ -1824,7 +2771,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             restorableLocations ??= new List<RestorableLocationResourceInfo>();
 
-            return new RestorableCosmosDBAccountData(id, name, resourceType, systemData, location, accountName, createdOn, oldestRestorableOn, deletedOn, apiType, restorableLocations?.ToList(), serializedAdditionalRawData: null);
+            return new RestorableCosmosDBAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                accountName,
+                createdOn,
+                oldestRestorableOn,
+                deletedOn,
+                apiType,
+                restorableLocations?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableLocationResourceInfo"/>. </summary>
@@ -1855,20 +2814,37 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.RestorableSqlDatabase"/> instance for mocking. </returns>
         public static RestorableSqlDatabase RestorableSqlDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableSqlDatabaseResourceInfo resource = null)
         {
-            return new RestorableSqlDatabase(id, name, resourceType, systemData, resource, serializedAdditionalRawData: null);
+            return new RestorableSqlDatabase(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resource,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableSqlDatabaseResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this database event. </param>
+        /// <param name="canUndelete"> A state of this database to identify if this database is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this database can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this database event happened. </param>
         /// <param name="databaseName"> The name of the SQL database. </param>
         /// <param name="databaseId"> The resource ID of the SQL database. </param>
         /// <param name="database"> Cosmos DB SQL database resource object. </param>
         /// <returns> A new <see cref="Models.ExtendedRestorableSqlDatabaseResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableSqlDatabaseResourceInfo ExtendedRestorableSqlDatabaseResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string eventTimestamp = null, string databaseName = null, string databaseId = null, RestorableSqlDatabasePropertiesResourceDatabase database = null)
+        public static ExtendedRestorableSqlDatabaseResourceInfo ExtendedRestorableSqlDatabaseResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string databaseName = null, string databaseId = null, RestorableSqlDatabasePropertiesResourceDatabase database = null)
         {
-            return new ExtendedRestorableSqlDatabaseResourceInfo(rid, operationType, eventTimestamp, databaseName, databaseId, database, serializedAdditionalRawData: null);
+            return new ExtendedRestorableSqlDatabaseResourceInfo(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                databaseName,
+                databaseId,
+                database,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableSqlDatabasePropertiesResourceDatabase"/>. </summary>
@@ -1884,7 +2860,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.RestorableSqlDatabasePropertiesResourceDatabase"/> instance for mocking. </returns>
         public static RestorableSqlDatabasePropertiesResourceDatabase RestorableSqlDatabasePropertiesResourceDatabase(string databaseName = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, string colls = null, string users = null, string self = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
-            return new RestorableSqlDatabasePropertiesResourceDatabase(databaseName, restoreParameters, createMode, serializedAdditionalRawData: null, colls, users, self, rid, timestamp, etag);
+            return new RestorableSqlDatabasePropertiesResourceDatabase(
+                databaseName,
+                restoreParameters,
+                createMode,
+                serializedAdditionalRawData: null,
+                colls,
+                users,
+                self,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableSqlContainer"/>. </summary>
@@ -1896,20 +2882,37 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.RestorableSqlContainer"/> instance for mocking. </returns>
         public static RestorableSqlContainer RestorableSqlContainer(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableSqlContainerResourceInfo resource = null)
         {
-            return new RestorableSqlContainer(id, name, resourceType, systemData, resource, serializedAdditionalRawData: null);
+            return new RestorableSqlContainer(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resource,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableSqlContainerResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this container event. </param>
+        /// <param name="canUndelete"> A state of this container to identify if this container is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this container can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The when this container event happened. </param>
         /// <param name="containerName"> The name of this SQL container. </param>
         /// <param name="containerId"> The resource ID of this SQL container. </param>
         /// <param name="container"> Cosmos DB SQL container resource object. </param>
         /// <returns> A new <see cref="Models.ExtendedRestorableSqlContainerResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableSqlContainerResourceInfo ExtendedRestorableSqlContainerResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string eventTimestamp = null, string containerName = null, string containerId = null, RestorableSqlContainerPropertiesResourceContainer container = null)
+        public static ExtendedRestorableSqlContainerResourceInfo ExtendedRestorableSqlContainerResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string containerName = null, string containerId = null, RestorableSqlContainerPropertiesResourceContainer container = null)
         {
-            return new ExtendedRestorableSqlContainerResourceInfo(rid, operationType, eventTimestamp, containerName, containerId, container, serializedAdditionalRawData: null);
+            return new ExtendedRestorableSqlContainerResourceInfo(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                containerName,
+                containerId,
+                container,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableSqlContainerPropertiesResourceContainer"/>. </summary>
@@ -1924,16 +2927,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="materializedViewDefinition"> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </param>
+        /// <param name="computedProperties"> List of computed properties. </param>
         /// <param name="self"> A system generated property that specifies the addressable path of the container resource. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <returns> A new <see cref="Models.RestorableSqlContainerPropertiesResourceContainer"/> instance for mocking. </returns>
-        public static RestorableSqlContainerPropertiesResourceContainer RestorableSqlContainerPropertiesResourceContainer(string containerName = null, CosmosDBIndexingPolicy indexingPolicy = null, CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = null, IEnumerable<CosmosDBUniqueKey> uniqueKeys = null, ConflictResolutionPolicy conflictResolutionPolicy = null, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = null, long? analyticalStorageTtl = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, MaterializedViewDefinition materializedViewDefinition = null, string self = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        public static RestorableSqlContainerPropertiesResourceContainer RestorableSqlContainerPropertiesResourceContainer(string containerName = null, CosmosDBIndexingPolicy indexingPolicy = null, CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = null, IEnumerable<CosmosDBUniqueKey> uniqueKeys = null, ConflictResolutionPolicy conflictResolutionPolicy = null, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = null, long? analyticalStorageTtl = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, MaterializedViewDefinition materializedViewDefinition = null, IEnumerable<ComputedProperty> computedProperties = null, string self = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
             uniqueKeys ??= new List<CosmosDBUniqueKey>();
+            computedProperties ??= new List<ComputedProperty>();
 
-            return new RestorableSqlContainerPropertiesResourceContainer(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList(), serializedAdditionalRawData: null) : null, conflictResolutionPolicy, clientEncryptionPolicy, analyticalStorageTtl, restoreParameters, createMode, materializedViewDefinition, serializedAdditionalRawData: null, self, rid, timestamp, etag);
+            return new RestorableSqlContainerPropertiesResourceContainer(
+                containerName,
+                indexingPolicy,
+                partitionKey,
+                defaultTtl,
+                uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList(), serializedAdditionalRawData: null) : null,
+                conflictResolutionPolicy,
+                clientEncryptionPolicy,
+                analyticalStorageTtl,
+                restoreParameters,
+                createMode,
+                materializedViewDefinition,
+                computedProperties?.ToList(),
+                serializedAdditionalRawData: null,
+                self,
+                rid,
+                timestamp,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableSqlResourceData"/>. </summary>
@@ -1948,7 +2970,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             collectionNames ??= new List<string>();
 
-            return new RestorableSqlResourceData(id, name, resourceType, systemData, databaseName, collectionNames?.ToList(), serializedAdditionalRawData: null);
+            return new RestorableSqlResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                databaseName,
+                collectionNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableMongoDBDatabase"/>. </summary>
@@ -1960,19 +2989,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.RestorableMongoDBDatabase"/> instance for mocking. </returns>
         public static RestorableMongoDBDatabase RestorableMongoDBDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableMongoDBDatabaseResourceInfo resource = null)
         {
-            return new RestorableMongoDBDatabase(id, name, resourceType, systemData, resource, serializedAdditionalRawData: null);
+            return new RestorableMongoDBDatabase(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resource,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableMongoDBDatabaseResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this database event. </param>
+        /// <param name="canUndelete"> A state of this database to identify if this database is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this database can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this database event happened. </param>
         /// <param name="databaseName"> The name of this MongoDB database. </param>
         /// <param name="databaseId"> The resource ID of this MongoDB database. </param>
         /// <returns> A new <see cref="Models.ExtendedRestorableMongoDBDatabaseResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableMongoDBDatabaseResourceInfo ExtendedRestorableMongoDBDatabaseResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string eventTimestamp = null, string databaseName = null, string databaseId = null)
+        public static ExtendedRestorableMongoDBDatabaseResourceInfo ExtendedRestorableMongoDBDatabaseResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string databaseName = null, string databaseId = null)
         {
-            return new ExtendedRestorableMongoDBDatabaseResourceInfo(rid, operationType, eventTimestamp, databaseName, databaseId, serializedAdditionalRawData: null);
+            return new ExtendedRestorableMongoDBDatabaseResourceInfo(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                databaseName,
+                databaseId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableMongoDBCollection"/>. </summary>
@@ -1984,19 +3029,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.RestorableMongoDBCollection"/> instance for mocking. </returns>
         public static RestorableMongoDBCollection RestorableMongoDBCollection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableMongoDBCollectionResourceInfo resource = null)
         {
-            return new RestorableMongoDBCollection(id, name, resourceType, systemData, resource, serializedAdditionalRawData: null);
+            return new RestorableMongoDBCollection(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resource,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableMongoDBCollectionResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this collection event. </param>
+        /// <param name="canUndelete"> A state of this collection to identify if this container is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this collection can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this collection event happened. </param>
         /// <param name="collectionName"> The name of this MongoDB collection. </param>
         /// <param name="collectionId"> The resource ID of this MongoDB collection. </param>
         /// <returns> A new <see cref="Models.ExtendedRestorableMongoDBCollectionResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableMongoDBCollectionResourceInfo ExtendedRestorableMongoDBCollectionResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string eventTimestamp = null, string collectionName = null, string collectionId = null)
+        public static ExtendedRestorableMongoDBCollectionResourceInfo ExtendedRestorableMongoDBCollectionResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string collectionName = null, string collectionId = null)
         {
-            return new ExtendedRestorableMongoDBCollectionResourceInfo(rid, operationType, eventTimestamp, collectionName, collectionId, serializedAdditionalRawData: null);
+            return new ExtendedRestorableMongoDBCollectionResourceInfo(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                collectionName,
+                collectionId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableMongoDBResourceData"/>. </summary>
@@ -2011,7 +3072,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             collectionNames ??= new List<string>();
 
-            return new RestorableMongoDBResourceData(id, name, resourceType, systemData, databaseName, collectionNames?.ToList(), serializedAdditionalRawData: null);
+            return new RestorableMongoDBResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                databaseName,
+                collectionNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableGremlinDatabase"/>. </summary>
@@ -2023,19 +3091,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.RestorableGremlinDatabase"/> instance for mocking. </returns>
         public static RestorableGremlinDatabase RestorableGremlinDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableGremlinDatabaseResourceInfo resource = null)
         {
-            return new RestorableGremlinDatabase(id, name, resourceType, systemData, resource, serializedAdditionalRawData: null);
+            return new RestorableGremlinDatabase(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resource,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableGremlinDatabaseResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this database event. </param>
+        /// <param name="canUndelete"> A state of this database to identify if this database is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this database can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this database event happened. </param>
         /// <param name="databaseName"> The name of this Gremlin database. </param>
         /// <param name="databaseId"> The resource ID of this Gremlin database. </param>
         /// <returns> A new <see cref="Models.ExtendedRestorableGremlinDatabaseResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableGremlinDatabaseResourceInfo ExtendedRestorableGremlinDatabaseResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string eventTimestamp = null, string databaseName = null, string databaseId = null)
+        public static ExtendedRestorableGremlinDatabaseResourceInfo ExtendedRestorableGremlinDatabaseResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string databaseName = null, string databaseId = null)
         {
-            return new ExtendedRestorableGremlinDatabaseResourceInfo(rid, operationType, eventTimestamp, databaseName, databaseId, serializedAdditionalRawData: null);
+            return new ExtendedRestorableGremlinDatabaseResourceInfo(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                databaseName,
+                databaseId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableGremlinGraph"/>. </summary>
@@ -2047,19 +3131,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.RestorableGremlinGraph"/> instance for mocking. </returns>
         public static RestorableGremlinGraph RestorableGremlinGraph(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableGremlinGraphResourceInfo resource = null)
         {
-            return new RestorableGremlinGraph(id, name, resourceType, systemData, resource, serializedAdditionalRawData: null);
+            return new RestorableGremlinGraph(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resource,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableGremlinGraphResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this graph event. </param>
+        /// <param name="canUndelete"> A state of this graph to identify if this graph is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this graph can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this graph event happened. </param>
         /// <param name="graphName"> The name of this Gremlin graph. </param>
         /// <param name="graphId"> The resource ID of this Gremlin graph. </param>
         /// <returns> A new <see cref="Models.ExtendedRestorableGremlinGraphResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableGremlinGraphResourceInfo ExtendedRestorableGremlinGraphResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string eventTimestamp = null, string graphName = null, string graphId = null)
+        public static ExtendedRestorableGremlinGraphResourceInfo ExtendedRestorableGremlinGraphResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string graphName = null, string graphId = null)
         {
-            return new ExtendedRestorableGremlinGraphResourceInfo(rid, operationType, eventTimestamp, graphName, graphId, serializedAdditionalRawData: null);
+            return new ExtendedRestorableGremlinGraphResourceInfo(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                graphName,
+                graphId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableGremlinResourceData"/>. </summary>
@@ -2074,7 +3174,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             graphNames ??= new List<string>();
 
-            return new RestorableGremlinResourceData(id, name, resourceType, systemData, databaseName, graphNames?.ToList(), serializedAdditionalRawData: null);
+            return new RestorableGremlinResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                databaseName,
+                graphNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableTable"/>. </summary>
@@ -2086,19 +3193,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.RestorableTable"/> instance for mocking. </returns>
         public static RestorableTable RestorableTable(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableTableResourceInfo resource = null)
         {
-            return new RestorableTable(id, name, resourceType, systemData, resource, serializedAdditionalRawData: null);
+            return new RestorableTable(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resource,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableTableResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this table event. </param>
+        /// <param name="canUndelete"> A state of this table to identify if this table is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this table can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this table event happened. </param>
         /// <param name="tableName"> The name of this Table. </param>
         /// <param name="tableId"> The resource ID of this Table. </param>
         /// <returns> A new <see cref="Models.ExtendedRestorableTableResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableTableResourceInfo ExtendedRestorableTableResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string eventTimestamp = null, string tableName = null, string tableId = null)
+        public static ExtendedRestorableTableResourceInfo ExtendedRestorableTableResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string tableName = null, string tableId = null)
         {
-            return new ExtendedRestorableTableResourceInfo(rid, operationType, eventTimestamp, tableName, tableId, serializedAdditionalRawData: null);
+            return new ExtendedRestorableTableResourceInfo(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                tableName,
+                tableId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableTableResourceData"/>. </summary>
@@ -2124,7 +3247,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="CosmosDB.CosmosDBServiceData"/> instance for mocking. </returns>
         public static CosmosDBServiceData CosmosDBServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBServiceProperties properties = null)
         {
-            return new CosmosDBServiceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new CosmosDBServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBServiceProperties"/>. </summary>
@@ -2135,11 +3264,67 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.CosmosDBServiceProperties"/> instance for mocking. </returns>
-        public static CosmosDBServiceProperties CosmosDBServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, string serviceType = "Unknown", CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static CosmosDBServiceProperties CosmosDBServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, string serviceType = null, CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new CosmosDBServiceProperties(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties);
+            return new CosmosDBServiceProperties(
+                createdOn,
+                instanceSize,
+                instanceCount,
+                serviceType == null ? default : new CosmosDBServiceType(serviceType),
+                status,
+                additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDB.ThroughputPoolResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> A provisioning state of the ThroughputPool. </param>
+        /// <param name="maxThroughput"> Value for throughput to be shared among CosmosDB resources in the pool. </param>
+        /// <returns> A new <see cref="CosmosDB.ThroughputPoolResourceData"/> instance for mocking. </returns>
+        public static ThroughputPoolResourceData ThroughputPoolResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBStatus? provisioningState = null, int? maxThroughput = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ThroughputPoolResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                maxThroughput,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDB.ThroughputPoolAccountResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> A provisioning state of the ThroughputPool Account. </param>
+        /// <param name="accountResourceIdentifier"> The resource identifier of global database account in the throughputPool. </param>
+        /// <param name="accountLocation"> The location of  global database account in the throughputPool. </param>
+        /// <param name="accountInstanceId"> The instance id of global database account in the throughputPool. </param>
+        /// <returns> A new <see cref="CosmosDB.ThroughputPoolAccountResourceData"/> instance for mocking. </returns>
+        public static ThroughputPoolAccountResourceData ThroughputPoolAccountResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBStatus? provisioningState = null, string accountResourceIdentifier = null, string accountLocation = null, string accountInstanceId = null)
+        {
+            return new ThroughputPoolAccountResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                accountResourceIdentifier,
+                accountLocation,
+                accountInstanceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataTransferServiceProperties"/>. </summary>
@@ -2155,7 +3340,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             locations ??= new List<DataTransferRegionalService>();
 
-            return new DataTransferServiceProperties(createdOn, instanceSize, instanceCount, CosmosDBServiceType.DataTransfer, status, additionalProperties, locations?.ToList());
+            return new DataTransferServiceProperties(
+                createdOn,
+                instanceSize,
+                instanceCount,
+                CosmosDBServiceType.DataTransfer,
+                status,
+                additionalProperties,
+                locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataTransferRegionalService"/>. </summary>
@@ -2192,7 +3384,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             locations ??= new List<SqlDedicatedGatewayRegionalService>();
 
-            return new SqlDedicatedGatewayServiceProperties(createdOn, instanceSize, instanceCount, CosmosDBServiceType.SqlDedicatedGateway, status, additionalProperties, sqlDedicatedGatewayEndpoint, locations?.ToList());
+            return new SqlDedicatedGatewayServiceProperties(
+                createdOn,
+                instanceSize,
+                instanceCount,
+                CosmosDBServiceType.SqlDedicatedGateway,
+                status,
+                additionalProperties,
+                sqlDedicatedGatewayEndpoint,
+                locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlDedicatedGatewayRegionalService"/>. </summary>
@@ -2220,7 +3420,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             locations ??= new List<GraphApiComputeRegionalService>();
 
-            return new GraphApiComputeServiceProperties(createdOn, instanceSize, instanceCount, CosmosDBServiceType.GraphApiCompute, status, additionalProperties, graphApiComputeEndpoint, locations?.ToList());
+            return new GraphApiComputeServiceProperties(
+                createdOn,
+                instanceSize,
+                instanceCount,
+                CosmosDBServiceType.GraphApiCompute,
+                status,
+                additionalProperties,
+                graphApiComputeEndpoint,
+                locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GraphApiComputeRegionalService"/>. </summary>
@@ -2247,7 +3455,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             locations ??= new List<MaterializedViewsBuilderRegionalService>();
 
-            return new MaterializedViewsBuilderServiceProperties(createdOn, instanceSize, instanceCount, CosmosDBServiceType.MaterializedViewsBuilder, status, additionalProperties, locations?.ToList());
+            return new MaterializedViewsBuilderServiceProperties(
+                createdOn,
+                instanceSize,
+                instanceCount,
+                CosmosDBServiceType.MaterializedViewsBuilder,
+                status,
+                additionalProperties,
+                locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MaterializedViewsBuilderRegionalService"/>. </summary>

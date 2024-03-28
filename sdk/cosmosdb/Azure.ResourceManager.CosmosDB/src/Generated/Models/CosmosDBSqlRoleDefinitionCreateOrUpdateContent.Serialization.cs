@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlRoleDefinitionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBSqlRoleDefinitionCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBSqlRoleDefinitionCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBSqlRolePermission>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlRoleDefinitionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBSqlRoleDefinitionCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBSqlRoleDefinitionCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> roleName = default;
-            Optional<CosmosDBSqlRoleDefinitionType> type = default;
-            Optional<IList<string>> assignableScopes = default;
-            Optional<IList<CosmosDBSqlRolePermission>> permissions = default;
+            string roleName = default;
+            CosmosDBSqlRoleDefinitionType? type = default;
+            IList<string> assignableScopes = default;
+            IList<CosmosDBSqlRolePermission> permissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<CosmosDBSqlRolePermission> array = new List<CosmosDBSqlRolePermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBSqlRolePermission.DeserializeCosmosDBSqlRolePermission(item));
+                                array.Add(CosmosDBSqlRolePermission.DeserializeCosmosDBSqlRolePermission(item, options));
                             }
                             permissions = array;
                             continue;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlRoleDefinitionCreateOrUpdateContent(roleName.Value, Optional.ToNullable(type), Optional.ToList(assignableScopes), Optional.ToList(permissions), serializedAdditionalRawData);
+            return new CosmosDBSqlRoleDefinitionCreateOrUpdateContent(roleName, type, assignableScopes ?? new ChangeTrackingList<string>(), permissions ?? new ChangeTrackingList<CosmosDBSqlRolePermission>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlRoleDefinitionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBSqlRoleDefinitionCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBSqlRoleDefinitionCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBSqlRoleDefinitionCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBSqlRoleDefinitionCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBSqlRoleDefinitionCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

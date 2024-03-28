@@ -21,9 +21,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target);
+            writer.WriteObjectValue<RemoteDeviceAdapterTarget>(Target);
             writer.WritePropertyName("iotHubDeviceConnection"u8);
-            writer.WriteObjectValue(IotHubDeviceConnection);
+            writer.WriteObjectValue<IotHubDeviceConnection>(IotHubDeviceConnection);
             writer.WriteEndObject();
         }
 
@@ -33,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             RemoteDeviceAdapterTarget target = default;
             IotHubDeviceConnection iotHubDeviceConnection = default;
             foreach (var property in element.EnumerateObject())
@@ -54,7 +54,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new RemoteDeviceAdapterProperties(description.Value, target, iotHubDeviceConnection);
+            return new RemoteDeviceAdapterProperties(description, target, iotHubDeviceConnection);
         }
     }
 }

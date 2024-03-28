@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveRoute)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveRoute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> disableBgpRoutePropagation = default;
-            Optional<EffectiveRouteSource> source = default;
-            Optional<EffectiveRouteState> state = default;
-            Optional<IReadOnlyList<string>> addressPrefix = default;
-            Optional<IReadOnlyList<string>> nextHopIPAddress = default;
-            Optional<RouteNextHopType> nextHopType = default;
+            string name = default;
+            bool? disableBgpRoutePropagation = default;
+            EffectiveRouteSource? source = default;
+            EffectiveRouteState? state = default;
+            IReadOnlyList<string> addressPrefix = default;
+            IReadOnlyList<string> nextHopIPAddress = default;
+            RouteNextHopType? nextHopType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveRoute(name.Value, Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(source), Optional.ToNullable(state), Optional.ToList(addressPrefix), Optional.ToList(nextHopIPAddress), Optional.ToNullable(nextHopType), serializedAdditionalRawData);
+            return new EffectiveRoute(
+                name,
+                disableBgpRoutePropagation,
+                source,
+                state,
+                addressPrefix ?? new ChangeTrackingList<string>(),
+                nextHopIPAddress ?? new ChangeTrackingList<string>(),
+                nextHopType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveRoute>.Write(ModelReaderWriterOptions options)
@@ -207,7 +215,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveRoute)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +231,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeEffectiveRoute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveRoute)} does not support reading '{options.Format}' format.");
             }
         }
 

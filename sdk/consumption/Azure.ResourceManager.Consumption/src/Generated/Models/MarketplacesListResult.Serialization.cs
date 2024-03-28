@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplacesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplacesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplacesListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConsumptionMarketplace>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplacesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplacesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplacesListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionMarketplace>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ConsumptionMarketplace> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionMarketplace> array = new List<ConsumptionMarketplace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionMarketplace.DeserializeConsumptionMarketplace(item));
+                        array.Add(ConsumptionMarketplace.DeserializeConsumptionMarketplace(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplacesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MarketplacesListResult(value ?? new ChangeTrackingList<ConsumptionMarketplace>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplacesListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplacesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplacesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeMarketplacesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplacesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplacesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

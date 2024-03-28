@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<DiskStorageAccountType> name = default;
-            Optional<string> tier = default;
+            DiskStorageAccountType? name = default;
+            string tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskSku(Optional.ToNullable(name), tier.Value, serializedAdditionalRawData);
+            return new DiskSku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskSku>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDiskSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskSku)} does not support reading '{options.Format}' format.");
             }
         }
 

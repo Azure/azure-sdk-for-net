@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -71,6 +70,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Id to use when querying for status for a particular purge operation. </summary>
+        [WirePath("operationId")]
         public string OperationId { get; }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualApplicationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualApplicationGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualApplicationGroupPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualApplicationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualApplicationGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualApplicationGroupPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> friendlyName = default;
-            Optional<bool> showInFeed = default;
+            SystemData systemData = default;
+            string description = default;
+            string friendlyName = default;
+            bool? showInFeed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplicationGroupPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), description.Value, friendlyName.Value, Optional.ToNullable(showInFeed), serializedAdditionalRawData);
+            return new VirtualApplicationGroupPatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                friendlyName,
+                showInFeed,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplicationGroupPatch>.Write(ModelReaderWriterOptions options)
@@ -213,7 +222,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualApplicationGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualApplicationGroupPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +238,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeVirtualApplicationGroupPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualApplicationGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualApplicationGroupPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

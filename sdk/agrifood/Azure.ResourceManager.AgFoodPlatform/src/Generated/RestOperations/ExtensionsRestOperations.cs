@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AgFoodPlatform.Models;
@@ -385,14 +384,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
             uri.AppendPath(farmBeatsResourceName, true);
             uri.AppendPath("/extensions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (extensionIds != null && Optional.IsCollectionDefined(extensionIds))
+            if (extensionIds != null && !(extensionIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in extensionIds)
                 {
                     uri.AppendQuery("extensionIds", param, true);
                 }
             }
-            if (extensionCategories != null && Optional.IsCollectionDefined(extensionCategories))
+            if (extensionCategories != null && !(extensionCategories is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in extensionCategories)
                 {

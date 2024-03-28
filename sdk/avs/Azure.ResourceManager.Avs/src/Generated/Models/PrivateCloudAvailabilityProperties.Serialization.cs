@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateCloudAvailabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateCloudAvailabilityProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateCloudAvailabilityProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateCloudAvailabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateCloudAvailabilityProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateCloudAvailabilityProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<AvailabilityStrategy> strategy = default;
-            Optional<int> zone = default;
-            Optional<int> secondaryZone = default;
+            AvailabilityStrategy? strategy = default;
+            int? zone = default;
+            int? secondaryZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateCloudAvailabilityProperties(Optional.ToNullable(strategy), Optional.ToNullable(zone), Optional.ToNullable(secondaryZone), serializedAdditionalRawData);
+            return new PrivateCloudAvailabilityProperties(strategy, zone, secondaryZone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateCloudAvailabilityProperties>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateCloudAvailabilityProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateCloudAvailabilityProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializePrivateCloudAvailabilityProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateCloudAvailabilityProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateCloudAvailabilityProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeFileSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeFileSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeFileSourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeFileSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeFileSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeFileSourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeFileSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeFileSourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeFileSourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeFileSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeFileSourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

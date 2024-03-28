@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {

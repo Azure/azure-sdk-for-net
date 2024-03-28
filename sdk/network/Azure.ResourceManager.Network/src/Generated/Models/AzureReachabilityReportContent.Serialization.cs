@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("providerLocation"u8);
-            writer.WriteObjectValue(ProviderLocation);
+            writer.WriteObjectValue<AzureReachabilityReportLocation>(ProviderLocation, options);
             if (Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             AzureReachabilityReportLocation providerLocation = default;
-            Optional<IList<string>> providers = default;
-            Optional<IList<AzureLocation>> azureLocations = default;
+            IList<string> providers = default;
+            IList<AzureLocation> azureLocations = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("providerLocation"u8))
                 {
-                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value);
+                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providers"u8))
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureReachabilityReportContent(providerLocation, Optional.ToList(providers), Optional.ToList(azureLocations), startTime, endTime, serializedAdditionalRawData);
+            return new AzureReachabilityReportContent(
+                providerLocation,
+                providers ?? new ChangeTrackingList<string>(),
+                azureLocations ?? new ChangeTrackingList<AzureLocation>(),
+                startTime,
+                endTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureReachabilityReportContent>.Write(ModelReaderWriterOptions options)
@@ -160,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +182,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAzureReachabilityReportContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support reading '{options.Format}' format.");
             }
         }
 

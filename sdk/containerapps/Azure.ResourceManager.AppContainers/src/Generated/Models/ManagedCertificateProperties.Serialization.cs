@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedCertificateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedCertificateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
-            Optional<string> subjectName = default;
-            Optional<string> error = default;
-            Optional<ManagedCertificateDomainControlValidation> domainControlValidation = default;
-            Optional<string> validationToken = default;
+            ContainerAppCertificateProvisioningState? provisioningState = default;
+            string subjectName = default;
+            string error = default;
+            ManagedCertificateDomainControlValidation? domainControlValidation = default;
+            string validationToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedCertificateProperties(Optional.ToNullable(provisioningState), subjectName.Value, error.Value, Optional.ToNullable(domainControlValidation), validationToken.Value, serializedAdditionalRawData);
+            return new ManagedCertificateProperties(
+                provisioningState,
+                subjectName,
+                error,
+                domainControlValidation,
+                validationToken,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedCertificateProperties>.Write(ModelReaderWriterOptions options)
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedCertificateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeManagedCertificateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedCertificateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

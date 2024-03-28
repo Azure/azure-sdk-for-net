@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDaprConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDaprConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDaprConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDaprConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDaprConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDaprConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> appId = default;
-            Optional<ContainerAppProtocol> appProtocol = default;
-            Optional<int> appPort = default;
-            Optional<int> httpReadBufferSize = default;
-            Optional<int> httpMaxRequestSize = default;
-            Optional<ContainerAppDaprLogLevel> logLevel = default;
-            Optional<bool> enableApiLogging = default;
+            bool? enabled = default;
+            string appId = default;
+            ContainerAppProtocol? appProtocol = default;
+            int? appPort = default;
+            int? httpReadBufferSize = default;
+            int? httpMaxRequestSize = default;
+            ContainerAppDaprLogLevel? logLevel = default;
+            bool? enableApiLogging = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDaprConfiguration(Optional.ToNullable(enabled), appId.Value, Optional.ToNullable(appProtocol), Optional.ToNullable(appPort), Optional.ToNullable(httpReadBufferSize), Optional.ToNullable(httpMaxRequestSize), Optional.ToNullable(logLevel), Optional.ToNullable(enableApiLogging), serializedAdditionalRawData);
+            return new ContainerAppDaprConfiguration(
+                enabled,
+                appId,
+                appProtocol,
+                appPort,
+                httpReadBufferSize,
+                httpMaxRequestSize,
+                logLevel,
+                enableApiLogging,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDaprConfiguration>.Write(ModelReaderWriterOptions options)
@@ -202,7 +211,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDaprConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDaprConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +227,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppDaprConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDaprConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDaprConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

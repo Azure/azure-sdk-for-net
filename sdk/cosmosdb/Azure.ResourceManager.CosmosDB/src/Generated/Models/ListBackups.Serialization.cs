@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ListBackups>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListBackups)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ListBackups)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CassandraClusterBackupResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ListBackups>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListBackups)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ListBackups)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CassandraClusterBackupResourceInfo>> value = default;
+            IReadOnlyList<CassandraClusterBackupResourceInfo> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterBackupResourceInfo> array = new List<CassandraClusterBackupResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterBackupResourceInfo.DeserializeCassandraClusterBackupResourceInfo(item));
+                        array.Add(CassandraClusterBackupResourceInfo.DeserializeCassandraClusterBackupResourceInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +101,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListBackups(Optional.ToList(value), serializedAdditionalRawData);
+            return new ListBackups(value ?? new ChangeTrackingList<CassandraClusterBackupResourceInfo>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (Optional.IsCollectionDefined(Value) || hasPropertyOverride)
+            {
+                if (Value.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  value: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Value)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  value: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ListBackups>.Write(ModelReaderWriterOptions options)
@@ -110,8 +149,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ListBackups)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListBackups)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeListBackups(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListBackups)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListBackups)} does not support reading '{options.Format}' format.");
             }
         }
 

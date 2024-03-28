@@ -11,6 +11,8 @@
     "**/SessionRecords/**",
     "**/packages/**",
     "artifacts/**/*",
+    "*.cbor",
+    "*.cose",
     "*.exe",
     "*.dll",
     "*.nupkg",
@@ -32,6 +34,7 @@
     "*.user",
     ".vscode/cspell.json",
     "assets.json",
+    "sdk/confidentialledger/Azure.Security.CodeTransparency/tests/TestFiles/*",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
@@ -78,6 +81,7 @@
     "fhir",
     "finalizer",
     "finalizers",
+    "flac",
     "hnsw",
     "ienumerable",
     "illumos",
@@ -93,6 +97,7 @@
     "nunit",
     "odata",
     "onco",
+    "opinsights",
     "otel",
     "overridden",
     "parallelization",
@@ -105,6 +110,7 @@
     "referer",
     "renormalize",
     "retriable",
+    "signalr",
     "signup",
     "skus",
     "southcentralus",
@@ -246,7 +252,10 @@
     {
       "filename": "**/sdk/confidentialledger/**/*.cs",
       "words": [
-        "ccfs"
+        "cbor",
+        "ccfs",
+        "cose",
+        "scitt"
       ]
     },
     {
@@ -433,13 +442,25 @@
         "Inprogress",
         "Twilio",
         "Vertica",
-        "Xero"
+        "Xero",
+		    "Soql"
       ]
     },
     {
       "filename": "**/sdk/defendereasm/**/*.cs",
       "words": [
         "easm"
+      ]
+    },
+    {
+      "filename": "**/sdk/easm/**/*",
+      "words": [
+        "easm",
+        "asns",
+        "cnames",
+        "alexa",
+        "whois",
+        "nxdomain"
       ]
     },
     {
@@ -529,6 +550,10 @@
         "ldaps",
         "llap",
         "oaep",
+        "SSDLRS",
+        "SSDV",
+        "SSDZRS",
+        "HDDLRS",
         "trino"
       ]
     },
@@ -610,7 +635,29 @@
         "Ambr",
         "Rfsp",
         "Snssai",
-        "AKSHCI"
+        "AKSHCI",
+        "imsi",
+        "guti",
+        "tnla",
+        "imsi",
+        "imei",
+        "imeisv",
+        "tmsi",
+        "supi",
+        "suci",
+        "ngap",
+        "fiveg",
+        "ngap",
+        "tngf",
+        "fiveqi",
+        "plmn",
+        "napt",
+        "nssai",
+        "iccid",
+        "gbps",
+        "mbps",
+        "sdkutrg",
+        "ueip"
       ]
     },
     {
@@ -961,6 +1008,7 @@
     {
       "filename": "**/sdk/servicefabricmanagedclusters/**/*.cs",
       "words": [
+        "dscp",
         "reimage",
         "ssdlrs"
       ]
@@ -1083,6 +1131,7 @@
         "Nysiis",
         "Phonetik",
         "Piqd",
+        "Rerank",
         "Reranker",
         "Rslp",
         "Soundex",
@@ -1306,6 +1355,12 @@
         "nfvi",
         "NFVIs",
         "nfvis"
+      ]
+    },
+    {
+      "filename": "**/sdk/confluent/**/*.cs",
+      "words": [
+        "Byok"
       ]
     }
   ],

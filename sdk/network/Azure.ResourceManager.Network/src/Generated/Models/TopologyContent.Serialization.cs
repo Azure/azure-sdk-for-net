@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopologyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopologyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopologyContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopologyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopologyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopologyContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> targetResourceGroupName = default;
-            Optional<WritableSubResource> targetVirtualNetwork = default;
-            Optional<WritableSubResource> targetSubnet = default;
+            string targetResourceGroupName = default;
+            WritableSubResource targetVirtualNetwork = default;
+            WritableSubResource targetSubnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopologyContent(targetResourceGroupName.Value, targetVirtualNetwork, targetSubnet, serializedAdditionalRawData);
+            return new TopologyContent(targetResourceGroupName, targetVirtualNetwork, targetSubnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopologyContent>.Write(ModelReaderWriterOptions options)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TopologyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopologyContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeTopologyContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TopologyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopologyContent)} does not support reading '{options.Format}' format.");
             }
         }
 

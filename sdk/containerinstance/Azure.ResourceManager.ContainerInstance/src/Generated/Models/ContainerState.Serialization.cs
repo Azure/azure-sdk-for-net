@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> state = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<int> exitCode = default;
-            Optional<DateTimeOffset> finishTime = default;
-            Optional<string> detailStatus = default;
+            string state = default;
+            DateTimeOffset? startTime = default;
+            int? exitCode = default;
+            DateTimeOffset? finishTime = default;
+            string detailStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerState(state.Value, Optional.ToNullable(startTime), Optional.ToNullable(exitCode), Optional.ToNullable(finishTime), detailStatus.Value, serializedAdditionalRawData);
+            return new ContainerState(
+                state,
+                startTime,
+                exitCode,
+                finishTime,
+                detailStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerState>.Write(ModelReaderWriterOptions options)
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerState)} does not support reading '{options.Format}' format.");
             }
         }
 

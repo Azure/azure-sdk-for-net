@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.MixedReality.Common;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
@@ -17,25 +18,25 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConversionStatus))
+            if (Common.Optional.IsDefined(ConversionStatus))
             {
                 writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(ConversionStatus.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AssetFileTypeString))
+            if (Common.Optional.IsDefined(AssetFileTypeString))
             {
                 writer.WritePropertyName("assetFileType"u8);
                 writer.WriteStringValue(AssetFileTypeString);
             }
-            if (Optional.IsDefined(InputAssetUriString))
+            if (Common.Optional.IsDefined(InputAssetUriString))
             {
                 writer.WritePropertyName("inputAssetUri"u8);
                 writer.WriteStringValue(InputAssetUriString);
             }
-            if (Optional.IsDefined(ConversionConfiguration))
+            if (Common.Optional.IsDefined(ConversionConfiguration))
             {
                 writer.WritePropertyName("ingestionConfiguration"u8);
-                writer.WriteObjectValue(ConversionConfiguration);
+                writer.WriteObjectValue<AssetConversionConfiguration>(ConversionConfiguration);
             }
             writer.WriteEndObject();
         }
@@ -46,17 +47,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             {
                 return null;
             }
-            Optional<string> clientErrorDetails = default;
-            Optional<string> serverErrorDetails = default;
-            Optional<ConversionErrorCode> errorCode = default;
-            Optional<Guid> jobId = default;
-            Optional<string> outputModelUri = default;
-            Optional<AssetConversionStatus> jobStatus = default;
-            Optional<string> assetFileType = default;
-            Optional<string> inputAssetUri = default;
-            Optional<Guid> accountId = default;
-            Optional<AssetConversionConfiguration> ingestionConfiguration = default;
-            Optional<Vector3> scaledAssetDimensions = default;
+            string clientErrorDetails = default;
+            string serverErrorDetails = default;
+            ConversionErrorCode errorCode = default;
+            Guid? jobId = default;
+            string outputModelUri = default;
+            AssetConversionStatus? jobStatus = default;
+            string assetFileType = default;
+            string inputAssetUri = default;
+            Guid? accountId = default;
+            AssetConversionConfiguration ingestionConfiguration = default;
+            Vector3 scaledAssetDimensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientErrorDetails"u8))
@@ -140,7 +141,18 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     continue;
                 }
             }
-            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value, scaledAssetDimensions.Value);
+            return new AssetConversionProperties(
+                clientErrorDetails,
+                serverErrorDetails,
+                errorCode,
+                jobId,
+                outputModelUri,
+                jobStatus,
+                assetFileType,
+                inputAssetUri,
+                accountId,
+                ingestionConfiguration,
+                scaledAssetDimensions);
         }
     }
 }

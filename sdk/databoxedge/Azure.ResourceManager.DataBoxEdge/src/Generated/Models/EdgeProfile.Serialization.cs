@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Subscription))
             {
                 writer.WritePropertyName("subscription"u8);
-                writer.WriteObjectValue(Subscription);
+                writer.WriteObjectValue<EdgeProfileSubscription>(Subscription, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<EdgeProfileSubscription> subscription = default;
+            EdgeProfileSubscription subscription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    subscription = EdgeProfileSubscription.DeserializeEdgeProfileSubscription(property.Value);
+                    subscription = EdgeProfileSubscription.DeserializeEdgeProfileSubscription(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeProfile(subscription.Value, serializedAdditionalRawData);
+            return new EdgeProfile(subscription, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeProfile>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

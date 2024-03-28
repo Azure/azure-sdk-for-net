@@ -19,11 +19,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
+            writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                writer.WriteObjectValue(Path);
+                writer.WriteObjectValue<object>(Path);
             }
             writer.WriteEndObject();
         }
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             LinkedServiceReference linkedServiceName = default;
-            Optional<object> path = default;
+            object path = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"u8))
@@ -53,14 +53,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LogLocationSettings(linkedServiceName, path.Value);
+            return new LogLocationSettings(linkedServiceName, path);
         }
 
         internal partial class LogLocationSettingsConverter : JsonConverter<LogLocationSettings>
         {
             public override void Write(Utf8JsonWriter writer, LogLocationSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LogLocationSettings>(model);
             }
             public override LogLocationSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

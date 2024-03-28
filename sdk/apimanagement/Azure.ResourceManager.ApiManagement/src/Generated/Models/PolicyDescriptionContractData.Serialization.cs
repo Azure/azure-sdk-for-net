@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyDescriptionContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyDescriptionContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyDescriptionContractData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyDescriptionContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyDescriptionContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyDescriptionContractData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<long> scope = default;
+            SystemData systemData = default;
+            string description = default;
+            long? scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDescriptionContractData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(scope), serializedAdditionalRawData);
+            return new PolicyDescriptionContractData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                scope,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDescriptionContractData>.Write(ModelReaderWriterOptions options)
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyDescriptionContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyDescriptionContractData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializePolicyDescriptionContractData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyDescriptionContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyDescriptionContractData)} does not support reading '{options.Format}' format.");
             }
         }
 

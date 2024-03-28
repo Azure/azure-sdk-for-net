@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetworkAnalytics;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProductListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProductListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProductListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataProductData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProductListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProductListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProductListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 return null;
             }
             IReadOnlyList<DataProductData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<DataProductData> array = new List<DataProductData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProductData.DeserializeDataProductData(item));
+                        array.Add(DataProductData.DeserializeDataProductData(item, options));
                     }
                     value = array;
                     continue;
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProductListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new DataProductListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProductListResult>.Write(ModelReaderWriterOptions options)
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProductListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProductListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                         return DeserializeDataProductListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProductListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProductListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

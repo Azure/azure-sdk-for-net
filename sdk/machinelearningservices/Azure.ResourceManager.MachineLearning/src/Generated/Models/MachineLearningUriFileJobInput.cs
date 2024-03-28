@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -27,13 +27,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningUriFileJobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mode"> Input Asset Delivery Mode. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
-        internal MachineLearningUriFileJobInput(string description, JobInputType jobInputType, MachineLearningInputDeliveryMode? mode, Uri uri) : base(description, jobInputType)
+        internal MachineLearningUriFileJobInput(string description, JobInputType jobInputType, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningInputDeliveryMode? mode, Uri uri) : base(description, jobInputType, serializedAdditionalRawData)
         {
             Mode = mode;
             Uri = uri;
             JobInputType = jobInputType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUriFileJobInput"/> for deserialization. </summary>
+        internal MachineLearningUriFileJobInput()
+        {
         }
 
         /// <summary> Input Asset Delivery Mode. </summary>

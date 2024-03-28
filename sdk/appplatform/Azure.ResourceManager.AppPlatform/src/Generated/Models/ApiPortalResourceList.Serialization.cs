@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiPortalResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiPortalResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiPortalResourceList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformApiPortalData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiPortalResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiPortalResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiPortalResourceList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppPlatformApiPortalData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AppPlatformApiPortalData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformApiPortalData> array = new List<AppPlatformApiPortalData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformApiPortalData.DeserializeAppPlatformApiPortalData(item));
+                        array.Add(AppPlatformApiPortalData.DeserializeAppPlatformApiPortalData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiPortalResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ApiPortalResourceList(value ?? new ChangeTrackingList<AppPlatformApiPortalData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiPortalResourceList>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiPortalResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiPortalResourceList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeApiPortalResourceList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiPortalResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiPortalResourceList)} does not support reading '{options.Format}' format.");
             }
         }
 

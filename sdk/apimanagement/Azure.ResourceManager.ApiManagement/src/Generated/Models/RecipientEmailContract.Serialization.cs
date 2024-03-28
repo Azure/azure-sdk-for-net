@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecipientEmailContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecipientEmailContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecipientEmailContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecipientEmailContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecipientEmailContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecipientEmailContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> email = default;
+            SystemData systemData = default;
+            string email = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecipientEmailContract(id, name, type, systemData.Value, email.Value, serializedAdditionalRawData);
+            return new RecipientEmailContract(
+                id,
+                name,
+                type,
+                systemData,
+                email,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecipientEmailContract>.Write(ModelReaderWriterOptions options)
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecipientEmailContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecipientEmailContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeRecipientEmailContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecipientEmailContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecipientEmailContract)} does not support reading '{options.Format}' format.");
             }
         }
 

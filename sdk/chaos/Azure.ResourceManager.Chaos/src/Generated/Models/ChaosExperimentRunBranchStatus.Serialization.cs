@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentRunBranchStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosExperimentRunBranchStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosExperimentRunBranchStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChaosExperimentRunActionStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentRunBranchStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosExperimentRunBranchStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosExperimentRunBranchStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<string> branchName = default;
-            Optional<string> branchId = default;
-            Optional<string> status = default;
-            Optional<IReadOnlyList<ChaosExperimentRunActionStatus>> actions = default;
+            string branchName = default;
+            string branchId = default;
+            string status = default;
+            IReadOnlyList<ChaosExperimentRunActionStatus> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosExperimentRunActionStatus> array = new List<ChaosExperimentRunActionStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentRunActionStatus.DeserializeChaosExperimentRunActionStatus(item));
+                        array.Add(ChaosExperimentRunActionStatus.DeserializeChaosExperimentRunActionStatus(item, options));
                     }
                     actions = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosExperimentRunBranchStatus(branchName.Value, branchId.Value, status.Value, Optional.ToList(actions), serializedAdditionalRawData);
+            return new ChaosExperimentRunBranchStatus(branchName, branchId, status, actions ?? new ChangeTrackingList<ChaosExperimentRunActionStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosExperimentRunBranchStatus>.Write(ModelReaderWriterOptions options)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentRunBranchStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosExperimentRunBranchStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         return DeserializeChaosExperimentRunBranchStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentRunBranchStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosExperimentRunBranchStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

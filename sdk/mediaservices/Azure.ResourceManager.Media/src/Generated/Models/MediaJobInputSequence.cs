@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -22,12 +22,13 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of <see cref="MediaJobInputSequence"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inputs">
         /// JobInputs that make up the timeline.
         /// Please note <see cref="MediaJobInputClip"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MediaJobInputAsset"/> and <see cref="MediaJobInputHttp"/>.
         /// </param>
-        internal MediaJobInputSequence(string odataType, IList<MediaJobInputClip> inputs) : base(odataType)
+        internal MediaJobInputSequence(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<MediaJobInputClip> inputs) : base(odataType, serializedAdditionalRawData)
         {
             Inputs = inputs;
             OdataType = odataType ?? "#Microsoft.Media.JobInputSequence";

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A failover group update request. </summary>
     public partial class FailoverGroupPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FailoverGroupPatch"/>. </summary>
         public FailoverGroupPatch()
         {
@@ -27,24 +60,31 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="readOnlyEndpoint"> Read-only endpoint of the failover group instance. </param>
         /// <param name="failoverDatabases"> List of databases in the failover group. </param>
         /// <param name="partnerServers"> List of partner server information for the failover group. </param>
-        internal FailoverGroupPatch(IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, IList<ResourceIdentifier> failoverDatabases, IList<PartnerServerInfo> partnerServers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FailoverGroupPatch(IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, IList<ResourceIdentifier> failoverDatabases, IList<PartnerServerInfo> partnerServers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             ReadWriteEndpoint = readWriteEndpoint;
             ReadOnlyEndpoint = readOnlyEndpoint;
             FailoverDatabases = failoverDatabases;
             PartnerServers = partnerServers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Read-write endpoint of the failover group instance. </summary>
+        [WirePath("properties.readWriteEndpoint")]
         public FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get; set; }
         /// <summary> Read-only endpoint of the failover group instance. </summary>
+        [WirePath("properties.readOnlyEndpoint")]
         public FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
         /// <summary> List of databases in the failover group. </summary>
+        [WirePath("properties.databases")]
         public IList<ResourceIdentifier> FailoverDatabases { get; }
         /// <summary> List of partner server information for the failover group. </summary>
+        [WirePath("properties.partnerServers")]
         public IList<PartnerServerInfo> PartnerServers { get; }
     }
 }

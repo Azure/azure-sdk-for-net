@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SensitivityLabel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SensitivityLabel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SensitivityLabel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SensitivityLabel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SensitivityLabel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SensitivityLabel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<SensitivityLabelRank> rank = default;
-            Optional<int> order = default;
-            Optional<bool> enabled = default;
+            string displayName = default;
+            string description = default;
+            SensitivityLabelRank? rank = default;
+            int? order = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivityLabel(displayName.Value, description.Value, Optional.ToNullable(rank), Optional.ToNullable(order), Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new SensitivityLabel(
+                displayName,
+                description,
+                rank,
+                order,
+                enabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivityLabel>.Write(ModelReaderWriterOptions options)
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SensitivityLabel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SensitivityLabel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSensitivityLabel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SensitivityLabel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SensitivityLabel)} does not support reading '{options.Format}' format.");
             }
         }
 

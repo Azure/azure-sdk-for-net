@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </summary>
     public partial class ServiceBusFilterAction
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ServiceBusFilterAction"/>. </summary>
         public ServiceBusFilterAction()
         {
@@ -19,18 +54,23 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="sqlExpression"> SQL expression. e.g. MyProperty='ABC'. </param>
         /// <param name="compatibilityLevel"> This property is reserved for future use. An integer value showing the compatibility level, currently hard-coded to 20. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
-        internal ServiceBusFilterAction(string sqlExpression, int? compatibilityLevel, bool? requiresPreprocessing)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusFilterAction(string sqlExpression, int? compatibilityLevel, bool? requiresPreprocessing, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SqlExpression = sqlExpression;
             CompatibilityLevel = compatibilityLevel;
             RequiresPreprocessing = requiresPreprocessing;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SQL expression. e.g. MyProperty='ABC'. </summary>
+        [WirePath("sqlExpression")]
         public string SqlExpression { get; set; }
         /// <summary> This property is reserved for future use. An integer value showing the compatibility level, currently hard-coded to 20. </summary>
+        [WirePath("compatibilityLevel")]
         public int? CompatibilityLevel { get; set; }
         /// <summary> Value that indicates whether the rule action requires preprocessing. </summary>
+        [WirePath("requiresPreprocessing")]
         public bool? RequiresPreprocessing { get; set; }
     }
 }

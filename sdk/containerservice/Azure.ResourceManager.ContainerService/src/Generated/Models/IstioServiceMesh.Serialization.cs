@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioServiceMesh>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Components))
             {
                 writer.WritePropertyName("components"u8);
-                writer.WriteObjectValue(Components);
+                writer.WriteObjectValue<IstioComponents>(Components, options);
             }
             if (Optional.IsDefined(CertificateAuthority))
             {
                 writer.WritePropertyName("certificateAuthority"u8);
-                writer.WriteObjectValue(CertificateAuthority);
+                writer.WriteObjectValue<IstioCertificateAuthority>(CertificateAuthority, options);
             }
             if (Optional.IsCollectionDefined(Revisions))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioServiceMesh>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IstioComponents> components = default;
-            Optional<IstioCertificateAuthority> certificateAuthority = default;
-            Optional<IList<string>> revisions = default;
+            IstioComponents components = default;
+            IstioCertificateAuthority certificateAuthority = default;
+            IList<string> revisions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    components = IstioComponents.DeserializeIstioComponents(property.Value);
+                    components = IstioComponents.DeserializeIstioComponents(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("certificateAuthority"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    certificateAuthority = IstioCertificateAuthority.DeserializeIstioCertificateAuthority(property.Value);
+                    certificateAuthority = IstioCertificateAuthority.DeserializeIstioCertificateAuthority(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("revisions"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IstioServiceMesh(components.Value, certificateAuthority.Value, Optional.ToList(revisions), serializedAdditionalRawData);
+            return new IstioServiceMesh(components, certificateAuthority, revisions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IstioServiceMesh>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeIstioServiceMesh(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioServiceMesh)} does not support reading '{options.Format}' format.");
             }
         }
 

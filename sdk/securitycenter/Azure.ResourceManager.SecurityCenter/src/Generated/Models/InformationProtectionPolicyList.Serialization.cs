@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionPolicyList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InformationProtectionPolicyList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InformationProtectionPolicyList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InformationProtectionPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionPolicyList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InformationProtectionPolicyList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InformationProtectionPolicyList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InformationProtectionPolicy>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<InformationProtectionPolicy> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<InformationProtectionPolicy> array = new List<InformationProtectionPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InformationProtectionPolicy.DeserializeInformationProtectionPolicy(item));
+                        array.Add(InformationProtectionPolicy.DeserializeInformationProtectionPolicy(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InformationProtectionPolicyList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new InformationProtectionPolicyList(value ?? new ChangeTrackingList<InformationProtectionPolicy>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InformationProtectionPolicyList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InformationProtectionPolicyList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InformationProtectionPolicyList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeInformationProtectionPolicyList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InformationProtectionPolicyList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InformationProtectionPolicyList)} does not support reading '{options.Format}' format.");
             }
         }
 

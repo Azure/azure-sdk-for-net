@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiEntityBaseContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue(AuthenticationSettings);
+                writer.WriteObjectValue<AuthenticationSettingsContract>(AuthenticationSettings, options);
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue(SubscriptionKeyParameterNames);
+                writer.WriteObjectValue<SubscriptionKeyParameterNamesContract>(SubscriptionKeyParameterNames, options);
             }
             if (Optional.IsDefined(ApiType))
             {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue(Contact);
+                writer.WriteObjectValue<ApiContactInformation>(Contact, options);
             }
             if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue(License);
+                writer.WriteObjectValue<ApiLicenseInformation>(License, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiEntityBaseContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,21 +139,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<AuthenticationSettingsContract> authenticationSettings = default;
-            Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;
-            Optional<ApiType> type = default;
-            Optional<string> apiRevision = default;
-            Optional<string> apiVersion = default;
-            Optional<bool> isCurrent = default;
-            Optional<bool> isOnline = default;
-            Optional<string> apiRevisionDescription = default;
-            Optional<string> apiVersionDescription = default;
-            Optional<ResourceIdentifier> apiVersionSetId = default;
-            Optional<bool> subscriptionRequired = default;
-            Optional<Uri> termsOfServiceUri = default;
-            Optional<ApiContactInformation> contact = default;
-            Optional<ApiLicenseInformation> license = default;
+            string description = default;
+            AuthenticationSettingsContract authenticationSettings = default;
+            SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default;
+            ApiType? type = default;
+            string apiRevision = default;
+            string apiVersion = default;
+            bool? isCurrent = default;
+            bool? isOnline = default;
+            string apiRevisionDescription = default;
+            string apiVersionDescription = default;
+            ResourceIdentifier apiVersionSetId = default;
+            bool? subscriptionRequired = default;
+            Uri termsOfServiceUri = default;
+            ApiContactInformation contact = default;
+            ApiLicenseInformation license = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property.Value);
+                    authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subscriptionKeyParameterNames"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property.Value);
+                    subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    contact = ApiContactInformation.DeserializeApiContactInformation(property.Value);
+                    contact = ApiContactInformation.DeserializeApiContactInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("license"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    license = ApiLicenseInformation.DeserializeApiLicenseInformation(property.Value);
+                    license = ApiLicenseInformation.DeserializeApiLicenseInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -279,7 +279,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiEntityBaseContract(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, serializedAdditionalRawData);
+            return new ApiEntityBaseContract(
+                description,
+                authenticationSettings,
+                subscriptionKeyParameterNames,
+                type,
+                apiRevision,
+                apiVersion,
+                isCurrent,
+                isOnline,
+                apiRevisionDescription,
+                apiVersionDescription,
+                apiVersionSetId,
+                subscriptionRequired,
+                termsOfServiceUri,
+                contact,
+                license,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiEntityBaseContract>.Write(ModelReaderWriterOptions options)
@@ -291,7 +307,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -307,7 +323,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiEntityBaseContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support reading '{options.Format}' format.");
             }
         }
 

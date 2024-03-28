@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -20,12 +19,12 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment.ToSerialString());
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores);
+            writer.WriteObjectValue<SentimentConfidenceScores>(ConfidenceScores);
             writer.WritePropertyName("sentences"u8);
             writer.WriteStartArray();
             foreach (var item in Sentences)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SentenceSentimentInternal>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("id"u8);
@@ -34,13 +33,13 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentWarning>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                writer.WriteObjectValue<TextDocumentStatistics?>(Statistics);
             }
             writer.WriteEndObject();
         }
@@ -56,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<SentenceSentimentInternal> sentences = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            TextDocumentStatistics? statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentiment"u8))
@@ -104,7 +103,13 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentimentResponseDocumentsItem(id, warnings, Optional.ToNullable(statistics), sentiment, confidenceScores, sentences);
+            return new SentimentResponseDocumentsItem(
+                id,
+                warnings,
+                statistics,
+                sentiment,
+                confidenceScores,
+                sentences);
         }
     }
 }

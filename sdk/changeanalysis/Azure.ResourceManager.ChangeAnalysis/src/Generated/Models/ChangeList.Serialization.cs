@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChangeList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChangeList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChangeList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DetectedChangeData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChangeList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChangeList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChangeList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DetectedChangeData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DetectedChangeData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     List<DetectedChangeData> array = new List<DetectedChangeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedChangeData.DeserializeDetectedChangeData(item));
+                        array.Add(DetectedChangeData.DeserializeDetectedChangeData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ChangeList(value ?? new ChangeTrackingList<DetectedChangeData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChangeList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChangeList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                         return DeserializeChangeList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChangeList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChangeList)} does not support reading '{options.Format}' format.");
             }
         }
 

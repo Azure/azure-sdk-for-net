@@ -76,22 +76,31 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The document types to be exported, as comma separated values. Allowed values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </summary>
+        [WirePath("RecordTypes")]
         public string RecordTypes { get; set; }
         /// <summary> The Continuous Export destination type. This has to be 'Blob'. </summary>
+        [WirePath("DestinationType")]
         public string DestinationType { get; set; }
         /// <summary> The SAS URL for the destination storage container. It must grant write permission. </summary>
+        [WirePath("DestinationAddress")]
         public string DestinationAddress { get; set; }
         /// <summary> Set to 'true' to create a Continuous Export configuration as enabled, otherwise set it to 'false'. </summary>
+        [WirePath("IsEnabled")]
         public string IsEnabled { get; set; }
         /// <summary> Deprecated. </summary>
+        [WirePath("NotificationQueueEnabled")]
         public string NotificationQueueEnabled { get; set; }
         /// <summary> Deprecated. </summary>
+        [WirePath("NotificationQueueUri")]
         public Uri NotificationQueueUri { get; set; }
         /// <summary> The subscription ID of the destination storage container. </summary>
+        [WirePath("DestinationStorageSubscriptionId")]
         public string DestinationStorageSubscriptionId { get; set; }
         /// <summary> The location ID of the destination storage container. </summary>
+        [WirePath("DestinationStorageLocationId")]
         public string DestinationStorageLocationId { get; set; }
         /// <summary> The name of destination storage account. </summary>
+        [WirePath("DestinationAccountId")]
         public string DestinationAccountId { get; set; }
     }
 }

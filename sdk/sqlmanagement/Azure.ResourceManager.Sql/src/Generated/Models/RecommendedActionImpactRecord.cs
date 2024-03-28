@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains information of estimated or observed impact on various metrics for an Azure SQL Database, Server or Elastic Pool Recommended Action. </summary>
     public partial class RecommendedActionImpactRecord
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RecommendedActionImpactRecord"/>. </summary>
         internal RecommendedActionImpactRecord()
         {
@@ -21,24 +56,31 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="absoluteValue"> Gets the absolute value of this dimension if applicable. e.g., Number of Queries affected. </param>
         /// <param name="changeValueAbsolute"> Gets the absolute change in the value of this dimension. e.g., Absolute Disk space change in Megabytes. </param>
         /// <param name="changeValueRelative"> Gets the relative change in the value of this dimension. e.g., Relative Disk space change in Percentage. </param>
-        internal RecommendedActionImpactRecord(string dimensionName, string unit, double? absoluteValue, double? changeValueAbsolute, double? changeValueRelative)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendedActionImpactRecord(string dimensionName, string unit, double? absoluteValue, double? changeValueAbsolute, double? changeValueRelative, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DimensionName = dimensionName;
             Unit = unit;
             AbsoluteValue = absoluteValue;
             ChangeValueAbsolute = changeValueAbsolute;
             ChangeValueRelative = changeValueRelative;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name of the impact dimension. e.g., CPUChange, DiskSpaceChange, NumberOfQueriesAffected. </summary>
+        [WirePath("dimensionName")]
         public string DimensionName { get; }
         /// <summary> Gets the name of the impact dimension. e.g., CPUChange, DiskSpaceChange, NumberOfQueriesAffected. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
         /// <summary> Gets the absolute value of this dimension if applicable. e.g., Number of Queries affected. </summary>
+        [WirePath("absoluteValue")]
         public double? AbsoluteValue { get; }
         /// <summary> Gets the absolute change in the value of this dimension. e.g., Absolute Disk space change in Megabytes. </summary>
+        [WirePath("changeValueAbsolute")]
         public double? ChangeValueAbsolute { get; }
         /// <summary> Gets the relative change in the value of this dimension. e.g., Relative Disk space change in Percentage. </summary>
+        [WirePath("changeValueRelative")]
         public double? ChangeValueRelative { get; }
     }
 }

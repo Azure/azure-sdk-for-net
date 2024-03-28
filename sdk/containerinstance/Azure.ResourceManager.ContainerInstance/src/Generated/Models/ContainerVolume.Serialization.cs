@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerVolume)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
-                writer.WriteObjectValue(AzureFile);
+                writer.WriteObjectValue<ContainerInstanceAzureFileVolume>(AzureFile, options);
             }
             if (Optional.IsDefined(EmptyDir))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(GitRepo))
             {
                 writer.WritePropertyName("gitRepo"u8);
-                writer.WriteObjectValue(GitRepo);
+                writer.WriteObjectValue<ContainerInstanceGitRepoVolume>(GitRepo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerVolume)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string name = default;
-            Optional<ContainerInstanceAzureFileVolume> azureFile = default;
-            Optional<BinaryData> emptyDir = default;
-            Optional<IDictionary<string, string>> secret = default;
-            Optional<ContainerInstanceGitRepoVolume> gitRepo = default;
+            ContainerInstanceAzureFileVolume azureFile = default;
+            BinaryData emptyDir = default;
+            IDictionary<string, string> secret = default;
+            ContainerInstanceGitRepoVolume gitRepo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    azureFile = ContainerInstanceAzureFileVolume.DeserializeContainerInstanceAzureFileVolume(property.Value);
+                    azureFile = ContainerInstanceAzureFileVolume.DeserializeContainerInstanceAzureFileVolume(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("emptyDir"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    gitRepo = ContainerInstanceGitRepoVolume.DeserializeContainerInstanceGitRepoVolume(property.Value);
+                    gitRepo = ContainerInstanceGitRepoVolume.DeserializeContainerInstanceGitRepoVolume(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerVolume(name, azureFile.Value, emptyDir.Value, Optional.ToDictionary(secret), gitRepo.Value, serializedAdditionalRawData);
+            return new ContainerVolume(
+                name,
+                azureFile,
+                emptyDir,
+                secret ?? new ChangeTrackingDictionary<string, string>(),
+                gitRepo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerVolume>.Write(ModelReaderWriterOptions options)
@@ -172,7 +178,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerVolume)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +194,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerVolume(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerVolume)} does not support reading '{options.Format}' format.");
             }
         }
 

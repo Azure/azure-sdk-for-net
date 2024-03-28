@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PortalSettingsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PortalSettingsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PortalSettingsContractData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PortalSettingsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PortalSettingsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PortalSettingsContractData>> value = default;
-            Optional<long> count = default;
+            IReadOnlyList<PortalSettingsContractData> value = default;
+            long? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<PortalSettingsContractData> array = new List<PortalSettingsContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PortalSettingsContractData.DeserializePortalSettingsContractData(item));
+                        array.Add(PortalSettingsContractData.DeserializePortalSettingsContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PortalSettingsListResult(Optional.ToList(value), Optional.ToNullable(count), serializedAdditionalRawData);
+            return new PortalSettingsListResult(value ?? new ChangeTrackingList<PortalSettingsContractData>(), count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PortalSettingsListResult>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PortalSettingsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PortalSettingsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializePortalSettingsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PortalSettingsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PortalSettingsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

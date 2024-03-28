@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanValidateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanValidateResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanValidateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanValidateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<bool> valid = default;
-            Optional<string> reasonCode = default;
-            Optional<string> reason = default;
+            bool? valid = default;
+            string reasonCode = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanValidateResult(Optional.ToNullable(valid), reasonCode.Value, reason.Value, serializedAdditionalRawData);
+            return new SavingsPlanValidateResult(valid, reasonCode, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanValidateResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanValidateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanValidateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeSavingsPlanValidateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanValidateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanValidateResult)} does not support reading '{options.Format}' format.");
             }
         }
 

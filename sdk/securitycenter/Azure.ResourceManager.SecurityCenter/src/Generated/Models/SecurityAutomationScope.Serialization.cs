@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationScope)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationScope)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationScope)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationScope)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> scopePath = default;
+            string description = default;
+            string scopePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationScope(description.Value, scopePath.Value, serializedAdditionalRawData);
+            return new SecurityAutomationScope(description, scopePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAutomationScope>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationScope)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationScope)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAutomationScope(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationScope)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationScope)} does not support reading '{options.Format}' format.");
             }
         }
 

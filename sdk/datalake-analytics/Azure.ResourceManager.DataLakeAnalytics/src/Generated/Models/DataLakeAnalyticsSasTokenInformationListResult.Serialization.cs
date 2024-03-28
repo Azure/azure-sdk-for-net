@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsSasTokenInformationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsSasTokenInformationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsSasTokenInformationListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeAnalyticsSasTokenInformation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsSasTokenInformationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsSasTokenInformationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsSasTokenInformationListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeAnalyticsSasTokenInformation>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DataLakeAnalyticsSasTokenInformation> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     List<DataLakeAnalyticsSasTokenInformation> array = new List<DataLakeAnalyticsSasTokenInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeAnalyticsSasTokenInformation.DeserializeDataLakeAnalyticsSasTokenInformation(item));
+                        array.Add(DataLakeAnalyticsSasTokenInformation.DeserializeDataLakeAnalyticsSasTokenInformation(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsSasTokenInformationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataLakeAnalyticsSasTokenInformationListResult(value ?? new ChangeTrackingList<DataLakeAnalyticsSasTokenInformation>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsSasTokenInformationListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsSasTokenInformationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsSasTokenInformationListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         return DeserializeDataLakeAnalyticsSasTokenInformationListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsSasTokenInformationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsSasTokenInformationListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

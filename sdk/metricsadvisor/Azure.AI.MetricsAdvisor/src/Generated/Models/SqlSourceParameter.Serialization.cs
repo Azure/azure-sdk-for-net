@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> connectionString = default;
+            string connectionString = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +70,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new SqlSourceParameter(connectionString.Value, query);
+            return new SqlSourceParameter(connectionString, query);
         }
     }
 }

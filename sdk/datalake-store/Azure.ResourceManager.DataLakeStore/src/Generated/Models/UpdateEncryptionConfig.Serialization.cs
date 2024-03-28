@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateEncryptionConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateEncryptionConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultMetaInfo))
             {
                 writer.WritePropertyName("keyVaultMetaInfo"u8);
-                writer.WriteObjectValue(KeyVaultMetaInfo);
+                writer.WriteObjectValue<UpdateKeyVaultMetaInfo>(KeyVaultMetaInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateEncryptionConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateEncryptionConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<UpdateKeyVaultMetaInfo> keyVaultMetaInfo = default;
+            UpdateKeyVaultMetaInfo keyVaultMetaInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     {
                         continue;
                     }
-                    keyVaultMetaInfo = UpdateKeyVaultMetaInfo.DeserializeUpdateKeyVaultMetaInfo(property.Value);
+                    keyVaultMetaInfo = UpdateKeyVaultMetaInfo.DeserializeUpdateKeyVaultMetaInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateEncryptionConfig(keyVaultMetaInfo.Value, serializedAdditionalRawData);
+            return new UpdateEncryptionConfig(keyVaultMetaInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateEncryptionConfig>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateEncryptionConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateEncryptionConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                         return DeserializeUpdateEncryptionConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateEncryptionConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateEncryptionConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecuritySettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecuritySettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecuritySettingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,11 +72,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecuritySettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecuritySettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecuritySettingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSetting(document.RootElement, options);
+            return DeserializeSecuritySettingData(document.RootElement, options);
         }
 
         internal static UnknownSetting DeserializeUnknownSetting(JsonElement element, ModelReaderWriterOptions options = null)
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +131,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownSetting(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownSetting(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuritySettingData>.Write(ModelReaderWriterOptions options)
@@ -144,7 +149,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecuritySettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecuritySettingData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,10 +162,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSetting(document.RootElement, options);
+                        return DeserializeSecuritySettingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecuritySettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecuritySettingData)} does not support reading '{options.Format}' format.");
             }
         }
 

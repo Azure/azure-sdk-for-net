@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshPublicKeyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SshPublicKeyPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshPublicKeyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SshPublicKeyPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> publicKey = default;
+            IDictionary<string, string> tags = default;
+            string publicKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SshPublicKeyPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, publicKey.Value);
+            return new SshPublicKeyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, publicKey);
         }
 
         BinaryData IPersistableModel<SshPublicKeyPatch>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SshPublicKeyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SshPublicKeyPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeSshPublicKeyPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SshPublicKeyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SshPublicKeyPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

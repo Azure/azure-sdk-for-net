@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRewriteRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationGatewayRewriteRuleCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ActionSet))
             {
                 writer.WritePropertyName("actionSet"u8);
-                writer.WriteObjectValue(ActionSet);
+                writer.WriteObjectValue<ApplicationGatewayRewriteRuleActionSet>(ActionSet, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRewriteRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> ruleSequence = default;
-            Optional<IList<ApplicationGatewayRewriteRuleCondition>> conditions = default;
-            Optional<ApplicationGatewayRewriteRuleActionSet> actionSet = default;
+            string name = default;
+            int? ruleSequence = default;
+            IList<ApplicationGatewayRewriteRuleCondition> conditions = default;
+            ApplicationGatewayRewriteRuleActionSet actionSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayRewriteRuleCondition> array = new List<ApplicationGatewayRewriteRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayRewriteRuleCondition.DeserializeApplicationGatewayRewriteRuleCondition(item));
+                        array.Add(ApplicationGatewayRewriteRuleCondition.DeserializeApplicationGatewayRewriteRuleCondition(item, options));
                     }
                     conditions = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    actionSet = ApplicationGatewayRewriteRuleActionSet.DeserializeApplicationGatewayRewriteRuleActionSet(property.Value);
+                    actionSet = ApplicationGatewayRewriteRuleActionSet.DeserializeApplicationGatewayRewriteRuleActionSet(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayRewriteRule(name.Value, Optional.ToNullable(ruleSequence), Optional.ToList(conditions), actionSet.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayRewriteRule(name, ruleSequence, conditions ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleCondition>(), actionSet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayRewriteRule>.Write(ModelReaderWriterOptions options)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayRewriteRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRule)} does not support reading '{options.Format}' format.");
             }
         }
 

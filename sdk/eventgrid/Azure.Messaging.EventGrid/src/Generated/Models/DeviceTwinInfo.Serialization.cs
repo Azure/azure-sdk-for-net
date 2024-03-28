@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,17 +17,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> authenticationType = default;
-            Optional<float> cloudToDeviceMessageCount = default;
-            Optional<string> connectionState = default;
-            Optional<string> deviceId = default;
-            Optional<string> etag = default;
-            Optional<string> lastActivityTime = default;
-            Optional<DeviceTwinInfoProperties> properties = default;
-            Optional<string> status = default;
-            Optional<string> statusUpdateTime = default;
-            Optional<float> version = default;
-            Optional<DeviceTwinInfoX509Thumbprint> x509Thumbprint = default;
+            string authenticationType = default;
+            float? cloudToDeviceMessageCount = default;
+            string connectionState = default;
+            string deviceId = default;
+            string etag = default;
+            string lastActivityTime = default;
+            DeviceTwinInfoProperties properties = default;
+            string status = default;
+            string statusUpdateTime = default;
+            float? version = default;
+            DeviceTwinInfoX509Thumbprint x509Thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authenticationType"u8))
@@ -103,7 +102,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new DeviceTwinInfo(authenticationType.Value, Optional.ToNullable(cloudToDeviceMessageCount), connectionState.Value, deviceId.Value, etag.Value, lastActivityTime.Value, properties.Value, status.Value, statusUpdateTime.Value, Optional.ToNullable(version), x509Thumbprint.Value);
+            return new DeviceTwinInfo(
+                authenticationType,
+                cloudToDeviceMessageCount,
+                connectionState,
+                deviceId,
+                etag,
+                lastActivityTime,
+                properties,
+                status,
+                statusUpdateTime,
+                version,
+                x509Thumbprint);
         }
     }
 }

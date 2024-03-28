@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionSavingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in CalculatedSavings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConsumptionCalculatedSavingsProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionSavingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionCalculatedSavingsProperties>> calculatedSavings = default;
-            Optional<int> lookBackPeriod = default;
-            Optional<float> recommendedQuantity = default;
-            Optional<string> reservationOrderTerm = default;
-            Optional<string> savingsType = default;
-            Optional<string> unitOfMeasure = default;
+            IReadOnlyList<ConsumptionCalculatedSavingsProperties> calculatedSavings = default;
+            int? lookBackPeriod = default;
+            float? recommendedQuantity = default;
+            string reservationOrderTerm = default;
+            string savingsType = default;
+            string unitOfMeasure = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionCalculatedSavingsProperties> array = new List<ConsumptionCalculatedSavingsProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionCalculatedSavingsProperties.DeserializeConsumptionCalculatedSavingsProperties(item));
+                        array.Add(ConsumptionCalculatedSavingsProperties.DeserializeConsumptionCalculatedSavingsProperties(item, options));
                     }
                     calculatedSavings = array;
                     continue;
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionSavingsProperties(Optional.ToList(calculatedSavings), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(recommendedQuantity), reservationOrderTerm.Value, savingsType.Value, unitOfMeasure.Value, serializedAdditionalRawData);
+            return new ConsumptionSavingsProperties(
+                calculatedSavings ?? new ChangeTrackingList<ConsumptionCalculatedSavingsProperties>(),
+                lookBackPeriod,
+                recommendedQuantity,
+                reservationOrderTerm,
+                savingsType,
+                unitOfMeasure,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionSavingsProperties>.Write(ModelReaderWriterOptions options)
@@ -174,7 +181,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -190,7 +197,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionSavingsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

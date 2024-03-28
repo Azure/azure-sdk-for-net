@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<EntityData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -197,7 +199,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<EntityData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -215,17 +217,17 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid?> tenantId = default;
-            Optional<string> displayName = default;
-            Optional<SubResource> parent = default;
-            Optional<EntityPermission?> permissions = default;
-            Optional<EntityPermission?> inheritedPermissions = default;
-            Optional<int?> numberOfDescendants = default;
-            Optional<int?> numberOfChildren = default;
-            Optional<int?> numberOfChildGroups = default;
-            Optional<IReadOnlyList<string>> parentDisplayNameChain = default;
-            Optional<IReadOnlyList<string>> parentNameChain = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            string displayName = default;
+            SubResource parent = default;
+            EntityPermission? permissions = default;
+            EntityPermission? inheritedPermissions = default;
+            int? numberOfDescendants = default;
+            int? numberOfChildren = default;
+            int? numberOfChildGroups = default;
+            IReadOnlyList<string> parentDisplayNameChain = default;
+            IReadOnlyList<string> parentNameChain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -381,7 +383,302 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EntityData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, parent, Optional.ToNullable(permissions), Optional.ToNullable(inheritedPermissions), Optional.ToNullable(numberOfDescendants), Optional.ToNullable(numberOfChildren), Optional.ToNullable(numberOfChildGroups), Optional.ToList(parentDisplayNameChain), Optional.ToList(parentNameChain), serializedAdditionalRawData);
+            return new EntityData(
+                id,
+                name,
+                type,
+                systemData,
+                tenantId,
+                displayName,
+                parent,
+                permissions,
+                inheritedPermissions,
+                numberOfDescendants,
+                numberOfChildren,
+                numberOfChildGroups,
+                parentDisplayNameChain ?? new ChangeTrackingList<string>(),
+                parentNameChain ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
+            {
+                builder.Append("    tenantId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (Optional.IsDefined(DisplayName) || hasPropertyOverride)
+            {
+                builder.Append("    displayName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parent), out propertyOverride);
+            if (Optional.IsDefined(Parent) || hasPropertyOverride)
+            {
+                builder.Append("    parent: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Parent, options, 4, false, "    parent: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permissions), out propertyOverride);
+            if (Optional.IsDefined(Permissions) || hasPropertyOverride)
+            {
+                builder.Append("    permissions: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Permissions.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InheritedPermissions), out propertyOverride);
+            if (Optional.IsDefined(InheritedPermissions) || hasPropertyOverride)
+            {
+                builder.Append("    inheritedPermissions: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{InheritedPermissions.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfDescendants), out propertyOverride);
+            if (Optional.IsDefined(NumberOfDescendants) || hasPropertyOverride)
+            {
+                builder.Append("    numberOfDescendants: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{NumberOfDescendants.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfChildren), out propertyOverride);
+            if (Optional.IsDefined(NumberOfChildren) || hasPropertyOverride)
+            {
+                builder.Append("    numberOfChildren: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{NumberOfChildren.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfChildGroups), out propertyOverride);
+            if (Optional.IsDefined(NumberOfChildGroups) || hasPropertyOverride)
+            {
+                builder.Append("    numberOfChildGroups: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{NumberOfChildGroups.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParentDisplayNameChain), out propertyOverride);
+            if (Optional.IsCollectionDefined(ParentDisplayNameChain) || hasPropertyOverride)
+            {
+                if (ParentDisplayNameChain.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    parentDisplayNameChain: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ParentDisplayNameChain)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParentNameChain), out propertyOverride);
+            if (Optional.IsCollectionDefined(ParentNameChain) || hasPropertyOverride)
+            {
+                if (ParentNameChain.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    parentNameChain: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ParentNameChain)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "ParentId":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("Id", item.Value);
+                        bicepOptions.PropertyOverrides.Add(Parent, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
         }
 
         BinaryData IPersistableModel<EntityData>.Write(ModelReaderWriterOptions options)
@@ -392,8 +689,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(EntityData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -409,7 +708,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                         return DeserializeEntityData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntityData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityData)} does not support reading '{options.Format}' format.");
             }
         }
 

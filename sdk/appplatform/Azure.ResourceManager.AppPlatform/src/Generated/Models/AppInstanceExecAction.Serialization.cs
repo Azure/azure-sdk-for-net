@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInstanceExecAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInstanceExecAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInstanceExecAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInstanceExecAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInstanceExecAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInstanceExecAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<string>> command = default;
+            IList<string> command = default;
             ProbeActionType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppInstanceExecAction(type, serializedAdditionalRawData, Optional.ToList(command));
+            return new AppInstanceExecAction(type, serializedAdditionalRawData, command ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<AppInstanceExecAction>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppInstanceExecAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInstanceExecAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppInstanceExecAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppInstanceExecAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInstanceExecAction)} does not support reading '{options.Format}' format.");
             }
         }
 

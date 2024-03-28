@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetTdeCertificatesSqlTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetTdeCertificatesSqlTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> base64EncodedCertificates = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            string base64EncodedCertificates = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetTdeCertificatesSqlTaskOutput(base64EncodedCertificates.Value, Optional.ToList(validationErrors), serializedAdditionalRawData);
+            return new GetTdeCertificatesSqlTaskOutput(base64EncodedCertificates, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetTdeCertificatesSqlTaskOutput>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeGetTdeCertificatesSqlTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

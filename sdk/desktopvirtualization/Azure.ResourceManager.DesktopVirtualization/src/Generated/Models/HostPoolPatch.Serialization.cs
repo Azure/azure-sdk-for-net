@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RegistrationInfo))
             {
                 writer.WritePropertyName("registrationInfo"u8);
-                writer.WriteObjectValue(RegistrationInfo);
+                writer.WriteObjectValue<HostPoolRegistrationInfoPatch>(RegistrationInfo, options);
             }
             if (Optional.IsDefined(VmTemplate))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(AgentUpdate))
             {
                 writer.WritePropertyName("agentUpdate"u8);
-                writer.WriteObjectValue(AgentUpdate);
+                writer.WriteObjectValue<SessionHostAgentUpdatePatchProperties>(AgentUpdate, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,29 +189,29 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> description = default;
-            Optional<string> customRdpProperty = default;
-            Optional<int> maxSessionLimit = default;
-            Optional<PersonalDesktopAssignmentType> personalDesktopAssignmentType = default;
-            Optional<HostPoolLoadBalancerType> loadBalancerType = default;
-            Optional<int> ring = default;
-            Optional<bool> validationEnvironment = default;
-            Optional<HostPoolRegistrationInfoPatch> registrationInfo = default;
-            Optional<string> vmTemplate = default;
-            Optional<string> ssoadfsAuthority = default;
-            Optional<string> ssoClientId = default;
-            Optional<string> ssoClientSecretKeyVaultPath = default;
-            Optional<HostPoolSsoSecretType> ssoSecretType = default;
-            Optional<PreferredAppGroupType> preferredAppGroupType = default;
-            Optional<bool> startVmOnConnect = default;
-            Optional<HostPoolPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<SessionHostAgentUpdatePatchProperties> agentUpdate = default;
+            SystemData systemData = default;
+            string friendlyName = default;
+            string description = default;
+            string customRdpProperty = default;
+            int? maxSessionLimit = default;
+            PersonalDesktopAssignmentType? personalDesktopAssignmentType = default;
+            HostPoolLoadBalancerType? loadBalancerType = default;
+            int? ring = default;
+            bool? validationEnvironment = default;
+            HostPoolRegistrationInfoPatch registrationInfo = default;
+            string vmTemplate = default;
+            string ssoadfsAuthority = default;
+            string ssoClientId = default;
+            string ssoClientSecretKeyVaultPath = default;
+            HostPoolSsoSecretType? ssoSecretType = default;
+            PreferredAppGroupType? preferredAppGroupType = default;
+            bool? startVmOnConnect = default;
+            HostPoolPublicNetworkAccess? publicNetworkAccess = default;
+            SessionHostAgentUpdatePatchProperties agentUpdate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            registrationInfo = HostPoolRegistrationInfoPatch.DeserializeHostPoolRegistrationInfoPatch(property0.Value);
+                            registrationInfo = HostPoolRegistrationInfoPatch.DeserializeHostPoolRegistrationInfoPatch(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("vmTemplate"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            agentUpdate = SessionHostAgentUpdatePatchProperties.DeserializeSessionHostAgentUpdatePatchProperties(property0.Value);
+                            agentUpdate = SessionHostAgentUpdatePatchProperties.DeserializeSessionHostAgentUpdatePatchProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -406,7 +406,31 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostPoolPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), friendlyName.Value, description.Value, customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), Optional.ToNullable(personalDesktopAssignmentType), Optional.ToNullable(loadBalancerType), Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), Optional.ToNullable(preferredAppGroupType), Optional.ToNullable(startVmOnConnect), Optional.ToNullable(publicNetworkAccess), agentUpdate.Value, serializedAdditionalRawData);
+            return new HostPoolPatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                friendlyName,
+                description,
+                customRdpProperty,
+                maxSessionLimit,
+                personalDesktopAssignmentType,
+                loadBalancerType,
+                ring,
+                validationEnvironment,
+                registrationInfo,
+                vmTemplate,
+                ssoadfsAuthority,
+                ssoClientId,
+                ssoClientSecretKeyVaultPath,
+                ssoSecretType,
+                preferredAppGroupType,
+                startVmOnConnect,
+                publicNetworkAccess,
+                agentUpdate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostPoolPatch>.Write(ModelReaderWriterOptions options)
@@ -418,7 +442,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -434,7 +458,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeHostPoolPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

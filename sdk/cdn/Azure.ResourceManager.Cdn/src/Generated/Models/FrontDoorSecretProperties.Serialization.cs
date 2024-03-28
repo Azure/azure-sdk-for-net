@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorSecretProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorSecretProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorSecretProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorSecretProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorSecretProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorSecretProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFirstPartyManagedCertificate": return AzureFirstPartyManagedCertificateProperties.DeserializeAzureFirstPartyManagedCertificateProperties(element);
-                    case "CustomerCertificate": return CustomerCertificateProperties.DeserializeCustomerCertificateProperties(element);
-                    case "ManagedCertificate": return ManagedCertificateProperties.DeserializeManagedCertificateProperties(element);
-                    case "UrlSigningKey": return UriSigningKeyProperties.DeserializeUriSigningKeyProperties(element);
+                    case "AzureFirstPartyManagedCertificate": return AzureFirstPartyManagedCertificateProperties.DeserializeAzureFirstPartyManagedCertificateProperties(element, options);
+                    case "CustomerCertificate": return CustomerCertificateProperties.DeserializeCustomerCertificateProperties(element, options);
+                    case "ManagedCertificate": return ManagedCertificateProperties.DeserializeManagedCertificateProperties(element, options);
+                    case "UrlSigningKey": return UriSigningKeyProperties.DeserializeUriSigningKeyProperties(element, options);
                 }
             }
-            return UnknownSecretProperties.DeserializeUnknownSecretProperties(element);
+            return UnknownSecretProperties.DeserializeUnknownSecretProperties(element, options);
         }
 
         BinaryData IPersistableModel<FrontDoorSecretProperties>.Write(ModelReaderWriterOptions options)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorSecretProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorSecretProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeFrontDoorSecretProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorSecretProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorSecretProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<BuildpacksGroupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<BuildpacksGroupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<WritableSubResource>> buildpacks = default;
+            string name = default;
+            IList<WritableSubResource> buildpacks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuildpacksGroupProperties(name.Value, Optional.ToList(buildpacks), serializedAdditionalRawData);
+            return new BuildpacksGroupProperties(name, buildpacks ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildpacksGroupProperties>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeBuildpacksGroupProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

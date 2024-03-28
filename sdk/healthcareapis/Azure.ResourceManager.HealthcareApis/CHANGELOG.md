@@ -1,14 +1,12 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2024-03-31)
 
 ### Features Added
 
-### Breaking Changes
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-2023-11' to 'package-2024-03-31'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/healthcareapis/resource-manager/readme.md
 
 ## 1.2.0 (2023-12-08)
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             foreach (var item in Errors)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<MongoDBError>(item.Value, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("eventsPending"u8);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             IReadOnlyDictionary<string, MongoDBError> errors = default;
             long eventsPending = default;
             long eventsReplayed = default;
-            Optional<DateTimeOffset> lastEventTime = default;
-            Optional<DateTimeOffset> lastReplayTime = default;
-            Optional<string> name = default;
-            Optional<string> qualifiedName = default;
+            DateTimeOffset? lastEventTime = default;
+            DateTimeOffset? lastReplayTime = default;
+            string name = default;
+            string qualifiedName = default;
             MongoDBProgressResultType resultType = default;
             MongoDBMigrationState state = default;
             long totalBytes = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MongoDBError> dictionary = new Dictionary<string, MongoDBError>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MongoDBError.DeserializeMongoDBError(property0.Value));
+                        dictionary.Add(property0.Name, MongoDBError.DeserializeMongoDBError(property0.Value, options));
                     }
                     errors = dictionary;
                     continue;
@@ -217,7 +217,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBCollectionProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, Optional.ToNullable(lastEventTime), Optional.ToNullable(lastReplayTime), name.Value, qualifiedName.Value, resultType, state, totalBytes, totalDocuments, serializedAdditionalRawData);
+            return new MongoDBCollectionProgress(
+                bytesCopied,
+                documentsCopied,
+                elapsedTime,
+                errors,
+                eventsPending,
+                eventsReplayed,
+                lastEventTime,
+                lastReplayTime,
+                name,
+                qualifiedName,
+                resultType,
+                state,
+                totalBytes,
+                totalDocuments,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBCollectionProgress>.Write(ModelReaderWriterOptions options)
@@ -229,7 +244,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +260,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMongoDBCollectionProgress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support reading '{options.Format}' format.");
             }
         }
 

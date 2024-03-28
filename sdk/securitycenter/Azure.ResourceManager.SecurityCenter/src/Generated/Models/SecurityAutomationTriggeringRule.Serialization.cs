@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationTriggeringRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationTriggeringRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> propertyJPath = default;
-            Optional<AutomationTriggeringRulePropertyType> propertyType = default;
-            Optional<string> expectedValue = default;
-            Optional<AutomationTriggeringRuleOperator> @operator = default;
+            string propertyJPath = default;
+            AutomationTriggeringRulePropertyType? propertyType = default;
+            string expectedValue = default;
+            AutomationTriggeringRuleOperator? @operator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationTriggeringRule(propertyJPath.Value, Optional.ToNullable(propertyType), expectedValue.Value, Optional.ToNullable(@operator), serializedAdditionalRawData);
+            return new SecurityAutomationTriggeringRule(propertyJPath, propertyType, expectedValue, @operator, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAutomationTriggeringRule>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAutomationTriggeringRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support reading '{options.Format}' format.");
             }
         }
 

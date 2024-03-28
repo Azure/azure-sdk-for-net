@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterResourceDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterResourceDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Azure": return AzureResourceDetails.DeserializeAzureResourceDetails(element);
-                    case "OnPremise": return OnPremiseResourceDetails.DeserializeOnPremiseResourceDetails(element);
-                    case "OnPremiseSql": return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element);
+                    case "Azure": return AzureResourceDetails.DeserializeAzureResourceDetails(element, options);
+                    case "OnPremise": return OnPremiseResourceDetails.DeserializeOnPremiseResourceDetails(element, options);
+                    case "OnPremiseSql": return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element, options);
                 }
             }
-            return UnknownResourceDetails.DeserializeUnknownResourceDetails(element);
+            return UnknownResourceDetails.DeserializeUnknownResourceDetails(element, options);
         }
 
         BinaryData IPersistableModel<SecurityCenterResourceDetails>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterResourceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityCenterResourceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterResourceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

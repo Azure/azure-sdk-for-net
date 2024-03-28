@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalDataStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalDataStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceGroupId = default;
+            ResourceIdentifier resourceGroupId = default;
             string objectType = default;
             DataStoreType dataStoreType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalDataStoreSettings(objectType, dataStoreType, serializedAdditionalRawData, resourceGroupId.Value);
+            return new OperationalDataStoreSettings(objectType, dataStoreType, serializedAdditionalRawData, resourceGroupId);
         }
 
         BinaryData IPersistableModel<OperationalDataStoreSettings>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeOperationalDataStoreSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

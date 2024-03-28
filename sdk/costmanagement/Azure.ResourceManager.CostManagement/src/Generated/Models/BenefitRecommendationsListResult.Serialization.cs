@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenefitRecommendationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitRecommendationsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitRecommendationsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BenefitRecommendationModel>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenefitRecommendationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitRecommendationsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitRecommendationsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BenefitRecommendationModel>> value = default;
-            Optional<Uri> nextLink = default;
+            IReadOnlyList<BenefitRecommendationModel> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<BenefitRecommendationModel> array = new List<BenefitRecommendationModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BenefitRecommendationModel.DeserializeBenefitRecommendationModel(item));
+                        array.Add(BenefitRecommendationModel.DeserializeBenefitRecommendationModel(item, options));
                     }
                     value = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BenefitRecommendationsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new BenefitRecommendationsListResult(value ?? new ChangeTrackingList<BenefitRecommendationModel>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitRecommendationsListResult>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BenefitRecommendationsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitRecommendationsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeBenefitRecommendationsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BenefitRecommendationsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitRecommendationsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

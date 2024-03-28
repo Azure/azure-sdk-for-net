@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalytics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalytics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalytics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<LogAnalyticsOutput>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalytics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalytics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalytics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<LogAnalyticsOutput> properties = default;
+            LogAnalyticsOutput properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    properties = Models.LogAnalyticsOutput.DeserializeLogAnalyticsOutput(property.Value);
+                    properties = Models.LogAnalyticsOutput.DeserializeLogAnalyticsOutput(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalytics(properties.Value, serializedAdditionalRawData);
+            return new LogAnalytics(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalytics>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalytics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalytics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeLogAnalytics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalytics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalytics)} does not support reading '{options.Format}' format.");
             }
         }
 

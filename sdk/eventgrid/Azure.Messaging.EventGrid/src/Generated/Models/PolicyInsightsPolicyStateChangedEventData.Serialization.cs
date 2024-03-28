@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,13 +20,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> policyAssignmentId = default;
-            Optional<string> policyDefinitionId = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<string> complianceState = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> complianceReasonCode = default;
+            DateTimeOffset? timestamp = default;
+            string policyAssignmentId = default;
+            string policyDefinitionId = default;
+            string policyDefinitionReferenceId = default;
+            string complianceState = default;
+            string subscriptionId = default;
+            string complianceReasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -70,7 +69,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new PolicyInsightsPolicyStateChangedEventData(Optional.ToNullable(timestamp), policyAssignmentId.Value, policyDefinitionId.Value, policyDefinitionReferenceId.Value, complianceState.Value, subscriptionId.Value, complianceReasonCode.Value);
+            return new PolicyInsightsPolicyStateChangedEventData(
+                timestamp,
+                policyAssignmentId,
+                policyDefinitionId,
+                policyDefinitionReferenceId,
+                complianceState,
+                subscriptionId,
+                complianceReasonCode);
         }
 
         internal partial class PolicyInsightsPolicyStateChangedEventDataConverter : JsonConverter<PolicyInsightsPolicyStateChangedEventData>

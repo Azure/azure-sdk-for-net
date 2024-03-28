@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Class representing data source used by the detectors. </summary>
     public partial class DetectorDataSource
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DetectorDataSource"/>. </summary>
         public DetectorDataSource()
         {
@@ -23,15 +55,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="DetectorDataSource"/>. </summary>
         /// <param name="instructions"> Instructions if any for the data source. </param>
         /// <param name="dataSourceUri"> Datasource Uri Links. </param>
-        internal DetectorDataSource(IList<string> instructions, IList<AppServiceNameValuePair> dataSourceUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectorDataSource(IList<string> instructions, IList<AppServiceNameValuePair> dataSourceUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Instructions = instructions;
             DataSourceUri = dataSourceUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Instructions if any for the data source. </summary>
+        [WirePath("instructions")]
         public IList<string> Instructions { get; }
         /// <summary> Datasource Uri Links. </summary>
+        [WirePath("dataSourceUri")]
         public IList<AppServiceNameValuePair> DataSourceUri { get; }
     }
 }

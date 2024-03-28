@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Network configuration of customer virtual network. </summary>
     internal partial class ContactProfilesPropertiesNetworkConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContactProfilesPropertiesNetworkConfiguration"/>. </summary>
         /// <param name="networkSubnetId"> ARM resource identifier of the subnet delegated to the Microsoft.Orbital/orbitalGateways. Needs to be at least a class C subnet, and should not have any IP created in it. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSubnetId"/> is null. </exception>
@@ -21,6 +54,20 @@ namespace Azure.ResourceManager.Orbital.Models
             Argument.AssertNotNull(networkSubnetId, nameof(networkSubnetId));
 
             NetworkSubnetId = networkSubnetId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContactProfilesPropertiesNetworkConfiguration"/>. </summary>
+        /// <param name="networkSubnetId"> ARM resource identifier of the subnet delegated to the Microsoft.Orbital/orbitalGateways. Needs to be at least a class C subnet, and should not have any IP created in it. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContactProfilesPropertiesNetworkConfiguration(ResourceIdentifier networkSubnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            NetworkSubnetId = networkSubnetId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContactProfilesPropertiesNetworkConfiguration"/> for deserialization. </summary>
+        internal ContactProfilesPropertiesNetworkConfiguration()
+        {
         }
 
         /// <summary> ARM resource identifier of the subnet delegated to the Microsoft.Orbital/orbitalGateways. Needs to be at least a class C subnet, and should not have any IP created in it. </summary>

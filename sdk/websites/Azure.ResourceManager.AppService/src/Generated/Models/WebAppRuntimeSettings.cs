@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Web App runtime settings. </summary>
     public partial class WebAppRuntimeSettings
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="WebAppRuntimeSettings"/>. </summary>
         internal WebAppRuntimeSettings()
         {
@@ -28,7 +61,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="endOfLifeOn"> End-of-life date for the minor version. </param>
         /// <param name="isAutoUpdate"> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isEarlyAccess"> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        internal WebAppRuntimeSettings(string runtimeVersion, bool? isRemoteDebuggingSupported, AppInsightsWebAppStackSettings appInsightsSettings, GitHubActionWebAppStackSettings gitHubActionSettings, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppRuntimeSettings(string runtimeVersion, bool? isRemoteDebuggingSupported, AppInsightsWebAppStackSettings appInsightsSettings, GitHubActionWebAppStackSettings gitHubActionSettings, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuntimeVersion = runtimeVersion;
             IsRemoteDebuggingSupported = isRemoteDebuggingSupported;
@@ -40,27 +74,38 @@ namespace Azure.ResourceManager.AppService.Models
             EndOfLifeOn = endOfLifeOn;
             IsAutoUpdate = isAutoUpdate;
             IsEarlyAccess = isEarlyAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Web App stack minor version (runtime only). </summary>
+        [WirePath("runtimeVersion")]
         public string RuntimeVersion { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("remoteDebuggingSupported")]
         public bool? IsRemoteDebuggingSupported { get; }
         /// <summary> Application Insights settings associated with the minor version. </summary>
+        [WirePath("appInsightsSettings")]
         public AppInsightsWebAppStackSettings AppInsightsSettings { get; }
         /// <summary> GitHub Actions settings associated with the minor version. </summary>
+        [WirePath("gitHubActionSettings")]
         public GitHubActionWebAppStackSettings GitHubActionSettings { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isPreview")]
         public bool? IsPreview { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isDeprecated")]
         public bool? IsDeprecated { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isHidden")]
         public bool? IsHidden { get; }
         /// <summary> End-of-life date for the minor version. </summary>
+        [WirePath("endOfLifeDate")]
         public DateTimeOffset? EndOfLifeOn { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isAutoUpdate")]
         public bool? IsAutoUpdate { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isEarlyAccess")]
         public bool? IsEarlyAccess { get; }
     }
 }

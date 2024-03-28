@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<OnPremiseResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<OnPremiseResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "OnPremiseSql": return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element);
+                    case "OnPremiseSql": return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element, options);
                 }
             }
             ResourceIdentifier workspaceId = default;
@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OnPremiseResourceDetails(source, serializedAdditionalRawData, workspaceId, vmuuid, sourceComputerId, machineName);
+            return new OnPremiseResourceDetails(
+                source,
+                serializedAdditionalRawData,
+                workspaceId,
+                vmuuid,
+                sourceComputerId,
+                machineName);
         }
 
         BinaryData IPersistableModel<OnPremiseResourceDetails>.Write(ModelReaderWriterOptions options)
@@ -133,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeOnPremiseResourceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnPremiseResourceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataShareOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareOperationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataShareOperationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataShareOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareOperationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataShareOperationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,9 +81,9 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> endTime = default;
-            Optional<ResponseError> error = default;
-            Optional<DateTimeOffset> startTime = default;
+            DateTimeOffset? endTime = default;
+            ResponseError error = default;
+            DateTimeOffset? startTime = default;
             DataShareOperationStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataShareOperationResult(Optional.ToNullable(endTime), error.Value, Optional.ToNullable(startTime), status, serializedAdditionalRawData);
+            return new DataShareOperationResult(endTime, error, startTime, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareOperationResult>.Write(ModelReaderWriterOptions options)
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataShareOperationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataShareOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeDataShareOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataShareOperationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataShareOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

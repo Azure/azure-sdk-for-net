@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -30,11 +30,17 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="TriggerDependencyReference"/>. </summary>
         /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
-        internal TriggerDependencyReference(string dependencyReferenceType, DataFactoryTriggerReference referenceTrigger) : base(dependencyReferenceType)
+        internal TriggerDependencyReference(string dependencyReferenceType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryTriggerReference referenceTrigger) : base(dependencyReferenceType, serializedAdditionalRawData)
         {
             ReferenceTrigger = referenceTrigger;
             DependencyReferenceType = dependencyReferenceType ?? "TriggerDependencyReference";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyReference"/> for deserialization. </summary>
+        internal TriggerDependencyReference()
+        {
         }
 
         /// <summary> Referenced trigger. </summary>

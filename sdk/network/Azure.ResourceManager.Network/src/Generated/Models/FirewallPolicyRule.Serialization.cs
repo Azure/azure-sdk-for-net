@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ApplicationRule": return ApplicationRule.DeserializeApplicationRule(element);
-                    case "NatRule": return NatRule.DeserializeNatRule(element);
-                    case "NetworkRule": return NetworkRule.DeserializeNetworkRule(element);
+                    case "ApplicationRule": return ApplicationRule.DeserializeApplicationRule(element, options);
+                    case "NatRule": return NatRule.DeserializeNatRule(element, options);
+                    case "NetworkRule": return NetworkRule.DeserializeNetworkRule(element, options);
                 }
             }
-            return UnknownFirewallPolicyRule.DeserializeUnknownFirewallPolicyRule(element);
+            return UnknownFirewallPolicyRule.DeserializeUnknownFirewallPolicyRule(element, options);
         }
 
         BinaryData IPersistableModel<FirewallPolicyRule>.Write(ModelReaderWriterOptions options)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFirewallPolicyRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyRule)} does not support reading '{options.Format}' format.");
             }
         }
 

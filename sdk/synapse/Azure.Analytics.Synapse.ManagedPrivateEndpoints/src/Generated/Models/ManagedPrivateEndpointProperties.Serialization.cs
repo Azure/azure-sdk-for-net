@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<ManagedPrivateEndpointConnectionState>(ConnectionState);
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {
@@ -60,14 +60,14 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> privateLinkResourceId = default;
-            Optional<string> groupId = default;
-            Optional<string> provisioningState = default;
-            Optional<ManagedPrivateEndpointConnectionState> connectionState = default;
-            Optional<bool> isReserved = default;
-            Optional<IList<string>> fqdns = default;
-            Optional<bool> isCompliant = default;
+            string name = default;
+            string privateLinkResourceId = default;
+            string groupId = default;
+            string provisioningState = default;
+            ManagedPrivateEndpointConnectionState connectionState = default;
+            bool? isReserved = default;
+            IList<string> fqdns = default;
+            bool? isCompliant = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -132,7 +132,15 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     continue;
                 }
             }
-            return new ManagedPrivateEndpointProperties(name.Value, privateLinkResourceId.Value, groupId.Value, provisioningState.Value, connectionState.Value, Optional.ToNullable(isReserved), Optional.ToList(fqdns), Optional.ToNullable(isCompliant));
+            return new ManagedPrivateEndpointProperties(
+                name,
+                privateLinkResourceId,
+                groupId,
+                provisioningState,
+                connectionState,
+                isReserved,
+                fqdns ?? new ChangeTrackingList<string>(),
+                isCompliant);
         }
     }
 }

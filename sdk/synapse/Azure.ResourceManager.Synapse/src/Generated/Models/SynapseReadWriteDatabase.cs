@@ -6,9 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -28,12 +28,13 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the database. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="softDeletePeriod"> The time the data should be kept before it stops being accessible to queries in TimeSpan. </param>
         /// <param name="hotCachePeriod"> The time the data should be kept in cache for fast queries in TimeSpan. </param>
         /// <param name="statistics"> The statistics of the database. </param>
         /// <param name="isFollowed"> Indicates whether the database is followed. </param>
-        internal SynapseReadWriteDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseKind kind, ResourceProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, bool? isFollowed) : base(id, name, resourceType, systemData, location, kind)
+        internal SynapseReadWriteDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, bool? isFollowed) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             SoftDeletePeriod = softDeletePeriod;

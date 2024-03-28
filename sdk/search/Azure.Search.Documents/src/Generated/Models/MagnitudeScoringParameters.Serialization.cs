@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             double boostingRangeStart = default;
             double boostingRangeEnd = default;
-            Optional<bool> constantBoostBeyondRange = default;
+            bool? constantBoostBeyondRange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boostingRangeStart"u8))
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new MagnitudeScoringParameters(boostingRangeStart, boostingRangeEnd, Optional.ToNullable(constantBoostBeyondRange));
+            return new MagnitudeScoringParameters(boostingRangeStart, boostingRangeEnd, constantBoostBeyondRange);
         }
     }
 }

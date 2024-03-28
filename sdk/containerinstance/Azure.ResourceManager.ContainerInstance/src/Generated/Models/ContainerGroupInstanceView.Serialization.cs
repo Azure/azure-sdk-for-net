@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerEvent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerEvent>> events = default;
-            Optional<string> state = default;
+            IReadOnlyList<ContainerEvent> events = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerEvent> array = new List<ContainerEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerEvent.DeserializeContainerEvent(item));
+                        array.Add(ContainerEvent.DeserializeContainerEvent(item, options));
                     }
                     events = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupInstanceView(Optional.ToList(events), state.Value, serializedAdditionalRawData);
+            return new ContainerGroupInstanceView(events ?? new ChangeTrackingList<ContainerEvent>(), state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupInstanceView>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerGroupInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

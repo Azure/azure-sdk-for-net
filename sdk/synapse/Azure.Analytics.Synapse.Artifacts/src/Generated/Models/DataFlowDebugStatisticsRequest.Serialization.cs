@@ -53,10 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> sessionId = default;
-            Optional<string> dataFlowName = default;
-            Optional<string> streamName = default;
-            Optional<IList<string>> columns = default;
+            string sessionId = default;
+            string dataFlowName = default;
+            string streamName = default;
+            IList<string> columns = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -89,14 +89,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowDebugStatisticsRequest(sessionId.Value, dataFlowName.Value, streamName.Value, Optional.ToList(columns));
+            return new DataFlowDebugStatisticsRequest(sessionId, dataFlowName, streamName, columns ?? new ChangeTrackingList<string>());
         }
 
         internal partial class DataFlowDebugStatisticsRequestConverter : JsonConverter<DataFlowDebugStatisticsRequest>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowDebugStatisticsRequest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DataFlowDebugStatisticsRequest>(model);
             }
             public override DataFlowDebugStatisticsRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

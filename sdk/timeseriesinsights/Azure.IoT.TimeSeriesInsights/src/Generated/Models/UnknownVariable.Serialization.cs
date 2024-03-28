@@ -20,7 +20,7 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<TimeSeriesExpression>(Filter);
             }
             writer.WriteEndObject();
         }
@@ -32,7 +32,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 return null;
             }
             string kind = "Unknown";
-            Optional<TimeSeriesExpression> filter = default;
+            TimeSeriesExpression filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -50,7 +50,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new UnknownVariable(kind, filter.Value);
+            return new UnknownVariable(kind, filter);
         }
     }
 }

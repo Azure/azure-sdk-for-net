@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchEndpointAccessProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchIPRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchEndpointAccessProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchEndpointAccessDefaultAction defaultAction = default;
-            Optional<IList<BatchIPRule>> ipRules = default;
+            IList<BatchIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchIPRule> array = new List<BatchIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchIPRule.DeserializeBatchIPRule(item));
+                        array.Add(BatchIPRule.DeserializeBatchIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchEndpointAccessProfile(defaultAction, Optional.ToList(ipRules), serializedAdditionalRawData);
+            return new BatchEndpointAccessProfile(defaultAction, ipRules ?? new ChangeTrackingList<BatchIPRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchEndpointAccessProfile>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchEndpointAccessProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

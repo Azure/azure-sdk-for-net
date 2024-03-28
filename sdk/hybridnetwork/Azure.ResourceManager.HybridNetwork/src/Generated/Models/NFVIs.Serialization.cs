@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class NFVIs : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownNFVIs))]
+    public partial class NFVIs : IUtf8JsonSerializable, IJsonModel<NFVIs>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NFVIs>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NFVIs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NFVIs>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NFVIs)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -22,11 +33,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             writer.WritePropertyName("nfviType"u8);
             writer.WriteStringValue(NfviType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NFVIs DeserializeNFVIs(JsonElement element)
+        NFVIs IJsonModel<NFVIs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NFVIs>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NFVIs)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNFVIs(document.RootElement, options);
+        }
+
+        internal static NFVIs DeserializeNFVIs(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,12 +75,43 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureArcKubernetes": return AzureArcK8SClusterNfviDetails.DeserializeAzureArcK8SClusterNfviDetails(element);
-                    case "AzureCore": return AzureCoreNfviDetails.DeserializeAzureCoreNfviDetails(element);
-                    case "AzureOperatorNexus": return AzureOperatorNexusClusterNfviDetails.DeserializeAzureOperatorNexusClusterNfviDetails(element);
+                    case "AzureArcKubernetes": return AzureArcK8SClusterNfviDetails.DeserializeAzureArcK8SClusterNfviDetails(element, options);
+                    case "AzureCore": return AzureCoreNfviDetails.DeserializeAzureCoreNfviDetails(element, options);
+                    case "AzureOperatorNexus": return AzureOperatorNexusClusterNfviDetails.DeserializeAzureOperatorNexusClusterNfviDetails(element, options);
                 }
             }
-            return UnknownNFVIs.DeserializeUnknownNFVIs(element);
+            return UnknownNFVIs.DeserializeUnknownNFVIs(element, options);
         }
+
+        BinaryData IPersistableModel<NFVIs>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NFVIs>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NFVIs)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NFVIs IPersistableModel<NFVIs>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NFVIs>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNFVIs(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NFVIs)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NFVIs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

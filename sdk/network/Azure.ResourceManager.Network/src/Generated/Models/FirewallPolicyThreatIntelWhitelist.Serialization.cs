@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyThreatIntelWhitelist>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyThreatIntelWhitelist)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyThreatIntelWhitelist)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyThreatIntelWhitelist>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyThreatIntelWhitelist)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyThreatIntelWhitelist)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> ipAddresses = default;
-            Optional<IList<string>> fqdns = default;
+            IList<string> ipAddresses = default;
+            IList<string> fqdns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyThreatIntelWhitelist(Optional.ToList(ipAddresses), Optional.ToList(fqdns), serializedAdditionalRawData);
+            return new FirewallPolicyThreatIntelWhitelist(ipAddresses ?? new ChangeTrackingList<string>(), fqdns ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyThreatIntelWhitelist>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyThreatIntelWhitelist)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyThreatIntelWhitelist)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFirewallPolicyThreatIntelWhitelist(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyThreatIntelWhitelist)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyThreatIntelWhitelist)} does not support reading '{options.Format}' format.");
             }
         }
 

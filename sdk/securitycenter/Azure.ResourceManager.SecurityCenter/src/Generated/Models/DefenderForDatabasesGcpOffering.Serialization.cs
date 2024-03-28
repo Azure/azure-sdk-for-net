@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
-                writer.WriteObjectValue(ArcAutoProvisioning);
+                writer.WriteObjectValue<DefenderForDatabasesGcpOfferingArcAutoProvisioning>(ArcAutoProvisioning, options);
             }
             if (Optional.IsDefined(DefenderForDatabasesArcAutoProvisioning))
             {
                 writer.WritePropertyName("defenderForDatabasesArcAutoProvisioning"u8);
-                writer.WriteObjectValue(DefenderForDatabasesArcAutoProvisioning);
+                writer.WriteObjectValue<GcpDefenderForDatabasesArcAutoProvisioning>(DefenderForDatabasesArcAutoProvisioning, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DefenderForDatabasesGcpOfferingArcAutoProvisioning> arcAutoProvisioning = default;
-            Optional<GcpDefenderForDatabasesArcAutoProvisioning> defenderForDatabasesArcAutoProvisioning = default;
+            DefenderForDatabasesGcpOfferingArcAutoProvisioning arcAutoProvisioning = default;
+            GcpDefenderForDatabasesArcAutoProvisioning defenderForDatabasesArcAutoProvisioning = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    arcAutoProvisioning = DefenderForDatabasesGcpOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioning(property.Value);
+                    arcAutoProvisioning = DefenderForDatabasesGcpOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioning(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defenderForDatabasesArcAutoProvisioning"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    defenderForDatabasesArcAutoProvisioning = GcpDefenderForDatabasesArcAutoProvisioning.DeserializeGcpDefenderForDatabasesArcAutoProvisioning(property.Value);
+                    defenderForDatabasesArcAutoProvisioning = GcpDefenderForDatabasesArcAutoProvisioning.DeserializeGcpDefenderForDatabasesArcAutoProvisioning(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForDatabasesGcpOffering(offeringType, description.Value, serializedAdditionalRawData, arcAutoProvisioning.Value, defenderForDatabasesArcAutoProvisioning.Value);
+            return new DefenderForDatabasesGcpOffering(offeringType, description, serializedAdditionalRawData, arcAutoProvisioning, defenderForDatabasesArcAutoProvisioning);
         }
 
         BinaryData IPersistableModel<DefenderForDatabasesGcpOffering>.Write(ModelReaderWriterOptions options)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDefenderForDatabasesGcpOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support reading '{options.Format}' format.");
             }
         }
 

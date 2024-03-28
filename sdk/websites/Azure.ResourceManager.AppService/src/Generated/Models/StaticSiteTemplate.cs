@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Template Options for the static site. </summary>
     public partial class StaticSiteTemplate
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="StaticSiteTemplate"/>. </summary>
         public StaticSiteTemplate()
         {
@@ -23,24 +56,31 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="repositoryName"> Name of the newly generated repository. </param>
         /// <param name="description"> Description of the newly generated repository. </param>
         /// <param name="isPrivate"> Whether or not the newly generated repository is a private repository. Defaults to false (i.e. public). </param>
-        internal StaticSiteTemplate(Uri templateRepositoryUri, string owner, string repositoryName, string description, bool? isPrivate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteTemplate(Uri templateRepositoryUri, string owner, string repositoryName, string description, bool? isPrivate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TemplateRepositoryUri = templateRepositoryUri;
             Owner = owner;
             RepositoryName = repositoryName;
             Description = description;
             IsPrivate = isPrivate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> URL of the template repository. The newly generated repository will be based on this one. </summary>
+        [WirePath("templateRepositoryUrl")]
         public Uri TemplateRepositoryUri { get; set; }
         /// <summary> Owner of the newly generated repository. </summary>
+        [WirePath("owner")]
         public string Owner { get; set; }
         /// <summary> Name of the newly generated repository. </summary>
+        [WirePath("repositoryName")]
         public string RepositoryName { get; set; }
         /// <summary> Description of the newly generated repository. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Whether or not the newly generated repository is a private repository. Defaults to false (i.e. public). </summary>
+        [WirePath("isPrivate")]
         public bool? IsPrivate { get; set; }
     }
 }

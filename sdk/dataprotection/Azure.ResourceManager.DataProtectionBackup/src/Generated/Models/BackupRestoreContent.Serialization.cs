@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupRestoreContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("restoreTargetInfo"u8);
-            writer.WriteObjectValue(RestoreTargetInfo);
+            writer.WriteObjectValue<RestoreTargetInfoBase>(RestoreTargetInfo, options);
             writer.WritePropertyName("sourceDataStoreType"u8);
             writer.WriteStringValue(SourceDataStoreType.ToString());
             if (Optional.IsDefined(SourceResourceId))
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(IdentityDetails))
             {
                 writer.WritePropertyName("identityDetails"u8);
-                writer.WriteObjectValue(IdentityDetails);
+                writer.WriteObjectValue<DataProtectionIdentityDetails>(IdentityDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupRestoreContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupRecoveryPointBasedRestoreRequest": return BackupRecoveryPointBasedRestoreContent.DeserializeBackupRecoveryPointBasedRestoreContent(element);
-                    case "AzureBackupRecoveryTimeBasedRestoreRequest": return BackupRecoveryTimeBasedRestoreContent.DeserializeBackupRecoveryTimeBasedRestoreContent(element);
-                    case "AzureBackupRestoreWithRehydrationRequest": return BackupRestoreWithRehydrationContent.DeserializeBackupRestoreWithRehydrationContent(element);
+                    case "AzureBackupRecoveryPointBasedRestoreRequest": return BackupRecoveryPointBasedRestoreContent.DeserializeBackupRecoveryPointBasedRestoreContent(element, options);
+                    case "AzureBackupRecoveryTimeBasedRestoreRequest": return BackupRecoveryTimeBasedRestoreContent.DeserializeBackupRecoveryTimeBasedRestoreContent(element, options);
+                    case "AzureBackupRestoreWithRehydrationRequest": return BackupRestoreWithRehydrationContent.DeserializeBackupRestoreWithRehydrationContent(element, options);
                 }
             }
-            return UnknownAzureBackupRestoreRequest.DeserializeUnknownAzureBackupRestoreRequest(element);
+            return UnknownAzureBackupRestoreRequest.DeserializeUnknownAzureBackupRestoreRequest(element, options);
         }
 
         BinaryData IPersistableModel<BackupRestoreContent>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupRestoreContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupRestoreContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupRestoreContent)} does not support reading '{options.Format}' format.");
             }
         }
 

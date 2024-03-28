@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecuritySolutionsReferenceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecuritySolutionsReferenceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecuritySolutionsReferenceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecuritySolutionsReferenceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecuritySolutionsReferenceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecuritySolutionsReferenceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             SecurityFamily securityFamily = default;
             string alertVendorName = default;
             Uri packageInfoUrl = default;
@@ -209,7 +209,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecuritySolutionsReferenceData(id, name, type, systemData.Value, securityFamily, alertVendorName, packageInfoUrl, productName, publisher, publisherDisplayName, template, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new SecuritySolutionsReferenceData(
+                id,
+                name,
+                type,
+                systemData,
+                securityFamily,
+                alertVendorName,
+                packageInfoUrl,
+                productName,
+                publisher,
+                publisherDisplayName,
+                template,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuritySolutionsReferenceData>.Write(ModelReaderWriterOptions options)
@@ -221,7 +234,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecuritySolutionsReferenceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecuritySolutionsReferenceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +250,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecuritySolutionsReferenceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecuritySolutionsReferenceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecuritySolutionsReferenceData)} does not support reading '{options.Format}' format.");
             }
         }
 

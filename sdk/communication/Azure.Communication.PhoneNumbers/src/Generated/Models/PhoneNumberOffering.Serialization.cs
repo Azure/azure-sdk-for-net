@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -18,9 +17,9 @@ namespace Azure.Communication.PhoneNumbers
             {
                 return null;
             }
-            Optional<PhoneNumberType> phoneNumberType = default;
-            Optional<PhoneNumberAssignmentType> assignmentType = default;
-            Optional<PhoneNumberCapabilities> availableCapabilities = default;
+            PhoneNumberType? phoneNumberType = default;
+            PhoneNumberAssignmentType? assignmentType = default;
+            PhoneNumberCapabilities availableCapabilities = default;
             PhoneNumberCost cost = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,7 +56,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PhoneNumberOffering(Optional.ToNullable(phoneNumberType), Optional.ToNullable(assignmentType), availableCapabilities.Value, cost);
+            return new PhoneNumberOffering(phoneNumberType, assignmentType, availableCapabilities, cost);
         }
     }
 }

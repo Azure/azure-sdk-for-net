@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Advisor;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Advisor.Models
             var format = options.Format == "W" ? ((IPersistableModel<SuppressionContractListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuppressionContractListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SuppressionContractListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SuppressionContractData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Advisor.Models
             var format = options.Format == "W" ? ((IPersistableModel<SuppressionContractListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuppressionContractListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SuppressionContractListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<SuppressionContractData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<SuppressionContractData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     List<SuppressionContractData> array = new List<SuppressionContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SuppressionContractData.DeserializeSuppressionContractData(item));
+                        array.Add(SuppressionContractData.DeserializeSuppressionContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SuppressionContractListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new SuppressionContractListResult(nextLink, value ?? new ChangeTrackingList<SuppressionContractData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SuppressionContractListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SuppressionContractListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SuppressionContractListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Advisor.Models
                         return DeserializeSuppressionContractListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SuppressionContractListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SuppressionContractListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

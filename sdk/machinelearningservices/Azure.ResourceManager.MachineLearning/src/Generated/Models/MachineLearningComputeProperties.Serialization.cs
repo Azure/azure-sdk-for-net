@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeProperties : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownCompute))]
+    public partial class MachineLearningComputeProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningComputeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningComputeProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
@@ -21,6 +32,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("computeLocation"u8);
                 writer.WriteStringValue(ComputeLocation);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(Description))
             {
@@ -34,6 +50,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdOn"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            {
+                writer.WritePropertyName("modifiedOn"u8);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
+            }
             if (Optional.IsDefined(ResourceId))
             {
                 if (ResourceId != null)
@@ -46,16 +72,67 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceId");
                 }
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningErrors))
+            {
+                if (ProvisioningErrors != null)
+                {
+                    writer.WritePropertyName("provisioningErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ProvisioningErrors)
+                    {
+                        writer.WriteObjectValue<MachineLearningError>(item, options);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("provisioningErrors");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsAttachedCompute))
+            {
+                writer.WritePropertyName("isAttachedCompute"u8);
+                writer.WriteBooleanValue(IsAttachedCompute.Value);
+            }
             if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningComputeProperties DeserializeMachineLearningComputeProperties(JsonElement element)
+        MachineLearningComputeProperties IJsonModel<MachineLearningComputeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningComputeProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningComputeProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningComputeProperties DeserializeMachineLearningComputeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,19 +141,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AKS": return MachineLearningAksCompute.DeserializeMachineLearningAksCompute(element);
-                    case "AmlCompute": return AmlCompute.DeserializeAmlCompute(element);
-                    case "ComputeInstance": return MachineLearningComputeInstance.DeserializeMachineLearningComputeInstance(element);
-                    case "DataFactory": return MachineLearningDataFactoryCompute.DeserializeMachineLearningDataFactoryCompute(element);
-                    case "DataLakeAnalytics": return MachineLearningDataLakeAnalytics.DeserializeMachineLearningDataLakeAnalytics(element);
-                    case "Databricks": return MachineLearningDatabricksCompute.DeserializeMachineLearningDatabricksCompute(element);
-                    case "HDInsight": return MachineLearningHDInsightCompute.DeserializeMachineLearningHDInsightCompute(element);
-                    case "Kubernetes": return MachineLearningKubernetesCompute.DeserializeMachineLearningKubernetesCompute(element);
-                    case "SynapseSpark": return MachineLearningSynapseSpark.DeserializeMachineLearningSynapseSpark(element);
-                    case "VirtualMachine": return MachineLearningVirtualMachineCompute.DeserializeMachineLearningVirtualMachineCompute(element);
+                    case "AKS": return MachineLearningAksCompute.DeserializeMachineLearningAksCompute(element, options);
+                    case "AmlCompute": return AmlCompute.DeserializeAmlCompute(element, options);
+                    case "ComputeInstance": return MachineLearningComputeInstance.DeserializeMachineLearningComputeInstance(element, options);
+                    case "Databricks": return MachineLearningDatabricksCompute.DeserializeMachineLearningDatabricksCompute(element, options);
+                    case "DataFactory": return MachineLearningDataFactoryCompute.DeserializeMachineLearningDataFactoryCompute(element, options);
+                    case "DataLakeAnalytics": return MachineLearningDataLakeAnalytics.DeserializeMachineLearningDataLakeAnalytics(element, options);
+                    case "HDInsight": return MachineLearningHDInsightCompute.DeserializeMachineLearningHDInsightCompute(element, options);
+                    case "Kubernetes": return MachineLearningKubernetesCompute.DeserializeMachineLearningKubernetesCompute(element, options);
+                    case "SynapseSpark": return MachineLearningSynapseSpark.DeserializeMachineLearningSynapseSpark(element, options);
+                    case "VirtualMachine": return MachineLearningVirtualMachineCompute.DeserializeMachineLearningVirtualMachineCompute(element, options);
                 }
             }
-            return UnknownCompute.DeserializeUnknownCompute(element);
+            return UnknownCompute.DeserializeUnknownCompute(element, options);
         }
+
+        BinaryData IPersistableModel<MachineLearningComputeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningComputeProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningComputeProperties IPersistableModel<MachineLearningComputeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningComputeProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningComputeProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningComputeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

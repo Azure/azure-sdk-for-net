@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<MsixPackageApplications>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<MsixPackageApplications>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<string> appId = default;
-            Optional<string> description = default;
-            Optional<string> appUserModelId = default;
-            Optional<string> friendlyName = default;
-            Optional<string> iconImageName = default;
-            Optional<BinaryData> rawIcon = default;
-            Optional<BinaryData> rawPng = default;
+            string appId = default;
+            string description = default;
+            string appUserModelId = default;
+            string friendlyName = default;
+            string iconImageName = default;
+            BinaryData rawIcon = default;
+            BinaryData rawPng = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MsixPackageApplications(appId.Value, description.Value, appUserModelId.Value, friendlyName.Value, iconImageName.Value, rawIcon.Value, rawPng.Value, serializedAdditionalRawData);
+            return new MsixPackageApplications(
+                appId,
+                description,
+                appUserModelId,
+                friendlyName,
+                iconImageName,
+                rawIcon,
+                rawPng,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MsixPackageApplications>.Write(ModelReaderWriterOptions options)
@@ -185,7 +193,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +209,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeMsixPackageApplications(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support reading '{options.Format}' format.");
             }
         }
 

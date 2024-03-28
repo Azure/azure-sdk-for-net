@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<PerNodeExtensionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerNodeExtensionState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PerNodeExtensionState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<HciExtensionInstanceView>(InstanceView, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<PerNodeExtensionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerNodeExtensionState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PerNodeExtensionState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> extension = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<NodeExtensionState> state = default;
-            Optional<HciExtensionInstanceView> instanceView = default;
+            string name = default;
+            string extension = default;
+            string typeHandlerVersion = default;
+            NodeExtensionState? state = default;
+            HciExtensionInstanceView instanceView = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    instanceView = HciExtensionInstanceView.DeserializeHciExtensionInstanceView(property.Value);
+                    instanceView = HciExtensionInstanceView.DeserializeHciExtensionInstanceView(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PerNodeExtensionState(name.Value, extension.Value, typeHandlerVersion.Value, Optional.ToNullable(state), instanceView.Value, serializedAdditionalRawData);
+            return new PerNodeExtensionState(
+                name,
+                extension,
+                typeHandlerVersion,
+                state,
+                instanceView,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PerNodeExtensionState>.Write(ModelReaderWriterOptions options)
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PerNodeExtensionState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PerNodeExtensionState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializePerNodeExtensionState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PerNodeExtensionState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PerNodeExtensionState)} does not support reading '{options.Format}' format.");
             }
         }
 

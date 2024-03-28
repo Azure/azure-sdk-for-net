@@ -22,29 +22,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(BucketName))
             {
                 writer.WritePropertyName("bucketName"u8);
-                writer.WriteObjectValue(BucketName);
+                writer.WriteObjectValue<object>(BucketName);
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteObjectValue(Version);
+                writer.WriteObjectValue<object>(Version);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-                writer.WriteObjectValue(FolderPath);
+                writer.WriteObjectValue<object>(FolderPath);
             }
             if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
-                writer.WriteObjectValue(FileName);
+                writer.WriteObjectValue<object>(FileName);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -55,11 +55,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> bucketName = default;
-            Optional<object> version = default;
+            object bucketName = default;
+            object version = default;
             string type = default;
-            Optional<object> folderPath = default;
-            Optional<object> fileName = default;
+            object folderPath = default;
+            object fileName = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -108,14 +108,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GoogleCloudStorageLocation(type, folderPath.Value, fileName.Value, additionalProperties, bucketName.Value, version.Value);
+            return new GoogleCloudStorageLocation(
+                type,
+                folderPath,
+                fileName,
+                additionalProperties,
+                bucketName,
+                version);
         }
 
         internal partial class GoogleCloudStorageLocationConverter : JsonConverter<GoogleCloudStorageLocation>
         {
             public override void Write(Utf8JsonWriter writer, GoogleCloudStorageLocation model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<GoogleCloudStorageLocation>(model);
             }
             public override GoogleCloudStorageLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitOperationResultContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<ErrorResponseBody>(Error, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ActionLog))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in ActionLog)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationResultLogItemContract>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitOperationResultContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<AsyncOperationStatus> status = default;
-            Optional<DateTimeOffset> started = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<string> resultInfo = default;
-            Optional<ErrorResponseBody> error = default;
-            Optional<IReadOnlyList<OperationResultLogItemContract>> actionLog = default;
+            SystemData systemData = default;
+            string id0 = default;
+            AsyncOperationStatus? status = default;
+            DateTimeOffset? started = default;
+            DateTimeOffset? updated = default;
+            string resultInfo = default;
+            ErrorResponseBody error = default;
+            IReadOnlyList<OperationResultLogItemContract> actionLog = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            error = ErrorResponseBody.DeserializeErrorResponseBody(property0.Value);
+                            error = ErrorResponseBody.DeserializeErrorResponseBody(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("actionLog"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<OperationResultLogItemContract> array = new List<OperationResultLogItemContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OperationResultLogItemContract.DeserializeOperationResultLogItemContract(item));
+                                array.Add(OperationResultLogItemContract.DeserializeOperationResultLogItemContract(item, options));
                             }
                             actionLog = array;
                             continue;
@@ -245,7 +245,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitOperationResultContractData(id, name, type, systemData.Value, id0.Value, Optional.ToNullable(status), Optional.ToNullable(started), Optional.ToNullable(updated), resultInfo.Value, error.Value, Optional.ToList(actionLog), serializedAdditionalRawData);
+            return new GitOperationResultContractData(
+                id,
+                name,
+                type,
+                systemData,
+                id0,
+                status,
+                started,
+                updated,
+                resultInfo,
+                error,
+                actionLog ?? new ChangeTrackingList<OperationResultLogItemContract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitOperationResultContractData>.Write(ModelReaderWriterOptions options)
@@ -257,7 +269,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -273,7 +285,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeGitOperationResultContractData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support reading '{options.Format}' format.");
             }
         }
 

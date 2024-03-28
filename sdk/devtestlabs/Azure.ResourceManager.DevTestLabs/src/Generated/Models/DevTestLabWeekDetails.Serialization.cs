@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabWeekDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabWeekDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabWeekDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabWeekDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabWeekDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabWeekDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IList<string>> weekdays = default;
-            Optional<string> time = default;
+            IList<string> weekdays = default;
+            string time = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabWeekDetails(Optional.ToList(weekdays), time.Value, serializedAdditionalRawData);
+            return new DevTestLabWeekDetails(weekdays ?? new ChangeTrackingList<string>(), time, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabWeekDetails>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabWeekDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabWeekDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabWeekDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabWeekDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabWeekDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

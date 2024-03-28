@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderResourceType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProviderExtendedLocation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Aliases)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceTypeAlias>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in ZoneMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ZoneMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in ApiProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApiProfile>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderResourceType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -150,16 +152,16 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<ProviderExtendedLocation>> locationMappings = default;
-            Optional<IReadOnlyList<ResourceTypeAlias>> aliases = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<string> defaultApiVersion = default;
-            Optional<IReadOnlyList<ZoneMapping>> zoneMappings = default;
-            Optional<IReadOnlyList<ApiProfile>> apiProfiles = default;
-            Optional<string> capabilities = default;
-            Optional<IReadOnlyDictionary<string, string>> properties = default;
+            string resourceType = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<ProviderExtendedLocation> locationMappings = default;
+            IReadOnlyList<ResourceTypeAlias> aliases = default;
+            IReadOnlyList<string> apiVersions = default;
+            string defaultApiVersion = default;
+            IReadOnlyList<ZoneMapping> zoneMappings = default;
+            IReadOnlyList<ApiProfile> apiProfiles = default;
+            string capabilities = default;
+            IReadOnlyDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +194,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ProviderExtendedLocation> array = new List<ProviderExtendedLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderExtendedLocation.DeserializeProviderExtendedLocation(item));
+                        array.Add(ProviderExtendedLocation.DeserializeProviderExtendedLocation(item, options));
                     }
                     locationMappings = array;
                     continue;
@@ -206,7 +208,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceTypeAlias> array = new List<ResourceTypeAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item));
+                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item, options));
                     }
                     aliases = array;
                     continue;
@@ -239,7 +241,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ZoneMapping> array = new List<ZoneMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ZoneMapping.DeserializeZoneMapping(item));
+                        array.Add(ZoneMapping.DeserializeZoneMapping(item, options));
                     }
                     zoneMappings = array;
                     continue;
@@ -253,7 +255,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ApiProfile> array = new List<ApiProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiProfile.DeserializeApiProfile(item));
+                        array.Add(ApiProfile.DeserializeApiProfile(item, options));
                     }
                     apiProfiles = array;
                     continue;
@@ -283,7 +285,293 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(zoneMappings), Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new ProviderResourceType(
+                resourceType,
+                locations ?? new ChangeTrackingList<string>(),
+                locationMappings ?? new ChangeTrackingList<ProviderExtendedLocation>(),
+                aliases ?? new ChangeTrackingList<ResourceTypeAlias>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                defaultApiVersion,
+                zoneMappings ?? new ChangeTrackingList<ZoneMapping>(),
+                apiProfiles ?? new ChangeTrackingList<ApiProfile>(),
+                capabilities,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
+            if (Optional.IsDefined(ResourceType) || hasPropertyOverride)
+            {
+                builder.Append("  resourceType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ResourceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
+            if (Optional.IsCollectionDefined(Locations) || hasPropertyOverride)
+            {
+                if (Locations.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  locations: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Locations)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocationMappings), out propertyOverride);
+            if (Optional.IsCollectionDefined(LocationMappings) || hasPropertyOverride)
+            {
+                if (LocationMappings.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  locationMappings: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in LocationMappings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  locationMappings: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Aliases), out propertyOverride);
+            if (Optional.IsCollectionDefined(Aliases) || hasPropertyOverride)
+            {
+                if (Aliases.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  aliases: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Aliases)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  aliases: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersions), out propertyOverride);
+            if (Optional.IsCollectionDefined(ApiVersions) || hasPropertyOverride)
+            {
+                if (ApiVersions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  apiVersions: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ApiVersions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultApiVersion), out propertyOverride);
+            if (Optional.IsDefined(DefaultApiVersion) || hasPropertyOverride)
+            {
+                builder.Append("  defaultApiVersion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DefaultApiVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DefaultApiVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DefaultApiVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ZoneMappings), out propertyOverride);
+            if (Optional.IsCollectionDefined(ZoneMappings) || hasPropertyOverride)
+            {
+                if (ZoneMappings.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  zoneMappings: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ZoneMappings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  zoneMappings: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiProfiles), out propertyOverride);
+            if (Optional.IsCollectionDefined(ApiProfiles) || hasPropertyOverride)
+            {
+                if (ApiProfiles.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  apiProfiles: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ApiProfiles)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  apiProfiles: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capabilities), out propertyOverride);
+            if (Optional.IsDefined(Capabilities) || hasPropertyOverride)
+            {
+                builder.Append("  capabilities: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Capabilities.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Capabilities}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Capabilities}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (Optional.IsCollectionDefined(Properties) || hasPropertyOverride)
+            {
+                if (Properties.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  properties: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in Properties)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ProviderResourceType>.Write(ModelReaderWriterOptions options)
@@ -294,8 +582,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -311,7 +601,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeProviderResourceType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> workerId = default;
-            Optional<IReadOnlyList<AcsRouterQueueDetails>> queueAssignments = default;
-            Optional<IReadOnlyList<AcsRouterChannelConfiguration>> channelConfigurations = default;
-            Optional<int> totalCapacity = default;
-            Optional<IReadOnlyDictionary<string, string>> labels = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            string workerId = default;
+            IReadOnlyList<AcsRouterQueueDetails> queueAssignments = default;
+            IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations = default;
+            int? totalCapacity = default;
+            IReadOnlyDictionary<string, string> labels = default;
+            IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workerId"u8))
@@ -101,7 +100,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterWorkerRegisteredEventData(workerId.Value, Optional.ToList(queueAssignments), Optional.ToList(channelConfigurations), Optional.ToNullable(totalCapacity), Optional.ToDictionary(labels), Optional.ToDictionary(tags));
+            return new AcsRouterWorkerRegisteredEventData(
+                workerId,
+                queueAssignments ?? new ChangeTrackingList<AcsRouterQueueDetails>(),
+                channelConfigurations ?? new ChangeTrackingList<AcsRouterChannelConfiguration>(),
+                totalCapacity,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class AcsRouterWorkerRegisteredEventDataConverter : JsonConverter<AcsRouterWorkerRegisteredEventData>

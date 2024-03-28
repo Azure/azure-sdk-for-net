@@ -14,9 +14,11 @@ sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
 skip-csproj: true
+enable-bicep-serialization: true
 
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 request-path-to-resource-name:
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}: EventHubsDisasterRecovery

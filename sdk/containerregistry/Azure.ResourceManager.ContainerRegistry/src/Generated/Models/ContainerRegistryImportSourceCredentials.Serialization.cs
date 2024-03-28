@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImportSourceCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryImportSourceCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryImportSourceCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryImportSourceCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryImportSourceCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryImportSourceCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> username = default;
+            string username = default;
             string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryImportSourceCredentials(username.Value, password, serializedAdditionalRawData);
+            return new ContainerRegistryImportSourceCredentials(username, password, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryImportSourceCredentials>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryImportSourceCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryImportSourceCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryImportSourceCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryImportSourceCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryImportSourceCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

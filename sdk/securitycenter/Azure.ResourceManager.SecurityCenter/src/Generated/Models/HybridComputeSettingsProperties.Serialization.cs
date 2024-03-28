@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ProxyServer))
             {
                 writer.WritePropertyName("proxyServer"u8);
-                writer.WriteObjectValue(ProxyServer);
+                writer.WriteObjectValue<ProxyServerProperties>(ProxyServer, options);
             }
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal);
+                writer.WriteObjectValue<ServicePrincipalProperties>(ServicePrincipal, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<HybridComputeProvisioningState> hybridComputeProvisioningState = default;
+            HybridComputeProvisioningState? hybridComputeProvisioningState = default;
             AutoProvisionState autoProvision = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> region = default;
-            Optional<ProxyServerProperties> proxyServer = default;
-            Optional<ServicePrincipalProperties> servicePrincipal = default;
+            string resourceGroupName = default;
+            string region = default;
+            ProxyServerProperties proxyServer = default;
+            ServicePrincipalProperties servicePrincipal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    proxyServer = ProxyServerProperties.DeserializeProxyServerProperties(property.Value);
+                    proxyServer = ProxyServerProperties.DeserializeProxyServerProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("servicePrincipal"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value);
+                    servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeSettingsProperties(Optional.ToNullable(hybridComputeProvisioningState), autoProvision, resourceGroupName.Value, region.Value, proxyServer.Value, servicePrincipal.Value, serializedAdditionalRawData);
+            return new HybridComputeSettingsProperties(
+                hybridComputeProvisioningState,
+                autoProvision,
+                resourceGroupName,
+                region,
+                proxyServer,
+                servicePrincipal,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeSettingsProperties>.Write(ModelReaderWriterOptions options)
@@ -161,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +184,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeHybridComputeSettingsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationStartMenuItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DesktopVirtualizationStartMenuItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DesktopVirtualizationStartMenuItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationStartMenuItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DesktopVirtualizationStartMenuItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DesktopVirtualizationStartMenuItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> appAlias = default;
-            Optional<string> filePath = default;
-            Optional<string> commandLineArguments = default;
-            Optional<string> iconPath = default;
-            Optional<int> iconIndex = default;
+            SystemData systemData = default;
+            string appAlias = default;
+            string filePath = default;
+            string commandLineArguments = default;
+            string iconPath = default;
+            int? iconIndex = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DesktopVirtualizationStartMenuItem(id, name, type, systemData.Value, appAlias.Value, filePath.Value, commandLineArguments.Value, iconPath.Value, Optional.ToNullable(iconIndex), serializedAdditionalRawData);
+            return new DesktopVirtualizationStartMenuItem(
+                id,
+                name,
+                type,
+                systemData,
+                appAlias,
+                filePath,
+                commandLineArguments,
+                iconPath,
+                iconIndex,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DesktopVirtualizationStartMenuItem>.Write(ModelReaderWriterOptions options)
@@ -209,7 +219,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DesktopVirtualizationStartMenuItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationStartMenuItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +235,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeDesktopVirtualizationStartMenuItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DesktopVirtualizationStartMenuItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationStartMenuItem)} does not support reading '{options.Format}' format.");
             }
         }
 

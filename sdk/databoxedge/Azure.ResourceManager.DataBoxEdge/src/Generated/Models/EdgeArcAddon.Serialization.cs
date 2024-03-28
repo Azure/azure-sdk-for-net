@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeArcAddon>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeArcAddon>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,15 +122,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string subscriptionId = default;
             string resourceGroupName = default;
             string resourceName = default;
             AzureLocation resourceLocation = default;
-            Optional<string> version = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<DataBoxEdgeRoleAddonProvisioningState> provisioningState = default;
+            string version = default;
+            DataBoxEdgeOSPlatformType? hostPlatform = default;
+            HostPlatformType? hostPlatformType = default;
+            DataBoxEdgeRoleAddonProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,7 +234,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeArcAddon(id, name, type, systemData.Value, kind, serializedAdditionalRawData, subscriptionId, resourceGroupName, resourceName, resourceLocation, version.Value, Optional.ToNullable(hostPlatform), Optional.ToNullable(hostPlatformType), Optional.ToNullable(provisioningState));
+            return new EdgeArcAddon(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                subscriptionId,
+                resourceGroupName,
+                resourceName,
+                resourceLocation,
+                version,
+                hostPlatform,
+                hostPlatformType,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<EdgeArcAddon>.Write(ModelReaderWriterOptions options)
@@ -246,7 +260,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -262,7 +276,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeArcAddon(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support reading '{options.Format}' format.");
             }
         }
 

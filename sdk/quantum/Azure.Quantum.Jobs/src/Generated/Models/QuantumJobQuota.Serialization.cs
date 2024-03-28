@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -18,13 +17,13 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Optional<string> dimension = default;
-            Optional<DimensionScope> scope = default;
-            Optional<string> providerId = default;
-            Optional<float> utilization = default;
-            Optional<float> holds = default;
-            Optional<float> limit = default;
-            Optional<MeterPeriod> period = default;
+            string dimension = default;
+            DimensionScope? scope = default;
+            string providerId = default;
+            float? utilization = default;
+            float? holds = default;
+            float? limit = default;
+            MeterPeriod? period = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimension"u8))
@@ -83,7 +82,14 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new QuantumJobQuota(dimension.Value, Optional.ToNullable(scope), providerId.Value, Optional.ToNullable(utilization), Optional.ToNullable(holds), Optional.ToNullable(limit), Optional.ToNullable(period));
+            return new QuantumJobQuota(
+                dimension,
+                scope,
+                providerId,
+                utilization,
+                holds,
+                limit,
+                period);
         }
     }
 }

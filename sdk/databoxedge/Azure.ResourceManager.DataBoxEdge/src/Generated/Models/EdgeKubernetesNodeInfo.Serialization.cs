@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesNodeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdgeKubernetesIPConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesNodeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<EdgeKubernetesNodeType> type = default;
-            Optional<IReadOnlyList<EdgeKubernetesIPConfiguration>> ipConfiguration = default;
+            string name = default;
+            EdgeKubernetesNodeType? type = default;
+            IReadOnlyList<EdgeKubernetesIPConfiguration> ipConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<EdgeKubernetesIPConfiguration> array = new List<EdgeKubernetesIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeKubernetesIPConfiguration.DeserializeEdgeKubernetesIPConfiguration(item));
+                        array.Add(EdgeKubernetesIPConfiguration.DeserializeEdgeKubernetesIPConfiguration(item, options));
                     }
                     ipConfiguration = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesNodeInfo(name.Value, Optional.ToNullable(type), Optional.ToList(ipConfiguration), serializedAdditionalRawData);
+            return new EdgeKubernetesNodeInfo(name, type, ipConfiguration ?? new ChangeTrackingList<EdgeKubernetesIPConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesNodeInfo>.Write(ModelReaderWriterOptions options)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeKubernetesNodeInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

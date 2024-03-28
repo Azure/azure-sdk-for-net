@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVirtualNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanVirtualNetworkRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanVirtualNetworkRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVirtualNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanVirtualNetworkRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanVirtualNetworkRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Optional<ElasticSanVirtualNetworkRuleAction> action = default;
+            ElasticSanVirtualNetworkRuleAction? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanVirtualNetworkRule(id, Optional.ToNullable(action), serializedAdditionalRawData);
+            return new ElasticSanVirtualNetworkRule(id, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanVirtualNetworkRule>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanVirtualNetworkRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanVirtualNetworkRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         return DeserializeElasticSanVirtualNetworkRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanVirtualNetworkRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanVirtualNetworkRule)} does not support reading '{options.Format}' format.");
             }
         }
 

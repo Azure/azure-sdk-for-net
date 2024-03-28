@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceInstanceViewStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> platformUpdateDomain = default;
-            Optional<int> platformFaultDomain = default;
-            Optional<string> privateId = default;
-            Optional<IReadOnlyList<ResourceInstanceViewStatus>> statuses = default;
+            int? platformUpdateDomain = default;
+            int? platformFaultDomain = default;
+            string privateId = default;
+            IReadOnlyList<ResourceInstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ResourceInstanceViewStatus> array = new List<ResourceInstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item));
+                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), privateId.Value, Optional.ToList(statuses), serializedAdditionalRawData);
+            return new RoleInstanceView(platformUpdateDomain, platformFaultDomain, privateId, statuses ?? new ChangeTrackingList<ResourceInstanceViewStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleInstanceView>.Write(ModelReaderWriterOptions options)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoleInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRoleInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

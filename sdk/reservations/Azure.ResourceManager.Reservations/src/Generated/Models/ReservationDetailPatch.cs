@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The request for reservation patch. </summary>
     public partial class ReservationDetailPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ReservationDetailPatch"/>. </summary>
         public ReservationDetailPatch()
         {
@@ -29,7 +60,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="isRenewEnabled"> Setting this to true will automatically purchase a new reservation on the expiration date time. </param>
         /// <param name="renewProperties"></param>
         /// <param name="reviewOn"> This is the date-time when the Azure hybrid benefit needs to be reviewed. </param>
-        internal ReservationDetailPatch(AppliedScopeType? appliedScopeType, IList<string> appliedScopes, AppliedScopeProperties appliedScopeProperties, InstanceFlexibility? instanceFlexibility, string name, bool? isRenewEnabled, PatchPropertiesRenewProperties renewProperties, DateTimeOffset? reviewOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationDetailPatch(AppliedScopeType? appliedScopeType, IList<string> appliedScopes, AppliedScopeProperties appliedScopeProperties, InstanceFlexibility? instanceFlexibility, string name, bool? isRenewEnabled, PatchPropertiesRenewProperties renewProperties, DateTimeOffset? reviewOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppliedScopeType = appliedScopeType;
             AppliedScopes = appliedScopes;
@@ -39,6 +71,7 @@ namespace Azure.ResourceManager.Reservations.Models
             IsRenewEnabled = isRenewEnabled;
             RenewProperties = renewProperties;
             ReviewOn = reviewOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the Applied Scope. </summary>

@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataExportDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataExportDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataExportDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("transferConfiguration"u8);
-            writer.WriteObjectValue(TransferConfiguration);
+            writer.WriteObjectValue<TransferConfiguration>(TransferConfiguration, options);
             if (Optional.IsDefined(LogCollectionLevel))
             {
                 writer.WritePropertyName("logCollectionLevel"u8);
                 writer.WriteStringValue(LogCollectionLevel.Value.ToSerialString());
             }
             writer.WritePropertyName("accountDetails"u8);
-            writer.WriteObjectValue(AccountDetails);
+            writer.WriteObjectValue<DataAccountDetails>(AccountDetails, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataExportDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataExportDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataExportDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             TransferConfiguration transferConfiguration = default;
-            Optional<LogCollectionLevel> logCollectionLevel = default;
+            LogCollectionLevel? logCollectionLevel = default;
             DataAccountDetails accountDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("transferConfiguration"u8))
                 {
-                    transferConfiguration = TransferConfiguration.DeserializeTransferConfiguration(property.Value);
+                    transferConfiguration = TransferConfiguration.DeserializeTransferConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logCollectionLevel"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("accountDetails"u8))
                 {
-                    accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value);
+                    accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataExportDetails(transferConfiguration, Optional.ToNullable(logCollectionLevel), accountDetails, serializedAdditionalRawData);
+            return new DataExportDetails(transferConfiguration, logCollectionLevel, accountDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataExportDetails>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataExportDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataExportDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataExportDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataExportDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataExportDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

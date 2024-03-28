@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpPeerStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpPeerStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> localAddress = default;
-            Optional<string> neighbor = default;
-            Optional<long> asn = default;
-            Optional<BgpPeerState> state = default;
-            Optional<TimeSpan> connectedDuration = default;
-            Optional<long> routesReceived = default;
-            Optional<long> messagesSent = default;
-            Optional<long> messagesReceived = default;
+            string localAddress = default;
+            string neighbor = default;
+            long? asn = default;
+            BgpPeerState? state = default;
+            TimeSpan? connectedDuration = default;
+            long? routesReceived = default;
+            long? messagesSent = default;
+            long? messagesReceived = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpPeerStatus(localAddress.Value, neighbor.Value, Optional.ToNullable(asn), Optional.ToNullable(state), Optional.ToNullable(connectedDuration), Optional.ToNullable(routesReceived), Optional.ToNullable(messagesSent), Optional.ToNullable(messagesReceived), serializedAdditionalRawData);
+            return new BgpPeerStatus(
+                localAddress,
+                neighbor,
+                asn,
+                state,
+                connectedDuration,
+                routesReceived,
+                messagesSent,
+                messagesReceived,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpPeerStatus>.Write(ModelReaderWriterOptions options)
@@ -198,7 +207,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +223,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeBgpPeerStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

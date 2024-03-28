@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerEffectiveSecurityAdminRulesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerEffectiveSecurityAdminRulesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerEffectiveSecurityAdminRulesListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EffectiveBaseSecurityAdminRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerEffectiveSecurityAdminRulesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerEffectiveSecurityAdminRulesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerEffectiveSecurityAdminRulesListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EffectiveBaseSecurityAdminRule>> value = default;
-            Optional<string> skipToken = default;
+            IReadOnlyList<EffectiveBaseSecurityAdminRule> value = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<EffectiveBaseSecurityAdminRule> array = new List<EffectiveBaseSecurityAdminRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EffectiveBaseSecurityAdminRule.DeserializeEffectiveBaseSecurityAdminRule(item));
+                        array.Add(EffectiveBaseSecurityAdminRule.DeserializeEffectiveBaseSecurityAdminRule(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerEffectiveSecurityAdminRulesListResult(Optional.ToList(value), skipToken.Value, serializedAdditionalRawData);
+            return new NetworkManagerEffectiveSecurityAdminRulesListResult(value ?? new ChangeTrackingList<EffectiveBaseSecurityAdminRule>(), skipToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerEffectiveSecurityAdminRulesListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerEffectiveSecurityAdminRulesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerEffectiveSecurityAdminRulesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkManagerEffectiveSecurityAdminRulesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerEffectiveSecurityAdminRulesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerEffectiveSecurityAdminRulesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

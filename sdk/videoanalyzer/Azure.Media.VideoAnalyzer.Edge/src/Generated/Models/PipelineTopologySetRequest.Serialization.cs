@@ -16,7 +16,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("pipelineTopology"u8);
-            writer.WriteObjectValue(PipelineTopology);
+            writer.WriteObjectValue<PipelineTopology>(PipelineTopology);
+            writer.WritePropertyName("methodName"u8);
+            writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
@@ -33,7 +35,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             PipelineTopology pipelineTopology = default;
             string methodName = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pipelineTopology"u8))
@@ -52,7 +54,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new PipelineTopologySetRequest(methodName, apiVersion.Value, pipelineTopology);
+            return new PipelineTopologySetRequest(methodName, apiVersion, pipelineTopology);
         }
     }
 }

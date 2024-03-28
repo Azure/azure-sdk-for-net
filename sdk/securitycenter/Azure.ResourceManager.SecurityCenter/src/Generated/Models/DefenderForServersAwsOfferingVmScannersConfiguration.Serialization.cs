@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOfferingVmScannersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingVmScannersConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingVmScannersConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOfferingVmScannersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingVmScannersConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingVmScannersConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> cloudRoleArn = default;
-            Optional<DefenderForServersScanningMode> scanningMode = default;
-            Optional<IDictionary<string, string>> exclusionTags = default;
+            string cloudRoleArn = default;
+            DefenderForServersScanningMode? scanningMode = default;
+            IDictionary<string, string> exclusionTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForServersAwsOfferingVmScannersConfiguration(cloudRoleArn.Value, Optional.ToNullable(scanningMode), Optional.ToDictionary(exclusionTags), serializedAdditionalRawData);
+            return new DefenderForServersAwsOfferingVmScannersConfiguration(cloudRoleArn, scanningMode, exclusionTags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderForServersAwsOfferingVmScannersConfiguration>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingVmScannersConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingVmScannersConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDefenderForServersAwsOfferingVmScannersConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingVmScannersConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingVmScannersConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

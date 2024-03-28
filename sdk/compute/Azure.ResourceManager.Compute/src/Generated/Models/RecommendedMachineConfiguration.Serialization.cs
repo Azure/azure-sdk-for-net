@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs"u8);
-                writer.WriteObjectValue(VCpus);
+                writer.WriteObjectValue<ResourceRange>(VCpus, options);
             }
             if (Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
-                writer.WriteObjectValue(Memory);
+                writer.WriteObjectValue<ResourceRange>(Memory, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ResourceRange> vCpus = default;
-            Optional<ResourceRange> memory = default;
+            ResourceRange vCpus = default;
+            ResourceRange memory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vCpus = ResourceRange.DeserializeResourceRange(property.Value);
+                    vCpus = ResourceRange.DeserializeResourceRange(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("memory"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    memory = ResourceRange.DeserializeResourceRange(property.Value);
+                    memory = ResourceRange.DeserializeResourceRange(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedMachineConfiguration(vCpus.Value, memory.Value, serializedAdditionalRawData);
+            return new RecommendedMachineConfiguration(vCpus, memory, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedMachineConfiguration>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRecommendedMachineConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxKeyEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxKeyEncryptionKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxKeyEncryptionKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("identityProperties"u8);
-                writer.WriteObjectValue(ManagedIdentity);
+                writer.WriteObjectValue<DataBoxManagedIdentity>(ManagedIdentity, options);
             }
             if (Optional.IsDefined(KekUri))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxKeyEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxKeyEncryptionKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxKeyEncryptionKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataBoxKeyEncryptionKeyType kekType = default;
-            Optional<DataBoxManagedIdentity> identityProperties = default;
-            Optional<Uri> kekUrl = default;
-            Optional<ResourceIdentifier> kekVaultResourceId = default;
+            DataBoxManagedIdentity identityProperties = default;
+            Uri kekUrl = default;
+            ResourceIdentifier kekVaultResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    identityProperties = DataBoxManagedIdentity.DeserializeDataBoxManagedIdentity(property.Value);
+                    identityProperties = DataBoxManagedIdentity.DeserializeDataBoxManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kekUrl"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxKeyEncryptionKey(kekType, identityProperties.Value, kekUrl.Value, kekVaultResourceId.Value, serializedAdditionalRawData);
+            return new DataBoxKeyEncryptionKey(kekType, identityProperties, kekUrl, kekVaultResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxKeyEncryptionKey>.Write(ModelReaderWriterOptions options)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxKeyEncryptionKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxKeyEncryptionKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxKeyEncryptionKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxKeyEncryptionKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxKeyEncryptionKey)} does not support reading '{options.Format}' format.");
             }
         }
 

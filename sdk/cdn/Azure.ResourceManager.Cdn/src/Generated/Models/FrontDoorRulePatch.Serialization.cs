@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorRulePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeliveryRuleCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeliveryRuleAction>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorRulePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> ruleSetName = default;
-            Optional<int> order = default;
-            Optional<IList<DeliveryRuleCondition>> conditions = default;
-            Optional<IList<DeliveryRuleAction>> actions = default;
-            Optional<MatchProcessingBehavior> matchProcessingBehavior = default;
+            string ruleSetName = default;
+            int? order = default;
+            IList<DeliveryRuleCondition> conditions = default;
+            IList<DeliveryRuleAction> actions = default;
+            MatchProcessingBehavior? matchProcessingBehavior = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<DeliveryRuleCondition> array = new List<DeliveryRuleCondition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryRuleCondition.DeserializeDeliveryRuleCondition(item));
+                                array.Add(DeliveryRuleCondition.DeserializeDeliveryRuleCondition(item, options));
                             }
                             conditions = array;
                             continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<DeliveryRuleAction> array = new List<DeliveryRuleAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryRuleAction.DeserializeDeliveryRuleAction(item));
+                                array.Add(DeliveryRuleAction.DeserializeDeliveryRuleAction(item, options));
                             }
                             actions = array;
                             continue;
@@ -180,7 +180,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRulePatch(ruleSetName.Value, Optional.ToNullable(order), Optional.ToList(conditions), Optional.ToList(actions), Optional.ToNullable(matchProcessingBehavior), serializedAdditionalRawData);
+            return new FrontDoorRulePatch(
+                ruleSetName,
+                order,
+                conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(),
+                actions ?? new ChangeTrackingList<DeliveryRuleAction>(),
+                matchProcessingBehavior,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRulePatch>.Write(ModelReaderWriterOptions options)
@@ -192,7 +198,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorRulePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +214,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeFrontDoorRulePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorRulePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

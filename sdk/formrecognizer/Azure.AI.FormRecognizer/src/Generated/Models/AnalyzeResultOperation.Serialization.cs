@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -22,8 +21,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             AnalyzeResultOperationStatus status = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            Optional<JsonElement> error = default;
-            Optional<AnalyzeResult> analyzeResult = default;
+            JsonElement error = default;
+            AnalyzeResult analyzeResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -56,7 +55,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new AnalyzeResultOperation(status, createdDateTime, lastUpdatedDateTime, error, analyzeResult.Value);
+            return new AnalyzeResultOperation(status, createdDateTime, lastUpdatedDateTime, error, analyzeResult);
         }
     }
 }

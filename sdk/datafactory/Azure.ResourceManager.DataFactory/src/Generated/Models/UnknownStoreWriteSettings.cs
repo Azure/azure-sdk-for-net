@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownStoreWriteSettings. </summary>
+    /// <summary> Unknown version of StoreWriteSettings. </summary>
     internal partial class UnknownStoreWriteSettings : StoreWriteSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStoreWriteSettings"/>. </summary>
@@ -19,10 +19,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
+        /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownStoreWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, DataFactoryElement<string> copyBehavior, IDictionary<string, BinaryData> additionalProperties) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
+        internal UnknownStoreWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, DataFactoryElement<string> copyBehavior, IList<DataFactoryMetadataItemInfo> metadata, IDictionary<string, BinaryData> additionalProperties) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, metadata, additionalProperties)
         {
             StoreWriteSettingsType = storeWriteSettingsType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownStoreWriteSettings"/> for deserialization. </summary>
+        internal UnknownStoreWriteSettings()
+        {
         }
     }
 }

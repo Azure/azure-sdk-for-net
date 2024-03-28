@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionSystemGeneratedEntities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionSystemGeneratedEntities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionSystemGeneratedEntities)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionSystemGeneratedEntities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionSystemGeneratedEntities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionSystemGeneratedEntities)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> generatedInteractionTypes = default;
-            Optional<IReadOnlyList<string>> generatedLinks = default;
-            Optional<IReadOnlyDictionary<string, string>> generatedKpis = default;
+            IReadOnlyList<string> generatedInteractionTypes = default;
+            IReadOnlyList<string> generatedLinks = default;
+            IReadOnlyDictionary<string, string> generatedKpis = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionSystemGeneratedEntities(Optional.ToList(generatedInteractionTypes), Optional.ToList(generatedLinks), Optional.ToDictionary(generatedKpis), serializedAdditionalRawData);
+            return new PredictionSystemGeneratedEntities(generatedInteractionTypes ?? new ChangeTrackingList<string>(), generatedLinks ?? new ChangeTrackingList<string>(), generatedKpis ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionSystemGeneratedEntities>.Write(ModelReaderWriterOptions options)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PredictionSystemGeneratedEntities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionSystemGeneratedEntities)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializePredictionSystemGeneratedEntities(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredictionSystemGeneratedEntities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionSystemGeneratedEntities)} does not support reading '{options.Format}' format.");
             }
         }
 

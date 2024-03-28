@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationContentSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationContentSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationContentSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Hash))
             {
                 writer.WritePropertyName("hash"u8);
-                writer.WriteObjectValue(Hash);
+                writer.WriteObjectValue<AutomationContentHash>(Hash, options);
             }
             if (Optional.IsDefined(SourceType))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationContentSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationContentSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationContentSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<AutomationContentHash> hash = default;
-            Optional<AutomationContentSourceType> type = default;
-            Optional<string> value = default;
-            Optional<string> version = default;
+            AutomationContentHash hash = default;
+            AutomationContentSourceType? type = default;
+            string value = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    hash = AutomationContentHash.DeserializeAutomationContentHash(property.Value);
+                    hash = AutomationContentHash.DeserializeAutomationContentHash(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationContentSource(hash.Value, Optional.ToNullable(type), value.Value, version.Value, serializedAdditionalRawData);
+            return new AutomationContentSource(hash, type, value, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationContentSource>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationContentSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationContentSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationContentSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationContentSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationContentSource)} does not support reading '{options.Format}' format.");
             }
         }
 

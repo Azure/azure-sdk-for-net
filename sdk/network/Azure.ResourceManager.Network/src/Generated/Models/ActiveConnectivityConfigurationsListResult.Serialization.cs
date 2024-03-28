@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActiveConnectivityConfigurationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveConnectivityConfigurationsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveConnectivityConfigurationsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActiveConnectivityConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActiveConnectivityConfigurationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveConnectivityConfigurationsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveConnectivityConfigurationsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ActiveConnectivityConfiguration>> value = default;
-            Optional<string> skipToken = default;
+            IReadOnlyList<ActiveConnectivityConfiguration> value = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ActiveConnectivityConfiguration> array = new List<ActiveConnectivityConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration(item));
+                        array.Add(ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActiveConnectivityConfigurationsListResult(Optional.ToList(value), skipToken.Value, serializedAdditionalRawData);
+            return new ActiveConnectivityConfigurationsListResult(value ?? new ChangeTrackingList<ActiveConnectivityConfiguration>(), skipToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActiveConnectivityConfigurationsListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActiveConnectivityConfigurationsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveConnectivityConfigurationsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeActiveConnectivityConfigurationsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActiveConnectivityConfigurationsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveConnectivityConfigurationsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

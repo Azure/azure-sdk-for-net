@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointGroupListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointGroupListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointGroupListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RestorePointGroupData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointGroupListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointGroupListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointGroupListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RestorePointGroupData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RestorePointGroupData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RestorePointGroupData> array = new List<RestorePointGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorePointGroupData.DeserializeRestorePointGroupData(item));
+                        array.Add(RestorePointGroupData.DeserializeRestorePointGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RestorePointGroupListResult(value ?? new ChangeTrackingList<RestorePointGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointGroupListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointGroupListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointGroupListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRestorePointGroupListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointGroupListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointGroupListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

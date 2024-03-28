@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertProcessingRuleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,20 +39,20 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AlertProcessingRuleCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule);
+                writer.WriteObjectValue<AlertProcessingRuleSchedule>(Schedule, options);
             }
             writer.WritePropertyName("actions"u8);
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AlertProcessingRuleAction>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Description))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertProcessingRuleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 return null;
             }
             IList<string> scopes = default;
-            Optional<IList<AlertProcessingRuleCondition>> conditions = default;
-            Optional<AlertProcessingRuleSchedule> schedule = default;
+            IList<AlertProcessingRuleCondition> conditions = default;
+            AlertProcessingRuleSchedule schedule = default;
             IList<AlertProcessingRuleAction> actions = default;
-            Optional<string> description = default;
-            Optional<bool> enabled = default;
+            string description = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<AlertProcessingRuleCondition> array = new List<AlertProcessingRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertProcessingRuleCondition.DeserializeAlertProcessingRuleCondition(item));
+                        array.Add(AlertProcessingRuleCondition.DeserializeAlertProcessingRuleCondition(item, options));
                     }
                     conditions = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    schedule = AlertProcessingRuleSchedule.DeserializeAlertProcessingRuleSchedule(property.Value);
+                    schedule = AlertProcessingRuleSchedule.DeserializeAlertProcessingRuleSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<AlertProcessingRuleAction> array = new List<AlertProcessingRuleAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertProcessingRuleAction.DeserializeAlertProcessingRuleAction(item));
+                        array.Add(AlertProcessingRuleAction.DeserializeAlertProcessingRuleAction(item, options));
                     }
                     actions = array;
                     continue;
@@ -176,7 +176,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertProcessingRuleProperties(scopes, Optional.ToList(conditions), schedule.Value, actions, description.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new AlertProcessingRuleProperties(
+                scopes,
+                conditions ?? new ChangeTrackingList<AlertProcessingRuleCondition>(),
+                schedule,
+                actions,
+                description,
+                enabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleProperties>.Write(ModelReaderWriterOptions options)
@@ -188,7 +195,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertProcessingRuleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +211,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeAlertProcessingRuleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertProcessingRuleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

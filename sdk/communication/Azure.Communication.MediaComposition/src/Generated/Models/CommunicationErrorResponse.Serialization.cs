@@ -16,7 +16,7 @@ namespace Azure.Communication.MediaComposition.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("error"u8);
-            writer.WriteObjectValue(Error);
+            writer.WriteObjectValue<CommunicationError>(Error);
             writer.WriteEndObject();
         }
 

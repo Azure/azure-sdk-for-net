@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -21,14 +19,14 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
+            string displayName = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
             string jobId = default;
             DateTimeOffset lastUpdatedDateTime = default;
             TextAnalyticsOperationStatus status = default;
-            Optional<IReadOnlyList<Error>> errors = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<Error> errors = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -85,7 +83,15 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new JobState(displayName.Value, createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdatedDateTime, status, Optional.ToList(errors), nextLink.Value);
+            return new JobState(
+                displayName,
+                createdDateTime,
+                expirationDateTime,
+                jobId,
+                lastUpdatedDateTime,
+                status,
+                errors ?? new ChangeTrackingList<Error>(),
+                nextLink);
         }
     }
 }

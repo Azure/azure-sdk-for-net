@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -27,6 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             Method = method;
             FunctionName = functionName;
+            Headers = new ChangeTrackingDictionary<string, DataFactoryElement<string>>();
             ActivityType = "AzureFunctionActivity";
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="functionName"> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </param>
         /// <param name="headers"> Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string). </param>
         /// <param name="body"> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </param>
-        internal AzureFunctionActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, AzureFunctionActivityMethod method, DataFactoryElement<string> functionName, DataFactoryElement<string> headers, DataFactoryElement<string> body) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal AzureFunctionActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, AzureFunctionActivityMethod method, DataFactoryElement<string> functionName, IDictionary<string, DataFactoryElement<string>> headers, DataFactoryElement<string> body) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Method = method;
             FunctionName = functionName;
@@ -54,12 +54,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "AzureFunctionActivity";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionActivity"/> for deserialization. </summary>
+        internal AzureFunctionActivity()
+        {
+        }
+
         /// <summary> Rest API method for target endpoint. </summary>
         public AzureFunctionActivityMethod Method { get; set; }
         /// <summary> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FunctionName { get; set; }
         /// <summary> Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Headers { get; set; }
+        public IDictionary<string, DataFactoryElement<string>> Headers { get; }
         /// <summary> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Body { get; set; }
     }

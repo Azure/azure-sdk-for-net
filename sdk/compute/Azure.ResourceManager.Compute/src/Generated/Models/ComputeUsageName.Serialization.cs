@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeUsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeUsageName)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeUsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeUsageName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<string> localizedValue = default;
+            string value = default;
+            string localizedValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeUsageName(value.Value, localizedValue.Value, serializedAdditionalRawData);
+            return new ComputeUsageName(value, localizedValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeUsageName>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeUsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeUsageName)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeComputeUsageName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeUsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeUsageName)} does not support reading '{options.Format}' format.");
             }
         }
 

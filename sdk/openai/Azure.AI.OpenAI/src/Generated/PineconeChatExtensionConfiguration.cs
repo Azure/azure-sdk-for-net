@@ -6,12 +6,12 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
     /// <summary>
-    /// A specific representation of configurable options for Elasticsearch when using it as an Azure OpenAI chat
+    /// A specific representation of configurable options for Pinecone when using it as an Azure OpenAI chat
     /// extension.
     /// </summary>
     public partial class PineconeChatExtensionConfiguration : AzureChatExtensionConfiguration
@@ -21,8 +21,9 @@ namespace Azure.AI.OpenAI
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
         /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> The parameters to use when configuring Azure OpenAI chat extensions. </param>
-        internal PineconeChatExtensionConfiguration(AzureChatExtensionType type, PineconeChatExtensionParameters parameters) : base(type)
+        internal PineconeChatExtensionConfiguration(AzureChatExtensionType type, IDictionary<string, BinaryData> serializedAdditionalRawData, PineconeChatExtensionParameters parameters) : base(type, serializedAdditionalRawData)
         {
             Parameters = parameters;
         }

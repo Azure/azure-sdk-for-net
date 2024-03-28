@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionRenewalTermDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionRenewalTermDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<string> billingFrequency = default;
-            Optional<string> productTypeId = default;
-            Optional<long> quantity = default;
-            Optional<string> skuId = default;
-            Optional<TimeSpan> termDuration = default;
+            string billingFrequency = default;
+            string productTypeId = default;
+            long? quantity = default;
+            string skuId = default;
+            TimeSpan? termDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionRenewalTermDetails(billingFrequency.Value, productTypeId.Value, Optional.ToNullable(quantity), skuId.Value, Optional.ToNullable(termDuration), serializedAdditionalRawData);
+            return new SubscriptionRenewalTermDetails(
+                billingFrequency,
+                productTypeId,
+                quantity,
+                skuId,
+                termDuration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionRenewalTermDetails>.Write(ModelReaderWriterOptions options)
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.Billing.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.Billing.Models
                         return DeserializeSubscriptionRenewalTermDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

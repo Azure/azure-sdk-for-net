@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppServiceBind>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppServiceBind)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppServiceBind)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppServiceBind>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppServiceBind)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppServiceBind)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> serviceId = default;
-            Optional<string> name = default;
+            ResourceIdentifier serviceId = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppServiceBind(serviceId.Value, name.Value, serializedAdditionalRawData);
+            return new ContainerAppServiceBind(serviceId, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppServiceBind>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppServiceBind)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppServiceBind)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppServiceBind(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppServiceBind)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppServiceBind)} does not support reading '{options.Format}' format.");
             }
         }
 

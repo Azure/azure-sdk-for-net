@@ -11,8 +11,6 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.AI.FormRecognizer;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -68,7 +66,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (features != null && Optional.IsCollectionDefined(features))
+            if (features != null && !(features is ChangeTrackingList<DocumentAnalysisFeature> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
@@ -78,7 +76,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(analyzeRequest);
+                content.JsonWriter.WriteObjectValue<AnalyzeDocumentRequest>(analyzeRequest);
                 request.Content = content;
             }
             return message;
@@ -164,7 +162,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (features != null && Optional.IsCollectionDefined(features))
+            if (features != null && !(features is ChangeTrackingList<DocumentAnalysisFeature> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
@@ -260,7 +258,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (features != null && Optional.IsCollectionDefined(features))
+            if (features != null && !(features is ChangeTrackingList<DocumentAnalysisFeature> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
@@ -426,7 +424,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(buildRequest);
+            content.JsonWriter.WriteObjectValue<BuildDocumentModelRequest>(buildRequest);
             request.Content = content;
             return message;
         }
@@ -491,7 +489,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(composeRequest);
+            content.JsonWriter.WriteObjectValue<ComposeDocumentModelRequest>(composeRequest);
             request.Content = content;
             return message;
         }
@@ -556,7 +554,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(authorizeCopyRequest);
+            content.JsonWriter.WriteObjectValue<AuthorizeCopyRequest>(authorizeCopyRequest);
             request.Content = content;
             return message;
         }
@@ -631,7 +629,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(copyToRequest);
+            content.JsonWriter.WriteObjectValue<DocumentModelCopyAuthorization>(copyToRequest);
             request.Content = content;
             return message;
         }
@@ -1016,7 +1014,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(buildRequest);
+            content.JsonWriter.WriteObjectValue<BuildDocumentClassifierRequest>(buildRequest);
             request.Content = content;
             return message;
         }
@@ -1274,7 +1272,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(classifyRequest);
+                content.JsonWriter.WriteObjectValue<ClassifyDocumentRequest>(classifyRequest);
                 request.Content = content;
             }
             return message;

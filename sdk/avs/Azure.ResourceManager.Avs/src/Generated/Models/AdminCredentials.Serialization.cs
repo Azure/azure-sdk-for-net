@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdminCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdminCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdminCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdminCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdminCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdminCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> nsxtUsername = default;
-            Optional<string> nsxtPassword = default;
-            Optional<string> vcenterUsername = default;
-            Optional<string> vcenterPassword = default;
+            string nsxtUsername = default;
+            string nsxtPassword = default;
+            string vcenterUsername = default;
+            string vcenterPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdminCredentials(nsxtUsername.Value, nsxtPassword.Value, vcenterUsername.Value, vcenterPassword.Value, serializedAdditionalRawData);
+            return new AdminCredentials(nsxtUsername, nsxtPassword, vcenterUsername, vcenterPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdminCredentials>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdminCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdminCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeAdminCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdminCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdminCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppJobPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ContainerAppJobPatchProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppJobPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ContainerAppJobPatchProperties> properties = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            ContainerAppJobPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    properties = ContainerAppJobPatchProperties.DeserializeContainerAppJobPatchProperties(property.Value);
+                    properties = ContainerAppJobPatchProperties.DeserializeContainerAppJobPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobPatch(identity, Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new ContainerAppJobPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobPatch>.Write(ModelReaderWriterOptions options)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppJobPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

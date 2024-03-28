@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -22,9 +21,9 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             ErrorCodeValue code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<InnerError> innererror = default;
-            Optional<IReadOnlyList<TextAnalyticsError>> details = default;
+            string target = default;
+            InnerError innererror = default;
+            IReadOnlyList<TextAnalyticsError> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -66,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new TextAnalyticsError(code, message, target.Value, innererror.Value, Optional.ToList(details));
+            return new TextAnalyticsError(code, message, target, innererror, details ?? new ChangeTrackingList<TextAnalyticsError>());
         }
     }
 }

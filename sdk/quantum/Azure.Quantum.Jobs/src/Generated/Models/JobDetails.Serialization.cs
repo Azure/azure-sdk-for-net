@@ -39,7 +39,7 @@ namespace Azure.Quantum.Jobs.Models
             if (Optional.IsDefined(InputParams))
             {
                 writer.WritePropertyName("inputParams"u8);
-                writer.WriteObjectValue(InputParams);
+                writer.WriteObjectValue<object>(InputParams);
             }
             writer.WritePropertyName("providerId"u8);
             writer.WriteStringValue(ProviderId);
@@ -99,25 +99,25 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
+            string id = default;
+            string name = default;
             string containerUri = default;
-            Optional<string> inputDataUri = default;
+            string inputDataUri = default;
             string inputDataFormat = default;
-            Optional<object> inputParams = default;
+            object inputParams = default;
             string providerId = default;
             string target = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<string> outputDataUri = default;
-            Optional<string> outputDataFormat = default;
-            Optional<JobStatus> status = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset?> beginExecutionTime = default;
-            Optional<DateTimeOffset?> endExecutionTime = default;
-            Optional<DateTimeOffset?> cancellationTime = default;
-            Optional<CostEstimate> costEstimate = default;
-            Optional<ErrorData> errorData = default;
-            Optional<IList<string>> tags = default;
+            IDictionary<string, string> metadata = default;
+            string outputDataUri = default;
+            string outputDataFormat = default;
+            JobStatus? status = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? beginExecutionTime = default;
+            DateTimeOffset? endExecutionTime = default;
+            DateTimeOffset? cancellationTime = default;
+            CostEstimate costEstimate = default;
+            ErrorData errorData = default;
+            IList<string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -271,7 +271,26 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new JobDetails(id.Value, name.Value, containerUri, inputDataUri.Value, inputDataFormat, inputParams.Value, providerId, target, Optional.ToDictionary(metadata), outputDataUri.Value, outputDataFormat.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(beginExecutionTime), Optional.ToNullable(endExecutionTime), Optional.ToNullable(cancellationTime), costEstimate.Value, errorData.Value, Optional.ToList(tags));
+            return new JobDetails(
+                id,
+                name,
+                containerUri,
+                inputDataUri,
+                inputDataFormat,
+                inputParams,
+                providerId,
+                target,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                outputDataUri,
+                outputDataFormat,
+                status,
+                creationTime,
+                beginExecutionTime,
+                endExecutionTime,
+                cancellationTime,
+                costEstimate,
+                errorData,
+                tags ?? new ChangeTrackingList<string>());
         }
     }
 }

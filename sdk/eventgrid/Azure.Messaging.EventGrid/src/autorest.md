@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/11bbc2b1df2e915a2227a6a1a48a27b9e67c3311/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/64819c695760764afa059d799fc7320d3fee33de/specification/eventgrid/data-plane/readme.md
 generation1-convenience-client: true
 model-factory-for-hlc:
 - MediaJobOutputAsset
@@ -95,7 +95,7 @@ directive:
     const namespace = "Azure.Messaging.EventGrid.SystemEvents";
     for (var path in $)
     {
-      if (!path.includes("CloudEvent") && !path.includes("EventGridEvent"))
+      if (!path.includes("CloudEventEvent") && !path.includes("EventGridEvent"))
       {
         $[path]["x-namespace"] = namespace;
       }
@@ -146,6 +146,10 @@ directive:
       {
           $[path]["properties"]["status"]["x-namespace"] = namespace;
           $[path]["properties"]["summaryReportBlobUrl"]["x-ms-client-name"] = "SummaryReportBlobUri";
+      }
+      if (path.includes("StorageTaskAssignmentCompletedEventData"))
+      {
+          $[path]["properties"]["status"]["x-namespace"] = namespace;
       }
       if (path.includes("EventGridMQTTClientCreatedOrUpdatedEventData"))
       {

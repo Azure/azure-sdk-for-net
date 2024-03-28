@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -23,13 +22,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="configurationType"> Input method to configure Access Control List. </param>
         /// <param name="aclsUri"> Access Control List file URL. </param>
         /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
         /// <param name="matchConfigurations"> List of match configurations. </param>
         /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        internal NetworkFabricAccessControlListPatch(IDictionary<string, string> tags, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, string annotation) : base(tags)
+        internal NetworkFabricAccessControlListPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, string annotation) : base(tags, serializedAdditionalRawData)
         {
             ConfigurationType = configurationType;
             AclsUri = aclsUri;

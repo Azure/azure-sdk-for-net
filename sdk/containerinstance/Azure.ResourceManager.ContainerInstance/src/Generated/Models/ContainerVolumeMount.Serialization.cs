@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerVolumeMount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerVolumeMount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerVolumeMount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerVolumeMount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string name = default;
             string mountPath = default;
-            Optional<bool> readOnly = default;
+            bool? readOnly = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerVolumeMount(name, mountPath, Optional.ToNullable(readOnly), serializedAdditionalRawData);
+            return new ContainerVolumeMount(name, mountPath, readOnly, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerVolumeMount>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerVolumeMount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerVolumeMount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerVolumeMount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerVolumeMount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerVolumeMount)} does not support reading '{options.Format}' format.");
             }
         }
 

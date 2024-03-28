@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetSimpleFilterParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetSimpleFilterParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
+            IList<string> zones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosTargetSimpleFilterParameters(Optional.ToList(zones), serializedAdditionalRawData);
+            return new ChaosTargetSimpleFilterParameters(zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosTargetSimpleFilterParameters>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         return DeserializeChaosTargetSimpleFilterParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosTargetSimpleFilterParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

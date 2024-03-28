@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationModuleFieldListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationModuleFieldListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationModuleFieldListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomationModuleField>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationModuleFieldListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationModuleFieldListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationModuleFieldListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationModuleField>> value = default;
+            IReadOnlyList<AutomationModuleField> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationModuleField> array = new List<AutomationModuleField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationModuleField.DeserializeAutomationModuleField(item));
+                        array.Add(AutomationModuleField.DeserializeAutomationModuleField(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationModuleFieldListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AutomationModuleFieldListResult(value ?? new ChangeTrackingList<AutomationModuleField>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationModuleFieldListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationModuleFieldListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationModuleFieldListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationModuleFieldListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationModuleFieldListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationModuleFieldListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

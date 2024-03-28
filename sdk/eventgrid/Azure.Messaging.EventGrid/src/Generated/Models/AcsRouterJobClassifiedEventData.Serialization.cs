@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,16 +21,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<AcsRouterQueueDetails> queueDetails = default;
-            Optional<string> classificationPolicyId = default;
-            Optional<int> priority = default;
-            Optional<IReadOnlyList<AcsRouterWorkerSelector>> attachedWorkerSelectors = default;
-            Optional<string> queueId = default;
-            Optional<IReadOnlyDictionary<string, string>> labels = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<string> jobId = default;
-            Optional<string> channelReference = default;
-            Optional<string> channelId = default;
+            AcsRouterQueueDetails queueDetails = default;
+            string classificationPolicyId = default;
+            int? priority = default;
+            IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors = default;
+            string queueId = default;
+            IReadOnlyDictionary<string, string> labels = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            string jobId = default;
+            string channelReference = default;
+            string channelId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queueDetails"u8))
@@ -120,7 +119,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobClassifiedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, Optional.ToDictionary(labels), Optional.ToDictionary(tags), queueDetails.Value, classificationPolicyId.Value, Optional.ToNullable(priority), Optional.ToList(attachedWorkerSelectors));
+            return new AcsRouterJobClassifiedEventData(
+                jobId,
+                channelReference,
+                channelId,
+                queueId,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                queueDetails,
+                classificationPolicyId,
+                priority,
+                attachedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>());
         }
 
         internal partial class AcsRouterJobClassifiedEventDataConverter : JsonConverter<AcsRouterJobClassifiedEventData>

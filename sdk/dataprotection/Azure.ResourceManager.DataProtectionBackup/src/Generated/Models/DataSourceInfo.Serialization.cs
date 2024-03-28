@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataSourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(ResourceProperties))
             {
                 writer.WritePropertyName("resourceProperties"u8);
-                writer.WriteObjectValue(ResourceProperties);
+                writer.WriteObjectValue<BaseResourceProperties>(ResourceProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataSourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> datasourceType = default;
-            Optional<string> objectType = default;
+            string datasourceType = default;
+            string objectType = default;
             ResourceIdentifier resourceId = default;
-            Optional<AzureLocation> resourceLocation = default;
-            Optional<string> resourceName = default;
-            Optional<ResourceType> resourceType = default;
-            Optional<string> resourceUri = default;
-            Optional<BaseResourceProperties> resourceProperties = default;
+            AzureLocation? resourceLocation = default;
+            string resourceName = default;
+            ResourceType? resourceType = default;
+            string resourceUri = default;
+            BaseResourceProperties resourceProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    resourceProperties = BaseResourceProperties.DeserializeBaseResourceProperties(property.Value);
+                    resourceProperties = BaseResourceProperties.DeserializeBaseResourceProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -171,7 +171,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataSourceInfo(datasourceType.Value, objectType.Value, resourceId, Optional.ToNullable(resourceLocation), resourceName.Value, Optional.ToNullable(resourceType), resourceUri.Value, resourceProperties.Value, serializedAdditionalRawData);
+            return new DataSourceInfo(
+                datasourceType,
+                objectType,
+                resourceId,
+                resourceLocation,
+                resourceName,
+                resourceType,
+                resourceUri,
+                resourceProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataSourceInfo>.Write(ModelReaderWriterOptions options)
@@ -183,7 +192,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataSourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +208,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataSourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataSourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -19,10 +19,10 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<RouteSummary> summary = default;
-            Optional<IReadOnlyList<RouteLeg>> legs = default;
-            Optional<IReadOnlyList<RouteSection>> sections = default;
-            Optional<RouteGuidance> guidance = default;
+            RouteSummary summary = default;
+            IReadOnlyList<RouteLeg> legs = default;
+            IReadOnlyList<RouteSection> sections = default;
+            RouteGuidance guidance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -72,7 +72,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteData(summary.Value, Optional.ToList(legs), Optional.ToList(sections), guidance.Value);
+            return new RouteData(summary, legs ?? new ChangeTrackingList<RouteLeg>(), sections ?? new ChangeTrackingList<RouteSection>(), guidance);
         }
     }
 }

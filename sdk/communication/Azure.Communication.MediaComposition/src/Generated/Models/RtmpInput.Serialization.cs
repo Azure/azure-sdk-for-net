@@ -19,7 +19,7 @@ namespace Azure.Communication.MediaComposition
             writer.WritePropertyName("streamKey"u8);
             writer.WriteStringValue(StreamKey);
             writer.WritePropertyName("resolution"u8);
-            writer.WriteObjectValue(Resolution);
+            writer.WriteObjectValue<LayoutResolution>(Resolution);
             writer.WritePropertyName("streamUrl"u8);
             writer.WriteStringValue(StreamUrl);
             if (Optional.IsDefined(Mode))
@@ -46,9 +46,9 @@ namespace Azure.Communication.MediaComposition
             string streamKey = default;
             LayoutResolution resolution = default;
             string streamUrl = default;
-            Optional<RtmpMode> mode = default;
+            RtmpMode? mode = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streamKey"u8))
@@ -86,7 +86,13 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new RtmpInput(kind, placeholderImageUri.Value, streamKey, resolution, streamUrl, Optional.ToNullable(mode));
+            return new RtmpInput(
+                kind,
+                placeholderImageUri,
+                streamKey,
+                resolution,
+                streamUrl,
+                mode);
         }
     }
 }

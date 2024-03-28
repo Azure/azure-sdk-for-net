@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<O365BreakOutCategoryPolicies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(O365BreakOutCategoryPolicies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(O365BreakOutCategoryPolicies)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<O365BreakOutCategoryPolicies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(O365BreakOutCategoryPolicies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(O365BreakOutCategoryPolicies)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> allow = default;
-            Optional<bool> optimize = default;
-            Optional<bool> @default = default;
+            bool? allow = default;
+            bool? optimize = default;
+            bool? @default = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new O365BreakOutCategoryPolicies(Optional.ToNullable(allow), Optional.ToNullable(optimize), Optional.ToNullable(@default), serializedAdditionalRawData);
+            return new O365BreakOutCategoryPolicies(allow, optimize, @default, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<O365BreakOutCategoryPolicies>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(O365BreakOutCategoryPolicies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(O365BreakOutCategoryPolicies)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeO365BreakOutCategoryPolicies(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(O365BreakOutCategoryPolicies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(O365BreakOutCategoryPolicies)} does not support reading '{options.Format}' format.");
             }
         }
 

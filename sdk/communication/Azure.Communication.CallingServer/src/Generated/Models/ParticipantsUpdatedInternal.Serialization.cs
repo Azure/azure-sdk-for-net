@@ -7,8 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -20,15 +18,15 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Optional<string> eventSource = default;
-            Optional<IReadOnlyList<CommunicationIdentifierModel>> participants = default;
-            Optional<string> version = default;
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
-            Optional<string> publicEventType = default;
+            string eventSource = default;
+            IReadOnlyList<CommunicationIdentifierModel> participants = default;
+            string version = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
+            string publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventSource"u8))
@@ -90,7 +88,16 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new ParticipantsUpdatedInternal(eventSource.Value, Optional.ToList(participants), version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new ParticipantsUpdatedInternal(
+                eventSource,
+                participants ?? new ChangeTrackingList<CommunicationIdentifierModel>(),
+                version,
+                operationContext,
+                resultInformation,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                publicEventType);
         }
     }
 }

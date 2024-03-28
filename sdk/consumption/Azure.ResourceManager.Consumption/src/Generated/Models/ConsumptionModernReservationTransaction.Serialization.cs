@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -198,31 +198,31 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> tags = default;
+            IReadOnlyList<string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<decimal> amount = default;
-            Optional<string> armSkuName = default;
-            Optional<string> billingFrequency = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
-            Optional<string> billingProfileName = default;
-            Optional<string> currency = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> eventDate = default;
-            Optional<string> eventType = default;
-            Optional<string> invoice = default;
-            Optional<ResourceIdentifier> invoiceId = default;
-            Optional<ResourceIdentifier> invoiceSectionId = default;
-            Optional<string> invoiceSectionName = default;
-            Optional<Guid> purchasingSubscriptionGuid = default;
-            Optional<string> purchasingSubscriptionName = default;
-            Optional<decimal> quantity = default;
-            Optional<string> region = default;
-            Optional<string> reservationOrderId = default;
-            Optional<string> reservationOrderName = default;
-            Optional<string> term = default;
+            SystemData systemData = default;
+            decimal? amount = default;
+            string armSkuName = default;
+            string billingFrequency = default;
+            ResourceIdentifier billingProfileId = default;
+            string billingProfileName = default;
+            string currency = default;
+            string description = default;
+            DateTimeOffset? eventDate = default;
+            string eventType = default;
+            string invoice = default;
+            ResourceIdentifier invoiceId = default;
+            ResourceIdentifier invoiceSectionId = default;
+            string invoiceSectionName = default;
+            Guid? purchasingSubscriptionGuid = default;
+            string purchasingSubscriptionName = default;
+            decimal? quantity = default;
+            string region = default;
+            string reservationOrderId = default;
+            string reservationOrderName = default;
+            string term = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -411,7 +411,33 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionModernReservationTransaction(id, name, type, systemData.Value, Optional.ToNullable(amount), armSkuName.Value, billingFrequency.Value, billingProfileId.Value, billingProfileName.Value, currency.Value, description.Value, Optional.ToNullable(eventDate), eventType.Value, invoice.Value, invoiceId.Value, invoiceSectionId.Value, invoiceSectionName.Value, Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, Optional.ToNullable(quantity), region.Value, reservationOrderId.Value, reservationOrderName.Value, term.Value, Optional.ToList(tags), serializedAdditionalRawData);
+            return new ConsumptionModernReservationTransaction(
+                id,
+                name,
+                type,
+                systemData,
+                amount,
+                armSkuName,
+                billingFrequency,
+                billingProfileId,
+                billingProfileName,
+                currency,
+                description,
+                eventDate,
+                eventType,
+                invoice,
+                invoiceId,
+                invoiceSectionId,
+                invoiceSectionName,
+                purchasingSubscriptionGuid,
+                purchasingSubscriptionName,
+                quantity,
+                region,
+                reservationOrderId,
+                reservationOrderName,
+                term,
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionModernReservationTransaction>.Write(ModelReaderWriterOptions options)
@@ -423,7 +449,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -439,7 +465,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionModernReservationTransaction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support reading '{options.Format}' format.");
             }
         }
 

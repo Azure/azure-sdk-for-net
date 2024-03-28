@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines contents of a web application rule. </summary>
     public partial class WebApplicationCustomRule
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="WebApplicationCustomRule"/>. </summary>
         /// <param name="priority"> Describes priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
         /// <param name="ruleType"> Describes type of rule. </param>
@@ -40,7 +71,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="rateLimitThreshold"> Number of allowed requests per client within the time window. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Describes what action to be applied when rule matches. </param>
-        internal WebApplicationCustomRule(string name, int priority, CustomRuleEnabledState? enabledState, WebApplicationRuleType ruleType, int? rateLimitDurationInMinutes, int? rateLimitThreshold, IList<WebApplicationRuleMatchCondition> matchConditions, RuleMatchActionType action)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebApplicationCustomRule(string name, int priority, CustomRuleEnabledState? enabledState, WebApplicationRuleType ruleType, int? rateLimitDurationInMinutes, int? rateLimitThreshold, IList<WebApplicationRuleMatchCondition> matchConditions, RuleMatchActionType action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Priority = priority;
@@ -50,6 +82,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             RateLimitThreshold = rateLimitThreshold;
             MatchConditions = matchConditions;
             Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebApplicationCustomRule"/> for deserialization. </summary>
+        internal WebApplicationCustomRule()
+        {
         }
 
         /// <summary> Describes the name of the rule. </summary>

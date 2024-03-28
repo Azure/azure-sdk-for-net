@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.CallAutomation;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -15,30 +16,35 @@ namespace Azure.Communication
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (CallAutomation.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(RawId))
+            if (CallAutomation.Optional.IsDefined(RawId))
             {
                 writer.WritePropertyName("rawId"u8);
                 writer.WriteStringValue(RawId);
             }
-            if (Optional.IsDefined(CommunicationUser))
+            if (CallAutomation.Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser"u8);
-                writer.WriteObjectValue(CommunicationUser);
+                writer.WriteObjectValue<CommunicationUserIdentifierModel>(CommunicationUser);
             }
-            if (Optional.IsDefined(PhoneNumber))
+            if (CallAutomation.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
-                writer.WriteObjectValue(PhoneNumber);
+                writer.WriteObjectValue<PhoneNumberIdentifierModel>(PhoneNumber);
             }
-            if (Optional.IsDefined(MicrosoftTeamsUser))
+            if (CallAutomation.Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
-                writer.WriteObjectValue(MicrosoftTeamsUser);
+                writer.WriteObjectValue<MicrosoftTeamsUserIdentifierModel>(MicrosoftTeamsUser);
+            }
+            if (CallAutomation.Optional.IsDefined(MicrosoftTeamsApp))
+            {
+                writer.WritePropertyName("microsoftTeamsApp"u8);
+                writer.WriteObjectValue<MicrosoftTeamsAppIdentifierModel>(MicrosoftTeamsApp);
             }
             writer.WriteEndObject();
         }
@@ -49,11 +55,12 @@ namespace Azure.Communication
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModelKind> kind = default;
-            Optional<string> rawId = default;
-            Optional<CommunicationUserIdentifierModel> communicationUser = default;
-            Optional<PhoneNumberIdentifierModel> phoneNumber = default;
-            Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
+            CommunicationIdentifierModelKind? kind = default;
+            string rawId = default;
+            CommunicationUserIdentifierModel communicationUser = default;
+            PhoneNumberIdentifierModel phoneNumber = default;
+            MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default;
+            MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -97,8 +104,23 @@ namespace Azure.Communication
                     microsoftTeamsUser = MicrosoftTeamsUserIdentifierModel.DeserializeMicrosoftTeamsUserIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("microsoftTeamsApp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    microsoftTeamsApp = MicrosoftTeamsAppIdentifierModel.DeserializeMicrosoftTeamsAppIdentifierModel(property.Value);
+                    continue;
+                }
             }
-            return new CommunicationIdentifierModel(Optional.ToNullable(kind), rawId.Value, communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
+            return new CommunicationIdentifierModel(
+                kind,
+                rawId,
+                communicationUser,
+                phoneNumber,
+                microsoftTeamsUser,
+                microsoftTeamsApp);
         }
     }
 }

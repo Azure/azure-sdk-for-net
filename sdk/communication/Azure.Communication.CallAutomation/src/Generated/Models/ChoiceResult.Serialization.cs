@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,8 +17,8 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> label = default;
-            Optional<string> recognizedPhrase = default;
+            string label = default;
+            string recognizedPhrase = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))
@@ -33,7 +32,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new ChoiceResult(label.Value, recognizedPhrase.Value);
+            return new ChoiceResult(label, recognizedPhrase);
         }
     }
 }

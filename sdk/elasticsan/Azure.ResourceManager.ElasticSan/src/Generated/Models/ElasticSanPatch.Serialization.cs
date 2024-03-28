@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<long> baseSizeTiB = default;
-            Optional<long> extendedCapacitySizeTiB = default;
-            Optional<ElasticSanPublicNetworkAccess> publicNetworkAccess = default;
+            IDictionary<string, string> tags = default;
+            long? baseSizeTiB = default;
+            long? extendedCapacitySizeTiB = default;
+            ElasticSanPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanPatch(Optional.ToDictionary(tags), Optional.ToNullable(baseSizeTiB), Optional.ToNullable(extendedCapacitySizeTiB), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new ElasticSanPatch(tags ?? new ChangeTrackingDictionary<string, string>(), baseSizeTiB, extendedCapacitySizeTiB, publicNetworkAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanPatch>.Write(ModelReaderWriterOptions options)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         return DeserializeElasticSanPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelOutput": return MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(element);
-                    case "ErrorOutput": return MigrateSchemaSqlTaskOutputError.DeserializeMigrateSchemaSqlTaskOutputError(element);
-                    case "MigrationLevelOutput": return MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(element);
-                    case "SchemaErrorOutput": return MigrateSchemaSqlServerSqlDBTaskOutputError.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputError(element);
+                    case "DatabaseLevelOutput": return MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(element, options);
+                    case "ErrorOutput": return MigrateSchemaSqlTaskOutputError.DeserializeMigrateSchemaSqlTaskOutputError(element, options);
+                    case "MigrationLevelOutput": return MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(element, options);
+                    case "SchemaErrorOutput": return MigrateSchemaSqlServerSqlDBTaskOutputError.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputError(element, options);
                 }
             }
-            return UnknownMigrateSchemaSqlServerSqlDBTaskOutput.DeserializeUnknownMigrateSchemaSqlServerSqlDBTaskOutput(element);
+            return UnknownMigrateSchemaSqlServerSqlDBTaskOutput.DeserializeUnknownMigrateSchemaSqlServerSqlDBTaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutput>.Write(ModelReaderWriterOptions options)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSchemaSqlServerSqlDBTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicySignaturesOverridesForIdpsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySignaturesOverridesForIdpsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySignaturesOverridesForIdpsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicySignaturesOverridesForIdpsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySignaturesOverridesForIdpsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySignaturesOverridesForIdpsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> signatures = default;
+            IDictionary<string, string> signatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySignaturesOverridesForIdpsProperties(Optional.ToDictionary(signatures), serializedAdditionalRawData);
+            return new PolicySignaturesOverridesForIdpsProperties(signatures ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySignaturesOverridesForIdpsProperties>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicySignaturesOverridesForIdpsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySignaturesOverridesForIdpsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePolicySignaturesOverridesForIdpsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicySignaturesOverridesForIdpsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySignaturesOverridesForIdpsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

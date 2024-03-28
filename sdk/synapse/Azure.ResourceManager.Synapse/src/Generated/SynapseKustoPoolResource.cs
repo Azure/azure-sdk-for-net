@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
@@ -765,7 +763,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseDataSourceResourceSku> GetSkusByResourceAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku(e), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -794,7 +792,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseDataSourceResourceSku> GetSkusByResource(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku(e), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -823,7 +821,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseLanguageExtension> GetLanguageExtensionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseLanguageExtension.DeserializeSynapseLanguageExtension, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SynapseLanguageExtension.DeserializeSynapseLanguageExtension(e), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -852,7 +850,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseLanguageExtension> GetLanguageExtensions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SynapseLanguageExtension.DeserializeSynapseLanguageExtension, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SynapseLanguageExtension.DeserializeSynapseLanguageExtension(e), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1065,7 +1063,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseFollowerDatabaseDefinition> GetFollowerDatabasesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition(e), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1094,7 +1092,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseFollowerDatabaseDefinition> GetFollowerDatabases(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition(e), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1371,7 +1369,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkDataAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData(e), _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1396,7 +1394,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkData(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData(e), _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
         }
 
         /// <summary>

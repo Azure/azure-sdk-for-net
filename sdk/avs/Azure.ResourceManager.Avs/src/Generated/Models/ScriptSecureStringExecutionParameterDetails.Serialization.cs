@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptSecureStringExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptSecureStringExecutionParameterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptSecureStringExecutionParameterDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptSecureStringExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptSecureStringExecutionParameterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptSecureStringExecutionParameterDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> secureValue = default;
+            string secureValue = default;
             string name = default;
             ScriptExecutionParameterType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptSecureStringExecutionParameterDetails(name, type, serializedAdditionalRawData, secureValue.Value);
+            return new ScriptSecureStringExecutionParameterDetails(name, type, serializedAdditionalRawData, secureValue);
         }
 
         BinaryData IPersistableModel<ScriptSecureStringExecutionParameterDetails>.Write(ModelReaderWriterOptions options)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScriptSecureStringExecutionParameterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptSecureStringExecutionParameterDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeScriptSecureStringExecutionParameterDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScriptSecureStringExecutionParameterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptSecureStringExecutionParameterDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

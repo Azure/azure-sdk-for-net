@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CacheKeyQueryStringActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CacheKeyQueryStringActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             CacheKeyQueryStringActionType typeName = default;
             QueryStringBehavior queryStringBehavior = default;
-            Optional<string> queryParameters = default;
+            string queryParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CacheKeyQueryStringActionProperties(typeName, queryStringBehavior, queryParameters.Value, serializedAdditionalRawData);
+            return new CacheKeyQueryStringActionProperties(typeName, queryStringBehavior, queryParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CacheKeyQueryStringActionProperties>.Write(ModelReaderWriterOptions options)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeCacheKeyQueryStringActionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CacheKeyQueryStringActionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
