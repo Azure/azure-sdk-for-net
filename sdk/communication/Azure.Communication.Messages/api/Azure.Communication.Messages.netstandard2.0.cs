@@ -18,7 +18,7 @@ namespace Azure.Communication.Messages
         public static Azure.Communication.Messages.MessageTemplateItem MessageTemplateItem(string name = null, string language = null, Azure.Communication.Messages.MessageTemplateStatus status = default(Azure.Communication.Messages.MessageTemplateStatus), string kind = null) { throw null; }
         public static Azure.Communication.Messages.MessageTemplateQuickAction MessageTemplateQuickAction(string name = null, string text = null, string payload = null) { throw null; }
         public static Azure.Communication.Messages.MessageTemplateText MessageTemplateText(string name = null, string text = null) { throw null; }
-        public static Azure.Communication.Messages.MessageTemplateValue MessageTemplateValue(string name = null, string kind = "Unknown") { throw null; }
+        public static Azure.Communication.Messages.MessageTemplateValue MessageTemplateValue(string name = null, string kind = null) { throw null; }
         public static Azure.Communication.Messages.MessageTemplateVideo MessageTemplateVideo(string name = null, System.Uri uri = null, string caption = null, string fileName = null) { throw null; }
         public static Azure.Communication.Messages.NotificationContent NotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string kind = null) { throw null; }
         public static Azure.Communication.Messages.SendMessageResult SendMessageResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.MessageReceipt> receipts = null) { throw null; }
@@ -294,9 +294,9 @@ namespace Azure.Communication.Messages.Models.Channels
     }
     public partial class WhatsAppMessageTemplateBindingsButton : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton>
     {
-        public WhatsAppMessageTemplateBindingsButton(Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType subType, string refValue) { }
+        public WhatsAppMessageTemplateBindingsButton(string subType, string refValue) { }
         public string RefValue { get { throw null; } }
-        public Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType SubType { get { throw null; } }
+        public string SubType { get { throw null; } }
         Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

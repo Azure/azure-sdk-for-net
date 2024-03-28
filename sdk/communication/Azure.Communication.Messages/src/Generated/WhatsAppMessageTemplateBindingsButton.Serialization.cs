@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages.Models.Channels
 
             writer.WriteStartObject();
             writer.WritePropertyName("subType"u8);
-            writer.WriteStringValue(SubType.ToString());
+            writer.WriteStringValue(SubType);
             writer.WritePropertyName("refValue"u8);
             writer.WriteStringValue(RefValue);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -68,7 +68,7 @@ namespace Azure.Communication.Messages.Models.Channels
             {
                 return null;
             }
-            WhatsAppMessageButtonSubType subType = default;
+            string subType = default;
             string refValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -76,7 +76,7 @@ namespace Azure.Communication.Messages.Models.Channels
             {
                 if (property.NameEquals("subType"u8))
                 {
-                    subType = new WhatsAppMessageButtonSubType(property.Value.GetString());
+                    subType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("refValue"u8))

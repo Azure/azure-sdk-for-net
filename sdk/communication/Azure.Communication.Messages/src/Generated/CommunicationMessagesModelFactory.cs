@@ -125,9 +125,9 @@ namespace Azure.Communication.Messages
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateValue"/> instance for mocking. </returns>
-        public static MessageTemplateValue MessageTemplateValue(string name = null, string kind = "Unknown")
+        public static MessageTemplateValue MessageTemplateValue(string name = null, string kind = null)
         {
-            return new UnknownMessageTemplateValue(name, kind, serializedAdditionalRawData: null);
+            return new UnknownMessageTemplateValue(name, kind == null ? default : new MessageTemplateValueKind(kind), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateText"/>. </summary>
