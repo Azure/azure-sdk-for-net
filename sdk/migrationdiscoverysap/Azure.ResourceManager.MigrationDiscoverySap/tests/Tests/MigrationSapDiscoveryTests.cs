@@ -4,13 +4,18 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.MigrationDiscoverySap.Models;
+using Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests.Enums;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using Azure.Storage.Blobs;
 using Microsoft.VisualBasic;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests;
@@ -55,7 +60,7 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
 
         // Upload Excel to Sap DiscoverySite
         string excelPathToImport = @"TestData/ExcelSDKTesting.xlsx";
-        await SapDiscoveryTestsHelpers.PostImportEntities(Client, sapDiscoverySiteResource, excelPathToImport);
+        await PostImportEntities(Client, sapDiscoverySiteResource, excelPathToImport);
 
         // Get List Sap Instances
         List<SapInstanceData> listSapInstances = await SapDiscoveryTestsHelpers
@@ -124,5 +129,62 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
         {
             return;
         }
+    }
+
+    public async Task PostImportEntities(ArmClient client, SapDiscoverySiteResource sapDiscoverySiteResource, string excelPathToImport)
+    {
+        ArmOperation<OperationStatusResult> importEntitiesOp =
+            await sapDiscoverySiteResource.ImportEntitiesAsync(WaitUntil.Completed);
+
+        Assert.IsNotNull(await SapDiscoveryTestsHelpers.TrackTillConditionReachedForAsyncOperationAsync(
+            new Func<Task<bool>>(async () => await SapDiscoveryTestsHelpers.TrackForDiscoveryExcelInputSasUriAsync(
+                client, importEntitiesOp)), 300),
+            "SAS Uri generation failed");
+
+        Response opStatus = await importEntitiesOp.UpdateStatusAsync();
+        var operationStatusObj = JObject.Parse(opStatus.Content.ToString());
+        var inputExcelSasUri = operationStatusObj?["properties"]?["discoveryExcelSasUri"].ToString();
+
+        //Upload here
+        using (FileStream stream = File.OpenRead(excelPathToImport))
+        {
+            // Construct the blob client with a sas token.
+            var blobClient = GetBlobContentClient(inputExcelSasUri);
+
+            await blobClient.UploadAsync(stream, overwrite: true);
+        }
+
+        Assert.IsTrue(await SapDiscoveryTestsHelpers.TrackTillConditionReachedForAsyncOperationAsync(
+            new Func<Task<bool>>(async () => await SapDiscoveryTestsHelpers.ValidateExcelParsingStatusAsync(
+                client,
+                importEntitiesOp.Value.Id,
+                43,
+                47)), 300),
+            "Excel Upload failed.");
+    }
+
+    /// <summary>
+    /// Get Blob Content client with blob uri and SaS token.
+    /// </summary>
+    /// <param name="sasUri">The SAS Uri of the blob.</param>
+    /// <returns>Blob content client.</returns>
+    public BlobClient GetBlobContentClient(string sasUri)
+    {
+        // Split the sas uri into blob uri and sas token.
+        // https://learn.microsoft.com/en-us/azure/ai-services/translator/document-translation/how-to-guides/create-sas-tokens?tabs=blobs#use-your-sas-url-to-grant-access-to-blob-storage
+        var sasUriFragment = sasUri.Split('?');
+        // Checks if the sas uri fragments are not-empty, not-null and has 2 elements.
+        if (sasUriFragment.Length != 2)
+        {
+            throw new InvalidDataException(
+                $"Invalid sas uri: {sasUri}. Sas uri should be in the format of <blobUri>?<sasToken>");
+        }
+
+        // Construct the blob client with a sas token.
+        var blobClient = InstrumentClient(new BlobClient(
+            new Uri(sasUriFragment[0]),
+            new AzureSasCredential(sasUriFragment[1])));
+
+        return blobClient;
     }
 }

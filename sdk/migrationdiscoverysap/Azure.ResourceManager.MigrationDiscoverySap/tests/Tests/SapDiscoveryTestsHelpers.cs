@@ -112,38 +112,6 @@ public static class SapDiscoveryTestsHelpers
         return serverInstancesList;
     }
 
-    public static async Task PostImportEntities(ArmClient client, SapDiscoverySiteResource sapDiscoverySiteResource, string excelPathToImport)
-    {
-        ArmOperation<OperationStatusResult> importEntitiesOp =
-            await sapDiscoverySiteResource.ImportEntitiesAsync(WaitUntil.Completed);
-
-        Assert.IsNotNull(await TrackTillConditionReachedForAsyncOperationAsync(
-            new Func<Task<bool>>(async () => await TrackForDiscoveryExcelInputSasUriAsync(
-                client, importEntitiesOp)), 300),
-            "SAS Uri generation failed");
-
-        Response opStatus = await importEntitiesOp.UpdateStatusAsync();
-        var operationStatusObj = JObject.Parse(opStatus.Content.ToString());
-        var inputExcelSasUri = operationStatusObj?["properties"]?["discoveryExcelSasUri"].ToString();
-
-        //Upload here
-        using (FileStream stream = File.OpenRead(excelPathToImport))
-        {
-            // Construct the blob client with a sas token.
-            BlobClient blobClient = GetBlobContentClient(inputExcelSasUri);
-
-            await blobClient.UploadAsync(stream, overwrite: true);
-        }
-
-        Assert.IsTrue(await TrackTillConditionReachedForAsyncOperationAsync(
-            new Func<Task<bool>>(async () => await ValidateExcelParsingStatusAsync(
-                client,
-                importEntitiesOp.Value.Id,
-                43,
-                47)), 300),
-            "Excel Upload failed.");
-    }
-
     /// <summary>
     /// Tracks till it satisfies the input condition (boolean function).
     /// </summary>
@@ -169,31 +137,6 @@ public static class SapDiscoveryTestsHelpers
         }
 
         return isConditionReached;
-    }
-
-    /// <summary>
-    /// Get Blob Content client with blob uri and SaS token.
-    /// </summary>
-    /// <param name="sasUri">The SAS Uri of the blob.</param>
-    /// <returns>Blob content client.</returns>
-    public static BlobClient GetBlobContentClient(string sasUri)
-    {
-        // Split the sas uri into blob uri and sas token.
-        // https://learn.microsoft.com/en-us/azure/ai-services/translator/document-translation/how-to-guides/create-sas-tokens?tabs=blobs#use-your-sas-url-to-grant-access-to-blob-storage
-        var sasUriFragment = sasUri.Split('?');
-        // Checks if the sas uri fragments are not-empty, not-null and has 2 elements.
-        if (sasUriFragment.Length != 2)
-        {
-            throw new InvalidDataException(
-                $"Invalid sas uri: {sasUri}. Sas uri should be in the format of <blobUri>?<sasToken>");
-        }
-
-        // Construct the blob client with a sas token.
-        var blobClient = new BlobClient(
-            new Uri(sasUriFragment[0]),
-            new AzureSasCredential(sasUriFragment[1]));
-
-        return blobClient;
     }
 
     public static async Task CreateMigrateProjectAsync(ArmClient client, AzureLocation targetRegion, string migrateProjectId)
