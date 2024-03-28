@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Every relation is an entity graph of a certain relationType, where all entities are connected and have specific roles within the relation context. </summary>
     public partial class HealthcareRelation
@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Text
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </param>
         /// <param name="entities"> The entities in the relation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entities"/> is null. </exception>
-        internal HealthcareRelation(HealthRelationType relationType, IEnumerable<HealthcareRelationEntity> entities)
+        internal HealthcareRelation(RelationType relationType, IEnumerable<HealthcareRelationEntity> entities)
         {
             Argument.AssertNotNull(entities, nameof(entities));
 
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Text
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </param>
         /// <param name="entities"> The entities in the relation. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted relation. </param>
-        internal HealthcareRelation(HealthRelationType relationType, IReadOnlyList<HealthcareRelationEntity> entities, double? confidenceScore)
+        internal HealthcareRelation(RelationType relationType, IReadOnlyList<HealthcareRelationEntity> entities, double? confidenceScore)
         {
             RelationType = relationType;
             Entities = entities;
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </summary>
-        public HealthRelationType RelationType { get; }
+        public RelationType RelationType { get; }
         /// <summary> The entities in the relation. </summary>
         public IReadOnlyList<HealthcareRelationEntity> Entities { get; }
         /// <summary> Confidence score between 0 and 1 of the extracted relation. </summary>

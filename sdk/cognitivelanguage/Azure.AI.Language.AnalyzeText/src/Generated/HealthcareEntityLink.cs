@@ -8,14 +8,14 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The HealthcareEntityLink. </summary>
     public partial class HealthcareEntityLink
     {
         /// <summary> Initializes a new instance of <see cref="HealthcareEntityLink"/>. </summary>
-        /// <param name="dataSource"> NamedEntity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
-        /// <param name="id"> NamedEntity id in the given source catalog. </param>
+        /// <param name="dataSource"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
+        /// <param name="id"> Entity id in the given source catalog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> or <paramref name="id"/> is null. </exception>
         internal HealthcareEntityLink(string dataSource, string id)
         {
@@ -26,9 +26,9 @@ namespace Azure.AI.Language.Text
             Id = id;
         }
 
-        /// <summary> NamedEntity Catalog. Examples include: UMLS, CHV, MSH, etc. </summary>
+        /// <summary> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </summary>
         public string DataSource { get; }
-        /// <summary> NamedEntity id in the given source catalog. </summary>
+        /// <summary> Entity id in the given source catalog. </summary>
         public string Id { get; }
     }
 }

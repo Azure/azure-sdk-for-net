@@ -5,23 +5,15 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> represents the Metadata of a date and/or time span. </summary>
     public partial class TemporalSpanMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="TemporalSpanMetadata"/>. </summary>
-        /// <param name="spanValues"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="spanValues"/> is null. </exception>
-        internal TemporalSpanMetadata(TemporalSpanValues spanValues)
+        internal TemporalSpanMetadata()
         {
-            Argument.AssertNotNull(spanValues, nameof(spanValues));
-
             MetadataKind = MetadataKind.TemporalSpanMetadata;
-            SpanValues = spanValues;
         }
 
         /// <summary> Initializes a new instance of <see cref="TemporalSpanMetadata"/>. </summary>

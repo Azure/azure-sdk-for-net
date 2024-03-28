@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Language.Text;
+using Azure.AI.Language.AnalyzeText;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -19,7 +19,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample10_AnalyzeTextSubmitJob_CustomMultiLabelClassificationLROTask
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            AnalyzeTextClient client = new AnalyzeTextClient(endpoint, credential);;
 
             string documentA =
                 "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"

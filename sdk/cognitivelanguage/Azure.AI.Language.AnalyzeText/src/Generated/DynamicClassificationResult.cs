@@ -10,46 +10,35 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary> Pre built result. </summary>
-    public partial class DynamicClassificationResult
+    /// <summary> The DynamicClassificationResult. </summary>
+    public partial class DynamicClassificationResult : PreBuiltResult
     {
         /// <summary> Initializes a new instance of <see cref="DynamicClassificationResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="documents"/> is null. </exception>
-        internal DynamicClassificationResult(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<DynamicClassificationDocumentResult> documents)
+        internal DynamicClassificationResult(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<DynamicClassificationDocumentResult> documents) : base(errors, modelVersion)
         {
             Argument.AssertNotNull(errors, nameof(errors));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
             Argument.AssertNotNull(documents, nameof(documents));
 
-            Errors = errors.ToList();
-            ModelVersion = modelVersion;
             Documents = documents.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DynamicClassificationResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
-        /// <param name="statistics"> statistics. </param>
+        /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        internal DynamicClassificationResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IReadOnlyList<DynamicClassificationDocumentResult> documents)
+        internal DynamicClassificationResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IReadOnlyList<DynamicClassificationDocumentResult> documents) : base(errors, statistics, modelVersion)
         {
-            Errors = errors;
-            Statistics = statistics;
-            ModelVersion = modelVersion;
             Documents = documents;
         }
 
-        /// <summary> Errors by document id. </summary>
-        public IReadOnlyList<DocumentError> Errors { get; }
-        /// <summary> statistics. </summary>
-        public RequestStatistics Statistics { get; }
-        /// <summary> This field indicates which model is used for scoring. </summary>
-        public string ModelVersion { get; }
         /// <summary> Response by document. </summary>
         public IReadOnlyList<DynamicClassificationDocumentResult> Documents { get; }
     }

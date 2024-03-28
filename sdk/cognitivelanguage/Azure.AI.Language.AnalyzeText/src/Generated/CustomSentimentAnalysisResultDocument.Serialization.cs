@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class CustomSentimentAnalysisResultDocument
     {
@@ -20,15 +20,35 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
+            DocumentSentimentValue sentiment = default;
+            SentimentConfidenceScores confidenceScores = default;
+            IReadOnlyList<CustomSentenceSentiment> sentences = default;
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             Optional<DocumentStatistics> statistics = default;
-            PredictedSentiment sentiment = default;
-            SentimentConfidenceScores confidenceScores = default;
-            IReadOnlyList<CustomSentenceSentiment> sentences = default;
-            Optional<string> detectedLanguage = default;
+            Optional<DetectedLanguage> detectedLanguage = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sentiment"u8))
+                {
+                    sentiment = property.Value.GetString().ToDocumentSentimentValue();
+                    continue;
+                }
+                if (property.NameEquals("confidenceScores"u8))
+                {
+                    confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("sentences"u8))
+                {
+                    List<CustomSentenceSentiment> array = new List<CustomSentenceSentiment>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CustomSentenceSentiment.DeserializeCustomSentenceSentiment(item));
+                    }
+                    sentences = array;
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -53,33 +73,17 @@ namespace Azure.AI.Language.Text
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sentiment"u8))
-                {
-                    sentiment = new PredictedSentiment(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("confidenceScores"u8))
-                {
-                    confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("sentences"u8))
-                {
-                    List<CustomSentenceSentiment> array = new List<CustomSentenceSentiment>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(CustomSentenceSentiment.DeserializeCustomSentenceSentiment(item));
-                    }
-                    sentences = array;
-                    continue;
-                }
                 if (property.NameEquals("detectedLanguage"u8))
                 {
-                    detectedLanguage = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
                     continue;
                 }
             }
-            return new CustomSentimentAnalysisResultDocument(id, warnings, statistics.Value, sentiment, confidenceScores, sentences, detectedLanguage.Value);
+            return new CustomSentimentAnalysisResultDocument(sentiment, confidenceScores, sentences, id, warnings, statistics.Value, detectedLanguage.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

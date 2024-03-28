@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class DynamicClassificationDocumentResult
     {
@@ -20,12 +20,22 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
+            IReadOnlyList<ClassificationResult> classifications = default;
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             Optional<DocumentStatistics> statistics = default;
-            IReadOnlyList<ClassificationResult> classifications = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("classifications"u8))
+                {
+                    List<ClassificationResult> array = new List<ClassificationResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ClassificationResult.DeserializeClassificationResult(item));
+                    }
+                    classifications = array;
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -48,16 +58,6 @@ namespace Azure.AI.Language.Text
                         continue;
                     }
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("classifications"u8))
-                {
-                    List<ClassificationResult> array = new List<ClassificationResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ClassificationResult.DeserializeClassificationResult(item));
-                    }
-                    classifications = array;
                     continue;
                 }
             }

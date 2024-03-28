@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The context of the summary. </summary>
     public partial class SummaryContext

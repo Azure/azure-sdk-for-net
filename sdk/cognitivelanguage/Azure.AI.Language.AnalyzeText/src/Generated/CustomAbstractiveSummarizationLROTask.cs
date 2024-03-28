@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> An object representing the task definition for an Custom Abstractive Summarization task. </summary>
     public partial class CustomAbstractiveSummarizationLROTask : AnalyzeTextLROTask
@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="CustomAbstractiveSummarizationLROTask"/>. </summary>
         /// <param name="parameters"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public CustomAbstractiveSummarizationLROTask(CustomAbstractiveSummarizationTaskContent parameters)
+        public CustomAbstractiveSummarizationLROTask(CustomAbstractiveSummarizationTaskParameters parameters)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -28,12 +28,12 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal CustomAbstractiveSummarizationLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomAbstractiveSummarizationTaskContent parameters) : base(taskName, kind)
+        internal CustomAbstractiveSummarizationLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomAbstractiveSummarizationTaskParameters parameters) : base(taskName, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets the parameters. </summary>
-        public CustomAbstractiveSummarizationTaskContent Parameters { get; }
+        public CustomAbstractiveSummarizationTaskParameters Parameters { get; }
     }
 }

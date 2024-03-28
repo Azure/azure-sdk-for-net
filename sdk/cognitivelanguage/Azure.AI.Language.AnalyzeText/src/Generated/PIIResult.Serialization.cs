@@ -10,28 +10,38 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class PIIResult
+    public partial class PiiResult
     {
-        internal static PIIResult DeserializePIIResult(JsonElement element)
+        internal static PiiResult DeserializePiiResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<AnalyzeTextDocumentError> errors = default;
+            IReadOnlyList<PiiResultWithDetectedLanguage> documents = default;
+            IReadOnlyList<DocumentError> errors = default;
             Optional<RequestStatistics> statistics = default;
             string modelVersion = default;
-            IReadOnlyList<PIIResultWithDetectedLanguage> documents = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"u8))
+                if (property.NameEquals("documents"u8))
                 {
-                    List<AnalyzeTextDocumentError> array = new List<AnalyzeTextDocumentError>();
+                    List<PiiResultWithDetectedLanguage> array = new List<PiiResultWithDetectedLanguage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeTextDocumentError.DeserializeAnalyzeTextDocumentError(item));
+                        array.Add(PiiResultWithDetectedLanguage.DeserializePiiResultWithDetectedLanguage(item));
+                    }
+                    documents = array;
+                    continue;
+                }
+                if (property.NameEquals("errors"u8))
+                {
+                    List<DocumentError> array = new List<DocumentError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentError.DeserializeDocumentError(item));
                     }
                     errors = array;
                     continue;
@@ -50,26 +60,16 @@ namespace Azure.AI.Language.Text
                     modelVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("documents"u8))
-                {
-                    List<PIIResultWithDetectedLanguage> array = new List<PIIResultWithDetectedLanguage>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PIIResultWithDetectedLanguage.DeserializePIIResultWithDetectedLanguage(item));
-                    }
-                    documents = array;
-                    continue;
-                }
             }
-            return new PIIResult(errors, statistics.Value, modelVersion, documents);
+            return new PiiResult(errors, statistics.Value, modelVersion, documents);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PIIResult FromResponse(Response response)
+        internal static PiiResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializePIIResult(document.RootElement);
+            return DeserializePiiResult(document.RootElement);
         }
     }
 }

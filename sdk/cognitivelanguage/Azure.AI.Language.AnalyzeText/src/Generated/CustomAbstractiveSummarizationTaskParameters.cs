@@ -8,16 +8,16 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Supported parameters for the Custom Abstractive Summarization task. </summary>
-    public partial class CustomAbstractiveSummarizationTaskContent
+    public partial class CustomAbstractiveSummarizationTaskParameters
     {
-        /// <summary> Initializes a new instance of <see cref="CustomAbstractiveSummarizationTaskContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomAbstractiveSummarizationTaskParameters"/>. </summary>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        public CustomAbstractiveSummarizationTaskContent(string projectName, string deploymentName)
+        public CustomAbstractiveSummarizationTaskParameters(string projectName, string deploymentName)
         {
             Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
@@ -26,21 +26,21 @@ namespace Azure.AI.Language.Text
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomAbstractiveSummarizationTaskContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomAbstractiveSummarizationTaskParameters"/>. </summary>
         /// <param name="sentenceCount"> Controls the approximate number of sentences in the output summaries. </param>
         /// <param name="stringIndexType"> String index type. </param>
         /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
-        /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        internal CustomAbstractiveSummarizationTaskContent(int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, bool? loggingOptOut, string projectName, string deploymentName)
+        /// <param name="loggingOptOut"> logging opt out. </param>
+        internal CustomAbstractiveSummarizationTaskParameters(int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, string projectName, string deploymentName, bool? loggingOptOut)
         {
             SentenceCount = sentenceCount;
             StringIndexType = stringIndexType;
             SummaryLength = summaryLength;
-            LoggingOptOut = loggingOptOut;
             ProjectName = projectName;
             DeploymentName = deploymentName;
+            LoggingOptOut = loggingOptOut;
         }
 
         /// <summary> Controls the approximate number of sentences in the output summaries. </summary>
@@ -49,11 +49,11 @@ namespace Azure.AI.Language.Text
         public StringIndexType? StringIndexType { get; set; }
         /// <summary> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </summary>
         public SummaryLengthBucket? SummaryLength { get; set; }
-        /// <summary> logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
         /// <summary> This field indicates the project name for the model. </summary>
         public string ProjectName { get; }
         /// <summary> This field indicates the deployment name for the model. </summary>
         public string DeploymentName { get; }
+        /// <summary> logging opt out. </summary>
+        public bool? LoggingOptOut { get; set; }
     }
 }

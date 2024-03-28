@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class SentimentTaskResult
     {
@@ -18,13 +18,13 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            SentimentResult results = default;
+            SentimentResponse results = default;
             AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = SentimentResult.DeserializeSentimentResponse(property.Value);
+                    results = SentimentResponse.DeserializeSentimentResponse(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

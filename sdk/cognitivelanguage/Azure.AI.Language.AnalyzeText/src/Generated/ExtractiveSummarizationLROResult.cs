@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The ExtractiveSummarizationLROResult. </summary>
     public partial class ExtractiveSummarizationLROResult : AnalyzeTextLROResult
@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal ExtractiveSummarizationLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status, ExtractiveSummarizationResult results) : base(lastUpdateDateTime, status)
+        internal ExtractiveSummarizationLROResult(DateTimeOffset lastUpdateDateTime, State status, ExtractiveSummarizationResult results) : base(lastUpdateDateTime, status)
         {
             Argument.AssertNotNull(results, nameof(results));
 
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"></param>
         /// <param name="results"></param>
-        internal ExtractiveSummarizationLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status, string taskName, AnalyzeTextLROResultsKind kind, ExtractiveSummarizationResult results) : base(lastUpdateDateTime, status, taskName, kind)
+        internal ExtractiveSummarizationLROResult(DateTimeOffset lastUpdateDateTime, State status, string taskName, AnalyzeTextLROResultsKind kind, ExtractiveSummarizationResult results) : base(lastUpdateDateTime, status, taskName, kind)
         {
             Results = results;
         }

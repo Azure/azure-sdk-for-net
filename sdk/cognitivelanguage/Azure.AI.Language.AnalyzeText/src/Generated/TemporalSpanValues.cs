@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
-
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The TemporalSpanValues. </summary>
     public partial class TemporalSpanValues
@@ -23,7 +21,7 @@ namespace Azure.AI.Language.Text
         /// <param name="duration"> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
         /// <param name="modifier"></param>
         /// <param name="timex"> An optional triplet containing the beginning, the end, and the duration all stated as ISO 8601 formatted strings. </param>
-        internal TemporalSpanValues(DateTimeOffset? begin, DateTimeOffset? end, string duration, TemporalModifier? modifier, string timex)
+        internal TemporalSpanValues(string begin, string end, string duration, TemporalModifier? modifier, string timex)
         {
             Begin = begin;
             End = end;
@@ -33,9 +31,9 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Gets the begin. </summary>
-        public DateTimeOffset? Begin { get; }
+        public string Begin { get; }
         /// <summary> Gets the end. </summary>
-        public DateTimeOffset? End { get; }
+        public string End { get; }
         /// <summary> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </summary>
         public string Duration { get; }
         /// <summary> Gets the modifier. </summary>

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The type of the extracted number entity. </summary>
     public readonly partial struct NumberKind : IEquatable<NumberKind>

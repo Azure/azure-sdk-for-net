@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> A metadata for numeric entity instances. </summary>
     public partial class OrdinalMetadata : BaseMetadata
@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Text
         /// <param name="relativeTo"></param>
         /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offset"/> or <paramref name="value"/> is null. </exception>
-        internal OrdinalMetadata(string offset, OrdinalRelativeTo relativeTo, string value)
+        internal OrdinalMetadata(string offset, RelativeTo relativeTo, string value)
         {
             Argument.AssertNotNull(offset, nameof(offset));
             Argument.AssertNotNull(value, nameof(value));
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Text
         /// <param name="offset"> The offset With respect to the reference (e.g., offset = -1 in "show me the second to last". </param>
         /// <param name="relativeTo"></param>
         /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
-        internal OrdinalMetadata(MetadataKind metadataKind, string offset, OrdinalRelativeTo relativeTo, string value) : base(metadataKind)
+        internal OrdinalMetadata(MetadataKind metadataKind, string offset, RelativeTo relativeTo, string value) : base(metadataKind)
         {
             Offset = offset;
             RelativeTo = relativeTo;
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Text
         /// <summary> The offset With respect to the reference (e.g., offset = -1 in "show me the second to last". </summary>
         public string Offset { get; }
         /// <summary> Gets the relative to. </summary>
-        public OrdinalRelativeTo RelativeTo { get; }
+        public RelativeTo RelativeTo { get; }
         /// <summary> A simple arithmetic expression that the ordinal denotes. </summary>
         public string Value { get; }
     }

@@ -8,15 +8,15 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary> The PIITaskResult. </summary>
-    public partial class PIITaskResult : AnalyzeTextTaskResult
+    /// <summary> The PiiTaskResult. </summary>
+    public partial class PiiTaskResult : AnalyzeTextTaskResult
     {
-        /// <summary> Initializes a new instance of <see cref="PIITaskResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiTaskResult"/>. </summary>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal PIITaskResult(PIIResult results)
+        internal PiiTaskResult(PiiResult results)
         {
             Argument.AssertNotNull(results, nameof(results));
 
@@ -24,15 +24,15 @@ namespace Azure.AI.Language.Text
             Results = results;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PIITaskResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiTaskResult"/>. </summary>
         /// <param name="kind"> The kind of task result. </param>
         /// <param name="results"></param>
-        internal PIITaskResult(AnalyzeTextTaskResultsKind kind, PIIResult results) : base(kind)
+        internal PiiTaskResult(AnalyzeTextTaskResultsKind kind, PiiResult results) : base(kind)
         {
             Results = results;
         }
 
         /// <summary> Gets the results. </summary>
-        public PIIResult Results { get; }
+        public PiiResult Results { get; }
     }
 }

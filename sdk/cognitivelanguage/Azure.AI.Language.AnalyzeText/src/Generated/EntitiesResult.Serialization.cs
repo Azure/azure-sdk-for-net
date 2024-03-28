@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class EntitiesResult
     {
@@ -20,18 +20,28 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            IReadOnlyList<AnalyzeTextDocumentError> errors = default;
+            IReadOnlyList<EntitiesDocumentResultWithMetadataDetectedLanguage> documents = default;
+            IReadOnlyList<DocumentError> errors = default;
             Optional<RequestStatistics> statistics = default;
             string modelVersion = default;
-            IReadOnlyList<EntitiesDocumentResultWithMetadataDetectedLanguage> documents = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"u8))
+                if (property.NameEquals("documents"u8))
                 {
-                    List<AnalyzeTextDocumentError> array = new List<AnalyzeTextDocumentError>();
+                    List<EntitiesDocumentResultWithMetadataDetectedLanguage> array = new List<EntitiesDocumentResultWithMetadataDetectedLanguage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeTextDocumentError.DeserializeAnalyzeTextDocumentError(item));
+                        array.Add(EntitiesDocumentResultWithMetadataDetectedLanguage.DeserializeEntitiesDocumentResultWithMetadataDetectedLanguage(item));
+                    }
+                    documents = array;
+                    continue;
+                }
+                if (property.NameEquals("errors"u8))
+                {
+                    List<DocumentError> array = new List<DocumentError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentError.DeserializeDocumentError(item));
                     }
                     errors = array;
                     continue;
@@ -48,16 +58,6 @@ namespace Azure.AI.Language.Text
                 if (property.NameEquals("modelVersion"u8))
                 {
                     modelVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("documents"u8))
-                {
-                    List<EntitiesDocumentResultWithMetadataDetectedLanguage> array = new List<EntitiesDocumentResultWithMetadataDetectedLanguage>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(EntitiesDocumentResultWithMetadataDetectedLanguage.DeserializeEntitiesDocumentResultWithMetadataDetectedLanguage(item));
-                    }
-                    documents = array;
                     continue;
                 }
             }

@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Client options for AnalyzeTextClient. </summary>
     public partial class AnalyzeTextClientOptions : ClientOptions
@@ -28,10 +28,7 @@ namespace Azure.AI.Language.Text
             V2023_11_15_Preview = 4,
         }
 
-        /// <summary>
-        /// Version of the service to use.
-        /// </summary>
-        public string Version { get; }
+        internal string Version { get; }
 
         /// <summary> Initializes new instance of AnalyzeTextClientOptions. </summary>
         public AnalyzeTextClientOptions(ServiceVersion version = LatestVersion)

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Represents the confidence scores between 0 and 1 across all sentiment classes: positive, neutral, negative. </summary>
     public partial class SentimentConfidenceScores

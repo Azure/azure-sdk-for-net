@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Represents the allow overlap policy. Will apply no post processing logic for the entities. Whatever the model predicts is what will be returned to the user. This allows the user to get a full view of every single model's possible values and apply their own custom logic on entity selection. </summary>
     public partial class AllowOverlapEntityPolicyType : BaseEntityOverlapPolicy
@@ -13,12 +13,12 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="AllowOverlapEntityPolicyType"/>. </summary>
         public AllowOverlapEntityPolicyType()
         {
-            PolicyKind = EntityOverlapPolicyKind.AllowOverlap;
+            PolicyKind = PolicyKind.AllowOverlap;
         }
 
         /// <summary> Initializes a new instance of <see cref="AllowOverlapEntityPolicyType"/>. </summary>
         /// <param name="policyKind"> The entity OverlapPolicy object kind. </param>
-        internal AllowOverlapEntityPolicyType(EntityOverlapPolicyKind policyKind) : base(policyKind)
+        internal AllowOverlapEntityPolicyType(PolicyKind policyKind) : base(policyKind)
         {
         }
     }

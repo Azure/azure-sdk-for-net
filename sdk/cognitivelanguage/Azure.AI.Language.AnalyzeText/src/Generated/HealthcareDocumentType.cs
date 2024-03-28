@@ -8,11 +8,8 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary>
-    /// Document type that can be provided as input for Fhir Documents. Expect to have fhirVersion provided when used. Behavior of using None enum is the same as not using the documentType parameter.
-    /// </summary>
     public readonly partial struct HealthcareDocumentType : IEquatable<HealthcareDocumentType>
     {
         private readonly string _value;

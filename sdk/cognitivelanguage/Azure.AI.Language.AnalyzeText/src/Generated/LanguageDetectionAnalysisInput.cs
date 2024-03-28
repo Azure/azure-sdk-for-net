@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The LanguageDetectionAnalysisInput. </summary>
     public partial class LanguageDetectionAnalysisInput

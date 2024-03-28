@@ -5,23 +5,15 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> This object contains information of the list component of the detected entity. </summary>
     public partial class ListComponent : EntityComponentInformation
     {
         /// <summary> Initializes a new instance of <see cref="ListComponent"/>. </summary>
-        /// <param name="value"> The list key of an extracted entity type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ListComponent(string value)
+        internal ListComponent()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             EntityComponentKind = EntityComponentKind.ListComponent;
-            Value = value;
         }
 
         /// <summary> Initializes a new instance of <see cref="ListComponent"/>. </summary>

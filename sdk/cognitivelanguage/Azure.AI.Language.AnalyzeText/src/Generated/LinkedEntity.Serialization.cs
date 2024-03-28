@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class LinkedEntity
     {
@@ -22,10 +21,10 @@ namespace Azure.AI.Language.Text
                 return null;
             }
             string name = default;
-            IReadOnlyList<EntityLinkingMatch> matches = default;
+            IReadOnlyList<Match> matches = default;
             string language = default;
-            string id = default;
-            Uri url = default;
+            Optional<string> id = default;
+            string url = default;
             string dataSource = default;
             Optional<string> bingId = default;
             foreach (var property in element.EnumerateObject())
@@ -37,10 +36,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("matches"u8))
                 {
-                    List<EntityLinkingMatch> array = new List<EntityLinkingMatch>();
+                    List<Match> array = new List<Match>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityLinkingMatch.DeserializeMatch(item));
+                        array.Add(Match.DeserializeMatch(item));
                     }
                     matches = array;
                     continue;
@@ -57,7 +56,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dataSource"u8))
@@ -71,7 +70,7 @@ namespace Azure.AI.Language.Text
                     continue;
                 }
             }
-            return new LinkedEntity(name, matches, language, id, url, dataSource, bingId.Value);
+            return new LinkedEntity(name, matches, language, id.Value, url, dataSource, bingId.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

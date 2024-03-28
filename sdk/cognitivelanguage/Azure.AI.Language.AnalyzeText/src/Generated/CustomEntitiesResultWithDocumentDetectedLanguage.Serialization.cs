@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class CustomEntitiesResultWithDocumentDetectedLanguage
     {
@@ -20,14 +20,23 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
+            IReadOnlyList<EntitiesDocumentResultWithDetectedLanguage> documents = default;
             IReadOnlyList<DocumentError> errors = default;
             Optional<RequestStatistics> statistics = default;
             string projectName = default;
             string deploymentName = default;
-            Optional<string> detectedLanguage = default;
-            IReadOnlyList<EntitiesDocumentResult> documents = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("documents"u8))
+                {
+                    List<EntitiesDocumentResultWithDetectedLanguage> array = new List<EntitiesDocumentResultWithDetectedLanguage>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EntitiesDocumentResultWithDetectedLanguage.DeserializeEntitiesDocumentResultWithDetectedLanguage(item));
+                    }
+                    documents = array;
+                    continue;
+                }
                 if (property.NameEquals("errors"u8))
                 {
                     List<DocumentError> array = new List<DocumentError>();
@@ -57,23 +66,8 @@ namespace Azure.AI.Language.Text
                     deploymentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("detectedLanguage"u8))
-                {
-                    detectedLanguage = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("documents"u8))
-                {
-                    List<EntitiesDocumentResult> array = new List<EntitiesDocumentResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(EntitiesDocumentResult.DeserializeEntitiesDocumentResult(item));
-                    }
-                    documents = array;
-                    continue;
-                }
             }
-            return new CustomEntitiesResultWithDocumentDetectedLanguage(errors, statistics.Value, projectName, deploymentName, detectedLanguage.Value, documents);
+            return new CustomEntitiesResultWithDocumentDetectedLanguage(errors, statistics.Value, projectName, deploymentName, documents);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

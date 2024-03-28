@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Contains details of errors encountered during a job execution. </summary>
     public partial class DocumentError
@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Text
         /// <param name="id"> The ID of the input document. </param>
         /// <param name="error"> Error encountered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="error"/> is null. </exception>
-        internal DocumentError(string id, ErrorResponse error)
+        internal DocumentError(string id, Error error)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(error, nameof(error));
@@ -29,6 +29,6 @@ namespace Azure.AI.Language.Text
         /// <summary> The ID of the input document. </summary>
         public string Id { get; }
         /// <summary> Error encountered. </summary>
-        public ErrorResponse Error { get; }
+        public Error Error { get; }
     }
 }

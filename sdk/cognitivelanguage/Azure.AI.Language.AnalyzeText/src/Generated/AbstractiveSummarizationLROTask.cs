@@ -5,27 +5,35 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+using System;
+using Azure.Core;
+
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> An object representing the task definition for an Abstractive Summarization task. </summary>
     public partial class AbstractiveSummarizationLROTask : AnalyzeTextLROTask
     {
         /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationLROTask"/>. </summary>
-        public AbstractiveSummarizationLROTask()
+        /// <param name="parameters"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public AbstractiveSummarizationLROTask(AbstractiveSummarizationTaskParameters parameters)
         {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
             Kind = AnalyzeTextLROTaskKind.AbstractiveSummarization;
+            Parameters = parameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationLROTask"/>. </summary>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal AbstractiveSummarizationLROTask(string taskName, AnalyzeTextLROTaskKind kind, AbstractiveSummarizationTaskContent parameters) : base(taskName, kind)
+        internal AbstractiveSummarizationLROTask(string taskName, AnalyzeTextLROTaskKind kind, AbstractiveSummarizationTaskParameters parameters) : base(taskName, kind)
         {
             Parameters = parameters;
         }
 
-        /// <summary> Gets or sets the parameters. </summary>
-        public AbstractiveSummarizationTaskContent Parameters { get; set; }
+        /// <summary> Gets the parameters. </summary>
+        public AbstractiveSummarizationTaskParameters Parameters { get; }
     }
 }

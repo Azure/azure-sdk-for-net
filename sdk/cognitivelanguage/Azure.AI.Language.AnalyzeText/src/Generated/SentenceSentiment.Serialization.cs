@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class SentenceSentiment
     {
@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Text
                 return null;
             }
             string text = default;
-            SentimentValue sentiment = default;
+            SentenceSentimentValue sentiment = default;
             SentimentConfidenceScores confidenceScores = default;
             int offset = default;
             int length = default;
@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("sentiment"u8))
                 {
-                    sentiment = new SentimentValue(property.Value.GetString());
+                    sentiment = property.Value.GetString().ToSentenceSentimentValue();
                     continue;
                 }
                 if (property.NameEquals("confidenceScores"u8))

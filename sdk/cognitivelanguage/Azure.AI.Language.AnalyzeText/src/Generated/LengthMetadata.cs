@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Represents the Length entity Metadata model. </summary>
     public partial class LengthMetadata : BaseMetadata

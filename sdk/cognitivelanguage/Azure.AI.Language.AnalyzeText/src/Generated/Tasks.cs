@@ -8,17 +8,17 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary> The JobStateTasks. </summary>
-    public partial class JobStateTasks
+    /// <summary> The Tasks. </summary>
+    public partial class Tasks
     {
-        /// <summary> Initializes a new instance of <see cref="JobStateTasks"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Tasks"/>. </summary>
         /// <param name="completed"></param>
         /// <param name="failed"></param>
         /// <param name="inProgress"></param>
         /// <param name="total"></param>
-        internal JobStateTasks(int completed, int failed, int inProgress, int total)
+        internal Tasks(int completed, int failed, int inProgress, int total)
         {
             Completed = completed;
             Failed = failed;
@@ -27,13 +27,13 @@ namespace Azure.AI.Language.Text
             Items = new ChangeTrackingList<AnalyzeTextLROResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobStateTasks"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Tasks"/>. </summary>
         /// <param name="completed"></param>
         /// <param name="failed"></param>
         /// <param name="inProgress"></param>
         /// <param name="total"></param>
         /// <param name="items"></param>
-        internal JobStateTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<AnalyzeTextLROResult> items)
+        internal Tasks(int completed, int failed, int inProgress, int total, IReadOnlyList<AnalyzeTextLROResult> items)
         {
             Completed = completed;
             Failed = failed;
@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Text
         /// <summary>
         /// Gets the items
         /// Please note <see cref="AnalyzeTextLROResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomEntityRecognitionLROResult"/>, <see cref="CustomSingleLabelClassificationLROResult"/>, <see cref="CustomMultiLabelClassificationLROResult"/>, <see cref="EntityLinkingLROResult"/>, <see cref="EntityRecognitionLROResult"/>, <see cref="HealthcareLROResult"/>, <see cref="KeyPhraseExtractionLROResult"/>, <see cref="PIIEntityRecognitionLROResult"/>, <see cref="SentimentLROResult"/>, <see cref="CustomSentimentAnalysisLROResult"/>, <see cref="ExtractiveSummarizationLROResult"/>, <see cref="AbstractiveSummarizationLROResult"/>, <see cref="CustomAbstractiveSummarizationLROResult"/> and <see cref="CustomHealthcareLROResult"/>.
+        /// The available derived classes include <see cref="CustomEntityRecognitionLROResult"/>, <see cref="CustomSingleLabelClassificationLROResult"/>, <see cref="CustomMultiLabelClassificationLROResult"/>, <see cref="EntityLinkingLROResult"/>, <see cref="EntityRecognitionLROResult"/>, <see cref="HealthcareLROResult"/>, <see cref="KeyPhraseExtractionLROResult"/>, <see cref="PiiEntityRecognitionLROResult"/>, <see cref="SentimentLROResult"/>, <see cref="CustomSentimentAnalysisLROResult"/>, <see cref="ExtractiveSummarizationLROResult"/>, <see cref="AbstractiveSummarizationLROResult"/>, <see cref="CustomAbstractiveSummarizationLROResult"/> and <see cref="CustomHealthcareLROResult"/>.
         /// </summary>
         public IReadOnlyList<AnalyzeTextLROResult> Items { get; }
     }

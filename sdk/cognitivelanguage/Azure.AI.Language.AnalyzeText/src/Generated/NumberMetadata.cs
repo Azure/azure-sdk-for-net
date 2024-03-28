@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> A metadata for numeric entity instances. </summary>
     public partial class NumberMetadata : BaseMetadata

@@ -10,51 +10,51 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> A ranked list of sentences representing the extracted summary. </summary>
     public partial class KeyPhrasesDocumentResultWithDetectedLanguage
     {
         /// <summary> Initializes a new instance of <see cref="KeyPhrasesDocumentResultWithDetectedLanguage"/>. </summary>
+        /// <param name="keyPhrases"> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </param>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <param name="keyPhrases"> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="keyPhrases"/> is null. </exception>
-        internal KeyPhrasesDocumentResultWithDetectedLanguage(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<string> keyPhrases)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyPhrases"/>, <paramref name="id"/> or <paramref name="warnings"/> is null. </exception>
+        internal KeyPhrasesDocumentResultWithDetectedLanguage(IEnumerable<string> keyPhrases, string id, IEnumerable<DocumentWarning> warnings)
         {
+            Argument.AssertNotNull(keyPhrases, nameof(keyPhrases));
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(warnings, nameof(warnings));
-            Argument.AssertNotNull(keyPhrases, nameof(keyPhrases));
 
+            KeyPhrases = keyPhrases.ToList();
             Id = id;
             Warnings = warnings.ToList();
-            KeyPhrases = keyPhrases.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyPhrasesDocumentResultWithDetectedLanguage"/>. </summary>
+        /// <param name="keyPhrases"> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </param>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        /// <param name="keyPhrases"> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        internal KeyPhrasesDocumentResultWithDetectedLanguage(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, IReadOnlyList<string> keyPhrases, string detectedLanguage)
+        internal KeyPhrasesDocumentResultWithDetectedLanguage(IReadOnlyList<string> keyPhrases, string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, DetectedLanguage detectedLanguage)
         {
+            KeyPhrases = keyPhrases;
             Id = id;
             Warnings = warnings;
             Statistics = statistics;
-            KeyPhrases = keyPhrases;
             DetectedLanguage = detectedLanguage;
         }
 
+        /// <summary> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </summary>
+        public IReadOnlyList<string> KeyPhrases { get; }
         /// <summary> Unique, non-empty document identifier. </summary>
         public string Id { get; }
         /// <summary> Warnings encountered while processing document. </summary>
         public IReadOnlyList<DocumentWarning> Warnings { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public DocumentStatistics Statistics { get; }
-        /// <summary> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </summary>
-        public IReadOnlyList<string> KeyPhrases { get; }
         /// <summary> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </summary>
-        public string DetectedLanguage { get; }
+        public DetectedLanguage DetectedLanguage { get; }
     }
 }

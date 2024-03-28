@@ -10,51 +10,51 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The EntityLinkingResultWithDetectedLanguage. </summary>
     public partial class EntityLinkingResultWithDetectedLanguage
     {
         /// <summary> Initializes a new instance of <see cref="EntityLinkingResultWithDetectedLanguage"/>. </summary>
+        /// <param name="entities"> Recognized well known entities in the document. </param>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <param name="entities"> Recognized well known entities in the document. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="entities"/> is null. </exception>
-        internal EntityLinkingResultWithDetectedLanguage(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<LinkedEntity> entities)
+        /// <exception cref="ArgumentNullException"> <paramref name="entities"/>, <paramref name="id"/> or <paramref name="warnings"/> is null. </exception>
+        internal EntityLinkingResultWithDetectedLanguage(IEnumerable<LinkedEntity> entities, string id, IEnumerable<DocumentWarning> warnings)
         {
+            Argument.AssertNotNull(entities, nameof(entities));
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(warnings, nameof(warnings));
-            Argument.AssertNotNull(entities, nameof(entities));
 
+            Entities = entities.ToList();
             Id = id;
             Warnings = warnings.ToList();
-            Entities = entities.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityLinkingResultWithDetectedLanguage"/>. </summary>
+        /// <param name="entities"> Recognized well known entities in the document. </param>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        /// <param name="entities"> Recognized well known entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        internal EntityLinkingResultWithDetectedLanguage(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, IReadOnlyList<LinkedEntity> entities, string detectedLanguage)
+        internal EntityLinkingResultWithDetectedLanguage(IReadOnlyList<LinkedEntity> entities, string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, DetectedLanguage detectedLanguage)
         {
+            Entities = entities;
             Id = id;
             Warnings = warnings;
             Statistics = statistics;
-            Entities = entities;
             DetectedLanguage = detectedLanguage;
         }
 
+        /// <summary> Recognized well known entities in the document. </summary>
+        public IReadOnlyList<LinkedEntity> Entities { get; }
         /// <summary> Unique, non-empty document identifier. </summary>
         public string Id { get; }
         /// <summary> Warnings encountered while processing document. </summary>
         public IReadOnlyList<DocumentWarning> Warnings { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public DocumentStatistics Statistics { get; }
-        /// <summary> Recognized well known entities in the document. </summary>
-        public IReadOnlyList<LinkedEntity> Entities { get; }
         /// <summary> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </summary>
-        public string DetectedLanguage { get; }
+        public DetectedLanguage DetectedLanguage { get; }
     }
 }

@@ -5,14 +5,14 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary>
-    /// Base task object.
+    /// The AnalyzeTextLROTask.
     /// Please note <see cref="AnalyzeTextLROTask"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CustomEntitiesLROTask"/>, <see cref="CustomSingleLabelClassificationLROTask"/>, <see cref="CustomMultiLabelClassificationLROTask"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PIILROTask"/>, <see cref="SentimentAnalysisLROTask"/>, <see cref="CustomSentimentAnalysisLROTask"/>, <see cref="ExtractiveSummarizationLROTask"/>, <see cref="AbstractiveSummarizationLROTask"/>, <see cref="CustomAbstractiveSummarizationLROTask"/> and <see cref="CustomHealthcareLROTask"/>.
+    /// The available derived classes include <see cref="CustomEntitiesLROTask"/>, <see cref="CustomSingleLabelClassificationLROTask"/>, <see cref="CustomMultiLabelClassificationLROTask"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/>, <see cref="SentimentAnalysisLROTask"/>, <see cref="CustomSentimentAnalysisLROTask"/>, <see cref="ExtractiveSummarizationLROTask"/>, <see cref="AbstractiveSummarizationLROTask"/>, <see cref="CustomAbstractiveSummarizationLROTask"/> and <see cref="CustomHealthcareLROTask"/>.
     /// </summary>
-    public abstract partial class AnalyzeTextLROTask
+    public abstract partial class AnalyzeTextLROTask : TaskIdentifier
     {
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextLROTask"/>. </summary>
         protected AnalyzeTextLROTask()
@@ -22,14 +22,11 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextLROTask"/>. </summary>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
-        internal AnalyzeTextLROTask(string taskName, AnalyzeTextLROTaskKind kind)
+        internal AnalyzeTextLROTask(string taskName, AnalyzeTextLROTaskKind kind) : base(taskName)
         {
-            TaskName = taskName;
             Kind = kind;
         }
 
-        /// <summary> task name. </summary>
-        public string TaskName { get; set; }
         /// <summary> The kind of task to perform. </summary>
         internal AnalyzeTextLROTaskKind Kind { get; set; }
     }

@@ -8,27 +8,27 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class EntityLinkingTaskContent : IUtf8JsonSerializable
+    public partial class EntityLinkingTaskParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LoggingOptOut))
+            if (Optional.IsDefined(StringIndexType))
             {
-                writer.WritePropertyName("loggingOptOut"u8);
-                writer.WriteBooleanValue(LoggingOptOut.Value);
+                writer.WritePropertyName("stringIndexType"u8);
+                writer.WriteStringValue(StringIndexType.Value.ToString());
             }
             if (Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (Optional.IsDefined(StringIndexType))
+            if (Optional.IsDefined(LoggingOptOut))
             {
-                writer.WritePropertyName("stringIndexType"u8);
-                writer.WriteStringValue(StringIndexType.Value.ToString());
+                writer.WritePropertyName("loggingOptOut"u8);
+                writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             writer.WriteEndObject();
         }

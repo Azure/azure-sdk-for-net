@@ -8,19 +8,19 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary> Supported parameters for an NamedEntity Recognition task. </summary>
-    public partial class EntitiesTaskContent
+    /// <summary> Supported parameters for an Entity Recognition task. </summary>
+    public partial class EntitiesTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of <see cref="EntitiesTaskContent"/>. </summary>
-        public EntitiesTaskContent()
+        /// <summary> Initializes a new instance of <see cref="EntitiesTaskParameters"/>. </summary>
+        public EntitiesTaskParameters()
         {
             InclusionList = new ChangeTrackingList<EntityCategory>();
             ExclusionList = new ChangeTrackingList<EntityCategory>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntitiesTaskContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="stringIndexType"></param>
@@ -28,10 +28,8 @@ namespace Azure.AI.Language.Text
         /// <param name="exclusionList"> (Optional) request parameter that filters out any entities that are included the excludeList. When a user specifies an excludeList, they cannot get a prediction returned with an entity in that list. We will apply inclusionList before exclusionList. </param>
         /// <param name="overlapPolicy"> (Optional) describes the type of overlap policy to apply to the ner output. </param>
         /// <param name="inferenceOptions"> (Optional) request parameter that allows the user to provide settings for running the inference. </param>
-        internal EntitiesTaskContent(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType, IList<EntityCategory> inclusionList, IList<EntityCategory> exclusionList, BaseEntityOverlapPolicy overlapPolicy, EntityInferenceConfig inferenceOptions)
+        internal EntitiesTaskParameters(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType, IList<EntityCategory> inclusionList, IList<EntityCategory> exclusionList, BaseEntityOverlapPolicy overlapPolicy, EntityInferenceOptions inferenceOptions) : base(loggingOptOut, modelVersion)
         {
-            LoggingOptOut = loggingOptOut;
-            ModelVersion = modelVersion;
             StringIndexType = stringIndexType;
             InclusionList = inclusionList;
             ExclusionList = exclusionList;
@@ -39,10 +37,6 @@ namespace Azure.AI.Language.Text
             InferenceOptions = inferenceOptions;
         }
 
-        /// <summary> logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
-        /// <summary> model version. </summary>
-        public string ModelVersion { get; set; }
         /// <summary> Gets or sets the string index type. </summary>
         public StringIndexType? StringIndexType { get; set; }
         /// <summary> (Optional) request parameter that limits the output to the requested entity types included in this list. We will apply inclusionList before exclusionList. </summary>
@@ -56,6 +50,6 @@ namespace Azure.AI.Language.Text
         /// </summary>
         public BaseEntityOverlapPolicy OverlapPolicy { get; set; }
         /// <summary> (Optional) request parameter that allows the user to provide settings for running the inference. </summary>
-        public EntityInferenceConfig InferenceOptions { get; set; }
+        public EntityInferenceOptions InferenceOptions { get; set; }
     }
 }

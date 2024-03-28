@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class ExtractiveSummarizationResult
     {
@@ -20,12 +20,22 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
+            IReadOnlyList<ExtractedSummaryDocumentResultWithDetectedLanguage> documents = default;
             IReadOnlyList<DocumentError> errors = default;
             Optional<RequestStatistics> statistics = default;
             string modelVersion = default;
-            IReadOnlyList<ExtractedSummaryDocumentResultWithDetectedLanguage> documents = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("documents"u8))
+                {
+                    List<ExtractedSummaryDocumentResultWithDetectedLanguage> array = new List<ExtractedSummaryDocumentResultWithDetectedLanguage>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ExtractedSummaryDocumentResultWithDetectedLanguage.DeserializeExtractedSummaryDocumentResultWithDetectedLanguage(item));
+                    }
+                    documents = array;
+                    continue;
+                }
                 if (property.NameEquals("errors"u8))
                 {
                     List<DocumentError> array = new List<DocumentError>();
@@ -48,16 +58,6 @@ namespace Azure.AI.Language.Text
                 if (property.NameEquals("modelVersion"u8))
                 {
                     modelVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("documents"u8))
-                {
-                    List<ExtractedSummaryDocumentResultWithDetectedLanguage> array = new List<ExtractedSummaryDocumentResultWithDetectedLanguage>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ExtractedSummaryDocumentResultWithDetectedLanguage.DeserializeExtractedSummaryDocumentResultWithDetectedLanguage(item));
-                    }
-                    documents = array;
                     continue;
                 }
             }

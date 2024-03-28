@@ -8,25 +8,18 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class DynamicClassificationTaskContent : IUtf8JsonSerializable
+    public partial class DynamicClassificationTaskParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LoggingOptOut))
+            if (Optional.IsDefined(ClassificationType))
             {
-                writer.WritePropertyName("loggingOptOut"u8);
-                writer.WriteBooleanValue(LoggingOptOut.Value);
+                writer.WritePropertyName("classificationType"u8);
+                writer.WriteStringValue(ClassificationType.Value.ToString());
             }
-            if (Optional.IsDefined(ModelVersion))
-            {
-                writer.WritePropertyName("modelVersion"u8);
-                writer.WriteStringValue(ModelVersion);
-            }
-            writer.WritePropertyName("classificationType"u8);
-            writer.WriteStringValue(ClassificationType.ToString());
             writer.WritePropertyName("categories"u8);
             writer.WriteStartArray();
             foreach (var item in Categories)
@@ -34,6 +27,16 @@ namespace Azure.AI.Language.Text
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(ModelVersion))
+            {
+                writer.WritePropertyName("modelVersion"u8);
+                writer.WriteStringValue(ModelVersion);
+            }
+            if (Optional.IsDefined(LoggingOptOut))
+            {
+                writer.WritePropertyName("loggingOptOut"u8);
+                writer.WriteBooleanValue(LoggingOptOut.Value);
+            }
             writer.WriteEndObject();
         }
 

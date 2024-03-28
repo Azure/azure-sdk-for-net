@@ -8,8 +8,9 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class DateTimeMetadata
     {
@@ -19,12 +20,16 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            IReadOnlyList<DateValue> dateValues = default;
+            Optional<IReadOnlyList<DateValue>> dateValues = default;
             MetadataKind metadataKind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateValues"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<DateValue> array = new List<DateValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -39,7 +44,7 @@ namespace Azure.AI.Language.Text
                     continue;
                 }
             }
-            return new DateTimeMetadata(metadataKind, dateValues);
+            return new DateTimeMetadata(metadataKind, Optional.ToList(dateValues));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

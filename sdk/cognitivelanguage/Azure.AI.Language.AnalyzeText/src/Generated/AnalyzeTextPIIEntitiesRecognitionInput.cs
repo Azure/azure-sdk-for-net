@@ -5,22 +5,22 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary> The AnalyzeTextPIIEntitiesRecognitionInput. </summary>
-    public partial class AnalyzeTextPIIEntitiesRecognitionInput : AnalyzeTextTask
+    /// <summary> The AnalyzeTextPiiEntitiesRecognitionInput. </summary>
+    public partial class AnalyzeTextPiiEntitiesRecognitionInput : AnalyzeTextTask
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextPIIEntitiesRecognitionInput"/>. </summary>
-        public AnalyzeTextPIIEntitiesRecognitionInput()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextPiiEntitiesRecognitionInput"/>. </summary>
+        public AnalyzeTextPiiEntitiesRecognitionInput()
         {
             Kind = AnalyzeTextTaskKind.PiiEntityRecognition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextPIIEntitiesRecognitionInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextPiiEntitiesRecognitionInput"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="analysisInput"></param>
         /// <param name="parameters"></param>
-        internal AnalyzeTextPIIEntitiesRecognitionInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, PIITaskContent parameters) : base(kind)
+        internal AnalyzeTextPiiEntitiesRecognitionInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, PiiTaskParameters parameters) : base(kind)
         {
             AnalysisInput = analysisInput;
             Parameters = parameters;
@@ -29,6 +29,6 @@ namespace Azure.AI.Language.Text
         /// <summary> Gets or sets the analysis input. </summary>
         public MultiLanguageAnalysisInput AnalysisInput { get; set; }
         /// <summary> Gets or sets the parameters. </summary>
-        public PIITaskContent Parameters { get; set; }
+        public PiiTaskParameters Parameters { get; set; }
     }
 }

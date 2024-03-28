@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class DocumentWarning
     {
@@ -19,14 +19,14 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            DocumentWarningCode code = default;
+            WarningCodeValue code = default;
             string message = default;
             Optional<string> targetRef = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
                 {
-                    code = new DocumentWarningCode(property.Value.GetString());
+                    code = new WarningCodeValue(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))

@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class DocumentError
     {
@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Text
                 return null;
             }
             string id = default;
-            ErrorResponse error = default;
+            Error error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("error"u8))
                 {
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = Error.DeserializeError(property.Value);
                     continue;
                 }
             }

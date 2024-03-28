@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The entity Metadata object kind. </summary>
     internal readonly partial struct MetadataKind : IEquatable<MetadataKind>

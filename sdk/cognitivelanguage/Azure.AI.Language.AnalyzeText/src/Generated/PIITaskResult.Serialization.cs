@@ -8,23 +8,23 @@
 using System.Text.Json;
 using Azure;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class PIITaskResult
+    public partial class PiiTaskResult
     {
-        internal static PIITaskResult DeserializePIITaskResult(JsonElement element)
+        internal static PiiTaskResult DeserializePiiTaskResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PIIResult results = default;
+            PiiResult results = default;
             AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = PIIResult.DeserializePIIResult(property.Value);
+                    results = PiiResult.DeserializePiiResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -33,15 +33,15 @@ namespace Azure.AI.Language.Text
                     continue;
                 }
             }
-            return new PIITaskResult(kind, results);
+            return new PiiTaskResult(kind, results);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new PIITaskResult FromResponse(Response response)
+        internal static new PiiTaskResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializePIITaskResult(document.RootElement);
+            return DeserializePiiTaskResult(document.RootElement);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class HealthcareRelation
     {
@@ -20,14 +20,14 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            HealthRelationType relationType = default;
+            RelationType relationType = default;
             IReadOnlyList<HealthcareRelationEntity> entities = default;
             Optional<double> confidenceScore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relationType"u8))
                 {
-                    relationType = new HealthRelationType(property.Value.GetString());
+                    relationType = new RelationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("entities"u8))

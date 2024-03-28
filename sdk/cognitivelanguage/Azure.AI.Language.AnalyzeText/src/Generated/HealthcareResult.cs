@@ -10,46 +10,35 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The HealthcareResult. </summary>
-    public partial class HealthcareResult
+    public partial class HealthcareResult : PreBuiltResult
     {
         /// <summary> Initializes a new instance of <see cref="HealthcareResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="documents"/> is null. </exception>
-        internal HealthcareResult(IEnumerable<AnalyzeTextDocumentError> errors, string modelVersion, IEnumerable<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> documents)
+        internal HealthcareResult(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> documents) : base(errors, modelVersion)
         {
             Argument.AssertNotNull(errors, nameof(errors));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
             Argument.AssertNotNull(documents, nameof(documents));
 
-            Errors = errors.ToList();
-            ModelVersion = modelVersion;
             Documents = documents.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthcareResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
-        /// <param name="statistics"></param>
+        /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"></param>
-        internal HealthcareResult(IReadOnlyList<AnalyzeTextDocumentError> errors, RequestStatistics statistics, string modelVersion, IReadOnlyList<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> documents)
+        internal HealthcareResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IReadOnlyList<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> documents) : base(errors, statistics, modelVersion)
         {
-            Errors = errors;
-            Statistics = statistics;
-            ModelVersion = modelVersion;
             Documents = documents;
         }
 
-        /// <summary> Errors by document id. </summary>
-        public IReadOnlyList<AnalyzeTextDocumentError> Errors { get; }
-        /// <summary> Gets the statistics. </summary>
-        public RequestStatistics Statistics { get; }
-        /// <summary> This field indicates which model is used for scoring. </summary>
-        public string ModelVersion { get; }
         /// <summary> Gets the documents. </summary>
         public IReadOnlyList<HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> Documents { get; }
     }

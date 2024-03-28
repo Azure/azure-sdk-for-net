@@ -5,12 +5,12 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary>
     /// Collection of documents to analyze and a single task to execute.
     /// Please note <see cref="AnalyzeTextTask"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AnalyzeTextDynamicClassificationInput"/>, <see cref="AnalyzeTextEntityLinkingInput"/>, <see cref="AnalyzeTextEntityRecognitionInput"/>, <see cref="AnalyzeTextKeyPhraseExtractionInput"/>, <see cref="AnalyzeTextLanguageDetectionInput"/>, <see cref="AnalyzeTextPIIEntitiesRecognitionInput"/> and <see cref="AnalyzeTextSentimentAnalysisInput"/>.
+    /// The available derived classes include <see cref="AnalyzeTextDynamicClassificationInput"/>, <see cref="AnalyzeTextEntityLinkingInput"/>, <see cref="AnalyzeTextEntityRecognitionInput"/>, <see cref="AnalyzeTextKeyPhraseExtractionInput"/>, <see cref="AnalyzeTextLanguageDetectionInput"/>, <see cref="AnalyzeTextPiiEntitiesRecognitionInput"/> and <see cref="AnalyzeTextSentimentAnalysisInput"/>.
     /// </summary>
     public abstract partial class AnalyzeTextTask
     {

@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The DocumentWarning. </summary>
     public partial class DocumentWarning
@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Text
         /// <param name="code"></param>
         /// <param name="message"> Warning message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        internal DocumentWarning(DocumentWarningCode code, string message)
+        internal DocumentWarning(WarningCodeValue code, string message)
         {
             Argument.AssertNotNull(message, nameof(message));
 
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Text
         /// <param name="code"></param>
         /// <param name="message"> Warning message. </param>
         /// <param name="targetRef"> A JSON pointer reference indicating the target object. </param>
-        internal DocumentWarning(DocumentWarningCode code, string message, string targetRef)
+        internal DocumentWarning(WarningCodeValue code, string message, string targetRef)
         {
             Code = code;
             Message = message;
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Gets the code. </summary>
-        public DocumentWarningCode Code { get; }
+        public WarningCodeValue Code { get; }
         /// <summary> Warning message. </summary>
         public string Message { get; }
         /// <summary> A JSON pointer reference indicating the target object. </summary>

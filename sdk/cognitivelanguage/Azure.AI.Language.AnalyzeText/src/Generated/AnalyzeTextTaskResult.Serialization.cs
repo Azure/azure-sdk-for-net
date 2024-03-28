@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class AnalyzeTextTaskResult
     {
@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Text
                     case "EntityRecognitionResults": return EntitiesTaskResult.DeserializeEntitiesTaskResult(element);
                     case "KeyPhraseExtractionResults": return KeyPhraseTaskResult.DeserializeKeyPhraseTaskResult(element);
                     case "LanguageDetectionResults": return LanguageDetectionTaskResult.DeserializeLanguageDetectionTaskResult(element);
-                    case "PiiEntityRecognitionResults": return PIITaskResult.DeserializePIITaskResult(element);
+                    case "PiiEntityRecognitionResults": return PiiTaskResult.DeserializePiiTaskResult(element);
                     case "SentimentAnalysisResults": return SentimentTaskResult.DeserializeSentimentTaskResult(element);
                 }
             }

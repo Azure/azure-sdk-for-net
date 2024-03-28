@@ -10,45 +10,42 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The LinkedEntity. </summary>
     public partial class LinkedEntity
     {
         /// <summary> Initializes a new instance of <see cref="LinkedEntity"/>. </summary>
-        /// <param name="name"> NamedEntity Linking formal name. </param>
+        /// <param name="name"> Entity Linking formal name. </param>
         /// <param name="matches"> List of instances this entity appears in the text. </param>
-        /// <param name="language"> LanguageClient used in the data source. </param>
-        /// <param name="id"> Unique identifier of the recognized entity from the data source. </param>
+        /// <param name="language"> Language used in the data source. </param>
         /// <param name="url"> URL for the entity's page from the data source. </param>
         /// <param name="dataSource"> Data source used to extract entity linking, such as Wiki/Bing etc. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="matches"/>, <paramref name="language"/>, <paramref name="id"/>, <paramref name="url"/> or <paramref name="dataSource"/> is null. </exception>
-        internal LinkedEntity(string name, IEnumerable<EntityLinkingMatch> matches, string language, string id, Uri url, string dataSource)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="matches"/>, <paramref name="language"/>, <paramref name="url"/> or <paramref name="dataSource"/> is null. </exception>
+        internal LinkedEntity(string name, IEnumerable<Match> matches, string language, string url, string dataSource)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(matches, nameof(matches));
             Argument.AssertNotNull(language, nameof(language));
-            Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(url, nameof(url));
             Argument.AssertNotNull(dataSource, nameof(dataSource));
 
             Name = name;
             Matches = matches.ToList();
             Language = language;
-            Id = id;
             Url = url;
             DataSource = dataSource;
         }
 
         /// <summary> Initializes a new instance of <see cref="LinkedEntity"/>. </summary>
-        /// <param name="name"> NamedEntity Linking formal name. </param>
+        /// <param name="name"> Entity Linking formal name. </param>
         /// <param name="matches"> List of instances this entity appears in the text. </param>
-        /// <param name="language"> LanguageClient used in the data source. </param>
+        /// <param name="language"> Language used in the data source. </param>
         /// <param name="id"> Unique identifier of the recognized entity from the data source. </param>
         /// <param name="url"> URL for the entity's page from the data source. </param>
         /// <param name="dataSource"> Data source used to extract entity linking, such as Wiki/Bing etc. </param>
-        /// <param name="bingId"> Bing NamedEntity Search API unique identifier of the recognized entity. </param>
-        internal LinkedEntity(string name, IReadOnlyList<EntityLinkingMatch> matches, string language, string id, Uri url, string dataSource, string bingId)
+        /// <param name="bingId"> Bing Entity Search API unique identifier of the recognized entity. </param>
+        internal LinkedEntity(string name, IReadOnlyList<Match> matches, string language, string id, string url, string dataSource, string bingId)
         {
             Name = name;
             Matches = matches;
@@ -59,19 +56,19 @@ namespace Azure.AI.Language.Text
             BingId = bingId;
         }
 
-        /// <summary> NamedEntity Linking formal name. </summary>
+        /// <summary> Entity Linking formal name. </summary>
         public string Name { get; }
         /// <summary> List of instances this entity appears in the text. </summary>
-        public IReadOnlyList<EntityLinkingMatch> Matches { get; }
-        /// <summary> LanguageClient used in the data source. </summary>
+        public IReadOnlyList<Match> Matches { get; }
+        /// <summary> Language used in the data source. </summary>
         public string Language { get; }
         /// <summary> Unique identifier of the recognized entity from the data source. </summary>
         public string Id { get; }
         /// <summary> URL for the entity's page from the data source. </summary>
-        public Uri Url { get; }
+        public string Url { get; }
         /// <summary> Data source used to extract entity linking, such as Wiki/Bing etc. </summary>
         public string DataSource { get; }
-        /// <summary> Bing NamedEntity Search API unique identifier of the recognized entity. </summary>
+        /// <summary> Bing Entity Search API unique identifier of the recognized entity. </summary>
         public string BingId { get; }
     }
 }

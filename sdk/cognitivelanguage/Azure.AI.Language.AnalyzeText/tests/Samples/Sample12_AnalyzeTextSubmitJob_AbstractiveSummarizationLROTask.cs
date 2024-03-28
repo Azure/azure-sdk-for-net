@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Language.Text;
+using Azure.AI.Language.AnalyzeText;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -19,7 +19,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample12_AnalyzeTextSubmitJob_AbstractiveSummarizationLROTask
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            AnalyzeTextClient client = new AnalyzeTextClient(endpoint, credential);;
 
             string documentA =
                 "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"

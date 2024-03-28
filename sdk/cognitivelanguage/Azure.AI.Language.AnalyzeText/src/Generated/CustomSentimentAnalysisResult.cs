@@ -10,10 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary> Custom Task Results. </summary>
-    public partial class CustomSentimentAnalysisResult
+    /// <summary> The CustomSentimentAnalysisResult. </summary>
+    public partial class CustomSentimentAnalysisResult : CustomResult
     {
         /// <summary> Initializes a new instance of <see cref="CustomSentimentAnalysisResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
@@ -21,16 +21,13 @@ namespace Azure.AI.Language.Text
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="documents"/> is null. </exception>
-        internal CustomSentimentAnalysisResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<CustomSentimentAnalysisResultDocument> documents)
+        internal CustomSentimentAnalysisResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<CustomSentimentAnalysisResultDocument> documents) : base(errors, projectName, deploymentName)
         {
             Argument.AssertNotNull(errors, nameof(errors));
             Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(documents, nameof(documents));
 
-            Errors = errors.ToList();
-            ProjectName = projectName;
-            DeploymentName = deploymentName;
             Documents = documents.ToList();
         }
 
@@ -40,23 +37,11 @@ namespace Azure.AI.Language.Text
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"></param>
-        internal CustomSentimentAnalysisResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IReadOnlyList<CustomSentimentAnalysisResultDocument> documents)
+        internal CustomSentimentAnalysisResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IReadOnlyList<CustomSentimentAnalysisResultDocument> documents) : base(errors, statistics, projectName, deploymentName)
         {
-            Errors = errors;
-            Statistics = statistics;
-            ProjectName = projectName;
-            DeploymentName = deploymentName;
             Documents = documents;
         }
 
-        /// <summary> Errors by document id. </summary>
-        public IReadOnlyList<DocumentError> Errors { get; }
-        /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
-        public RequestStatistics Statistics { get; }
-        /// <summary> This field indicates the project name for the model. </summary>
-        public string ProjectName { get; }
-        /// <summary> This field indicates the deployment name for the model. </summary>
-        public string DeploymentName { get; }
         /// <summary> Gets the documents. </summary>
         public IReadOnlyList<CustomSentimentAnalysisResultDocument> Documents { get; }
     }

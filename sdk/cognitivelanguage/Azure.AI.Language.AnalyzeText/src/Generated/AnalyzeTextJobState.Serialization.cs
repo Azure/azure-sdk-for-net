@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class AnalyzeTextJobState
     {
@@ -24,12 +24,12 @@ namespace Azure.AI.Language.Text
             Optional<string> displayName = default;
             DateTimeOffset createdDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
-            string jobId = default;
+            Guid jobId = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            TaskStatus status = default;
-            Optional<IReadOnlyList<ErrorResponse>> errors = default;
+            State status = default;
+            Optional<IReadOnlyList<Error>> errors = default;
             Optional<string> nextLink = default;
-            JobStateTasks tasks = default;
+            Tasks tasks = default;
             Optional<RequestStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("jobId"u8))
                 {
-                    jobId = property.Value.GetString();
+                    jobId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("lastUpdatedDateTime"u8))
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new TaskStatus(property.Value.GetString());
+                    status = new State(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -73,10 +73,10 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    List<ErrorResponse> array = new List<ErrorResponse>();
+                    List<Error> array = new List<Error>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
+                        array.Add(Error.DeserializeError(item));
                     }
                     errors = array;
                     continue;
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("tasks"u8))
                 {
-                    tasks = JobStateTasks.DeserializeTasks(property.Value);
+                    tasks = Tasks.DeserializeTasks(property.Value);
                     continue;
                 }
                 if (property.NameEquals("statistics"u8))
@@ -106,7 +106,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        public static AnalyzeTextJobState FromResponse(Response response)
+        internal static AnalyzeTextJobState FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAnalyzeTextJobState(document.RootElement);

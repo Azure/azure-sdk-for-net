@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The HealthcareAssertion. </summary>
     public partial class HealthcareAssertion
@@ -20,7 +20,7 @@ namespace Azure.AI.Language.Text
         /// <param name="certainty"> Describes the entities certainty and polarity. </param>
         /// <param name="association"> Describes if the entity is the subject of the text or if it describes someone else. </param>
         /// <param name="temporality"> Describes temporal information regarding the entity. </param>
-        internal HealthcareAssertion(HealthcareConditionality? conditionality, HealthcareCertainty? certainty, HealthcareAssociation? association, HealthcareTemporality? temporality)
+        internal HealthcareAssertion(Conditionality? conditionality, Certainty? certainty, Association? association, Temporality? temporality)
         {
             Conditionality = conditionality;
             Certainty = certainty;
@@ -29,12 +29,12 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Describes any conditionality on the entity. </summary>
-        public HealthcareConditionality? Conditionality { get; }
+        public Conditionality? Conditionality { get; }
         /// <summary> Describes the entities certainty and polarity. </summary>
-        public HealthcareCertainty? Certainty { get; }
+        public Certainty? Certainty { get; }
         /// <summary> Describes if the entity is the subject of the text or if it describes someone else. </summary>
-        public HealthcareAssociation? Association { get; }
+        public Association? Association { get; }
         /// <summary> Describes temporal information regarding the entity. </summary>
-        public HealthcareTemporality? Temporality { get; }
+        public Temporality? Temporality { get; }
     }
 }

@@ -6,8 +6,9 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The CustomHealthcareLROResult. </summary>
     public partial class CustomHealthcareLROResult : AnalyzeTextLROResult
@@ -15,9 +16,14 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="CustomHealthcareLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        internal CustomHealthcareLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status) : base(lastUpdateDateTime, status)
+        /// <param name="results"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
+        internal CustomHealthcareLROResult(DateTimeOffset lastUpdateDateTime, State status, CustomHealthcareResult results) : base(lastUpdateDateTime, status)
         {
+            Argument.AssertNotNull(results, nameof(results));
+
             Kind = AnalyzeTextLROResultsKind.CustomHealthcareLROResults;
+            Results = results;
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomHealthcareLROResult"/>. </summary>
@@ -26,7 +32,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"></param>
         /// <param name="results"></param>
-        internal CustomHealthcareLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status, string taskName, AnalyzeTextLROResultsKind kind, CustomHealthcareResult results) : base(lastUpdateDateTime, status, taskName, kind)
+        internal CustomHealthcareLROResult(DateTimeOffset lastUpdateDateTime, State status, string taskName, AnalyzeTextLROResultsKind kind, CustomHealthcareResult results) : base(lastUpdateDateTime, status, taskName, kind)
         {
             Results = results;
         }

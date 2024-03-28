@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.Language.Text;
+using Azure.AI.Language.AnalyzeText;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -17,7 +17,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample13_AnalyzeTextSubmitJob_MultipleTasks
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            AnalyzeTextClient client = new AnalyzeTextClient(endpoint, credential);;
 
             string documentA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"

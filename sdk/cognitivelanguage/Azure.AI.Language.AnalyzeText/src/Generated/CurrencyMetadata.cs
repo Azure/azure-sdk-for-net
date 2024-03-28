@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Represents the Currency ) entity Metadata model. </summary>
     public partial class CurrencyMetadata : BaseMetadata

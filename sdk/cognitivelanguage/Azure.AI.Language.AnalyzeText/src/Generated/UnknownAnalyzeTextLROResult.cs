@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Unknown version of AnalyzeTextLROResult. </summary>
     internal partial class UnknownAnalyzeTextLROResult : AnalyzeTextLROResult
@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"></param>
-        internal UnknownAnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status, string taskName, AnalyzeTextLROResultsKind kind) : base(lastUpdateDateTime, status, taskName, kind)
+        internal UnknownAnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, State status, string taskName, AnalyzeTextLROResultsKind kind) : base(lastUpdateDateTime, status, taskName, kind)
         {
         }
     }

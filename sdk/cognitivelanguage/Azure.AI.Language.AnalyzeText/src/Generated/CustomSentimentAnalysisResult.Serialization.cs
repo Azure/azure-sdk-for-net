@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class CustomSentimentAnalysisResult
     {
@@ -20,13 +20,23 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
+            IReadOnlyList<CustomSentimentAnalysisResultDocument> documents = default;
             IReadOnlyList<DocumentError> errors = default;
             Optional<RequestStatistics> statistics = default;
             string projectName = default;
             string deploymentName = default;
-            IReadOnlyList<CustomSentimentAnalysisResultDocument> documents = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("documents"u8))
+                {
+                    List<CustomSentimentAnalysisResultDocument> array = new List<CustomSentimentAnalysisResultDocument>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CustomSentimentAnalysisResultDocument.DeserializeCustomSentimentAnalysisResultDocument(item));
+                    }
+                    documents = array;
+                    continue;
+                }
                 if (property.NameEquals("errors"u8))
                 {
                     List<DocumentError> array = new List<DocumentError>();
@@ -54,16 +64,6 @@ namespace Azure.AI.Language.Text
                 if (property.NameEquals("deploymentName"u8))
                 {
                     deploymentName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("documents"u8))
-                {
-                    List<CustomSentimentAnalysisResultDocument> array = new List<CustomSentimentAnalysisResultDocument>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(CustomSentimentAnalysisResultDocument.DeserializeCustomSentimentAnalysisResultDocument(item));
-                    }
-                    documents = array;
                     continue;
                 }
             }

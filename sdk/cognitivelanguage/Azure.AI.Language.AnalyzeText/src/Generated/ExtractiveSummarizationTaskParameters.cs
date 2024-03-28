@@ -5,37 +5,31 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Supported parameters for an Extractive Summarization task. </summary>
-    public partial class ExtractiveSummarizationTaskContent
+    public partial class ExtractiveSummarizationTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskContent"/>. </summary>
-        public ExtractiveSummarizationTaskContent()
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskParameters"/>. </summary>
+        public ExtractiveSummarizationTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="sentenceCount"></param>
         /// <param name="sortBy"></param>
         /// <param name="stringIndexType"></param>
         /// <param name="query"> (Optional) If provided, the query will be used to extract most relevant sentences from the document. </param>
-        internal ExtractiveSummarizationTaskContent(bool? loggingOptOut, string modelVersion, long? sentenceCount, ExtractiveSummarizationSortingCriteria? sortBy, StringIndexType? stringIndexType, string query)
+        internal ExtractiveSummarizationTaskParameters(bool? loggingOptOut, string modelVersion, long? sentenceCount, ExtractiveSummarizationSortingCriteria? sortBy, StringIndexType? stringIndexType, string query) : base(loggingOptOut, modelVersion)
         {
-            LoggingOptOut = loggingOptOut;
-            ModelVersion = modelVersion;
             SentenceCount = sentenceCount;
             SortBy = sortBy;
             StringIndexType = stringIndexType;
             Query = query;
         }
 
-        /// <summary> logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
-        /// <summary> model version. </summary>
-        public string ModelVersion { get; set; }
         /// <summary> Gets or sets the sentence count. </summary>
         public long? SentenceCount { get; set; }
         /// <summary> Gets or sets the sort by. </summary>

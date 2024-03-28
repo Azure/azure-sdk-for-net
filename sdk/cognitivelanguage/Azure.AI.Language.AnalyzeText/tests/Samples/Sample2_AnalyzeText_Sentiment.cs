@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Language.Text;
+using Azure.AI.Language.AnalyzeText;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -19,7 +19,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample2_AnalyzeText_Sentiment
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            AnalyzeTextClient client = new AnalyzeTextClient(endpoint, credential);;
 
             string documentA =
                 "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
@@ -87,7 +87,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample2_AnalyzeText_Sentiment_OpinionMining
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            AnalyzeTextClient client = new AnalyzeTextClient(endpoint, credential);;
 
             string reviewA =
                 "The food and service were unacceptable, but the concierge were nice. After talking to them about the"

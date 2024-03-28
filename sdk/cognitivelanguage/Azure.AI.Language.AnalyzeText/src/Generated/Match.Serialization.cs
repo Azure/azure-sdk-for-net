@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class EntityLinkingMatch
+    public partial class Match
     {
-        internal static EntityLinkingMatch DeserializeMatch(JsonElement element)
+        internal static Match DeserializeMatch(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -45,12 +45,12 @@ namespace Azure.AI.Language.Text
                     continue;
                 }
             }
-            return new EntityLinkingMatch(confidenceScore, text, offset, length);
+            return new Match(confidenceScore, text, offset, length);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EntityLinkingMatch FromResponse(Response response)
+        internal static Match FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeMatch(document.RootElement);

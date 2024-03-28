@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The AnalyzeTextJobState. </summary>
     public partial class AnalyzeTextJobState
@@ -20,14 +20,14 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> status. </param>
         /// <param name="tasks"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
-        internal AnalyzeTextJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, TaskStatus status, JobStateTasks tasks)
+        internal AnalyzeTextJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, State status, Tasks tasks)
         {
             Argument.AssertNotNull(tasks, nameof(tasks));
 
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
             Status = status;
-            Errors = new ChangeTrackingList<ErrorResponse>();
+            Errors = new ChangeTrackingList<Error>();
             Tasks = tasks;
         }
 
@@ -41,8 +41,8 @@ namespace Azure.AI.Language.Text
         /// <param name="errors"> errors. </param>
         /// <param name="nextLink"> next link. </param>
         /// <param name="tasks"></param>
-        /// <param name="statistics"></param>
-        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TaskStatus status, IReadOnlyList<ErrorResponse> errors, string nextLink, JobStateTasks tasks, RequestStatistics statistics)
+        /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
+        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdatedDateTime, State status, IReadOnlyList<Error> errors, string nextLink, Tasks tasks, RequestStatistics statistics)
         {
             DisplayName = displayName;
             CreatedDateTime = createdDateTime;
@@ -63,18 +63,18 @@ namespace Azure.AI.Language.Text
         /// <summary> Date and time job expires. </summary>
         public DateTimeOffset? ExpirationDateTime { get; }
         /// <summary> job ID. </summary>
-        public string JobId { get; }
+        public Guid JobId { get; }
         /// <summary> last updated date and time. </summary>
         public DateTimeOffset LastUpdatedDateTime { get; }
         /// <summary> status. </summary>
-        public TaskStatus Status { get; }
+        public State Status { get; }
         /// <summary> errors. </summary>
-        public IReadOnlyList<ErrorResponse> Errors { get; }
+        public IReadOnlyList<Error> Errors { get; }
         /// <summary> next link. </summary>
         public string NextLink { get; }
         /// <summary> Gets the tasks. </summary>
-        public JobStateTasks Tasks { get; }
-        /// <summary> Gets the statistics. </summary>
+        public Tasks Tasks { get; }
+        /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public RequestStatistics Statistics { get; }
     }
 }

@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class RequestStatistics
     {
@@ -22,6 +24,8 @@ namespace Azure.AI.Language.Text
             int validDocumentsCount = default;
             int erroneousDocumentsCount = default;
             long transactionsCount = default;
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documentsCount"u8))
@@ -44,8 +48,10 @@ namespace Azure.AI.Language.Text
                     transactionsCount = property.Value.GetInt64();
                     continue;
                 }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
-            return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount);
+            additionalProperties = additionalPropertiesDictionary;
+            return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, additionalProperties);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

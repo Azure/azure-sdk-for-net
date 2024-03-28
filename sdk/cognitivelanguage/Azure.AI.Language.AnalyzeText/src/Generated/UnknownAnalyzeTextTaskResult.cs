@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Unknown version of AnalyzeTextTaskResult. </summary>
     internal partial class UnknownAnalyzeTextTaskResult : AnalyzeTextTaskResult

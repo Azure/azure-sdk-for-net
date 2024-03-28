@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary>
     /// This object contains information of the detected entity components. The possible component types may expand in the future. Parsing code should handle unexpected values gracefully

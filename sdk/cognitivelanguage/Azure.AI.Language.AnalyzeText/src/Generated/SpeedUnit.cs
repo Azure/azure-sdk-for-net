@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The speed Unit of measurement. </summary>
     public readonly partial struct SpeedUnit : IEquatable<SpeedUnit>
@@ -28,9 +28,9 @@ namespace Azure.AI.Language.Text
         private const string KilometersPerMinuteValue = "KilometersPerMinute";
         private const string KilometersPerSecondValue = "KilometersPerSecond";
         private const string MilesPerHourValue = "MilesPerHour";
-        private const string KnotValue = "Knot";
-        private const string FootPerSecondValue = "FootPerSecond";
-        private const string FootPerMinuteValue = "FootPerMinute";
+        private const string KnotsValue = "Knots";
+        private const string FeetPerSecondValue = "FeetPerSecond";
+        private const string FeetPerMinuteValue = "FeetPerMinute";
         private const string YardsPerMinuteValue = "YardsPerMinute";
         private const string YardsPerSecondValue = "YardsPerSecond";
         private const string MetersPerMillisecondValue = "MetersPerMillisecond";
@@ -49,12 +49,12 @@ namespace Azure.AI.Language.Text
         public static SpeedUnit KilometersPerSecond { get; } = new SpeedUnit(KilometersPerSecondValue);
         /// <summary> MilesPerHour. </summary>
         public static SpeedUnit MilesPerHour { get; } = new SpeedUnit(MilesPerHourValue);
-        /// <summary> Knot. </summary>
-        public static SpeedUnit Knot { get; } = new SpeedUnit(KnotValue);
-        /// <summary> FootPerSecond. </summary>
-        public static SpeedUnit FootPerSecond { get; } = new SpeedUnit(FootPerSecondValue);
-        /// <summary> FootPerMinute. </summary>
-        public static SpeedUnit FootPerMinute { get; } = new SpeedUnit(FootPerMinuteValue);
+        /// <summary> Knots. </summary>
+        public static SpeedUnit Knots { get; } = new SpeedUnit(KnotsValue);
+        /// <summary> FeetPerSecond. </summary>
+        public static SpeedUnit FeetPerSecond { get; } = new SpeedUnit(FeetPerSecondValue);
+        /// <summary> FeetPerMinute. </summary>
+        public static SpeedUnit FeetPerMinute { get; } = new SpeedUnit(FeetPerMinuteValue);
         /// <summary> YardsPerMinute. </summary>
         public static SpeedUnit YardsPerMinute { get; } = new SpeedUnit(YardsPerMinuteValue);
         /// <summary> YardsPerSecond. </summary>

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Represents the Volume entity Metadata model. </summary>
     public partial class VolumeMetadata : BaseMetadata

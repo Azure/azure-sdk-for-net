@@ -9,77 +9,44 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The CustomHealthcareEntity. </summary>
-    public partial class CustomHealthcareEntity
+    public partial class CustomHealthcareEntity : HealthcareEntity
     {
         /// <summary> Initializes a new instance of <see cref="CustomHealthcareEntity"/>. </summary>
-        /// <param name="text"> NamedEntity text as appears in the request. </param>
-        /// <param name="category"> Healthcare NamedEntity Category. </param>
+        /// <param name="text"> Entity text as appears in the request. </param>
+        /// <param name="category"> Healthcare Entity Category. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        internal CustomHealthcareEntity(string text, HealthcareEntityCategory category, int offset, int length, double confidenceScore)
+        internal CustomHealthcareEntity(string text, HealthcareEntityCategory category, int offset, int length, double confidenceScore) : base(text, category, offset, length, confidenceScore)
         {
             Argument.AssertNotNull(text, nameof(text));
 
-            Text = text;
-            Category = category;
-            Offset = offset;
-            Length = length;
-            ConfidenceScore = confidenceScore;
-            Links = new ChangeTrackingList<HealthcareEntityLink>();
             EntityComponentInformation = new ChangeTrackingList<EntityComponentInformation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomHealthcareEntity"/>. </summary>
-        /// <param name="text"> NamedEntity text as appears in the request. </param>
-        /// <param name="category"> Healthcare NamedEntity Category. </param>
-        /// <param name="subcategory"> (Optional) NamedEntity sub type. </param>
+        /// <param name="text"> Entity text as appears in the request. </param>
+        /// <param name="category"> Healthcare Entity Category. </param>
+        /// <param name="subcategory"> (Optional) Entity sub type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <param name="assertion"></param>
         /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
-        /// <param name="links"> NamedEntity references in known data sources. </param>
-        /// <param name="entityComponentInformation"> (Optional) NamedEntity component information listing fired components of the extracted entity. This object only applies for custom healthcare. </param>
-        internal CustomHealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareAssertion assertion, string name, IReadOnlyList<HealthcareEntityLink> links, IReadOnlyList<EntityComponentInformation> entityComponentInformation)
+        /// <param name="links"> Entity references in known data sources. </param>
+        /// <param name="entityComponentInformation"> (Optional) Entity component information listing fired components of the extracted entity. This object only applies for custom healthcare. </param>
+        internal CustomHealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareAssertion assertion, string name, IReadOnlyList<HealthcareEntityLink> links, IReadOnlyList<EntityComponentInformation> entityComponentInformation) : base(text, category, subcategory, offset, length, confidenceScore, assertion, name, links)
         {
-            Text = text;
-            Category = category;
-            Subcategory = subcategory;
-            Offset = offset;
-            Length = length;
-            ConfidenceScore = confidenceScore;
-            Assertion = assertion;
-            Name = name;
-            Links = links;
             EntityComponentInformation = entityComponentInformation;
         }
 
-        /// <summary> NamedEntity text as appears in the request. </summary>
-        public string Text { get; }
-        /// <summary> Healthcare NamedEntity Category. </summary>
-        public HealthcareEntityCategory Category { get; }
-        /// <summary> (Optional) NamedEntity sub type. </summary>
-        public string Subcategory { get; }
-        /// <summary> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </summary>
-        public int Offset { get; }
-        /// <summary> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </summary>
-        public int Length { get; }
-        /// <summary> Confidence score between 0 and 1 of the extracted entity. </summary>
-        public double ConfidenceScore { get; }
-        /// <summary> Gets the assertion. </summary>
-        public HealthcareAssertion Assertion { get; }
-        /// <summary> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </summary>
-        public string Name { get; }
-        /// <summary> NamedEntity references in known data sources. </summary>
-        public IReadOnlyList<HealthcareEntityLink> Links { get; }
         /// <summary>
-        /// (Optional) NamedEntity component information listing fired components of the extracted entity. This object only applies for custom healthcare.
-        /// Please note <see cref="Text.EntityComponentInformation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// (Optional) Entity component information listing fired components of the extracted entity. This object only applies for custom healthcare.
+        /// Please note <see cref="AnalyzeText.EntityComponentInformation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PrebuiltComponent"/>, <see cref="LearnedComponent"/> and <see cref="ListComponent"/>.
         /// </summary>
         public IReadOnlyList<EntityComponentInformation> EntityComponentInformation { get; }

@@ -5,25 +5,19 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> A Metadata for temporal set entity instances. </summary>
     public partial class TemporalSetMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="TemporalSetMetadata"/>. </summary>
-        /// <param name="dateValues"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dateValues"/> is null. </exception>
-        internal TemporalSetMetadata(IEnumerable<DateValue> dateValues)
+        internal TemporalSetMetadata()
         {
-            Argument.AssertNotNull(dateValues, nameof(dateValues));
-
             MetadataKind = MetadataKind.TemporalSetMetadata;
-            DateValues = dateValues.ToList();
+            DateValues = new ChangeTrackingList<DateValue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TemporalSetMetadata"/>. </summary>

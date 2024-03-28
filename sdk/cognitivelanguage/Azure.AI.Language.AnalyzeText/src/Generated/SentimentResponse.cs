@@ -10,47 +10,36 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary> PredictedSentiment analysis per document. </summary>
-    public partial class SentimentResult
+    /// <summary> Sentiment analysis per document. </summary>
+    public partial class SentimentResponse : PreBuiltResult
     {
-        /// <summary> Initializes a new instance of <see cref="SentimentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentResponse"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        /// <param name="documents"> Response by document. </param>
+        /// <param name="documents"> The sentiment analysis results for each document in the input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="documents"/> is null. </exception>
-        internal SentimentResult(IEnumerable<AnalyzeTextDocumentError> errors, string modelVersion, IEnumerable<SentimentResponseWithDocumentDetectedLanguage> documents)
+        internal SentimentResponse(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<SentimentDocumentResultWithDetectedLanguage> documents) : base(errors, modelVersion)
         {
             Argument.AssertNotNull(errors, nameof(errors));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
             Argument.AssertNotNull(documents, nameof(documents));
 
-            Errors = errors.ToList();
-            ModelVersion = modelVersion;
             Documents = documents.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SentimentResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentResponse"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
-        /// <param name="statistics"></param>
+        /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        /// <param name="documents"> Response by document. </param>
-        internal SentimentResult(IReadOnlyList<AnalyzeTextDocumentError> errors, RequestStatistics statistics, string modelVersion, IReadOnlyList<SentimentResponseWithDocumentDetectedLanguage> documents)
+        /// <param name="documents"> The sentiment analysis results for each document in the input. </param>
+        internal SentimentResponse(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IReadOnlyList<SentimentDocumentResultWithDetectedLanguage> documents) : base(errors, statistics, modelVersion)
         {
-            Errors = errors;
-            Statistics = statistics;
-            ModelVersion = modelVersion;
             Documents = documents;
         }
 
-        /// <summary> Errors by document id. </summary>
-        public IReadOnlyList<AnalyzeTextDocumentError> Errors { get; }
-        /// <summary> Gets the statistics. </summary>
-        public RequestStatistics Statistics { get; }
-        /// <summary> This field indicates which model is used for scoring. </summary>
-        public string ModelVersion { get; }
-        /// <summary> Response by document. </summary>
-        public IReadOnlyList<SentimentResponseWithDocumentDetectedLanguage> Documents { get; }
+        /// <summary> The sentiment analysis results for each document in the input. </summary>
+        public IReadOnlyList<SentimentDocumentResultWithDetectedLanguage> Documents { get; }
     }
 }

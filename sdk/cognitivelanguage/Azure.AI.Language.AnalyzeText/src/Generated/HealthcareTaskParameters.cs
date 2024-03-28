@@ -5,35 +5,29 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Supported parameters for a Healthcare task. </summary>
-    public partial class HealthcareTaskContent
+    public partial class HealthcareTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of <see cref="HealthcareTaskContent"/>. </summary>
-        public HealthcareTaskContent()
+        /// <summary> Initializes a new instance of <see cref="HealthcareTaskParameters"/>. </summary>
+        public HealthcareTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareTaskContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="stringIndexType"></param>
         /// <param name="fhirVersion"> The FHIR Spec version that the result will use to format the fhirBundle. For additional information see https://www.hl7.org/fhir/overview.html. </param>
         /// <param name="documentType"> Document type that can be provided as input for Fhir Documents. Expect to have fhirVersion provided when used. Behavior of using None enum is the same as not using the documentType parameter. </param>
-        internal HealthcareTaskContent(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType, FhirVersion? fhirVersion, HealthcareDocumentType? documentType)
+        internal HealthcareTaskParameters(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType, FhirVersion? fhirVersion, HealthcareDocumentType? documentType) : base(loggingOptOut, modelVersion)
         {
-            LoggingOptOut = loggingOptOut;
-            ModelVersion = modelVersion;
             StringIndexType = stringIndexType;
             FhirVersion = fhirVersion;
             DocumentType = documentType;
         }
 
-        /// <summary> logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
-        /// <summary> model version. </summary>
-        public string ModelVersion { get; set; }
         /// <summary> Gets or sets the string index type. </summary>
         public StringIndexType? StringIndexType { get; set; }
         /// <summary> The FHIR Spec version that the result will use to format the fhirBundle. For additional information see https://www.hl7.org/fhir/overview.html. </summary>

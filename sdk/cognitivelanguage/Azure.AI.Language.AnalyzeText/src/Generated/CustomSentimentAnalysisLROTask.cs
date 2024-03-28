@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Use custom models to ease the process of sentiment analysis from documents like product reviews. </summary>
     public partial class CustomSentimentAnalysisLROTask : AnalyzeTextLROTask
@@ -20,12 +20,12 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal CustomSentimentAnalysisLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomSentimentAnalysisTaskContent parameters) : base(taskName, kind)
+        internal CustomSentimentAnalysisLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomSentimentAnalysisTaskParameters parameters) : base(taskName, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public CustomSentimentAnalysisTaskContent Parameters { get; set; }
+        public CustomSentimentAnalysisTaskParameters Parameters { get; set; }
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The sorting criteria to use for the results of Extractive Summarization. </summary>
     public readonly partial struct ExtractiveSummarizationSortingCriteria : IEquatable<ExtractiveSummarizationSortingCriteria>

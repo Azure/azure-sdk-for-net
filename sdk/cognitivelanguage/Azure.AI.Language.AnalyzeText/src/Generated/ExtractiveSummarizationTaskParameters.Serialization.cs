@@ -8,23 +8,13 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class ExtractiveSummarizationTaskContent : IUtf8JsonSerializable
+    public partial class ExtractiveSummarizationTaskParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LoggingOptOut))
-            {
-                writer.WritePropertyName("loggingOptOut"u8);
-                writer.WriteBooleanValue(LoggingOptOut.Value);
-            }
-            if (Optional.IsDefined(ModelVersion))
-            {
-                writer.WritePropertyName("modelVersion"u8);
-                writer.WriteStringValue(ModelVersion);
-            }
             if (Optional.IsDefined(SentenceCount))
             {
                 writer.WritePropertyName("sentenceCount"u8);
@@ -44,6 +34,16 @@ namespace Azure.AI.Language.Text
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
+            }
+            if (Optional.IsDefined(ModelVersion))
+            {
+                writer.WritePropertyName("modelVersion"u8);
+                writer.WriteStringValue(ModelVersion);
+            }
+            if (Optional.IsDefined(LoggingOptOut))
+            {
+                writer.WritePropertyName("loggingOptOut"u8);
+                writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             writer.WriteEndObject();
         }

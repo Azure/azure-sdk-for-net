@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Enum that defines the length of the output summaries. </summary>
     public readonly partial struct SummaryLengthBucket : IEquatable<SummaryLengthBucket>

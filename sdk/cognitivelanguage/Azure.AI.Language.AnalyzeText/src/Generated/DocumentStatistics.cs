@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
     public partial class DocumentStatistics

@@ -10,10 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary> Custom Task Results. </summary>
-    public partial class CustomLabelClassificationResultWithDocumentDetectedLanguage
+    /// <summary> The CustomLabelClassificationResultWithDocumentDetectedLanguage. </summary>
+    public partial class CustomLabelClassificationResultWithDocumentDetectedLanguage : CustomResult
     {
         /// <summary> Initializes a new instance of <see cref="CustomLabelClassificationResultWithDocumentDetectedLanguage"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
@@ -21,16 +21,13 @@ namespace Azure.AI.Language.Text
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Response by document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="documents"/> is null. </exception>
-        internal CustomLabelClassificationResultWithDocumentDetectedLanguage(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<ClassificationDocumentResult> documents)
+        internal CustomLabelClassificationResultWithDocumentDetectedLanguage(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<ClassificationDocumentResultWithDetectedLanguage> documents) : base(errors, projectName, deploymentName)
         {
             Argument.AssertNotNull(errors, nameof(errors));
             Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(documents, nameof(documents));
 
-            Errors = errors.ToList();
-            ProjectName = projectName;
-            DeploymentName = deploymentName;
             Documents = documents.ToList();
         }
 
@@ -40,28 +37,12 @@ namespace Azure.AI.Language.Text
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Response by document. </param>
-        /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        internal CustomLabelClassificationResultWithDocumentDetectedLanguage(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IReadOnlyList<ClassificationDocumentResult> documents, string detectedLanguage)
+        internal CustomLabelClassificationResultWithDocumentDetectedLanguage(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IReadOnlyList<ClassificationDocumentResultWithDetectedLanguage> documents) : base(errors, statistics, projectName, deploymentName)
         {
-            Errors = errors;
-            Statistics = statistics;
-            ProjectName = projectName;
-            DeploymentName = deploymentName;
             Documents = documents;
-            DetectedLanguage = detectedLanguage;
         }
 
-        /// <summary> Errors by document id. </summary>
-        public IReadOnlyList<DocumentError> Errors { get; }
-        /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
-        public RequestStatistics Statistics { get; }
-        /// <summary> This field indicates the project name for the model. </summary>
-        public string ProjectName { get; }
-        /// <summary> This field indicates the deployment name for the model. </summary>
-        public string DeploymentName { get; }
         /// <summary> Response by document. </summary>
-        public IReadOnlyList<ClassificationDocumentResult> Documents { get; }
-        /// <summary> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </summary>
-        public string DetectedLanguage { get; }
+        public IReadOnlyList<ClassificationDocumentResultWithDetectedLanguage> Documents { get; }
     }
 }

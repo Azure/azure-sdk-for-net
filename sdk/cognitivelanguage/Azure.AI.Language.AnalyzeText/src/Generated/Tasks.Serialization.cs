@@ -10,11 +10,11 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class JobStateTasks
+    public partial class Tasks
     {
-        internal static JobStateTasks DeserializeTasks(JsonElement element)
+        internal static Tasks DeserializeTasks(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -62,12 +62,12 @@ namespace Azure.AI.Language.Text
                     continue;
                 }
             }
-            return new JobStateTasks(completed, failed, inProgress, total, Optional.ToList(items));
+            return new Tasks(completed, failed, inProgress, total, Optional.ToList(items));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static JobStateTasks FromResponse(Response response)
+        internal static Tasks FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeTasks(document.RootElement);

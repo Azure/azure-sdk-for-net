@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.Language.Text;
+using Azure.AI.Language.AnalyzeText;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -20,7 +20,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample7_AnalyzeTextSubmitJob_HealthcareLROTask
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            AnalyzeTextClient client = new AnalyzeTextClient(endpoint, credential);;
 
             string documentA =
                 "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM |"

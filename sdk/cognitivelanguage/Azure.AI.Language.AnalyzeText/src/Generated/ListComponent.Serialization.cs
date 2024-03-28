@@ -7,8 +7,9 @@
 
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class ListComponent
     {
@@ -18,7 +19,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            string value = default;
+            Optional<string> value = default;
             EntityComponentKind entityComponentKind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,7 +34,7 @@ namespace Azure.AI.Language.Text
                     continue;
                 }
             }
-            return new ListComponent(entityComponentKind, value);
+            return new ListComponent(entityComponentKind, value.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -8,17 +8,17 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary> The PIIEntityRecognitionLROResult. </summary>
-    public partial class PIIEntityRecognitionLROResult : AnalyzeTextLROResult
+    /// <summary> The PiiEntityRecognitionLROResult. </summary>
+    public partial class PiiEntityRecognitionLROResult : AnalyzeTextLROResult
     {
-        /// <summary> Initializes a new instance of <see cref="PIIEntityRecognitionLROResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiEntityRecognitionLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal PIIEntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status, PIIResult results) : base(lastUpdateDateTime, status)
+        internal PiiEntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime, State status, PiiResult results) : base(lastUpdateDateTime, status)
         {
             Argument.AssertNotNull(results, nameof(results));
 
@@ -26,18 +26,18 @@ namespace Azure.AI.Language.Text
             Results = results;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PIIEntityRecognitionLROResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiEntityRecognitionLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"></param>
         /// <param name="results"></param>
-        internal PIIEntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status, string taskName, AnalyzeTextLROResultsKind kind, PIIResult results) : base(lastUpdateDateTime, status, taskName, kind)
+        internal PiiEntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime, State status, string taskName, AnalyzeTextLROResultsKind kind, PiiResult results) : base(lastUpdateDateTime, status, taskName, kind)
         {
             Results = results;
         }
 
         /// <summary> Gets the results. </summary>
-        public PIIResult Results { get; }
+        public PiiResult Results { get; }
     }
 }

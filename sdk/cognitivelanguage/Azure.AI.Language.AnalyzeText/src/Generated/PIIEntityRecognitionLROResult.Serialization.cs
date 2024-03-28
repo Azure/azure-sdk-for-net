@@ -10,26 +10,26 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class PIIEntityRecognitionLROResult
+    public partial class PiiEntityRecognitionLROResult
     {
-        internal static PIIEntityRecognitionLROResult DeserializePIIEntityRecognitionLROResult(JsonElement element)
+        internal static PiiEntityRecognitionLROResult DeserializePiiEntityRecognitionLROResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PIIResult results = default;
+            PiiResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            TaskStatus status = default;
+            State status = default;
             Optional<string> taskName = default;
             AnalyzeTextLROResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = PIIResult.DeserializePIIResult(property.Value);
+                    results = PiiResult.DeserializePiiResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateDateTime"u8))
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new TaskStatus(property.Value.GetString());
+                    status = new State(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))
@@ -53,15 +53,15 @@ namespace Azure.AI.Language.Text
                     continue;
                 }
             }
-            return new PIIEntityRecognitionLROResult(lastUpdateDateTime, status, taskName.Value, kind, results);
+            return new PiiEntityRecognitionLROResult(lastUpdateDateTime, status, taskName.Value, kind, results);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new PIIEntityRecognitionLROResult FromResponse(Response response)
+        internal static new PiiEntityRecognitionLROResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializePIIEntityRecognitionLROResult(document.RootElement);
+            return DeserializePiiEntityRecognitionLROResult(document.RootElement);
         }
     }
 }

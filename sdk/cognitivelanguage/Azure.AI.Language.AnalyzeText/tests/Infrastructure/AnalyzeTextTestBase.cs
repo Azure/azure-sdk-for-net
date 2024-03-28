@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.AI.Language.Text;
+using Azure.AI.Language.AnalyzeText;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         /// <summary>
         /// Gets an instrumented client of type <typeparamref name="TClient"/>.
         /// </summary>
-        protected LanguageClient Client { get; private set; }
+        protected AnalyzeTextClient client { get; private set; }
 
         /// <summary>
         /// Gets the service version used for this instance of the test fixture.

@@ -8,15 +8,18 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class EntityInferenceConfig : IUtf8JsonSerializable
+    public partial class EntityInferenceOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("excludeNormalizedValues"u8);
-            writer.WriteBooleanValue(ExcludeNormalizedValues);
+            if (Optional.IsDefined(ExcludeNormalizedValues))
+            {
+                writer.WritePropertyName("excludeNormalizedValues"u8);
+                writer.WriteBooleanValue(ExcludeNormalizedValues.Value);
+            }
             writer.WriteEndObject();
         }
 

@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The TargetRelation. </summary>
     public partial class TargetRelation
@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Text
         /// <param name="ref"> The JSON pointer indicating the linked object. </param>
         /// <param name="relationType"> The type related to the target. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ref"/> is null. </exception>
-        internal TargetRelation(string @ref, SentimentRelationType relationType)
+        internal TargetRelation(string @ref, TargetRelationType relationType)
         {
             Argument.AssertNotNull(@ref, nameof(@ref));
 
@@ -28,6 +28,6 @@ namespace Azure.AI.Language.Text
         /// <summary> The JSON pointer indicating the linked object. </summary>
         public string Ref { get; }
         /// <summary> The type related to the target. </summary>
-        public SentimentRelationType RelationType { get; }
+        public TargetRelationType RelationType { get; }
     }
 }

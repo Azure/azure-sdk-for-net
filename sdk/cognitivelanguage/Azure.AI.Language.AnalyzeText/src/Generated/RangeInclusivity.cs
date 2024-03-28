@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The range inclusiveness of this property property. </summary>
     public readonly partial struct RangeInclusivity : IEquatable<RangeInclusivity>

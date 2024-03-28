@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> An optional modifier of a date/time instance. </summary>
     public readonly partial struct TemporalModifier : IEquatable<TemporalModifier>

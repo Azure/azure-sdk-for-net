@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class EntityWithMetadata
     {
@@ -20,17 +20,41 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
+            Optional<BaseMetadata> metadata = default;
+            string type = default;
+            IReadOnlyList<EntityTag> tags = default;
             string text = default;
             string category = default;
             Optional<string> subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
-            string type = default;
-            IReadOnlyList<EntityTag> tags = default;
-            Optional<BaseMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    metadata = BaseMetadata.DeserializeBaseMetadata(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    List<EntityTag> array = new List<EntityTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EntityTag.DeserializeEntityTag(item));
+                    }
+                    tags = array;
+                    continue;
+                }
                 if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
@@ -61,37 +85,13 @@ namespace Azure.AI.Language.Text
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    List<EntityTag> array = new List<EntityTag>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(EntityTag.DeserializeEntityTag(item));
-                    }
-                    tags = array;
-                    continue;
-                }
-                if (property.NameEquals("metadata"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    metadata = BaseMetadata.DeserializeBaseMetadata(property.Value);
-                    continue;
-                }
             }
             return new EntityWithMetadata(text, category, subcategory.Value, offset, length, confidenceScore, type, tags, metadata.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EntityWithMetadata FromResponse(Response response)
+        internal static new EntityWithMetadata FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeEntityWithMetadata(document.RootElement);

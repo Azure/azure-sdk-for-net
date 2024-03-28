@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Result for Dynamic Classification task. </summary>
     public partial class DynamicClassificationTaskResult : AnalyzeTextTaskResult

@@ -7,19 +7,19 @@
 
 using System;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary>
-    /// Returns the current state of the task.
+    /// The AnalyzeTextLROResult.
     /// Please note <see cref="AnalyzeTextLROResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CustomEntityRecognitionLROResult"/>, <see cref="CustomSingleLabelClassificationLROResult"/>, <see cref="CustomMultiLabelClassificationLROResult"/>, <see cref="EntityLinkingLROResult"/>, <see cref="EntityRecognitionLROResult"/>, <see cref="HealthcareLROResult"/>, <see cref="KeyPhraseExtractionLROResult"/>, <see cref="PIIEntityRecognitionLROResult"/>, <see cref="SentimentLROResult"/>, <see cref="CustomSentimentAnalysisLROResult"/>, <see cref="ExtractiveSummarizationLROResult"/>, <see cref="AbstractiveSummarizationLROResult"/>, <see cref="CustomAbstractiveSummarizationLROResult"/> and <see cref="CustomHealthcareLROResult"/>.
+    /// The available derived classes include <see cref="CustomEntityRecognitionLROResult"/>, <see cref="CustomSingleLabelClassificationLROResult"/>, <see cref="CustomMultiLabelClassificationLROResult"/>, <see cref="EntityLinkingLROResult"/>, <see cref="EntityRecognitionLROResult"/>, <see cref="HealthcareLROResult"/>, <see cref="KeyPhraseExtractionLROResult"/>, <see cref="PiiEntityRecognitionLROResult"/>, <see cref="SentimentLROResult"/>, <see cref="CustomSentimentAnalysisLROResult"/>, <see cref="ExtractiveSummarizationLROResult"/>, <see cref="AbstractiveSummarizationLROResult"/>, <see cref="CustomAbstractiveSummarizationLROResult"/> and <see cref="CustomHealthcareLROResult"/>.
     /// </summary>
     public abstract partial class AnalyzeTextLROResult
     {
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        protected AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status)
+        protected AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, State status)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"></param>
-        internal AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status, string taskName, AnalyzeTextLROResultsKind kind)
+        internal AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, State status, string taskName, AnalyzeTextLROResultsKind kind)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;
@@ -41,10 +41,10 @@ namespace Azure.AI.Language.Text
         /// <summary> The last updated time in UTC for the task. </summary>
         public DateTimeOffset LastUpdateDateTime { get; }
         /// <summary> The status of the task at the mentioned last update time. </summary>
-        public TaskStatus Status { get; }
+        public State Status { get; }
         /// <summary> task name. </summary>
         public string TaskName { get; }
         /// <summary> Gets or sets the kind. </summary>
-        public AnalyzeTextLROResultsKind Kind { get; set; }
+        internal AnalyzeTextLROResultsKind Kind { get; set; }
     }
 }

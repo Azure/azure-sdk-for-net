@@ -5,12 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class TemporalSpanValues
     {
@@ -20,8 +19,8 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            Optional<DateTimeOffset> begin = default;
-            Optional<DateTimeOffset> end = default;
+            Optional<string> begin = default;
+            Optional<string> end = default;
             Optional<string> duration = default;
             Optional<TemporalModifier> modifier = default;
             Optional<string> timex = default;
@@ -29,20 +28,12 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("begin"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    begin = property.Value.GetDateTimeOffset("O");
+                    begin = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("end"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    end = property.Value.GetDateTimeOffset("O");
+                    end = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("duration"u8))
@@ -65,7 +56,7 @@ namespace Azure.AI.Language.Text
                     continue;
                 }
             }
-            return new TemporalSpanValues(Optional.ToNullable(begin), Optional.ToNullable(end), duration.Value, Optional.ToNullable(modifier), timex.Value);
+            return new TemporalSpanValues(begin.Value, end.Value, duration.Value, Optional.ToNullable(modifier), timex.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

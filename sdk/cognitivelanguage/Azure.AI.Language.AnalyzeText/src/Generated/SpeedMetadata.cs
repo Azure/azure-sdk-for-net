@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Represents the Speed entity Metadata model. </summary>
     public partial class SpeedMetadata : BaseMetadata

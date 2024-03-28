@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class CustomHealthcareEntity
     {
@@ -20,6 +20,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
+            Optional<IReadOnlyList<EntityComponentInformation>> entityComponentInformation = default;
             string text = default;
             HealthcareEntityCategory category = default;
             Optional<string> subcategory = default;
@@ -29,9 +30,22 @@ namespace Azure.AI.Language.Text
             Optional<HealthcareAssertion> assertion = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<HealthcareEntityLink>> links = default;
-            Optional<IReadOnlyList<EntityComponentInformation>> entityComponentInformation = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("entityComponentInformation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EntityComponentInformation> array = new List<EntityComponentInformation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AnalyzeText.EntityComponentInformation.DeserializeEntityComponentInformation(item));
+                    }
+                    entityComponentInformation = array;
+                    continue;
+                }
                 if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
@@ -90,27 +104,13 @@ namespace Azure.AI.Language.Text
                     links = array;
                     continue;
                 }
-                if (property.NameEquals("entityComponentInformation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<EntityComponentInformation> array = new List<EntityComponentInformation>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AI.Language.Text.EntityComponentInformation.DeserializeEntityComponentInformation(item));
-                    }
-                    entityComponentInformation = array;
-                    continue;
-                }
             }
             return new CustomHealthcareEntity(text, category, subcategory.Value, offset, length, confidenceScore, assertion.Value, name.Value, Optional.ToList(links), Optional.ToList(entityComponentInformation));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CustomHealthcareEntity FromResponse(Response response)
+        internal static new CustomHealthcareEntity FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeCustomHealthcareEntity(document.RootElement);

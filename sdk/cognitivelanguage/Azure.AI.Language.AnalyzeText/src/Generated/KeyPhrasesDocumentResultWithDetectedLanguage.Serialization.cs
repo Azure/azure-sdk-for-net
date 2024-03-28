@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class KeyPhrasesDocumentResultWithDetectedLanguage
     {
@@ -20,13 +20,23 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
+            IReadOnlyList<string> keyPhrases = default;
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             Optional<DocumentStatistics> statistics = default;
-            IReadOnlyList<string> keyPhrases = default;
-            Optional<string> detectedLanguage = default;
+            Optional<DetectedLanguage> detectedLanguage = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("keyPhrases"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    keyPhrases = array;
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -51,23 +61,17 @@ namespace Azure.AI.Language.Text
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keyPhrases"u8))
-                {
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    keyPhrases = array;
-                    continue;
-                }
                 if (property.NameEquals("detectedLanguage"u8))
                 {
-                    detectedLanguage = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
                     continue;
                 }
             }
-            return new KeyPhrasesDocumentResultWithDetectedLanguage(id, warnings, statistics.Value, keyPhrases, detectedLanguage.Value);
+            return new KeyPhrasesDocumentResultWithDetectedLanguage(keyPhrases, id, warnings, statistics.Value, detectedLanguage.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

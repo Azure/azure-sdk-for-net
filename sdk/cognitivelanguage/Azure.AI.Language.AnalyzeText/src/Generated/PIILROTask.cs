@@ -5,27 +5,27 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary> The PIILROTask. </summary>
-    public partial class PIILROTask : AnalyzeTextLROTask
+    /// <summary> The PiiLROTask. </summary>
+    public partial class PiiLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of <see cref="PIILROTask"/>. </summary>
-        public PIILROTask()
+        /// <summary> Initializes a new instance of <see cref="PiiLROTask"/>. </summary>
+        public PiiLROTask()
         {
             Kind = AnalyzeTextLROTaskKind.PiiEntityRecognition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PIILROTask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiLROTask"/>. </summary>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal PIILROTask(string taskName, AnalyzeTextLROTaskKind kind, PIITaskContent parameters) : base(taskName, kind)
+        internal PiiLROTask(string taskName, AnalyzeTextLROTaskKind kind, PiiTaskParameters parameters) : base(taskName, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public PIITaskContent Parameters { get; set; }
+        public PiiTaskParameters Parameters { get; set; }
     }
 }

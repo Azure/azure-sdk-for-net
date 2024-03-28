@@ -18,7 +18,7 @@ To create a new `AnalyzeTextClient`, you will need the service endpoint and cred
 ```C# Snippet:CreateAnalyzeTextClient
 Uri endpoint = TestEnvironment.Endpoint;
 AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+AnalyzeTextClient client = new AnalyzeTextClient(endpoint, credential);;
 ```
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.

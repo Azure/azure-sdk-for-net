@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class NumericRangeMetadata
     {
@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            NumericRangeKind rangeKind = default;
+            RangeKind rangeKind = default;
             double minimum = default;
             double maximum = default;
             Optional<RangeInclusivity> rangeInclusivity = default;
@@ -28,7 +28,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("rangeKind"u8))
                 {
-                    rangeKind = new NumericRangeKind(property.Value.GetString());
+                    rangeKind = new RangeKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("minimum"u8))

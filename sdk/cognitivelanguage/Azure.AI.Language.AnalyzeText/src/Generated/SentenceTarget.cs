@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The SentenceTarget. </summary>
     public partial class SentenceTarget
@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text
         /// <param name="text"> The target text detected. </param>
         /// <param name="relations"> The array of either assessment or target objects which is related to the target. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="confidenceScores"/>, <paramref name="text"/> or <paramref name="relations"/> is null. </exception>
-        internal SentenceTarget(SentimentValue sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IEnumerable<TargetRelation> relations)
+        internal SentenceTarget(TokenSentimentValue sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IEnumerable<TargetRelation> relations)
         {
             Argument.AssertNotNull(confidenceScores, nameof(confidenceScores));
             Argument.AssertNotNull(text, nameof(text));
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Text
         /// <param name="length"> The length of the target. </param>
         /// <param name="text"> The target text detected. </param>
         /// <param name="relations"> The array of either assessment or target objects which is related to the target. </param>
-        internal SentenceTarget(SentimentValue sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IReadOnlyList<TargetRelation> relations)
+        internal SentenceTarget(TokenSentimentValue sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IReadOnlyList<TargetRelation> relations)
         {
             Sentiment = sentiment;
             ConfidenceScores = confidenceScores;
@@ -55,7 +55,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Gets the sentiment. </summary>
-        public SentimentValue Sentiment { get; }
+        public TokenSentimentValue Sentiment { get; }
         /// <summary> Gets the confidence scores. </summary>
         public TargetConfidenceScoreLabel ConfidenceScores { get; }
         /// <summary> The target offset from the start of the sentence. </summary>

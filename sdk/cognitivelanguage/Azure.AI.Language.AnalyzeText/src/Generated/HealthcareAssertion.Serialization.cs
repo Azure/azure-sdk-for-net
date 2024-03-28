@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class HealthcareAssertion
     {
@@ -19,10 +19,10 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            Optional<HealthcareConditionality> conditionality = default;
-            Optional<HealthcareCertainty> certainty = default;
-            Optional<HealthcareAssociation> association = default;
-            Optional<HealthcareTemporality> temporality = default;
+            Optional<Conditionality> conditionality = default;
+            Optional<Certainty> certainty = default;
+            Optional<Association> association = default;
+            Optional<Temporality> temporality = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionality"u8))
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    conditionality = new HealthcareConditionality(property.Value.GetString());
+                    conditionality = property.Value.GetString().ToConditionality();
                     continue;
                 }
                 if (property.NameEquals("certainty"u8))
@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    certainty = new HealthcareCertainty(property.Value.GetString());
+                    certainty = property.Value.GetString().ToCertainty();
                     continue;
                 }
                 if (property.NameEquals("association"u8))
@@ -49,7 +49,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    association = new HealthcareAssociation(property.Value.GetString());
+                    association = property.Value.GetString().ToAssociation();
                     continue;
                 }
                 if (property.NameEquals("temporality"u8))
@@ -58,7 +58,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    temporality = new HealthcareTemporality(property.Value.GetString());
+                    temporality = property.Value.GetString().ToTemporality();
                     continue;
                 }
             }

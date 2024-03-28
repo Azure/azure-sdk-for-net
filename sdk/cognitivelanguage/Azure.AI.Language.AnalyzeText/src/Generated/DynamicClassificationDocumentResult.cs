@@ -10,24 +10,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The DynamicClassificationDocumentResult. </summary>
-    public partial class DynamicClassificationDocumentResult
+    public partial class DynamicClassificationDocumentResult : DocumentResult
     {
         /// <summary> Initializes a new instance of <see cref="DynamicClassificationDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="classifications"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="classifications"/> is null. </exception>
-        internal DynamicClassificationDocumentResult(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<ClassificationResult> classifications)
+        internal DynamicClassificationDocumentResult(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<ClassificationResult> classifications) : base(id, warnings)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(warnings, nameof(warnings));
             Argument.AssertNotNull(classifications, nameof(classifications));
 
-            Id = id;
-            Warnings = warnings.ToList();
             Classifications = classifications.ToList();
         }
 
@@ -36,20 +34,11 @@ namespace Azure.AI.Language.Text
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="classifications"></param>
-        internal DynamicClassificationDocumentResult(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, IReadOnlyList<ClassificationResult> classifications)
+        internal DynamicClassificationDocumentResult(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, IReadOnlyList<ClassificationResult> classifications) : base(id, warnings, statistics)
         {
-            Id = id;
-            Warnings = warnings;
-            Statistics = statistics;
             Classifications = classifications;
         }
 
-        /// <summary> Unique, non-empty document identifier. </summary>
-        public string Id { get; }
-        /// <summary> Warnings encountered while processing document. </summary>
-        public IReadOnlyList<DocumentWarning> Warnings { get; }
-        /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
-        public DocumentStatistics Statistics { get; }
         /// <summary> Gets the classifications. </summary>
         public IReadOnlyList<ClassificationResult> Classifications { get; }
     }

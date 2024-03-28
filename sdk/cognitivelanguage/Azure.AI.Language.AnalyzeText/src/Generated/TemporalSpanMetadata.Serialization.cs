@@ -7,8 +7,9 @@
 
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class TemporalSpanMetadata
     {
@@ -18,12 +19,16 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            TemporalSpanValues spanValues = default;
+            Optional<TemporalSpanValues> spanValues = default;
             MetadataKind metadataKind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("spanValues"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     spanValues = TemporalSpanValues.DeserializeTemporalSpanValues(property.Value);
                     continue;
                 }
@@ -33,7 +38,7 @@ namespace Azure.AI.Language.Text
                     continue;
                 }
             }
-            return new TemporalSpanMetadata(metadataKind, spanValues);
+            return new TemporalSpanMetadata(metadataKind, spanValues.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

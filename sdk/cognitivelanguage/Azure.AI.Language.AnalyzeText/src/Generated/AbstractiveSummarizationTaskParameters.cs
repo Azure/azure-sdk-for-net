@@ -5,40 +5,38 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Supported parameters for the pre-build Abstractive Summarization task. </summary>
-    public partial class AbstractiveSummarizationTaskContent
+    public partial class AbstractiveSummarizationTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationTaskContent"/>. </summary>
-        public AbstractiveSummarizationTaskContent()
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationTaskParameters"/>. </summary>
+        public AbstractiveSummarizationTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationTaskContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="sentenceCount"> Controls the approximate number of sentences in the output summaries. </param>
         /// <param name="stringIndexType"> String index type. </param>
         /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
-        internal AbstractiveSummarizationTaskContent(bool? loggingOptOut, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength)
+        /// <param name="query"> (Optional) If provided, the query will be used to generate the summary. </param>
+        internal AbstractiveSummarizationTaskParameters(bool? loggingOptOut, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength, string query) : base(loggingOptOut, modelVersion)
         {
-            LoggingOptOut = loggingOptOut;
-            ModelVersion = modelVersion;
             SentenceCount = sentenceCount;
             StringIndexType = stringIndexType;
             SummaryLength = summaryLength;
+            Query = query;
         }
 
-        /// <summary> logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
-        /// <summary> model version. </summary>
-        public string ModelVersion { get; set; }
         /// <summary> Controls the approximate number of sentences in the output summaries. </summary>
         public int? SentenceCount { get; set; }
         /// <summary> String index type. </summary>
         public StringIndexType? StringIndexType { get; set; }
         /// <summary> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </summary>
         public SummaryLengthBucket? SummaryLength { get; set; }
+        /// <summary> (Optional) If provided, the query will be used to generate the summary. </summary>
+        public string Query { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     internal partial class UnknownAnalyzeTextLROResult
     {
@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Text
                 return null;
             }
             DateTimeOffset lastUpdateDateTime = default;
-            TaskStatus status = default;
+            State status = default;
             Optional<string> taskName = default;
             AnalyzeTextLROResultsKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new TaskStatus(property.Value.GetString());
+                    status = new State(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))

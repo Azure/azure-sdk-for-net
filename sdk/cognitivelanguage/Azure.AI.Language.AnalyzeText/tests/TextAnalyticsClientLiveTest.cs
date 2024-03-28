@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Language.Text;
+using Azure.AI.Language.AnalyzeText;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 

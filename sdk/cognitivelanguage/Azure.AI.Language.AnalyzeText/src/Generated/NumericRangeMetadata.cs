@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> represents the Metadata of numeric intervals. </summary>
     public partial class NumericRangeMetadata : BaseMetadata
@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Text
         /// <param name="rangeKind"></param>
         /// <param name="minimum"> The beginning value of  the interval. </param>
         /// <param name="maximum"> The ending value of the interval. </param>
-        internal NumericRangeMetadata(NumericRangeKind rangeKind, double minimum, double maximum)
+        internal NumericRangeMetadata(RangeKind rangeKind, double minimum, double maximum)
         {
             MetadataKind = MetadataKind.NumericRangeMetadata;
             RangeKind = rangeKind;
@@ -28,7 +28,7 @@ namespace Azure.AI.Language.Text
         /// <param name="minimum"> The beginning value of  the interval. </param>
         /// <param name="maximum"> The ending value of the interval. </param>
         /// <param name="rangeInclusivity"></param>
-        internal NumericRangeMetadata(MetadataKind metadataKind, NumericRangeKind rangeKind, double minimum, double maximum, RangeInclusivity? rangeInclusivity) : base(metadataKind)
+        internal NumericRangeMetadata(MetadataKind metadataKind, RangeKind rangeKind, double minimum, double maximum, RangeInclusivity? rangeInclusivity) : base(metadataKind)
         {
             RangeKind = rangeKind;
             Minimum = minimum;
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Gets the range kind. </summary>
-        public NumericRangeKind RangeKind { get; }
+        public RangeKind RangeKind { get; }
         /// <summary> The beginning value of  the interval. </summary>
         public double Minimum { get; }
         /// <summary> The ending value of the interval. </summary>

@@ -5,19 +5,24 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The class that houses the inference options allowed for named entity recognition. </summary>
-    public partial class EntityInferenceConfig
+    public partial class EntityInferenceOptions
     {
-        /// <summary> Initializes a new instance of <see cref="EntityInferenceConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityInferenceOptions"/>. </summary>
+        public EntityInferenceOptions()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntityInferenceOptions"/>. </summary>
         /// <param name="excludeNormalizedValues"> Option to include/exclude the detected entity values to be normalized and included in the metadata. The numeric and temporal entity types support value normalization. </param>
-        public EntityInferenceConfig(bool excludeNormalizedValues)
+        internal EntityInferenceOptions(bool? excludeNormalizedValues)
         {
             ExcludeNormalizedValues = excludeNormalizedValues;
         }
 
         /// <summary> Option to include/exclude the detected entity values to be normalized and included in the metadata. The numeric and temporal entity types support value normalization. </summary>
-        public bool ExcludeNormalizedValues { get; }
+        public bool? ExcludeNormalizedValues { get; set; }
     }
 }

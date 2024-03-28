@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class LanguageDetectionResult
     {
@@ -20,18 +20,28 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            IReadOnlyList<AnalyzeTextDocumentError> errors = default;
+            IReadOnlyList<LanguageDetectionDocumentResult> documents = default;
+            IReadOnlyList<DocumentError> errors = default;
             Optional<RequestStatistics> statistics = default;
             string modelVersion = default;
-            Optional<IReadOnlyList<LanguageDetectionDocumentResult>> documents = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"u8))
+                if (property.NameEquals("documents"u8))
                 {
-                    List<AnalyzeTextDocumentError> array = new List<AnalyzeTextDocumentError>();
+                    List<LanguageDetectionDocumentResult> array = new List<LanguageDetectionDocumentResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeTextDocumentError.DeserializeAnalyzeTextDocumentError(item));
+                        array.Add(LanguageDetectionDocumentResult.DeserializeLanguageDetectionDocumentResult(item));
+                    }
+                    documents = array;
+                    continue;
+                }
+                if (property.NameEquals("errors"u8))
+                {
+                    List<DocumentError> array = new List<DocumentError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentError.DeserializeDocumentError(item));
                     }
                     errors = array;
                     continue;
@@ -50,22 +60,8 @@ namespace Azure.AI.Language.Text
                     modelVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("documents"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<LanguageDetectionDocumentResult> array = new List<LanguageDetectionDocumentResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(LanguageDetectionDocumentResult.DeserializeLanguageDetectionDocumentResult(item));
-                    }
-                    documents = array;
-                    continue;
-                }
             }
-            return new LanguageDetectionResult(errors, statistics.Value, modelVersion, Optional.ToList(documents));
+            return new LanguageDetectionResult(errors, statistics.Value, modelVersion, documents);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

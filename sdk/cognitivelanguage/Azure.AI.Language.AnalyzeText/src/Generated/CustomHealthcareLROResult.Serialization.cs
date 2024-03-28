@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class CustomHealthcareLROResult
     {
@@ -20,19 +20,15 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            Optional<CustomHealthcareResult> results = default;
+            CustomHealthcareResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            TaskStatus status = default;
+            State status = default;
             Optional<string> taskName = default;
             AnalyzeTextLROResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     results = CustomHealthcareResult.DeserializeCustomHealthcareResult(property.Value);
                     continue;
                 }
@@ -43,7 +39,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new TaskStatus(property.Value.GetString());
+                    status = new State(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))
@@ -57,7 +53,7 @@ namespace Azure.AI.Language.Text
                     continue;
                 }
             }
-            return new CustomHealthcareLROResult(lastUpdateDateTime, status, taskName.Value, kind, results.Value);
+            return new CustomHealthcareLROResult(lastUpdateDateTime, status, taskName.Value, kind, results);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

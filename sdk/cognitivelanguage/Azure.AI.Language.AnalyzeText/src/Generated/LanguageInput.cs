@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The LanguageInput. </summary>
     public partial class LanguageInput
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Text
         /// <param name="id"> A unique, non-empty document identifier. </param>
         /// <param name="text"> The input text to process. </param>
         /// <param name="countryHint"></param>
-        public LanguageInput(string id, string text, string countryHint)
+        internal LanguageInput(string id, string text, string countryHint)
         {
             Id = id;
             Text = text;

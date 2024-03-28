@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> An object representing the task definition for a Key Phrase Extraction task. </summary>
     public partial class KeyPhraseLROTask : AnalyzeTextLROTask
@@ -20,12 +20,12 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal KeyPhraseLROTask(string taskName, AnalyzeTextLROTaskKind kind, KeyPhraseTaskContent parameters) : base(taskName, kind)
+        internal KeyPhraseLROTask(string taskName, AnalyzeTextLROTaskKind kind, KeyPhraseTaskParameters parameters) : base(taskName, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public KeyPhraseTaskContent Parameters { get; set; }
+        public KeyPhraseTaskParameters Parameters { get; set; }
     }
 }

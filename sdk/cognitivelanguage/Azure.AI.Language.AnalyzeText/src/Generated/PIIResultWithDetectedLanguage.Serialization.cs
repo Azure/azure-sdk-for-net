@@ -10,24 +10,39 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class PIIResultWithDetectedLanguage
+    public partial class PiiResultWithDetectedLanguage
     {
-        internal static PIIResultWithDetectedLanguage DeserializePIIResultWithDetectedLanguage(JsonElement element)
+        internal static PiiResultWithDetectedLanguage DeserializePiiResultWithDetectedLanguage(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string redactedText = default;
+            IReadOnlyList<Entity> entities = default;
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             Optional<DocumentStatistics> statistics = default;
-            string redactedText = default;
-            IReadOnlyList<NamedEntity> entities = default;
-            Optional<string> detectedLanguage = default;
+            Optional<DetectedLanguage> detectedLanguage = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("redactedText"u8))
+                {
+                    redactedText = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("entities"u8))
+                {
+                    List<Entity> array = new List<Entity>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Entity.DeserializeEntity(item));
+                    }
+                    entities = array;
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -52,36 +67,25 @@ namespace Azure.AI.Language.Text
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("redactedText"u8))
-                {
-                    redactedText = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("entities"u8))
-                {
-                    List<NamedEntity> array = new List<NamedEntity>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(NamedEntity.DeserializeEntity(item));
-                    }
-                    entities = array;
-                    continue;
-                }
                 if (property.NameEquals("detectedLanguage"u8))
                 {
-                    detectedLanguage = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
                     continue;
                 }
             }
-            return new PIIResultWithDetectedLanguage(id, warnings, statistics.Value, redactedText, entities, detectedLanguage.Value);
+            return new PiiResultWithDetectedLanguage(redactedText, entities, id, warnings, statistics.Value, detectedLanguage.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PIIResultWithDetectedLanguage FromResponse(Response response)
+        internal static PiiResultWithDetectedLanguage FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializePIIResultWithDetectedLanguage(document.RootElement);
+            return DeserializePiiResultWithDetectedLanguage(document.RootElement);
         }
     }
 }

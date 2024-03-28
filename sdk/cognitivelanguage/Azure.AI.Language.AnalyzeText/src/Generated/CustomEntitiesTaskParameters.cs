@@ -8,43 +8,31 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Supported parameters for a Custom Entities task. </summary>
-    public partial class CustomEntitiesTaskContent
+    public partial class CustomEntitiesTaskParameters : CustomTaskParameters
     {
-        /// <summary> Initializes a new instance of <see cref="CustomEntitiesTaskContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesTaskParameters"/>. </summary>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        public CustomEntitiesTaskContent(string projectName, string deploymentName)
+        public CustomEntitiesTaskParameters(string projectName, string deploymentName) : base(projectName, deploymentName)
         {
             Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
-
-            ProjectName = projectName;
-            DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomEntitiesTaskContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="stringIndexType"></param>
-        internal CustomEntitiesTaskContent(bool? loggingOptOut, string projectName, string deploymentName, StringIndexType? stringIndexType)
+        internal CustomEntitiesTaskParameters(bool? loggingOptOut, string projectName, string deploymentName, StringIndexType? stringIndexType) : base(loggingOptOut, projectName, deploymentName)
         {
-            LoggingOptOut = loggingOptOut;
-            ProjectName = projectName;
-            DeploymentName = deploymentName;
             StringIndexType = stringIndexType;
         }
 
-        /// <summary> logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
-        /// <summary> This field indicates the project name for the model. </summary>
-        public string ProjectName { get; }
-        /// <summary> This field indicates the deployment name for the model. </summary>
-        public string DeploymentName { get; }
         /// <summary> Gets or sets the string index type. </summary>
         public StringIndexType? StringIndexType { get; set; }
     }

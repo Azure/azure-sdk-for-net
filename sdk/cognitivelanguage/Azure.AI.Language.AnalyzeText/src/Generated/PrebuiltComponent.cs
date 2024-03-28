@@ -5,23 +5,15 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> This object contains information of the prebuilt component of the detected entity. </summary>
     public partial class PrebuiltComponent : EntityComponentInformation
     {
         /// <summary> Initializes a new instance of <see cref="PrebuiltComponent"/>. </summary>
-        /// <param name="value"> The prebuilt component of an extracted entity type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PrebuiltComponent(string value)
+        internal PrebuiltComponent()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             EntityComponentKind = EntityComponentKind.PrebuiltComponent;
-            Value = value;
         }
 
         /// <summary> Initializes a new instance of <see cref="PrebuiltComponent"/>. </summary>

@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class LanguageDetectionDocumentResult
     {
@@ -20,12 +20,17 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
+            DetectedLanguage detectedLanguage = default;
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             Optional<DocumentStatistics> statistics = default;
-            DetectedLanguage detectedLanguage = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("detectedLanguage"u8))
+                {
+                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -48,11 +53,6 @@ namespace Azure.AI.Language.Text
                         continue;
                     }
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("detectedLanguage"u8))
-                {
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
                     continue;
                 }
             }

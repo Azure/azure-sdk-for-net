@@ -8,12 +8,9 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary>
-    /// The kind of results that are returned from the long-running operation.
-    /// </summary>
-    public readonly partial struct AnalyzeTextLROResultsKind : IEquatable<AnalyzeTextLROResultsKind>
+    internal readonly partial struct AnalyzeTextLROResultsKind : IEquatable<AnalyzeTextLROResultsKind>
     {
         private readonly string _value;
 

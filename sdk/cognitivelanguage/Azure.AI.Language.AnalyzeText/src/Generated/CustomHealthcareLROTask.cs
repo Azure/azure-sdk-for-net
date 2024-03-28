@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The CustomHealthcareLROTask. </summary>
     public partial class CustomHealthcareLROTask : AnalyzeTextLROTask
@@ -20,12 +20,12 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal CustomHealthcareLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomHealthcareTaskContent parameters) : base(taskName, kind)
+        internal CustomHealthcareLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomHealthcareTaskParameters parameters) : base(taskName, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public CustomHealthcareTaskContent Parameters { get; set; }
+        public CustomHealthcareTaskParameters Parameters { get; set; }
     }
 }

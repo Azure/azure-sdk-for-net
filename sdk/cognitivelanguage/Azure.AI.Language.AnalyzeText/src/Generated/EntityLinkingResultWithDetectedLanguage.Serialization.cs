@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class EntityLinkingResultWithDetectedLanguage
     {
@@ -20,13 +20,23 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
+            IReadOnlyList<LinkedEntity> entities = default;
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             Optional<DocumentStatistics> statistics = default;
-            IReadOnlyList<LinkedEntity> entities = default;
-            Optional<string> detectedLanguage = default;
+            Optional<DetectedLanguage> detectedLanguage = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("entities"u8))
+                {
+                    List<LinkedEntity> array = new List<LinkedEntity>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LinkedEntity.DeserializeLinkedEntity(item));
+                    }
+                    entities = array;
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -51,23 +61,17 @@ namespace Azure.AI.Language.Text
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("entities"u8))
-                {
-                    List<LinkedEntity> array = new List<LinkedEntity>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(LinkedEntity.DeserializeLinkedEntity(item));
-                    }
-                    entities = array;
-                    continue;
-                }
                 if (property.NameEquals("detectedLanguage"u8))
                 {
-                    detectedLanguage = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
                     continue;
                 }
             }
-            return new EntityLinkingResultWithDetectedLanguage(id, warnings, statistics.Value, entities, detectedLanguage.Value);
+            return new EntityLinkingResultWithDetectedLanguage(entities, id, warnings, statistics.Value, detectedLanguage.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

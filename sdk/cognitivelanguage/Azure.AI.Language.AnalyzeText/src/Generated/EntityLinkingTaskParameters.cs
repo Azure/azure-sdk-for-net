@@ -5,31 +5,25 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary> Supported parameters for an NamedEntity Linking task. </summary>
-    public partial class EntityLinkingTaskContent
+    /// <summary> Supported parameters for an Entity Linking task. </summary>
+    public partial class EntityLinkingTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskContent"/>. </summary>
-        public EntityLinkingTaskContent()
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskParameters"/>. </summary>
+        public EntityLinkingTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="stringIndexType"></param>
-        internal EntityLinkingTaskContent(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType)
+        internal EntityLinkingTaskParameters(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
         {
-            LoggingOptOut = loggingOptOut;
-            ModelVersion = modelVersion;
             StringIndexType = stringIndexType;
         }
 
-        /// <summary> logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
-        /// <summary> model version. </summary>
-        public string ModelVersion { get; set; }
         /// <summary> Gets or sets the string index type. </summary>
         public StringIndexType? StringIndexType { get; set; }
     }

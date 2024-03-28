@@ -5,28 +5,21 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary> Supported parameters for a LanguageClient Detection task. </summary>
-    public partial class LanguageDetectionTaskContent
+    /// <summary> Supported parameters for a Language Detection task. </summary>
+    public partial class LanguageDetectionTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of <see cref="LanguageDetectionTaskContent"/>. </summary>
-        public LanguageDetectionTaskContent()
+        /// <summary> Initializes a new instance of <see cref="LanguageDetectionTaskParameters"/>. </summary>
+        public LanguageDetectionTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LanguageDetectionTaskContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LanguageDetectionTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
-        internal LanguageDetectionTaskContent(bool? loggingOptOut, string modelVersion)
+        internal LanguageDetectionTaskParameters(bool? loggingOptOut, string modelVersion) : base(loggingOptOut, modelVersion)
         {
-            LoggingOptOut = loggingOptOut;
-            ModelVersion = modelVersion;
         }
-
-        /// <summary> logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
-        /// <summary> model version. </summary>
-        public string ModelVersion { get; set; }
     }
 }

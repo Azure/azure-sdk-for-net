@@ -8,25 +8,22 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class AbstractiveSummarizationLROTask : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
-            }
+            writer.WritePropertyName("parameters"u8);
+            writer.WriteObjectValue(Parameters);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 

@@ -5,41 +5,30 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The AnalyzeTextDynamicClassificationInput. </summary>
     public partial class AnalyzeTextDynamicClassificationInput : AnalyzeTextTask
     {
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextDynamicClassificationInput"/>. </summary>
-        /// <param name="analysisInput"></param>
-        /// <param name="parameters"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisInput"/> or <paramref name="parameters"/> is null. </exception>
-        public AnalyzeTextDynamicClassificationInput(MultiLanguageAnalysisInput analysisInput, DynamicClassificationTaskContent parameters)
+        public AnalyzeTextDynamicClassificationInput()
         {
-            Argument.AssertNotNull(analysisInput, nameof(analysisInput));
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
             Kind = AnalyzeTextTaskKind.DynamicClassification;
-            AnalysisInput = analysisInput;
-            Parameters = parameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextDynamicClassificationInput"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="analysisInput"></param>
         /// <param name="parameters"></param>
-        internal AnalyzeTextDynamicClassificationInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, DynamicClassificationTaskContent parameters) : base(kind)
+        internal AnalyzeTextDynamicClassificationInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, DynamicClassificationTaskParameters parameters) : base(kind)
         {
             AnalysisInput = analysisInput;
             Parameters = parameters;
         }
 
-        /// <summary> Gets the analysis input. </summary>
-        public MultiLanguageAnalysisInput AnalysisInput { get; }
-        /// <summary> Gets the parameters. </summary>
-        public DynamicClassificationTaskContent Parameters { get; }
+        /// <summary> Gets or sets the analysis input. </summary>
+        public MultiLanguageAnalysisInput AnalysisInput { get; set; }
+        /// <summary> Gets or sets the parameters. </summary>
+        public DynamicClassificationTaskParameters Parameters { get; set; }
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Identifies the script of the input document. Maps to the ISO 15924 standard formal name. </summary>
     public readonly partial struct ScriptKind : IEquatable<ScriptKind>

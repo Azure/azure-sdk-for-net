@@ -5,25 +5,19 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> A Metadata for date entity instances. </summary>
     public partial class DateMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="DateMetadata"/>. </summary>
-        /// <param name="dateValues"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dateValues"/> is null. </exception>
-        internal DateMetadata(IEnumerable<DateValue> dateValues)
+        internal DateMetadata()
         {
-            Argument.AssertNotNull(dateValues, nameof(dateValues));
-
             MetadataKind = MetadataKind.DateMetadata;
-            DateValues = dateValues.ToList();
+            DateValues = new ChangeTrackingList<DateValue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DateMetadata"/>. </summary>

@@ -5,28 +5,21 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Supported parameters for a Key Phrase Extraction task. </summary>
-    public partial class KeyPhraseTaskContent
+    public partial class KeyPhraseTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of <see cref="KeyPhraseTaskContent"/>. </summary>
-        public KeyPhraseTaskContent()
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseTaskParameters"/>. </summary>
+        public KeyPhraseTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyPhraseTaskContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
-        internal KeyPhraseTaskContent(bool? loggingOptOut, string modelVersion)
+        internal KeyPhraseTaskParameters(bool? loggingOptOut, string modelVersion) : base(loggingOptOut, modelVersion)
         {
-            LoggingOptOut = loggingOptOut;
-            ModelVersion = modelVersion;
         }
-
-        /// <summary> logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
-        /// <summary> model version. </summary>
-        public string ModelVersion { get; set; }
     }
 }

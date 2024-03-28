@@ -7,78 +7,45 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The EntityWithMetadata. </summary>
-    public partial class EntityWithMetadata
+    public partial class EntityWithMetadata : EntityWithTags
     {
         /// <summary> Initializes a new instance of <see cref="EntityWithMetadata"/>. </summary>
-        /// <param name="text"> NamedEntity text as appears in the request. </param>
-        /// <param name="category"> NamedEntity type. </param>
+        /// <param name="text"> Entity text as appears in the request. </param>
+        /// <param name="category"> Entity type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <param name="type"> An entity type is the lowest (or finest) granularity at which the entity has been detected. The type maps to the specific metadata attributes associated with the entity detected. </param>
         /// <param name="tags"> List of entity tags. Tags are to express some similarities/affinity between entities. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="category"/>, <paramref name="type"/> or <paramref name="tags"/> is null. </exception>
-        internal EntityWithMetadata(string text, string category, int offset, int length, double confidenceScore, string type, IEnumerable<EntityTag> tags)
+        internal EntityWithMetadata(string text, string category, int offset, int length, double confidenceScore, string type, IEnumerable<EntityTag> tags) : base(text, category, offset, length, confidenceScore, type, tags)
         {
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(category, nameof(category));
             Argument.AssertNotNull(type, nameof(type));
             Argument.AssertNotNull(tags, nameof(tags));
-
-            Text = text;
-            Category = category;
-            Offset = offset;
-            Length = length;
-            ConfidenceScore = confidenceScore;
-            Type = type;
-            Tags = tags.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityWithMetadata"/>. </summary>
-        /// <param name="text"> NamedEntity text as appears in the request. </param>
-        /// <param name="category"> NamedEntity type. </param>
-        /// <param name="subcategory"> (Optional) NamedEntity sub type. </param>
+        /// <param name="text"> Entity text as appears in the request. </param>
+        /// <param name="category"> Entity type. </param>
+        /// <param name="subcategory"> (Optional) Entity sub type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <param name="type"> An entity type is the lowest (or finest) granularity at which the entity has been detected. The type maps to the specific metadata attributes associated with the entity detected. </param>
         /// <param name="tags"> List of entity tags. Tags are to express some similarities/affinity between entities. </param>
         /// <param name="metadata"> The entity metadata object. </param>
-        internal EntityWithMetadata(string text, string category, string subcategory, int offset, int length, double confidenceScore, string type, IReadOnlyList<EntityTag> tags, BaseMetadata metadata)
+        internal EntityWithMetadata(string text, string category, string subcategory, int offset, int length, double confidenceScore, string type, IReadOnlyList<EntityTag> tags, BaseMetadata metadata) : base(text, category, subcategory, offset, length, confidenceScore, type, tags)
         {
-            Text = text;
-            Category = category;
-            Subcategory = subcategory;
-            Offset = offset;
-            Length = length;
-            ConfidenceScore = confidenceScore;
-            Type = type;
-            Tags = tags;
             Metadata = metadata;
         }
 
-        /// <summary> NamedEntity text as appears in the request. </summary>
-        public string Text { get; }
-        /// <summary> NamedEntity type. </summary>
-        public string Category { get; }
-        /// <summary> (Optional) NamedEntity sub type. </summary>
-        public string Subcategory { get; }
-        /// <summary> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </summary>
-        public int Offset { get; }
-        /// <summary> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </summary>
-        public int Length { get; }
-        /// <summary> Confidence score between 0 and 1 of the extracted entity. </summary>
-        public double ConfidenceScore { get; }
-        /// <summary> An entity type is the lowest (or finest) granularity at which the entity has been detected. The type maps to the specific metadata attributes associated with the entity detected. </summary>
-        public string Type { get; }
-        /// <summary> List of entity tags. Tags are to express some similarities/affinity between entities. </summary>
-        public IReadOnlyList<EntityTag> Tags { get; }
         /// <summary>
         /// The entity metadata object.
         /// Please note <see cref="BaseMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

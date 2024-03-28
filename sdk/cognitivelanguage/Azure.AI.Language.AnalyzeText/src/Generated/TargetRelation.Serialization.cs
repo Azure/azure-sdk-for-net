@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class TargetRelation
     {
@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Text
                 return null;
             }
             string @ref = default;
-            SentimentRelationType relationType = default;
+            TargetRelationType relationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ref"u8))
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("relationType"u8))
                 {
-                    relationType = new SentimentRelationType(property.Value.GetString());
+                    relationType = property.Value.GetString().ToTargetRelationType();
                     continue;
                 }
             }

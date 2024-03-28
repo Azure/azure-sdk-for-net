@@ -8,22 +8,22 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class CustomSingleLabelClassificationTaskContent : IUtf8JsonSerializable
+    public partial class CustomSingleLabelClassificationTaskParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("projectName"u8);
+            writer.WriteStringValue(ProjectName);
+            writer.WritePropertyName("deploymentName"u8);
+            writer.WriteStringValue(DeploymentName);
             if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
-            writer.WritePropertyName("projectName"u8);
-            writer.WriteStringValue(ProjectName);
-            writer.WritePropertyName("deploymentName"u8);
-            writer.WriteStringValue(DeploymentName);
             writer.WriteEndObject();
         }
 

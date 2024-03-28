@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The AnalyzeTextJobsInput. </summary>
     public partial class AnalyzeTextJobsInput
@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Text
         /// <summary>
         /// Gets the tasks
         /// Please note <see cref="AnalyzeTextLROTask"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomEntitiesLROTask"/>, <see cref="CustomSingleLabelClassificationLROTask"/>, <see cref="CustomMultiLabelClassificationLROTask"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PIILROTask"/>, <see cref="SentimentAnalysisLROTask"/>, <see cref="CustomSentimentAnalysisLROTask"/>, <see cref="ExtractiveSummarizationLROTask"/>, <see cref="AbstractiveSummarizationLROTask"/>, <see cref="CustomAbstractiveSummarizationLROTask"/> and <see cref="CustomHealthcareLROTask"/>.
+        /// The available derived classes include <see cref="CustomEntitiesLROTask"/>, <see cref="CustomSingleLabelClassificationLROTask"/>, <see cref="CustomMultiLabelClassificationLROTask"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/>, <see cref="SentimentAnalysisLROTask"/>, <see cref="CustomSentimentAnalysisLROTask"/>, <see cref="ExtractiveSummarizationLROTask"/>, <see cref="AbstractiveSummarizationLROTask"/>, <see cref="CustomAbstractiveSummarizationLROTask"/> and <see cref="CustomHealthcareLROTask"/>.
         /// </summary>
         public IList<AnalyzeTextLROTask> Tasks { get; }
         /// <summary> Default language to use for records requesting automatic language detection. </summary>

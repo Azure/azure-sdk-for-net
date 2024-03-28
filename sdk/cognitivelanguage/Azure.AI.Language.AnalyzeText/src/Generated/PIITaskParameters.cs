@@ -8,19 +8,18 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Supported parameters for a PII Entities Recognition task. </summary>
-    public partial class PIITaskContent
+    public partial class PiiTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of <see cref="PIITaskContent"/>. </summary>
-        public PIITaskContent()
+        /// <summary> Initializes a new instance of <see cref="PiiTaskParameters"/>. </summary>
+        public PiiTaskParameters()
         {
-            PiiCategories = new ChangeTrackingList<PiiCategories>();
-            ExcludePiiCategories = new ChangeTrackingList<PiiCategoriesExcludeCategories>();
+            PiiCategories = new ChangeTrackingList<PiiCategory>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PIITaskContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="domain"></param>
@@ -28,10 +27,8 @@ namespace Azure.AI.Language.Text
         /// <param name="stringIndexType"></param>
         /// <param name="excludePiiCategories"></param>
         /// <param name="redactionCharacter"></param>
-        internal PIITaskContent(bool? loggingOptOut, string modelVersion, PiiDomain? domain, IList<PiiCategories> piiCategories, StringIndexType? stringIndexType, IList<PiiCategoriesExcludeCategories> excludePiiCategories, RedactionCharacter? redactionCharacter)
+        internal PiiTaskParameters(bool? loggingOptOut, string modelVersion, PiiDomain? domain, IList<PiiCategory> piiCategories, StringIndexType? stringIndexType, PiiCategoriesExclude? excludePiiCategories, RedactionCharacter? redactionCharacter) : base(loggingOptOut, modelVersion)
         {
-            LoggingOptOut = loggingOptOut;
-            ModelVersion = modelVersion;
             Domain = domain;
             PiiCategories = piiCategories;
             StringIndexType = stringIndexType;
@@ -39,18 +36,14 @@ namespace Azure.AI.Language.Text
             RedactionCharacter = redactionCharacter;
         }
 
-        /// <summary> logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
-        /// <summary> model version. </summary>
-        public string ModelVersion { get; set; }
         /// <summary> Gets or sets the domain. </summary>
         public PiiDomain? Domain { get; set; }
         /// <summary> Gets the pii categories. </summary>
-        public IList<PiiCategories> PiiCategories { get; }
+        public IList<PiiCategory> PiiCategories { get; }
         /// <summary> Gets or sets the string index type. </summary>
         public StringIndexType? StringIndexType { get; set; }
-        /// <summary> Gets the exclude pii categories. </summary>
-        public IList<PiiCategoriesExcludeCategories> ExcludePiiCategories { get; }
+        /// <summary> Gets or sets the exclude pii categories. </summary>
+        public PiiCategoriesExclude? ExcludePiiCategories { get; set; }
         /// <summary> Gets or sets the redaction character. </summary>
         public RedactionCharacter? RedactionCharacter { get; set; }
     }

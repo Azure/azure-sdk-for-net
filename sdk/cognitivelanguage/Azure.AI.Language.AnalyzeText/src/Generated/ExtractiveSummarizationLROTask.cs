@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> An object representing the task definition for an Extractive Summarization task. </summary>
     public partial class ExtractiveSummarizationLROTask : AnalyzeTextLROTask
@@ -20,12 +20,12 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal ExtractiveSummarizationLROTask(string taskName, AnalyzeTextLROTaskKind kind, ExtractiveSummarizationTaskContent parameters) : base(taskName, kind)
+        internal ExtractiveSummarizationLROTask(string taskName, AnalyzeTextLROTaskKind kind, ExtractiveSummarizationTaskParameters parameters) : base(taskName, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public ExtractiveSummarizationTaskContent Parameters { get; set; }
+        public ExtractiveSummarizationTaskParameters Parameters { get; set; }
     }
 }

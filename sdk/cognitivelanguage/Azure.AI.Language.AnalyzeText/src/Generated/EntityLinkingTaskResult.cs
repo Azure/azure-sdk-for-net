@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The EntityLinkingTaskResult. </summary>
     public partial class EntityLinkingTaskResult : AnalyzeTextTaskResult

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The CustomEntitiesLROTask. </summary>
     public partial class CustomEntitiesLROTask : AnalyzeTextLROTask
@@ -20,12 +20,12 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal CustomEntitiesLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomEntitiesTaskContent parameters) : base(taskName, kind)
+        internal CustomEntitiesLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomEntitiesTaskParameters parameters) : base(taskName, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public CustomEntitiesTaskContent Parameters { get; set; }
+        public CustomEntitiesTaskParameters Parameters { get; set; }
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The Age Unit of measurement. </summary>
     public readonly partial struct AgeUnit : IEquatable<AgeUnit>

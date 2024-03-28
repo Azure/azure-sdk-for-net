@@ -9,11 +9,11 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class NamedEntity
+    public partial class Entity
     {
-        internal static NamedEntity DeserializeEntity(JsonElement element)
+        internal static Entity DeserializeEntity(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -58,12 +58,12 @@ namespace Azure.AI.Language.Text
                     continue;
                 }
             }
-            return new NamedEntity(text, category, subcategory.Value, offset, length, confidenceScore);
+            return new Entity(text, category, subcategory.Value, offset, length, confidenceScore);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static NamedEntity FromResponse(Response response)
+        internal static Entity FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeEntity(document.RootElement);

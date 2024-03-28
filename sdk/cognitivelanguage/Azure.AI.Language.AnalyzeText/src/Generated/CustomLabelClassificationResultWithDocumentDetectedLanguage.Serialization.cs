@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class CustomLabelClassificationResultWithDocumentDetectedLanguage
     {
@@ -20,14 +20,23 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
+            IReadOnlyList<ClassificationDocumentResultWithDetectedLanguage> documents = default;
             IReadOnlyList<DocumentError> errors = default;
             Optional<RequestStatistics> statistics = default;
             string projectName = default;
             string deploymentName = default;
-            IReadOnlyList<ClassificationDocumentResult> documents = default;
-            Optional<string> detectedLanguage = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("documents"u8))
+                {
+                    List<ClassificationDocumentResultWithDetectedLanguage> array = new List<ClassificationDocumentResultWithDetectedLanguage>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ClassificationDocumentResultWithDetectedLanguage.DeserializeClassificationDocumentResultWithDetectedLanguage(item));
+                    }
+                    documents = array;
+                    continue;
+                }
                 if (property.NameEquals("errors"u8))
                 {
                     List<DocumentError> array = new List<DocumentError>();
@@ -57,23 +66,8 @@ namespace Azure.AI.Language.Text
                     deploymentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("documents"u8))
-                {
-                    List<ClassificationDocumentResult> array = new List<ClassificationDocumentResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ClassificationDocumentResult.DeserializeClassificationDocumentResult(item));
-                    }
-                    documents = array;
-                    continue;
-                }
-                if (property.NameEquals("detectedLanguage"u8))
-                {
-                    detectedLanguage = property.Value.GetString();
-                    continue;
-                }
             }
-            return new CustomLabelClassificationResultWithDocumentDetectedLanguage(errors, statistics.Value, projectName, deploymentName, documents, detectedLanguage.Value);
+            return new CustomLabelClassificationResultWithDocumentDetectedLanguage(errors, statistics.Value, projectName, deploymentName, documents);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

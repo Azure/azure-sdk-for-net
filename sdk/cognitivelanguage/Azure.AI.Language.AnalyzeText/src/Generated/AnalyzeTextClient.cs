@@ -6,20 +6,23 @@
 #nullable disable
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     // Data plane generated client.
-    /// <summary> The AnalyzeText service client. </summary>
+    /// <summary> The language service API is a suite of natural language processing (NLP) skills built with best-in-class Microsoft machine learning algorithms.  The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering. Further documentation can be found in &lt;a href="https://docs.microsoft.com/azure/cognitive-services/language-service/overview"&gt;https://docs.microsoft.com/azure/cognitive-services/language-service/overview&lt;/a&gt;.0. </summary>
     public partial class AnalyzeTextClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -55,16 +58,502 @@ namespace Azure.AI.Language.Text
             _keyCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of LanguageClient. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual LanguageClient GetLanguageClient(string apiVersion = "2023-11-15-preview")
+        /// <summary> Request text analysis over a collection of documents. </summary>
+        /// <param name="body"> Collection of documents to analyze and a single task to execute. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeTextAsync(AnalyzeTextTask,bool?,CancellationToken)']/*" />
+        public virtual async Task<Response<AnalyzeTextTaskResult>> AnalyzeTextAsync(AnalyzeTextTask body, bool? showStats = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            Argument.AssertNotNull(body, nameof(body));
 
-            return new LanguageClient(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, apiVersion);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = body.ToRequestContent();
+            Response response = await AnalyzeTextAsync(content, showStats, context).ConfigureAwait(false);
+            return Response.FromValue(AnalyzeTextTaskResult.FromResponse(response), response);
         }
+
+        /// <summary> Request text analysis over a collection of documents. </summary>
+        /// <param name="body"> Collection of documents to analyze and a single task to execute. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeText(AnalyzeTextTask,bool?,CancellationToken)']/*" />
+        public virtual Response<AnalyzeTextTaskResult> AnalyzeText(AnalyzeTextTask body, bool? showStats = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = body.ToRequestContent();
+            Response response = AnalyzeText(content, showStats, context);
+            return Response.FromValue(AnalyzeTextTaskResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Request text analysis over a collection of documents.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AnalyzeTextAsync(AnalyzeTextTask,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeTextAsync(RequestContent,bool?,RequestContext)']/*" />
+        public virtual async Task<Response> AnalyzeTextAsync(RequestContent content, bool? showStats = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AnalyzeTextClient.AnalyzeText");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAnalyzeTextRequest(content, showStats, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Request text analysis over a collection of documents.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AnalyzeText(AnalyzeTextTask,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeText(RequestContent,bool?,RequestContext)']/*" />
+        public virtual Response AnalyzeText(RequestContent content, bool? showStats = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AnalyzeTextClient.AnalyzeText");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAnalyzeTextRequest(content, showStats, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get analysis status and results. </summary>
+        /// <param name="jobId"> job ID. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the status of an analysis job. A job can consist of one or more tasks. After all tasks succeed, the job transitions to the succeeded state and results are available for each task. </remarks>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeTextJobStatusAsync(Guid,bool?,int?,int?,CancellationToken)']/*" />
+        public virtual async Task<Response<AnalyzeTextJobState>> AnalyzeTextJobStatusAsync(Guid jobId, bool? showStats = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AnalyzeTextJobStatusAsync(jobId, showStats, top, skip, context).ConfigureAwait(false);
+            return Response.FromValue(AnalyzeTextJobState.FromResponse(response), response);
+        }
+
+        /// <summary> Get analysis status and results. </summary>
+        /// <param name="jobId"> job ID. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the status of an analysis job. A job can consist of one or more tasks. After all tasks succeed, the job transitions to the succeeded state and results are available for each task. </remarks>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeTextJobStatus(Guid,bool?,int?,int?,CancellationToken)']/*" />
+        public virtual Response<AnalyzeTextJobState> AnalyzeTextJobStatus(Guid jobId, bool? showStats = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AnalyzeTextJobStatus(jobId, showStats, top, skip, context);
+            return Response.FromValue(AnalyzeTextJobState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get analysis status and results
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AnalyzeTextJobStatusAsync(Guid,bool?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> job ID. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeTextJobStatusAsync(Guid,bool?,int?,int?,RequestContext)']/*" />
+        public virtual async Task<Response> AnalyzeTextJobStatusAsync(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
+        {
+            using var scope = ClientDiagnostics.CreateScope("AnalyzeTextClient.AnalyzeTextJobStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAnalyzeTextJobStatusRequest(jobId, showStats, top, skip, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get analysis status and results
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AnalyzeTextJobStatus(Guid,bool?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> job ID. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="top"> The maximum number of resources to return from the collection. </param>
+        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeTextJobStatus(Guid,bool?,int?,int?,RequestContext)']/*" />
+        public virtual Response AnalyzeTextJobStatus(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
+        {
+            using var scope = ClientDiagnostics.CreateScope("AnalyzeTextClient.AnalyzeTextJobStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAnalyzeTextJobStatusRequest(jobId, showStats, top, skip, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed as a long-running operation. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="analyzeTextJobsInput"> The <see cref="AnalyzeTextJobsInput"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzeTextJobsInput"/> is null. </exception>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitJobAsync(WaitUntil,AnalyzeTextJobsInput,CancellationToken)']/*" />
+        public virtual async Task<Operation> AnalyzeTextSubmitJobAsync(WaitUntil waitUntil, AnalyzeTextJobsInput analyzeTextJobsInput, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(analyzeTextJobsInput, nameof(analyzeTextJobsInput));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = analyzeTextJobsInput.ToRequestContent();
+            return await AnalyzeTextSubmitJobAsync(waitUntil, content, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed as a long-running operation. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="analyzeTextJobsInput"> The <see cref="AnalyzeTextJobsInput"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzeTextJobsInput"/> is null. </exception>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitJob(WaitUntil,AnalyzeTextJobsInput,CancellationToken)']/*" />
+        public virtual Operation AnalyzeTextSubmitJob(WaitUntil waitUntil, AnalyzeTextJobsInput analyzeTextJobsInput, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(analyzeTextJobsInput, nameof(analyzeTextJobsInput));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = analyzeTextJobsInput.ToRequestContent();
+            return AnalyzeTextSubmitJob(waitUntil, content, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed as a long-running operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AnalyzeTextSubmitJobAsync(WaitUntil,AnalyzeTextJobsInput,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitJobAsync(WaitUntil,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation> AnalyzeTextSubmitJobAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AnalyzeTextClient.AnalyzeTextSubmitJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAnalyzeTextSubmitJobRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "AnalyzeTextClient.AnalyzeTextSubmitJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed as a long-running operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AnalyzeTextSubmitJob(WaitUntil,AnalyzeTextJobsInput,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitJob(WaitUntil,RequestContent,RequestContext)']/*" />
+        public virtual Operation AnalyzeTextSubmitJob(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AnalyzeTextClient.AnalyzeTextSubmitJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAnalyzeTextSubmitJobRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "AnalyzeTextClient.AnalyzeTextSubmitJob", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Cancel a long-running Text Analysis job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="jobId"> job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeTextCancelJobAsync(WaitUntil,Guid,RequestContext)']/*" />
+        public virtual async Task<Operation> AnalyzeTextCancelJobAsync(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("AnalyzeTextClient.AnalyzeTextCancelJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAnalyzeTextCancelJobRequest(jobId, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "AnalyzeTextClient.AnalyzeTextCancelJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Cancel a long-running Text Analysis job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="jobId"> job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/AnalyzeTextClient.xml" path="doc/members/member[@name='AnalyzeTextCancelJob(WaitUntil,Guid,RequestContext)']/*" />
+        public virtual Operation AnalyzeTextCancelJob(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("AnalyzeTextClient.AnalyzeTextCancelJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAnalyzeTextCancelJobRequest(jobId, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "AnalyzeTextClient.AnalyzeTextCancelJob", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateAnalyzeTextRequest(RequestContent content, bool? showStats, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/:analyze-text", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAnalyzeTextJobStatusRequest(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-text/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateAnalyzeTextSubmitJobRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-text/jobs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAnalyzeTextCancelJobRequest(Guid jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-text/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath(":cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
+        }
+
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
     }
 }

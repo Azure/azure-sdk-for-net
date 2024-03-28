@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary>
     /// The abstract base class for entity OverlapPolicy.
@@ -21,12 +21,12 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Initializes a new instance of <see cref="BaseEntityOverlapPolicy"/>. </summary>
         /// <param name="policyKind"> The entity OverlapPolicy object kind. </param>
-        internal BaseEntityOverlapPolicy(EntityOverlapPolicyKind policyKind)
+        internal BaseEntityOverlapPolicy(PolicyKind policyKind)
         {
             PolicyKind = policyKind;
         }
 
         /// <summary> The entity OverlapPolicy object kind. </summary>
-        internal EntityOverlapPolicyKind PolicyKind { get; set; }
+        internal PolicyKind PolicyKind { get; set; }
     }
 }

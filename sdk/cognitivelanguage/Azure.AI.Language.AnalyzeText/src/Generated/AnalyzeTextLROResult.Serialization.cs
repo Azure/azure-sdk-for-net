@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class AnalyzeTextLROResult
     {
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Text
                     case "EntityRecognitionLROResults": return EntityRecognitionLROResult.DeserializeEntityRecognitionLROResult(element);
                     case "HealthcareLROResults": return HealthcareLROResult.DeserializeHealthcareLROResult(element);
                     case "KeyPhraseExtractionLROResults": return KeyPhraseExtractionLROResult.DeserializeKeyPhraseExtractionLROResult(element);
-                    case "PiiEntityRecognitionLROResults": return PIIEntityRecognitionLROResult.DeserializePIIEntityRecognitionLROResult(element);
+                    case "PiiEntityRecognitionLROResults": return PiiEntityRecognitionLROResult.DeserializePiiEntityRecognitionLROResult(element);
                     case "SentimentAnalysisLROResults": return SentimentLROResult.DeserializeSentimentLROResult(element);
                     case "CustomSentimentAnalysisLROResults": return CustomSentimentAnalysisLROResult.DeserializeCustomSentimentAnalysisLROResult(element);
                     case "ExtractiveSummarizationLROResults": return ExtractiveSummarizationLROResult.DeserializeExtractiveSummarizationLROResult(element);

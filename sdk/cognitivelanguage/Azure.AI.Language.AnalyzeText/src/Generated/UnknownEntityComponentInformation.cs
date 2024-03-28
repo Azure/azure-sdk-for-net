@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Unknown version of EntityComponentInformation. </summary>
     internal partial class UnknownEntityComponentInformation : EntityComponentInformation

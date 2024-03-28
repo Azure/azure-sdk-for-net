@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     internal readonly partial struct EntityComponentKind : IEquatable<EntityComponentKind>
     {

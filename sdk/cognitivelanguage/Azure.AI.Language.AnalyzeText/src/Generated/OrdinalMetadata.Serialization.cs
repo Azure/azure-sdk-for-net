@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class OrdinalMetadata
     {
@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Text
                 return null;
             }
             string offset = default;
-            OrdinalRelativeTo relativeTo = default;
+            RelativeTo relativeTo = default;
             string value = default;
             MetadataKind metadataKind = default;
             foreach (var property in element.EnumerateObject())
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("relativeTo"u8))
                 {
-                    relativeTo = new OrdinalRelativeTo(property.Value.GetString());
+                    relativeTo = new RelativeTo(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))

@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The SentenceAssessment. </summary>
     public partial class SentenceAssessment
@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Text
         /// <param name="text"> The target text detected. </param>
         /// <param name="isNegated"> The indicator representing if the assessment is negated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="confidenceScores"/> or <paramref name="text"/> is null. </exception>
-        internal SentenceAssessment(SentimentValue sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, bool isNegated)
+        internal SentenceAssessment(TokenSentimentValue sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, bool isNegated)
         {
             Argument.AssertNotNull(confidenceScores, nameof(confidenceScores));
             Argument.AssertNotNull(text, nameof(text));
@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Gets the sentiment. </summary>
-        public SentimentValue Sentiment { get; }
+        public TokenSentimentValue Sentiment { get; }
         /// <summary> Gets the confidence scores. </summary>
         public TargetConfidenceScoreLabel ConfidenceScores { get; }
         /// <summary> The target offset from the start of the sentence. </summary>

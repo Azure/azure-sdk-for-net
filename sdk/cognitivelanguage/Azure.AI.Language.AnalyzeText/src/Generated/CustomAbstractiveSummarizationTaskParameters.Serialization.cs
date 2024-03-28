@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class CustomAbstractiveSummarizationTaskContent : IUtf8JsonSerializable
+    public partial class CustomAbstractiveSummarizationTaskParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,15 +30,15 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("summaryLength"u8);
                 writer.WriteStringValue(SummaryLength.Value.ToString());
             }
+            writer.WritePropertyName("projectName"u8);
+            writer.WriteStringValue(ProjectName);
+            writer.WritePropertyName("deploymentName"u8);
+            writer.WriteStringValue(DeploymentName);
             if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
-            writer.WritePropertyName("projectName"u8);
-            writer.WriteStringValue(ProjectName);
-            writer.WritePropertyName("deploymentName"u8);
-            writer.WriteStringValue(DeploymentName);
             writer.WriteEndObject();
         }
 

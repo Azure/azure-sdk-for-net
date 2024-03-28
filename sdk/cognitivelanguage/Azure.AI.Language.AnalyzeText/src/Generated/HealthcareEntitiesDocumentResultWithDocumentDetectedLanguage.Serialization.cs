@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     public partial class HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage
     {
@@ -21,39 +21,15 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            string id = default;
-            IReadOnlyList<DocumentWarning> warnings = default;
-            Optional<DocumentStatistics> statistics = default;
             IReadOnlyList<HealthcareEntity> entities = default;
             IReadOnlyList<HealthcareRelation> relations = default;
             Optional<IReadOnlyDictionary<string, BinaryData>> fhirBundle = default;
-            Optional<string> detectedLanguage = default;
+            Optional<DetectedLanguage> detectedLanguage = default;
+            string id = default;
+            IReadOnlyList<DocumentWarning> warnings = default;
+            Optional<DocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("warnings"u8))
-                {
-                    List<DocumentWarning> array = new List<DocumentWarning>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DocumentWarning.DeserializeDocumentWarning(item));
-                    }
-                    warnings = array;
-                    continue;
-                }
-                if (property.NameEquals("statistics"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("entities"u8))
                 {
                     List<HealthcareEntity> array = new List<HealthcareEntity>();
@@ -97,7 +73,35 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("detectedLanguage"u8))
                 {
-                    detectedLanguage = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("warnings"u8))
+                {
+                    List<DocumentWarning> array = new List<DocumentWarning>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentWarning.DeserializeDocumentWarning(item));
+                    }
+                    warnings = array;
+                    continue;
+                }
+                if (property.NameEquals("statistics"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
                     continue;
                 }
             }

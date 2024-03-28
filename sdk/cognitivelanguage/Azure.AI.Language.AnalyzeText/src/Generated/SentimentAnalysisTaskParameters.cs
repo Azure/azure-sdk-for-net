@@ -5,33 +5,27 @@
 
 #nullable disable
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
-    /// <summary> Supported parameters for a PredictedSentiment Analysis task. </summary>
-    public partial class SentimentAnalysisTaskContent
+    /// <summary> Supported parameters for a Sentiment Analysis task. </summary>
+    public partial class SentimentAnalysisTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTaskContent"/>. </summary>
-        public SentimentAnalysisTaskContent()
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTaskParameters"/>. </summary>
+        public SentimentAnalysisTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTaskContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="opinionMining"></param>
         /// <param name="stringIndexType"></param>
-        internal SentimentAnalysisTaskContent(bool? loggingOptOut, string modelVersion, bool? opinionMining, StringIndexType? stringIndexType)
+        internal SentimentAnalysisTaskParameters(bool? loggingOptOut, string modelVersion, bool? opinionMining, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
         {
-            LoggingOptOut = loggingOptOut;
-            ModelVersion = modelVersion;
             OpinionMining = opinionMining;
             StringIndexType = stringIndexType;
         }
 
-        /// <summary> logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
-        /// <summary> model version. </summary>
-        public string ModelVersion { get; set; }
         /// <summary> Gets or sets the opinion mining. </summary>
         public bool? OpinionMining { get; set; }
         /// <summary> Gets or sets the string index type. </summary>

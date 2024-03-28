@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The length unit of measurement. </summary>
     public readonly partial struct LengthUnit : IEquatable<LengthUnit>
@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Text
         private const string InchValue = "Inch";
         private const string FootValue = "Foot";
         private const string LightYearValue = "LightYear";
-        private const string PtValue = "Pt";
+        private const string PointValue = "Point";
 
         /// <summary> Unspecified. </summary>
         public static LengthUnit Unspecified { get; } = new LengthUnit(UnspecifiedValue);
@@ -72,8 +72,8 @@ namespace Azure.AI.Language.Text
         public static LengthUnit Foot { get; } = new LengthUnit(FootValue);
         /// <summary> LightYear. </summary>
         public static LengthUnit LightYear { get; } = new LengthUnit(LightYearValue);
-        /// <summary> Pt. </summary>
-        public static LengthUnit Pt { get; } = new LengthUnit(PtValue);
+        /// <summary> Point. </summary>
+        public static LengthUnit Point { get; } = new LengthUnit(PointValue);
         /// <summary> Determines if two <see cref="LengthUnit"/> values are the same. </summary>
         public static bool operator ==(LengthUnit left, LengthUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LengthUnit"/> values are not the same. </summary>

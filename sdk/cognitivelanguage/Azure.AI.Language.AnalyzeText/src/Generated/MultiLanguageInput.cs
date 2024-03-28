@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.Text
+namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Contains an input document to be analyzed by the service. </summary>
     public partial class MultiLanguageInput
@@ -29,8 +29,8 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="MultiLanguageInput"/>. </summary>
         /// <param name="id"> A unique, non-empty document identifier. </param>
         /// <param name="text"> The input text to process. </param>
-        /// <param name="language"> (Optional) This is the 2 letter ISO 639-1 representation of a language. For example, use "en" for English; "es" for Spanish etc. If not set, use "en" for English as default. (Following only applies to 2023-04-15-preview and above) For Auto LanguageClient Detection, use "auto". If not set, use "en" for English as default. </param>
-        public MultiLanguageInput(string id, string text, string language)
+        /// <param name="language"> (Optional) This is the 2 letter ISO 639-1 representation of a language. For example, use "en" for English; "es" for Spanish etc. If not set, use "en" for English as default. (Following only applies to 2023-04-15-preview and above) For Auto Language Detection, use "auto". If not set, use "en" for English as default. </param>
+        internal MultiLanguageInput(string id, string text, string language)
         {
             Id = id;
             Text = text;
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text
         public string Id { get; }
         /// <summary> The input text to process. </summary>
         public string Text { get; }
-        /// <summary> (Optional) This is the 2 letter ISO 639-1 representation of a language. For example, use "en" for English; "es" for Spanish etc. If not set, use "en" for English as default. (Following only applies to 2023-04-15-preview and above) For Auto LanguageClient Detection, use "auto". If not set, use "en" for English as default. </summary>
+        /// <summary> (Optional) This is the 2 letter ISO 639-1 representation of a language. For example, use "en" for English; "es" for Spanish etc. If not set, use "en" for English as default. (Following only applies to 2023-04-15-preview and above) For Auto Language Detection, use "auto". If not set, use "en" for English as default. </summary>
         public string Language { get; set; }
     }
 }
