@@ -31,13 +31,23 @@ namespace Azure.Health.Insights.CancerProfiling
             if (Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
-                writer.WriteObjectValue<PatientInfo>(Info, options);
+                writer.WriteObjectValue<PatientDetails>(Info, options);
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (Optional.IsCollectionDefined(Encounters))
             {
-                writer.WritePropertyName("data"u8);
+                writer.WritePropertyName("encounters"u8);
                 writer.WriteStartArray();
-                foreach (var item in Data)
+                foreach (var item in Encounters)
+                {
+                    writer.WriteObjectValue<Encounter>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PatientDocuments))
+            {
+                writer.WritePropertyName("patientDocuments"u8);
+                writer.WriteStartArray();
+                foreach (var item in PatientDocuments)
                 {
                     writer.WriteObjectValue<PatientDocument>(item, options);
                 }
@@ -82,8 +92,9 @@ namespace Azure.Health.Insights.CancerProfiling
                 return null;
             }
             string id = default;
-            PatientInfo info = default;
-            IList<PatientDocument> data = default;
+            PatientDetails info = default;
+            IList<Encounter> encounters = default;
+            IList<PatientDocument> patientDocuments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,10 +110,24 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         continue;
                     }
-                    info = PatientInfo.DeserializePatientInfo(property.Value, options);
+                    info = PatientDetails.DeserializePatientDetails(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("data"u8))
+                if (property.NameEquals("encounters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<Encounter> array = new List<Encounter>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Encounter.DeserializeEncounter(item, options));
+                    }
+                    encounters = array;
+                    continue;
+                }
+                if (property.NameEquals("patientDocuments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +138,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         array.Add(PatientDocument.DeserializePatientDocument(item, options));
                     }
-                    data = array;
+                    patientDocuments = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -122,7 +147,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatientRecord(id, info, data ?? new ChangeTrackingList<PatientDocument>(), serializedAdditionalRawData);
+            return new PatientRecord(id, info, encounters ?? new ChangeTrackingList<Encounter>(), patientDocuments ?? new ChangeTrackingList<PatientDocument>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientRecord>.Write(ModelReaderWriterOptions options)

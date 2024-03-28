@@ -16,7 +16,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     /// Please note <see cref="FhirR4DomainResource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FhirR4Observation"/>.
     /// </summary>
-    public abstract partial class FhirR4DomainResource : FhirR4Resource
+    internal abstract partial class FhirR4DomainResource : FhirR4Resource
     {
         /// <summary> Initializes a new instance of <see cref="FhirR4DomainResource"/>. </summary>
         /// <param name="resourceType"> The type of resource. </param>

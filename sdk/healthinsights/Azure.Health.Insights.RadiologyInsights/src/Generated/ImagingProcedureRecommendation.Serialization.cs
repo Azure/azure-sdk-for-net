@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    public partial class ImagingProcedureRecommendation : IUtf8JsonSerializable, IJsonModel<ImagingProcedureRecommendation>
+    internal partial class ImagingProcedureRecommendation : IUtf8JsonSerializable, IJsonModel<ImagingProcedureRecommendation>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImagingProcedureRecommendation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 

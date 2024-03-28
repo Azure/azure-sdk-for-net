@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <summary> Initializes a new instance of <see cref="ClinicalTrialMetadata"/>. </summary>
         /// <param name="conditions"> Medical conditions and their synonyms which are relevant for the clinical trial, given as strings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conditions"/> is null. </exception>
-        public ClinicalTrialMetadata(IEnumerable<string> conditions)
+        internal ClinicalTrialMetadata(IEnumerable<string> conditions)
         {
             Argument.AssertNotNull(conditions, nameof(conditions));
 
@@ -72,7 +72,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="contacts"> Contact details of the trial administrators, for patients that want to participate in the trial. </param>
         /// <param name="facilities"> Research facilities where the clinical trial is conducted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClinicalTrialMetadata(IList<ClinicalTrialPhase> phases, ClinicalTrialStudyType? studyType, ClinicalTrialRecruitmentStatus? recruitmentStatus, IList<string> conditions, IList<string> sponsors, IList<ContactDetails> contacts, IList<ClinicalTrialResearchFacility> facilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClinicalTrialMetadata(IReadOnlyList<ClinicalTrialPhase> phases, ClinicalTrialStudyType? studyType, ClinicalTrialRecruitmentStatus? recruitmentStatus, IReadOnlyList<string> conditions, IReadOnlyList<string> sponsors, IReadOnlyList<ContactDetails> contacts, IReadOnlyList<ClinicalTrialResearchFacility> facilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Phases = phases;
             StudyType = studyType;
@@ -93,18 +93,18 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// Phases which are relevant for the clinical trial.
         /// Each clinical trial can be in a certain phase or in multiple phases.
         /// </summary>
-        public IList<ClinicalTrialPhase> Phases { get; }
+        public IReadOnlyList<ClinicalTrialPhase> Phases { get; }
         /// <summary> Possible study types of a clinical trial. </summary>
-        public ClinicalTrialStudyType? StudyType { get; set; }
+        public ClinicalTrialStudyType? StudyType { get; }
         /// <summary> Possible recruitment status of a clinical trial. </summary>
-        public ClinicalTrialRecruitmentStatus? RecruitmentStatus { get; set; }
+        public ClinicalTrialRecruitmentStatus? RecruitmentStatus { get; }
         /// <summary> Medical conditions and their synonyms which are relevant for the clinical trial, given as strings. </summary>
-        public IList<string> Conditions { get; }
+        public IReadOnlyList<string> Conditions { get; }
         /// <summary> Sponsors/collaborators involved with the trial. </summary>
-        public IList<string> Sponsors { get; }
+        public IReadOnlyList<string> Sponsors { get; }
         /// <summary> Contact details of the trial administrators, for patients that want to participate in the trial. </summary>
-        public IList<ContactDetails> Contacts { get; }
+        public IReadOnlyList<ContactDetails> Contacts { get; }
         /// <summary> Research facilities where the clinical trial is conducted. </summary>
-        public IList<ClinicalTrialResearchFacility> Facilities { get; }
+        public IReadOnlyList<ClinicalTrialResearchFacility> Facilities { get; }
     }
 }

@@ -29,9 +29,9 @@ namespace Azure.Health.Insights.CancerProfiling
         private const string InlineValue = "inline";
         private const string ReferenceValue = "reference";
 
-        /// <summary> inline. </summary>
+        /// <summary> The content is given as a string (for instance, text). </summary>
         public static DocumentContentSourceType Inline { get; } = new DocumentContentSourceType(InlineValue);
-        /// <summary> reference. </summary>
+        /// <summary> The content is given as a URI. </summary>
         public static DocumentContentSourceType Reference { get; } = new DocumentContentSourceType(ReferenceValue);
         /// <summary> Determines if two <see cref="DocumentContentSourceType"/> values are the same. </summary>
         public static bool operator ==(DocumentContentSourceType left, DocumentContentSourceType right) => left.Equals(right);
