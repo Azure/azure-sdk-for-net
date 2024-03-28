@@ -182,7 +182,7 @@ namespace Azure.Maps.Rendering
                 List<string> paths = null;
                 if (options?.ImagePathStyles != null)
                 {
-                    pushpins = new List<string>();
+                    paths = new List<string>();
                     foreach (var path in options?.ImagePathStyles)
                     {
                         paths.Add(path.ToQueryString());
