@@ -245,6 +245,34 @@ namespace Azure.Storage.Blobs
                 IsHierarchicalNamespaceEnabled = response.Headers.IsHierarchicalNamespaceEnabled.GetValueOrDefault()
             };
         }
+
+        internal static AccountInfo ToAccountInfo(this ResponseWithHeaders<BlobGetAccountInfoHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+            return new AccountInfo
+            {
+                SkuName = response.Headers.SkuName.GetValueOrDefault(),
+                AccountKind = response.Headers.AccountKind.GetValueOrDefault(),
+                IsHierarchicalNamespaceEnabled = response.Headers.IsHierarchicalNamespaceEnabled.GetValueOrDefault()
+            };
+        }
+
+        internal static AccountInfo ToAccountInfo(this ResponseWithHeaders<ContainerGetAccountInfoHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+            return new AccountInfo
+            {
+                SkuName = response.Headers.SkuName.GetValueOrDefault(),
+                AccountKind = response.Headers.AccountKind.GetValueOrDefault(),
+                IsHierarchicalNamespaceEnabled = response.Headers.IsHierarchicalNamespaceEnabled.GetValueOrDefault()
+            };
+        }
         #endregion
 
         #region ToBlobContainerInfo
