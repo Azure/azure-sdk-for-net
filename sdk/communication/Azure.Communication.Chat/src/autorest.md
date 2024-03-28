@@ -17,3 +17,4 @@ require:
     -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/fe375c4b0f59b587a263e4b5754925ccc660bd47/specification/communication/data-plane/Chat/readme.md
 payload-flattening-threshold: 10
 generation1-convenience-client: true
+```

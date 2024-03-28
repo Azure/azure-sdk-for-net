@@ -1444,7 +1444,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Assert.AreEqual(chatError.Details, chatErrorDetails);
             Assert.AreEqual(chatError.InnerError, innerChatError);
 
-            var chatParticipant = ChatModelFactory.ChatParticipant(It.IsAny<CommunicationIdentifier>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>());
+            var chatParticipant = ChatModelFactory.ChatParticipant(It.IsAny<CommunicationIdentifier>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<IDictionary<string, string>>());
             Assert.IsNotNull(chatParticipant);
 
             var addChatParticipantsResult = ChatModelFactory.AddChatParticipantsResult(It.IsAny<IEnumerable<ChatError>>());
