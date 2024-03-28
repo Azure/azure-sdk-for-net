@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Compute.Batch;
 
 namespace Azure.Compute.Batch.Tests.Infrastructure
 {
@@ -22,9 +23,9 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 
         public string PoolId { get; private set; }
 
-        protected readonly BatchClient client;
+        protected readonly BatchApi client;
 
-        protected PoolFixture(string poolId, BatchClient batchClient)
+        protected PoolFixture(string poolId, BatchApi batchClient)
         {
             PoolId = poolId;
             client = batchClient;
@@ -46,7 +47,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
         public async Task<BatchPool> FindPoolIfExistsAsync()
         {
             // reuse existing pool if it exists
-            client.GetPoolsAsync(maxresults: 100, timeOut: 10);
+            client.GetPoolsAsync(maxresults: 100, timeOutInSeconds: 10);
             AsyncPageable<BatchPool> batchPools = client.GetPoolsAsync();
 
             await foreach (BatchPool curPool in batchPools)
@@ -60,7 +61,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             return null;
         }
 
-        public static async Task<BatchPool> WaitForPoolAllocation(BatchClient client, string poolId)
+        public static async Task<BatchPool> WaitForPoolAllocation(BatchApi client, string poolId)
         {
             BatchPool thePool = await client.GetPoolAsync(poolId);
 

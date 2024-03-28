@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Compute.Batch;
 
 namespace Azure.Compute.Batch.Tests.Infrastructure
 {
     public class PaasWindowsPoolFixture : PoolFixture
     {
-        public PaasWindowsPoolFixture(BatchClient batchClient) : base(TestUtilities.GetMyName() + "-pooltest", batchClient) { }
+        public PaasWindowsPoolFixture(BatchApi batchClient) : base(TestUtilities.GetMyName() + "-pooltest", batchClient) { }
 
         public async Task<BatchPool> CreatePoolAsync()
         {
@@ -23,7 +24,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             {
                 // gotta create a new pool
                 var password = TestUtilities.GenerateRandomPassword();
-                BatchPoolCreateOptions batchPoolCreateOptions = new BatchPoolCreateOptions(
+                BatchPoolCreateContent batchPoolCreateOptions = new BatchPoolCreateContent(
                     PoolId,
                     VMSize)
                 {
@@ -38,10 +39,10 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
                             ElevationLevel = ElevationLevel.NonAdmin,
                         },
                     },
-                    StartTask = new StartTask("cmd /c hostname")
+                    StartTask = new BatchStartTask("cmd /c hostname")
                     {
                         EnvironmentSettings = {
-                            new EnvironmentSetting("key", "value")
+                            new EnvironmentSetting("key")
                         },
                         UserIdentity = new UserIdentity()
                         {
