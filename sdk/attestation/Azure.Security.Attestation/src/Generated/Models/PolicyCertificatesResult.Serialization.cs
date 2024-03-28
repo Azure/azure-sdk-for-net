@@ -36,6 +36,14 @@ namespace Azure.Security.Attestation
             return new PolicyCertificatesResult(xMsPolicyCertificates);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PolicyCertificatesResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePolicyCertificatesResult(document.RootElement);
+        }
+
         internal partial class PolicyCertificatesResultConverter : JsonConverter<PolicyCertificatesResult>
         {
             public override void Write(Utf8JsonWriter writer, PolicyCertificatesResult model, JsonSerializerOptions options)
