@@ -28,6 +28,7 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
 
     [TestCase]
     [RecordedTest]
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/43073")]
     public async Task TestDiscoveryOperations()
     {
         AzureLocation targetRegion = AzureLocation.SoutheastAsia;
