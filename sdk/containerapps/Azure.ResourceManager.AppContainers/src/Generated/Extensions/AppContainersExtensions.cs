@@ -471,22 +471,22 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="JobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppJobResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetJobResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="JobResource"/> object. </returns>
-        public static JobResource GetJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppJobResource"/> object. </returns>
+        public static ContainerAppJobResource GetContainerAppJobResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppContainersArmClient(client).GetJobResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppJobResource(id);
         }
 
         /// <summary>
@@ -1014,20 +1014,20 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets a collection of JobResources in the ResourceGroupResource.
+        /// Gets a collection of ContainerAppJobResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetJobs()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppJobs()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
-        public static JobCollection GetJobs(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ContainerAppJobResources and their operations over a ContainerAppJobResource. </returns>
+        public static ContainerAppJobCollection GetContainerAppJobs(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetJobs();
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppJobs();
         }
 
         /// <summary>
@@ -1047,12 +1047,12 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetJobAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppJobAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1061,11 +1061,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<JobResource>> GetJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerAppJobResource>> GetContainerAppJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetJobAsync(jobName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppJobAsync(jobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1085,12 +1085,12 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetJob(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppJob(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1099,11 +1099,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<JobResource> GetJob(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
+        public static Response<ContainerAppJobResource> GetContainerAppJob(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetJob(jobName, cancellationToken);
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppJob(jobName, cancellationToken);
         }
 
         /// <summary>
@@ -1471,23 +1471,23 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetJobs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetContainerAppJobs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="JobResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<JobResource> GetJobsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerAppJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerAppJobResource> GetContainerAppJobsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetJobsAsync(cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppJobsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1507,23 +1507,23 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetJobs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetContainerAppJobs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="JobResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<JobResource> GetJobs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerAppJobResource> GetContainerAppJobs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetJobs(cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppJobs(cancellationToken);
         }
 
         /// <summary>

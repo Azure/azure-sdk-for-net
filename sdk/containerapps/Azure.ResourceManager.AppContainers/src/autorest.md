@@ -242,6 +242,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}: ContainerAppManagedEnvironmentDaprComponent
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}: ContainerAppManagedEnvironmentDetector
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi: ContainerAppManagedEnvironmentDetectorResourceProperty
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}: ContainerAppJob
 
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckContainerAppNameAvailability

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container Apps Job resource specific properties. </summary>
-    public partial class JobPatch
+    public partial class ContainerAppJobPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="JobPatch"/>. </summary>
-        public JobPatch()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobPatch"/>. </summary>
+        public ContainerAppJobPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobPatch"/>. </summary>
         /// <param name="extendedLocation"> The complex type of the extended location. </param>
         /// <param name="identity"> Managed identities needed by a container app job to interact with other Azure services to not maintain any secrets or credentials in code. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobPatch(ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, IDictionary<string, string> tags, ContainerAppJobPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppJobPatch(ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, IDictionary<string, string> tags, ContainerAppJobPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             Identity = identity;

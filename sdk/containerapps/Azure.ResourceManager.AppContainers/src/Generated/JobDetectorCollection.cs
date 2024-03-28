@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A class representing a collection of <see cref="JobDetectorResource"/> and their operations.
-    /// Each <see cref="JobDetectorResource"/> in the collection will belong to the same instance of <see cref="JobResource"/>.
-    /// To get a <see cref="JobDetectorCollection"/> instance call the GetJobDetectors method from an instance of <see cref="JobResource"/>.
+    /// Each <see cref="JobDetectorResource"/> in the collection will belong to the same instance of <see cref="ContainerAppJobResource"/>.
+    /// To get a <see cref="JobDetectorCollection"/> instance call the GetJobDetectors method from an instance of <see cref="ContainerAppJobResource"/>.
     /// </summary>
     public partial class JobDetectorCollection : ArmCollection, IEnumerable<JobDetectorResource>, IAsyncEnumerable<JobDetectorResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != JobResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, JobResource.ResourceType), nameof(id));
+            if (id.ResourceType != ContainerAppJobResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerAppJobResource.ResourceType), nameof(id));
         }
 
         /// <summary>

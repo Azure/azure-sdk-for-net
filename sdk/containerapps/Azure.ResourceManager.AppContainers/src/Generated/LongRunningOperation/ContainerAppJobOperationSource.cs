@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal class JobOperationSource : IOperationSource<JobResource>
+    internal class ContainerAppJobOperationSource : IOperationSource<ContainerAppJobResource>
     {
         private readonly ArmClient _client;
 
-        internal JobOperationSource(ArmClient client)
+        internal ContainerAppJobOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        JobResource IOperationSource<JobResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerAppJobResource IOperationSource<ContainerAppJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerAppJobData.DeserializeContainerAppJobData(document.RootElement);
-            return new JobResource(_client, data);
+            return new ContainerAppJobResource(_client, data);
         }
 
-        async ValueTask<JobResource> IOperationSource<JobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerAppJobResource> IOperationSource<ContainerAppJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerAppJobData.DeserializeContainerAppJobData(document.RootElement);
-            return new JobResource(_client, data);
+            return new ContainerAppJobResource(_client, data);
         }
     }
 }

@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "f07f3711-b45e-40fe-a941-4e6d93f851e6";
             string resourceGroupName = "mikono-workerapp-test-rg";
             string jobName = "mikonojob1";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // get the collection of this JobDetectorResource
-            JobDetectorCollection collection = job.GetJobDetectors();
+            JobDetectorCollection collection = containerAppJob.GetJobDetectors();
 
             // invoke the operation and iterate over the result
             await foreach (JobDetectorResource item in collection.GetAllAsync())
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "f07f3711-b45e-40fe-a941-4e6d93f851e6";
             string resourceGroupName = "mikono-workerapp-test-rg";
             string jobName = "mikonojob1";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // get the collection of this JobDetectorResource
-            JobDetectorCollection collection = job.GetJobDetectors();
+            JobDetectorCollection collection = containerAppJob.GetJobDetectors();
 
             // invoke the operation
             string detectorName = "containerappjobnetworkIO";
@@ -99,16 +99,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "f07f3711-b45e-40fe-a941-4e6d93f851e6";
             string resourceGroupName = "mikono-workerapp-test-rg";
             string jobName = "mikonojob1";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // get the collection of this JobDetectorResource
-            JobDetectorCollection collection = job.GetJobDetectors();
+            JobDetectorCollection collection = containerAppJob.GetJobDetectors();
 
             // invoke the operation
             string detectorName = "containerappjobnetworkIO";
@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "f07f3711-b45e-40fe-a941-4e6d93f851e6";
             string resourceGroupName = "mikono-workerapp-test-rg";
             string jobName = "mikonojob1";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // get the collection of this JobDetectorResource
-            JobDetectorCollection collection = job.GetJobDetectors();
+            JobDetectorCollection collection = containerAppJob.GetJobDetectors();
 
             // invoke the operation
             string detectorName = "containerappjobnetworkIO";

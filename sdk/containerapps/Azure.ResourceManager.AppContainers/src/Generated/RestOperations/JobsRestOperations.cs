@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string jobName, JobPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string jobName, ContainerAppJobPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.AppContainers
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<JobPatch>(patch, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue<ContainerAppJobPatch>(patch, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string jobName, JobPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string jobName, ContainerAppJobPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string jobName, JobPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string jobName, ContainerAppJobPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

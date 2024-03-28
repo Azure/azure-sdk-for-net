@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppContainers.Samples
 {
-    public partial class Sample_JobCollection
+    public partial class Sample_ContainerAppJobCollection
     {
         // List Container Apps Jobs by resource group
         [NUnit.Framework.Test]
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this JobResource
-            JobCollection collection = resourceGroupResource.GetJobs();
+            // get the collection of this ContainerAppJobResource
+            ContainerAppJobCollection collection = resourceGroupResource.GetContainerAppJobs();
 
             // invoke the operation and iterate over the result
-            await foreach (JobResource item in collection.GetAllAsync())
+            await foreach (ContainerAppJobResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this JobResource
-            JobCollection collection = resourceGroupResource.GetJobs();
+            // get the collection of this ContainerAppJobResource
+            ContainerAppJobCollection collection = resourceGroupResource.GetContainerAppJobs();
 
             // invoke the operation
             string jobName = "testcontainerAppsJob0";
-            JobResource result = await collection.GetAsync(jobName);
+            ContainerAppJobResource result = await collection.GetAsync(jobName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this JobResource
-            JobCollection collection = resourceGroupResource.GetJobs();
+            // get the collection of this ContainerAppJobResource
+            ContainerAppJobCollection collection = resourceGroupResource.GetContainerAppJobs();
 
             // invoke the operation
             string jobName = "testcontainerAppsJob0";
@@ -138,13 +138,13 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this JobResource
-            JobCollection collection = resourceGroupResource.GetJobs();
+            // get the collection of this ContainerAppJobResource
+            ContainerAppJobCollection collection = resourceGroupResource.GetContainerAppJobs();
 
             // invoke the operation
             string jobName = "testcontainerAppsJob0";
-            NullableResponse<JobResource> response = await collection.GetIfExistsAsync(jobName);
-            JobResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ContainerAppJobResource> response = await collection.GetIfExistsAsync(jobName);
+            ContainerAppJobResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -180,8 +180,8 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this JobResource
-            JobCollection collection = resourceGroupResource.GetJobs();
+            // get the collection of this ContainerAppJobResource
+            ContainerAppJobCollection collection = resourceGroupResource.GetContainerAppJobs();
 
             // invoke the operation
             string jobName = "testcontainerAppsJob0";
@@ -261,8 +261,8 @@ SubPath = "subPath2",
 },
                 },
             };
-            ArmOperation<JobResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, jobName, data);
-            JobResource result = lro.Value;
+            ArmOperation<ContainerAppJobResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, jobName, data);
+            ContainerAppJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -291,8 +291,8 @@ SubPath = "subPath2",
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this JobResource
-            JobCollection collection = resourceGroupResource.GetJobs();
+            // get the collection of this ContainerAppJobResource
+            ContainerAppJobCollection collection = resourceGroupResource.GetContainerAppJobs();
 
             // invoke the operation
             string jobName = "testcontainerAppsJob0";
@@ -363,8 +363,8 @@ Name = "testcontainerAppsJob0",
 },
                 },
             };
-            ArmOperation<JobResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, jobName, data);
-            JobResource result = lro.Value;
+            ArmOperation<ContainerAppJobResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, jobName, data);
+            ContainerAppJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -393,8 +393,8 @@ Name = "testcontainerAppsJob0",
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this JobResource
-            JobCollection collection = resourceGroupResource.GetJobs();
+            // get the collection of this ContainerAppJobResource
+            ContainerAppJobCollection collection = resourceGroupResource.GetContainerAppJobs();
 
             // invoke the operation
             string jobName = "testcontainerAppsJob0";
@@ -468,8 +468,8 @@ Name = "testcontainerAppsJob0",
 },
                 },
             };
-            ArmOperation<JobResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, jobName, data);
-            JobResource result = lro.Value;
+            ArmOperation<ContainerAppJobResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, jobName, data);
+            ContainerAppJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

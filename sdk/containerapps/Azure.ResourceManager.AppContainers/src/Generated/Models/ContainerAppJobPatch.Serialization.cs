@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class JobPatch : IUtf8JsonSerializable, IJsonModel<JobPatch>
+    public partial class ContainerAppJobPatch : IUtf8JsonSerializable, IJsonModel<ContainerAppJobPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppJobPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<JobPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerAppJobPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndObject();
         }
 
-        JobPatch IJsonModel<JobPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppJobPatch IJsonModel<ContainerAppJobPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeJobPatch(document.RootElement, options);
+            return DeserializeContainerAppJobPatch(document.RootElement, options);
         }
 
-        internal static JobPatch DeserializeJobPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerAppJobPatch DeserializeContainerAppJobPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -148,38 +148,38 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobPatch(extendedLocation, identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
+            return new ContainerAppJobPatch(extendedLocation, identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<JobPatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerAppJobPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        JobPatch IPersistableModel<JobPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerAppJobPatch IPersistableModel<ContainerAppJobPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeJobPatch(document.RootElement, options);
+                        return DeserializeContainerAppJobPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<JobPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerAppJobPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

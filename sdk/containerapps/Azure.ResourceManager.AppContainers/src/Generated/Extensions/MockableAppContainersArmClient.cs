@@ -311,15 +311,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="JobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ContainerAppJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppJobResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobResource"/> object. </returns>
-        public virtual JobResource GetJobResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppJobResource"/> object. </returns>
+        public virtual ContainerAppJobResource GetContainerAppJobResource(ResourceIdentifier id)
         {
-            JobResource.ValidateResourceId(id);
-            return new JobResource(Client, id);
+            ContainerAppJobResource.ValidateResourceId(id);
+            return new ContainerAppJobResource(Client, id);
         }
 
         /// <summary>

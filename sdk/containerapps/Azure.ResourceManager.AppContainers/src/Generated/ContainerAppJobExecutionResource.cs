@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers
     /// A Class representing a ContainerAppJobExecution along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppJobExecutionResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetContainerAppJobExecutionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="JobResource"/> using the GetContainerAppJobExecution method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppJobResource"/> using the GetContainerAppJobExecution method.
     /// </summary>
     public partial class ContainerAppJobExecutionResource : ArmResource
     {

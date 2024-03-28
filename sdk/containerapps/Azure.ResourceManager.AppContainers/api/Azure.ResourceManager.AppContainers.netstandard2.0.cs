@@ -29,7 +29,13 @@ namespace Azure.ResourceManager.AppContainers
         public static Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyResource GetContainerAppDetectorPropertyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyRevisionResource GetContainerAppDetectorPropertyRevisionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppContainers.ContainerAppDetectorResource GetContainerAppDetectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource> GetContainerAppJob(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource>> GetContainerAppJobAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppContainers.ContainerAppJobExecutionResource GetContainerAppJobExecutionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppContainers.ContainerAppJobResource GetContainerAppJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppContainers.ContainerAppJobCollection GetContainerAppJobs(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppContainers.ContainerAppJobResource> GetContainerAppJobs(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppContainers.ContainerAppJobResource> GetContainerAppJobsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppContainers.ContainerAppManagedCertificateResource GetContainerAppManagedCertificateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironment(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string environmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentResource>> GetContainerAppManagedEnvironmentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string environmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -57,14 +63,8 @@ namespace Azure.ResourceManager.AppContainers
         public static Azure.ResourceManager.AppContainers.DaprSubscriptionResource GetDaprSubscriptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppContainers.DotNetComponentResource GetDotNetComponentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppContainers.JavaComponentResource GetJavaComponentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.AppContainers.JobResource> GetJob(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.JobResource>> GetJobAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppContainers.JobDetectorPropertyResource GetJobDetectorPropertyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppContainers.JobDetectorResource GetJobDetectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.AppContainers.JobResource GetJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.AppContainers.JobCollection GetJobs(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.AppContainers.JobResource> GetJobs(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.AppContainers.JobResource> GetJobsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppContainers.Models.AppContainersUsage> GetUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppContainers.Models.AppContainersUsage> GetUsagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -576,6 +576,23 @@ namespace Azure.ResourceManager.AppContainers
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.ContainerAppDiagnosticData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.ContainerAppDiagnosticData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ContainerAppJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppContainers.ContainerAppJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.ContainerAppJobResource>, System.Collections.IEnumerable
+    {
+        protected ContainerAppJobCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.ContainerAppJobResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string jobName, Azure.ResourceManager.AppContainers.ContainerAppJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.ContainerAppJobResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string jobName, Azure.ResourceManager.AppContainers.ContainerAppJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.ContainerAppJobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.ContainerAppJobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppContainers.ContainerAppJobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppContainers.ContainerAppJobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppContainers.ContainerAppJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppContainers.ContainerAppJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppContainers.ContainerAppJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.ContainerAppJobResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
     public partial class ContainerAppJobData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.ContainerAppJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.ContainerAppJobData>
     {
         public ContainerAppJobData(Azure.Core.AzureLocation location) { }
@@ -633,6 +650,39 @@ namespace Azure.ResourceManager.AppContainers
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobExecutionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation StopExecutionJob(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopExecutionJobAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ContainerAppJobResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ContainerAppJobResource() { }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppJobData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jobName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobExecutionResource> GetContainerAppJobExecution(string jobExecutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobExecutionResource>> GetContainerAppJobExecutionAsync(string jobExecutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppJobExecutionCollection GetContainerAppJobExecutions() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppContainers.JobDetectorResource> GetJobDetector(string detectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.JobDetectorResource>> GetJobDetectorAsync(string detectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.JobDetectorPropertyResource GetJobDetectorProperty() { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.JobDetectorCollection GetJobDetectors() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.Models.ContainerAppWritableSecret> GetSecrets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.Models.ContainerAppWritableSecret> GetSecretsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutionBase> Start(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutionTemplate template = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutionBase>> StartAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutionTemplate template = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutions> StopMultipleExecutions(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutions>> StopMultipleExecutionsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.ContainerAppJobResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.ContainerAppJobResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ContainerAppManagedCertificateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppContainers.ContainerAppManagedCertificateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.ContainerAppManagedCertificateResource>, System.Collections.IEnumerable
     {
@@ -1382,23 +1432,6 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.JavaComponentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppContainers.JavaComponentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.JavaComponentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppContainers.JavaComponentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class JobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppContainers.JobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.JobResource>, System.Collections.IEnumerable
-    {
-        protected JobCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.JobResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string jobName, Azure.ResourceManager.AppContainers.ContainerAppJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.JobResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string jobName, Azure.ResourceManager.AppContainers.ContainerAppJobData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppContainers.JobResource> Get(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.JobResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.JobResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.JobResource>> GetAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.AppContainers.JobResource> GetIfExists(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppContainers.JobResource>> GetIfExistsAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppContainers.JobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppContainers.JobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppContainers.JobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.JobResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
     public partial class JobDetectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppContainers.JobDetectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.JobDetectorResource>, System.Collections.IEnumerable
     {
         protected JobDetectorCollection() { }
@@ -1434,39 +1467,6 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Azure.Response<Azure.ResourceManager.AppContainers.JobDetectorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.JobDetectorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class JobResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected JobResource() { }
-        public virtual Azure.ResourceManager.AppContainers.ContainerAppJobData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.AppContainers.JobResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.JobResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jobName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppContainers.JobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.JobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobExecutionResource> GetContainerAppJobExecution(string jobExecutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobExecutionResource>> GetContainerAppJobExecutionAsync(string jobExecutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.AppContainers.ContainerAppJobExecutionCollection GetContainerAppJobExecutions() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppContainers.JobDetectorResource> GetJobDetector(string detectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.JobDetectorResource>> GetJobDetectorAsync(string detectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.AppContainers.JobDetectorPropertyResource GetJobDetectorProperty() { throw null; }
-        public virtual Azure.ResourceManager.AppContainers.JobDetectorCollection GetJobDetectors() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.Models.ContainerAppWritableSecret> GetSecrets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.Models.ContainerAppWritableSecret> GetSecretsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppContainers.JobResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.JobResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppContainers.JobResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.JobResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutionBase> Start(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutionTemplate template = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutionBase>> StartAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutionTemplate template = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutions> StopMultipleExecutions(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutions>> StopMultipleExecutionsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.JobResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppContainers.Models.JobPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.JobResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppContainers.Models.JobPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.AppContainers.Mocking
 {
@@ -1485,6 +1485,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         public virtual Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyRevisionResource GetContainerAppDetectorPropertyRevisionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppDetectorResource GetContainerAppDetectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppJobExecutionResource GetContainerAppJobExecutionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppJobResource GetContainerAppJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedCertificateResource GetContainerAppManagedCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentCertificateResource GetContainerAppManagedEnvironmentCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1504,7 +1505,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         public virtual Azure.ResourceManager.AppContainers.JavaComponentResource GetJavaComponentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.JobDetectorPropertyResource GetJobDetectorPropertyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.JobDetectorResource GetJobDetectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.AppContainers.JobResource GetJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableAppContainersResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -1517,13 +1517,13 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironment(string connectedEnvironmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentResource>> GetContainerAppConnectedEnvironmentAsync(string connectedEnvironmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentCollection GetContainerAppConnectedEnvironments() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource> GetContainerAppJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource>> GetContainerAppJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppJobCollection GetContainerAppJobs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironment(string environmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentResource>> GetContainerAppManagedEnvironmentAsync(string environmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentCollection GetContainerAppManagedEnvironments() { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppCollection GetContainerApps() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppContainers.JobResource> GetJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.JobResource>> GetJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.AppContainers.JobCollection GetJobs() { throw null; }
     }
     public partial class MockableAppContainersSubscriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -1536,14 +1536,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.BuilderResource> GetBuilderResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironments(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironmentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.ContainerAppJobResource> GetContainerAppJobs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.ContainerAppJobResource> GetContainerAppJobsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironments(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironmentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.ContainerAppResource> GetContainerApps(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.ContainerAppResource> GetContainerAppsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> GetCustomDomainVerificationId(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> GetCustomDomainVerificationIdAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.JobResource> GetJobs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.JobResource> GetJobsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.Models.AppContainersUsage> GetUsages(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.Models.AppContainersUsage> GetUsagesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -3002,6 +3002,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutionTemplate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppJobExecutionTemplate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ContainerAppJobPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatch>
+    {
+        public ContainerAppJobPatch() { }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatchProperties Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ContainerAppJobPatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatchProperties>
     {
         public ContainerAppJobPatchProperties() { }
@@ -4285,19 +4298,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static implicit operator Azure.ResourceManager.AppContainers.Models.JobExecutionRunningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppContainers.Models.JobExecutionRunningState left, Azure.ResourceManager.AppContainers.Models.JobExecutionRunningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class JobPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.JobPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.JobPatch>
-    {
-        public JobPatch() { }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocation ExtendedLocation { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppJobPatchProperties Properties { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        Azure.ResourceManager.AppContainers.Models.JobPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.JobPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.JobPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppContainers.Models.JobPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.JobPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.JobPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.JobPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LogLevelSetting : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.LogLevelSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.LogLevelSetting>
     {

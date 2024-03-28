@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // get the collection of this ContainerAppJobExecutionResource
-            ContainerAppJobExecutionCollection collection = job.GetContainerAppJobExecutions();
+            ContainerAppJobExecutionCollection collection = containerAppJob.GetContainerAppJobExecutions();
 
             // invoke the operation and iterate over the result
             await foreach (ContainerAppJobExecutionResource item in collection.GetAllAsync())
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // get the collection of this ContainerAppJobExecutionResource
-            ContainerAppJobExecutionCollection collection = job.GetContainerAppJobExecutions();
+            ContainerAppJobExecutionCollection collection = containerAppJob.GetContainerAppJobExecutions();
 
             // invoke the operation
             string jobExecutionName = "jobExecution1";
@@ -99,16 +99,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // get the collection of this ContainerAppJobExecutionResource
-            ContainerAppJobExecutionCollection collection = job.GetContainerAppJobExecutions();
+            ContainerAppJobExecutionCollection collection = containerAppJob.GetContainerAppJobExecutions();
 
             // invoke the operation
             string jobExecutionName = "jobExecution1";
@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobResource created on azure
-            // for more information of creating JobResource, please refer to the document of JobResource
+            // this example assumes you already have this ContainerAppJobResource created on azure
+            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            JobResource job = client.GetJobResource(jobResourceId);
+            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
             // get the collection of this ContainerAppJobExecutionResource
-            ContainerAppJobExecutionCollection collection = job.GetContainerAppJobExecutions();
+            ContainerAppJobExecutionCollection collection = containerAppJob.GetContainerAppJobExecutions();
 
             // invoke the operation
             string jobExecutionName = "jobExecution1";

@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         private ConnectedEnvironmentsRestOperations _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient;
         private ClientDiagnostics _containerAppClientDiagnostics;
         private ContainerAppsRestOperations _containerAppRestClient;
-        private ClientDiagnostics _jobClientDiagnostics;
-        private JobsRestOperations _jobRestClient;
+        private ClientDiagnostics _containerAppJobJobsClientDiagnostics;
+        private JobsRestOperations _containerAppJobJobsRestClient;
         private ClientDiagnostics _containerAppJobExecutionClientDiagnostics;
         private ContainerAppsAPIRestOperations _containerAppJobExecutionRestClient;
         private ClientDiagnostics _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics;
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         private ConnectedEnvironmentsRestOperations ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient => _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient ??= new ConnectedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppConnectedEnvironmentResource.ResourceType));
         private ClientDiagnostics ContainerAppClientDiagnostics => _containerAppClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppResource.ResourceType.Namespace, Diagnostics);
         private ContainerAppsRestOperations ContainerAppRestClient => _containerAppRestClient ??= new ContainerAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppResource.ResourceType));
-        private ClientDiagnostics JobClientDiagnostics => _jobClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", JobResource.ResourceType.Namespace, Diagnostics);
-        private JobsRestOperations JobRestClient => _jobRestClient ??= new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(JobResource.ResourceType));
+        private ClientDiagnostics ContainerAppJobJobsClientDiagnostics => _containerAppJobJobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobResource.ResourceType.Namespace, Diagnostics);
+        private JobsRestOperations ContainerAppJobJobsRestClient => _containerAppJobJobsRestClient ??= new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppJobResource.ResourceType));
         private ClientDiagnostics ContainerAppJobExecutionClientDiagnostics => _containerAppJobExecutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobExecutionResource.ResourceType.Namespace, Diagnostics);
         private ContainerAppsAPIRestOperations ContainerAppJobExecutionRestClient => _containerAppJobExecutionRestClient ??= new ContainerAppsAPIRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppJobExecutionResource.ResourceType));
         private ClientDiagnostics ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics => _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
@@ -377,17 +377,17 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JobResource> GetJobsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerAppJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppJobResource> GetContainerAppJobsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => JobRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JobRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, ContainerAppJobData.DeserializeContainerAppJobData(e)), JobClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetJobs", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppJobJobsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppJobJobsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobResource(Client, ContainerAppJobData.DeserializeContainerAppJobData(e)), ContainerAppJobJobsClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetContainerAppJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -407,17 +407,17 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JobResource> GetJobs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppJobResource> GetContainerAppJobs(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => JobRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JobRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, ContainerAppJobData.DeserializeContainerAppJobData(e)), JobClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetJobs", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppJobJobsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppJobJobsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobResource(Client, ContainerAppJobData.DeserializeContainerAppJobData(e)), ContainerAppJobJobsClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetContainerAppJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

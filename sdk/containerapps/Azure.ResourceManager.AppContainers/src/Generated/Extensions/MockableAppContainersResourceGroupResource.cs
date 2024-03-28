@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return GetContainerAppManagedEnvironments().Get(environmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of JobResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
-        public virtual JobCollection GetJobs()
+        /// <summary> Gets a collection of ContainerAppJobResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ContainerAppJobResources and their operations over a ContainerAppJobResource. </returns>
+        public virtual ContainerAppJobCollection GetContainerAppJobs()
         {
-            return GetCachedClient(client => new JobCollection(client, Id));
+            return GetCachedClient(client => new ContainerAppJobCollection(client, Id));
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -342,9 +342,9 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<JobResource>> GetJobAsync(string jobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppJobResource>> GetContainerAppJobAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            return await GetJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,9 +373,9 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<JobResource> GetJob(string jobName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppJobResource> GetContainerAppJob(string jobName, CancellationToken cancellationToken = default)
         {
-            return GetJobs().Get(jobName, cancellationToken);
+            return GetContainerAppJobs().Get(jobName, cancellationToken);
         }
     }
 }
