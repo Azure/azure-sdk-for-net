@@ -17,24 +17,26 @@ dotnet add package Azure.Communication.ProgrammableConnectivity --prerelease
 
 Before you can use the SDK successfully, you'll need to
 * Follow the [guide](https://learn.microsoft.com/en-us/azure/programmable-connectivity/azure-programmable-connectivity-create-gateway) to create a gateway, or have one already.
-* Note down your endpoint and `apc-gateway-id`.
+* Note down your endpoint and `apc-gateway-id`, which is retrieved by following the guide linked.
 
 ### Authenticate the client
 
-The SDK uses `DefaultAzureCredential()` to authenticate with APC. See [docs](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.environmentcredential?view=azure-dotnet) for information on how to allow this to access your credentials.
+The SDK uses `DefaultAzureCredential` to authenticate with APC. See [docs](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) for information on how to allow this to access your credentials.
 
-## Key concepts
+## Examples
+
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/programmableconnectivity/Azure.Communication.ProgrammableConnectivity/samples).
+
+### Key concepts for each example
 
 For each call that you make to APC with the SDK, you will follow the same pattern:
-* Create a client `ProgrammableConnectivityClient`
+* Create a client `baseClient = new ProgrammableConnectivityClient()`
 * Access the sub-client for your use case (sim-swap/location/number-verification/device-network) by calling say `baseClient.GetSimSwapClient()`
 * Create the content for your request by using the objects given by the SDK, for example `SimSwapVerificationContent`
 * Call the client with the content you've created
 * Access the result
 
-## Examples
-
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/programmableconnectivity/Azure.Communication.ProgrammableConnectivity/samples).
+When handling an error, catch `RequestFailedException`, and log out the details. See [README.md](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/programmableconnectivity/Azure.Communication.ProgrammableConnectivity/samples/README.md) for a specific example.
 
 ## Troubleshooting
 
@@ -42,6 +44,6 @@ If your call doesn't work, we recommend logging out the exception messages, and 
 
 ## Contributing
 
-APC is currently not accepting/excpecting contributions for this codedbase.
+APC is currently not accepting/expecting contributions for this codebase.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/programmableconnectivity/Azure.Communication.ProgrammableConnectivity/README.png)

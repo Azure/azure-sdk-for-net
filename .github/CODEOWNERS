@@ -908,10 +908,10 @@
 # ServiceLabel: %Playwright
 # ServiceOwners:                                                   @shreyaanand @mjmadhu
 
-# PRLabel: %Communication - programmableconnectivity
+# PRLabel: %Communication - Programmable Connectivity
 /sdk/programmableconnectivity/                                     @aronhegedusms
 
-# ServiceLabel: %Communication - programmableconnectivity
+# ServiceLabel: %Communication - Programmable Connectivity
 # ServiceOwners:                                                   @aronhegedusms
 
 # ######## Management Plane ########
