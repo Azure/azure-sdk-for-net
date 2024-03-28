@@ -58,6 +58,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new MachineLearningServicesModelRegisteredEventData(modelName, modelVersion, modelTags, modelProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MachineLearningServicesModelRegisteredEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMachineLearningServicesModelRegisteredEventData(document.RootElement);
+        }
+
         internal partial class MachineLearningServicesModelRegisteredEventDataConverter : JsonConverter<MachineLearningServicesModelRegisteredEventData>
         {
             public override void Write(Utf8JsonWriter writer, MachineLearningServicesModelRegisteredEventData model, JsonSerializerOptions options)

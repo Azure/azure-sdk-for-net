@@ -676,7 +676,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <returns> A new <see cref="DocumentIntelligence.OperationDetails"/> instance for mocking. </returns>
-        public static OperationDetails OperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, string kind = null, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null)
+        public static OperationDetails OperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, string kind = "Unknown", Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -686,7 +686,7 @@ namespace Azure.AI.DocumentIntelligence
                 percentCompleted,
                 createdOn,
                 lastUpdatedOn,
-                kind == null ? default : new OperationKind(kind),
+                kind,
                 resourceLocation,
                 apiVersion,
                 tags,

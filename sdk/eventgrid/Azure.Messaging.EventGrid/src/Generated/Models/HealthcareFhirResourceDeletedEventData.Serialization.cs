@@ -58,6 +58,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new HealthcareFhirResourceDeletedEventData(resourceType, resourceFhirAccount, resourceFhirId, resourceVersionId);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareFhirResourceDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareFhirResourceDeletedEventData(document.RootElement);
+        }
+
         internal partial class HealthcareFhirResourceDeletedEventDataConverter : JsonConverter<HealthcareFhirResourceDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, HealthcareFhirResourceDeletedEventData model, JsonSerializerOptions options)

@@ -76,6 +76,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 disconnectionReason);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new EventGridMqttClientSessionDisconnectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEventGridMqttClientSessionDisconnectedEventData(document.RootElement);
+        }
+
         internal partial class EventGridMqttClientSessionDisconnectedEventDataConverter : JsonConverter<EventGridMqttClientSessionDisconnectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, EventGridMqttClientSessionDisconnectedEventData model, JsonSerializerOptions options)

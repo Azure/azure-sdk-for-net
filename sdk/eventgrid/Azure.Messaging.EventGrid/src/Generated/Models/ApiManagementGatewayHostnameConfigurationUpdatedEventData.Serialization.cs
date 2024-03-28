@@ -32,6 +32,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new ApiManagementGatewayHostnameConfigurationUpdatedEventData(resourceUri);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ApiManagementGatewayHostnameConfigurationUpdatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeApiManagementGatewayHostnameConfigurationUpdatedEventData(document.RootElement);
+        }
+
         internal partial class ApiManagementGatewayHostnameConfigurationUpdatedEventDataConverter : JsonConverter<ApiManagementGatewayHostnameConfigurationUpdatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ApiManagementGatewayHostnameConfigurationUpdatedEventData model, JsonSerializerOptions options)

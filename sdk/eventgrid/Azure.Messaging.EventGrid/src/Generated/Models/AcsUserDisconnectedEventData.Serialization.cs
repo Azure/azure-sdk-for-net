@@ -36,6 +36,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AcsUserDisconnectedEventData(userCommunicationIdentifier);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsUserDisconnectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsUserDisconnectedEventData(document.RootElement);
+        }
+
         internal partial class AcsUserDisconnectedEventDataConverter : JsonConverter<AcsUserDisconnectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsUserDisconnectedEventData model, JsonSerializerOptions options)

@@ -52,6 +52,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new DataBoxCopyCompletedEventData(serialNumber, stageName, stageTime);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataBoxCopyCompletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataBoxCopyCompletedEventData(document.RootElement);
+        }
+
         internal partial class DataBoxCopyCompletedEventDataConverter : JsonConverter<DataBoxCopyCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, DataBoxCopyCompletedEventData model, JsonSerializerOptions options)

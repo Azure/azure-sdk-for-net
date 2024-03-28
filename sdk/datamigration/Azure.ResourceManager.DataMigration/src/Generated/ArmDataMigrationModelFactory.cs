@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
         /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationProperties DatabaseMigrationProperties(string kind = null, string scope = null, string provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string targetDatabaseCollation = null, string provisioningError = null)
+        public static DatabaseMigrationProperties DatabaseMigrationProperties(string kind = "Unknown", string scope = null, string provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string targetDatabaseCollation = null, string provisioningError = null)
         {
             return new UnknownDatabaseMigrationProperties(
-                kind == null ? default : new ResourceType(kind),
+                kind,
                 scope,
                 provisioningState,
                 migrationStatus,
@@ -705,14 +705,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <returns> A new <see cref="Models.ProjectTaskProperties"/> instance for mocking. </returns>
-        public static ProjectTaskProperties ProjectTaskProperties(string taskType = null, IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null)
+        public static ProjectTaskProperties ProjectTaskProperties(string taskType = "Unknown", IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null)
         {
             errors ??= new List<ODataError>();
             commands ??= new List<CommandProperties>();
             clientData ??= new Dictionary<string, string>();
 
             return new UnknownProjectTaskProperties(
-                taskType == null ? default : new TaskType(taskType),
+                taskType,
                 errors?.ToList(),
                 state,
                 commands?.ToList(),
@@ -725,11 +725,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
         /// <returns> A new <see cref="Models.CommandProperties"/> instance for mocking. </returns>
-        public static CommandProperties CommandProperties(string commandType = null, IEnumerable<ODataError> errors = null, CommandState? state = null)
+        public static CommandProperties CommandProperties(string commandType = "Unknown", IEnumerable<ODataError> errors = null, CommandState? state = null)
         {
             errors ??= new List<ODataError>();
 
-            return new UnknownCommandProperties(commandType == null ? default : new CommandType(commandType), errors?.ToList(), state, serializedAdditionalRawData: null);
+            return new UnknownCommandProperties(commandType, errors?.ToList(), state, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NameAvailabilityResponse"/>. </summary>
@@ -2668,7 +2668,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
         /// <returns> A new <see cref="Models.MongoDBProgress"/> instance for mocking. </returns>
-        public static MongoDBProgress MongoDBProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, string resultType = null, MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default)
+        public static MongoDBProgress MongoDBProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, string resultType = "Unknown", MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default)
         {
             errors ??= new Dictionary<string, MongoDBError>();
 
@@ -2683,7 +2683,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 lastReplayOn,
                 name,
                 qualifiedName,
-                resultType == null ? default : new MongoDBProgressResultType(resultType),
+                resultType,
                 state,
                 totalBytes,
                 totalDocuments,

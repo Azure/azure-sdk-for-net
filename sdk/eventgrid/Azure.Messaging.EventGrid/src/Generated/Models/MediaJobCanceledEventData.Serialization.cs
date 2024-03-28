@@ -77,6 +77,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new MediaJobCanceledEventData(previousState, state, correlationData ?? new ChangeTrackingDictionary<string, string>(), outputs ?? new ChangeTrackingList<MediaJobOutput>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MediaJobCanceledEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaJobCanceledEventData(document.RootElement);
+        }
+
         internal partial class MediaJobCanceledEventDataConverter : JsonConverter<MediaJobCanceledEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaJobCanceledEventData model, JsonSerializerOptions options)

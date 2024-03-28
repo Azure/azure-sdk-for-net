@@ -50,6 +50,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AcsRouterWorkerDeletedEventData(jobId, channelReference, channelId, workerId);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsRouterWorkerDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterWorkerDeletedEventData(document.RootElement);
+        }
+
         internal partial class AcsRouterWorkerDeletedEventDataConverter : JsonConverter<AcsRouterWorkerDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterWorkerDeletedEventData model, JsonSerializerOptions options)

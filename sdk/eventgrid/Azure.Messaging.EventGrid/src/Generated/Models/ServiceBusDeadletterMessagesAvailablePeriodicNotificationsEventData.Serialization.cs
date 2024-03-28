@@ -68,6 +68,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 subscriptionName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData(document.RootElement);
+        }
+
         internal partial class ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventDataConverter : JsonConverter<ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData>
         {
             public override void Write(Utf8JsonWriter writer, ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData model, JsonSerializerOptions options)

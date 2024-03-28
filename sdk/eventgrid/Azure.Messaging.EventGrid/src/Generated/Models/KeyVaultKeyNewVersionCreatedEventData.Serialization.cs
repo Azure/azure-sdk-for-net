@@ -83,6 +83,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 exp);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyVaultKeyNewVersionCreatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyVaultKeyNewVersionCreatedEventData(document.RootElement);
+        }
+
         internal partial class KeyVaultKeyNewVersionCreatedEventDataConverter : JsonConverter<KeyVaultKeyNewVersionCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, KeyVaultKeyNewVersionCreatedEventData model, JsonSerializerOptions options)
