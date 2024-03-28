@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the database. </param>
         /// <returns> A new <see cref="Kusto.KustoDatabaseData"/> instance for mocking. </returns>
-        public static KustoDatabaseData KustoDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
+        public static KustoDatabaseData KustoDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
         {
             return new KustoDatabaseData(
                 id,
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                kind == null ? default : new KustoKind(kind),
+                kind,
                 serializedAdditionalRawData: null);
         }
 
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
         /// <returns> A new <see cref="Kusto.KustoDataConnectionData"/> instance for mocking. </returns>
-        public static KustoDataConnectionData KustoDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
+        public static KustoDataConnectionData KustoDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
         {
             return new KustoDataConnectionData(
                 id,
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 location,
-                kind == null ? default : new DataConnectionKind(kind),
+                kind,
                 serializedAdditionalRawData: null);
         }
 
