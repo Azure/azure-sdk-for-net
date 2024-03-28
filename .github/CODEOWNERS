@@ -175,6 +175,12 @@
 # ServiceLabel: %Bot Service
 # ServiceOwners:                                                   @sgellock
 
+# PRLabel: %CDK
+/sdk/provisioning/                                                 @JoshLove-msft @tg-msft
+
+# ServiceLabel: %CDK
+# AzureSdkOwners:                                                  @JoshLove-msft
+
 # ServiceLabel: %Cloud Shell
 # ServiceOwners:                                                   @maertendMSFT
 
@@ -188,7 +194,7 @@
 /sdk/contentsafety/                                                @bowgong @mengaims @JieZhou000
 
 # ServiceLabel: %Cognitive - Content Safety
-# ServiceOwners:                     	                           @bowgong @mengaims @JieZhou000
+# ServiceOwners:                     	                             @bowgong @mengaims @JieZhou000
 
 # PRLabel: %Cognitive - Custom Vision
 /sdk/cognitiveservices/Vision.CustomVision*/                       @areddish @tburns10
@@ -237,6 +243,11 @@
 # ServiceLabel: %Cognitive - Health Insights
 # ServiceOwners:                                                   @asaflevi-ms
 
+# PRLabel: %Cognitive - Personalizer
+/sdk/personalizer/                                                 @orenmichaely @tyclintw
+
+# ServiceLabel: %Cognitive - Personalizer
+# ServiceOwners:                                                   @orenmichaely @tyclintw
 # PRLabel: %Cognitive - QnA Maker
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
 
@@ -733,6 +744,12 @@
 # ServiceLabel: %Image Analysis
 # ServiceOwners:                                                   @rhurey @dargilco
 
+# PRLabel: %Playwright
+/sdk/playwrighttesting/                                            @shreyaanand @mjmadhu
+
+# ServiceLabel: %Playwright
+# ServiceOwners:                                                   @shreyaanand @mjmadhu
+
 # ServiceLabel: %Policy
 # ServiceOwners:                                                   @aperezcloud @kenieva
 
@@ -895,18 +912,6 @@
 
 # ServiceLabel: %WebPubSub
 # ServiceOwners:                                                   @vicancy @JialinXin
-
-# PRLabel: %Cognitive - Personalizer
-/sdk/personalizer/                                                 @orenmichaely @tyclintw
-
-# ServiceLabel: %Cognitive - Personalizer
-# ServiceOwners:                                                   @orenmichaely @tyclintw
-
-# PRLabel: %Playwright
-/sdk/playwrighttesting/                                            @shreyaanand @mjmadhu
-
-# ServiceLabel: %Playwright
-# ServiceOwners:                                                   @shreyaanand @mjmadhu
 
 # ######## Management Plane ########
 
