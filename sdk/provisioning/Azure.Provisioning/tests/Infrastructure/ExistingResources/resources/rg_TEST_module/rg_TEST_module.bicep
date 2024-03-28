@@ -93,6 +93,15 @@ resource signalRService_d95Jninqk 'Microsoft.SignalRService/signalR@2022-02-01' 
   name: 'existingSignalR'
 }
 
+resource webPubSub_d95Jnanqk 'Microsoft.SignalRService/webPubSub@2021-10-01' existing = {
+  name: 'existingWebPubSub'
+}
+
+resource webPubSubHub_da5Jnanqk 'Microsoft.SignalRService/webPubSub/hubs@2021-10-01' existing = {
+  name: '${webPubSub_d95Jnanqk}/existingWebPubSubHub'
+}
+
+
 resource applicationInsightsComponent_OdiSCimF0 'Microsoft.Insights/components@2020-02-02' existing = {
   name: 'existingAppInsights'
 }

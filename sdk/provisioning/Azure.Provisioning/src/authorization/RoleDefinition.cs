@@ -73,6 +73,11 @@ namespace Azure.Provisioning.Authorization
         /// </summary>
         public static RoleDefinition SignalRAppServer { get; } = new RoleDefinition("420fcaa2-552c-430f-98ca-3264be4806c7");
 
+        /// <summary>
+        /// Web PubSub Service Owner - Full access to Azure Web PubSub Service REST APIs
+        /// </summary>
+        public static RoleDefinition WebPubSubServiceOwner { get; } = new RoleDefinition("12cf5a90-567b-43ae-8102-96cf46c7d9b4");
+
         /// <summary> Converts a string to a <see cref="RoleDefinition"/>. </summary>
         public static implicit operator RoleDefinition(string value) => new RoleDefinition(value);
 

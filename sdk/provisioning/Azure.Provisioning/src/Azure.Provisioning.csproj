@@ -24,6 +24,7 @@
     <PackageReference Include="Azure.ResourceManager.Search" />
     <PackageReference Include="Azure.ResourceManager.EventHubs" />
     <PackageReference Include="Azure.ResourceManager.SignalR" />
+    <PackageReference Include="Azure.ResourceManager.WebPubSub" />
     <PackageReference Include="Azure.ResourceManager.ApplicationInsights" />
     <PackageReference Include="Azure.ResourceManager.OperationalInsights" />
     <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" />
