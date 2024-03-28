@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Type of the script. </param>
         /// <returns> A new <see cref="Resources.ArmDeploymentScriptData"/> instance for mocking. </returns>
-        public static ArmDeploymentScriptData ArmDeploymentScriptData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArmDeploymentScriptManagedIdentity identity = null, AzureLocation location = default, IDictionary<string, string> tags = null, string kind = null)
+        public static ArmDeploymentScriptData ArmDeploymentScriptData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArmDeploymentScriptManagedIdentity identity = null, AzureLocation location = default, IDictionary<string, string> tags = null, string kind = "Unknown")
         {
             tags ??= new Dictionary<string, string>();
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Resources.Models
                 identity,
                 location,
                 tags,
-                kind == null ? default : new ScriptType(kind),
+                kind,
                 serializedAdditionalRawData: null);
         }
 
