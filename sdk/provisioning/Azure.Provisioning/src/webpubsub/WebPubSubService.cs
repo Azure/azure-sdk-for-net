@@ -18,7 +18,7 @@ namespace Azure.Provisioning.WebPubSub
         // https://learn.microsoft.com/azure/templates/microsoft.signalrservice/2023-02-01/webPubSub?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.SignalRService/webPubSub";
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.ResourceManager.WebPubSub/src/Generated/RestOperations/WebPubSubRestOperations.cs#L36
-        private const string DefaultVersion = "2021-10-01";
+        internal const string DefaultVersion = "2021-10-01";
 
         private static WebPubSubData Empty(string name) => ArmWebPubSubModelFactory.WebPubSubData();
 

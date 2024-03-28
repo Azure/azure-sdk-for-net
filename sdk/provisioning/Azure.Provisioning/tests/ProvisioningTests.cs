@@ -365,10 +365,12 @@ namespace Azure.Provisioning.Tests
         public async Task WebPubSub()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
-            var signalR = new WebPubSubService(infrastructure, sku: new Azure.ResourceManager.WebPubSub.Models.BillingInfoSku("Standard_S1"));
-            signalR.AssignRole(RoleDefinition.WebPubSubServiceOwner, Guid.Empty);
-
-            signalR.AddOutput("hostName", data => data.HostName);
+            var wps = new WebPubSubService(infrastructure, sku: new Azure.ResourceManager.WebPubSub.Models.BillingInfoSku("Standard_S1"));
+            wps.AssignRole(RoleDefinition.WebPubSubServiceOwner, Guid.Empty);
+            var properties = new Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties();
+            properties.EventHandlers.Add(new Azure.ResourceManager.WebPubSub.Models.WebPubSubEventHandler("tunnel:///eventhandler") { UserEventPattern = "*" });
+            _ = new WebPubSubHub(infrastructure, properties, parent: wps);
+            wps.AddOutput("hostName", data => data.HostName);
             infrastructure.Build(GetOutputPath());
 
             await ValidateBicepAsync(interactiveMode: true);
@@ -631,7 +633,10 @@ namespace Azure.Provisioning.Tests
 
             infra.AddResource(SignalRService.FromExisting(infra, "'existingSignalR'", rg));
 
-            infra.AddResource(WebPubSubService.FromExisting(infra, "'existingWebPubSub'", rg));
+            var wps = WebPubSubService.FromExisting(infra, "'existingWebPubSub'", rg);
+            infra.AddResource(wps);
+            var wpsHub = WebPubSubHub.FromExisting(infra, "'existingWebPubSubHub'", wps);
+            infra.AddResource(wpsHub);
 
             infra.AddResource(ApplicationInsightsComponent.FromExisting(infra, "'existingAppInsights'", rg));
 
