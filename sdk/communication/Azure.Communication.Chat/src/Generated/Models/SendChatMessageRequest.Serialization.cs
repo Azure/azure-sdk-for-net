@@ -38,6 +38,16 @@ namespace Azure.Communication.Chat
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(Attachments))
+            {
+                writer.WritePropertyName("attachments"u8);
+                writer.WriteStartArray();
+                foreach (var item in Attachments)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
     }

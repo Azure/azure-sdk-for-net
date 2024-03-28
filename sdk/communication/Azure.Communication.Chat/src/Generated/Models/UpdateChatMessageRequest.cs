@@ -16,20 +16,25 @@ namespace Azure.Communication.Chat
         public UpdateChatMessageRequest()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
+            Attachments = new ChangeTrackingList<ChatAttachmentInternal>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateChatMessageRequest"/>. </summary>
         /// <param name="content"> Chat message content. </param>
         /// <param name="metadata"> Message metadata. </param>
-        internal UpdateChatMessageRequest(string content, IDictionary<string, string> metadata)
+        /// <param name="attachments"> The array of attachments. </param>
+        internal UpdateChatMessageRequest(string content, IDictionary<string, string> metadata, IList<ChatAttachmentInternal> attachments)
         {
             Content = content;
             Metadata = metadata;
+            Attachments = attachments;
         }
 
         /// <summary> Chat message content. </summary>
         public string Content { get; set; }
         /// <summary> Message metadata. </summary>
         public IDictionary<string, string> Metadata { get; }
+        /// <summary> The array of attachments. </summary>
+        public IList<ChatAttachmentInternal> Attachments { get; }
     }
 }

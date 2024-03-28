@@ -7,11 +7,37 @@
 
 using System;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class ChatAttachmentInternal
+    internal partial class ChatAttachmentInternal : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("attachmentType"u8);
+            writer.WriteStringValue(AttachmentType.ToString());
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Url))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Url.AbsoluteUri);
+            }
+            if (Optional.IsDefined(PreviewUrl))
+            {
+                writer.WritePropertyName("previewUrl"u8);
+                writer.WriteStringValue(PreviewUrl.AbsoluteUri);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static ChatAttachmentInternal DeserializeChatAttachmentInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

@@ -22,6 +22,7 @@ namespace Azure.Communication.Chat
 
             Content = content;
             Metadata = new ChangeTrackingDictionary<string, string>();
+            Attachments = new ChangeTrackingList<ChatAttachmentInternal>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SendChatMessageRequest"/>. </summary>
@@ -29,12 +30,14 @@ namespace Azure.Communication.Chat
         /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="type"> The chat message type. </param>
         /// <param name="metadata"> Message metadata. </param>
-        internal SendChatMessageRequest(string content, string senderDisplayName, ChatMessageType? type, IDictionary<string, string> metadata)
+        /// <param name="attachments"> The array of attachments. </param>
+        internal SendChatMessageRequest(string content, string senderDisplayName, ChatMessageType? type, IDictionary<string, string> metadata, IList<ChatAttachmentInternal> attachments)
         {
             Content = content;
             SenderDisplayName = senderDisplayName;
             Type = type;
             Metadata = metadata;
+            Attachments = attachments;
         }
 
         /// <summary> Chat message content. </summary>
@@ -45,5 +48,7 @@ namespace Azure.Communication.Chat
         public ChatMessageType? Type { get; set; }
         /// <summary> Message metadata. </summary>
         public IDictionary<string, string> Metadata { get; }
+        /// <summary> The array of attachments. </summary>
+        public IList<ChatAttachmentInternal> Attachments { get; }
     }
 }

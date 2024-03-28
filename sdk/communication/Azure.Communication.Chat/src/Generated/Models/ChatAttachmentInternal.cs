@@ -16,7 +16,7 @@ namespace Azure.Communication.Chat
         /// <param name="id"> Id of the attachment. </param>
         /// <param name="attachmentType"> The type of attachment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal ChatAttachmentInternal(string id, ChatAttachmentType attachmentType)
+        public ChatAttachmentInternal(string id, ChatAttachmentType attachmentType)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -40,14 +40,14 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Id of the attachment. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> The type of attachment. </summary>
-        public ChatAttachmentType AttachmentType { get; }
+        public ChatAttachmentType AttachmentType { get; set; }
         /// <summary> The name of the attachment content. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The URL where the attachment can be downloaded. </summary>
-        public Uri Url { get; }
+        public Uri Url { get; set; }
         /// <summary> The URL where the preview of attachment can be downloaded. </summary>
-        public Uri PreviewUrl { get; }
+        public Uri PreviewUrl { get; set; }
     }
 }

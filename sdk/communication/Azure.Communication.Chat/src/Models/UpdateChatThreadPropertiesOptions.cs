@@ -27,5 +27,10 @@ namespace Azure.Communication.Chat
         /// Property bag of chat thread metadata key - value pairs.
         /// </summary>
         public IDictionary<string, string> Metadata { get; }
+
+        /// <summary>
+        /// Thread retention policy
+        /// </summary>
+        public ChatRetentionPolicy RetentionPolicy { get; set; }
     }
 }
