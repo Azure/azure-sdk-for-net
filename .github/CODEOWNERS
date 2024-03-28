@@ -248,6 +248,7 @@
 
 # ServiceLabel: %Cognitive - Personalizer
 # ServiceOwners:                                                   @orenmichaely @tyclintw
+
 # PRLabel: %Cognitive - QnA Maker
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
 
