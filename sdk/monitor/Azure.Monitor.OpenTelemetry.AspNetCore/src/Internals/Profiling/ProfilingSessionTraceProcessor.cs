@@ -20,10 +20,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
         /// records the profiling session ID.
         /// </summary>
         /// <remarks>
-        /// Experimental until formalization of OTEP profiles data format.
-        /// See <see href="https://github.com/open-telemetry/oteps/pull/239" />.
+        /// See <see href="https://github.com/open-telemetry/oteps/blob/main/text/profiles/0239-profiles-data-model.md#from-other-signals-to-profiles" />.
         /// </remarks>
-        internal const string TagName = "profile_id_experimental";
+        internal const string TagName = "profile_id";
 
         private readonly ProfilingSessionEventSource _eventSource = ProfilingSessionEventSource.Current;
 
