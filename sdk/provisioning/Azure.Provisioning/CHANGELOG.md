@@ -1,14 +1,10 @@
 # Release History
 
-## 0.1.0-beta.2 (Unreleased)
+## 0.1.0-beta.2 (2024-03-27)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Split the Azure.Provisioning package into separate packages for each supported Azure service.
 
 ## 0.1.0-beta.1 (2024-03-26)
 

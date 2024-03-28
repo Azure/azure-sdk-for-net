@@ -34,10 +34,21 @@ namespace Azure.Provisioning
         /// </summary>
         internal bool IsExpression { get; }
 
-        internal bool IsFromOutput => Output != null;
+        /// <summary>
+        /// Whether the parameter was constructed from an Output.
+        /// </summary>
+        public bool IsFromOutput => Output != null;
         internal bool IsLiteral => Output?.IsLiteral ?? false;
-        internal string? Value { get; }
-        internal IConstruct? Source { get; }
+
+        /// <summary>
+        /// The value of the parameter.
+        /// </summary>
+        public string? Value { get; }
+
+        /// <summary>
+        /// The source of the parameter.
+        /// </summary>
+        public IConstruct? Source { get; }
         internal Output? Output { get; }
 
         /// <summary>

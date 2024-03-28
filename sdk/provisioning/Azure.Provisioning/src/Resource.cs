@@ -34,17 +34,24 @@ namespace Azure.Provisioning
         /// Gets the parent <see cref="Resource"/>.
         /// </summary>
         public Resource? Parent { get; }
-        private protected object ResourceData { get; }
+
+        /// <summary>
+        /// Gets the data of the resource.
+        /// </summary>
+        protected object ResourceData { get; }
+
         /// <summary>
         /// Gets the version of the resource.
         /// </summary>
         public string Version { get; }
+
         /// <summary>
         /// Gets the name of the resource.
         /// </summary>
         public string Name { get; }
 
         private ResourceType ResourceType { get; }
+
         /// <summary>
         /// Gets the <see cref="ResourceIdentifier"/> of the resource.
         /// </summary>

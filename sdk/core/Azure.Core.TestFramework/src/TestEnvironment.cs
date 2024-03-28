@@ -541,7 +541,7 @@ namespace Azure.Core.TestFramework
             return _recording.GetVariable(name, null);
         }
 
-        internal static string GetSourcePath(Assembly assembly)
+        public static string GetSourcePath(Assembly assembly)
         {
             if (assembly == null)
                 throw new ArgumentNullException(nameof(assembly));

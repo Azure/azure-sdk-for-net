@@ -48,25 +48,15 @@ namespace Azure.Provisioning
         /// <param name="resourceType">The resourceType.</param>
         /// <param name="version">The version.</param>
         /// <param name="createProperties">Lambda to create the ARM properties.</param>
+        /// <param name="isExisting">Whether the resource already exists</param>
         protected Resource(
             IConstruct scope,
             Resource? parent,
             string resourceName,
             ResourceType resourceType,
             string version,
-            Func<string, T> createProperties)
-            : this(scope, parent, resourceName, resourceType, version, name => createProperties(name), false)
-        {
-        }
-
-        internal Resource(
-            IConstruct scope,
-            Resource? parent,
-            string resourceName,
-            ResourceType resourceType,
-            string version,
             Func<string, T> createProperties,
-            bool isExisting)
+            bool isExisting = false)
             : base(scope, parent, resourceName, resourceType, version, name => createProperties(name), isExisting)
         {
             _properties = (T)ResourceData;
