@@ -4164,7 +4164,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleGroups"> Effective configuration groups. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <returns> A new <see cref="Models.ActiveBaseSecurityAdminRule"/> instance for mocking. </returns>
-        public static ActiveBaseSecurityAdminRule ActiveBaseSecurityAdminRule(string id = null, DateTimeOffset? commitOn = null, string region = null, string configurationDescription = null, string ruleCollectionDescription = null, IEnumerable<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = null, IEnumerable<NetworkConfigurationGroup> ruleGroups = null, string kind = null)
+        public static ActiveBaseSecurityAdminRule ActiveBaseSecurityAdminRule(string id = null, DateTimeOffset? commitOn = null, string region = null, string configurationDescription = null, string ruleCollectionDescription = null, IEnumerable<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = null, IEnumerable<NetworkConfigurationGroup> ruleGroups = null, string kind = "Unknown")
         {
             ruleCollectionAppliesToGroups ??= new List<NetworkManagerSecurityGroupItem>();
             ruleGroups ??= new List<NetworkConfigurationGroup>();
@@ -4177,7 +4177,7 @@ namespace Azure.ResourceManager.Network.Models
                 ruleCollectionDescription,
                 ruleCollectionAppliesToGroups?.ToList(),
                 ruleGroups?.ToList(),
-                kind == null ? default : new EffectiveAdminRuleKind(kind),
+                kind,
                 serializedAdditionalRawData: null);
         }
 
@@ -4250,7 +4250,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleGroups"> Effective configuration groups. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <returns> A new <see cref="Models.EffectiveBaseSecurityAdminRule"/> instance for mocking. </returns>
-        public static EffectiveBaseSecurityAdminRule EffectiveBaseSecurityAdminRule(ResourceIdentifier resourceId = null, string configurationDescription = null, string ruleCollectionDescription = null, IEnumerable<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = null, IEnumerable<NetworkConfigurationGroup> ruleGroups = null, string kind = null)
+        public static EffectiveBaseSecurityAdminRule EffectiveBaseSecurityAdminRule(ResourceIdentifier resourceId = null, string configurationDescription = null, string ruleCollectionDescription = null, IEnumerable<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = null, IEnumerable<NetworkConfigurationGroup> ruleGroups = null, string kind = "Unknown")
         {
             ruleCollectionAppliesToGroups ??= new List<NetworkManagerSecurityGroupItem>();
             ruleGroups ??= new List<NetworkConfigurationGroup>();
@@ -4261,7 +4261,7 @@ namespace Azure.ResourceManager.Network.Models
                 ruleCollectionDescription,
                 ruleCollectionAppliesToGroups?.ToList(),
                 ruleGroups?.ToList(),
-                kind == null ? default : new EffectiveAdminRuleKind(kind),
+                kind,
                 serializedAdditionalRawData: null);
         }
 
@@ -4403,14 +4403,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.BaseAdminRuleData"/> instance for mocking. </returns>
-        public static BaseAdminRuleData BaseAdminRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
+        public static BaseAdminRuleData BaseAdminRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
         {
             return new BaseAdminRuleData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind == null ? default : new AdminRuleKind(kind),
+                kind,
                 etag,
                 serializedAdditionalRawData: null);
         }
