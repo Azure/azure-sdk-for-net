@@ -64,3 +64,5 @@ extends:
     - name: Azure.Communication.AlphaIds
       safeName: AzureCommunicationAlphaIds
       skipReleaseStage: true
+    - name: Azure.Communication.ProgrammableConnectivity
+      safeName: AzureCommunicationProgrammableConnectivity
