@@ -159,6 +159,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 configMergeRule ?? new ChangeTrackingDictionary<string, string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SparkConfiguration>(this);
+            return content;
+        }
+
         internal partial class SparkConfigurationConverter : JsonConverter<SparkConfiguration>
         {
             public override void Write(Utf8JsonWriter writer, SparkConfiguration model, JsonSerializerOptions options)

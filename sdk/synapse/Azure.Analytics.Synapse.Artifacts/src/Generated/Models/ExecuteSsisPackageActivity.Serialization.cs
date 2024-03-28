@@ -484,6 +484,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 logLocation);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExecuteSsisPackageActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExecuteSsisPackageActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ExecuteSsisPackageActivity>(this);
+            return content;
+        }
+
         internal partial class ExecuteSsisPackageActivityConverter : JsonConverter<ExecuteSsisPackageActivity>
         {
             public override void Write(Utf8JsonWriter writer, ExecuteSsisPackageActivity model, JsonSerializerOptions options)

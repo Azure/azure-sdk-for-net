@@ -85,6 +85,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkTableRequestTarget(tableName, schemaName, distributionOptions, structureOptions);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkTableRequestTarget FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkTableRequestTarget(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LinkTableRequestTarget>(this);
+            return content;
+        }
+
         internal partial class LinkTableRequestTargetConverter : JsonConverter<LinkTableRequestTarget>
         {
             public override void Write(Utf8JsonWriter writer, LinkTableRequestTarget model, JsonSerializerOptions options)

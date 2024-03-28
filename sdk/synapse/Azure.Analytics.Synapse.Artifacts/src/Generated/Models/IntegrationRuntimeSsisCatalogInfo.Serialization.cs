@@ -95,6 +95,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new IntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint, catalogAdminUserName, catalogAdminPassword, catalogPricingTier, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IntegrationRuntimeSsisCatalogInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIntegrationRuntimeSsisCatalogInfo(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<IntegrationRuntimeSsisCatalogInfo>(this);
+            return content;
+        }
+
         internal partial class IntegrationRuntimeSsisCatalogInfoConverter : JsonConverter<IntegrationRuntimeSsisCatalogInfo>
         {
             public override void Write(Utf8JsonWriter writer, IntegrationRuntimeSsisCatalogInfo model, JsonSerializerOptions options)

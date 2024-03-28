@@ -55,6 +55,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ExposureControlRequest(featureName, featureType);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ExposureControlRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExposureControlRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ExposureControlRequest>(this);
+            return content;
+        }
+
         internal partial class ExposureControlRequestConverter : JsonConverter<ExposureControlRequest>
         {
             public override void Write(Utf8JsonWriter writer, ExposureControlRequest model, JsonSerializerOptions options)

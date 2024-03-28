@@ -68,6 +68,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ScriptAction(name, uri, roles, parameters);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ScriptAction FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeScriptAction(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ScriptAction>(this);
+            return content;
+        }
+
         internal partial class ScriptActionConverter : JsonConverter<ScriptAction>
         {
             public override void Write(Utf8JsonWriter writer, ScriptAction model, JsonSerializerOptions options)

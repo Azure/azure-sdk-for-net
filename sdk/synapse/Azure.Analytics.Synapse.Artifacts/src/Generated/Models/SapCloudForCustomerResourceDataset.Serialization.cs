@@ -211,6 +211,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 path);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SapCloudForCustomerResourceDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapCloudForCustomerResourceDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SapCloudForCustomerResourceDataset>(this);
+            return content;
+        }
+
         internal partial class SapCloudForCustomerResourceDatasetConverter : JsonConverter<SapCloudForCustomerResourceDataset>
         {
             public override void Write(Utf8JsonWriter writer, SapCloudForCustomerResourceDataset model, JsonSerializerOptions options)

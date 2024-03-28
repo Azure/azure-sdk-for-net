@@ -165,6 +165,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 httpRequestTimeout);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SapEccSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapEccSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SapEccSource>(this);
+            return content;
+        }
+
         internal partial class SapEccSourceConverter : JsonConverter<SapEccSource>
         {
             public override void Write(Utf8JsonWriter writer, SapEccSource model, JsonSerializerOptions options)

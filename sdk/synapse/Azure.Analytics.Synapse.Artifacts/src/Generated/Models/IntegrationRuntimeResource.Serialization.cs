@@ -65,6 +65,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new IntegrationRuntimeResource(id, name, type, etag, properties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new IntegrationRuntimeResource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIntegrationRuntimeResource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<IntegrationRuntimeResource>(this);
+            return content;
+        }
+
         internal partial class IntegrationRuntimeResourceConverter : JsonConverter<IntegrationRuntimeResource>
         {
             public override void Write(Utf8JsonWriter writer, IntegrationRuntimeResource model, JsonSerializerOptions options)

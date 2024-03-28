@@ -66,6 +66,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new JsonWriteSettings(type, additionalProperties, filePattern);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new JsonWriteSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeJsonWriteSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<JsonWriteSettings>(this);
+            return content;
+        }
+
         internal partial class JsonWriteSettingsConverter : JsonConverter<JsonWriteSettings>
         {
             public override void Write(Utf8JsonWriter writer, JsonWriteSettings model, JsonSerializerOptions options)

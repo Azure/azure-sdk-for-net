@@ -218,6 +218,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 entityName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DynamicsEntityDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDynamicsEntityDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DynamicsEntityDataset>(this);
+            return content;
+        }
+
         internal partial class DynamicsEntityDatasetConverter : JsonConverter<DynamicsEntityDataset>
         {
             public override void Write(Utf8JsonWriter writer, DynamicsEntityDataset model, JsonSerializerOptions options)

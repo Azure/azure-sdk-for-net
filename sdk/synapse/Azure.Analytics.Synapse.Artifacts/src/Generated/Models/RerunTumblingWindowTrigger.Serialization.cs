@@ -165,6 +165,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 rerunConcurrency);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RerunTumblingWindowTrigger FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRerunTumblingWindowTrigger(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RerunTumblingWindowTrigger>(this);
+            return content;
+        }
+
         internal partial class RerunTumblingWindowTriggerConverter : JsonConverter<RerunTumblingWindowTrigger>
         {
             public override void Write(Utf8JsonWriter writer, RerunTumblingWindowTrigger model, JsonSerializerOptions options)

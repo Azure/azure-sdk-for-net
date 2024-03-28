@@ -118,6 +118,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 schemaLinkedService);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DataFlowSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFlowSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DataFlowSource>(this);
+            return content;
+        }
+
         internal partial class DataFlowSourceConverter : JsonConverter<DataFlowSource>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowSource model, JsonSerializerOptions options)

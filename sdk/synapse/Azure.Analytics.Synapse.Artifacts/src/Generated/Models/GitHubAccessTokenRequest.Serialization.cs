@@ -27,6 +27,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<GitHubAccessTokenRequest>(this);
+            return content;
+        }
+
         internal partial class GitHubAccessTokenRequestConverter : JsonConverter<GitHubAccessTokenRequest>
         {
             public override void Write(Utf8JsonWriter writer, GitHubAccessTokenRequest model, JsonSerializerOptions options)

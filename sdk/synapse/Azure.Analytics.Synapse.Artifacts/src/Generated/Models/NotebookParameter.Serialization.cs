@@ -63,6 +63,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new NotebookParameter(value, type);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static NotebookParameter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotebookParameter(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<NotebookParameter>(this);
+            return content;
+        }
+
         internal partial class NotebookParameterConverter : JsonConverter<NotebookParameter>
         {
             public override void Write(Utf8JsonWriter writer, NotebookParameter model, JsonSerializerOptions options)

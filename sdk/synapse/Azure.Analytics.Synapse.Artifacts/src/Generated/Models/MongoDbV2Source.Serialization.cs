@@ -181,6 +181,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalColumns);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MongoDbV2Source FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMongoDbV2Source(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MongoDbV2Source>(this);
+            return content;
+        }
+
         internal partial class MongoDbV2SourceConverter : JsonConverter<MongoDbV2Source>
         {
             public override void Write(Utf8JsonWriter writer, MongoDbV2Source model, JsonSerializerOptions options)

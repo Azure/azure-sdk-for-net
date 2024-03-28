@@ -89,6 +89,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new CreateDataFlowDebugSessionRequest(computeType, coreCount, timeToLive, integrationRuntime);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CreateDataFlowDebugSessionRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCreateDataFlowDebugSessionRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CreateDataFlowDebugSessionRequest>(this);
+            return content;
+        }
+
         internal partial class CreateDataFlowDebugSessionRequestConverter : JsonConverter<CreateDataFlowDebugSessionRequest>
         {
             public override void Write(Utf8JsonWriter writer, CreateDataFlowDebugSessionRequest model, JsonSerializerOptions options)

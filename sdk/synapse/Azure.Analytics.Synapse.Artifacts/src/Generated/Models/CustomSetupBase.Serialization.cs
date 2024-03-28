@@ -32,6 +32,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CustomSetupBase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomSetupBase(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CustomSetupBase>(this);
+            return content;
+        }
+
         internal partial class CustomSetupBaseConverter : JsonConverter<CustomSetupBase>
         {
             public override void Write(Utf8JsonWriter writer, CustomSetupBase model, JsonSerializerOptions options)

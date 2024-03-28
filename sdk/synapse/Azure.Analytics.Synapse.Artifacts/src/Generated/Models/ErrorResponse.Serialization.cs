@@ -75,6 +75,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ErrorResponse(code, message, target, details ?? new ChangeTrackingList<ErrorResponse>(), additionalInfo ?? new ChangeTrackingList<ErrorAdditionalInfo>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeErrorResponse(document.RootElement);
+        }
+
         internal partial class ErrorResponseConverter : JsonConverter<ErrorResponse>
         {
             public override void Write(Utf8JsonWriter writer, ErrorResponse model, JsonSerializerOptions options)

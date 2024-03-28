@@ -188,6 +188,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 clientKey);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AppFiguresLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAppFiguresLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AppFiguresLinkedService>(this);
+            return content;
+        }
+
         internal partial class AppFiguresLinkedServiceConverter : JsonConverter<AppFiguresLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, AppFiguresLinkedService model, JsonSerializerOptions options)

@@ -218,6 +218,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 tableName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CouchbaseTableDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCouchbaseTableDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CouchbaseTableDataset>(this);
+            return content;
+        }
+
         internal partial class CouchbaseTableDatasetConverter : JsonConverter<CouchbaseTableDataset>
         {
             public override void Write(Utf8JsonWriter writer, CouchbaseTableDataset model, JsonSerializerOptions options)

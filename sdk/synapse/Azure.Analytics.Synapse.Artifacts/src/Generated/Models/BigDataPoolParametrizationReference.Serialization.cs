@@ -49,6 +49,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new BigDataPoolParametrizationReference(type, referenceName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static BigDataPoolParametrizationReference FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBigDataPoolParametrizationReference(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<BigDataPoolParametrizationReference>(this);
+            return content;
+        }
+
         internal partial class BigDataPoolParametrizationReferenceConverter : JsonConverter<BigDataPoolParametrizationReference>
         {
             public override void Write(Utf8JsonWriter writer, BigDataPoolParametrizationReference model, JsonSerializerOptions options)

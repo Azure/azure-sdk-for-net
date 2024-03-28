@@ -44,6 +44,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new PipelineListResponse(value, nextLink);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PipelineListResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePipelineListResponse(document.RootElement);
+        }
+
         internal partial class PipelineListResponseConverter : JsonConverter<PipelineListResponse>
         {
             public override void Write(Utf8JsonWriter writer, PipelineListResponse model, JsonSerializerOptions options)

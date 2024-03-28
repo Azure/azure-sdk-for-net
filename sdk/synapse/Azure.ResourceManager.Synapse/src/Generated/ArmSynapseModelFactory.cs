@@ -2003,9 +2003,9 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
         /// <returns> A new <see cref="Models.SynapseSsisObjectMetadata"/> instance for mocking. </returns>
-        public static SynapseSsisObjectMetadata SynapseSsisObjectMetadata(string metadataType = null, long? id = null, string name = null, string description = null)
+        public static SynapseSsisObjectMetadata SynapseSsisObjectMetadata(string metadataType = "Unknown", long? id = null, string name = null, string description = null)
         {
-            return new UnknownSsisObjectMetadata(metadataType == null ? default : new SynapseSsisObjectMetadataType(metadataType), id, name, description, serializedAdditionalRawData: null);
+            return new UnknownSsisObjectMetadata(metadataType, id, name, description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseSelfHostedIntegrationRuntimeNode"/>. </summary>
@@ -2098,11 +2098,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeStatus"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeStatus SynapseIntegrationRuntimeStatus(string runtimeType = null, string dataFactoryName = null, SynapseIntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static SynapseIntegrationRuntimeStatus SynapseIntegrationRuntimeStatus(string runtimeType = "Unknown", string dataFactoryName = null, SynapseIntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SynapseIntegrationRuntimeStatus(runtimeType == null ? default : new IntegrationRuntimeType(runtimeType), dataFactoryName, state, additionalProperties);
+            return new SynapseIntegrationRuntimeStatus(runtimeType, dataFactoryName, state, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeAuthKeys"/>. </summary>
@@ -2445,7 +2445,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the database. </param>
         /// <returns> A new <see cref="Synapse.SynapseDatabaseData"/> instance for mocking. </returns>
-        public static SynapseDatabaseData SynapseDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
+        public static SynapseDatabaseData SynapseDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
         {
             return new SynapseDatabaseData(
                 id,
@@ -2453,7 +2453,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 resourceType,
                 systemData,
                 location,
-                kind == null ? default : new SynapseKind(kind),
+                kind,
                 serializedAdditionalRawData: null);
         }
 
@@ -2474,7 +2474,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
         /// <returns> A new <see cref="Synapse.SynapseDataConnectionData"/> instance for mocking. </returns>
-        public static SynapseDataConnectionData SynapseDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
+        public static SynapseDataConnectionData SynapseDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
         {
             return new SynapseDataConnectionData(
                 id,
@@ -2482,7 +2482,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 resourceType,
                 systemData,
                 location,
-                kind == null ? default : new SynapseDataConnectionKind(kind),
+                kind,
                 serializedAdditionalRawData: null);
         }
 

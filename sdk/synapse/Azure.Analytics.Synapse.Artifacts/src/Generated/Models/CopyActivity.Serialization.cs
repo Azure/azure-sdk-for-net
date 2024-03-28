@@ -527,6 +527,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 skipErrorFile);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CopyActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCopyActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CopyActivity>(this);
+            return content;
+        }
+
         internal partial class CopyActivityConverter : JsonConverter<CopyActivity>
         {
             public override void Write(Utf8JsonWriter writer, CopyActivity model, JsonSerializerOptions options)

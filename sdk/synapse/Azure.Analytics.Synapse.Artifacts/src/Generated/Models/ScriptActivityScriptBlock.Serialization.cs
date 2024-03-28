@@ -75,6 +75,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ScriptActivityScriptBlock(text, type, parameters ?? new ChangeTrackingList<ScriptActivityParameter>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ScriptActivityScriptBlock FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeScriptActivityScriptBlock(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ScriptActivityScriptBlock>(this);
+            return content;
+        }
+
         internal partial class ScriptActivityScriptBlockConverter : JsonConverter<ScriptActivityScriptBlock>
         {
             public override void Write(Utf8JsonWriter writer, ScriptActivityScriptBlock model, JsonSerializerOptions options)

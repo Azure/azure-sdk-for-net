@@ -197,6 +197,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 sapDataColumnDelimiter);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SapOpenHubSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapOpenHubSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SapOpenHubSource>(this);
+            return content;
+        }
+
         internal partial class SapOpenHubSourceConverter : JsonConverter<SapOpenHubSource>
         {
             public override void Write(Utf8JsonWriter writer, SapOpenHubSource model, JsonSerializerOptions options)

@@ -211,6 +211,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 childPackages ?? new ChangeTrackingList<SsisChildPackage>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SsisPackageLocation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSsisPackageLocation(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SsisPackageLocation>(this);
+            return content;
+        }
+
         internal partial class SsisPackageLocationConverter : JsonConverter<SsisPackageLocation>
         {
             public override void Write(Utf8JsonWriter writer, SsisPackageLocation model, JsonSerializerOptions options)

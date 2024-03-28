@@ -182,6 +182,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 waitTimeInSeconds);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new WaitActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWaitActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<WaitActivity>(this);
+            return content;
+        }
+
         internal partial class WaitActivityConverter : JsonConverter<WaitActivity>
         {
             public override void Write(Utf8JsonWriter writer, WaitActivity model, JsonSerializerOptions options)
