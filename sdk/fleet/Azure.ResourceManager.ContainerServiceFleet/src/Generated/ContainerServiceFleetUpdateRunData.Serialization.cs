@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
 using Azure.ResourceManager.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,17 +68,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             if (Optional.IsDefined(Strategy))
             {
                 writer.WritePropertyName("strategy"u8);
-                writer.WriteObjectValue(Strategy);
+                writer.WriteObjectValue<ContainerServiceFleetUpdateRunStrategy>(Strategy, options);
             }
             if (Optional.IsDefined(ManagedClusterUpdate))
             {
                 writer.WritePropertyName("managedClusterUpdate"u8);
-                writer.WriteObjectValue(ManagedClusterUpdate);
+                writer.WriteObjectValue<ContainerServiceFleetManagedClusterUpdate>(ManagedClusterUpdate, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ContainerServiceFleetUpdateRunStatus>(Status, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -253,7 +252,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -269,7 +268,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                         return DeserializeContainerServiceFleetUpdateRunData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunData)} does not support reading '{options.Format}' format.");
             }
         }
 

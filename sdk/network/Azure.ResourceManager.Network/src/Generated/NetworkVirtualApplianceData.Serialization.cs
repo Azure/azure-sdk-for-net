@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NvaSku))
             {
                 writer.WritePropertyName("nvaSku"u8);
-                writer.WriteObjectValue(NvaSku);
+                writer.WriteObjectValue<VirtualApplianceSkuProperties>(NvaSku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AddressPrefix))
             {
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualApplianceNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualApplianceNicProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AdditionalNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualApplianceAdditionalNicProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -196,12 +195,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Delegation))
             {
                 writer.WritePropertyName("delegation"u8);
-                writer.WriteObjectValue(Delegation);
+                writer.WriteObjectValue<VirtualApplianceDelegationProperties>(Delegation, options);
             }
             if (Optional.IsDefined(PartnerManagedResource))
             {
                 writer.WritePropertyName("partnerManagedResource"u8);
-                writer.WriteObjectValue(PartnerManagedResource);
+                writer.WriteObjectValue<PartnerManagedResourceProperties>(PartnerManagedResource, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -577,7 +576,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -593,7 +592,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeNetworkVirtualApplianceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -26,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DatasetReference>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -36,19 +35,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DatasetReference>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<ActivityPolicy>(Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -75,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActivityDependency>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -85,60 +84,60 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserProperty>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue<CopySource>(Source);
             writer.WritePropertyName("sink"u8);
-            writer.WriteObjectValue(Sink);
+            writer.WriteObjectValue<CopySink>(Sink);
             if (Optional.IsDefined(Translator))
             {
                 writer.WritePropertyName("translator"u8);
-                writer.WriteObjectValue(Translator);
+                writer.WriteObjectValue<object>(Translator);
             }
             if (Optional.IsDefined(EnableStaging))
             {
                 writer.WritePropertyName("enableStaging"u8);
-                writer.WriteObjectValue(EnableStaging);
+                writer.WriteObjectValue<object>(EnableStaging);
             }
             if (Optional.IsDefined(StagingSettings))
             {
                 writer.WritePropertyName("stagingSettings"u8);
-                writer.WriteObjectValue(StagingSettings);
+                writer.WriteObjectValue<StagingSettings>(StagingSettings);
             }
             if (Optional.IsDefined(ParallelCopies))
             {
                 writer.WritePropertyName("parallelCopies"u8);
-                writer.WriteObjectValue(ParallelCopies);
+                writer.WriteObjectValue<object>(ParallelCopies);
             }
             if (Optional.IsDefined(DataIntegrationUnits))
             {
                 writer.WritePropertyName("dataIntegrationUnits"u8);
-                writer.WriteObjectValue(DataIntegrationUnits);
+                writer.WriteObjectValue<object>(DataIntegrationUnits);
             }
             if (Optional.IsDefined(EnableSkipIncompatibleRow))
             {
                 writer.WritePropertyName("enableSkipIncompatibleRow"u8);
-                writer.WriteObjectValue(EnableSkipIncompatibleRow);
+                writer.WriteObjectValue<object>(EnableSkipIncompatibleRow);
             }
             if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
                 writer.WritePropertyName("redirectIncompatibleRowSettings"u8);
-                writer.WriteObjectValue(RedirectIncompatibleRowSettings);
+                writer.WriteObjectValue<RedirectIncompatibleRowSettings>(RedirectIncompatibleRowSettings);
             }
             if (Optional.IsDefined(LogStorageSettings))
             {
                 writer.WritePropertyName("logStorageSettings"u8);
-                writer.WriteObjectValue(LogStorageSettings);
+                writer.WriteObjectValue<LogStorageSettings>(LogStorageSettings);
             }
             if (Optional.IsDefined(LogSettings))
             {
                 writer.WritePropertyName("logSettings"u8);
-                writer.WriteObjectValue(LogSettings);
+                writer.WriteObjectValue<LogSettings>(LogSettings);
             }
             if (Optional.IsCollectionDefined(PreserveRules))
             {
@@ -151,7 +150,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -166,25 +165,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ValidateDataConsistency))
             {
                 writer.WritePropertyName("validateDataConsistency"u8);
-                writer.WriteObjectValue(ValidateDataConsistency);
+                writer.WriteObjectValue<object>(ValidateDataConsistency);
             }
             if (Optional.IsDefined(SkipErrorFile))
             {
                 writer.WritePropertyName("skipErrorFile"u8);
-                writer.WriteObjectValue(SkipErrorFile);
+                writer.WriteObjectValue<SkipErrorFile>(SkipErrorFile);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -532,7 +531,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, CopyActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<CopyActivity>(model);
             }
             public override CopyActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

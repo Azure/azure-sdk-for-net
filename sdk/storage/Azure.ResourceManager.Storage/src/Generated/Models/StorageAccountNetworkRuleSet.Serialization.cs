@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountNetworkRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountNetworkRuleSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceAccessRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageAccountResourceAccessRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageAccountVirtualNetworkRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageAccountIPRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountNetworkRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountNetworkRuleSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -182,6 +183,112 @@ namespace Azure.ResourceManager.Storage.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Bypass), out propertyOverride);
+            if (Optional.IsDefined(Bypass) || hasPropertyOverride)
+            {
+                builder.Append("  bypass: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Bypass.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceAccessRules), out propertyOverride);
+            if (Optional.IsCollectionDefined(ResourceAccessRules) || hasPropertyOverride)
+            {
+                if (ResourceAccessRules.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  resourceAccessRules: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ResourceAccessRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  resourceAccessRules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkRules), out propertyOverride);
+            if (Optional.IsCollectionDefined(VirtualNetworkRules) || hasPropertyOverride)
+            {
+                if (VirtualNetworkRules.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  virtualNetworkRules: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in VirtualNetworkRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  virtualNetworkRules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPRules), out propertyOverride);
+            if (Optional.IsCollectionDefined(IPRules) || hasPropertyOverride)
+            {
+                if (IPRules.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  ipRules: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in IPRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ipRules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAction), out propertyOverride);
+            builder.Append("  defaultAction: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{DefaultAction.ToSerialString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<StorageAccountNetworkRuleSet>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
@@ -190,8 +297,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountNetworkRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountNetworkRuleSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +316,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageAccountNetworkRuleSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountNetworkRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountNetworkRuleSet)} does not support reading '{options.Format}' format.");
             }
         }
 

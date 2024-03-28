@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of paths using which data within the container can be partitioned. </summary>
+        [WirePath("paths")]
         public IList<string> Paths { get; }
         /// <summary> Indicates the kind of algorithm used for partitioning. For MultiHash, multiple partition keys (upto three maximum) are supported for container create. </summary>
+        [WirePath("kind")]
         public CosmosDBPartitionKind? Kind { get; set; }
         /// <summary> Indicates the version of the partition key definition. </summary>
+        [WirePath("version")]
         public int? Version { get; set; }
         /// <summary> Indicates if the container is using a system generated partition key. </summary>
+        [WirePath("systemKey")]
         public bool? IsSystemKey { get; }
     }
 }

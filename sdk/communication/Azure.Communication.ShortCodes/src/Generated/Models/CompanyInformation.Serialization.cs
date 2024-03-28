@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Communication.ShortCodes;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
@@ -35,12 +34,12 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(ContactInformation))
             {
                 writer.WritePropertyName("contactInformation"u8);
-                writer.WriteObjectValue(ContactInformation);
+                writer.WriteObjectValue<ContactInformation>(ContactInformation);
             }
             if (Optional.IsDefined(CustomerCareInformation))
             {
                 writer.WritePropertyName("customerCareInformation"u8);
-                writer.WriteObjectValue(CustomerCareInformation);
+                writer.WriteObjectValue<CustomerCareInformation>(CustomerCareInformation);
             }
             writer.WriteEndObject();
         }

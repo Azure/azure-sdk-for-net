@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.LargeInstance
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.LargeInstance
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue<LargeInstanceHardwareProfile>(HardwareProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<LargeInstanceStorageProfile>(StorageProfile, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<LargeInstanceOSProfile>(OSProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<LargeInstanceNetworkProfile>(NetworkProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AzureLargeInstanceId))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.LargeInstance
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.LargeInstance
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.LargeInstance
                         return DeserializeLargeInstanceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceData)} does not support reading '{options.Format}' format.");
             }
         }
 

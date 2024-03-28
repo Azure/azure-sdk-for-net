@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PolicyInsights
             var format = options.Format == "W" ? ((IPersistableModel<PolicyRemediationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyRemediationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyRemediationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.PolicyInsights
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<RemediationFilters>(Filter, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
-                writer.WriteObjectValue(DeploymentStatus);
+                writer.WriteObjectValue<RemediationDeploymentSummary>(DeploymentStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PolicyInsights
             if (Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
-                writer.WriteObjectValue(FailureThreshold);
+                writer.WriteObjectValue<RemediationPropertiesFailureThreshold>(FailureThreshold, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PolicyInsights
             var format = options.Format == "W" ? ((IPersistableModel<PolicyRemediationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyRemediationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyRemediationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyRemediationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyRemediationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.PolicyInsights
                         return DeserializePolicyRemediationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyRemediationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyRemediationData)} does not support reading '{options.Format}' format.");
             }
         }
 

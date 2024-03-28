@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ElasticSan
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanPrivateEndpointConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanPrivateEndpointConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ElasticSan
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(ConnectionState);
+            writer.WriteObjectValue<ElasticSanPrivateLinkServiceConnectionState>(ConnectionState, options);
             if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ElasticSan
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanPrivateEndpointConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanPrivateEndpointConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ElasticSan
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ElasticSan
                         return DeserializeElasticSanPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

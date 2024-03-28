@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -24,19 +23,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AttachedNetworkConfiguration))
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
-                writer.WriteObjectValue(AttachedNetworkConfiguration);
+                writer.WriteObjectValue<AttachedNetworkConfiguration>(AttachedNetworkConfiguration, options);
             }
             if (Optional.IsDefined(BgpServiceLoadBalancerConfiguration))
             {
                 writer.WritePropertyName("bgpServiceLoadBalancerConfiguration"u8);
-                writer.WriteObjectValue(BgpServiceLoadBalancerConfiguration);
+                writer.WriteObjectValue<BgpServiceLoadBalancerConfiguration>(BgpServiceLoadBalancerConfiguration, options);
             }
             writer.WritePropertyName("cloudServicesNetworkId"u8);
             writer.WriteStringValue(CloudServicesNetworkId);
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,7 +206,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeKubernetesClusterNetworkConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterNetworkConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

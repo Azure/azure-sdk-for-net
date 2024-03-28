@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesVersion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities);
+                writer.WriteObjectValue<KubernetesVersionCapabilities>(Capabilities, options);
             }
             if (Optional.IsDefined(IsPreview))
             {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 foreach (var item in PatchVersions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<KubernetesPatchVersion>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeKubernetesVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesVersion)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -80,16 +79,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Start time of the period. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time of the period. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> List of time periods. </summary>
+        [WirePath("properties.abnormalTimePeriods")]
         public IList<AbnormalTimePeriod> AbnormalTimePeriods { get; }
         /// <summary> Data by each detector. </summary>
+        [WirePath("properties.payload")]
         public IList<AnalysisDetectorEvidences> Payload { get; }
         /// <summary> Data by each detector for detectors that did not corelate. </summary>
+        [WirePath("properties.nonCorrelatedDetectors")]
         public IList<DetectorDefinition> NonCorrelatedDetectors { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -69,12 +68,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The function name as it will appear in the policy rule. eg - 'vault'. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </summary>
+        [WirePath("fullyQualifiedResourceType")]
         public ResourceType? FullyQualifiedResourceType { get; }
         /// <summary> The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported. </summary>
+        [WirePath("defaultProperties")]
         public IReadOnlyList<string> DefaultProperties { get; }
         /// <summary> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01'). </summary>
+        [WirePath("allowCustomProperties")]
         public bool? AllowCustomProperties { get; }
     }
 }

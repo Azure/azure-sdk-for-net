@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<DateAfterCreation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DateAfterCreation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DateAfterCreation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<DateAfterCreation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DateAfterCreation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DateAfterCreation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,6 +101,46 @@ namespace Azure.ResourceManager.Storage.Models
             return new DateAfterCreation(daysAfterCreationGreaterThan, daysAfterLastTierChangeGreaterThan, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterCreationGreaterThan), out propertyOverride);
+            builder.Append("  daysAfterCreationGreaterThan: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{DaysAfterCreationGreaterThan.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterLastTierChangeGreaterThan), out propertyOverride);
+            if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan) || hasPropertyOverride)
+            {
+                builder.Append("  daysAfterLastTierChangeGreaterThan: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DaysAfterLastTierChangeGreaterThan.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DateAfterCreation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DateAfterCreation>)this).GetFormatFromOptions(options) : options.Format;
@@ -109,8 +149,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DateAfterCreation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DateAfterCreation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +168,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeDateAfterCreation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DateAfterCreation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DateAfterCreation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (options.Format != "W" && Optional.IsDefined(OutboundIPs))
             {
                 writer.WritePropertyName("outboundIPs"u8);
-                writer.WriteObjectValue(OutboundIPs);
+                writer.WriteObjectValue<NetworkProfileOutboundIPs>(OutboundIPs, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RequiredTraffics))
             {
@@ -63,14 +62,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredTraffics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformServiceRequiredTraffic>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IngressConfig))
             {
                 writer.WritePropertyName("ingressConfig"u8);
-                writer.WriteObjectValue(IngressConfig);
+                writer.WriteObjectValue<IngressConfig>(IngressConfig, options);
             }
             if (Optional.IsDefined(OutboundType))
             {
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -226,7 +225,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +241,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformServiceNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

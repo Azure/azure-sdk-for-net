@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationIntentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AReplicationIntentDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AReplicationIntentDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<A2AProtectionIntentDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmManagedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<A2AProtectionIntentManagedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,27 +74,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProtectionProfile))
             {
                 writer.WritePropertyName("protectionProfile"u8);
-                writer.WriteObjectValue(ProtectionProfile);
+                writer.WriteObjectValue<ProtectionProfileCustomDetails>(ProtectionProfile, options);
             }
             if (Optional.IsDefined(PrimaryStagingStorageAccount))
             {
                 writer.WritePropertyName("primaryStagingStorageAccount"u8);
-                writer.WriteObjectValue(PrimaryStagingStorageAccount);
+                writer.WriteObjectValue<StorageAccountCustomDetails>(PrimaryStagingStorageAccount, options);
             }
             if (Optional.IsDefined(RecoveryAvailabilitySet))
             {
                 writer.WritePropertyName("recoveryAvailabilitySet"u8);
-                writer.WriteObjectValue(RecoveryAvailabilitySet);
+                writer.WriteObjectValue<RecoveryAvailabilitySetCustomDetails>(RecoveryAvailabilitySet, options);
             }
             if (Optional.IsDefined(RecoveryVirtualNetwork))
             {
                 writer.WritePropertyName("recoveryVirtualNetwork"u8);
-                writer.WriteObjectValue(RecoveryVirtualNetwork);
+                writer.WriteObjectValue<RecoveryVirtualNetworkCustomDetails>(RecoveryVirtualNetwork, options);
             }
             if (Optional.IsDefined(RecoveryProximityPlacementGroup))
             {
                 writer.WritePropertyName("recoveryProximityPlacementGroup"u8);
-                writer.WriteObjectValue(RecoveryProximityPlacementGroup);
+                writer.WriteObjectValue<RecoveryProximityPlacementGroupCustomDetails>(RecoveryProximityPlacementGroup, options);
             }
             if (Optional.IsDefined(AutoProtectionOfDataDisk))
             {
@@ -115,12 +114,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(RecoveryBootDiagStorageAccount))
             {
                 writer.WritePropertyName("recoveryBootDiagStorageAccount"u8);
-                writer.WriteObjectValue(RecoveryBootDiagStorageAccount);
+                writer.WriteObjectValue<StorageAccountCustomDetails>(RecoveryBootDiagStorageAccount, options);
             }
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
-                writer.WriteObjectValue(DiskEncryptionInfo);
+                writer.WriteObjectValue<SiteRecoveryDiskEncryptionInfo>(DiskEncryptionInfo, options);
             }
             if (Optional.IsDefined(RecoveryAvailabilityZone))
             {
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationIntentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AReplicationIntentDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AReplicationIntentDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -446,7 +445,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2AReplicationIntentDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AReplicationIntentDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -462,7 +461,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2AReplicationIntentDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2AReplicationIntentDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AReplicationIntentDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

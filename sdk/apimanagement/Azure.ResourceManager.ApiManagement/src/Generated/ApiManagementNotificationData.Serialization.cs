@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementNotificationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementNotificationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementNotificationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Recipients))
             {
                 writer.WritePropertyName("recipients"u8);
-                writer.WriteObjectValue(Recipients);
+                writer.WriteObjectValue<RecipientsContractProperties>(Recipients, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementNotificationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementNotificationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementNotificationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementNotificationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementNotificationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiManagementNotificationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementNotificationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementNotificationData)} does not support reading '{options.Format}' format.");
             }
         }
 

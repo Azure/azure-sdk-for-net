@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
@@ -23,7 +22,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<AtlasTypesDef>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasTypesDef)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AtlasTypesDef)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in BusinessMetadataDefs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AtlasBusinessMetadataDef>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +42,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ClassificationDefs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AtlasClassificationDef>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +52,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in EntityDefs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AtlasEntityDef>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,7 +62,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in EnumDefs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AtlasEnumDef>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +72,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in RelationshipDefs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AtlasRelationshipDef>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +82,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in StructDefs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AtlasStructDef>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +92,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in TermTemplateDefs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TermTemplateDef>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +119,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<AtlasTypesDef>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasTypesDef)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AtlasTypesDef)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -270,7 +269,7 @@ namespace Azure.Analytics.Purview.DataMap
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasTypesDef)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AtlasTypesDef)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -286,7 +285,7 @@ namespace Azure.Analytics.Purview.DataMap
                         return DeserializeAtlasTypesDef(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasTypesDef)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AtlasTypesDef)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -304,7 +303,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AtlasTypesDef>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

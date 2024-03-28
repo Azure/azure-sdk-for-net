@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ContainerAppAvailableWorkloadProfileProperties>(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppAvailableWorkloadProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

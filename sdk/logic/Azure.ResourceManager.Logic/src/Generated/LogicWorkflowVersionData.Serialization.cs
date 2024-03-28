@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowVersionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowVersionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -96,22 +96,22 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
-                writer.WriteObjectValue(EndpointsConfiguration);
+                writer.WriteObjectValue<FlowEndpointsConfiguration>(EndpointsConfiguration, options);
             }
             if (Optional.IsDefined(AccessControl))
             {
                 writer.WritePropertyName("accessControl"u8);
-                writer.WriteObjectValue(AccessControl);
+                writer.WriteObjectValue<FlowAccessControlConfiguration>(AccessControl, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<LogicSku>(Sku, options);
             }
             if (Optional.IsDefined(IntegrationAccount))
             {
                 writer.WritePropertyName("integrationAccount"u8);
-                writer.WriteObjectValue(IntegrationAccount);
+                writer.WriteObjectValue<LogicResourceReference>(IntegrationAccount, options);
             }
             if (Optional.IsDefined(Definition))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Logic
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<LogicWorkflowParameterInfo>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowVersionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowVersionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Logic
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowVersionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowVersionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Logic
                         return DeserializeLogicWorkflowVersionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowVersionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowVersionData)} does not support reading '{options.Format}' format.");
             }
         }
 

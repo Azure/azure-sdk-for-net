@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -28,27 +27,27 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(DimensionAnomalyScope))
             {
                 writer.WritePropertyName("dimensionAnomalyScope"u8);
-                writer.WriteObjectValue(DimensionAnomalyScope);
+                writer.WriteObjectValue<DimensionKey>(DimensionAnomalyScope);
             }
             if (Optional.IsDefined(TopNAnomalyScope))
             {
                 writer.WritePropertyName("topNAnomalyScope"u8);
-                writer.WriteObjectValue(TopNAnomalyScope);
+                writer.WriteObjectValue<TopNGroupScope>(TopNAnomalyScope);
             }
             if (Optional.IsDefined(SeverityFilter))
             {
                 writer.WritePropertyName("severityFilter"u8);
-                writer.WriteObjectValue(SeverityFilter);
+                writer.WriteObjectValue<SeverityCondition>(SeverityFilter);
             }
             if (Optional.IsDefined(AlertSnoozeCondition))
             {
                 writer.WritePropertyName("snoozeFilter"u8);
-                writer.WriteObjectValue(AlertSnoozeCondition);
+                writer.WriteObjectValue<MetricAnomalyAlertSnoozeCondition>(AlertSnoozeCondition);
             }
             if (Optional.IsDefined(ValueFilter))
             {
                 writer.WritePropertyName("valueFilter"u8);
-                writer.WriteObjectValue(ValueFilter);
+                writer.WriteObjectValue<MetricBoundaryCondition>(ValueFilter);
             }
             writer.WriteEndObject();
         }

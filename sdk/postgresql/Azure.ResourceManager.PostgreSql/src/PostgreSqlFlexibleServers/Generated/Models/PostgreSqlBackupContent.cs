@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -73,6 +72,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Backup Settings. </summary>
         internal PostgreSqlFlexibleServerBackupSettings BackupSettings { get; }
         /// <summary> Backup Name for the current backup. </summary>
+        [WirePath("backupSettings.backupName")]
         public string BackupName
         {
             get => BackupSettings?.BackupName;

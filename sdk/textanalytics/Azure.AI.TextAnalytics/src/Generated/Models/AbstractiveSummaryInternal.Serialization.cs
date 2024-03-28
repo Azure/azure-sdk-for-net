@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -25,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Contexts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SummaryContextInternal>(item);
                 }
                 writer.WriteEndArray();
             }

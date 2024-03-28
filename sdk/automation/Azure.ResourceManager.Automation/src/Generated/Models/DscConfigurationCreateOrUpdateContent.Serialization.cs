@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteBooleanValue(IsLogProgressEnabled.Value);
             }
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue<AutomationContentSource>(Source, options);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Automation.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DscConfigurationParameterDefinition>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -238,7 +237,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscConfigurationCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

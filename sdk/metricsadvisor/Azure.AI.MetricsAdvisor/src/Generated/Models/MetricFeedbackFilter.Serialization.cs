@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -21,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
-                writer.WriteObjectValue(DimensionFilter);
+                writer.WriteObjectValue<FeedbackFilter>(DimensionFilter);
             }
             if (Optional.IsDefined(FeedbackType))
             {

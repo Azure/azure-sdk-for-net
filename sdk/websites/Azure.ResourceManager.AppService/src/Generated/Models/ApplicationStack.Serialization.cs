@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationStack>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationStack)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationStack)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MajorVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StackMajorVersion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Frameworks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationStack>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in IsDeprecated)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationStack>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationStack>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationStack)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationStack)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -193,6 +194,153 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Display), out propertyOverride);
+            if (Optional.IsDefined(Display) || hasPropertyOverride)
+            {
+                builder.Append("  display: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Display.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Display}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Display}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dependency), out propertyOverride);
+            if (Optional.IsDefined(Dependency) || hasPropertyOverride)
+            {
+                builder.Append("  dependency: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Dependency.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Dependency}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Dependency}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MajorVersions), out propertyOverride);
+            if (Optional.IsCollectionDefined(MajorVersions) || hasPropertyOverride)
+            {
+                if (MajorVersions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  majorVersions: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in MajorVersions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  majorVersions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Frameworks), out propertyOverride);
+            if (Optional.IsCollectionDefined(Frameworks) || hasPropertyOverride)
+            {
+                if (Frameworks.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  frameworks: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Frameworks)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  frameworks: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDeprecated), out propertyOverride);
+            if (Optional.IsCollectionDefined(IsDeprecated) || hasPropertyOverride)
+            {
+                if (IsDeprecated.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  isDeprecated: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in IsDeprecated)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  isDeprecated: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ApplicationStack>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationStack>)this).GetFormatFromOptions(options) : options.Format;
@@ -201,8 +349,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationStack)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationStack)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +368,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeApplicationStack(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationStack)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationStack)} does not support reading '{options.Format}' format.");
             }
         }
 

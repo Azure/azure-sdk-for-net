@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Key name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Key value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

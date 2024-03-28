@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AlertsManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
@@ -24,14 +23,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ServiceAlertSummaryGroup>(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeServiceAlertSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

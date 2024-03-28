@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsistencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsistencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,6 +116,60 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new ConsistencyPolicy(defaultConsistencyLevel, maxStalenessPrefix, maxIntervalInSeconds, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultConsistencyLevel), out propertyOverride);
+            builder.Append("  defaultConsistencyLevel: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{DefaultConsistencyLevel.ToSerialString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxStalenessPrefix), out propertyOverride);
+            if (Optional.IsDefined(MaxStalenessPrefix) || hasPropertyOverride)
+            {
+                builder.Append("  maxStalenessPrefix: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MaxStalenessPrefix.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxIntervalInSeconds), out propertyOverride);
+            if (Optional.IsDefined(MaxIntervalInSeconds) || hasPropertyOverride)
+            {
+                builder.Append("  maxIntervalInSeconds: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{MaxIntervalInSeconds.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ConsistencyPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsistencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -124,8 +178,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeConsistencyPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

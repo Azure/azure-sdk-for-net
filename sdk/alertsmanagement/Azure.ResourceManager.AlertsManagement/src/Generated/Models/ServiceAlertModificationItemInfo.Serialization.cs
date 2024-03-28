@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModificationItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModificationItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +191,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeServiceAlertModificationItemInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Mocking
 {

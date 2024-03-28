@@ -22,8 +22,13 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Creates an instance of <see cref="MetricsClient"/>.
+        /// <code snippet="Snippet:CreateMetricsClient" language="csharp">
+        /// var client = new MetricsClient(
+        ///     new Uri(&quot;https://&lt;region&gt;.metrics.monitor.azure.com&quot;),
+        ///     new DefaultAzureCredential());
+        /// </code>
         /// </summary>
-        /// <param name="endpoint">The data plane service endpoint to use. For example, <c>https://metrics.monitor.azure.com/.default</c> for Azure Public Cloud.</param>
+        /// <param name="endpoint">The data plane service endpoint to use. For example, <c>https://&lt;region&gt;.metrics.monitor.azure.com/</c> for Azure Public Cloud.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="MetricsClientOptions"/> instance to use as client configuration.</param>
         public MetricsClient(Uri endpoint, TokenCredential credential, MetricsClientOptions options = null)
@@ -58,17 +63,17 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Returns all the Azure Monitor metrics requested for the batch of resources.
         /// </summary>
-        /// <param name="resourceIds">The resource URIs for which the metrics is requested.</param>
+        /// <param name="resourceIds">The resource URIs for which the metrics are requested.</param>
         /// <param name="metricNames">The names of the metrics to query.</param>
         /// <param name="metricNamespace">The namespace of the metrics to query.</param>
-        /// <param name="options">The <see cref="MetricsClientOptions"/> to configure the query.</param>
+        /// <param name="options">The <see cref="MetricsQueryResourcesOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time series metrics result for the requested metric names.</returns>
         public virtual Response<MetricsQueryResourcesResult> QueryResources(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
         {
             if (resourceIds.Count() == 0 || metricNames.Count == 0)
             {
-                throw new ArgumentException("Resource IDs or metricNames can not be empty");
+                throw new ArgumentException($"{nameof(resourceIds)} or {nameof(metricNames)} cannot be empty");
             }
             if (metricNamespace == null)
             {
@@ -95,14 +100,14 @@ namespace Azure.Monitor.Query
         /// <param name="resourceIds">The resource URIs for which the metrics are requested.</param>
         /// <param name="metricNames">The names of the metrics to query.</param>
         /// <param name="metricNamespace">The namespace of the metrics to query.</param>
-        /// <param name="options">The <see cref="MetricsClientOptions"/> to configure the query.</param>
+        /// <param name="options">The <see cref="MetricsQueryResourcesOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time series metrics result for the requested metric names.</returns>
         public virtual async Task<Response<MetricsQueryResourcesResult>> QueryResourcesAsync(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
         {
             if (resourceIds.Count() == 0 || metricNames.Count == 0)
             {
-                throw new ArgumentException("Resource IDs or metricNames can not be empty");
+                throw new ArgumentException($"{nameof(resourceIds)} or {nameof(metricNames)} cannot be empty");
             }
             if (metricNamespace == null)
             {

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             var format = options.Format == "W" ? ((IPersistableModel<LocalRulestackData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocalRulestackData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocalRulestackData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(SecurityServices))
             {
                 writer.WritePropertyName("securityServices"u8);
-                writer.WriteObjectValue(SecurityServices);
+                writer.WriteObjectValue<RulestackSecurityServices>(SecurityServices, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             var format = options.Format == "W" ? ((IPersistableModel<LocalRulestackData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocalRulestackData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocalRulestackData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -357,7 +356,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LocalRulestackData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocalRulestackData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -373,7 +372,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         return DeserializeLocalRulestackData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LocalRulestackData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocalRulestackData)} does not support reading '{options.Format}' format.");
             }
         }
 

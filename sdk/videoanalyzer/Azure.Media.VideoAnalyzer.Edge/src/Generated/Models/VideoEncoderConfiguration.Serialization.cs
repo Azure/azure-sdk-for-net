@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -29,22 +28,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
+                writer.WriteObjectValue<VideoResolution>(Resolution);
             }
             if (Optional.IsDefined(RateControl))
             {
                 writer.WritePropertyName("rateControl"u8);
-                writer.WriteObjectValue(RateControl);
+                writer.WriteObjectValue<RateControl>(RateControl);
             }
             if (Optional.IsDefined(H264))
             {
                 writer.WritePropertyName("h264"u8);
-                writer.WriteObjectValue(H264);
+                writer.WriteObjectValue<H264Configuration>(H264);
             }
             if (Optional.IsDefined(Mpeg4))
             {
                 writer.WritePropertyName("mpeg4"u8);
-                writer.WriteObjectValue(Mpeg4);
+                writer.WriteObjectValue<Mpeg4Configuration>(Mpeg4);
             }
             writer.WriteEndObject();
         }

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationRuntimeComputeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationRuntimeComputeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,22 +49,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DataFlowProperties))
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
-                writer.WriteObjectValue(DataFlowProperties);
+                writer.WriteObjectValue<IntegrationRuntimeDataFlowProperties>(DataFlowProperties, options);
             }
             if (Optional.IsDefined(VnetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
-                writer.WriteObjectValue(VnetProperties);
+                writer.WriteObjectValue<IntegrationRuntimeVnetProperties>(VnetProperties, options);
             }
             if (Optional.IsDefined(CopyComputeScaleProperties))
             {
                 writer.WritePropertyName("copyComputeScaleProperties"u8);
-                writer.WriteObjectValue(CopyComputeScaleProperties);
+                writer.WriteObjectValue<CopyComputeScaleProperties>(CopyComputeScaleProperties, options);
             }
             if (Optional.IsDefined(PipelineExternalComputeScaleProperties))
             {
                 writer.WritePropertyName("pipelineExternalComputeScaleProperties"u8);
-                writer.WriteObjectValue(PipelineExternalComputeScaleProperties);
+                writer.WriteObjectValue<PipelineExternalComputeScaleProperties>(PipelineExternalComputeScaleProperties, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationRuntimeComputeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationRuntimeComputeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeComputeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeComputeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -222,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeIntegrationRuntimeComputeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeComputeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeComputeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

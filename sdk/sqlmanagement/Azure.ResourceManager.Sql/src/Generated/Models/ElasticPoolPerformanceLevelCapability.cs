@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -88,28 +87,40 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The performance level for the pool. </summary>
+        [WirePath("performanceLevel")]
         public PerformanceLevelCapability PerformanceLevel { get; }
         /// <summary> The sku. </summary>
+        [WirePath("sku")]
         public SqlSku Sku { get; }
         /// <summary> List of supported license types. </summary>
+        [WirePath("supportedLicenseTypes")]
         public IReadOnlyList<LicenseTypeCapability> SupportedLicenseTypes { get; }
         /// <summary> The maximum number of databases supported. </summary>
+        [WirePath("maxDatabaseCount")]
         public int? MaxDatabaseCount { get; }
         /// <summary> The included (free) max size for this performance level. </summary>
+        [WirePath("includedMaxSize")]
         public MaxSizeCapability IncludedMaxSize { get; }
         /// <summary> The list of supported max sizes. </summary>
+        [WirePath("supportedMaxSizes")]
         public IReadOnlyList<MaxSizeRangeCapability> SupportedMaxSizes { get; }
         /// <summary> The list of supported per database max sizes. </summary>
+        [WirePath("supportedPerDatabaseMaxSizes")]
         public IReadOnlyList<MaxSizeRangeCapability> SupportedPerDatabaseMaxSizes { get; }
         /// <summary> The list of supported per database max performance levels. </summary>
+        [WirePath("supportedPerDatabaseMaxPerformanceLevels")]
         public IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> SupportedPerDatabaseMaxPerformanceLevels { get; }
         /// <summary> Whether or not zone redundancy is supported for the performance level. </summary>
+        [WirePath("zoneRedundant")]
         public bool? IsZoneRedundant { get; }
         /// <summary> List of supported maintenance configurations. </summary>
+        [WirePath("supportedMaintenanceConfigurations")]
         public IReadOnlyList<MaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

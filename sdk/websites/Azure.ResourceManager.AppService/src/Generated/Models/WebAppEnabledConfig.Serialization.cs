@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppEnabledConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppEnabledConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppEnabledConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppEnabledConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppEnabledConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppEnabledConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,6 +93,36 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppEnabledConfig(enabled, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
+            if (Optional.IsDefined(Enabled) || hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = Enabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<WebAppEnabledConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebAppEnabledConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,8 +131,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WebAppEnabledConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppEnabledConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeWebAppEnabledConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebAppEnabledConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppEnabledConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

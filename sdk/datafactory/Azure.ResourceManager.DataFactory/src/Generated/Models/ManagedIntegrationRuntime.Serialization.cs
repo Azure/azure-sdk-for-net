@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ManagedVirtualNetwork))
             {
                 writer.WritePropertyName("managedVirtualNetwork"u8);
-                writer.WriteObjectValue(ManagedVirtualNetwork);
+                writer.WriteObjectValue<ManagedVirtualNetworkReference>(ManagedVirtualNetwork, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
@@ -49,17 +48,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
-                writer.WriteObjectValue(ComputeProperties);
+                writer.WriteObjectValue<IntegrationRuntimeComputeProperties>(ComputeProperties, options);
             }
             if (Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
-                writer.WriteObjectValue(SsisProperties);
+                writer.WriteObjectValue<IntegrationRuntimeSsisProperties>(SsisProperties, options);
             }
             if (Optional.IsDefined(CustomerVirtualNetwork))
             {
                 writer.WritePropertyName("customerVirtualNetwork"u8);
-                writer.WriteObjectValue(CustomerVirtualNetwork);
+                writer.WriteObjectValue<IntegrationRuntimeCustomerVirtualNetwork>(CustomerVirtualNetwork, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeManagedIntegrationRuntime(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support reading '{options.Format}' format.");
             }
         }
 

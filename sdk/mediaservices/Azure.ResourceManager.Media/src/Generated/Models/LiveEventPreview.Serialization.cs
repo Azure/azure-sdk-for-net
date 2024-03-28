@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<LiveEventPreview>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveEventPreview)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveEventPreview)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LiveEventEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.Media.Models
                 if (AccessControl != null)
                 {
                     writer.WritePropertyName("accessControl"u8);
-                    writer.WriteObjectValue(AccessControl);
+                    writer.WriteObjectValue<LiveEventPreviewAccessControl>(AccessControl, options);
                 }
                 else
                 {
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<LiveEventPreview>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveEventPreview)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveEventPreview)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LiveEventPreview)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveEventPreview)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeLiveEventPreview(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LiveEventPreview)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveEventPreview)} does not support reading '{options.Format}' format.");
             }
         }
 

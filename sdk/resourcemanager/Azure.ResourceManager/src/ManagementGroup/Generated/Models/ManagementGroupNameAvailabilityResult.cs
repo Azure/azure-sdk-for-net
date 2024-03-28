@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> Required. True indicates name is valid and available. False indicates the name is invalid, unavailable, or both. </summary>
+        [WirePath("nameAvailable")]
         public bool? NameAvailable { get; }
         /// <summary> Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider's naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable. </summary>
+        [WirePath("reason")]
         public ManagementGroupNameUnavailableReason? Reason { get; }
         /// <summary> Required if nameAvailable == false. Localized. If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that is already in use, and direct them to select a different name. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

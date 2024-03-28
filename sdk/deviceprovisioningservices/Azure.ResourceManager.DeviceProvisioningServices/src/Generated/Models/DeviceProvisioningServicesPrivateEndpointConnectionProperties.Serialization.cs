@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DeviceProvisioningServices;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceProvisioningServicesPrivateEndpointConnectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceProvisioningServicesPrivateEndpointConnectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(ConnectionState);
+            writer.WriteObjectValue<DeviceProvisioningServicesPrivateLinkServiceConnectionState>(ConnectionState, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceProvisioningServicesPrivateEndpointConnectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceProvisioningServicesPrivateEndpointConnectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceProvisioningServicesPrivateEndpointConnectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceProvisioningServicesPrivateEndpointConnectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         return DeserializeDeviceProvisioningServicesPrivateEndpointConnectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceProvisioningServicesPrivateEndpointConnectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceProvisioningServicesPrivateEndpointConnectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

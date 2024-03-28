@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmProtectedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -271,7 +270,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(MobilityAgentDetails))
             {
                 writer.WritePropertyName("mobilityAgentDetails"u8);
-                writer.WriteObjectValue(MobilityAgentDetails);
+                writer.WriteObjectValue<InMageRcmMobilityAgentDetails>(MobilityAgentDetails, options);
             }
             if (Optional.IsCollectionDefined(LastAgentUpgradeErrorDetails))
             {
@@ -279,7 +278,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in LastAgentUpgradeErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmLastAgentUpgradeErrorDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -289,7 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentUpgradeBlockingErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmAgentUpgradeBlockingErrorDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -299,14 +298,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmNicDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DiscoveredVmDetails))
             {
                 writer.WritePropertyName("discoveredVmDetails"u8);
-                writer.WriteObjectValue(DiscoveredVmDetails);
+                writer.WriteObjectValue<InMageRcmDiscoveredProtectedVmDetails>(DiscoveredVmDetails, options);
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -894,7 +893,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -910,7 +909,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmReplicationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

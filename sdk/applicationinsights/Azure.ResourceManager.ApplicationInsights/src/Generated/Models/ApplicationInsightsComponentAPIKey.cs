@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -73,16 +72,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The unique ID of the API key inside an Application Insights component. It is auto generated when the API key is created. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The API key value. It will be only return once when the API Key was created. </summary>
+        [WirePath("apiKey")]
         public string ApiKey { get; }
         /// <summary> The create date of this API key. </summary>
+        [WirePath("createdDate")]
         public string CreatedDate { get; }
         /// <summary> The name of the API key. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The read access rights of this API Key. </summary>
+        [WirePath("linkedReadProperties")]
         public IReadOnlyList<string> LinkedReadProperties { get; }
         /// <summary> The write access rights of this API Key. </summary>
+        [WirePath("linkedWriteProperties")]
         public IReadOnlyList<string> LinkedWriteProperties { get; }
     }
 }

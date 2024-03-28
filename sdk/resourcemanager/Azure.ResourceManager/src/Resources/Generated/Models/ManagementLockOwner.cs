@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The application ID of the lock owner. </summary>
+        [WirePath("applicationId")]
         public string ApplicationId { get; set; }
     }
 }

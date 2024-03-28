@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHelpStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpStep)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,14 +72,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StepInput>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AutomatedCheckResults))
             {
                 writer.WritePropertyName("automatedCheckResults"u8);
-                writer.WriteObjectValue(AutomatedCheckResults);
+                writer.WriteObjectValue<AutomatedCheckResult>(AutomatedCheckResults, options);
             }
             if (Optional.IsCollectionDefined(Insights))
             {
@@ -89,7 +87,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SelfHelpDiagnosticInsight>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +119,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHelpStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpStep)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -281,7 +279,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpStep)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -297,7 +295,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeSelfHelpStep(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpStep)} does not support reading '{options.Format}' format.");
             }
         }
 

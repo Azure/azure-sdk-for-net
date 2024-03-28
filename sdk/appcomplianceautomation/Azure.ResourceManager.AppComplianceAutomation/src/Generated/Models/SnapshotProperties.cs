@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppComplianceAutomation;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models

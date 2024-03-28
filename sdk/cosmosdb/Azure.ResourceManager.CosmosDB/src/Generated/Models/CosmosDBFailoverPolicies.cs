@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of failover policies. </summary>
+        [WirePath("failoverPolicies")]
         public IList<CosmosDBFailoverPolicy> FailoverPolicies { get; }
     }
 }

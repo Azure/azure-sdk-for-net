@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The private link resource group id. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
         /// <summary> The private link resource required member names. </summary>
+        [WirePath("requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
     }
 }

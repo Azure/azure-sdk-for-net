@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<AlertRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.Monitor
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition);
+            writer.WriteObjectValue<AlertRuleCondition>(Condition, options);
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                writer.WriteObjectValue<AlertRuleAction>(Action, options);
             }
             if (Optional.IsCollectionDefined(Actions))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AlertRuleAction>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<AlertRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Monitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Monitor
                         return DeserializeAlertRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Projections)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<KnowledgeStoreProjection>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Identity))
@@ -31,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity);
                 }
                 else
                 {
@@ -41,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<SearchIndexerKnowledgeStoreParameters>(Parameters);
             }
             writer.WriteEndObject();
         }

@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Automanage
             var format = options.Format == "W" ? ((IPersistableModel<AutomanageConfigurationProfileAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<AutomanageConfigurationProfileAssignmentProperties>(Properties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Automanage
             var format = options.Format == "W" ? ((IPersistableModel<AutomanageConfigurationProfileAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Automanage
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Automanage
                         return DeserializeAutomanageConfigurationProfileAssignmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

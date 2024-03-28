@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -23,19 +22,19 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchDeploymentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchDeploymentConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchDeploymentConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudServiceConfiguration))
             {
                 writer.WritePropertyName("cloudServiceConfiguration"u8);
-                writer.WriteObjectValue(CloudServiceConfiguration);
+                writer.WriteObjectValue<BatchCloudServiceConfiguration>(CloudServiceConfiguration, options);
             }
             if (Optional.IsDefined(VmConfiguration))
             {
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
-                writer.WriteObjectValue(VmConfiguration);
+                writer.WriteObjectValue<BatchVmConfiguration>(VmConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchDeploymentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchDeploymentConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchDeploymentConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchDeploymentConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchDeploymentConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchDeploymentConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchDeploymentConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchDeploymentConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

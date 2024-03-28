@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationDeploymentPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationDeploymentPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationDeploymentPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationDeploymentPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationDeploymentPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationDeploymentPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,6 +86,32 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationDeploymentPolicy(deploymentMode, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentMode), out propertyOverride);
+            builder.Append("  deploymentMode: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{DeploymentMode.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ArmApplicationDeploymentPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationDeploymentPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -93,8 +120,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationDeploymentPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationDeploymentPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmApplicationDeploymentPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationDeploymentPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationDeploymentPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

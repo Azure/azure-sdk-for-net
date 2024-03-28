@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -72,16 +71,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The rule name. </summary>
+        [WirePath("Name")]
         public string Name { get; set; }
         /// <summary> A flag that indicates whether this rule is enabled by the user. </summary>
+        [WirePath("Enabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> A flag that indicated whether notifications on this rule should be sent to subscription owners. </summary>
+        [WirePath("SendEmailsToSubscriptionOwners")]
         public bool? SendEmailsToSubscriptionOwners { get; set; }
         /// <summary> Custom email addresses for this rule notifications. </summary>
+        [WirePath("CustomEmails")]
         public IList<string> CustomEmails { get; }
         /// <summary> The last time this rule was updated. </summary>
+        [WirePath("LastUpdatedTime")]
         public string LastUpdatedTime { get; set; }
         /// <summary> Static definitions of the ProactiveDetection configuration rule (same values for all components). </summary>
+        [WirePath("RuleDefinitions")]
         public ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions RuleDefinitions { get; set; }
     }
 }

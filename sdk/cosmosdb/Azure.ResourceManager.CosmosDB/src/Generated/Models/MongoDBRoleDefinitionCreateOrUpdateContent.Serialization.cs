@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBRoleDefinitionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBRoleDefinitionCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBRoleDefinitionCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Privileges)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MongoDBPrivilege>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MongoDBRole>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBRoleDefinitionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBRoleDefinitionCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBRoleDefinitionCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +194,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBRoleDefinitionCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBRoleDefinitionCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeMongoDBRoleDefinitionCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBRoleDefinitionCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBRoleDefinitionCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

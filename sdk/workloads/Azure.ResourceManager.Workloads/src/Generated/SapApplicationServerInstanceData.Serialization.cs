@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Workloads
             var format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapApplicationServerInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapApplicationServerInstanceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Workloads
                 writer.WriteStartArray();
                 foreach (var item in VmDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationServerVmDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors);
+                writer.WriteObjectValue<SapVirtualInstanceError>(Errors, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Workloads
             var format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapApplicationServerInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapApplicationServerInstanceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Workloads
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapApplicationServerInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapApplicationServerInstanceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Workloads
                         return DeserializeSapApplicationServerInstanceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapApplicationServerInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapApplicationServerInstanceData)} does not support reading '{options.Format}' format.");
             }
         }
 

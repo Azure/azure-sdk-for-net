@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(PolicyInfo))
             {
                 writer.WritePropertyName("policyInfo"u8);
-                writer.WriteObjectValue(PolicyInfo);
+                writer.WriteObjectValue<PolicyReference>(PolicyInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EvaluationResult))
             {
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(EvaluationDetails))
             {
                 writer.WritePropertyName("evaluationDetails"u8);
-                writer.WriteObjectValue(EvaluationDetails);
+                writer.WriteObjectValue<PolicyEvaluationDetails>(EvaluationDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicyEvaluationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

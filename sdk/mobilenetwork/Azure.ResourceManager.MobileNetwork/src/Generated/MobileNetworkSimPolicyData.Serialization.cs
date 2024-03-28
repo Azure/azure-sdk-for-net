@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSimPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkSimPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkSimPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("ueAmbr"u8);
-            writer.WriteObjectValue(UeAmbr);
+            writer.WriteObjectValue<Ambr>(UEAmbr, options);
             writer.WritePropertyName("defaultSlice"u8);
             JsonSerializer.Serialize(writer, DefaultSlice);
             if (Optional.IsDefined(RfspIndex))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteStartArray();
             foreach (var item in SliceConfigurations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MobileNetworkSliceConfiguration>(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSimPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkSimPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkSimPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkSimPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkSimPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         return DeserializeMobileNetworkSimPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkSimPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkSimPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

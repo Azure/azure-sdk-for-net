@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmPolicyParameter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmPolicyParameter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmPolicyParameter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<ParameterDefinitionsValueMetadata>(Metadata, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmPolicyParameter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmPolicyParameter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmPolicyParameter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -174,6 +175,90 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmPolicyParameter(type, allowedValues ?? new ChangeTrackingList<BinaryData>(), defaultValue, metadata, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParameterType), out propertyOverride);
+            if (Optional.IsDefined(ParameterType) || hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ParameterType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedValues), out propertyOverride);
+            if (Optional.IsCollectionDefined(AllowedValues) || hasPropertyOverride)
+            {
+                if (AllowedValues.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  allowedValues: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedValues)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultValue), out propertyOverride);
+            if (Optional.IsDefined(DefaultValue) || hasPropertyOverride)
+            {
+                builder.Append("  defaultValue: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DefaultValue.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metadata), out propertyOverride);
+            if (Optional.IsDefined(Metadata) || hasPropertyOverride)
+            {
+                builder.Append("  metadata: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Metadata, options, 2, false, "  metadata: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ArmPolicyParameter>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmPolicyParameter>)this).GetFormatFromOptions(options) : options.Format;
@@ -182,8 +267,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmPolicyParameter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmPolicyParameter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +286,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmPolicyParameter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmPolicyParameter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmPolicyParameter)} does not support reading '{options.Format}' format.");
             }
         }
 

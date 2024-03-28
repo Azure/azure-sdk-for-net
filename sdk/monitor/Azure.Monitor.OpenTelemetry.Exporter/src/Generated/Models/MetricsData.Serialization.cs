@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MetricDataPoint>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Properties))
@@ -39,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }

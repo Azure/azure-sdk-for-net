@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<doc>
+  <members>
+    <member name="CreateOrUpdateEnvironmentAsync(WaitUntil,string,string,DevCenterEnvironment,CancellationToken)">
+      <example>
+        This sample shows how to call CreateOrUpdateEnvironmentAsync.
+        <code>
+          <![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+DevCenterEnvironment environment = new DevCenterEnvironment("<environmentName>", "<environmentType>", "<catalogName>", "<environmentDefinitionName>");
+Operation<DevCenterEnvironment> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", environment);
+DevCenterEnvironment responseData = operation.Value;
+]]>
+        </code>
+        This sample shows how to call CreateOrUpdateEnvironmentAsync with all parameters.
+        <code>
+          <![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+DevCenterEnvironment environment = new DevCenterEnvironment("<environmentName>", "<environmentType>", "<catalogName>", "<environmentDefinitionName>")
+{
+    Parameters =
+    {
+        ["key"] = BinaryData.FromObjectAsJson(new object())
+    },
+};
+Operation<DevCenterEnvironment> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", environment);
+DevCenterEnvironment responseData = operation.Value;
+]]>
+        </code>
+      </example>
+    </member>
+    <member name="CreateOrUpdateEnvironment(WaitUntil,string,stringDevCenterEnvironment,CancellationToken)">
+      <example>
+        This sample shows how to call CreateOrUpdateEnvironment.
+        <code>
+          <![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+DevCenterEnvironment environment = new DevCenterEnvironment("<environmentName>", "<environmentType>", "<catalogName>", "<environmentDefinitionName>");
+Operation<DevCenterEnvironment> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", environment);
+DevCenterEnvironment responseData = operation.Value;
+]]>
+        </code>
+        This sample shows how to call CreateOrUpdateEnvironment with all parameters.
+        <code>
+          <![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+DevCenterEnvironment environment = new DevCenterEnvironment("<environmentName>", "<environmentType>", "<catalogName>", "<environmentDefinitionName>")
+{
+    Parameters =
+    {
+        ["key"] = BinaryData.FromObjectAsJson(new object())
+    },
+};
+Operation<DevCenterEnvironment> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", environment);
+DevCenterEnvironment responseData = operation.Value;
+]]>
+        </code>
+      </example>
+    </member>
+  </members>
+</doc>

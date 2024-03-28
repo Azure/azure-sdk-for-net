@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticAcls)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiskPoolIscsiTargetPortalGroupAcl>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Luns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedDiskIscsiLun>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -246,7 +245,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -262,7 +261,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                         return DeserializeDiskPoolIscsiTargetPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

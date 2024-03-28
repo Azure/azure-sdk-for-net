@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoHealRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoHealRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
-                writer.WriteObjectValue(Triggers);
+                writer.WriteObjectValue<AutoHealTriggers>(Triggers, options);
             }
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue(Actions);
+                writer.WriteObjectValue<AutoHealActions>(Actions, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoHealRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoHealRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,6 +108,49 @@ namespace Azure.ResourceManager.AppService.Models
             return new AutoHealRules(triggers, actions, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Triggers), out propertyOverride);
+            if (Optional.IsDefined(Triggers) || hasPropertyOverride)
+            {
+                builder.Append("  triggers: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Triggers, options, 2, false, "  triggers: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Actions), out propertyOverride);
+            if (Optional.IsDefined(Actions) || hasPropertyOverride)
+            {
+                builder.Append("  actions: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Actions, options, 2, false, "  actions: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AutoHealRules>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealRules>)this).GetFormatFromOptions(options) : options.Format;
@@ -116,8 +159,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoHealRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoHealRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAutoHealRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoHealRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoHealRules)} does not support reading '{options.Format}' format.");
             }
         }
 

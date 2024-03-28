@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(PortCondition))
             {
                 writer.WritePropertyName("portCondition"u8);
-                writer.WriteObjectValue(PortCondition);
+                writer.WriteObjectValue<AccessControlListPortCondition>(PortCondition, options);
             }
             if (Optional.IsCollectionDefined(ProtocolTypes))
             {
@@ -95,12 +94,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(VlanMatchCondition))
             {
                 writer.WritePropertyName("vlanMatchCondition"u8);
-                writer.WriteObjectValue(VlanMatchCondition);
+                writer.WriteObjectValue<VlanMatchCondition>(VlanMatchCondition, options);
             }
             if (Optional.IsDefined(IPCondition))
             {
                 writer.WritePropertyName("ipCondition"u8);
-                writer.WriteObjectValue(IPCondition);
+                writer.WriteObjectValue<IPMatchCondition>(IPCondition, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -292,7 +291,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +307,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeAccessControlListMatchCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

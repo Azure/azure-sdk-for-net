@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Avs;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(ManagementCluster))
             {
                 writer.WritePropertyName("managementCluster"u8);
-                writer.WriteObjectValue(ManagementCluster);
+                writer.WriteObjectValue<AvsManagementCluster>(ManagementCluster, options);
             }
             if (Optional.IsDefined(Internet))
             {
@@ -62,19 +61,19 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in IdentitySources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SingleSignOnIdentitySource>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
-                writer.WriteObjectValue(Availability);
+                writer.WriteObjectValue<PrivateCloudAvailabilityProperties>(Availability, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<CustomerManagedEncryption>(Encryption, options);
             }
             if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
             {
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -263,7 +262,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -279,7 +278,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeAvsPrivateCloudPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

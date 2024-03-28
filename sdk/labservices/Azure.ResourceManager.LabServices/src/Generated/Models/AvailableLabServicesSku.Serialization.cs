@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableLabServicesSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<AvailableLabServicesSkuCapacity>(Capacity, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableLabServicesSkuCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableLabServicesSkuCost>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableLabServicesSkuRestrictions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableLabServicesSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -272,7 +271,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeAvailableLabServicesSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support reading '{options.Format}' format.");
             }
         }
 

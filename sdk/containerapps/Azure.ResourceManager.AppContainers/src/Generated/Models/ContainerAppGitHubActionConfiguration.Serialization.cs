@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -23,19 +22,19 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppGitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(RegistryInfo))
             {
                 writer.WritePropertyName("registryInfo"u8);
-                writer.WriteObjectValue(RegistryInfo);
+                writer.WriteObjectValue<ContainerAppRegistryInfo>(RegistryInfo, options);
             }
             if (Optional.IsDefined(AzureCredentials))
             {
                 writer.WritePropertyName("azureCredentials"u8);
-                writer.WriteObjectValue(AzureCredentials);
+                writer.WriteObjectValue<ContainerAppCredentials>(AzureCredentials, options);
             }
             if (Optional.IsDefined(ContextPath))
             {
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppGitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -204,7 +203,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +219,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppGitHubActionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

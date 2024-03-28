@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerResourceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in FrontendIPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoadBalancerFrontendIPConfigurationResourceSettings>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in BackendAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoadBalancerBackendAddressPoolResourceSettings>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerResourceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerResourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -240,7 +239,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeLoadBalancerResourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerResourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

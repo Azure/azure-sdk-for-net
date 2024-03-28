@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerHistoryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowTriggerHistoryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerHistoryData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,17 +95,17 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation);
+                writer.WriteObjectValue<Correlation>(Correlation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue(InputsLink);
+                writer.WriteObjectValue<LogicContentLink>(InputsLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue(OutputsLink);
+                writer.WriteObjectValue<LogicContentLink>(OutputsLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsFired))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(Run))
             {
                 writer.WritePropertyName("run"u8);
-                writer.WriteObjectValue(Run);
+                writer.WriteObjectValue<LogicResourceReference>(Run, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerHistoryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowTriggerHistoryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerHistoryData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Logic
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerHistoryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerHistoryData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Logic
                         return DeserializeLogicWorkflowTriggerHistoryData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerHistoryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerHistoryData)} does not support reading '{options.Format}' format.");
             }
         }
 

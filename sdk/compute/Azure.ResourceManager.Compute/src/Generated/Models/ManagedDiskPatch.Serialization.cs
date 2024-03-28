@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<DiskSku>(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsGroup);
+                writer.WriteObjectValue<EncryptionSettingsGroup>(EncryptionSettingsGroup, options);
             }
             if (Optional.IsDefined(DiskIopsReadWrite))
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<DiskEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
@@ -113,17 +112,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                writer.WriteObjectValue<DiskPurchasePlan>(PurchasePlan, options);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities);
+                writer.WriteObjectValue<SupportedCapabilities>(SupportedCapabilities, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PropertyUpdatesInProgress))
             {
                 writer.WritePropertyName("propertyUpdatesInProgress"u8);
-                writer.WriteObjectValue(PropertyUpdatesInProgress);
+                writer.WriteObjectValue<PropertyUpdatesInProgress>(PropertyUpdatesInProgress, options);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -462,7 +461,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -478,7 +477,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeManagedDiskPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

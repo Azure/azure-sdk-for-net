@@ -8,10 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (options.Format != "W" && Optional.IsDefined(CurrentStatus))
             {
                 writer.WritePropertyName("currentStatus"u8);
-                writer.WriteObjectValue(CurrentStatus);
+                writer.WriteObjectValue<PostgreSqlMigrationStatus>(CurrentStatus, options);
             }
             if (Optional.IsDefined(MigrationMode))
             {
@@ -82,12 +83,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (options.Format != "W" && Optional.IsDefined(SourceDbServerMetadata))
             {
                 writer.WritePropertyName("sourceDbServerMetadata"u8);
-                writer.WriteObjectValue(SourceDbServerMetadata);
+                writer.WriteObjectValue<PostgreSqlServerMetadata>(SourceDbServerMetadata, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TargetDbServerMetadata))
             {
                 writer.WritePropertyName("targetDbServerMetadata"u8);
-                writer.WriteObjectValue(TargetDbServerMetadata);
+                writer.WriteObjectValue<PostgreSqlServerMetadata>(TargetDbServerMetadata, options);
             }
             if (Optional.IsDefined(SourceDbServerResourceId))
             {
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (Optional.IsDefined(SecretParameters))
             {
                 writer.WritePropertyName("secretParameters"u8);
-                writer.WriteObjectValue(SecretParameters);
+                writer.WriteObjectValue<PostgreSqlMigrationSecretParameters>(SecretParameters, options);
             }
             if (Optional.IsCollectionDefined(DbsToMigrate))
             {
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -522,6 +523,490 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (Optional.IsCollectionDefined(Tags) || hasPropertyOverride)
+            {
+                if (Tags.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  tags: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationId), out propertyOverride);
+            if (Optional.IsDefined(MigrationId) || hasPropertyOverride)
+            {
+                builder.Append("    migrationId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (MigrationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MigrationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MigrationId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentStatus), out propertyOverride);
+            if (Optional.IsDefined(CurrentStatus) || hasPropertyOverride)
+            {
+                builder.Append("    currentStatus: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, CurrentStatus, options, 4, false, "    currentStatus: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationMode), out propertyOverride);
+            if (Optional.IsDefined(MigrationMode) || hasPropertyOverride)
+            {
+                builder.Append("    migrationMode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MigrationMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceDbServerMetadata), out propertyOverride);
+            if (Optional.IsDefined(SourceDbServerMetadata) || hasPropertyOverride)
+            {
+                builder.Append("    sourceDbServerMetadata: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, SourceDbServerMetadata, options, 4, false, "    sourceDbServerMetadata: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetDbServerMetadata), out propertyOverride);
+            if (Optional.IsDefined(TargetDbServerMetadata) || hasPropertyOverride)
+            {
+                builder.Append("    targetDbServerMetadata: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, TargetDbServerMetadata, options, 4, false, "    targetDbServerMetadata: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceDbServerResourceId), out propertyOverride);
+            if (Optional.IsDefined(SourceDbServerResourceId) || hasPropertyOverride)
+            {
+                builder.Append("    sourceDbServerResourceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SourceDbServerResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceDbServerFullyQualifiedDomainName), out propertyOverride);
+            if (Optional.IsDefined(SourceDbServerFullyQualifiedDomainName) || hasPropertyOverride)
+            {
+                builder.Append("    sourceDbServerFullyQualifiedDomainName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SourceDbServerFullyQualifiedDomainName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceDbServerFullyQualifiedDomainName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceDbServerFullyQualifiedDomainName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetDbServerResourceId), out propertyOverride);
+            if (Optional.IsDefined(TargetDbServerResourceId) || hasPropertyOverride)
+            {
+                builder.Append("    targetDbServerResourceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TargetDbServerResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetDbServerFullyQualifiedDomainName), out propertyOverride);
+            if (Optional.IsDefined(TargetDbServerFullyQualifiedDomainName) || hasPropertyOverride)
+            {
+                builder.Append("    targetDbServerFullyQualifiedDomainName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (TargetDbServerFullyQualifiedDomainName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetDbServerFullyQualifiedDomainName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetDbServerFullyQualifiedDomainName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretParameters), out propertyOverride);
+            if (Optional.IsDefined(SecretParameters) || hasPropertyOverride)
+            {
+                builder.Append("    secretParameters: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, SecretParameters, options, 4, false, "    secretParameters: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DbsToMigrate), out propertyOverride);
+            if (Optional.IsCollectionDefined(DbsToMigrate) || hasPropertyOverride)
+            {
+                if (DbsToMigrate.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    dbsToMigrate: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in DbsToMigrate)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SetupLogicalReplicationOnSourceDbIfNeeded), out propertyOverride);
+            if (Optional.IsDefined(SetupLogicalReplicationOnSourceDbIfNeeded) || hasPropertyOverride)
+            {
+                builder.Append("    setupLogicalReplicationOnSourceDbIfNeeded: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SetupLogicalReplicationOnSourceDbIfNeeded.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OverwriteDbsInTarget), out propertyOverride);
+            if (Optional.IsDefined(OverwriteDbsInTarget) || hasPropertyOverride)
+            {
+                builder.Append("    overwriteDbsInTarget: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{OverwriteDbsInTarget.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationWindowStartTimeInUtc), out propertyOverride);
+            if (Optional.IsDefined(MigrationWindowStartTimeInUtc) || hasPropertyOverride)
+            {
+                builder.Append("    migrationWindowStartTimeInUtc: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(MigrationWindowStartTimeInUtc.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationWindowEndTimeInUtc), out propertyOverride);
+            if (Optional.IsDefined(MigrationWindowEndTimeInUtc) || hasPropertyOverride)
+            {
+                builder.Append("    migrationWindowEndTimeInUtc: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(MigrationWindowEndTimeInUtc.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartDataMigration), out propertyOverride);
+            if (Optional.IsDefined(StartDataMigration) || hasPropertyOverride)
+            {
+                builder.Append("    startDataMigration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{StartDataMigration.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TriggerCutover), out propertyOverride);
+            if (Optional.IsDefined(TriggerCutover) || hasPropertyOverride)
+            {
+                builder.Append("    triggerCutover: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TriggerCutover.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DbsToTriggerCutoverOn), out propertyOverride);
+            if (Optional.IsCollectionDefined(DbsToTriggerCutoverOn) || hasPropertyOverride)
+            {
+                if (DbsToTriggerCutoverOn.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    dbsToTriggerCutoverOn: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in DbsToTriggerCutoverOn)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cancel), out propertyOverride);
+            if (Optional.IsDefined(Cancel) || hasPropertyOverride)
+            {
+                builder.Append("    cancel: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Cancel.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DbsToCancelMigrationOn), out propertyOverride);
+            if (Optional.IsCollectionDefined(DbsToCancelMigrationOn) || hasPropertyOverride)
+            {
+                if (DbsToCancelMigrationOn.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    dbsToCancelMigrationOn: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in DbsToCancelMigrationOn)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PostgreSqlMigrationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -530,8 +1015,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -547,7 +1034,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         return DeserializePostgreSqlMigrationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support reading '{options.Format}' format.");
             }
         }
 

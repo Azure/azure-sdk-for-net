@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -69,12 +68,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The name of the Virtual Network. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The key (ID) of the Virtual Network. </summary>
+        [WirePath("key")]
         public int? Key { get; set; }
         /// <summary> The ARM uri of the Virtual Network. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> A List of subnets that access is allowed to on this Virtual Network. An empty array (but not null) is interpreted to mean that all subnets are allowed within this Virtual Network. </summary>
+        [WirePath("subnets")]
         public IList<PrivateAccessSubnet> Subnets { get; }
     }
 }

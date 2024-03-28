@@ -9,3 +9,5 @@ using Azure.Core;
 [assembly: CodeGenSuppressType("Azure.ResourceManager.PostgreSql.Argument")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.PostgreSql.Utf8JsonRequestContent")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.PostgreSql.ChangeTrackingDictionary")]
+[assembly: CodeGenSuppressType("Azure.ResourceManager.PostgreSql.ModelSerializationExtensions")]
+[assembly: CodeGenSuppressType("Azure.ResourceManager.PostgreSql.BicepSerializationHelpers")]

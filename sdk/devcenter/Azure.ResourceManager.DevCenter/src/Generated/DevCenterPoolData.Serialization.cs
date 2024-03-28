@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(StopOnDisconnect))
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
-                writer.WriteObjectValue(StopOnDisconnect);
+                writer.WriteObjectValue<StopOnDisconnectConfiguration>(StopOnDisconnect, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HealthStatus))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WriteStartArray();
                 foreach (var item in HealthStatusDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevCenterHealthStatusDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DevCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DevCenter
                         return DeserializeDevCenterPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

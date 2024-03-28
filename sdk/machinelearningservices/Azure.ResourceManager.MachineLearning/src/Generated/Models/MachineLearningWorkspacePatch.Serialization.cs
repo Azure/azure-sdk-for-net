@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<MachineLearningSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -75,12 +74,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<EncryptionUpdateProperties>(Encryption, options);
             }
             if (Optional.IsDefined(FeatureStoreSettings))
             {
                 writer.WritePropertyName("featureStoreSettings"u8);
-                writer.WriteObjectValue(FeatureStoreSettings);
+                writer.WriteObjectValue<FeatureStoreSettings>(FeatureStoreSettings, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ManagedNetwork))
             {
                 writer.WritePropertyName("managedNetwork"u8);
-                writer.WriteObjectValue(ManagedNetwork);
+                writer.WriteObjectValue<ManagedNetworkSettings>(ManagedNetwork, options);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentity))
             {
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {
                 writer.WritePropertyName("serviceManagedResourcesSettings"u8);
-                writer.WriteObjectValue(ServiceManagedResourcesSettings);
+                writer.WriteObjectValue<ServiceManagedResourcesSettings>(ServiceManagedResourcesSettings, options);
             }
             if (Optional.IsDefined(SoftDeleteRetentionInDays))
             {
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -365,7 +364,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -381,7 +380,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningWorkspacePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

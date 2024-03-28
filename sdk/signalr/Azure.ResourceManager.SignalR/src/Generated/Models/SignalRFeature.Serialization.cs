@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRFeature>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRFeature)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRFeature)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRFeature>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRFeature)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRFeature)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,6 +121,90 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRFeature(flag, value, properties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Flag), out propertyOverride);
+            builder.Append("  flag: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Flag.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Value.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Value}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Value}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (Optional.IsCollectionDefined(Properties) || hasPropertyOverride)
+            {
+                if (Properties.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  properties: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in Properties)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SignalRFeature>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SignalRFeature>)this).GetFormatFromOptions(options) : options.Format;
@@ -128,8 +213,10 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SignalRFeature)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRFeature)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -145,7 +232,7 @@ namespace Azure.ResourceManager.SignalR.Models
                         return DeserializeSignalRFeature(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignalRFeature)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRFeature)} does not support reading '{options.Format}' format.");
             }
         }
 

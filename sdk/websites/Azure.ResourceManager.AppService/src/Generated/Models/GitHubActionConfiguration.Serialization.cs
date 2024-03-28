@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubActionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubActionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(CodeConfiguration))
             {
                 writer.WritePropertyName("codeConfiguration"u8);
-                writer.WriteObjectValue(CodeConfiguration);
+                writer.WriteObjectValue<GitHubActionCodeConfiguration>(CodeConfiguration, options);
             }
             if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
-                writer.WriteObjectValue(ContainerConfiguration);
+                writer.WriteObjectValue<GitHubActionContainerConfiguration>(ContainerConfiguration, options);
             }
             if (Optional.IsDefined(IsLinux))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubActionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubActionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,6 +138,79 @@ namespace Azure.ResourceManager.AppService.Models
             return new GitHubActionConfiguration(codeConfiguration, containerConfiguration, isLinux, generateWorkflowFile, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CodeConfiguration), out propertyOverride);
+            if (Optional.IsDefined(CodeConfiguration) || hasPropertyOverride)
+            {
+                builder.Append("  codeConfiguration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, CodeConfiguration, options, 2, false, "  codeConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerConfiguration), out propertyOverride);
+            if (Optional.IsDefined(ContainerConfiguration) || hasPropertyOverride)
+            {
+                builder.Append("  containerConfiguration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, ContainerConfiguration, options, 2, false, "  containerConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLinux), out propertyOverride);
+            if (Optional.IsDefined(IsLinux) || hasPropertyOverride)
+            {
+                builder.Append("  isLinux: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsLinux.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GenerateWorkflowFile), out propertyOverride);
+            if (Optional.IsDefined(GenerateWorkflowFile) || hasPropertyOverride)
+            {
+                builder.Append("  generateWorkflowFile: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = GenerateWorkflowFile.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<GitHubActionConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -146,8 +219,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(GitHubActionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubActionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +238,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeGitHubActionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitHubActionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubActionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

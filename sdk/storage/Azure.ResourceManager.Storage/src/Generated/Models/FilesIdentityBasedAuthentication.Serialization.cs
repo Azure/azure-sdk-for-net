@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilesIdentityBasedAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(ActiveDirectoryProperties))
             {
                 writer.WritePropertyName("activeDirectoryProperties"u8);
-                writer.WriteObjectValue(ActiveDirectoryProperties);
+                writer.WriteObjectValue<StorageActiveDirectoryProperties>(ActiveDirectoryProperties, options);
             }
             if (Optional.IsDefined(DefaultSharePermission))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilesIdentityBasedAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,6 +116,60 @@ namespace Azure.ResourceManager.Storage.Models
             return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties, defaultSharePermission, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DirectoryServiceOptions), out propertyOverride);
+            builder.Append("  directoryServiceOptions: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{DirectoryServiceOptions.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveDirectoryProperties), out propertyOverride);
+            if (Optional.IsDefined(ActiveDirectoryProperties) || hasPropertyOverride)
+            {
+                builder.Append("  activeDirectoryProperties: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, ActiveDirectoryProperties, options, 2, false, "  activeDirectoryProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultSharePermission), out propertyOverride);
+            if (Optional.IsDefined(DefaultSharePermission) || hasPropertyOverride)
+            {
+                builder.Append("  defaultSharePermission: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DefaultSharePermission.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FilesIdentityBasedAuthentication>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FilesIdentityBasedAuthentication>)this).GetFormatFromOptions(options) : options.Format;
@@ -124,8 +178,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +197,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeFilesIdentityBasedAuthentication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support reading '{options.Format}' format.");
             }
         }
 

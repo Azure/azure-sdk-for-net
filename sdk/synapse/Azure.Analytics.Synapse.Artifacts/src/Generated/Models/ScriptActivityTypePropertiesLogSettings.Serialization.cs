@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -21,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
-                writer.WriteObjectValue(LogLocationSettings);
+                writer.WriteObjectValue<LogLocationSettings>(LogLocationSettings);
             }
             writer.WriteEndObject();
         }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> List of tables in the database full schema. </summary>
+        [WirePath("tables")]
         public IReadOnlyList<SyncFullSchemaTable> Tables { get; }
         /// <summary> Last update time of the database schema. </summary>
+        [WirePath("lastUpdateTime")]
         public DateTimeOffset? LastUpdateOn { get; }
     }
 }

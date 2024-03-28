@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<AssistantThreadCreationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssistantThreadCreationOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssistantThreadCreationOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ThreadInitializationMessage>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +77,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<AssistantThreadCreationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssistantThreadCreationOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssistantThreadCreationOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +144,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssistantThreadCreationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssistantThreadCreationOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +160,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeAssistantThreadCreationOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssistantThreadCreationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssistantThreadCreationOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -179,7 +178,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AssistantThreadCreationOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlowSourceSetting>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -39,14 +38,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(DatasetParameters))
             {
                 writer.WritePropertyName("datasetParameters"u8);
-                writer.WriteObjectValue(DatasetParameters);
+                writer.WriteObjectValue<object>(DatasetParameters);
             }
             writer.WriteEndObject();
         }

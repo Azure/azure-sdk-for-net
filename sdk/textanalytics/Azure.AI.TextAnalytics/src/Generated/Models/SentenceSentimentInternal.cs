@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -23,14 +22,12 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="length"> The length of the sentence. </param>
         /// <param name="targets"> The array of sentence targets for the sentence. </param>
         /// <param name="assessments"> The array of assessments for the sentence. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="sentiment"/>, <paramref name="confidenceScores"/>, <paramref name="targets"/> or <paramref name="assessments"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="sentiment"/> or <paramref name="confidenceScores"/> is null. </exception>
         public SentenceSentimentInternal(string text, string sentiment, SentimentConfidenceScores confidenceScores, int offset, int length, IEnumerable<SentenceTarget> targets, IEnumerable<SentenceAssessment> assessments)
         {
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(sentiment, nameof(sentiment));
             Argument.AssertNotNull(confidenceScores, nameof(confidenceScores));
-            Argument.AssertNotNull(targets, nameof(targets));
-            Argument.AssertNotNull(assessments, nameof(assessments));
 
             Text = text;
             Sentiment = sentiment;

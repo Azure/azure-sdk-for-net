@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityUserInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicObservabilityUserInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicObservabilityUserInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityUserInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicObservabilityUserInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicObservabilityUserInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicObservabilityUserInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityUserInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                         return DeserializeNewRelicObservabilityUserInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicObservabilityUserInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityUserInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

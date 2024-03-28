@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHuntingBookmark>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                writer.WriteObjectValue<SecurityInsightsUserInfo>(CreatedBy, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -133,12 +132,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy);
+                writer.WriteObjectValue<SecurityInsightsUserInfo>(UpdatedBy, options);
             }
             if (Optional.IsDefined(IncidentInfo))
             {
                 writer.WritePropertyName("incidentInfo"u8);
-                writer.WriteObjectValue(IncidentInfo);
+                writer.WriteObjectValue<SecurityInsightsBookmarkIncidentInfo>(IncidentInfo, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHuntingBookmark>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -393,7 +392,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -409,7 +408,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsHuntingBookmark(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support reading '{options.Format}' format.");
             }
         }
 

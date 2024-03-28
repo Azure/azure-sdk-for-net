@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,14 +22,14 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentModelCopyToOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentModelCopyToOperationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentModelCopyToOperationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result);
+                writer.WriteObjectValue<DocumentModelDetails>(Result, options);
             }
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
@@ -68,7 +67,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<DocumentIntelligenceError>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentModelCopyToOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentModelCopyToOperationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentModelCopyToOperationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -229,7 +228,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentModelCopyToOperationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentModelCopyToOperationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +244,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentModelCopyToOperationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentModelCopyToOperationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentModelCopyToOperationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -263,7 +262,7 @@ namespace Azure.AI.DocumentIntelligence
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentModelCopyToOperationDetails>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

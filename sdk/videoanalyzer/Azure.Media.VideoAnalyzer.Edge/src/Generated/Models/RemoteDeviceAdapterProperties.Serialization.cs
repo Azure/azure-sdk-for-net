@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -22,9 +21,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target);
+            writer.WriteObjectValue<RemoteDeviceAdapterTarget>(Target);
             writer.WritePropertyName("iotHubDeviceConnection"u8);
-            writer.WriteObjectValue(IotHubDeviceConnection);
+            writer.WriteObjectValue<IotHubDeviceConnection>(IotHubDeviceConnection);
             writer.WriteEndObject();
         }
 

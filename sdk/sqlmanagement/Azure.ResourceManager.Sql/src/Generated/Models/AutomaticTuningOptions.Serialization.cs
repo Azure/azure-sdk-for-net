@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticTuningOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticTuningOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,6 +138,77 @@ namespace Azure.ResourceManager.Sql.Models
             return new AutomaticTuningOptions(desiredState, actualState, reasonCode, reasonDesc, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DesiredState), out propertyOverride);
+            if (Optional.IsDefined(DesiredState) || hasPropertyOverride)
+            {
+                builder.Append("  desiredState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DesiredState.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActualState), out propertyOverride);
+            if (Optional.IsDefined(ActualState) || hasPropertyOverride)
+            {
+                builder.Append("  actualState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ActualState.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonCode), out propertyOverride);
+            if (Optional.IsDefined(ReasonCode) || hasPropertyOverride)
+            {
+                builder.Append("  reasonCode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ReasonCode.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonDesc), out propertyOverride);
+            if (Optional.IsDefined(ReasonDesc) || hasPropertyOverride)
+            {
+                builder.Append("  reasonDesc: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ReasonDesc.Value.ToSerialString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AutomaticTuningOptions>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticTuningOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -146,8 +217,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +236,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeAutomaticTuningOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

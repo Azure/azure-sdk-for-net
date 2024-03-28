@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -133,14 +132,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmFailbackProtectedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MobilityAgentDetails))
             {
                 writer.WritePropertyName("mobilityAgentDetails"u8);
-                writer.WriteObjectValue(MobilityAgentDetails);
+                writer.WriteObjectValue<InMageRcmFailbackMobilityAgentDetails>(MobilityAgentDetails, options);
             }
             if (Optional.IsCollectionDefined(VmNics))
             {
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmFailbackNicDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiscoveredVmDetails))
             {
                 writer.WritePropertyName("discoveredVmDetails"u8);
-                writer.WriteObjectValue(DiscoveredVmDetails);
+                writer.WriteObjectValue<InMageRcmFailbackDiscoveredProtectedVmDetails>(DiscoveredVmDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastUsedPolicyId))
             {
@@ -207,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -541,7 +540,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -557,7 +556,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmFailbackReplicationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

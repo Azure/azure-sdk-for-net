@@ -13,6 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedTestSources)\DataProvider.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedTestSources)\TestHelper.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedTestSources)\RandomExtensions.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
   <ItemGroup>

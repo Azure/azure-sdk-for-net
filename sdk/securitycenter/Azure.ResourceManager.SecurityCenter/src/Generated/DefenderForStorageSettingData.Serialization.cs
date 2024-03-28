@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForStorageSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W" && Optional.IsDefined(SensitiveDataDiscoveryOperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
-                writer.WriteObjectValue(SensitiveDataDiscoveryOperationStatus);
+                writer.WriteObjectValue<ExtensionOperationStatus>(SensitiveDataDiscoveryOperationStatus, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("malwareScanning"u8);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W" && Optional.IsDefined(MalwareScanningOperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
-                writer.WriteObjectValue(MalwareScanningOperationStatus);
+                writer.WriteObjectValue<ExtensionOperationStatus>(MalwareScanningOperationStatus, options);
             }
             writer.WritePropertyName("onUpload"u8);
             writer.WriteStartObject();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForStorageSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeDefenderForStorageSettingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support reading '{options.Format}' format.");
             }
         }
 

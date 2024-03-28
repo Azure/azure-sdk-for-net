@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<MySqlFlexibleServerSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(DataEncryption))
             {
                 writer.WritePropertyName("dataEncryption"u8);
-                writer.WriteObjectValue(DataEncryption);
+                writer.WriteObjectValue<MySqlFlexibleServerDataEncryption>(DataEncryption, options);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -137,22 +136,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage);
+                writer.WriteObjectValue<MySqlFlexibleServerStorage>(Storage, options);
             }
             if (Optional.IsDefined(Backup))
             {
                 writer.WritePropertyName("backup"u8);
-                writer.WriteObjectValue(Backup);
+                writer.WriteObjectValue<MySqlFlexibleServerBackupProperties>(Backup, options);
             }
             if (Optional.IsDefined(HighAvailability))
             {
                 writer.WritePropertyName("highAvailability"u8);
-                writer.WriteObjectValue(HighAvailability);
+                writer.WriteObjectValue<MySqlFlexibleServerHighAvailability>(HighAvailability, options);
             }
             if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network);
+                writer.WriteObjectValue<MySqlFlexibleServerNetwork>(Network, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -160,19 +159,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MySqlFlexibleServersPrivateEndpointConnection>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow);
+                writer.WriteObjectValue<MySqlFlexibleServerMaintenanceWindow>(MaintenanceWindow, options);
             }
             if (Optional.IsDefined(ImportSourceProperties))
             {
                 writer.WritePropertyName("importSourceProperties"u8);
-                writer.WriteObjectValue(ImportSourceProperties);
+                writer.WriteObjectValue<ImportSourceProperties>(ImportSourceProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -523,7 +522,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -539,7 +538,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         return DeserializeMySqlFlexibleServerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support reading '{options.Format}' format.");
             }
         }
 

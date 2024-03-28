@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Storage
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountLocalUserData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountLocalUserData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountLocalUserData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +58,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in PermissionScopes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StoragePermissionScope>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +73,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in SshAuthorizedKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageSshPublicKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +121,7 @@ namespace Azure.ResourceManager.Storage
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountLocalUserData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountLocalUserData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountLocalUserData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -271,6 +273,207 @@ namespace Azure.ResourceManager.Storage
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PermissionScopes), out propertyOverride);
+            if (Optional.IsCollectionDefined(PermissionScopes) || hasPropertyOverride)
+            {
+                if (PermissionScopes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    permissionScopes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in PermissionScopes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    permissionScopes: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HomeDirectory), out propertyOverride);
+            if (Optional.IsDefined(HomeDirectory) || hasPropertyOverride)
+            {
+                builder.Append("    homeDirectory: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (HomeDirectory.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HomeDirectory}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HomeDirectory}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SshAuthorizedKeys), out propertyOverride);
+            if (Optional.IsCollectionDefined(SshAuthorizedKeys) || hasPropertyOverride)
+            {
+                if (SshAuthorizedKeys.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    sshAuthorizedKeys: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SshAuthorizedKeys)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    sshAuthorizedKeys: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sid), out propertyOverride);
+            if (Optional.IsDefined(Sid) || hasPropertyOverride)
+            {
+                builder.Append("    sid: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Sid.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Sid}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Sid}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasSharedKey), out propertyOverride);
+            if (Optional.IsDefined(HasSharedKey) || hasPropertyOverride)
+            {
+                builder.Append("    hasSharedKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = HasSharedKey.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasSshKey), out propertyOverride);
+            if (Optional.IsDefined(HasSshKey) || hasPropertyOverride)
+            {
+                builder.Append("    hasSshKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = HasSshKey.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasSshPassword), out propertyOverride);
+            if (Optional.IsDefined(HasSshPassword) || hasPropertyOverride)
+            {
+                builder.Append("    hasSshPassword: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = HasSshPassword.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<StorageAccountLocalUserData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountLocalUserData>)this).GetFormatFromOptions(options) : options.Format;
@@ -279,8 +482,10 @@ namespace Azure.ResourceManager.Storage
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountLocalUserData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountLocalUserData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -296,7 +501,7 @@ namespace Azure.ResourceManager.Storage
                         return DeserializeStorageAccountLocalUserData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountLocalUserData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountLocalUserData)} does not support reading '{options.Format}' format.");
             }
         }
 

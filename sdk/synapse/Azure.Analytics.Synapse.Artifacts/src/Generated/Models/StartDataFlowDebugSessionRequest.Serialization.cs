@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -28,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DataFlow))
             {
                 writer.WritePropertyName("dataFlow"u8);
-                writer.WriteObjectValue(DataFlow);
+                writer.WriteObjectValue<DataFlowResource>(DataFlow);
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
@@ -36,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlowResource>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -46,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DatasetResource>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -56,19 +55,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedServices)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LinkedServiceResource>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
-                writer.WriteObjectValue(Staging);
+                writer.WriteObjectValue<object>(Staging);
             }
             if (Optional.IsDefined(DebugSettings))
             {
                 writer.WritePropertyName("debugSettings"u8);
-                writer.WriteObjectValue(DebugSettings);
+                writer.WriteObjectValue<object>(DebugSettings);
             }
             if (Optional.IsDefined(IncrementalDebug))
             {
@@ -193,7 +192,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, StartDataFlowDebugSessionRequest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<StartDataFlowDebugSessionRequest>(model);
             }
             public override StartDataFlowDebugSessionRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

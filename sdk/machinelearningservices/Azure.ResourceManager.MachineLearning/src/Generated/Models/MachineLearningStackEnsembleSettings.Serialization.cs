@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningStackEnsembleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningStackEnsembleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningStackEnsembleSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningStackEnsembleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningStackEnsembleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningStackEnsembleSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningStackEnsembleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningStackEnsembleSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningStackEnsembleSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningStackEnsembleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningStackEnsembleSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

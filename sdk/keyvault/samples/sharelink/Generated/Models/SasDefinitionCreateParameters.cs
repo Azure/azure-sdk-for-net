@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Security.KeyVault.Storage;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {

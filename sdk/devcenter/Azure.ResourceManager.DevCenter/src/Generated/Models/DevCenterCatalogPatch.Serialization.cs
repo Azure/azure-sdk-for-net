@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterCatalogPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterCatalogPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterCatalogPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,12 +42,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue(GitHub);
+                writer.WriteObjectValue<DevCenterGitCatalog>(GitHub, options);
             }
             if (Optional.IsDefined(AdoGit))
             {
                 writer.WritePropertyName("adoGit"u8);
-                writer.WriteObjectValue(AdoGit);
+                writer.WriteObjectValue<DevCenterGitCatalog>(AdoGit, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterCatalogPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterCatalogPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterCatalogPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterCatalogPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterCatalogPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         return DeserializeDevCenterCatalogPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterCatalogPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterCatalogPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

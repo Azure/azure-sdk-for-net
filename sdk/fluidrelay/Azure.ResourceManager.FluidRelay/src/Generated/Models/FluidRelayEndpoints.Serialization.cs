@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.FluidRelay;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             var format = options.Format == "W" ? ((IPersistableModel<FluidRelayEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             var format = options.Format == "W" ? ((IPersistableModel<FluidRelayEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                         return DeserializeFluidRelayEndpoints(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.LabServices
             var format = options.Format == "W" ? ((IPersistableModel<LabData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,27 +66,27 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(AutoShutdownProfile))
             {
                 writer.WritePropertyName("autoShutdownProfile"u8);
-                writer.WriteObjectValue(AutoShutdownProfile);
+                writer.WriteObjectValue<LabAutoShutdownProfile>(AutoShutdownProfile, options);
             }
             if (Optional.IsDefined(ConnectionProfile))
             {
                 writer.WritePropertyName("connectionProfile"u8);
-                writer.WriteObjectValue(ConnectionProfile);
+                writer.WriteObjectValue<LabConnectionProfile>(ConnectionProfile, options);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                writer.WriteObjectValue(VirtualMachineProfile);
+                writer.WriteObjectValue<LabVirtualMachineProfile>(VirtualMachineProfile, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<LabSecurityProfile>(SecurityProfile, options);
             }
             if (Optional.IsDefined(RosterProfile))
             {
                 writer.WritePropertyName("rosterProfile"u8);
-                writer.WriteObjectValue(RosterProfile);
+                writer.WriteObjectValue<LabRosterProfile>(RosterProfile, options);
             }
             if (Optional.IsDefined(LabPlanId))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<LabNetworkProfile>(NetworkProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.LabServices
             var format = options.Format == "W" ? ((IPersistableModel<LabData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.LabServices
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.LabServices
                         return DeserializeLabData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -25,7 +25,7 @@ namespace Azure.Communication.PhoneNumbers
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                writer.WriteObjectValue<OperatorInformationOptions>(Options);
             }
             writer.WriteEndObject();
         }

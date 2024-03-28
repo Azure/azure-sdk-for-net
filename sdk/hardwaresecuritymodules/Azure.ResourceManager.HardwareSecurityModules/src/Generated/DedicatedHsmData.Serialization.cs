@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<HardwareSecurityModulesSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<NetworkProfile>(NetworkProfile, options);
             }
             if (Optional.IsDefined(ManagementNetworkProfile))
             {
                 writer.WritePropertyName("managementNetworkProfile"u8);
-                writer.WriteObjectValue(ManagementNetworkProfile);
+                writer.WriteObjectValue<NetworkProfile>(ManagementNetworkProfile, options);
             }
             if (Optional.IsDefined(StampId))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                         return DeserializeDedicatedHsmData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support reading '{options.Format}' format.");
             }
         }
 

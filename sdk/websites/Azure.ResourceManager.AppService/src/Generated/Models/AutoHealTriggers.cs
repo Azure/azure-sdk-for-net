@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -74,16 +73,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> A rule based on total requests. </summary>
+        [WirePath("requests")]
         public RequestsBasedTrigger Requests { get; set; }
         /// <summary> A rule based on private bytes. </summary>
+        [WirePath("privateBytesInKB")]
         public int? PrivateBytesInKB { get; set; }
         /// <summary> A rule based on status codes. </summary>
+        [WirePath("statusCodes")]
         public IList<StatusCodesBasedTrigger> StatusCodes { get; }
         /// <summary> A rule based on request execution time. </summary>
+        [WirePath("slowRequests")]
         public SlowRequestsBasedTrigger SlowRequests { get; set; }
         /// <summary> A rule based on multiple Slow Requests Rule with path. </summary>
+        [WirePath("slowRequestsWithPath")]
         public IList<SlowRequestsBasedTrigger> SlowRequestsWithPath { get; }
         /// <summary> A rule based on status codes ranges. </summary>
+        [WirePath("statusCodesRange")]
         public IList<StatusCodesRangeBasedTrigger> StatusCodesRange { get; }
     }
 }

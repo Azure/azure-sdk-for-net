@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointCloudTieringStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,32 +54,32 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(SpaceSavings))
             {
                 writer.WritePropertyName("spaceSavings"u8);
-                writer.WriteObjectValue(SpaceSavings);
+                writer.WriteObjectValue<CloudTieringSpaceSavings>(SpaceSavings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CachePerformance))
             {
                 writer.WritePropertyName("cachePerformance"u8);
-                writer.WriteObjectValue(CachePerformance);
+                writer.WriteObjectValue<CloudTieringCachePerformance>(CachePerformance, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FilesNotTiering))
             {
                 writer.WritePropertyName("filesNotTiering"u8);
-                writer.WriteObjectValue(FilesNotTiering);
+                writer.WriteObjectValue<CloudTieringFilesNotTiering>(FilesNotTiering, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VolumeFreeSpacePolicyStatus))
             {
                 writer.WritePropertyName("volumeFreeSpacePolicyStatus"u8);
-                writer.WriteObjectValue(VolumeFreeSpacePolicyStatus);
+                writer.WriteObjectValue<CloudTieringVolumeFreeSpacePolicyStatus>(VolumeFreeSpacePolicyStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DatePolicyStatus))
             {
                 writer.WritePropertyName("datePolicyStatus"u8);
-                writer.WriteObjectValue(DatePolicyStatus);
+                writer.WriteObjectValue<CloudTieringDatePolicyStatus>(DatePolicyStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LowDiskMode))
             {
                 writer.WritePropertyName("lowDiskMode"u8);
-                writer.WriteObjectValue(LowDiskMode);
+                writer.WriteObjectValue<CloudTieringLowDiskMode>(LowDiskMode, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointCloudTieringStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -264,7 +263,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -280,7 +279,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeServerEndpointCloudTieringStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

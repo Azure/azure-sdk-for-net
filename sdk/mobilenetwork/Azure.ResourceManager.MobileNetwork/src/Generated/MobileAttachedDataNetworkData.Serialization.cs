@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileAttachedDataNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("userPlaneDataInterface"u8);
-            writer.WriteObjectValue(UserPlaneDataInterface);
+            writer.WriteObjectValue<MobileNetworkInterfaceProperties>(UserPlaneDataInterface, options);
             writer.WritePropertyName("dnsAddresses"u8);
             writer.WriteStartArray();
             foreach (var item in DnsAddresses)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(NaptConfiguration))
             {
                 writer.WritePropertyName("naptConfiguration"u8);
-                writer.WriteObjectValue(NaptConfiguration);
+                writer.WriteObjectValue<NaptConfiguration>(NaptConfiguration, options);
             }
             if (Optional.IsCollectionDefined(UserEquipmentAddressPoolPrefix))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileAttachedDataNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         return DeserializeMobileAttachedDataNetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

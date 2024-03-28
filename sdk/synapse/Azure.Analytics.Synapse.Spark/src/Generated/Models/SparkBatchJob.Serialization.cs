@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Analytics.Synapse.Spark;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {

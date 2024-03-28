@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,17 +23,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
-                writer.WriteObjectValue(Serializer);
+                writer.WriteObjectValue<object>(Serializer);
             }
             if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
-                writer.WriteObjectValue(Deserializer);
+                writer.WriteObjectValue<object>(Deserializer);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -63,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, DatasetStorageFormat model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DatasetStorageFormat>(model);
             }
             public override DatasetStorageFormat Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingPlanInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal);
+                writer.WriteObjectValue<BillingBenefitsPrice>(PricingCurrencyTotal, options);
             }
             if (Optional.IsDefined(StartOn))
             {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteStartArray();
                 foreach (var item in Transactions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SavingsPlanOrderPaymentDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingPlanInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeBillingPlanInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingPlanInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceAadRegistration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceAadRegistration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,6 +151,153 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OpenIdIssuer), out propertyOverride);
+            if (Optional.IsDefined(OpenIdIssuer) || hasPropertyOverride)
+            {
+                builder.Append("  openIdIssuer: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (OpenIdIssuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OpenIdIssuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OpenIdIssuer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
+            if (Optional.IsDefined(ClientId) || hasPropertyOverride)
+            {
+                builder.Append("  clientId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretSettingName), out propertyOverride);
+            if (Optional.IsDefined(ClientSecretSettingName) || hasPropertyOverride)
+            {
+                builder.Append("  clientSecretSettingName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ClientSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientSecretSettingName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretCertificateThumbprintString), out propertyOverride);
+            if (Optional.IsDefined(ClientSecretCertificateThumbprintString) || hasPropertyOverride)
+            {
+                builder.Append("  clientSecretCertificateThumbprint: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ClientSecretCertificateThumbprintString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientSecretCertificateThumbprintString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientSecretCertificateThumbprintString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretCertificateSubjectAlternativeName), out propertyOverride);
+            if (Optional.IsDefined(ClientSecretCertificateSubjectAlternativeName) || hasPropertyOverride)
+            {
+                builder.Append("  clientSecretCertificateSubjectAlternativeName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ClientSecretCertificateSubjectAlternativeName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientSecretCertificateSubjectAlternativeName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientSecretCertificateSubjectAlternativeName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretCertificateIssuer), out propertyOverride);
+            if (Optional.IsDefined(ClientSecretCertificateIssuer) || hasPropertyOverride)
+            {
+                builder.Append("  clientSecretCertificateIssuer: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ClientSecretCertificateIssuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientSecretCertificateIssuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientSecretCertificateIssuer}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AppServiceAadRegistration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceAadRegistration>)this).GetFormatFromOptions(options) : options.Format;
@@ -159,8 +306,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +325,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceAadRegistration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support reading '{options.Format}' format.");
             }
         }
 

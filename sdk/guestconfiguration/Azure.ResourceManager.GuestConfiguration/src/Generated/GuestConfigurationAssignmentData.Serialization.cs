@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.GuestConfiguration
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<GuestConfigurationAssignmentProperties>(Properties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                         return DeserializeGuestConfigurationAssignmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

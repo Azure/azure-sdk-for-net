@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication.ShortCodes;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
@@ -68,7 +67,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in UseCases)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UseCase>(item);
                 }
                 writer.WriteEndArray();
             }

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,12 +52,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteObjectValue(Certificate);
+                writer.WriteObjectValue<ClusterCertificateDescription>(Certificate, options);
             }
             if (Optional.IsDefined(CertificateCommonNames))
             {
                 writer.WritePropertyName("certificateCommonNames"u8);
-                writer.WriteObjectValue(CertificateCommonNames);
+                writer.WriteObjectValue<ClusterServerCertificateCommonNames>(CertificateCommonNames, options);
             }
             if (Optional.IsCollectionDefined(ClientCertificateCommonNames))
             {
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in ClientCertificateCommonNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterClientCertificateCommonName>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in ClientCertificateThumbprints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterClientCertificateThumbprint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in FabricSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SettingsSectionDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in NodeTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterNodeTypeDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,17 +117,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(ReverseProxyCertificate))
             {
                 writer.WritePropertyName("reverseProxyCertificate"u8);
-                writer.WriteObjectValue(ReverseProxyCertificate);
+                writer.WriteObjectValue<ClusterCertificateDescription>(ReverseProxyCertificate, options);
             }
             if (Optional.IsDefined(UpgradeDescription))
             {
                 writer.WritePropertyName("upgradeDescription"u8);
-                writer.WriteObjectValue(UpgradeDescription);
+                writer.WriteObjectValue<ClusterUpgradePolicy>(UpgradeDescription, options);
             }
             if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
             {
                 writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
-                writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy);
+                writer.WriteObjectValue<ApplicationTypeVersionsCleanupPolicy>(ApplicationTypeVersionsCleanupPolicy, options);
             }
             if (Optional.IsDefined(UpgradeMode))
             {
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Notifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterNotification>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -209,7 +208,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -554,7 +553,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -570,7 +569,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeServiceFabricClusterPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricClusterPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

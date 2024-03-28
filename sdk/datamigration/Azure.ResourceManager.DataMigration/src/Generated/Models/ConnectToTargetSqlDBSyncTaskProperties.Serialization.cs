@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlDBSyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBSyncTaskProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBSyncTaskProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
+                writer.WriteObjectValue<ConnectToTargetSqlDBSyncTaskInput>(Input, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Output))
             {
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Output)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectToTargetSqlDBTaskOutput>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ODataError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Commands)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CommandProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlDBSyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBSyncTaskProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBSyncTaskProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -234,7 +233,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetSqlDBSyncTaskProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToTargetSqlDBSyncTaskProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectToTargetSqlDBSyncTaskProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetSqlDBSyncTaskProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToTargetSqlDBSyncTaskProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

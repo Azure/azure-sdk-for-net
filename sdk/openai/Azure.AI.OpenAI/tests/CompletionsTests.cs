@@ -99,7 +99,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task AdvancedCompletionsOptions(Service serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.Completions);
             string promptText = "Are bananas especially radioactive?";
             string suffix = "<end>";
             var requestOptions = new CompletionsOptions()
@@ -111,13 +111,13 @@ namespace Azure.AI.OpenAI.Tests
                 User = "AzureSDKOpenAITests",
                 LogProbabilityCount = 1,
                 MaxTokens = 512,
-                TokenSelectionBiases =
-                {
-                    [25996] = -100, // ' banana', with the leading space
-                    [35484] = -100, // ' bananas', with the leading space
-                    [40058] = -100, // ' Banana'
-                    [15991] = -100, // 'anas'
-                },
+                //TokenSelectionBiases =
+                //{
+                //    [25996] = -100, // ' banana', with the leading space
+                //    [35484] = -100, // ' bananas', with the leading space
+                //    [40058] = -100, // ' Banana'
+                //    [15991] = -100, // 'anas'
+                //},
                 Suffix = suffix,
             };
             Response<Completions> response = await client.GetCompletionsAsync(requestOptions);

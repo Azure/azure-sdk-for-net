@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationContentSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationContentSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationContentSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Hash))
             {
                 writer.WritePropertyName("hash"u8);
-                writer.WriteObjectValue(Hash);
+                writer.WriteObjectValue<AutomationContentHash>(Hash, options);
             }
             if (Optional.IsDefined(SourceType))
             {
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationContentSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationContentSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationContentSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationContentSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationContentSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationContentSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationContentSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationContentSource)} does not support reading '{options.Format}' format.");
             }
         }
 

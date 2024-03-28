@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> A function alias, used when the type of the item is Function. </summary>
+        [WirePath("functionAlias")]
         public string FunctionAlias { get; set; }
     }
 }

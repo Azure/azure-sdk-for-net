@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.BillingBenefits
             var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<BillingBenefitsSku>(Sku, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                writer.WriteObjectValue<BillingBenefitsAppliedScopeProperties>(AppliedScopeProperties, options);
             }
             if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue(Commitment);
+                writer.WriteObjectValue<BillingBenefitsCommitment>(Commitment, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.BillingBenefits
             var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.BillingBenefits
                         return DeserializeBillingBenefitsSavingsPlanOrderAliasData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderAliasData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,8 +15,8 @@ namespace Azure.AI.Translation.Text
 {
     /// <summary> The Translator service client. </summary>
     // Methods are replaced by the version where clientTraceId parameter is of type System.Guid
-    [CodeGenSuppress("TranslateAsync", typeof(IEnumerable<string>), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
-    [CodeGenSuppress("Translate", typeof(IEnumerable<string>), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("TranslateAsync", typeof(IEnumerable<string>), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(TextType?), typeof(string), typeof(ProfanityAction?), typeof(ProfanityMarker?), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("Translate", typeof(IEnumerable<string>), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(string), typeof(TextType?), typeof(string), typeof(ProfanityAction?), typeof(ProfanityMarker?), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
     [CodeGenSuppress("TranslateAsync", typeof(IEnumerable<string>), typeof(RequestContent), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
     [CodeGenSuppress("Translate", typeof(IEnumerable<string>), typeof(RequestContent), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
     [CodeGenSuppress("TransliterateAsync", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<InputTextItem>), typeof(string), typeof(CancellationToken))]
@@ -137,6 +137,21 @@ namespace Azure.AI.Translation.Text
             {
                 this._endpoint = new Uri(endpoint, PLATFORM_PATH);
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
+        /// </summary>
+        /// <param name="credential">Cognitive Services Token</param>
+        /// <param name="resourceId">The value is the Resource ID for your Translator resource instance.</param>
+        /// <param name="region">Azure Resource Region</param>
+        /// <param name="options">Translate Client Options</param>
+        public TextTranslationClient(TokenCredential credential, string resourceId, string region = DEFAULT_REGION, TextTranslationClientOptions options = default) : this(DEFAULT_ENDPOINT, options)
+        {
+            var policy = new TextTranslationAADAuthenticationPolicy(credential, TOKEN_SCOPE, region, resourceId);
+            options = options ?? new TextTranslationClientOptions();
+
+            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }
 
         /// <summary> Translate Text. </summary>

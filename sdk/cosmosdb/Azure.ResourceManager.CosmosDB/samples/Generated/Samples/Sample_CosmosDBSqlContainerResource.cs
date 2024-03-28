@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
@@ -23,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_CosmosDBSqlContainerGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlContainerGet.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlContainerGet.json
             // this example is just showing the usage of "SqlResources_GetSqlContainer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CosmosDBSqlContainerCreateUpdate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlContainerCreateUpdate.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlContainerCreateUpdate.json
             // this example is just showing the usage of "SqlResources_CreateUpdateSqlContainer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,6 +131,14 @@ Paths =
             {
 new CosmosDBClientEncryptionIncludedPath("/path","keyId","Deterministic","AEAD_AES_256_CBC_HMAC_SHA256")
             }, 2),
+                ComputedProperties =
+{
+new ComputedProperty()
+{
+Name = "cp_lowerName",
+Query = "SELECT VALUE LOWER(c.name) FROM c",
+}
+},
             })
             {
                 Options = new CosmosDBCreateUpdateConfig(),
@@ -156,7 +161,7 @@ new CosmosDBClientEncryptionIncludedPath("/path","keyId","Deterministic","AEAD_A
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CosmosDBSqlContainerRestore()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlContainerRestore.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlContainerRestore.json
             // this example is just showing the usage of "SqlResources_CreateUpdateSqlContainer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,6 +186,7 @@ new CosmosDBClientEncryptionIncludedPath("/path","keyId","Deterministic","AEAD_A
                 {
                     RestoreSource = "/subscriptions/subid/providers/Microsoft.DocumentDB/locations/WestUS/restorableDatabaseAccounts/restorableDatabaseAccountId",
                     RestoreTimestampInUtc = DateTimeOffset.Parse("2022-07-20T18:28:00Z"),
+                    RestoreWithTtlDisabled = true,
                 },
                 CreateMode = CosmosDBAccountCreateMode.Restore,
             })
@@ -205,7 +211,7 @@ new CosmosDBClientEncryptionIncludedPath("/path","keyId","Deterministic","AEAD_A
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CosmosDBSqlMaterializedViewCreateUpdate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlMaterializedViewCreateUpdate.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlMaterializedViewCreateUpdate.json
             // this example is just showing the usage of "SqlResources_CreateUpdateSqlContainer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -286,7 +292,7 @@ Kind = CosmosDBIndexKind.Range,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_CosmosDBSqlContainerDelete()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlContainerDelete.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlContainerDelete.json
             // this example is just showing the usage of "SqlResources_DeleteSqlContainer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -315,7 +321,7 @@ Kind = CosmosDBIndexKind.Range,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSqlContainerPartitionMerge_CosmosDBSqlContainerPartitionMerge()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlContainerPartitionMerge.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlContainerPartitionMerge.json
             // this example is just showing the usage of "SqlResources_ListSqlContainerPartitionMerge" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -349,7 +355,7 @@ Kind = CosmosDBIndexKind.Range,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RetrieveContinuousBackupInformation_CosmosDBSqlContainerBackupInformation()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlContainerBackupInformation.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlContainerBackupInformation.json
             // this example is just showing the usage of "SqlResources_RetrieveContinuousBackupInformation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

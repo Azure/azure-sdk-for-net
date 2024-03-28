@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                writer.WriteObjectValue<NetworkConfiguration>(NetworkConfiguration, options);
             }
             if (Optional.IsDefined(DatabaseType))
             {
@@ -40,16 +39,16 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
             writer.WritePropertyName("virtualMachineConfiguration"u8);
-            writer.WriteObjectValue(VirtualMachineConfiguration);
+            writer.WriteObjectValue<SapVirtualMachineConfiguration>(VirtualMachineConfiguration, options);
             if (Optional.IsDefined(DBDiskConfiguration))
             {
                 writer.WritePropertyName("dbDiskConfiguration"u8);
-                writer.WriteObjectValue(DBDiskConfiguration);
+                writer.WriteObjectValue<DiskConfiguration>(DBDiskConfiguration, options);
             }
             if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
-                writer.WriteObjectValue(CustomResourceNames);
+                writer.WriteObjectValue<SingleServerCustomResourceNames>(CustomResourceNames, options);
             }
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +203,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSingleServerConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

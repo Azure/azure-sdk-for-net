@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The name of the gremlin database available for restore. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> The names of the graphs available for restore. </summary>
+        [WirePath("graphNames")]
         public IList<string> GraphNames { get; }
     }
 }

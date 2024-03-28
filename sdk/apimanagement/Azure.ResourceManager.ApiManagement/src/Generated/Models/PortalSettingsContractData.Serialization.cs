@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,12 +62,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(IsSubscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue(IsSubscriptions);
+                writer.WriteObjectValue<SubscriptionDelegationSettingProperties>(IsSubscriptions, options);
             }
             if (Optional.IsDefined(IsUserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue(IsUserRegistration);
+                writer.WriteObjectValue<RegistrationDelegationSettingProperties>(IsUserRegistration, options);
             }
             if (Optional.IsDefined(IsRedirectEnabled))
             {
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService"u8);
-                writer.WriteObjectValue(TermsOfService);
+                writer.WriteObjectValue<TermsOfServiceProperties>(TermsOfService, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +263,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializePortalSettingsContractData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support reading '{options.Format}' format.");
             }
         }
 

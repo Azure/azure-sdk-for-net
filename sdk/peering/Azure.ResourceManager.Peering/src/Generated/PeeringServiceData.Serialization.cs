@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Peering
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServiceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<PeeringServiceSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Peering
             if (Optional.IsDefined(LogAnalyticsWorkspaceProperties))
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceProperties"u8);
-                writer.WriteObjectValue(LogAnalyticsWorkspaceProperties);
+                writer.WriteObjectValue<PeeringLogAnalyticsWorkspaceProperties>(LogAnalyticsWorkspaceProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Peering
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServiceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Peering
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Peering
                         return DeserializePeeringServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 

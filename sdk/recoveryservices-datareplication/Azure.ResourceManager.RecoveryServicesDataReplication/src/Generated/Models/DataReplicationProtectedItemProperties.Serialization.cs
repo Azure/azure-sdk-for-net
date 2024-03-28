@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentJob))
             {
                 writer.WritePropertyName("currentJob"u8);
-                writer.WriteObjectValue(CurrentJob);
+                writer.WriteObjectValue<ProtectedItemJobProperties>(CurrentJob, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AllowedJobs))
             {
@@ -144,17 +143,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (options.Format != "W" && Optional.IsDefined(LastFailedEnableProtectionJob))
             {
                 writer.WritePropertyName("lastFailedEnableProtectionJob"u8);
-                writer.WriteObjectValue(LastFailedEnableProtectionJob);
+                writer.WriteObjectValue<ProtectedItemJobProperties>(LastFailedEnableProtectionJob, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastFailedPlannedFailoverJob))
             {
                 writer.WritePropertyName("lastFailedPlannedFailoverJob"u8);
-                writer.WriteObjectValue(LastFailedPlannedFailoverJob);
+                writer.WriteObjectValue<ProtectedItemJobProperties>(LastFailedPlannedFailoverJob, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastTestFailoverJob))
             {
                 writer.WritePropertyName("lastTestFailoverJob"u8);
-                writer.WriteObjectValue(LastTestFailoverJob);
+                writer.WriteObjectValue<ProtectedItemJobProperties>(LastTestFailoverJob, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReplicationHealth))
             {
@@ -167,12 +166,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataReplicationHealthErrorInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties);
+            writer.WriteObjectValue<ProtectedItemModelCustomProperties>(CustomProperties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -507,7 +506,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -523,7 +522,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDataReplicationProtectedItemProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

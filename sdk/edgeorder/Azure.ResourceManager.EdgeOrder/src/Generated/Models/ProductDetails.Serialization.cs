@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -23,17 +22,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayInfo))
             {
                 writer.WritePropertyName("displayInfo"u8);
-                writer.WriteObjectValue(DisplayInfo);
+                writer.WriteObjectValue<ProductDisplayInfo>(DisplayInfo, options);
             }
             writer.WritePropertyName("hierarchyInformation"u8);
-            writer.WriteObjectValue(HierarchyInformation);
+            writer.WriteObjectValue<HierarchyInformation>(HierarchyInformation, options);
             if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in DeviceDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdgeOrderProductDeviceDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProductDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +186,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeProductDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProductDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

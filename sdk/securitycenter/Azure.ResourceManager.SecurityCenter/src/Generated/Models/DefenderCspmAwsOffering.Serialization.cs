@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -23,39 +22,39 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderCspmAwsOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderCspmAwsOffering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(VmScanners))
             {
                 writer.WritePropertyName("vmScanners"u8);
-                writer.WriteObjectValue(VmScanners);
+                writer.WriteObjectValue<DefenderCspmAwsOfferingVmScanners>(VmScanners, options);
             }
             if (Optional.IsDefined(DataSensitivityDiscovery))
             {
                 writer.WritePropertyName("dataSensitivityDiscovery"u8);
-                writer.WriteObjectValue(DataSensitivityDiscovery);
+                writer.WriteObjectValue<DefenderCspmAwsOfferingDataSensitivityDiscovery>(DataSensitivityDiscovery, options);
             }
             if (Optional.IsDefined(DatabasesDspm))
             {
                 writer.WritePropertyName("databasesDspm"u8);
-                writer.WriteObjectValue(DatabasesDspm);
+                writer.WriteObjectValue<DefenderCspmAwsOfferingDatabasesDspm>(DatabasesDspm, options);
             }
             if (Optional.IsDefined(Ciem))
             {
                 writer.WritePropertyName("ciem"u8);
-                writer.WriteObjectValue(Ciem);
+                writer.WriteObjectValue<DefenderCspmAwsOfferingCiem>(Ciem, options);
             }
             if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
-                writer.WriteObjectValue(MdcContainersImageAssessment);
+                writer.WriteObjectValue<DefenderCspmAwsOfferingMdcContainersImageAssessment>(MdcContainersImageAssessment, options);
             }
             if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
-                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
+                writer.WriteObjectValue<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>(MdcContainersAgentlessDiscoveryK8S, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderCspmAwsOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderCspmAwsOffering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -205,7 +204,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderCspmAwsOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderCspmAwsOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +220,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDefenderCspmAwsOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderCspmAwsOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderCspmAwsOffering)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -90,8 +90,6 @@ namespace Azure.Maps.Search.Tests
                 new FuzzySearchQuery("pizza", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04) }),
             });
 
-            // delay 400 ms for the task to complete
-            await Task.Delay(400);
             var fuzzySearchBatchResp = operation.WaitForCompletion();
 
             Assert.AreEqual("CAFE_PUB", fuzzySearchBatchResp.Value.Results[0].Results[0].PointOfInterest.Classifications[0].Code);

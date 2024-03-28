@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -18,19 +17,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            writer.WriteObjectValue<EndpointBase>(Endpoint);
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image);
+                writer.WriteObjectValue<ImageProperties>(Image);
             }
             if (Optional.IsDefined(SamplingOptions))
             {
                 writer.WritePropertyName("samplingOptions"u8);
-                writer.WriteObjectValue(SamplingOptions);
+                writer.WriteObjectValue<SamplingOptions>(SamplingOptions);
             }
             writer.WritePropertyName("operation"u8);
-            writer.WriteObjectValue(Operation);
+            writer.WriteObjectValue<SpatialAnalysisOperationBase>(Operation);
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
@@ -39,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NodeInput>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

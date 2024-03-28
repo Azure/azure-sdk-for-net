@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigServerSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigServerSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigServerSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(GitProperty))
             {
                 writer.WritePropertyName("gitProperty"u8);
-                writer.WriteObjectValue(GitProperty);
+                writer.WriteObjectValue<AppPlatformConfigServerGitProperty>(GitProperty, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigServerSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigServerSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigServerSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigServerSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigServerSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeConfigServerSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigServerSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigServerSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

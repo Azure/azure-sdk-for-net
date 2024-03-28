@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet);
+                writer.WriteObjectValue<SubnetData>(Subnet, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
             {
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkInterfaceData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkServiceConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkPrivateLinkServiceConnection>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ManualPrivateLinkServiceConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkPrivateLinkServiceConnection>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in CustomDnsConfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CustomDnsConfigProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationSecurityGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationSecurityGroupData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateEndpointIPConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -424,7 +423,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -440,7 +439,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializePrivateEndpointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointData)} does not support reading '{options.Format}' format.");
             }
         }
 

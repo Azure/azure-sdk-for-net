@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableApiManagementServiceSkuResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableApiManagementServiceSkuResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableApiManagementServiceSkuResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,12 +34,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ResourceSku>(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<ApiManagementResourceSkuCapacity>(Capacity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableApiManagementServiceSkuResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableApiManagementServiceSkuResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableApiManagementServiceSkuResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableApiManagementServiceSkuResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableApiManagementServiceSkuResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeAvailableApiManagementServiceSkuResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableApiManagementServiceSkuResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableApiManagementServiceSkuResult)} does not support reading '{options.Format}' format.");
             }
         }
 

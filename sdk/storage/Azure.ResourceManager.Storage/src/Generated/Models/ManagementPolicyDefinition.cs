@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -73,8 +72,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> An object that defines the action set. </summary>
+        [WirePath("actions")]
         public ManagementPolicyAction Actions { get; set; }
         /// <summary> An object that defines the filter set. </summary>
+        [WirePath("filters")]
         public ManagementPolicyFilter Filters { get; set; }
     }
 }

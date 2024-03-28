@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ArcScVmm
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScVmmServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScVmmServerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ArcScVmm
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<VmmServerPropertiesCredentials>(Credentials, options);
             }
             writer.WritePropertyName("fqdn"u8);
             writer.WriteStringValue(Fqdn);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ArcScVmm
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScVmmServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScVmmServerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScVmmServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScVmmServerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ArcScVmm
                         return DeserializeScVmmServerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScVmmServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScVmmServerData)} does not support reading '{options.Format}' format.");
             }
         }
 

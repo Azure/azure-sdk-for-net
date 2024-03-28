@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The name of the API Key. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The read access rights of this API Key. </summary>
+        [WirePath("linkedReadProperties")]
         public IList<string> LinkedReadProperties { get; }
         /// <summary> The write access rights of this API Key. </summary>
+        [WirePath("linkedWriteProperties")]
         public IList<string> LinkedWriteProperties { get; }
     }
 }

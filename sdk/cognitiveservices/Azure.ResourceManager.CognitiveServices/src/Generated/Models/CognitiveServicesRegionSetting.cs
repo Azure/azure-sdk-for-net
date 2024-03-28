@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Name of the region. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> A value for priority or weighted routing methods. </summary>
+        [WirePath("value")]
         public float? Value { get; set; }
         /// <summary> Maps the region to the regional custom subdomain. </summary>
+        [WirePath("customsubdomain")]
         public string Customsubdomain { get; set; }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -24,17 +23,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(SmartDetectionCondition))
             {
                 writer.WritePropertyName("smartDetectionCondition"u8);
-                writer.WriteObjectValue(SmartDetectionCondition);
+                writer.WriteObjectValue<SmartDetectionCondition>(SmartDetectionCondition);
             }
             if (Optional.IsDefined(HardThresholdCondition))
             {
                 writer.WritePropertyName("hardThresholdCondition"u8);
-                writer.WriteObjectValue(HardThresholdCondition);
+                writer.WriteObjectValue<HardThresholdCondition>(HardThresholdCondition);
             }
             if (Optional.IsDefined(ChangeThresholdCondition))
             {
                 writer.WritePropertyName("changeThresholdCondition"u8);
-                writer.WriteObjectValue(ChangeThresholdCondition);
+                writer.WriteObjectValue<ChangeThresholdCondition>(ChangeThresholdCondition);
             }
             writer.WriteEndObject();
         }

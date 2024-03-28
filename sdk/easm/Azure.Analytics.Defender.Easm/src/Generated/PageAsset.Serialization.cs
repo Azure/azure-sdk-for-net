@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,7 +22,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<PageAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PageAsset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PageAsset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +47,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in IpAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +57,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Successful)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +67,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in HttpResponseCodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedInteger>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +77,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in HttpResponseMessages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +87,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in ResponseTimes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedLong>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +97,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Frames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +107,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Windows)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +117,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in NonHtmlFrames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +127,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in UndirectedContent)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +137,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in ContentTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -148,7 +147,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in ContentLengths)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedLong>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -158,7 +157,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in WindowNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -168,7 +167,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Charsets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -178,7 +177,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Titles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -188,7 +187,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Languages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -198,7 +197,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in ResponseHeaders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -208,7 +207,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Cookies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CookieDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -218,7 +217,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in WebComponents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebComponent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -228,7 +227,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Attributes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AttributeDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -238,7 +237,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in AssetSecurityPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AssetSecurityPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -248,7 +247,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in ResponseBodyMinhashSignatures)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedIntegers>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -258,7 +257,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in FullDomMinhashSignatures)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedIntegers>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -268,7 +267,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in ResponseBodyHashSignatures)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -278,7 +277,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -288,7 +287,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in SslCerts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SslCertAsset>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -298,7 +297,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SourceDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -320,7 +319,7 @@ namespace Azure.Analytics.Defender.Easm
             if (Optional.IsDefined(Cause))
             {
                 writer.WritePropertyName("cause"u8);
-                writer.WriteObjectValue(Cause);
+                writer.WriteObjectValue<PageCause>(Cause, options);
             }
             if (Optional.IsDefined(Referrer))
             {
@@ -333,7 +332,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in RedirectUrls)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -348,7 +347,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in FinalUrls)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -358,7 +357,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in FinalResponseCodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedInteger>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -368,7 +367,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in ParkedPage)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -378,7 +377,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in ResourceUrls)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceUri>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -388,7 +387,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Guids)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GuidPair>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -398,7 +397,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in FinalIpAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -408,7 +407,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Asns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedLong>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -418,7 +417,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in IpBlocks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IpBlock>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -428,7 +427,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in FinalAsns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedLong>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -438,7 +437,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in FinalIpBlocks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IpBlock>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -448,19 +447,19 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in ResponseBodies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DomainAsset))
             {
                 writer.WritePropertyName("domainAsset"u8);
-                writer.WriteObjectValue(DomainAsset);
+                writer.WriteObjectValue<DomainAsset>(DomainAsset, options);
             }
             if (Optional.IsDefined(RootUrl))
             {
                 writer.WritePropertyName("rootUrl"u8);
-                writer.WriteObjectValue(RootUrl);
+                writer.WriteObjectValue<ObservedBoolean>(RootUrl, options);
             }
             if (Optional.IsDefined(IsRootUrl))
             {
@@ -473,7 +472,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Location)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedLocation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -483,7 +482,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Services)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AssetService>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -498,7 +497,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Cnames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -508,7 +507,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Cdns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -528,7 +527,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in SslServerConfig)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SslServerConfig>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -538,7 +537,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in GdprAssetSecurityPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AssetSecurityPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -548,7 +547,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Ipv4)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -558,7 +557,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Ipv6)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -585,7 +584,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<PageAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PageAsset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PageAsset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -1500,7 +1499,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PageAsset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PageAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -1516,7 +1515,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializePageAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PageAsset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PageAsset)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -1534,7 +1533,7 @@ namespace Azure.Analytics.Defender.Easm
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<PageAsset>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

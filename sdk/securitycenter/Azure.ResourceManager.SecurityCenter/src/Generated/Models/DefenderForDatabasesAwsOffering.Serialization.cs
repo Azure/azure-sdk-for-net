@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -23,24 +22,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOffering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
-                writer.WriteObjectValue(ArcAutoProvisioning);
+                writer.WriteObjectValue<DefenderForDatabasesAwsOfferingArcAutoProvisioning>(ArcAutoProvisioning, options);
             }
             if (Optional.IsDefined(Rds))
             {
                 writer.WritePropertyName("rds"u8);
-                writer.WriteObjectValue(Rds);
+                writer.WriteObjectValue<DefenderForDatabasesAwsOfferingRds>(Rds, options);
             }
             if (Optional.IsDefined(DatabasesDspm))
             {
                 writer.WritePropertyName("databasesDspm"u8);
-                writer.WriteObjectValue(DatabasesDspm);
+                writer.WriteObjectValue<DefenderFoDatabasesAwsOfferingDatabasesDspm>(DatabasesDspm, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOffering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDefenderForDatabasesAwsOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOffering)} does not support reading '{options.Format}' format.");
             }
         }
 

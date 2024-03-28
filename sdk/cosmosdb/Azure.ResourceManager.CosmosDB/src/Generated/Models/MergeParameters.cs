@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Specifies whether the operation is a real merge operation or a simulation. </summary>
+        [WirePath("isDryRun")]
         public bool? IsDryRun { get; set; }
     }
 }

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -23,17 +22,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderItemAddressProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderItemAddressProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                writer.WriteObjectValue<EdgeOrderShippingAddress>(ShippingAddress, options);
             }
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails);
+            writer.WriteObjectValue<EdgeOrderAddressContactDetails>(ContactDetails, options);
             if (options.Format != "W" && Optional.IsDefined(AddressValidationStatus))
             {
                 writer.WritePropertyName("addressValidationStatus"u8);
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemAddressProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderItemAddressProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderItemAddressProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemAddressProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderItemAddressProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeEdgeOrderItemAddressProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemAddressProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderItemAddressProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

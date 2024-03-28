@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.MixedReality.Common;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
@@ -17,9 +18,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         {
             writer.WriteStartObject();
             writer.WritePropertyName("rotation"u8);
-            writer.WriteObjectValue(RotationWrapper);
+            writer.WriteObjectValue<Quaternion>(RotationWrapper);
             writer.WritePropertyName("translation"u8);
-            writer.WriteObjectValue(TranslationWrapper);
+            writer.WriteObjectValue<Vector3>(TranslationWrapper);
             writer.WriteEndObject();
         }
 

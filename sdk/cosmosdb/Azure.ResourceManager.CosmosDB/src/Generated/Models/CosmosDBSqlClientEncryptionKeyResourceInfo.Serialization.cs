@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlClientEncryptionKeyResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(KeyWrapMetadata))
             {
                 writer.WritePropertyName("keyWrapMetadata"u8);
-                writer.WriteObjectValue(KeyWrapMetadata);
+                writer.WriteObjectValue<CosmosDBKeyWrapMetadata>(KeyWrapMetadata, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlClientEncryptionKeyResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,6 +130,93 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CosmosDBSqlClientEncryptionKeyResourceInfo(id, encryptionAlgorithm, wrappedDataEncryptionKey, keyWrapMetadata, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionAlgorithm), out propertyOverride);
+            if (Optional.IsDefined(EncryptionAlgorithm) || hasPropertyOverride)
+            {
+                builder.Append("  encryptionAlgorithm: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (EncryptionAlgorithm.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EncryptionAlgorithm}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EncryptionAlgorithm}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WrappedDataEncryptionKey), out propertyOverride);
+            if (Optional.IsDefined(WrappedDataEncryptionKey) || hasPropertyOverride)
+            {
+                builder.Append("  wrappedDataEncryptionKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{WrappedDataEncryptionKey.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyWrapMetadata), out propertyOverride);
+            if (Optional.IsDefined(KeyWrapMetadata) || hasPropertyOverride)
+            {
+                builder.Append("  keyWrapMetadata: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, KeyWrapMetadata, options, 2, false, "  keyWrapMetadata: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CosmosDBSqlClientEncryptionKeyResourceInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlClientEncryptionKeyResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -138,8 +225,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +244,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBSqlClientEncryptionKeyResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBSqlClientEncryptionKeyResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

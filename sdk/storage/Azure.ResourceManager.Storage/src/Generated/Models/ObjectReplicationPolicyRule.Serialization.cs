@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ObjectReplicationPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters);
+                writer.WriteObjectValue<ObjectReplicationPolicyFilter>(Filters, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ObjectReplicationPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,6 +120,101 @@ namespace Azure.ResourceManager.Storage.Models
             return new ObjectReplicationPolicyRule(ruleId, sourceContainer, destinationContainer, filters, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleId), out propertyOverride);
+            if (Optional.IsDefined(RuleId) || hasPropertyOverride)
+            {
+                builder.Append("  ruleId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RuleId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RuleId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RuleId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceContainer), out propertyOverride);
+            if (Optional.IsDefined(SourceContainer) || hasPropertyOverride)
+            {
+                builder.Append("  sourceContainer: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SourceContainer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceContainer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceContainer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationContainer), out propertyOverride);
+            if (Optional.IsDefined(DestinationContainer) || hasPropertyOverride)
+            {
+                builder.Append("  destinationContainer: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DestinationContainer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DestinationContainer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DestinationContainer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Filters), out propertyOverride);
+            if (Optional.IsDefined(Filters) || hasPropertyOverride)
+            {
+                builder.Append("  filters: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Filters, options, 2, false, "  filters: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ObjectReplicationPolicyRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ObjectReplicationPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -128,8 +223,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -145,7 +242,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeObjectReplicationPolicyRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support reading '{options.Format}' format.");
             }
         }
 
