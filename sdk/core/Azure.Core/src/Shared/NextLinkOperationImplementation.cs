@@ -90,6 +90,30 @@ namespace Azure.Core
             _apiVersion = apiVersion;
         }
 
+        public OperationState UpdateState(CancellationToken cancellationToken)
+        {
+            Response response = GetResponseAsync(false, _nextRequestUri, cancellationToken).EnsureCompleted();
+
+            var hasCompleted = IsFinalState(response, _headerSource, out var failureState, out var resourceLocation);
+            if (failureState != null)
+            {
+                return failureState.Value;
+            }
+
+            if (hasCompleted)
+            {
+                string? finalUri = GetFinalUri(resourceLocation);
+                var finalResponse = finalUri != null
+                    ? GetResponseAsync(false, finalUri, cancellationToken).EnsureCompleted()
+                    : response;
+
+                return GetOperationStateFromFinalResponse(_requestMethod, finalResponse);
+            }
+
+            UpdateNextRequestUri(response.Headers);
+            return OperationState.Pending(response);
+        }
+
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response response = await GetResponseAsync(async, _nextRequestUri, cancellationToken).ConfigureAwait(false);
@@ -416,6 +440,8 @@ namespace Azure.Core
                 _operationState = operationState;
             }
 
+            public OperationState UpdateState(CancellationToken cancellationToken) => _operationState;
+
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(_operationState);
         }
 
@@ -432,7 +458,10 @@ namespace Azure.Core
 
             public async ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
             {
-                var state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
+                var state = async
+                    ? await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false)
+                    : _operation.UpdateState(cancellationToken);
+
                 if (state.HasSucceeded)
                 {
                     var result = async

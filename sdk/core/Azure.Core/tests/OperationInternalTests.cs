@@ -103,7 +103,7 @@ namespace Azure.Core.Tests
         [Test]
         public void UpdateStatusWhenOperationThrows([Values(true, false)] bool async)
         {
-            var operation = new TestOperation((_, _) => new ValueTask<OperationState>(Task.FromException<OperationState>(CustomException)));
+            var operation = new TestOperation((_, _) => new ValueTask<OperationState>(Task.FromException<OperationState>(CustomException)), _ => throw CustomException);
             var operationInternal = new OperationInternal(operation, ClientDiagnostics, InitialResponse);
             StackOverflowException thrownException = async
                 ? Assert.ThrowsAsync<StackOverflowException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
@@ -165,7 +165,7 @@ namespace Azure.Core.Tests
         public async Task UpdateStatusSetsFailedScopeWhenOperationThrows([Values(true, false)] bool async)
         {
             using ClientDiagnosticListener testListener = new(DiagnosticNamespace);
-            var operation = new TestOperation((_, _) => new ValueTask<OperationState>(Task.FromException<OperationState>(CustomException)));
+            var operation = new TestOperation((_, _) => new ValueTask<OperationState>(Task.FromException<OperationState>(CustomException)), _ => throw CustomException);
             var operationInternal = new OperationInternal(operation, ClientDiagnostics, InitialResponse);
             try
             {
@@ -190,6 +190,11 @@ namespace Azure.Core.Tests
             {
                 passedToken = ct;
                 return new ValueTask<OperationState>(OperationState.Success(new MockResponse(200)));
+            },
+            ct =>
+            {
+                passedToken = ct;
+                return OperationState.Success(new MockResponse(200));
             });
 
             var operationInternal = new OperationInternal(operation, ClientDiagnostics, InitialResponse);
@@ -287,6 +292,11 @@ namespace Azure.Core.Tests
             {
                 passedToken = ct;
                 return new ValueTask<OperationState>(OperationState.Success(new MockResponse(200)));
+            },
+            ct =>
+            {
+                passedToken = ct;
+                return OperationState.Success(new MockResponse(200));
             });
 
             var operationInternal = new OperationInternal(operation, ClientDiagnostics, InitialResponse, fallbackStrategy: new ZeroPollingStrategy());
@@ -363,6 +373,24 @@ namespace Azure.Core.Tests
 
                 callCount++;
                 return OperationState.Success(new MockResponse(200));
+            },
+            ct =>
+            {
+                mre.Wait(ct);
+
+                if (callCount < expectedDelayStrategyCalls)
+                {
+                    callCount++;
+                    return OperationState.Pending(new MockResponse(200));
+                }
+
+                if (callCount > expectedDelayStrategyCalls)
+                {
+                    throw new Exception("More calls than expected");
+                }
+
+                callCount++;
+                return OperationState.Success(new MockResponse(200));
             });
 
             var operationInternal = new OperationInternal(operation, ClientDiagnostics, InitialResponse, fallbackStrategy: fallbackStrategy);
@@ -393,8 +421,9 @@ namespace Azure.Core.Tests
         private readonly struct TestOperation : IOperation
         {
             private readonly Func<bool, CancellationToken, ValueTask<OperationState>> _updateStateAsyncHandler;
+            private readonly Func<CancellationToken, OperationState> _updateStateHandler;
 
-            public static TestOperation Succeeded() => new((_, _) => new ValueTask<OperationState>(OperationState.Success(new MockResponse(200))));
+            public static TestOperation Succeeded() => new((_, _) => new ValueTask<OperationState>(OperationState.Success(new MockResponse(200))), _ => OperationState.Success(new MockResponse(200)));
             public static TestOperation SucceededAfter(int retries)
             {
                 var count = 0;
@@ -412,11 +441,28 @@ namespace Azure.Core.Tests
                     }
 
                     throw new InvalidOperationException("More UpdateStateAsync calls than expected");
+                },
+                _ =>
+                {
+                    {
+                        if (count == retries)
+                        {
+                            return OperationState.Success(new MockResponse(200));
+                        }
+
+                        if (count < retries)
+                        {
+                            count++;
+                            return OperationState.Pending(new MockResponse(200));
+                        }
+
+                        throw new InvalidOperationException("More UpdateStateAsync calls than expected");
+                    }
                 });
             }
 
-            public static TestOperation Failed(int status) => new((_, _) => new ValueTask<OperationState>(OperationState.Failure(new MockResponse(status))));
-            public static TestOperation Failed(int status, RequestFailedException exception) => new((_, _) => new ValueTask<OperationState>(OperationState.Failure(new MockResponse(status), exception)));
+            public static TestOperation Failed(int status) => new((_, _) => new ValueTask<OperationState>(OperationState.Failure(new MockResponse(status))), _ => OperationState.Failure(new MockResponse(status)));
+            public static TestOperation Failed(int status, RequestFailedException exception) => new((_, _) => new ValueTask<OperationState>(OperationState.Failure(new MockResponse(status), exception)), _ => OperationState.Failure(new MockResponse(status), exception));
             public static TestOperation FailedAfter(int retries, int status, RequestFailedException exception)
             {
                 var count = 0;
@@ -429,15 +475,28 @@ namespace Azure.Core.Tests
 
                     count++;
                     return new ValueTask<OperationState>(OperationState.Pending(new MockResponse(200)));
+                },
+                _ =>
+                {
+                    if (count >= retries)
+                    {
+                        return OperationState.Failure(new MockResponse(status), exception);
+                    }
+
+                    count++;
+                    return OperationState.Pending(new MockResponse(200));
                 });
             }
 
-            public TestOperation(Func<bool, CancellationToken, ValueTask<OperationState>> updateStateAsyncHandler)
+            public TestOperation(Func<bool, CancellationToken, ValueTask<OperationState>> updateStateAsyncHandler, Func<CancellationToken, OperationState> updateStateHandler)
             {
                 _updateStateAsyncHandler = updateStateAsyncHandler;
+                _updateStateHandler = updateStateHandler;
             }
 
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => _updateStateAsyncHandler(async, cancellationToken);
+
+            public OperationState UpdateState(CancellationToken cancellationToken) => _updateStateHandler(cancellationToken);
         }
 
         private class CallCountStrategy : DelayStrategy

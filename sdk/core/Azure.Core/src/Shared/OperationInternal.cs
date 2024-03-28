@@ -150,6 +150,35 @@ namespace Azure.Core
         /// must be manually updated by the operation implementing this method.
         /// <example>Usage example:
         /// <code>
+        ///   OperationState IOperation.UpdateStateAsync(CancellationToken cancellationToken)<br/>
+        ///   {<br/>
+        ///     Response&lt;R&gt; response = &lt;sync service call&gt;;<br/>
+        ///     if (&lt;operation succeeded&gt;) return OperationState.Success(response.GetRawResponse(), &lt;parse response&gt;);<br/>
+        ///     if (&lt;operation failed&gt;) return OperationState.Failure(response.GetRawResponse());<br/>
+        ///     return OperationState.Pending(response.GetRawResponse());<br/>
+        ///   }
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A structure indicating the current operation state. The <see cref="OperationState"/> structure must be instantiated by one of
+        /// its static methods:
+        /// <list type="bullet">
+        ///   <item>Use <see cref="OperationState.Success"/> when the operation has completed successfully.</item>
+        ///   <item>Use <see cref="OperationState.Failure"/> when the operation has completed with failures.</item>
+        ///   <item>Use <see cref="OperationState.Pending"/> when the operation has not completed yet.</item>
+        /// </list>
+        /// </returns>
+        OperationState UpdateState(CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Calls the service and updates the state of the long-running operation. Properties directly handled by the
+        /// <see cref="OperationInternal"/> class, such as <see cref="OperationInternalBase.RawResponse"/>
+        /// don't need to be updated. Operation-specific properties, such as "<c>CreateOn</c>" or "<c>LastModified</c>",
+        /// must be manually updated by the operation implementing this method.
+        /// <example>Usage example:
+        /// <code>
         ///   async ValueTask&lt;OperationState&gt; IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)<br/>
         ///   {<br/>
         ///     Response&lt;R&gt; response = async ? &lt;async service call&gt; : &lt;sync service call&gt;;<br/>
