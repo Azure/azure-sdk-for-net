@@ -1,5 +1,9 @@
 # Release History
 
+## 1.0.0-preview.7
+
+- Updates the DTMI convention to be aligned with DTDL v3 requirements, to allow _versionless_ and `major.minor`
+
 ## 1.0.0-preview.6 (Unreleased)
 
 ### Features Added

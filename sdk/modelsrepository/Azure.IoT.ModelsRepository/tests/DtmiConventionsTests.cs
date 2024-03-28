@@ -14,6 +14,8 @@ namespace Azure.IoT.ModelsRepository.Tests
         [TestCase("dtmi:com:example:Model:1", null)]
         [TestCase("", null)]
         [TestCase(null, null)]
+        [TestCase("dtmi:com:example:Model", "dtmi/com/example/model.json")]
+        [TestCase("dtmi:com:example:Model;1.2", "dtmi/com/example/model-1.2.json")]
         public void DtmiToPath(string dtmi, string expectedPath)
         {
             DtmiConventions.DtmiToPath(dtmi).Should().Be(expectedPath);
@@ -54,6 +56,8 @@ namespace Azure.IoT.ModelsRepository.Tests
         [TestCase("com:example:Thermostat;1", false)]
         [TestCase("", false)]
         [TestCase(null, false)]
+        [TestCase("dtmi:contoso:scope:entity", true)]
+        [TestCase("dtmi:contoso:scope:entity;2.1", true)]
         public void IsValidDtmi(string dtmi, bool expected)
         {
             DtmiConventions.IsValidDtmi(dtmi).Should().Be(expected);
