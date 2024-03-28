@@ -70,6 +70,8 @@ CreateChatThreadOptions createChatThreadOptions = new CreateChatThreadOptions("H
 createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
 createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
 
+createChatThreadOptions.RetentionPolicy = new ThreadCreationDateRetentionPolicy(40);
+
 CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
 ChatThreadProperties chatThread = createChatThreadResult.ChatThread;
 ```
@@ -93,6 +95,7 @@ Once you initialized a `ChatThreadClient` class, you can do the following chat o
 UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new UpdateChatThreadPropertiesOptions();
 updateChatThreadPropertiesOptions.Topic = "Launch meeting";
 updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
+updateChatThreadPropertiesOptions.RetentionPolicy = new NoneRetentionPolicy();
 await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
 ```
 ### Send a message
@@ -197,6 +200,8 @@ createChatThreadOptions.Participants.Add(chatParticipant);
 createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
 createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
 
+createChatThreadOptions.RetentionPolicy = new ThreadCreationDateRetentionPolicy(60);
+
 CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
 string threadId = createChatThreadResult.ChatThread.Id;
 ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
@@ -238,6 +243,7 @@ Use `UpdatePropertiesAsync` to update the chat thread topic or metadata.
 UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new UpdateChatThreadPropertiesOptions();
 updateChatThreadPropertiesOptions.Topic = "new topic !";
 updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
+updateChatThreadPropertiesOptions.RetentionPolicy = new ThreadCreationDateRetentionPolicy(60);
 await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
 ```
 

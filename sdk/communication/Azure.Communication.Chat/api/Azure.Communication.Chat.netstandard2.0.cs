@@ -132,6 +132,7 @@ namespace Azure.Communication.Chat
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatMessageReadReceipt ChatMessageReadReceipt(Azure.Communication.CommunicationIdentifier sender, string chatMessageId, System.DateTimeOffset readOn) { throw null; }
         public static Azure.Communication.Chat.ChatParticipant ChatParticipant(Azure.Communication.CommunicationIdentifier user, string displayName, System.DateTimeOffset? shareHistoryTime) { throw null; }
+        public static Azure.Communication.Chat.ChatParticipant ChatParticipant(Azure.Communication.CommunicationIdentifier user, string displayName, System.DateTimeOffset? shareHistoryTime, System.Collections.Generic.IDictionary<string, string> metadata) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatThreadItem ChatThreadItem(string id, string topic, System.DateTimeOffset? deletedOn, System.DateTimeOffset? lastMessageReceivedOn) { throw null; }
         public static Azure.Communication.Chat.ChatThreadProperties ChatThreadProperties(string id, string topic, System.DateTimeOffset createdOn, Azure.Communication.CommunicationIdentifier createdBy, System.DateTimeOffset deletedOn) { throw null; }
@@ -227,12 +228,17 @@ namespace Azure.Communication.Chat
         public Azure.Communication.Chat.ChatThreadProperties ChatThread { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
     }
+    public partial class NoneRetentionPolicy : Azure.Communication.Chat.ChatRetentionPolicy
+    {
+        public NoneRetentionPolicy() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RetentionPolicyKind : System.IEquatable<Azure.Communication.Chat.RetentionPolicyKind>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RetentionPolicyKind(string value) { throw null; }
+        public static Azure.Communication.Chat.RetentionPolicyKind None { get { throw null; } }
         public static Azure.Communication.Chat.RetentionPolicyKind ThreadCreationDate { get { throw null; } }
         public bool Equals(Azure.Communication.Chat.RetentionPolicyKind other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
