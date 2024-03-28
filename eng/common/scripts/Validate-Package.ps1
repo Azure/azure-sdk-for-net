@@ -212,7 +212,11 @@ $changeLogStatus = [PSCustomObject]@{
 ValidateChangeLog $changeLogPath $versionString $changeLogStatus
 
 # API review and package name validation
-$apireviewDetails = VerifyAPIReview $PackageName $pkgInfo.Version $Language
+$fulPackageName = $PackageName
+if ($pkgInfo.Group){
+    $fulPackageName = "$($pkgInfo.Group):$PackageName"
+}
+$apireviewDetails = VerifyAPIReview $fulPackageName $pkgInfo.Version $Language
 
 $pkgValidationDetails= [PSCustomObject]@{
     Name = $PackageName
