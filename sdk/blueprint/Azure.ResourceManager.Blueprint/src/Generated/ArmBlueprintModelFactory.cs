@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Specifies the kind of blueprint artifact. </param>
         /// <returns> A new <see cref="Blueprint.ArtifactData"/> instance for mocking. </returns>
-        public static ArtifactData ArtifactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        public static ArtifactData ArtifactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
             return new UnknownArtifact(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind == null ? default : new ArtifactKind(kind),
+                kind,
                 serializedAdditionalRawData: null);
         }
 
