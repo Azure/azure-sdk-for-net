@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/84a410a1f92f743cecde8ddd016d5c780f3ce41a/specification/app/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/65e849e611ec6a2a3aa503e3cb6c6a4fc9cd4c19/specification/app/resource-manager/readme.md
 # tag: package-preview-2024-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -17,6 +17,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 
 #mgmt-debug:
@@ -231,6 +232,7 @@ rename-mapping:
   JobScale.pollingInterval: PollingIntervalInSeconds
   JobScaleRule: ContainerAppJobScaleRule
   JobConfigurationEventTriggerConfig: EventTriggerConfiguration
+  DaprSubscriptionBulkSubscribeOptions: DaprSubscriptionBulkSubscribeConfig
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
