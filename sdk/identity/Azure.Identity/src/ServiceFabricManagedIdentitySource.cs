@@ -57,7 +57,7 @@ namespace Azure.Identity
             return new HttpClientTransport(httpHandler);
         }
 
-        private ServiceFabricManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string identityHeaderValue, ManagedIdentityClientOptions options) : base(pipeline)
+        internal ServiceFabricManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string identityHeaderValue, ManagedIdentityClientOptions options) : base(pipeline)
         {
             _endpoint = endpoint;
             _identityHeaderValue = identityHeaderValue;

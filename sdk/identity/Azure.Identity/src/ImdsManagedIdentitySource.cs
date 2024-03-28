@@ -87,14 +87,16 @@ namespace Azure.Identity
             {
                 return await base.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
             }
-            catch (RequestFailedException e) when (e.Status == 200)
-            {
-                // This is a rare case where the request times out but the response was successful.
-                throw new RequestFailedException("Response from IMDS was successful, but the operation timed out prior to completion.", e.InnerException);
-            }
             catch (RequestFailedException e) when (e.Status == 0)
             {
-                throw new CredentialUnavailableException(NoResponseError, e);
+                if (e.InnerException is TaskCanceledException)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw new CredentialUnavailableException(NoResponseError, e);
+                }
             }
             catch (TaskCanceledException e)
             {

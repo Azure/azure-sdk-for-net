@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -13,16 +14,15 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ImdsManagedIdentitySourceTests : ClientTestBase
+    public class ManagedIdentitySourceTests : ClientTestBase
     {
         private string _expectedResourceId = $"/subscriptions/{Guid.NewGuid().ToString()}/locations/MyLocation";
 
-        public ImdsManagedIdentitySourceTests(bool isAsync) : base(isAsync)
+        public ManagedIdentitySourceTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [Test]
-        public void VerifyAuthenticateDoesNotLogTokenOnTaskCancelled()
+        public static IEnumerable<object[]> ManagedIdentitySources()
         {
             var mockTransport = new MockTransport(request => CreateMockResponse(200, "secret").WithHeader("Content-Type", "application/json"));
             var options = new TokenCredentialOptions() { Transport = mockTransport };
@@ -32,14 +32,29 @@ namespace Azure.Identity.Tests
             {
                 TokenFactory = () => { return new AccessToken("secret", DateTimeOffset.UtcNow.AddHours(24)); }
             };
-            ImdsManagedIdentitySource source = new ImdsManagedIdentitySource(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = "mock-client-id" });
+            var miCredOptions = new ManagedIdentityClientOptions { Pipeline = pipeline };
+            var endpoint = new Uri("https://localhost");
 
+            yield return new object[] { new ImdsManagedIdentitySource(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = "mock-client-id" }) };
+            yield return new object[] { new AppServiceV2017ManagedIdentitySource(pipeline, endpoint, "mysecret", miCredOptions) };
+            yield return new object[] { new AppServiceV2019ManagedIdentitySource(pipeline, endpoint, "mysecret", miCredOptions) };
+            yield return new object[] { new AzureArcManagedIdentitySource(endpoint, miCredOptions) };
+            yield return new object[] { new CloudShellManagedIdentitySource(endpoint, miCredOptions) };
+            yield return new object[] { new ServiceFabricManagedIdentitySource(pipeline, endpoint, "myHeader", miCredOptions) };
+        }
+
+        [Test]
+        [TestCaseSource(nameof(ManagedIdentitySources))]
+        public void VerifyAuthenticateDoesNotLogTokenOnTaskCancelled(object miSource)
+        {
+            var source = (ManagedIdentitySource)miSource;
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await source.AuthenticateAsync(IsAsync, new TokenRequestContext(MockScopes.Default), new CancellationToken(true)));
             Assert.IsInstanceOf(typeof(TaskCanceledException), ex.InnerException);
             Assert.That(ex.Message, Does.Not.Contain("secret"));
+            Assert.That(ex.Message, Does.Contain("Response from Managed Identity was successful, but the operation timed out prior to completion."));
         }
 
-        private MockResponse CreateMockResponse(int responseCode, string token)
+        private static MockResponse CreateMockResponse(int responseCode, string token)
         {
             var response = new MockResponse(responseCode);
             string jsonData = $"{{ \"access_token\": \"{token}\", \"expires_on\": \"3600\" }}";
