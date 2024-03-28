@@ -70,6 +70,18 @@ namespace Azure.Security.CodeTransparency
                     .ConfigureAwait(false)
                 : _client.GetEntryStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
+            return GetOperateState(response);
+        }
+
+        public OperationState UpdateState(CancellationToken cancellationToken)
+        {
+            Response response = _client.GetEntryStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
+
+            return GetOperateState(response);
+        }
+
+        private OperationState GetOperateState(Response response)
+        {
             if (response.Status != (int)HttpStatusCode.OK)
             {
                 RequestFailedException ex = new(response);
@@ -80,10 +92,12 @@ namespace Azure.Security.CodeTransparency
             if (result.Value.Status == OperationStatus.Failed)
             {
                 return OperationState.Failure(response, new RequestFailedException(result.Value.Error));
-            } else if (result.Value.Status == OperationStatus.Succeeded)
+            }
+            else if (result.Value.Status == OperationStatus.Succeeded)
             {
                 return OperationState.Success(response);
-            } else
+            }
+            else
             {
                 return OperationState.Pending(response);
             }
