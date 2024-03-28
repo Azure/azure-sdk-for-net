@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.5 (Unreleased)
+## 1.2.0-beta.5 (2024-03-28)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added backwards compatibility method `ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData` to support passing the `storageSizeInGB` parameter.
 
 ## 1.2.0-beta.4 (2024-03-26)
 
