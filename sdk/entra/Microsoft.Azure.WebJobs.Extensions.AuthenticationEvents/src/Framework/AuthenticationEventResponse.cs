@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
@@ -14,18 +15,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     {
         // internal HttpResponseMessage HttpResponseMessage { get; set; }
         /// <summary>Invalidates this instance. (Builds the Json payload).</summary>
-        internal abstract void Invalidate();
+        internal abstract void BuildJsonElement();
 
         /// <summary>Gets or sets the body of the event response.</summary>
         [Required]
         public string Body
         {
-            get { return Content == null ? string.Empty : Content.ReadAsStringAsync()?.Result; }
+            get
+            {
+                if (_body == null)
+                {
+                    _body = Content == null ? string.Empty : Content.ReadAsStringAsync()?.Result;
+                }
+                return _body;
+            }
             set
             {
+                _body = value;
                 Content = new StringContent(value, Encoding.UTF8, "application/json");
             }
         }
+
+        private string _body;
 
         /// <summary>Creates an instance of a sub class of EventResponse based on type and assigns the json schema and payload to the newly created instance.</summary>
         /// <param name="type">The type to create.</param>
@@ -96,25 +107,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             Body = payload.ToString();
         }
 
-        /// <summary>Validates the current Json body payload against it's associated Json schema.</summary>
-        /// <exception cref="AggregateException">An aggregation of the errors within the Json if the payload fails the validation.</exception>
+        /// <summary>
+        /// Performs the validation and throws an exception if it fails.
+        /// </summary>
+        /// <exception cref="AuthenticationEventTriggerResponseValidationException">
+        /// The exception that is thrown when a validation exception is thrown
+        /// </exception>
         internal void Validate()
         {
-            Helpers.ValidateGraph(this);
-        }
-
-        internal void MarkAsFailed(Exception ex, bool internalError)
-        {
-            StatusCode = internalError ? System.Net.HttpStatusCode.InternalServerError : System.Net.HttpStatusCode.BadRequest;
-            ReasonPhrase = String.Empty;
-            Body = Helpers.GetFailedRequestPayload(ex);
-        }
-
-        internal void MarkAsUnauthorized()
-        {
-            StatusCode = System.Net.HttpStatusCode.Unauthorized;
-            ReasonPhrase = String.Empty;
-            Body = String.Empty;
+            try
+            {
+                Helpers.ValidateGraph(this);
+                BuildJsonElement();
+            }
+            catch (ValidationException exception)
+            {
+                throw new AuthenticationEventTriggerResponseValidationException(exception.Message);
+            }
         }
     }
 }
