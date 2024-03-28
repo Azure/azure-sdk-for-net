@@ -13,7 +13,12 @@ namespace Azure.Communication.Messages.Models.Channels
     public partial class WhatsAppMessageTemplateBindings { }
 
     [CodeGenModel("WhatsAppMessageTemplateBindingsButton")]
-    public partial class WhatsAppMessageTemplateBindingsButton { }
+    public partial class WhatsAppMessageTemplateBindingsButton
+    {
+        /// <summary> The WhatsApp button sub type. </summary>
+        [CodeGenMember("SubType")]
+        public string SubType { get; }
+    }
 
     [CodeGenModel("WhatsAppMessageTemplateBindingsComponent")]
     public partial class WhatsAppMessageTemplateBindingsComponent { }

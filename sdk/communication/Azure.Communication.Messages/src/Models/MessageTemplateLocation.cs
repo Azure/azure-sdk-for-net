@@ -42,7 +42,7 @@ namespace Azure.Communication.Messages
         public MessageTemplateLocation(string name) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Kind = "location";
+            Kind = MessageTemplateValueKind.Location;
         }
 
         // This is a direct copy of the auto-rest generated constructor but we want to make the internal Latitude and Longitude read only
@@ -54,7 +54,7 @@ namespace Azure.Communication.Messages
         internal MessageTemplateLocation(string name, double latitudeInternal, double longitudeInternal) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Kind = "location";
+            Kind = MessageTemplateValueKind.Location;
         }
 
         // This is a direct copy of the auto-rest generated constructor but we want to make the internal Latitude and Longitude read only
@@ -66,7 +66,7 @@ namespace Azure.Communication.Messages
         /// <param name="address"> The [Optional] address of the location. </param>
         /// <param name="latitudeInternal"> The latitude of the location. </param>
         /// <param name="longitudeInternal"> The longitude of the location. </param>
-        internal MessageTemplateLocation(string name, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string locationName, string address, double latitudeInternal, double longitudeInternal) : base(name, kind, serializedAdditionalRawData)
+        internal MessageTemplateLocation(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string locationName, string address, double latitudeInternal, double longitudeInternal) : base(name, kind, serializedAdditionalRawData)
         {
             LocationName = locationName;
             Address = address;
