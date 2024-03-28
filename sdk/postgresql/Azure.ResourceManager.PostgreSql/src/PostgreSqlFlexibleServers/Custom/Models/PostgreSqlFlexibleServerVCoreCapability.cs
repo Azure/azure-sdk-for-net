@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -11,6 +13,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class PostgreSqlFlexibleServerVCoreCapability
     {
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerVCoreCapability. </summary>
         internal PostgreSqlFlexibleServerVCoreCapability()
         {
@@ -22,13 +26,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="supportedIops"> supported IOPS. </param>
         /// <param name="supportedMemoryPerVCoreInMB"> supported memory per vCore in MB. </param>
         /// <param name="status"> The status. </param>
-        internal PostgreSqlFlexibleServerVCoreCapability(string name, long? vCores, long? supportedIops, long? supportedMemoryPerVCoreInMB, string status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerVCoreCapability(string name, long? vCores, long? supportedIops, long? supportedMemoryPerVCoreInMB, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             VCores = vCores;
             SupportedIops = supportedIops;
             SupportedMemoryPerVCoreInMB = supportedMemoryPerVCoreInMB;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> vCore name. </summary>

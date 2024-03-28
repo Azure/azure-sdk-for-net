@@ -214,7 +214,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 supportedStorageEditions.ToList(),
                 supportedServerVersions.ToList(),
                 supportedNodeTypes.ToList(),
-                status);
+                status,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNodeTypeCapability"/>. </summary>
@@ -225,7 +226,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerNodeTypeCapability PostgreSqlFlexibleServerNodeTypeCapability(string name = null, string nodeType = null, string status = null)
         {
-            return new PostgreSqlFlexibleServerNodeTypeCapability(name, nodeType, status);
+            return new PostgreSqlFlexibleServerNodeTypeCapability(name, nodeType, status, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerServerVersionCapability"/>. </summary>
@@ -317,7 +318,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 vCores,
                 supportedIops,
                 supportedMemoryPerVCoreInMB,
-                status);
+                status,
+                default);
         }
     }
 }

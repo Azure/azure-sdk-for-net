@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
@@ -13,6 +14,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class PostgreSqlFlexibleServerHyperscaleNodeEditionCapability
     {
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerHyperscaleNodeEditionCapability. </summary>
         internal PostgreSqlFlexibleServerHyperscaleNodeEditionCapability()
         {
@@ -27,13 +30,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="supportedServerVersions"> The list of server versions supported by this server edition. </param>
         /// <param name="supportedNodeTypes"> The list of Node Types supported by this server edition. </param>
         /// <param name="status"> The status. </param>
-        internal PostgreSqlFlexibleServerHyperscaleNodeEditionCapability(string name, IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions, IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions, IReadOnlyList<PostgreSqlFlexibleServerNodeTypeCapability> supportedNodeTypes, string status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerHyperscaleNodeEditionCapability(string name, IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions, IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions, IReadOnlyList<PostgreSqlFlexibleServerNodeTypeCapability> supportedNodeTypes, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             SupportedStorageEditions = supportedStorageEditions;
             SupportedServerVersions = supportedServerVersions;
             SupportedNodeTypes = supportedNodeTypes;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Server edition name. </summary>
