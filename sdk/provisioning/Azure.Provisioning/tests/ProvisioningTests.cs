@@ -40,6 +40,7 @@ using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.TestFramework;
 using CoreTestEnvironment = Azure.Core.TestFramework.TestEnvironment;
 using UserAssignedIdentity = Azure.Provisioning.ManagedServiceIdentities.UserAssignedIdentity;
+using Azure.Provisioning.WebPubSub;
 
 namespace Azure.Provisioning.Tests
 {
@@ -361,6 +362,19 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        public async Task WebPubSub()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var signalR = new WebPubSubService(infrastructure, sku: new Azure.ResourceManager.WebPubSub.Models.BillingInfoSku("Standard_S1"));
+            signalR.AssignRole(RoleDefinition.WebPubSubServiceOwner, Guid.Empty);
+
+            signalR.AddOutput("hostName", data => data.HostName);
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
         public async Task AppInsights()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
@@ -616,6 +630,8 @@ namespace Azure.Provisioning.Tests
             infra.AddResource(EventHubsConsumerGroup.FromExisting(infra, "'existingEhConsumerGroup'", hub));
 
             infra.AddResource(SignalRService.FromExisting(infra, "'existingSignalR'", rg));
+
+            infra.AddResource(WebPubSubService.FromExisting(infra, "'existingWebPubSub'", rg));
 
             infra.AddResource(ApplicationInsightsComponent.FromExisting(infra, "'existingAppInsights'", rg));
 

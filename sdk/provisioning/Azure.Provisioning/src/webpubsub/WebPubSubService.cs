@@ -41,7 +41,7 @@ namespace Azure.Provisioning.WebPubSub
             : this(scope, parent, name, version, false, (name) => ArmWebPubSubModelFactory.WebPubSubData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
-                sku: sku ?? new BillingInfoSku("Free_F1")))
+                sku: sku ?? new BillingInfoSku("Free_F1") { Capacity = 1 }))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
