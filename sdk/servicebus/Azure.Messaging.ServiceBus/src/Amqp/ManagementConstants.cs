@@ -36,6 +36,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             public const string EnumerateRulesOperation = Microsoft + ":enumerate-rules";
             public const string ScheduleMessageOperation = Microsoft + ":schedule-message";
             public const string CancelScheduledMessageOperation = Microsoft + ":cancel-scheduled-message";
+            public const string DeleteMessagesOperation = Microsoft + ":batch-delete-messages";
         }
 
         public static class Properties
@@ -64,6 +65,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             public static readonly MapKey FromSequenceNumber = new MapKey("from-sequence-number");
             public static readonly MapKey MessageCount = new MapKey("message-count");
+            public static readonly MapKey EnqueuedTimeUtc = new MapKey("enqueued-time-utc");
 
             public static readonly MapKey Skip = new MapKey("skip");
             public static readonly MapKey Top = new MapKey("top");
