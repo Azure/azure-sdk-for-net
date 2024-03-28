@@ -1,10 +1,5 @@
 namespace Azure.Provisioning
 {
-    public static partial class CdkExtensions
-    {
-        public static T? GetSingleResourceInScope<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
-        public static T? GetSingleResource<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
-    }
     public partial class Configuration
     {
         public Configuration() { }
@@ -86,6 +81,11 @@ namespace Azure.Provisioning
         public string? Description { get { throw null; } }
         public bool IsSecure { get { throw null; } }
         public string Name { get { throw null; } }
+    }
+    public static partial class ProvisioningExtensions
+    {
+        public static T? GetSingleResourceInScope<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
+        public static T? GetSingleResource<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
     }
     public abstract partial class Resource : System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>
     {
@@ -305,7 +305,7 @@ namespace Azure.Provisioning.PostgreSql
     }
     public partial class PostgreSqlFlexibleServer : Azure.Provisioning.Resource<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData>
     {
-        public PostgreSqlFlexibleServer(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Parameter administratorLogin, Azure.Provisioning.Parameter administratorPassword, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerSku? sku = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVersion? serverVersion = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVersion?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerHighAvailability? highAvailability = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerDataEncryption? encryption = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupProperties? backup = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNetwork? network = null, string? availabilityZone = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "postgres", string version = "2023-03-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData>)) { }
+        public PostgreSqlFlexibleServer(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Parameter administratorLogin, Azure.Provisioning.Parameter administratorPassword, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerSku? sku = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVersion? serverVersion = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVersion?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerHighAvailability? highAvailability = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerDataEncryption? encryption = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupProperties? backup = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNetwork? network = null, int? storageSizeInGB = default(int?), string? availabilityZone = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "postgres", string version = "2023-03-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData>)) { }
         public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
         protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
         public Azure.Provisioning.PostgreSql.PostgreSqlConnectionString GetConnectionString(Azure.Provisioning.Parameter administratorLogin, Azure.Provisioning.Parameter administratorPassword) { throw null; }
