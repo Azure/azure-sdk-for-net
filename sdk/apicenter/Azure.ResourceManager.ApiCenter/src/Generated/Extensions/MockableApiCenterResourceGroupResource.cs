@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ApiCenterServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApiCenterServiceResources and their operations over a ApiCenterServiceResource. </returns>
-        public virtual ApiCenterServiceCollection GetApiCenterServices()
+        /// <summary> Gets a collection of ServiceEntityResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ServiceEntityResources and their operations over a ServiceEntityResource. </returns>
+        public virtual ServiceEntityCollection GetServiceEntities()
         {
-            return GetCachedClient(client => new ApiCenterServiceCollection(client, Id));
+            return GetCachedClient(client => new ServiceEntityCollection(client, Id));
         }
 
         /// <summary>
-        /// Get service
+        /// Returns details of the service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -53,26 +53,26 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiCenterServiceResource"/></description>
+        /// <description><see cref="ServiceEntityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Service name. </param>
+        /// <param name="serviceName"> The name of Azure API Center service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiCenterServiceResource>> GetApiCenterServiceAsync(string serviceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceEntityResource>> GetServiceEntityAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            return await GetApiCenterServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetServiceEntities().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get service
+        /// Returns details of the service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -84,22 +84,22 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiCenterServiceResource"/></description>
+        /// <description><see cref="ServiceEntityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Service name. </param>
+        /// <param name="serviceName"> The name of Azure API Center service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiCenterServiceResource> GetApiCenterService(string serviceName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceEntityResource> GetServiceEntity(string serviceName, CancellationToken cancellationToken = default)
         {
-            return GetApiCenterServices().Get(serviceName, cancellationToken);
+            return GetServiceEntities().Get(serviceName, cancellationToken);
         }
     }
 }
