@@ -118,7 +118,7 @@ namespace Azure.Communication.ShortCodes
                 try
                 {
                     var response = await RestClient.GetShortCodesAsync(skip: null, top: pageSizeHint, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.ShortCodesValue, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.ShortCodesProperty, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -133,7 +133,7 @@ namespace Azure.Communication.ShortCodes
                 try
                 {
                     var response = await RestClient.GetShortCodesNextPageAsync(nextLink, skip: null, top: pageSizeHint, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.ShortCodesValue, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.ShortCodesProperty, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -158,7 +158,7 @@ namespace Azure.Communication.ShortCodes
                 try
                 {
                     var response = RestClient.GetShortCodes(skip: null, top: pageSizeHint, cancellationToken);
-                    return Page.FromValues(response.Value.ShortCodesValue, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.ShortCodesProperty, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -173,7 +173,7 @@ namespace Azure.Communication.ShortCodes
                 try
                 {
                     var response = RestClient.GetShortCodesNextPage(nextLink, skip: null, top: pageSizeHint, cancellationToken);
-                    return Page.FromValues(response.Value.ShortCodesValue, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.ShortCodesProperty, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
