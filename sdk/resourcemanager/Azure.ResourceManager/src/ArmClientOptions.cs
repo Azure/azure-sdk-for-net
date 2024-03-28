@@ -30,7 +30,7 @@ namespace Azure.ResourceManager
         /// To find which API Versions are available in your environment you can use the <see cref="ResourceProviderResource.Get"/> method
         /// for the provider namespace you are interested in.
         /// </summary>
-        /// <param name="resourceType"> The resource type to set the version for. </param>
+        /// <param name="resourceType"> The resource type to set the version for. To determine the appropriate value, you can refer to the corresponding documentation or XML documentation comments of the API. Then, get its resource type from the Resource's ResourceType field.</param>
         /// <param name="apiVersion"> The api version to use. </param>
         public void SetApiVersion(ResourceType resourceType, string apiVersion)
         {
