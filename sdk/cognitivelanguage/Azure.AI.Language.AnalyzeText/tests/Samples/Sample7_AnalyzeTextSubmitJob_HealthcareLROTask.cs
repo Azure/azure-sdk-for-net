@@ -47,8 +47,8 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 Documents =
         {
-            new MultiLanguageInput("A", documentA, "en"),
-            new MultiLanguageInput("B", documentB, "en"),
+            new MultiLanguageInput("A", documentA) { Language = "en" },
+            new MultiLanguageInput("B", documentB) { Language = "en" },
         }
             };
 
@@ -134,7 +134,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                         }
 
                         // View the errors in the document
-                        foreach (AnalyzeTextDocumentError error in healthcareLROResult.Results.Errors)
+                        foreach (DocumentError error in healthcareLROResult.Results.Errors)
                         {
                             Console.WriteLine($"  Error in document: {error.Id}!");
                             Console.WriteLine($"  Document error code: {error.Error.Code}");

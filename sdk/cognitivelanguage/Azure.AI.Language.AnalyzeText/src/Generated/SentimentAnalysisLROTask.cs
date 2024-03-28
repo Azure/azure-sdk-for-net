@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> An object representing the task definition for a Sentiment Analysis task. </summary>
@@ -18,14 +21,15 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="SentimentAnalysisLROTask"/>. </summary>
         /// <param name="taskName"> task name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal SentimentAnalysisLROTask(string taskName, AnalyzeTextLROTaskKind kind, SentimentAnalysisTaskParameters parameters) : base(taskName, kind)
+        internal SentimentAnalysisLROTask(string taskName, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROTaskKind kind, SentimentAnalysisTaskContent parameters) : base(taskName, serializedAdditionalRawData, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public SentimentAnalysisTaskParameters Parameters { get; set; }
+        public SentimentAnalysisTaskContent Parameters { get; set; }
     }
 }

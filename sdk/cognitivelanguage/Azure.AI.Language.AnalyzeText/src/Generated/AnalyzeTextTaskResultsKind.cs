@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.AnalyzeText
 {
+    /// <summary> The AnalyzeTextTaskResultsKind. </summary>
     internal readonly partial struct AnalyzeTextTaskResultsKind : IEquatable<AnalyzeTextTaskResultsKind>
     {
         private readonly string _value;

@@ -7,27 +7,58 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The AnalyzeTextJobState. </summary>
     public partial class AnalyzeTextJobState
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobState"/>. </summary>
         /// <param name="createdDateTime"> Date and time job created. </param>
         /// <param name="lastUpdatedDateTime"> last updated date and time. </param>
         /// <param name="status"> status. </param>
         /// <param name="tasks"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
-        internal AnalyzeTextJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, State status, Tasks tasks)
+        internal AnalyzeTextJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, CurrentState status, TasksStatus tasks)
         {
             Argument.AssertNotNull(tasks, nameof(tasks));
 
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
             Status = status;
-            Errors = new ChangeTrackingList<Error>();
+            Errors = new ChangeTrackingList<AnalyzeTextError>();
             Tasks = tasks;
         }
 
@@ -42,7 +73,8 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="nextLink"> next link. </param>
         /// <param name="tasks"></param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
-        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdatedDateTime, State status, IReadOnlyList<Error> errors, string nextLink, Tasks tasks, RequestStatistics statistics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdatedDateTime, CurrentState status, IReadOnlyList<AnalyzeTextError> errors, string nextLink, TasksStatus tasks, RequestStatistics statistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             CreatedDateTime = createdDateTime;
@@ -54,6 +86,12 @@ namespace Azure.AI.Language.AnalyzeText
             NextLink = nextLink;
             Tasks = tasks;
             Statistics = statistics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobState"/> for deserialization. </summary>
+        internal AnalyzeTextJobState()
+        {
         }
 
         /// <summary> display name. </summary>
@@ -67,13 +105,13 @@ namespace Azure.AI.Language.AnalyzeText
         /// <summary> last updated date and time. </summary>
         public DateTimeOffset LastUpdatedDateTime { get; }
         /// <summary> status. </summary>
-        public State Status { get; }
+        public CurrentState Status { get; }
         /// <summary> errors. </summary>
-        public IReadOnlyList<Error> Errors { get; }
+        public IReadOnlyList<AnalyzeTextError> Errors { get; }
         /// <summary> next link. </summary>
         public string NextLink { get; }
         /// <summary> Gets the tasks. </summary>
-        public Tasks Tasks { get; }
+        public TasksStatus Tasks { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public RequestStatistics Statistics { get; }
     }

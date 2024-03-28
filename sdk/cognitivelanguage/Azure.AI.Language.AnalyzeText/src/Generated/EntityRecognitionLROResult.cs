@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -18,7 +18,7 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal EntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime, State status, EntitiesResult results) : base(lastUpdateDateTime, status)
+        internal EntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime, CurrentState status, EntitiesResult results) : base(lastUpdateDateTime, status)
         {
             Argument.AssertNotNull(results, nameof(results));
 
@@ -31,10 +31,16 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"></param>
-        internal EntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime, State status, string taskName, AnalyzeTextLROResultsKind kind, EntitiesResult results) : base(lastUpdateDateTime, status, taskName, kind)
+        internal EntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime, CurrentState status, string taskName, AnalyzeTextLROResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, EntitiesResult results) : base(lastUpdateDateTime, status, taskName, kind, serializedAdditionalRawData)
         {
             Results = results;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntityRecognitionLROResult"/> for deserialization. </summary>
+        internal EntityRecognitionLROResult()
+        {
         }
 
         /// <summary> Gets the results. </summary>

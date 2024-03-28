@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.AnalyzeText
 {
+    /// <summary> The healthcareDocumentType. </summary>
     public readonly partial struct HealthcareDocumentType : IEquatable<HealthcareDocumentType>
     {
         private readonly string _value;

@@ -38,7 +38,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 }
             };
 
-            Response<AnalyzeTextTaskResult> response = await Client.AnalyzeTextAsync(body);
+            Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Value);
             LanguageDetectionTaskResult languageDetectionTaskResult = (LanguageDetectionTaskResult)response.Value;
@@ -71,12 +71,12 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 {
                     Documents =
                     {
-                        new MultiLanguageInput("A", documentA, "en"),
+                        new MultiLanguageInput("A", documentA) { Language = "en" },
                     }
                 }
             };
 
-            Response<AnalyzeTextTaskResult> response = await Client.AnalyzeTextAsync(body);
+            Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Value);
             SentimentTaskResult sentimentTaskResult = (SentimentTaskResult)response.Value;
@@ -84,7 +84,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(sentimentTaskResult);
             Assert.IsNotNull(sentimentTaskResult.Results);
             Assert.IsNotNull(sentimentTaskResult.Results.Documents);
-            foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in sentimentTaskResult.Results.Documents)
+            foreach (SentimentDocumentResultWithDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in sentimentTaskResult.Results.Documents)
             {
                 Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage);
                 Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.Id);
@@ -125,7 +125,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 {
                     Documents =
                     {
-                        new MultiLanguageInput("A", documentA, "en"),
+                        new MultiLanguageInput("A", documentA) { Language = "en" },
                     }
                 },
                 Parameters = new KeyPhraseTaskContent()
@@ -134,7 +134,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 }
             };
 
-            Response<AnalyzeTextTaskResult> response = await Client.AnalyzeTextAsync(body);
+            Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Value);
             KeyPhraseTaskResult keyPhraseTaskResult = (KeyPhraseTaskResult)response.Value;
@@ -170,7 +170,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 {
                     Documents =
                     {
-                        new MultiLanguageInput("A", documentA, "en"),
+                        new MultiLanguageInput("A", documentA) { Language = "en" },
                     }
                 },
                 Parameters = new EntitiesTaskContent()
@@ -179,7 +179,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 }
             };
 
-            Response<AnalyzeTextTaskResult> response = await Client.AnalyzeTextAsync(body);
+            Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Value);
             EntitiesTaskResult entitiesTaskResult = (EntitiesTaskResult)response.Value;
@@ -212,26 +212,26 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 + " use their phone number 800-102-1100. They are originally from Brazil and have document ID number"
                 + " 998.214.865-68.";
 
-            AnalyzeTextTask body = new AnalyzeTextPIIEntitiesRecognitionInput()
+            AnalyzeTextTask body = new AnalyzeTextPiiEntitiesRecognitionInput()
             {
                 AnalysisInput = new MultiLanguageAnalysisInput()
                 {
                     Documents =
                     {
-                        new MultiLanguageInput("A", documentA, "en"),
+                        new MultiLanguageInput("A", documentA) { Language = "en" },
                     }
                 }
             };
 
-            Response<AnalyzeTextTaskResult> response = await Client.AnalyzeTextAsync(body);
+            Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Value);
-            PIITaskResult piiTaskResult = (PIITaskResult)response.Value;
+            PiiTaskResult piiTaskResult = (PiiTaskResult)response.Value;
 
             Assert.IsNotNull(piiTaskResult);
             Assert.IsNotNull(piiTaskResult.Results);
             Assert.IsNotNull(piiTaskResult.Results.Documents);
-            foreach (PIIResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
+            foreach (PiiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
             {
                 Assert.IsNotNull(piiResult.Id);
                 Assert.IsNotNull(piiResult.Entities);
@@ -262,7 +262,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 {
                     Documents =
                     {
-                        new MultiLanguageInput("A", documentA, "en"),
+                        new MultiLanguageInput("A", documentA) { Language = "en" },
                     }
                 },
                 Parameters = new EntityLinkingTaskContent()
@@ -271,7 +271,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 }
             };
 
-            Response<AnalyzeTextTaskResult> response = await Client.AnalyzeTextAsync(body);
+            Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Value);
             EntityLinkingTaskResult entityLinkingTaskResult = (EntityLinkingTaskResult)response.Value;
@@ -311,7 +311,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 Documents =
                 {
-                    new MultiLanguageInput("A", documentA, "en"),
+                    new MultiLanguageInput("A", documentA) { Language = "en" },
                 }
             };
 
@@ -320,7 +320,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 new HealthcareLROTask()
             });
 
-            Operation operation = await Client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
+            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
             Assert.IsNotNull(operation);
             AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
             Assert.IsNotNull(analyzeTextJobState);
@@ -389,7 +389,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 Documents =
                 {
-                    new MultiLanguageInput("A", documentA, "en"),
+                    new MultiLanguageInput("A", documentA) { Language = "en" },
                 }
             };
 
@@ -403,7 +403,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Parameters = new CustomEntitiesTaskContent(projectName, deploymentName)
                 }
             });
-            Operation operation = await Client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
+            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
             Assert.IsNotNull(operation);
             AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
             Assert.IsNotNull(analyzeTextJobState);
@@ -419,7 +419,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Assert.IsNotNull(customClassificationResult.Results);
                     Assert.IsNotNull(customClassificationResult.Results.Documents);
 
-                    foreach (EntitiesDocumentResult entitiesDocument in customClassificationResult.Results.Documents)
+                    foreach (EntitiesDocumentResultWithDetectedLanguage entitiesDocument in customClassificationResult.Results.Documents)
                     {
                         Assert.IsNotNull(entitiesDocument.Id);
                         Assert.IsNotNull(entitiesDocument.Entities);
@@ -449,7 +449,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 Documents =
                 {
-                    new MultiLanguageInput("A", documentA, "en"),
+                    new MultiLanguageInput("A", documentA) { Language = "en" },
                 }
             };
 
@@ -463,7 +463,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Parameters = new CustomSingleLabelClassificationTaskContent(projectName, deploymentName)
                 }
             });
-            Operation operation = await Client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
+            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
             Assert.IsNotNull(operation);
             AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
             Assert.IsNotNull(analyzeTextJobState);
@@ -479,7 +479,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Assert.IsNotNull(customClassificationResult.Results);
                     Assert.IsNotNull(customClassificationResult.Results.Documents);
 
-                    foreach (ClassificationDocumentResult customClassificationDocument in customClassificationResult.Results.Documents)
+                    foreach (ClassificationDocumentResultWithDetectedLanguage customClassificationDocument in customClassificationResult.Results.Documents)
                     {
                         Assert.IsNotNull(customClassificationDocument.Id);
                         Assert.IsNotNull(customClassificationDocument.Class);
@@ -505,7 +505,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 Documents =
         {
-            new MultiLanguageInput("A", documentA, "en"),
+            new MultiLanguageInput("A", documentA) { Language = "en" },
         }
             };
 
@@ -519,7 +519,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Parameters = new CustomMultiLabelClassificationTaskContent(projectName, deploymentName)
                 }
             });
-            Operation operation = await Client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
+            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
             Assert.IsNotNull(operation);
             AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
             Assert.IsNotNull(analyzeTextJobState);
@@ -535,7 +535,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Assert.IsNotNull(customClassificationResult.Results);
                     Assert.IsNotNull(customClassificationResult.Results.Documents);
 
-                    foreach (ClassificationDocumentResult customClassificationDocument in customClassificationResult.Results.Documents)
+                    foreach (ClassificationDocumentResultWithDetectedLanguage customClassificationDocument in customClassificationResult.Results.Documents)
                     {
                         Assert.IsNotNull(customClassificationDocument.Id);
                         Assert.IsNotNull(customClassificationDocument.Class);
@@ -595,7 +595,10 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 Documents =
                 {
-                    new MultiLanguageInput("A", documentA, "en"),
+                    new MultiLanguageInput("A", documentA)
+                    {
+                        Language = "en"
+                    },
                 }
             };
 
@@ -604,7 +607,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 new ExtractiveSummarizationLROTask()
             });
 
-            Operation operation = await Client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
+            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
             Assert.IsNotNull(operation);
             AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
             Assert.IsNotNull(analyzeTextJobState);
@@ -681,16 +684,19 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 Documents =
                 {
-                    new MultiLanguageInput("A", documentA, "en"),
+                    new MultiLanguageInput("A", documentA)
+                    {
+                        Language = "en"
+                    },
                 }
             };
 
             AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLanguageAnalysisInput, new AnalyzeTextLROTask[]
             {
-                new AbstractiveSummarizationLROTask()
+                new AbstractiveSummarizationLROTask(new AbstractiveSummarizationTaskContent())
             });
 
-            Operation operation = await Client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
+            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
             Assert.IsNotNull(operation);
             AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
             Assert.IsNotNull(analyzeTextJobState);

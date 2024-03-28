@@ -5,17 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class SentenceSentiment
+    public partial class SentenceSentiment : IUtf8JsonSerializable, IJsonModel<SentenceSentiment>
     {
-        internal static SentenceSentiment DeserializeSentenceSentiment(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SentenceSentiment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SentenceSentiment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SentenceSentiment>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SentenceSentiment)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("text"u8);
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("sentiment"u8);
+            writer.WriteStringValue(Sentiment.ToSerialString());
+            writer.WritePropertyName("confidenceScores"u8);
+            writer.WriteObjectValue<SentimentConfidenceScores>(ConfidenceScores, options);
+            writer.WritePropertyName("offset"u8);
+            writer.WriteNumberValue(Offset);
+            writer.WritePropertyName("length"u8);
+            writer.WriteNumberValue(Length);
+            if (Optional.IsCollectionDefined(Targets))
+            {
+                writer.WritePropertyName("targets"u8);
+                writer.WriteStartArray();
+                foreach (var item in Targets)
+                {
+                    writer.WriteObjectValue<SentenceTarget>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Assessments))
+            {
+                writer.WritePropertyName("assessments"u8);
+                writer.WriteStartArray();
+                foreach (var item in Assessments)
+                {
+                    writer.WriteObjectValue<SentenceAssessment>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SentenceSentiment IJsonModel<SentenceSentiment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SentenceSentiment>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SentenceSentiment)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSentenceSentiment(document.RootElement, options);
+        }
+
+        internal static SentenceSentiment DeserializeSentenceSentiment(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,8 +99,10 @@ namespace Azure.AI.Language.AnalyzeText
             SentimentConfidenceScores confidenceScores = default;
             int offset = default;
             int length = default;
-            Optional<IReadOnlyList<SentenceTarget>> targets = default;
-            Optional<IReadOnlyList<SentenceAssessment>> assessments = default;
+            IReadOnlyList<SentenceTarget> targets = default;
+            IReadOnlyList<SentenceAssessment> assessments = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -41,7 +117,7 @@ namespace Azure.AI.Language.AnalyzeText
                 }
                 if (property.NameEquals("confidenceScores"u8))
                 {
-                    confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value);
+                    confidenceScores = SentimentConfidenceScores.DeserializeSentimentConfidenceScores(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offset"u8))
@@ -63,7 +139,7 @@ namespace Azure.AI.Language.AnalyzeText
                     List<SentenceTarget> array = new List<SentenceTarget>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentenceTarget.DeserializeSentenceTarget(item));
+                        array.Add(SentenceTarget.DeserializeSentenceTarget(item, options));
                     }
                     targets = array;
                     continue;
@@ -77,14 +153,58 @@ namespace Azure.AI.Language.AnalyzeText
                     List<SentenceAssessment> array = new List<SentenceAssessment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentenceAssessment.DeserializeSentenceAssessment(item));
+                        array.Add(SentenceAssessment.DeserializeSentenceAssessment(item, options));
                     }
                     assessments = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SentenceSentiment(text, sentiment, confidenceScores, offset, length, Optional.ToList(targets), Optional.ToList(assessments));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SentenceSentiment(
+                text,
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                targets ?? new ChangeTrackingList<SentenceTarget>(),
+                assessments ?? new ChangeTrackingList<SentenceAssessment>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SentenceSentiment>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SentenceSentiment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SentenceSentiment)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SentenceSentiment IPersistableModel<SentenceSentiment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SentenceSentiment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSentenceSentiment(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SentenceSentiment)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SentenceSentiment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -92,6 +212,14 @@ namespace Azure.AI.Language.AnalyzeText
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeSentenceSentiment(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SentenceSentiment>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

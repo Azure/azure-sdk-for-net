@@ -113,9 +113,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     {
                         Documents =
                         {
-                            new LanguageInput("A", documentA, "es"),
-                            new LanguageInput("B", documentB, "us"),
-                            new LanguageInput("C", documentC, "fr"),
+                            new LanguageInput("A", documentA) { CountryHint = "es" },
+                            new LanguageInput("B", documentB) { CountryHint = "us" },
+                            new LanguageInput("C", documentC) { CountryHint = "fr" },
                         }
                     }
                 };

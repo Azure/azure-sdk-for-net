@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.AnalyzeText
 {
+    /// <summary> The fhirVersion. </summary>
     public readonly partial struct FhirVersion : IEquatable<FhirVersion>
     {
         private readonly string _value;

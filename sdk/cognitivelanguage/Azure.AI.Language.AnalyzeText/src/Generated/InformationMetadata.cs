@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Represents the Information (data) entity Metadata model. </summary>
@@ -22,12 +25,18 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="InformationMetadata"/>. </summary>
         /// <param name="metadataKind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"></param>
-        internal InformationMetadata(MetadataKind metadataKind, double value, InformationUnit unit) : base(metadataKind)
+        internal InformationMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> serializedAdditionalRawData, double value, InformationUnit unit) : base(metadataKind, serializedAdditionalRawData)
         {
             Value = value;
             Unit = unit;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InformationMetadata"/> for deserialization. </summary>
+        internal InformationMetadata()
+        {
         }
 
         /// <summary> The numeric value that the extracted text denotes. </summary>

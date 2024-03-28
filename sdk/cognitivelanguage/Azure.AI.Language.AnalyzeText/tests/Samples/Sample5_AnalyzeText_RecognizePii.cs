@@ -33,27 +33,27 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
             string documentC = string.Empty;
 
-            AnalyzeTextTask body = new AnalyzeTextPIIEntitiesRecognitionInput()
+            AnalyzeTextTask body = new AnalyzeTextPiiEntitiesRecognitionInput()
             {
                 AnalysisInput = new MultiLanguageAnalysisInput()
                 {
                     Documents =
                     {
-                        new MultiLanguageInput("A", documentA, "en"),
-                        new MultiLanguageInput("B", documentB, "es"),
+                        new MultiLanguageInput("A", documentA) { Language = "en" },
+                        new MultiLanguageInput("B", documentB) { Language = "es" },
                         new MultiLanguageInput("C", documentC),
                     }
                 },
-                Parameters = new PIITaskContent()
+                Parameters = new PiiTaskContent()
                 {
                     ModelVersion = "latest",
                 }
             };
 
             Response<AnalyzeTextTaskResult> response = client.AnalyzeText(body);
-            PIITaskResult piiTaskResult = (PIITaskResult)response.Value;
+            PiiTaskResult piiTaskResult = (PiiTaskResult)response.Value;
 
-            foreach (PIIResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
+            foreach (PiiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
             {
                 Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
 
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 Console.WriteLine();
             }
 
-            foreach (AnalyzeTextDocumentError analyzeTextDocumentError in piiTaskResult.Results.Errors)
+            foreach (DocumentError analyzeTextDocumentError in piiTaskResult.Results.Errors)
             {
                 Console.WriteLine($"  Error on document {analyzeTextDocumentError.Id}!");
                 Console.WriteLine($"  Document error code: {analyzeTextDocumentError.Error.Code}");

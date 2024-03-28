@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.AnalyzeText
 {
+    /// <summary> The WarningCodeValue. </summary>
     public readonly partial struct WarningCodeValue : IEquatable<WarningCodeValue>
     {
         private readonly string _value;

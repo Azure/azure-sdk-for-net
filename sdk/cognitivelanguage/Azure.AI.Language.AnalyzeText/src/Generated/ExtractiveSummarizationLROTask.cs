@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> An object representing the task definition for an Extractive Summarization task. </summary>
@@ -18,14 +21,15 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationLROTask"/>. </summary>
         /// <param name="taskName"> task name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal ExtractiveSummarizationLROTask(string taskName, AnalyzeTextLROTaskKind kind, ExtractiveSummarizationTaskParameters parameters) : base(taskName, kind)
+        internal ExtractiveSummarizationLROTask(string taskName, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROTaskKind kind, ExtractiveSummarizationTaskContent parameters) : base(taskName, serializedAdditionalRawData, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public ExtractiveSummarizationTaskParameters Parameters { get; set; }
+        public ExtractiveSummarizationTaskContent Parameters { get; set; }
     }
 }

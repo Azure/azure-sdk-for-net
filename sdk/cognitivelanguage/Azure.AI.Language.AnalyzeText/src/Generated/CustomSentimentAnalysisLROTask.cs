@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Use custom models to ease the process of sentiment analysis from documents like product reviews. </summary>
@@ -18,14 +21,15 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="CustomSentimentAnalysisLROTask"/>. </summary>
         /// <param name="taskName"> task name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal CustomSentimentAnalysisLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomSentimentAnalysisTaskParameters parameters) : base(taskName, kind)
+        internal CustomSentimentAnalysisLROTask(string taskName, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROTaskKind kind, CustomSentimentAnalysisTaskContent parameters) : base(taskName, serializedAdditionalRawData, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public CustomSentimentAnalysisTaskParameters Parameters { get; set; }
+        public CustomSentimentAnalysisTaskContent Parameters { get; set; }
     }
 }

@@ -6,31 +6,119 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class AnalyzeTextJobState
+    public partial class AnalyzeTextJobState : IUtf8JsonSerializable, IJsonModel<AnalyzeTextJobState>
     {
-        internal static AnalyzeTextJobState DeserializeAnalyzeTextJobState(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeTextJobState>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnalyzeTextJobState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobState>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTextJobState)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            writer.WritePropertyName("createdDateTime"u8);
+            writer.WriteStringValue(CreatedDateTime, "O");
+            if (Optional.IsDefined(ExpirationDateTime))
+            {
+                writer.WritePropertyName("expirationDateTime"u8);
+                writer.WriteStringValue(ExpirationDateTime.Value, "O");
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            writer.WritePropertyName("lastUpdatedDateTime"u8);
+            writer.WriteStringValue(LastUpdatedDateTime, "O");
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue<AnalyzeTextError>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            writer.WritePropertyName("tasks"u8);
+            writer.WriteObjectValue<TasksStatus>(Tasks, options);
+            if (Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics"u8);
+                writer.WriteObjectValue<RequestStatistics>(Statistics, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnalyzeTextJobState IJsonModel<AnalyzeTextJobState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobState>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTextJobState)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTextJobState(document.RootElement, options);
+        }
+
+        internal static AnalyzeTextJobState DeserializeAnalyzeTextJobState(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> displayName = default;
+            string displayName = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
             Guid jobId = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            State status = default;
-            Optional<IReadOnlyList<Error>> errors = default;
-            Optional<string> nextLink = default;
-            Tasks tasks = default;
-            Optional<RequestStatistics> statistics = default;
+            CurrentState status = default;
+            IReadOnlyList<AnalyzeTextError> errors = default;
+            string nextLink = default;
+            TasksStatus tasks = default;
+            RequestStatistics statistics = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -64,7 +152,7 @@ namespace Azure.AI.Language.AnalyzeText
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new State(property.Value.GetString());
+                    status = new CurrentState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -73,10 +161,10 @@ namespace Azure.AI.Language.AnalyzeText
                     {
                         continue;
                     }
-                    List<Error> array = new List<Error>();
+                    List<AnalyzeTextError> array = new List<AnalyzeTextError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Error.DeserializeError(item));
+                        array.Add(AnalyzeTextError.DeserializeAnalyzeTextError(item, options));
                     }
                     errors = array;
                     continue;
@@ -88,7 +176,7 @@ namespace Azure.AI.Language.AnalyzeText
                 }
                 if (property.NameEquals("tasks"u8))
                 {
-                    tasks = Tasks.DeserializeTasks(property.Value);
+                    tasks = TasksStatus.DeserializeTasksStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("statistics"u8))
@@ -97,19 +185,74 @@ namespace Azure.AI.Language.AnalyzeText
                     {
                         continue;
                     }
-                    statistics = RequestStatistics.DeserializeRequestStatistics(property.Value);
+                    statistics = RequestStatistics.DeserializeRequestStatistics(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnalyzeTextJobState(displayName.Value, createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdatedDateTime, status, Optional.ToList(errors), nextLink.Value, tasks, statistics.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnalyzeTextJobState(
+                displayName,
+                createdDateTime,
+                expirationDateTime,
+                jobId,
+                lastUpdatedDateTime,
+                status,
+                errors ?? new ChangeTrackingList<AnalyzeTextError>(),
+                nextLink,
+                tasks,
+                statistics,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AnalyzeTextJobState>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobState>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeTextJobState)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AnalyzeTextJobState IPersistableModel<AnalyzeTextJobState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobState>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnalyzeTextJobState(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeTextJobState)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnalyzeTextJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AnalyzeTextJobState FromResponse(Response response)
+        public static AnalyzeTextJobState FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAnalyzeTextJobState(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AnalyzeTextJobState>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

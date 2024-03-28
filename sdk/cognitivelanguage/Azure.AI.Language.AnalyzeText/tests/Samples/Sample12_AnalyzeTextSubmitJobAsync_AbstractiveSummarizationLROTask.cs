@@ -65,13 +65,13 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 Documents =
                 {
-                    new MultiLanguageInput("A", documentA, "en"),
+                    new MultiLanguageInput("A", documentA) { Language = "en" },
                 }
             };
 
             AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLanguageAnalysisInput, new AnalyzeTextLROTask[]
             {
-                new AbstractiveSummarizationLROTask()
+                new AbstractiveSummarizationLROTask( new AbstractiveSummarizationTaskContent())
             });
 
             Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);

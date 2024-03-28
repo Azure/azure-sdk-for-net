@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -18,7 +18,7 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal HealthcareLROResult(DateTimeOffset lastUpdateDateTime, State status, HealthcareResult results) : base(lastUpdateDateTime, status)
+        internal HealthcareLROResult(DateTimeOffset lastUpdateDateTime, CurrentState status, HealthcareResult results) : base(lastUpdateDateTime, status)
         {
             Argument.AssertNotNull(results, nameof(results));
 
@@ -31,10 +31,16 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"></param>
-        internal HealthcareLROResult(DateTimeOffset lastUpdateDateTime, State status, string taskName, AnalyzeTextLROResultsKind kind, HealthcareResult results) : base(lastUpdateDateTime, status, taskName, kind)
+        internal HealthcareLROResult(DateTimeOffset lastUpdateDateTime, CurrentState status, string taskName, AnalyzeTextLROResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, HealthcareResult results) : base(lastUpdateDateTime, status, taskName, kind, serializedAdditionalRawData)
         {
             Results = results;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareLROResult"/> for deserialization. </summary>
+        internal HealthcareLROResult()
+        {
         }
 
         /// <summary> Gets the results. </summary>

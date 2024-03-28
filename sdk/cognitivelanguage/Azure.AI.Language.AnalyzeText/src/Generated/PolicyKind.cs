@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.AnalyzeText
 {
+    /// <summary> The policyKind. </summary>
     internal readonly partial struct PolicyKind : IEquatable<PolicyKind>
     {
         private readonly string _value;

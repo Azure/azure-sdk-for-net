@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.AnalyzeText
 {
+    /// <summary> The PiiDomain. </summary>
     public readonly partial struct PiiDomain : IEquatable<PiiDomain>
     {
         private readonly string _value;

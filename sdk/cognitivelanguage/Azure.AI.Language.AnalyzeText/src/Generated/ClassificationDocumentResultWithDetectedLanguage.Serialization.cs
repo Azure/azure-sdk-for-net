@@ -5,26 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class ClassificationDocumentResultWithDetectedLanguage
+    public partial class ClassificationDocumentResultWithDetectedLanguage : IUtf8JsonSerializable, IJsonModel<ClassificationDocumentResultWithDetectedLanguage>
     {
-        internal static ClassificationDocumentResultWithDetectedLanguage DeserializeClassificationDocumentResultWithDetectedLanguage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClassificationDocumentResultWithDetectedLanguage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ClassificationDocumentResultWithDetectedLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClassificationDocumentResultWithDetectedLanguage)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("class"u8);
+            writer.WriteStartArray();
+            foreach (var item in Class)
+            {
+                writer.WriteObjectValue<ClassificationResult>(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(DetectedLanguage))
+            {
+                writer.WritePropertyName("detectedLanguage"u8);
+                writer.WriteObjectValue<DetectedLanguage>(DetectedLanguage, options);
+            }
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("warnings"u8);
+            writer.WriteStartArray();
+            foreach (var item in Warnings)
+            {
+                writer.WriteObjectValue<DocumentWarning>(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics"u8);
+                writer.WriteObjectValue<DocumentStatistics>(Statistics, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ClassificationDocumentResultWithDetectedLanguage IJsonModel<ClassificationDocumentResultWithDetectedLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClassificationDocumentResultWithDetectedLanguage)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClassificationDocumentResultWithDetectedLanguage(document.RootElement, options);
+        }
+
+        internal static ClassificationDocumentResultWithDetectedLanguage DeserializeClassificationDocumentResultWithDetectedLanguage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<ClassificationResult> @class = default;
-            Optional<DetectedLanguage> detectedLanguage = default;
+            DetectedLanguage detectedLanguage = default;
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
-            Optional<DocumentStatistics> statistics = default;
+            DocumentStatistics statistics = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("class"u8))
@@ -32,7 +104,7 @@ namespace Azure.AI.Language.AnalyzeText
                     List<ClassificationResult> array = new List<ClassificationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClassificationResult.DeserializeClassificationResult(item));
+                        array.Add(ClassificationResult.DeserializeClassificationResult(item, options));
                     }
                     @class = array;
                     continue;
@@ -43,7 +115,7 @@ namespace Azure.AI.Language.AnalyzeText
                     {
                         continue;
                     }
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
+                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -56,7 +128,7 @@ namespace Azure.AI.Language.AnalyzeText
                     List<DocumentWarning> array = new List<DocumentWarning>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentWarning.DeserializeDocumentWarning(item));
+                        array.Add(DocumentWarning.DeserializeDocumentWarning(item, options));
                     }
                     warnings = array;
                     continue;
@@ -67,19 +139,69 @@ namespace Azure.AI.Language.AnalyzeText
                     {
                         continue;
                     }
-                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);
+                    statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClassificationDocumentResultWithDetectedLanguage(id, warnings, statistics.Value, @class, detectedLanguage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ClassificationDocumentResultWithDetectedLanguage(
+                id,
+                warnings,
+                statistics,
+                serializedAdditionalRawData,
+                @class,
+                detectedLanguage);
         }
+
+        BinaryData IPersistableModel<ClassificationDocumentResultWithDetectedLanguage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ClassificationDocumentResultWithDetectedLanguage)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ClassificationDocumentResultWithDetectedLanguage IPersistableModel<ClassificationDocumentResultWithDetectedLanguage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationDocumentResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeClassificationDocumentResultWithDetectedLanguage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClassificationDocumentResultWithDetectedLanguage)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ClassificationDocumentResultWithDetectedLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ClassificationDocumentResultWithDetectedLanguage FromResponse(Response response)
+        internal static new ClassificationDocumentResultWithDetectedLanguage FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeClassificationDocumentResultWithDetectedLanguage(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ClassificationDocumentResultWithDetectedLanguage>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The EntityWithTags. </summary>
-    public partial class EntityWithTags : Entity
+    public partial class EntityWithTags : NamedEntity
     {
         /// <summary> Initializes a new instance of <see cref="EntityWithTags"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
@@ -42,12 +41,18 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="type"> An entity type is the lowest (or finest) granularity at which the entity has been detected. The type maps to the specific metadata attributes associated with the entity detected. </param>
         /// <param name="tags"> List of entity tags. Tags are to express some similarities/affinity between entities. </param>
-        internal EntityWithTags(string text, string category, string subcategory, int offset, int length, double confidenceScore, string type, IReadOnlyList<EntityTag> tags) : base(text, category, subcategory, offset, length, confidenceScore)
+        internal EntityWithTags(string text, string category, string subcategory, int offset, int length, double confidenceScore, IDictionary<string, BinaryData> serializedAdditionalRawData, string type, IReadOnlyList<EntityTag> tags) : base(text, category, subcategory, offset, length, confidenceScore, serializedAdditionalRawData)
         {
             Type = type;
             Tags = tags;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntityWithTags"/> for deserialization. </summary>
+        internal EntityWithTags()
+        {
         }
 
         /// <summary> An entity type is the lowest (or finest) granularity at which the entity has been detected. The type maps to the specific metadata attributes associated with the entity detected. </summary>

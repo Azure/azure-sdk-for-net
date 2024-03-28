@@ -5,15 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class AnalyzeTextLROResult
+    [PersistableModelProxy(typeof(UnknownAnalyzeTextLROResult))]
+    public partial class AnalyzeTextLROResult : IUtf8JsonSerializable, IJsonModel<AnalyzeTextLROResult>
     {
-        internal static AnalyzeTextLROResult DeserializeAnalyzeTextLROResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeTextLROResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnalyzeTextLROResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextLROResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTextLROResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("lastUpdateDateTime"u8);
+            writer.WriteStringValue(LastUpdateDateTime, "O");
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(TaskName))
+            {
+                writer.WritePropertyName("taskName"u8);
+                writer.WriteStringValue(TaskName);
+            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnalyzeTextLROResult IJsonModel<AnalyzeTextLROResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextLROResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTextLROResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTextLROResult(document.RootElement, options);
+        }
+
+        internal static AnalyzeTextLROResult DeserializeAnalyzeTextLROResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,24 +79,55 @@ namespace Azure.AI.Language.AnalyzeText
             {
                 switch (discriminator.GetString())
                 {
-                    case "CustomEntityRecognitionLROResults": return CustomEntityRecognitionLROResult.DeserializeCustomEntityRecognitionLROResult(element);
-                    case "CustomSingleLabelClassificationLROResults": return CustomSingleLabelClassificationLROResult.DeserializeCustomSingleLabelClassificationLROResult(element);
-                    case "CustomMultiLabelClassificationLROResults": return CustomMultiLabelClassificationLROResult.DeserializeCustomMultiLabelClassificationLROResult(element);
-                    case "EntityLinkingLROResults": return EntityLinkingLROResult.DeserializeEntityLinkingLROResult(element);
-                    case "EntityRecognitionLROResults": return EntityRecognitionLROResult.DeserializeEntityRecognitionLROResult(element);
-                    case "HealthcareLROResults": return HealthcareLROResult.DeserializeHealthcareLROResult(element);
-                    case "KeyPhraseExtractionLROResults": return KeyPhraseExtractionLROResult.DeserializeKeyPhraseExtractionLROResult(element);
-                    case "PiiEntityRecognitionLROResults": return PiiEntityRecognitionLROResult.DeserializePiiEntityRecognitionLROResult(element);
-                    case "SentimentAnalysisLROResults": return SentimentLROResult.DeserializeSentimentLROResult(element);
-                    case "CustomSentimentAnalysisLROResults": return CustomSentimentAnalysisLROResult.DeserializeCustomSentimentAnalysisLROResult(element);
-                    case "ExtractiveSummarizationLROResults": return ExtractiveSummarizationLROResult.DeserializeExtractiveSummarizationLROResult(element);
-                    case "AbstractiveSummarizationLROResults": return AbstractiveSummarizationLROResult.DeserializeAbstractiveSummarizationLROResult(element);
-                    case "CustomAbstractiveSummarizationLROResults": return CustomAbstractiveSummarizationLROResult.DeserializeCustomAbstractiveSummarizationLROResult(element);
-                    case "CustomHealthcareLROResults": return CustomHealthcareLROResult.DeserializeCustomHealthcareLROResult(element);
+                    case "AbstractiveSummarizationLROResults": return AbstractiveSummarizationLROResult.DeserializeAbstractiveSummarizationLROResult(element, options);
+                    case "CustomAbstractiveSummarizationLROResults": return CustomAbstractiveSummarizationLROResult.DeserializeCustomAbstractiveSummarizationLROResult(element, options);
+                    case "CustomEntityRecognitionLROResults": return CustomEntityRecognitionLROResult.DeserializeCustomEntityRecognitionLROResult(element, options);
+                    case "CustomHealthcareLROResults": return CustomHealthcareLROResult.DeserializeCustomHealthcareLROResult(element, options);
+                    case "CustomMultiLabelClassificationLROResults": return CustomMultiLabelClassificationLROResult.DeserializeCustomMultiLabelClassificationLROResult(element, options);
+                    case "CustomSentimentAnalysisLROResults": return CustomSentimentAnalysisLROResult.DeserializeCustomSentimentAnalysisLROResult(element, options);
+                    case "CustomSingleLabelClassificationLROResults": return CustomSingleLabelClassificationLROResult.DeserializeCustomSingleLabelClassificationLROResult(element, options);
+                    case "EntityLinkingLROResults": return EntityLinkingLROResult.DeserializeEntityLinkingLROResult(element, options);
+                    case "EntityRecognitionLROResults": return EntityRecognitionLROResult.DeserializeEntityRecognitionLROResult(element, options);
+                    case "ExtractiveSummarizationLROResults": return ExtractiveSummarizationLROResult.DeserializeExtractiveSummarizationLROResult(element, options);
+                    case "HealthcareLROResults": return HealthcareLROResult.DeserializeHealthcareLROResult(element, options);
+                    case "KeyPhraseExtractionLROResults": return KeyPhraseExtractionLROResult.DeserializeKeyPhraseExtractionLROResult(element, options);
+                    case "PiiEntityRecognitionLROResults": return PiiEntityRecognitionLROResult.DeserializePiiEntityRecognitionLROResult(element, options);
+                    case "SentimentAnalysisLROResults": return SentimentLROResult.DeserializeSentimentLROResult(element, options);
                 }
             }
-            return UnknownAnalyzeTextLROResult.DeserializeUnknownAnalyzeTextLROResult(element);
+            return UnknownAnalyzeTextLROResult.DeserializeUnknownAnalyzeTextLROResult(element, options);
         }
+
+        BinaryData IPersistableModel<AnalyzeTextLROResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextLROResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeTextLROResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AnalyzeTextLROResult IPersistableModel<AnalyzeTextLROResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextLROResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnalyzeTextLROResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeTextLROResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnalyzeTextLROResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -47,6 +135,14 @@ namespace Azure.AI.Language.AnalyzeText
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAnalyzeTextLROResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AnalyzeTextLROResult>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

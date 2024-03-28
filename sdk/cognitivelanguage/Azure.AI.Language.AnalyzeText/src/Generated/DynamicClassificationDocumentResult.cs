@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -33,10 +32,16 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="classifications"></param>
-        internal DynamicClassificationDocumentResult(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, IReadOnlyList<ClassificationResult> classifications) : base(id, warnings, statistics)
+        internal DynamicClassificationDocumentResult(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<ClassificationResult> classifications) : base(id, warnings, statistics, serializedAdditionalRawData)
         {
             Classifications = classifications;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynamicClassificationDocumentResult"/> for deserialization. </summary>
+        internal DynamicClassificationDocumentResult()
+        {
         }
 
         /// <summary> Gets the classifications. </summary>

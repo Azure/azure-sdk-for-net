@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.AnalyzeText
 {
+    /// <summary> The RangeKind. </summary>
     public readonly partial struct RangeKind : IEquatable<RangeKind>
     {
         private readonly string _value;

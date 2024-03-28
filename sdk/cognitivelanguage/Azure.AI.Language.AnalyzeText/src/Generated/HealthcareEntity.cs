@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The HealthcareEntity. </summary>
     public partial class HealthcareEntity
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HealthcareEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Healthcare Entity Category. </param>
@@ -43,7 +74,8 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="assertion"></param>
         /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
         /// <param name="links"> Entity references in known data sources. </param>
-        internal HealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareAssertion assertion, string name, IReadOnlyList<HealthcareEntityLink> links)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareAssertion assertion, string name, IReadOnlyList<HealthcareEntityLink> links, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             Category = category;
@@ -54,6 +86,12 @@ namespace Azure.AI.Language.AnalyzeText
             Assertion = assertion;
             Name = name;
             Links = links;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntity"/> for deserialization. </summary>
+        internal HealthcareEntity()
+        {
         }
 
         /// <summary> Entity text as appears in the request. </summary>

@@ -32,7 +32,10 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 Documents =
                 {
-                    new MultiLanguageInput("A", documentA, "en"),
+                    new MultiLanguageInput("A", documentA)
+                    {
+                        Language = "en"
+                    },
                 }
             };
 
@@ -59,7 +62,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     CustomSingleLabelClassificationLROResult customClassificationResult = (CustomSingleLabelClassificationLROResult)analyzeTextLROResult;
 
                     // View the classifications recognized in the input documents.
-                    foreach (ClassificationDocumentResult customClassificationDocument in customClassificationResult.Results.Documents)
+                    foreach (ClassificationDocumentResultWithDetectedLanguage customClassificationDocument in customClassificationResult.Results.Documents)
                     {
                         Console.WriteLine($"Result for document with Id = \"{customClassificationDocument.Id}\":");
                         Console.WriteLine($"  Recognized {customClassificationDocument.Class.Count} classifications:");

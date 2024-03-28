@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -16,7 +16,7 @@ namespace Azure.AI.Language.AnalyzeText
         /// <summary> Initializes a new instance of <see cref="SentimentTaskResult"/>. </summary>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal SentimentTaskResult(SentimentResponse results)
+        internal SentimentTaskResult(SentimentResult results)
         {
             Argument.AssertNotNull(results, nameof(results));
 
@@ -26,13 +26,19 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="SentimentTaskResult"/>. </summary>
         /// <param name="kind"> The kind of task result. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"></param>
-        internal SentimentTaskResult(AnalyzeTextTaskResultsKind kind, SentimentResponse results) : base(kind)
+        internal SentimentTaskResult(AnalyzeTextTaskResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, SentimentResult results) : base(kind, serializedAdditionalRawData)
         {
             Results = results;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SentimentTaskResult"/> for deserialization. </summary>
+        internal SentimentTaskResult()
+        {
+        }
+
         /// <summary> Gets the results. </summary>
-        public SentimentResponse Results { get; }
+        public SentimentResult Results { get; }
     }
 }

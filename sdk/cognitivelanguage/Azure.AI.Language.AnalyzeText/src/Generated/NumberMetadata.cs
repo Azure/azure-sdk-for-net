@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> A metadata for numeric entity instances. </summary>
@@ -22,12 +25,18 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="NumberMetadata"/>. </summary>
         /// <param name="metadataKind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="numberKind"></param>
         /// <param name="value"> A numeric representation of what the extracted text denotes. </param>
-        internal NumberMetadata(MetadataKind metadataKind, NumberKind numberKind, double value) : base(metadataKind)
+        internal NumberMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> serializedAdditionalRawData, NumberKind numberKind, double value) : base(metadataKind, serializedAdditionalRawData)
         {
             NumberKind = numberKind;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NumberMetadata"/> for deserialization. </summary>
+        internal NumberMetadata()
+        {
         }
 
         /// <summary> Gets the number kind. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class AnalyzeTextJobsInput : IUtf8JsonSerializable
+    public partial class AnalyzeTextJobsInput : IUtf8JsonSerializable, IJsonModel<AnalyzeTextJobsInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeTextJobsInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnalyzeTextJobsInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobsInput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTextJobsInput)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
@@ -21,12 +32,12 @@ namespace Azure.AI.Language.AnalyzeText
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue(AnalysisInput);
+            writer.WriteObjectValue<MultiLanguageAnalysisInput>(AnalysisInput, options);
             writer.WritePropertyName("tasks"u8);
             writer.WriteStartArray();
             foreach (var item in Tasks)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AnalyzeTextLROTask>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(DefaultLanguage))
@@ -34,14 +45,130 @@ namespace Azure.AI.Language.AnalyzeText
                 writer.WritePropertyName("defaultLanguage"u8);
                 writer.WriteStringValue(DefaultLanguage);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        AnalyzeTextJobsInput IJsonModel<AnalyzeTextJobsInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobsInput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTextJobsInput)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTextJobsInput(document.RootElement, options);
+        }
+
+        internal static AnalyzeTextJobsInput DeserializeAnalyzeTextJobsInput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string displayName = default;
+            MultiLanguageAnalysisInput analysisInput = default;
+            IList<AnalyzeTextLROTask> tasks = default;
+            string defaultLanguage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("analysisInput"u8))
+                {
+                    analysisInput = MultiLanguageAnalysisInput.DeserializeMultiLanguageAnalysisInput(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("tasks"u8))
+                {
+                    List<AnalyzeTextLROTask> array = new List<AnalyzeTextLROTask>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AnalyzeTextLROTask.DeserializeAnalyzeTextLROTask(item, options));
+                    }
+                    tasks = array;
+                    continue;
+                }
+                if (property.NameEquals("defaultLanguage"u8))
+                {
+                    defaultLanguage = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnalyzeTextJobsInput(displayName, analysisInput, tasks, defaultLanguage, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AnalyzeTextJobsInput>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobsInput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeTextJobsInput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AnalyzeTextJobsInput IPersistableModel<AnalyzeTextJobsInput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextJobsInput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnalyzeTextJobsInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeTextJobsInput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnalyzeTextJobsInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnalyzeTextJobsInput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnalyzeTextJobsInput(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AnalyzeTextJobsInput>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> This object contains information of the prebuilt component of the detected entity. </summary>
@@ -18,8 +21,9 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="PrebuiltComponent"/>. </summary>
         /// <param name="entityComponentKind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The prebuilt component of an extracted entity type. </param>
-        internal PrebuiltComponent(EntityComponentKind entityComponentKind, string value) : base(entityComponentKind)
+        internal PrebuiltComponent(EntityComponentKind entityComponentKind, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(entityComponentKind, serializedAdditionalRawData)
         {
             Value = value;
         }

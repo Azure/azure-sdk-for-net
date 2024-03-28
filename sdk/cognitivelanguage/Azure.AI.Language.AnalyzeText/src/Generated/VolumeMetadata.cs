@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Represents the Volume entity Metadata model. </summary>
@@ -22,12 +25,18 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="VolumeMetadata"/>. </summary>
         /// <param name="metadataKind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"></param>
-        internal VolumeMetadata(MetadataKind metadataKind, double value, VolumeUnit unit) : base(metadataKind)
+        internal VolumeMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> serializedAdditionalRawData, double value, VolumeUnit unit) : base(metadataKind, serializedAdditionalRawData)
         {
             Value = value;
             Unit = unit;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VolumeMetadata"/> for deserialization. </summary>
+        internal VolumeMetadata()
+        {
         }
 
         /// <summary> The numeric value that the extracted text denotes. </summary>

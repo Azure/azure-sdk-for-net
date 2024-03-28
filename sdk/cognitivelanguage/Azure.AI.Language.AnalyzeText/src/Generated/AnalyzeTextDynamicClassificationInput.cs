@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The AnalyzeTextDynamicClassificationInput. </summary>
@@ -18,9 +21,10 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextDynamicClassificationInput"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="analysisInput"></param>
         /// <param name="parameters"></param>
-        internal AnalyzeTextDynamicClassificationInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, DynamicClassificationTaskParameters parameters) : base(kind)
+        internal AnalyzeTextDynamicClassificationInput(AnalyzeTextTaskKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, MultiLanguageAnalysisInput analysisInput, DynamicClassificationTaskContent parameters) : base(kind, serializedAdditionalRawData)
         {
             AnalysisInput = analysisInput;
             Parameters = parameters;
@@ -29,6 +33,6 @@ namespace Azure.AI.Language.AnalyzeText
         /// <summary> Gets or sets the analysis input. </summary>
         public MultiLanguageAnalysisInput AnalysisInput { get; set; }
         /// <summary> Gets or sets the parameters. </summary>
-        public DynamicClassificationTaskParameters Parameters { get; set; }
+        public DynamicClassificationTaskContent Parameters { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.AnalyzeText
 {
+    /// <summary> The EntityCategory. </summary>
     public readonly partial struct EntityCategory : IEquatable<EntityCategory>
     {
         private readonly string _value;

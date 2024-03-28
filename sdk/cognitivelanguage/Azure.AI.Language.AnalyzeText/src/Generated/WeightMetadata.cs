@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Represents the Weight ) entity Metadata model. </summary>
@@ -22,12 +25,18 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="WeightMetadata"/>. </summary>
         /// <param name="metadataKind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"></param>
-        internal WeightMetadata(MetadataKind metadataKind, double value, WeightUnit unit) : base(metadataKind)
+        internal WeightMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> serializedAdditionalRawData, double value, WeightUnit unit) : base(metadataKind, serializedAdditionalRawData)
         {
             Value = value;
             Unit = unit;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WeightMetadata"/> for deserialization. </summary>
+        internal WeightMetadata()
+        {
         }
 
         /// <summary> The numeric value that the extracted text denotes. </summary>

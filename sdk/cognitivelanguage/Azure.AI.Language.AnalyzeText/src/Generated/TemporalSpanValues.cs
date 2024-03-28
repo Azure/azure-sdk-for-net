@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The TemporalSpanValues. </summary>
     public partial class TemporalSpanValues
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TemporalSpanValues"/>. </summary>
         internal TemporalSpanValues()
         {
@@ -21,13 +56,15 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="duration"> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
         /// <param name="modifier"></param>
         /// <param name="timex"> An optional triplet containing the beginning, the end, and the duration all stated as ISO 8601 formatted strings. </param>
-        internal TemporalSpanValues(string begin, string end, string duration, TemporalModifier? modifier, string timex)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TemporalSpanValues(string begin, string end, string duration, TemporalModifier? modifier, string timex, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Begin = begin;
             End = end;
             Duration = duration;
             Modifier = modifier;
             Timex = timex;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the begin. </summary>

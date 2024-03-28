@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The EntityTag. </summary>
     public partial class EntityTag
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EntityTag"/>. </summary>
         /// <param name="name"> Tags are to express some similarities/affinity between entities. Entity Tags will be unique globally. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -26,10 +58,17 @@ namespace Azure.AI.Language.AnalyzeText
         /// <summary> Initializes a new instance of <see cref="EntityTag"/>. </summary>
         /// <param name="name"> Tags are to express some similarities/affinity between entities. Entity Tags will be unique globally. </param>
         /// <param name="confidenceScore"> Detection score between 0 and 1 of the extracted entity. </param>
-        internal EntityTag(string name, double? confidenceScore)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EntityTag(string name, double? confidenceScore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ConfidenceScore = confidenceScore;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntityTag"/> for deserialization. </summary>
+        internal EntityTag()
+        {
         }
 
         /// <summary> Tags are to express some similarities/affinity between entities. Entity Tags will be unique globally. </summary>

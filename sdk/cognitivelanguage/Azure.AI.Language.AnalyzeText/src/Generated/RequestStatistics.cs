@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -41,6 +40,11 @@ namespace Azure.AI.Language.AnalyzeText
             ErroneousDocumentsCount = erroneousDocumentsCount;
             TransactionsCount = transactionsCount;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequestStatistics"/> for deserialization. </summary>
+        internal RequestStatistics()
+        {
         }
 
         /// <summary> Number of documents submitted in the request. </summary>

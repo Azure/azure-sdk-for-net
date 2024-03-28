@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The AnalyzeTextLanguageDetectionInput. </summary>
@@ -18,9 +21,10 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextLanguageDetectionInput"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="analysisInput"></param>
         /// <param name="parameters"></param>
-        internal AnalyzeTextLanguageDetectionInput(AnalyzeTextTaskKind kind, LanguageDetectionAnalysisInput analysisInput, LanguageDetectionTaskParameters parameters) : base(kind)
+        internal AnalyzeTextLanguageDetectionInput(AnalyzeTextTaskKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, LanguageDetectionAnalysisInput analysisInput, LanguageDetectionTaskContent parameters) : base(kind, serializedAdditionalRawData)
         {
             AnalysisInput = analysisInput;
             Parameters = parameters;
@@ -29,6 +33,6 @@ namespace Azure.AI.Language.AnalyzeText
         /// <summary> Gets or sets the analysis input. </summary>
         public LanguageDetectionAnalysisInput AnalysisInput { get; set; }
         /// <summary> Gets or sets the parameters. </summary>
-        public LanguageDetectionTaskParameters Parameters { get; set; }
+        public LanguageDetectionTaskContent Parameters { get; set; }
     }
 }

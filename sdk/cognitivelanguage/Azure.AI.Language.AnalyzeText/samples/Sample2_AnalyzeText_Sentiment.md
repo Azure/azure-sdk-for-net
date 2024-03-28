@@ -43,9 +43,9 @@ try
         {
             Documents =
             {
-                new MultiLanguageInput("A", documentA, "en"),
-                new MultiLanguageInput("B", documentB, "es"),
-                new MultiLanguageInput("C", documentC, "en"),
+                new MultiLanguageInput("A", documentA) { Language = "en" },
+                new MultiLanguageInput("B", documentB) { Language = "es" },
+                new MultiLanguageInput("C", documentC) { Language = "en" },
             }
         }
     };
@@ -123,9 +123,9 @@ AnalyzeTextTask body = new AnalyzeTextSentimentAnalysisInput()
     {
         Documents =
         {
-            new MultiLanguageInput("A", reviewA, "en"),
-            new MultiLanguageInput("B", reviewB, "en"),
-            new MultiLanguageInput("C", reviewC, "en"),
+            new MultiLanguageInput("A", documentA) { Language = "en" },
+            new MultiLanguageInput("B", documentB) { Language = "en" },
+            new MultiLanguageInput("C", documentC) { Language = "en" },
         }
     },
     Parameters = new SentimentAnalysisTaskContent()

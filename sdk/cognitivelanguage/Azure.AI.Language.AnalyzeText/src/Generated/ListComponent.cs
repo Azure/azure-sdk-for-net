@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> This object contains information of the list component of the detected entity. </summary>
@@ -18,8 +21,9 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="ListComponent"/>. </summary>
         /// <param name="entityComponentKind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The list key of an extracted entity type. </param>
-        internal ListComponent(EntityComponentKind entityComponentKind, string value) : base(entityComponentKind)
+        internal ListComponent(EntityComponentKind entityComponentKind, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(entityComponentKind, serializedAdditionalRawData)
         {
             Value = value;
         }

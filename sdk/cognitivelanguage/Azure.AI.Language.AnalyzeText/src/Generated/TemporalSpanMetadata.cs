@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> represents the Metadata of a date and/or time span. </summary>
@@ -18,8 +21,9 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="TemporalSpanMetadata"/>. </summary>
         /// <param name="metadataKind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="spanValues"></param>
-        internal TemporalSpanMetadata(MetadataKind metadataKind, TemporalSpanValues spanValues) : base(metadataKind)
+        internal TemporalSpanMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> serializedAdditionalRawData, TemporalSpanValues spanValues) : base(metadataKind, serializedAdditionalRawData)
         {
             SpanValues = spanValues;
         }

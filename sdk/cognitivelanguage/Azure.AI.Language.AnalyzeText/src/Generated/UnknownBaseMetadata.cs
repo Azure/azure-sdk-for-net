@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Unknown version of BaseMetadata. </summary>
@@ -12,7 +15,13 @@ namespace Azure.AI.Language.AnalyzeText
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBaseMetadata"/>. </summary>
         /// <param name="metadataKind"></param>
-        internal UnknownBaseMetadata(MetadataKind metadataKind) : base(metadataKind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBaseMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(metadataKind, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBaseMetadata"/> for deserialization. </summary>
+        internal UnknownBaseMetadata()
         {
         }
     }

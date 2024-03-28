@@ -16,7 +16,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 ## Recognizing Personally Identifiable Information in multiple documents
 
-To recognize Personally Identifiable Information in multiple documents, call `AnalyzeText` on an `AnalyzeTextPIIEntitiesRecognitionInput`.  The results are returned as a `PIITaskResult`.
+To recognize Personally Identifiable Information in multiple documents, call `AnalyzeText` on an `AnalyzeTextpiiEntitiesRecognitionInput`.  The results are returned as a `piiTaskResult`.
 
 ```C# Snippet:Sample5_AnalyzeText_RecognizePii
 string documentA =
@@ -31,27 +31,27 @@ string documentB =
 
 string documentC = string.Empty;
 
-AnalyzeTextTask body = new AnalyzeTextPIIEntitiesRecognitionInput()
+AnalyzeTextTask body = new AnalyzeTextpiiEntitiesRecognitionInput()
 {
     AnalysisInput = new MultiLanguageAnalysisInput()
     {
         Documents =
         {
-            new MultiLanguageInput("A", documentA, "en"),
-            new MultiLanguageInput("B", documentB, "es"),
+            new MultiLanguageInput("A", documentA) { Language = "en" },
+            new MultiLanguageInput("B", documentB) { Language = "es" },
             new MultiLanguageInput("C", documentC),
         }
     },
-    Parameters = new PIITaskContent()
+    Parameters = new piiTaskContent()
     {
         ModelVersion = "latest",
     }
 };
 
 Response<AnalyzeTextTaskResult> response = client.AnalyzeText(body);
-PIITaskResult piiTaskResult = (PIITaskResult)response.Value;
+piiTaskResult piiTaskResult = (piiTaskResult)response.Value;
 
-foreach (PIIResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
+foreach (piiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
 {
     Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
 

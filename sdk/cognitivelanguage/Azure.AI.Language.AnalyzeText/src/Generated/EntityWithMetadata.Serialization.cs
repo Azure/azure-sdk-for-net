@@ -5,30 +5,105 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class EntityWithMetadata
+    public partial class EntityWithMetadata : IUtf8JsonSerializable, IJsonModel<EntityWithMetadata>
     {
-        internal static EntityWithMetadata DeserializeEntityWithMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityWithMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EntityWithMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EntityWithMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EntityWithMetadata)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteObjectValue<BaseMetadata>(Metadata, options);
+            }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
+            writer.WritePropertyName("tags"u8);
+            writer.WriteStartArray();
+            foreach (var item in Tags)
+            {
+                writer.WriteObjectValue<EntityTag>(item, options);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("text"u8);
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("category"u8);
+            writer.WriteStringValue(Category);
+            if (Optional.IsDefined(Subcategory))
+            {
+                writer.WritePropertyName("subcategory"u8);
+                writer.WriteStringValue(Subcategory);
+            }
+            writer.WritePropertyName("offset"u8);
+            writer.WriteNumberValue(Offset);
+            writer.WritePropertyName("length"u8);
+            writer.WriteNumberValue(Length);
+            writer.WritePropertyName("confidenceScore"u8);
+            writer.WriteNumberValue(ConfidenceScore);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EntityWithMetadata IJsonModel<EntityWithMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EntityWithMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EntityWithMetadata)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEntityWithMetadata(document.RootElement, options);
+        }
+
+        internal static EntityWithMetadata DeserializeEntityWithMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BaseMetadata> metadata = default;
+            BaseMetadata metadata = default;
             string type = default;
             IReadOnlyList<EntityTag> tags = default;
             string text = default;
             string category = default;
-            Optional<string> subcategory = default;
+            string subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadata"u8))
@@ -37,7 +112,7 @@ namespace Azure.AI.Language.AnalyzeText
                     {
                         continue;
                     }
-                    metadata = BaseMetadata.DeserializeBaseMetadata(property.Value);
+                    metadata = BaseMetadata.DeserializeBaseMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -50,7 +125,7 @@ namespace Azure.AI.Language.AnalyzeText
                     List<EntityTag> array = new List<EntityTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityTag.DeserializeEntityTag(item));
+                        array.Add(EntityTag.DeserializeEntityTag(item, options));
                     }
                     tags = array;
                     continue;
@@ -85,9 +160,55 @@ namespace Azure.AI.Language.AnalyzeText
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EntityWithMetadata(text, category, subcategory.Value, offset, length, confidenceScore, type, tags, metadata.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EntityWithMetadata(
+                text,
+                category,
+                subcategory,
+                offset,
+                length,
+                confidenceScore,
+                serializedAdditionalRawData,
+                type,
+                tags,
+                metadata);
         }
+
+        BinaryData IPersistableModel<EntityWithMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EntityWithMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EntityWithMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EntityWithMetadata IPersistableModel<EntityWithMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EntityWithMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEntityWithMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EntityWithMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EntityWithMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -95,6 +216,14 @@ namespace Azure.AI.Language.AnalyzeText
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeEntityWithMetadata(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<EntityWithMetadata>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -36,10 +35,16 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="documents"></param>
-        internal CustomHealthcareResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IReadOnlyList<CustomHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> documents) : base(errors, statistics, projectName, deploymentName)
+        internal CustomHealthcareResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<CustomHealthcareEntitiesDocumentResultWithDocumentDetectedLanguage> documents) : base(errors, statistics, projectName, deploymentName, serializedAdditionalRawData)
         {
             Documents = documents;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomHealthcareResult"/> for deserialization. </summary>
+        internal CustomHealthcareResult()
+        {
         }
 
         /// <summary> Gets the documents. </summary>

@@ -45,8 +45,8 @@ MultiLanguageAnalysisInput multiLanguageAnalysisInput = new MultiLanguageAnalysi
 {
     Documents =
         {
-            new MultiLanguageInput("A", documentA, "en"),
-            new MultiLanguageInput("B", documentB, "en"),
+            new MultiLanguageInput("A", documentA) { Language = "en" },
+            new MultiLanguageInput("B", documentB) { Language = "en" },
         }
 };
 

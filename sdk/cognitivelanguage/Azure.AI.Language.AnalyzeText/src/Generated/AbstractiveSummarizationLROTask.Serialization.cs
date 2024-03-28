@@ -5,18 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class AbstractiveSummarizationLROTask : IUtf8JsonSerializable
+    public partial class AbstractiveSummarizationLROTask : IUtf8JsonSerializable, IJsonModel<AbstractiveSummarizationLROTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AbstractiveSummarizationLROTask>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AbstractiveSummarizationLROTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AbstractiveSummarizationLROTask)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Parameters);
+            writer.WriteObjectValue<AbstractiveSummarizationTaskContent>(Parameters, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(TaskName))
@@ -24,14 +35,119 @@ namespace Azure.AI.Language.AnalyzeText
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        AbstractiveSummarizationLROTask IJsonModel<AbstractiveSummarizationLROTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AbstractiveSummarizationLROTask)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAbstractiveSummarizationLROTask(document.RootElement, options);
+        }
+
+        internal static AbstractiveSummarizationLROTask DeserializeAbstractiveSummarizationLROTask(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AbstractiveSummarizationTaskContent parameters = default;
+            AnalyzeTextLROTaskKind kind = default;
+            string taskName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("parameters"u8))
+                {
+                    parameters = AbstractiveSummarizationTaskContent.DeserializeAbstractiveSummarizationTaskContent(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new AnalyzeTextLROTaskKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("taskName"u8))
+                {
+                    taskName = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AbstractiveSummarizationLROTask(taskName, serializedAdditionalRawData, kind, parameters);
+        }
+
+        BinaryData IPersistableModel<AbstractiveSummarizationLROTask>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationLROTask>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AbstractiveSummarizationLROTask)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AbstractiveSummarizationLROTask IPersistableModel<AbstractiveSummarizationLROTask>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AbstractiveSummarizationLROTask>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAbstractiveSummarizationLROTask(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AbstractiveSummarizationLROTask)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AbstractiveSummarizationLROTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AbstractiveSummarizationLROTask FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAbstractiveSummarizationLROTask(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AbstractiveSummarizationLROTask>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

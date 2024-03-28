@@ -5,22 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class TemporalSpanMetadata
+    public partial class TemporalSpanMetadata : IUtf8JsonSerializable, IJsonModel<TemporalSpanMetadata>
     {
-        internal static TemporalSpanMetadata DeserializeTemporalSpanMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TemporalSpanMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TemporalSpanMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TemporalSpanMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TemporalSpanMetadata)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SpanValues))
+            {
+                writer.WritePropertyName("spanValues"u8);
+                writer.WriteObjectValue<TemporalSpanValues>(SpanValues, options);
+            }
+            writer.WritePropertyName("metadataKind"u8);
+            writer.WriteStringValue(MetadataKind.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TemporalSpanMetadata IJsonModel<TemporalSpanMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TemporalSpanMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TemporalSpanMetadata)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTemporalSpanMetadata(document.RootElement, options);
+        }
+
+        internal static TemporalSpanMetadata DeserializeTemporalSpanMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<TemporalSpanValues> spanValues = default;
+            TemporalSpanValues spanValues = default;
             MetadataKind metadataKind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("spanValues"u8))
@@ -29,7 +83,7 @@ namespace Azure.AI.Language.AnalyzeText
                     {
                         continue;
                     }
-                    spanValues = TemporalSpanValues.DeserializeTemporalSpanValues(property.Value);
+                    spanValues = TemporalSpanValues.DeserializeTemporalSpanValues(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadataKind"u8))
@@ -37,9 +91,45 @@ namespace Azure.AI.Language.AnalyzeText
                     metadataKind = new MetadataKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TemporalSpanMetadata(metadataKind, spanValues.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TemporalSpanMetadata(metadataKind, serializedAdditionalRawData, spanValues);
         }
+
+        BinaryData IPersistableModel<TemporalSpanMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TemporalSpanMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TemporalSpanMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TemporalSpanMetadata IPersistableModel<TemporalSpanMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TemporalSpanMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTemporalSpanMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TemporalSpanMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TemporalSpanMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -47,6 +137,14 @@ namespace Azure.AI.Language.AnalyzeText
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeTemporalSpanMetadata(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TemporalSpanMetadata>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

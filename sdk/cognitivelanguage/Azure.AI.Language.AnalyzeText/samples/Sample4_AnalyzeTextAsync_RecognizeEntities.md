@@ -45,10 +45,10 @@ AnalyzeTextTask body = new AnalyzeTextEntityRecognitionInput()
     {
         Documents =
         {
-            new MultiLanguageInput("A", documentA, "en"),
-            new MultiLanguageInput("B", documentB, "es"),
-            new MultiLanguageInput("C", documentC, "en"),
-            new MultiLanguageInput("D", documentD, "en"),
+            new MultiLanguageInput("A", documentA) { Language = "en" },
+            new MultiLanguageInput("B", documentB) { Language = "es" },
+            new MultiLanguageInput("C", documentC) { Language = "en" },
+            new MultiLanguageInput("D", documentD)
         }
     },
     Parameters = new EntitiesTaskParameters()

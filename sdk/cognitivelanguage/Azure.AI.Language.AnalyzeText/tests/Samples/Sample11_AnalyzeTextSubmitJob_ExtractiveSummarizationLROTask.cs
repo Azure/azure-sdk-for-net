@@ -64,7 +64,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 Documents =
                 {
-                    new MultiLanguageInput("A", documentA, "en"),
+                    new MultiLanguageInput("A", documentA) { Language = "en" },
                 }
             };
 

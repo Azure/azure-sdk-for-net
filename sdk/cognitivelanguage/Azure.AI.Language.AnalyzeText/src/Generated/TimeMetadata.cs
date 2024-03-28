@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -22,8 +22,9 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="TimeMetadata"/>. </summary>
         /// <param name="metadataKind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dateValues"></param>
-        internal TimeMetadata(MetadataKind metadataKind, IReadOnlyList<DateValue> dateValues) : base(metadataKind)
+        internal TimeMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<DateValue> dateValues) : base(metadataKind, serializedAdditionalRawData)
         {
             DateValues = dateValues;
         }

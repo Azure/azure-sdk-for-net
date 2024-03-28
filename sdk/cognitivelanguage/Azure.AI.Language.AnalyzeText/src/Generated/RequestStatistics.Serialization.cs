@@ -6,16 +6,65 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class RequestStatistics
+    public partial class RequestStatistics : IUtf8JsonSerializable, IJsonModel<RequestStatistics>
     {
-        internal static RequestStatistics DeserializeRequestStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RequestStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RequestStatistics)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("documentsCount"u8);
+            writer.WriteNumberValue(DocumentsCount);
+            writer.WritePropertyName("validDocumentsCount"u8);
+            writer.WriteNumberValue(ValidDocumentsCount);
+            writer.WritePropertyName("erroneousDocumentsCount"u8);
+            writer.WriteNumberValue(ErroneousDocumentsCount);
+            writer.WritePropertyName("transactionsCount"u8);
+            writer.WriteNumberValue(TransactionsCount);
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            writer.WriteEndObject();
+        }
+
+        RequestStatistics IJsonModel<RequestStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RequestStatistics)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRequestStatistics(document.RootElement, options);
+        }
+
+        internal static RequestStatistics DeserializeRequestStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,12 +103,51 @@ namespace Azure.AI.Language.AnalyzeText
             return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, additionalProperties);
         }
 
+        BinaryData IPersistableModel<RequestStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RequestStatistics)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RequestStatistics IPersistableModel<RequestStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRequestStatistics(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RequestStatistics)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RequestStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static RequestStatistics FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeRequestStatistics(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RequestStatistics>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

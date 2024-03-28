@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Use custom models to classify text into multi label taxonomy. </summary>
@@ -18,14 +21,15 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationLROTask"/>. </summary>
         /// <param name="taskName"> task name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal CustomMultiLabelClassificationLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomMultiLabelClassificationTaskParameters parameters) : base(taskName, kind)
+        internal CustomMultiLabelClassificationLROTask(string taskName, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROTaskKind kind, CustomMultiLabelClassificationTaskContent parameters) : base(taskName, serializedAdditionalRawData, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public CustomMultiLabelClassificationTaskParameters Parameters { get; set; }
+        public CustomMultiLabelClassificationTaskContent Parameters { get; set; }
     }
 }

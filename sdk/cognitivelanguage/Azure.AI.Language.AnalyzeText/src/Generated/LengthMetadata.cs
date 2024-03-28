@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Represents the Length entity Metadata model. </summary>
@@ -22,12 +25,18 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="LengthMetadata"/>. </summary>
         /// <param name="metadataKind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"></param>
-        internal LengthMetadata(MetadataKind metadataKind, double value, LengthUnit unit) : base(metadataKind)
+        internal LengthMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> serializedAdditionalRawData, double value, LengthUnit unit) : base(metadataKind, serializedAdditionalRawData)
         {
             Value = value;
             Unit = unit;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LengthMetadata"/> for deserialization. </summary>
+        internal LengthMetadata()
+        {
         }
 
         /// <summary> The numeric value that the extracted text denotes. </summary>

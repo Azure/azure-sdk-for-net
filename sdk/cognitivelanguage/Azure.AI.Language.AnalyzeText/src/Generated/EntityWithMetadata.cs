@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -38,18 +37,28 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="type"> An entity type is the lowest (or finest) granularity at which the entity has been detected. The type maps to the specific metadata attributes associated with the entity detected. </param>
         /// <param name="tags"> List of entity tags. Tags are to express some similarities/affinity between entities. </param>
-        /// <param name="metadata"> The entity metadata object. </param>
-        internal EntityWithMetadata(string text, string category, string subcategory, int offset, int length, double confidenceScore, string type, IReadOnlyList<EntityTag> tags, BaseMetadata metadata) : base(text, category, subcategory, offset, length, confidenceScore, type, tags)
+        /// <param name="metadata">
+        /// The entity metadata object.
+        /// Please note <see cref="BaseMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AgeMetadata"/>, <see cref="AreaMetadata"/>, <see cref="CurrencyMetadata"/>, <see cref="DateMetadata"/>, <see cref="DateTimeMetadata"/>, <see cref="InformationMetadata"/>, <see cref="LengthMetadata"/>, <see cref="NumberMetadata"/>, <see cref="NumericRangeMetadata"/>, <see cref="OrdinalMetadata"/>, <see cref="SpeedMetadata"/>, <see cref="TemperatureMetadata"/>, <see cref="TemporalSetMetadata"/>, <see cref="TemporalSpanMetadata"/>, <see cref="TimeMetadata"/>, <see cref="VolumeMetadata"/> and <see cref="WeightMetadata"/>.
+        /// </param>
+        internal EntityWithMetadata(string text, string category, string subcategory, int offset, int length, double confidenceScore, IDictionary<string, BinaryData> serializedAdditionalRawData, string type, IReadOnlyList<EntityTag> tags, BaseMetadata metadata) : base(text, category, subcategory, offset, length, confidenceScore, serializedAdditionalRawData, type, tags)
         {
             Metadata = metadata;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntityWithMetadata"/> for deserialization. </summary>
+        internal EntityWithMetadata()
+        {
         }
 
         /// <summary>
         /// The entity metadata object.
         /// Please note <see cref="BaseMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AgeMetadata"/>, <see cref="VolumeMetadata"/>, <see cref="SpeedMetadata"/>, <see cref="AreaMetadata"/>, <see cref="LengthMetadata"/>, <see cref="InformationMetadata"/>, <see cref="TemperatureMetadata"/>, <see cref="WeightMetadata"/>, <see cref="CurrencyMetadata"/>, <see cref="DateMetadata"/>, <see cref="DateTimeMetadata"/>, <see cref="TemporalSetMetadata"/>, <see cref="TimeMetadata"/>, <see cref="NumberMetadata"/>, <see cref="OrdinalMetadata"/>, <see cref="TemporalSpanMetadata"/> and <see cref="NumericRangeMetadata"/>.
+        /// The available derived classes include <see cref="AgeMetadata"/>, <see cref="AreaMetadata"/>, <see cref="CurrencyMetadata"/>, <see cref="DateMetadata"/>, <see cref="DateTimeMetadata"/>, <see cref="InformationMetadata"/>, <see cref="LengthMetadata"/>, <see cref="NumberMetadata"/>, <see cref="NumericRangeMetadata"/>, <see cref="OrdinalMetadata"/>, <see cref="SpeedMetadata"/>, <see cref="TemperatureMetadata"/>, <see cref="TemporalSetMetadata"/>, <see cref="TemporalSpanMetadata"/>, <see cref="TimeMetadata"/>, <see cref="VolumeMetadata"/> and <see cref="WeightMetadata"/>.
         /// </summary>
         public BaseMetadata Metadata { get; }
     }

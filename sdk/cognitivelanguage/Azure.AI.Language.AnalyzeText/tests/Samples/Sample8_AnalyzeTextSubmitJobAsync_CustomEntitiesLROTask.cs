@@ -39,8 +39,8 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 Documents =
                 {
-                    new MultiLanguageInput("A", documentA, "en"),
-                    new MultiLanguageInput("B", documentB, "en"),
+                    new MultiLanguageInput("A", documentA) { Language = "en" },
+                    new MultiLanguageInput("B", documentB) { Language = "en" },
                 }
             };
 
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     CustomEntityRecognitionLROResult customClassificationResult = (CustomEntityRecognitionLROResult)analyzeTextLROResult;
 
                     // View the classifications recognized in the input documents.
-                    foreach (EntitiesDocumentResult entitiesDocument in customClassificationResult.Results.Documents)
+                    foreach (EntitiesDocumentResultWithDetectedLanguage entitiesDocument in customClassificationResult.Results.Documents)
                     {
                         Console.WriteLine($"Result for document with Id = \"{entitiesDocument.Id}\":");
                         Console.WriteLine($"  Recognized {entitiesDocument.Entities.Count} Entities:");

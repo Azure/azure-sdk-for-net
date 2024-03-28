@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class BaseMetadata
+    [PersistableModelProxy(typeof(UnknownBaseMetadata))]
+    public partial class BaseMetadata : IUtf8JsonSerializable, IJsonModel<BaseMetadata>
     {
-        internal static BaseMetadata DeserializeBaseMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaseMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BaseMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BaseMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BaseMetadata)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("metadataKind"u8);
+            writer.WriteStringValue(MetadataKind.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BaseMetadata IJsonModel<BaseMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BaseMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BaseMetadata)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBaseMetadata(document.RootElement, options);
+        }
+
+        internal static BaseMetadata DeserializeBaseMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,27 +70,58 @@ namespace Azure.AI.Language.AnalyzeText
             {
                 switch (discriminator.GetString())
                 {
-                    case "AgeMetadata": return AgeMetadata.DeserializeAgeMetadata(element);
-                    case "VolumeMetadata": return VolumeMetadata.DeserializeVolumeMetadata(element);
-                    case "SpeedMetadata": return SpeedMetadata.DeserializeSpeedMetadata(element);
-                    case "AreaMetadata": return AreaMetadata.DeserializeAreaMetadata(element);
-                    case "LengthMetadata": return LengthMetadata.DeserializeLengthMetadata(element);
-                    case "InformationMetadata": return InformationMetadata.DeserializeInformationMetadata(element);
-                    case "TemperatureMetadata": return TemperatureMetadata.DeserializeTemperatureMetadata(element);
-                    case "WeightMetadata": return WeightMetadata.DeserializeWeightMetadata(element);
-                    case "CurrencyMetadata": return CurrencyMetadata.DeserializeCurrencyMetadata(element);
-                    case "DateMetadata": return DateMetadata.DeserializeDateMetadata(element);
-                    case "DateTimeMetadata": return DateTimeMetadata.DeserializeDateTimeMetadata(element);
-                    case "TemporalSetMetadata": return TemporalSetMetadata.DeserializeTemporalSetMetadata(element);
-                    case "TimeMetadata": return TimeMetadata.DeserializeTimeMetadata(element);
-                    case "NumberMetadata": return NumberMetadata.DeserializeNumberMetadata(element);
-                    case "OrdinalMetadata": return OrdinalMetadata.DeserializeOrdinalMetadata(element);
-                    case "TemporalSpanMetadata": return TemporalSpanMetadata.DeserializeTemporalSpanMetadata(element);
-                    case "NumericRangeMetadata": return NumericRangeMetadata.DeserializeNumericRangeMetadata(element);
+                    case "AgeMetadata": return AgeMetadata.DeserializeAgeMetadata(element, options);
+                    case "AreaMetadata": return AreaMetadata.DeserializeAreaMetadata(element, options);
+                    case "CurrencyMetadata": return CurrencyMetadata.DeserializeCurrencyMetadata(element, options);
+                    case "DateMetadata": return DateMetadata.DeserializeDateMetadata(element, options);
+                    case "DateTimeMetadata": return DateTimeMetadata.DeserializeDateTimeMetadata(element, options);
+                    case "InformationMetadata": return InformationMetadata.DeserializeInformationMetadata(element, options);
+                    case "LengthMetadata": return LengthMetadata.DeserializeLengthMetadata(element, options);
+                    case "NumberMetadata": return NumberMetadata.DeserializeNumberMetadata(element, options);
+                    case "NumericRangeMetadata": return NumericRangeMetadata.DeserializeNumericRangeMetadata(element, options);
+                    case "OrdinalMetadata": return OrdinalMetadata.DeserializeOrdinalMetadata(element, options);
+                    case "SpeedMetadata": return SpeedMetadata.DeserializeSpeedMetadata(element, options);
+                    case "TemperatureMetadata": return TemperatureMetadata.DeserializeTemperatureMetadata(element, options);
+                    case "TemporalSetMetadata": return TemporalSetMetadata.DeserializeTemporalSetMetadata(element, options);
+                    case "TemporalSpanMetadata": return TemporalSpanMetadata.DeserializeTemporalSpanMetadata(element, options);
+                    case "TimeMetadata": return TimeMetadata.DeserializeTimeMetadata(element, options);
+                    case "VolumeMetadata": return VolumeMetadata.DeserializeVolumeMetadata(element, options);
+                    case "WeightMetadata": return WeightMetadata.DeserializeWeightMetadata(element, options);
                 }
             }
-            return UnknownBaseMetadata.DeserializeUnknownBaseMetadata(element);
+            return UnknownBaseMetadata.DeserializeUnknownBaseMetadata(element, options);
         }
+
+        BinaryData IPersistableModel<BaseMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BaseMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BaseMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BaseMetadata IPersistableModel<BaseMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BaseMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBaseMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BaseMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BaseMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -50,6 +129,14 @@ namespace Azure.AI.Language.AnalyzeText
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeBaseMetadata(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<BaseMetadata>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

@@ -46,9 +46,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 {
                     Documents =
                     {
-                        new MultiLanguageInput("A", documentA, "en"),
-                        new MultiLanguageInput("B", documentB, "en"),
-                        new MultiLanguageInput("C", documentC, "es"),
+                        new MultiLanguageInput("A", documentA) { Language = "en" },
+                        new MultiLanguageInput("B", documentB) { Language = "en" },
+                        new MultiLanguageInput("C", documentC) { Language = "es" },
                         new MultiLanguageInput("D", documentD),
                     }
                 },
@@ -83,7 +83,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 Console.WriteLine();
             }
 
-            foreach (AnalyzeTextDocumentError analyzeTextDocumentError in entityLinkingTaskResult.Results.Errors)
+            foreach (DocumentError analyzeTextDocumentError in entityLinkingTaskResult.Results.Errors)
             {
                 Console.WriteLine($"  Error on document {analyzeTextDocumentError.Id}!");
                 Console.WriteLine($"  Document error code: {analyzeTextDocumentError.Error.Code}");

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -17,7 +18,13 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"></param>
-        internal UnknownAnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, State status, string taskName, AnalyzeTextLROResultsKind kind) : base(lastUpdateDateTime, status, taskName, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, CurrentState status, string taskName, AnalyzeTextLROResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(lastUpdateDateTime, status, taskName, kind, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeTextLROResult"/> for deserialization. </summary>
+        internal UnknownAnalyzeTextLROResult()
         {
         }
     }

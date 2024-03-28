@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -26,10 +26,16 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="EntitiesTaskResult"/>. </summary>
         /// <param name="kind"> The kind of task result. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"></param>
-        internal EntitiesTaskResult(AnalyzeTextTaskResultsKind kind, EntitiesResult results) : base(kind)
+        internal EntitiesTaskResult(AnalyzeTextTaskResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, EntitiesResult results) : base(kind, serializedAdditionalRawData)
         {
             Results = results;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntitiesTaskResult"/> for deserialization. </summary>
+        internal EntitiesTaskResult()
+        {
         }
 
         /// <summary> Gets the results. </summary>

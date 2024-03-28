@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -32,10 +31,16 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="detectedLanguage"> Detected Language. </param>
-        internal LanguageDetectionDocumentResult(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, DetectedLanguage detectedLanguage) : base(id, warnings, statistics)
+        internal LanguageDetectionDocumentResult(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, IDictionary<string, BinaryData> serializedAdditionalRawData, DetectedLanguage detectedLanguage) : base(id, warnings, statistics, serializedAdditionalRawData)
         {
             DetectedLanguage = detectedLanguage;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LanguageDetectionDocumentResult"/> for deserialization. </summary>
+        internal LanguageDetectionDocumentResult()
+        {
         }
 
         /// <summary> Detected Language. </summary>

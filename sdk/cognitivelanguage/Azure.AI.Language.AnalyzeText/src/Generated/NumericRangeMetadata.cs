@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> represents the Metadata of numeric intervals. </summary>
@@ -24,16 +27,22 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="NumericRangeMetadata"/>. </summary>
         /// <param name="metadataKind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rangeKind"></param>
         /// <param name="minimum"> The beginning value of  the interval. </param>
         /// <param name="maximum"> The ending value of the interval. </param>
         /// <param name="rangeInclusivity"></param>
-        internal NumericRangeMetadata(MetadataKind metadataKind, RangeKind rangeKind, double minimum, double maximum, RangeInclusivity? rangeInclusivity) : base(metadataKind)
+        internal NumericRangeMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> serializedAdditionalRawData, RangeKind rangeKind, double minimum, double maximum, RangeInclusivity? rangeInclusivity) : base(metadataKind, serializedAdditionalRawData)
         {
             RangeKind = rangeKind;
             Minimum = minimum;
             Maximum = maximum;
             RangeInclusivity = rangeInclusivity;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NumericRangeMetadata"/> for deserialization. </summary>
+        internal NumericRangeMetadata()
+        {
         }
 
         /// <summary> Gets the range kind. </summary>

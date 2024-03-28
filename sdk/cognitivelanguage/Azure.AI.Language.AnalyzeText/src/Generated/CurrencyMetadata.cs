@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -28,14 +28,20 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="CurrencyMetadata"/>. </summary>
         /// <param name="metadataKind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"></param>
         /// <param name="iso4217"> The alphabetic code based on another ISO standard, ISO 3166, which lists the codes for country names. The first two letters of the ISO 4217 three-letter code are the same as the code for the country name, and, where possible, the third letter corresponds to the first letter of the currency name. </param>
-        internal CurrencyMetadata(MetadataKind metadataKind, double value, string unit, string iso4217) : base(metadataKind)
+        internal CurrencyMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> serializedAdditionalRawData, double value, string unit, string iso4217) : base(metadataKind, serializedAdditionalRawData)
         {
             Value = value;
             Unit = unit;
             Iso4217 = iso4217;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CurrencyMetadata"/> for deserialization. </summary>
+        internal CurrencyMetadata()
+        {
         }
 
         /// <summary> The numeric value that the extracted text denotes. </summary>

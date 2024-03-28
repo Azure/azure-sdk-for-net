@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -16,7 +16,7 @@ namespace Azure.AI.Language.AnalyzeText
         /// <summary> Initializes a new instance of <see cref="CustomAbstractiveSummarizationLROTask"/>. </summary>
         /// <param name="parameters"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public CustomAbstractiveSummarizationLROTask(CustomAbstractiveSummarizationTaskParameters parameters)
+        public CustomAbstractiveSummarizationLROTask(AbstractiveSummarizationTaskContentBase parameters)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -26,14 +26,20 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="CustomAbstractiveSummarizationLROTask"/>. </summary>
         /// <param name="taskName"> task name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal CustomAbstractiveSummarizationLROTask(string taskName, AnalyzeTextLROTaskKind kind, CustomAbstractiveSummarizationTaskParameters parameters) : base(taskName, kind)
+        internal CustomAbstractiveSummarizationLROTask(string taskName, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROTaskKind kind, AbstractiveSummarizationTaskContentBase parameters) : base(taskName, serializedAdditionalRawData, kind)
         {
             Parameters = parameters;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CustomAbstractiveSummarizationLROTask"/> for deserialization. </summary>
+        internal CustomAbstractiveSummarizationLROTask()
+        {
+        }
+
         /// <summary> Gets the parameters. </summary>
-        public CustomAbstractiveSummarizationTaskParameters Parameters { get; }
+        public AbstractiveSummarizationTaskContentBase Parameters { get; }
     }
 }

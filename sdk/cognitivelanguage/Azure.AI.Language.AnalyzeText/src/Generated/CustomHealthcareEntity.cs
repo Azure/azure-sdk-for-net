@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -38,16 +37,26 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="assertion"></param>
         /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
         /// <param name="links"> Entity references in known data sources. </param>
-        /// <param name="entityComponentInformation"> (Optional) Entity component information listing fired components of the extracted entity. This object only applies for custom healthcare. </param>
-        internal CustomHealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareAssertion assertion, string name, IReadOnlyList<HealthcareEntityLink> links, IReadOnlyList<EntityComponentInformation> entityComponentInformation) : base(text, category, subcategory, offset, length, confidenceScore, assertion, name, links)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="entityComponentInformation">
+        /// (Optional) Entity component information listing fired components of the extracted entity. This object only applies for custom healthcare.
+        /// Please note <see cref="AnalyzeText.EntityComponentInformation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="LearnedComponent"/>, <see cref="ListComponent"/> and <see cref="PrebuiltComponent"/>.
+        /// </param>
+        internal CustomHealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareAssertion assertion, string name, IReadOnlyList<HealthcareEntityLink> links, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<EntityComponentInformation> entityComponentInformation) : base(text, category, subcategory, offset, length, confidenceScore, assertion, name, links, serializedAdditionalRawData)
         {
             EntityComponentInformation = entityComponentInformation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomHealthcareEntity"/> for deserialization. </summary>
+        internal CustomHealthcareEntity()
+        {
         }
 
         /// <summary>
         /// (Optional) Entity component information listing fired components of the extracted entity. This object only applies for custom healthcare.
         /// Please note <see cref="AnalyzeText.EntityComponentInformation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="PrebuiltComponent"/>, <see cref="LearnedComponent"/> and <see cref="ListComponent"/>.
+        /// The available derived classes include <see cref="LearnedComponent"/>, <see cref="ListComponent"/> and <see cref="PrebuiltComponent"/>.
         /// </summary>
         public IReadOnlyList<EntityComponentInformation> EntityComponentInformation { get; }
     }

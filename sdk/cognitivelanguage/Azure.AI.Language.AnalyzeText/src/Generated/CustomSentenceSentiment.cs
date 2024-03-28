@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The CustomSentenceSentiment. </summary>
     public partial class CustomSentenceSentiment
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CustomSentenceSentiment"/>. </summary>
         /// <param name="text"> The sentence text. </param>
         /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
@@ -30,6 +62,28 @@ namespace Azure.AI.Language.AnalyzeText
             ConfidenceScores = confidenceScores;
             Offset = offset;
             Length = length;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomSentenceSentiment"/>. </summary>
+        /// <param name="text"> The sentence text. </param>
+        /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
+        /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
+        /// <param name="offset"> The target offset from the start of the sentence. </param>
+        /// <param name="length"> The length of the target. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomSentenceSentiment(string text, SentenceSentimentValue sentiment, SentimentConfidenceScores confidenceScores, int offset, int length, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Text = text;
+            Sentiment = sentiment;
+            ConfidenceScores = confidenceScores;
+            Offset = offset;
+            Length = length;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomSentenceSentiment"/> for deserialization. </summary>
+        internal CustomSentenceSentiment()
+        {
         }
 
         /// <summary> The sentence text. </summary>

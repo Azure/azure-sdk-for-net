@@ -48,9 +48,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 {
                     Documents =
                     {
-                        new MultiLanguageInput("A", documentA, "en"),
-                        new MultiLanguageInput("B", documentB, "es"),
-                        new MultiLanguageInput("C", documentC, "en"),
+                        new MultiLanguageInput("A", documentA) { Language = "en" },
+                        new MultiLanguageInput("B", documentB) { Language = "es" },
+                        new MultiLanguageInput("C", documentC) { Language = "en" },
                         new MultiLanguageInput("D", documentD),
                     }
                 },
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 Console.WriteLine();
             }
 
-            foreach (AnalyzeTextDocumentError analyzeTextDocumentError in keyPhraseTaskResult.Results.Errors)
+            foreach (DocumentError analyzeTextDocumentError in keyPhraseTaskResult.Results.Errors)
             {
                 Console.WriteLine($"  Error on document {analyzeTextDocumentError.Id}!");
                 Console.WriteLine($"  Document error code: {analyzeTextDocumentError.Error.Code}");

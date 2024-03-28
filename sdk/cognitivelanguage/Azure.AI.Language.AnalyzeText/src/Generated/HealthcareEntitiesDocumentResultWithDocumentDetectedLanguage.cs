@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -37,16 +36,22 @@ namespace Azure.AI.Language.AnalyzeText
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="entities"> Healthcare entities. </param>
         /// <param name="relations"> Healthcare entity relations. </param>
         /// <param name="fhirBundle"> JSON bundle containing a FHIR compatible object for consumption in other Healthcare tools. For additional information see https://www.hl7.org/fhir/overview.html. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        internal HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, IReadOnlyList<HealthcareEntity> entities, IReadOnlyList<HealthcareRelation> relations, IReadOnlyDictionary<string, BinaryData> fhirBundle, DetectedLanguage detectedLanguage) : base(id, warnings, statistics)
+        internal HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<HealthcareEntity> entities, IReadOnlyList<HealthcareRelation> relations, IReadOnlyDictionary<string, BinaryData> fhirBundle, DetectedLanguage detectedLanguage) : base(id, warnings, statistics, serializedAdditionalRawData)
         {
             Entities = entities;
             Relations = relations;
             FhirBundle = fhirBundle;
             DetectedLanguage = detectedLanguage;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage"/> for deserialization. </summary>
+        internal HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage()
+        {
         }
 
         /// <summary> Healthcare entities. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> Unknown version of EntityComponentInformation. </summary>
@@ -12,7 +15,13 @@ namespace Azure.AI.Language.AnalyzeText
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEntityComponentInformation"/>. </summary>
         /// <param name="entityComponentKind"></param>
-        internal UnknownEntityComponentInformation(EntityComponentKind entityComponentKind) : base(entityComponentKind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownEntityComponentInformation(EntityComponentKind entityComponentKind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(entityComponentKind, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownEntityComponentInformation"/> for deserialization. </summary>
+        internal UnknownEntityComponentInformation()
         {
         }
     }

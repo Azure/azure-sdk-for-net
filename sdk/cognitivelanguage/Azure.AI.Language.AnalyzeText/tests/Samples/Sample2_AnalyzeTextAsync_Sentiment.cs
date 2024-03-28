@@ -46,9 +46,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     {
                         Documents =
                         {
-                            new MultiLanguageInput("A", documentA, "en"),
-                            new MultiLanguageInput("B", documentB, "es"),
-                            new MultiLanguageInput("C", documentC, "en"),
+                            new MultiLanguageInput("A", documentA) { Language = "en" },
+                            new MultiLanguageInput("B", documentB) { Language = "es" },
+                            new MultiLanguageInput("C", documentC) { Language = "en" },
                         }
                     }
                 };
@@ -56,7 +56,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
                 SentimentTaskResult sentimentTaskResult = (SentimentTaskResult)response.Value;
 
-                foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in sentimentTaskResult.Results.Documents)
+                foreach (SentimentDocumentResultWithDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in sentimentTaskResult.Results.Documents)
                 {
                     Console.WriteLine($"Document {sentimentResponseWithDocumentDetectedLanguage.Id} sentiment is {sentimentResponseWithDocumentDetectedLanguage.Sentiment} with: ");
                     Console.WriteLine($"  Positive confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Positive}");
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     Console.WriteLine($"  Negative confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Negative}");
                 }
 
-                foreach (AnalyzeTextDocumentError analyzeTextDocumentError in sentimentTaskResult.Results.Errors)
+                foreach (DocumentError analyzeTextDocumentError in sentimentTaskResult.Results.Errors)
                 {
                     Console.WriteLine($"  Error on document {analyzeTextDocumentError.Id}!");
                     Console.WriteLine($"  Document error code: {analyzeTextDocumentError.Error.Code}");
@@ -122,9 +122,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 {
                     Documents =
                     {
-                        new MultiLanguageInput("A", reviewA, "en"),
-                        new MultiLanguageInput("B", reviewB, "en"),
-                        new MultiLanguageInput("C", reviewC, "en"),
+                        new MultiLanguageInput("A", reviewA) { Language = "en" },
+                        new MultiLanguageInput("B", reviewB) { Language = "en" },
+                        new MultiLanguageInput("C", reviewC) { Language = "en" },
                     }
                 },
                 Parameters = new SentimentAnalysisTaskContent()
@@ -153,13 +153,13 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         private Dictionary<string, int> GetComplaints(SentimentTaskResult reviews)
         {
             Dictionary<string, int> complaints = new();
-            foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in reviews.Results.Documents)
+            foreach (SentimentDocumentResultWithDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in reviews.Results.Documents)
             {
                 foreach (SentenceSentiment sentence in sentimentResponseWithDocumentDetectedLanguage.Sentences)
                 {
                     foreach (SentenceTarget target in sentence.Targets)
                     {
-                        if (target.Sentiment == SentimentValue.Negative)
+                        if (target.Sentiment == TokenSentimentValue.Negative)
                         {
                             complaints.TryGetValue(target.Text, out int value);
                             complaints[target.Text] = value + 1;

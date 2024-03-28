@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The AnalyzeTextSentimentAnalysisInput. </summary>
@@ -18,9 +21,10 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextSentimentAnalysisInput"/>. </summary>
         /// <param name="kind"> The kind of task to perform. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="analysisInput"></param>
         /// <param name="parameters"></param>
-        internal AnalyzeTextSentimentAnalysisInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, SentimentAnalysisTaskParameters parameters) : base(kind)
+        internal AnalyzeTextSentimentAnalysisInput(AnalyzeTextTaskKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, MultiLanguageAnalysisInput analysisInput, SentimentAnalysisTaskContent parameters) : base(kind, serializedAdditionalRawData)
         {
             AnalysisInput = analysisInput;
             Parameters = parameters;
@@ -29,6 +33,6 @@ namespace Azure.AI.Language.AnalyzeText
         /// <summary> Gets or sets the analysis input. </summary>
         public MultiLanguageAnalysisInput AnalysisInput { get; set; }
         /// <summary> Gets or sets the parameters. </summary>
-        public SentimentAnalysisTaskParameters Parameters { get; set; }
+        public SentimentAnalysisTaskContent Parameters { get; set; }
     }
 }

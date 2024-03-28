@@ -43,10 +43,10 @@ AnalyzeTextTask body = new AnalyzeTextEntityLinkingInput()
     {
         Documents =
         {
-            new MultiLanguageInput("A", documentA, "en"),
-            new MultiLanguageInput("B", documentB, "en"),
-            new MultiLanguageInput("C", documentC, "es"),
-            new MultiLanguageInput("C", documentC),
+            new MultiLanguageInput("A", documentA) { Language = "en" },
+            new MultiLanguageInput("B", documentB) { Language = "en" },
+            new MultiLanguageInput("C", documentC) { Language = "es" },
+            new MultiLanguageInput("D", documentD),
         }
     },
     Parameters = new EntityLinkingTaskContent()

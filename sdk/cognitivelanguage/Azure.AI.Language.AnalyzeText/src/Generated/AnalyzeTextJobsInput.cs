@@ -8,16 +8,50 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
     /// <summary> The AnalyzeTextJobsInput. </summary>
     public partial class AnalyzeTextJobsInput
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobsInput"/>. </summary>
         /// <param name="analysisInput"></param>
-        /// <param name="tasks"></param>
+        /// <param name="tasks">
+        /// Please note <see cref="AnalyzeTextLROTask"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AbstractiveSummarizationLROTask"/>, <see cref="CustomAbstractiveSummarizationLROTask"/>, <see cref="CustomEntitiesLROTask"/>, <see cref="CustomHealthcareLROTask"/>, <see cref="CustomMultiLabelClassificationLROTask"/>, <see cref="CustomSentimentAnalysisLROTask"/>, <see cref="CustomSingleLabelClassificationLROTask"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="ExtractiveSummarizationLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/> and <see cref="SentimentAnalysisLROTask"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisInput"/> or <paramref name="tasks"/> is null. </exception>
         public AnalyzeTextJobsInput(MultiLanguageAnalysisInput analysisInput, IEnumerable<AnalyzeTextLROTask> tasks)
         {
@@ -31,14 +65,24 @@ namespace Azure.AI.Language.AnalyzeText
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobsInput"/>. </summary>
         /// <param name="displayName"></param>
         /// <param name="analysisInput"></param>
-        /// <param name="tasks"></param>
+        /// <param name="tasks">
+        /// Please note <see cref="AnalyzeTextLROTask"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AbstractiveSummarizationLROTask"/>, <see cref="CustomAbstractiveSummarizationLROTask"/>, <see cref="CustomEntitiesLROTask"/>, <see cref="CustomHealthcareLROTask"/>, <see cref="CustomMultiLabelClassificationLROTask"/>, <see cref="CustomSentimentAnalysisLROTask"/>, <see cref="CustomSingleLabelClassificationLROTask"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="ExtractiveSummarizationLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/> and <see cref="SentimentAnalysisLROTask"/>.
+        /// </param>
         /// <param name="defaultLanguage"> Default language to use for records requesting automatic language detection. </param>
-        internal AnalyzeTextJobsInput(string displayName, MultiLanguageAnalysisInput analysisInput, IList<AnalyzeTextLROTask> tasks, string defaultLanguage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeTextJobsInput(string displayName, MultiLanguageAnalysisInput analysisInput, IList<AnalyzeTextLROTask> tasks, string defaultLanguage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             AnalysisInput = analysisInput;
             Tasks = tasks;
             DefaultLanguage = defaultLanguage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobsInput"/> for deserialization. </summary>
+        internal AnalyzeTextJobsInput()
+        {
         }
 
         /// <summary> Gets or sets the display name. </summary>
@@ -48,7 +92,7 @@ namespace Azure.AI.Language.AnalyzeText
         /// <summary>
         /// Gets the tasks
         /// Please note <see cref="AnalyzeTextLROTask"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomEntitiesLROTask"/>, <see cref="CustomSingleLabelClassificationLROTask"/>, <see cref="CustomMultiLabelClassificationLROTask"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/>, <see cref="SentimentAnalysisLROTask"/>, <see cref="CustomSentimentAnalysisLROTask"/>, <see cref="ExtractiveSummarizationLROTask"/>, <see cref="AbstractiveSummarizationLROTask"/>, <see cref="CustomAbstractiveSummarizationLROTask"/> and <see cref="CustomHealthcareLROTask"/>.
+        /// The available derived classes include <see cref="AbstractiveSummarizationLROTask"/>, <see cref="CustomAbstractiveSummarizationLROTask"/>, <see cref="CustomEntitiesLROTask"/>, <see cref="CustomHealthcareLROTask"/>, <see cref="CustomMultiLabelClassificationLROTask"/>, <see cref="CustomSentimentAnalysisLROTask"/>, <see cref="CustomSingleLabelClassificationLROTask"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="ExtractiveSummarizationLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/> and <see cref="SentimentAnalysisLROTask"/>.
         /// </summary>
         public IList<AnalyzeTextLROTask> Tasks { get; }
         /// <summary> Default language to use for records requesting automatic language detection. </summary>

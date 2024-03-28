@@ -5,24 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class HealthcareAssertion
+    public partial class HealthcareAssertion : IUtf8JsonSerializable, IJsonModel<HealthcareAssertion>
     {
-        internal static HealthcareAssertion DeserializeHealthcareAssertion(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareAssertion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HealthcareAssertion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareAssertion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HealthcareAssertion)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Conditionality))
+            {
+                writer.WritePropertyName("conditionality"u8);
+                writer.WriteStringValue(Conditionality.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Certainty))
+            {
+                writer.WritePropertyName("certainty"u8);
+                writer.WriteStringValue(Certainty.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Association))
+            {
+                writer.WritePropertyName("association"u8);
+                writer.WriteStringValue(Association.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Temporality))
+            {
+                writer.WritePropertyName("temporality"u8);
+                writer.WriteStringValue(Temporality.Value.ToSerialString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HealthcareAssertion IJsonModel<HealthcareAssertion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareAssertion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HealthcareAssertion)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareAssertion(document.RootElement, options);
+        }
+
+        internal static HealthcareAssertion DeserializeHealthcareAssertion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Conditionality> conditionality = default;
-            Optional<Certainty> certainty = default;
-            Optional<Association> association = default;
-            Optional<Temporality> temporality = default;
+            HealthcareAssertionConditionality? conditionality = default;
+            HealthcareAssertionCertainty? certainty = default;
+            HealthcareAssertionAssociation? association = default;
+            HealthcareAssertionTemporality? temporality = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionality"u8))
@@ -31,7 +98,7 @@ namespace Azure.AI.Language.AnalyzeText
                     {
                         continue;
                     }
-                    conditionality = property.Value.GetString().ToConditionality();
+                    conditionality = property.Value.GetString().ToHealthcareAssertionConditionality();
                     continue;
                 }
                 if (property.NameEquals("certainty"u8))
@@ -40,7 +107,7 @@ namespace Azure.AI.Language.AnalyzeText
                     {
                         continue;
                     }
-                    certainty = property.Value.GetString().ToCertainty();
+                    certainty = property.Value.GetString().ToHealthcareAssertionCertainty();
                     continue;
                 }
                 if (property.NameEquals("association"u8))
@@ -49,7 +116,7 @@ namespace Azure.AI.Language.AnalyzeText
                     {
                         continue;
                     }
-                    association = property.Value.GetString().ToAssociation();
+                    association = property.Value.GetString().ToHealthcareAssertionAssociation();
                     continue;
                 }
                 if (property.NameEquals("temporality"u8))
@@ -58,12 +125,48 @@ namespace Azure.AI.Language.AnalyzeText
                     {
                         continue;
                     }
-                    temporality = property.Value.GetString().ToTemporality();
+                    temporality = property.Value.GetString().ToHealthcareAssertionTemporality();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HealthcareAssertion(Optional.ToNullable(conditionality), Optional.ToNullable(certainty), Optional.ToNullable(association), Optional.ToNullable(temporality));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HealthcareAssertion(conditionality, certainty, association, temporality, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HealthcareAssertion>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareAssertion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HealthcareAssertion)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HealthcareAssertion IPersistableModel<HealthcareAssertion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareAssertion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHealthcareAssertion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HealthcareAssertion)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HealthcareAssertion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -71,6 +174,14 @@ namespace Azure.AI.Language.AnalyzeText
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeHealthcareAssertion(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HealthcareAssertion>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

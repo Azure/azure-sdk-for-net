@@ -27,7 +27,7 @@ AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput
             Language = "<language>",
         }},
     },
-    Parameters = new DynamicClassificationTaskParameters(new string[] { "<categories>" })
+    Parameters = new DynamicClassificationTaskContent(new string[] { "<categories>" })
     {
         ClassificationType = ClassificationType.Multi,
     },
@@ -61,7 +61,7 @@ AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput
             Language = "<language>",
         }},
     },
-    Parameters = new DynamicClassificationTaskParameters(new string[] { "<categories>" })
+    Parameters = new DynamicClassificationTaskContent(new string[] { "<categories>" })
     {
         ClassificationType = ClassificationType.Multi,
     },
@@ -361,7 +361,7 @@ AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(new MultiLa
 {
     new CustomEntitiesLROTask
     {
-        Parameters = new CustomEntitiesTaskParameters("<projectName>", "<deploymentName>")
+        Parameters = new CustomEntitiesTaskContent("<projectName>", "<deploymentName>")
         {
             StringIndexType = StringIndexType.TextElementsV8,
         },
@@ -404,7 +404,7 @@ AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(new MultiLa
 {
     new CustomEntitiesLROTask
     {
-        Parameters = new CustomEntitiesTaskParameters("<projectName>", "<deploymentName>")
+        Parameters = new CustomEntitiesTaskContent("<projectName>", "<deploymentName>")
         {
             StringIndexType = StringIndexType.TextElementsV8,
         },

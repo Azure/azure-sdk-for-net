@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.Language.AnalyzeText
 {
@@ -31,14 +31,20 @@ namespace Azure.AI.Language.AnalyzeText
 
         /// <summary> Initializes a new instance of <see cref="OrdinalMetadata"/>. </summary>
         /// <param name="metadataKind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="offset"> The offset With respect to the reference (e.g., offset = -1 in "show me the second to last". </param>
         /// <param name="relativeTo"></param>
         /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
-        internal OrdinalMetadata(MetadataKind metadataKind, string offset, RelativeTo relativeTo, string value) : base(metadataKind)
+        internal OrdinalMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> serializedAdditionalRawData, string offset, RelativeTo relativeTo, string value) : base(metadataKind, serializedAdditionalRawData)
         {
             Offset = offset;
             RelativeTo = relativeTo;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OrdinalMetadata"/> for deserialization. </summary>
+        internal OrdinalMetadata()
+        {
         }
 
         /// <summary> The offset With respect to the reference (e.g., offset = -1 in "show me the second to last". </summary>

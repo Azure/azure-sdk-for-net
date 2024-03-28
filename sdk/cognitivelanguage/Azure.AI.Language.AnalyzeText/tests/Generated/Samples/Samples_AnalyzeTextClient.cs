@@ -8,8 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
-using Azure.AI.Language.AnalyzeText;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -175,7 +173,7 @@ language = "<language>",
 Language = "<language>",
 }},
                 },
-                Parameters = new DynamicClassificationTaskParameters(new string[] { "<categories>" })
+                Parameters = new DynamicClassificationTaskContent(new string[] { "<categories>" })
                 {
                     ClassificationType = ClassificationType.Multi,
                 },
@@ -200,7 +198,7 @@ Language = "<language>",
 Language = "<language>",
 }},
                 },
-                Parameters = new DynamicClassificationTaskParameters(new string[] { "<categories>" })
+                Parameters = new DynamicClassificationTaskContent(new string[] { "<categories>" })
                 {
                     ClassificationType = ClassificationType.Multi,
                 },
@@ -550,7 +548,7 @@ Language = "<language>",
             {
 new CustomEntitiesLROTask
 {
-Parameters = new CustomEntitiesTaskParameters("<projectName>", "<deploymentName>")
+Parameters = new CustomEntitiesTaskContent("<projectName>", "<deploymentName>")
 {
 StringIndexType = StringIndexType.TextElementsV8,
 },
@@ -581,7 +579,7 @@ Language = "<language>",
             {
 new CustomEntitiesLROTask
 {
-Parameters = new CustomEntitiesTaskParameters("<projectName>", "<deploymentName>")
+Parameters = new CustomEntitiesTaskContent("<projectName>", "<deploymentName>")
 {
 StringIndexType = StringIndexType.TextElementsV8,
 },

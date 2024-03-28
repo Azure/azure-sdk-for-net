@@ -48,10 +48,10 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             await base.StartTestRecordingAsync();
 
             AnalyzeTextClientOptions options = new(ServiceVersion);
-            Client = CreateClient<AnalyzeTextClient>(
+            client = CreateClient<AnalyzeTextClient>(
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
-                InstrumentClientOptions(options)).GetLanguageClient(options.Version);
+                InstrumentClientOptions(options));
         }
     }
 }

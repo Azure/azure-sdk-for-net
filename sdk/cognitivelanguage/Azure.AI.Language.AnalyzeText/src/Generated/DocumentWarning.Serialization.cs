@@ -5,23 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class DocumentWarning
+    public partial class DocumentWarning : IUtf8JsonSerializable, IJsonModel<DocumentWarning>
     {
-        internal static DocumentWarning DeserializeDocumentWarning(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentWarning>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DocumentWarning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentWarning>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentWarning)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code.ToString());
+            writer.WritePropertyName("message"u8);
+            writer.WriteStringValue(Message);
+            if (Optional.IsDefined(TargetRef))
+            {
+                writer.WritePropertyName("targetRef"u8);
+                writer.WriteStringValue(TargetRef);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentWarning IJsonModel<DocumentWarning>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentWarning>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentWarning)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentWarning(document.RootElement, options);
+        }
+
+        internal static DocumentWarning DeserializeDocumentWarning(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             WarningCodeValue code = default;
             string message = default;
-            Optional<string> targetRef = default;
+            string targetRef = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -39,9 +95,45 @@ namespace Azure.AI.Language.AnalyzeText
                     targetRef = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentWarning(code, message, targetRef.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DocumentWarning(code, message, targetRef, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DocumentWarning>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentWarning>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DocumentWarning)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DocumentWarning IPersistableModel<DocumentWarning>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentWarning>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDocumentWarning(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DocumentWarning)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DocumentWarning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -49,6 +141,14 @@ namespace Azure.AI.Language.AnalyzeText
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeDocumentWarning(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DocumentWarning>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

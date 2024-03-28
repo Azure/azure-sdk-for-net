@@ -5,36 +5,160 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Language.AnalyzeText
 {
-    public partial class AnalyzeTextLanguageDetectionInput : IUtf8JsonSerializable
+    public partial class AnalyzeTextLanguageDetectionInput : IUtf8JsonSerializable, IJsonModel<AnalyzeTextLanguageDetectionInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeTextLanguageDetectionInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnalyzeTextLanguageDetectionInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextLanguageDetectionInput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTextLanguageDetectionInput)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AnalysisInput))
             {
                 writer.WritePropertyName("analysisInput"u8);
-                writer.WriteObjectValue(AnalysisInput);
+                writer.WriteObjectValue<LanguageDetectionAnalysisInput>(AnalysisInput, options);
             }
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<LanguageDetectionTaskContent>(Parameters, options);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        AnalyzeTextLanguageDetectionInput IJsonModel<AnalyzeTextLanguageDetectionInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextLanguageDetectionInput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTextLanguageDetectionInput)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTextLanguageDetectionInput(document.RootElement, options);
+        }
+
+        internal static AnalyzeTextLanguageDetectionInput DeserializeAnalyzeTextLanguageDetectionInput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            LanguageDetectionAnalysisInput analysisInput = default;
+            LanguageDetectionTaskContent parameters = default;
+            AnalyzeTextTaskKind kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("analysisInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    analysisInput = LanguageDetectionAnalysisInput.DeserializeLanguageDetectionAnalysisInput(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("parameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parameters = LanguageDetectionTaskContent.DeserializeLanguageDetectionTaskContent(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new AnalyzeTextTaskKind(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnalyzeTextLanguageDetectionInput(kind, serializedAdditionalRawData, analysisInput, parameters);
+        }
+
+        BinaryData IPersistableModel<AnalyzeTextLanguageDetectionInput>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextLanguageDetectionInput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeTextLanguageDetectionInput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AnalyzeTextLanguageDetectionInput IPersistableModel<AnalyzeTextLanguageDetectionInput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextLanguageDetectionInput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnalyzeTextLanguageDetectionInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeTextLanguageDetectionInput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnalyzeTextLanguageDetectionInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AnalyzeTextLanguageDetectionInput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnalyzeTextLanguageDetectionInput(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AnalyzeTextLanguageDetectionInput>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }
