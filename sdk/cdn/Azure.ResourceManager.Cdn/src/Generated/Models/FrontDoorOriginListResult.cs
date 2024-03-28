@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginListResult"/>. </summary>
-        /// <param name="value"> List of CDN origins within an endpoint. </param>
+        /// <param name="value"> List of Azure Front Door origins within an Azure Front Door endpoint. </param>
         /// <param name="nextLink"> URL to get the next set of origin objects if there are any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorOriginListResult(IReadOnlyList<FrontDoorOriginData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of CDN origins within an endpoint. </summary>
+        /// <summary> List of Azure Front Door origins within an Azure Front Door endpoint. </summary>
         public IReadOnlyList<FrontDoorOriginData> Value { get; }
         /// <summary> URL to get the next set of origin objects if there are any. </summary>
         public string NextLink { get; }

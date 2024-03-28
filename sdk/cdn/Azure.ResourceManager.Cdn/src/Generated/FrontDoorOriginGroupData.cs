@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A class representing the FrontDoorOriginGroup data model.
-    /// AFDOrigin group comprising of origins is used for load balancing to origins when the content cannot be served from CDN.
+    /// AFDOrigin group comprising of origins is used for load balancing to origins when the content cannot be served from Azure Front Door.
     /// </summary>
     public partial class FrontDoorOriginGroupData : ResourceData
     {

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupOverrideSetting"/>. </summary>
         /// <param name="ruleGroupName"> Describes the managed rule group within the rule set to override. </param>
-        /// <param name="rules"> List of rules that will be disabled. If none specified, all rules in the group will be disabled. </param>
+        /// <param name="rules"> List of rules that will be enabled. If none specified, all rules in the group will be disabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedRuleGroupOverrideSetting(string ruleGroupName, IList<ManagedRuleOverrideSetting> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Describes the managed rule group within the rule set to override. </summary>
         public string RuleGroupName { get; set; }
-        /// <summary> List of rules that will be disabled. If none specified, all rules in the group will be disabled. </summary>
+        /// <summary> List of rules that will be enabled. If none specified, all rules in the group will be disabled. </summary>
         public IList<ManagedRuleOverrideSetting> Rules { get; }
     }
 }

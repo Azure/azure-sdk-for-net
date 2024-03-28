@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckEndpointNameAvailability_CheckEndpointNameAvailability()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2021-06-01/examples/CheckEndpointNameAvailability.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/CheckEndpointNameAvailability.json
             // this example is just showing the usage of "CheckEndpointNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

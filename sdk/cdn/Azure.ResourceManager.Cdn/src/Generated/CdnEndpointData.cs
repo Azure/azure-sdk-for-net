@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
             UriSigningKeys = new ChangeTrackingList<UriSigningKey>();
             Origins = new ChangeTrackingList<DeepCreatedOrigin>();
             OriginGroups = new ChangeTrackingList<DeepCreatedOriginGroup>();
-            CustomDomains = new ChangeTrackingList<CdnCustomDomainData>();
+            DeepCreatedCustomDomains = new ChangeTrackingList<DeepCreatedCustomDomain>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnEndpointData"/>. </summary>
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="hostName"> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </param>
         /// <param name="origins"> The source of the content being delivered via CDN. </param>
         /// <param name="originGroups"> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </param>
-        /// <param name="customDomains"> The custom domains under the endpoint. </param>
+        /// <param name="deepCreatedCustomDomains"> The custom domains under the endpoint. </param>
         /// <param name="resourceState"> Resource status of the endpoint. </param>
         /// <param name="provisioningState"> Provisioning status of the endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CdnEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, IReadOnlyList<CdnCustomDomainData> customDomains, EndpointResourceState? resourceState, CdnEndpointProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal CdnEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, IReadOnlyList<DeepCreatedCustomDomain> deepCreatedCustomDomains, EndpointResourceState? resourceState, CdnEndpointProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             OriginPath = originPath;
             ContentTypesToCompress = contentTypesToCompress;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn
             HostName = hostName;
             Origins = origins;
             OriginGroups = originGroups;
-            CustomDomains = customDomains;
+            DeepCreatedCustomDomains = deepCreatedCustomDomains;
             ResourceState = resourceState;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </summary>
         public IList<DeepCreatedOriginGroup> OriginGroups { get; }
         /// <summary> The custom domains under the endpoint. </summary>
-        public IReadOnlyList<CdnCustomDomainData> CustomDomains { get; }
+        public IReadOnlyList<DeepCreatedCustomDomain> DeepCreatedCustomDomains { get; }
         /// <summary> Resource status of the endpoint. </summary>
         public EndpointResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the endpoint. </summary>

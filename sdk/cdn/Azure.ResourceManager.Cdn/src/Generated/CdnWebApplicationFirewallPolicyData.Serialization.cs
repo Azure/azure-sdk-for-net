@@ -101,6 +101,17 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ExtendedProperties))
+            {
+                writer.WritePropertyName("extendedProperties"u8);
+                writer.WriteStartObject();
+                foreach (var item in ExtendedProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -163,6 +174,7 @@ namespace Azure.ResourceManager.Cdn
             CustomRuleList customRules = default;
             ManagedRuleSetList managedRules = default;
             IReadOnlyList<SubResource> endpointLinks = default;
+            IDictionary<string, string> extendedProperties = default;
             WebApplicationFirewallPolicyProvisioningState? provisioningState = default;
             PolicyResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -285,6 +297,20 @@ namespace Azure.ResourceManager.Cdn
                             endpointLinks = array;
                             continue;
                         }
+                        if (property0.NameEquals("extendedProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            extendedProperties = dictionary;
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -326,6 +352,7 @@ namespace Azure.ResourceManager.Cdn
                 customRules,
                 managedRules,
                 endpointLinks ?? new ChangeTrackingList<SubResource>(),
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
                 provisioningState,
                 resourceState,
                 serializedAdditionalRawData);

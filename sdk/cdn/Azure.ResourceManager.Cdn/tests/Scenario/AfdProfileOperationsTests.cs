@@ -172,5 +172,29 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnNameAvailabilityResult result = await afdProfile.CheckFrontDoorProfileHostNameAvailabilityAsync(input);
             Assert.AreEqual(result.NameAvailable, true);
         }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task UpdateLogScrubbing()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
+            string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
+            ProfilePatch updateOptions = new ProfilePatch();
+            updateOptions.LogScrubbing = new()
+            {
+                State = ProfileScrubbingState.Enabled,
+            };
+            var item = new ProfileScrubbingRules() {
+                MatchVariable = ScrubbingRuleEntryMatchVariable.RequestIPAddress,
+                SelectorMatchOperator = ScrubbingRuleEntryMatchOperator.EqualsAny,
+                State = ScrubbingRuleEntryState.Enabled,
+            };
+            updateOptions.LogScrubbing.ScrubbingRules.Add(item);
+            var lro = await afdProfile.UpdateAsync(WaitUntil.Completed, updateOptions);
+            ProfileResource updatedAfdProfile = lro.Value;
+            ResourceDataHelper.AssertProfileUpdate(updatedAfdProfile, updateOptions);
+        }
     }
 }
