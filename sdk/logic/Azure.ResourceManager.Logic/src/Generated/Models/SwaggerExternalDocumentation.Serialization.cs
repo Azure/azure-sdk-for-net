@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerExternalDocumentation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerExternalDocumentation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<Uri> uri = default;
-            Optional<IDictionary<string, BinaryData>> extensions = default;
+            string description = default;
+            Uri uri = default;
+            IDictionary<string, BinaryData> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerExternalDocumentation(description.Value, uri.Value, Optional.ToDictionary(extensions), serializedAdditionalRawData);
+            return new SwaggerExternalDocumentation(description, uri, extensions ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerExternalDocumentation>.Write(ModelReaderWriterOptions options)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeSwaggerExternalDocumentation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerExternalDocumentation)} does not support reading '{options.Format}' format.");
             }
         }
 

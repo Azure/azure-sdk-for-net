@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<NumericalDataQualityMetricThreshold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NumericalDataQualityMetricThreshold)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NumericalDataQualityMetricThreshold)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Threshold != null)
                 {
                     writer.WritePropertyName("threshold"u8);
-                    writer.WriteObjectValue(Threshold);
+                    writer.WriteObjectValue<MonitoringThreshold>(Threshold, options);
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<NumericalDataQualityMetricThreshold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NumericalDataQualityMetricThreshold)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NumericalDataQualityMetricThreshold)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             NumericalDataQualityMetric metric = default;
             MonitoringFeatureDataType dataType = default;
-            Optional<MonitoringThreshold> threshold = default;
+            MonitoringThreshold threshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         threshold = null;
                         continue;
                     }
-                    threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value);
+                    threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NumericalDataQualityMetricThreshold(dataType, threshold.Value, serializedAdditionalRawData, metric);
+            return new NumericalDataQualityMetricThreshold(dataType, threshold, serializedAdditionalRawData, metric);
         }
 
         BinaryData IPersistableModel<NumericalDataQualityMetricThreshold>.Write(ModelReaderWriterOptions options)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NumericalDataQualityMetricThreshold)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NumericalDataQualityMetricThreshold)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeNumericalDataQualityMetricThreshold(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NumericalDataQualityMetricThreshold)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NumericalDataQualityMetricThreshold)} does not support reading '{options.Format}' format.");
             }
         }
 

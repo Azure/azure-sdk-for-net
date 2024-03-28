@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureCoreVhdImageArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCoreVhdImageArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureCoreVhdImageArtifactProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(VhdArtifactProfile))
             {
                 writer.WritePropertyName("vhdArtifactProfile"u8);
-                writer.WriteObjectValue(VhdArtifactProfile);
+                writer.WriteObjectValue<VhdImageArtifactProfile>(VhdArtifactProfile, options);
             }
             if (Optional.IsDefined(ArtifactStore))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureCoreVhdImageArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCoreVhdImageArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureCoreVhdImageArtifactProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<VhdImageArtifactProfile> vhdArtifactProfile = default;
-            Optional<WritableSubResource> artifactStore = default;
+            VhdImageArtifactProfile vhdArtifactProfile = default;
+            WritableSubResource artifactStore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    vhdArtifactProfile = VhdImageArtifactProfile.DeserializeVhdImageArtifactProfile(property.Value);
+                    vhdArtifactProfile = VhdImageArtifactProfile.DeserializeVhdImageArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("artifactStore"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCoreVhdImageArtifactProfile(artifactStore, serializedAdditionalRawData, vhdArtifactProfile.Value);
+            return new AzureCoreVhdImageArtifactProfile(artifactStore, serializedAdditionalRawData, vhdArtifactProfile);
         }
 
         BinaryData IPersistableModel<AzureCoreVhdImageArtifactProfile>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureCoreVhdImageArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureCoreVhdImageArtifactProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeAzureCoreVhdImageArtifactProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureCoreVhdImageArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureCoreVhdImageArtifactProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

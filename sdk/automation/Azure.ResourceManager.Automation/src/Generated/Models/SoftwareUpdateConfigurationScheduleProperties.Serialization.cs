@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(AdvancedSchedule))
             {
                 writer.WritePropertyName("advancedSchedule"u8);
-                writer.WriteObjectValue(AdvancedSchedule);
+                writer.WriteObjectValue<AutomationAdvancedSchedule>(AdvancedSchedule, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,20 +148,20 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<double> startTimeOffsetMinutes = default;
-            Optional<DateTimeOffset?> expiryTime = default;
-            Optional<double> expiryTimeOffsetMinutes = default;
-            Optional<bool> isEnabled = default;
-            Optional<DateTimeOffset?> nextRun = default;
-            Optional<double> nextRunOffsetMinutes = default;
-            Optional<long> interval = default;
-            Optional<AutomationScheduleFrequency> frequency = default;
-            Optional<string> timeZone = default;
-            Optional<AutomationAdvancedSchedule> advancedSchedule = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
+            DateTimeOffset? startTime = default;
+            double? startTimeOffsetMinutes = default;
+            DateTimeOffset? expiryTime = default;
+            double? expiryTimeOffsetMinutes = default;
+            bool? isEnabled = default;
+            DateTimeOffset? nextRun = default;
+            double? nextRunOffsetMinutes = default;
+            long? interval = default;
+            AutomationScheduleFrequency? frequency = default;
+            string timeZone = default;
+            AutomationAdvancedSchedule advancedSchedule = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(property.Value);
+                    advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("creationTime"u8))
@@ -292,7 +292,22 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationScheduleProperties(Optional.ToNullable(startTime), Optional.ToNullable(startTimeOffsetMinutes), Optional.ToNullable(expiryTime), Optional.ToNullable(expiryTimeOffsetMinutes), Optional.ToNullable(isEnabled), Optional.ToNullable(nextRun), Optional.ToNullable(nextRunOffsetMinutes), Optional.ToNullable(interval), Optional.ToNullable(frequency), timeZone.Value, advancedSchedule.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationScheduleProperties(
+                startTime,
+                startTimeOffsetMinutes,
+                expiryTime,
+                expiryTimeOffsetMinutes,
+                isEnabled,
+                nextRun,
+                nextRunOffsetMinutes,
+                interval,
+                frequency,
+                timeZone,
+                advancedSchedule,
+                creationTime,
+                lastModifiedTime,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>.Write(ModelReaderWriterOptions options)
@@ -304,7 +319,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -320,7 +335,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeSoftwareUpdateConfigurationScheduleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationScheduleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

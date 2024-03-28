@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabAutoShutdownProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabAutoShutdownProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<LabServicesEnableState> shutdownOnDisconnect = default;
-            Optional<LabServicesEnableState> shutdownWhenNotConnected = default;
-            Optional<LabVirtualMachineShutdownOnIdleMode> shutdownOnIdle = default;
-            Optional<TimeSpan> disconnectDelay = default;
-            Optional<TimeSpan> noConnectDelay = default;
-            Optional<TimeSpan> idleDelay = default;
+            LabServicesEnableState? shutdownOnDisconnect = default;
+            LabServicesEnableState? shutdownWhenNotConnected = default;
+            LabVirtualMachineShutdownOnIdleMode? shutdownOnIdle = default;
+            TimeSpan? disconnectDelay = default;
+            TimeSpan? noConnectDelay = default;
+            TimeSpan? idleDelay = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabAutoShutdownProfile(Optional.ToNullable(shutdownOnDisconnect), Optional.ToNullable(shutdownWhenNotConnected), Optional.ToNullable(shutdownOnIdle), Optional.ToNullable(disconnectDelay), Optional.ToNullable(noConnectDelay), Optional.ToNullable(idleDelay), serializedAdditionalRawData);
+            return new LabAutoShutdownProfile(
+                shutdownOnDisconnect,
+                shutdownWhenNotConnected,
+                shutdownOnIdle,
+                disconnectDelay,
+                noConnectDelay,
+                idleDelay,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabAutoShutdownProfile>.Write(ModelReaderWriterOptions options)
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabAutoShutdownProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

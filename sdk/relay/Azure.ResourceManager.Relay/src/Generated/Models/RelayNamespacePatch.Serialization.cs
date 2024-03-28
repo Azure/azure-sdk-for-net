@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
 {
@@ -24,14 +23,14 @@ namespace Azure.ResourceManager.Relay.Models
             var format = options.Format == "W" ? ((IPersistableModel<RelayNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<RelaySku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Relay.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RelayPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.Relay.Models
             var format = options.Format == "W" ? ((IPersistableModel<RelayNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -150,20 +149,20 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<RelaySku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            RelaySku sku = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<string> serviceBusEndpoint = default;
-            Optional<string> metricId = default;
-            Optional<IList<RelayPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<RelayPublicNetworkAccess> publicNetworkAccess = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string status = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            string serviceBusEndpoint = default;
+            string metricId = default;
+            IList<RelayPrivateEndpointConnectionData> privateEndpointConnections = default;
+            RelayPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.Relay.Models
                     {
                         continue;
                     }
-                    sku = RelaySku.DeserializeRelaySku(property.Value);
+                    sku = RelaySku.DeserializeRelaySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -271,7 +270,7 @@ namespace Azure.ResourceManager.Relay.Models
                             List<RelayPrivateEndpointConnectionData> array = new List<RelayPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelayPrivateEndpointConnectionData.DeserializeRelayPrivateEndpointConnectionData(item));
+                                array.Add(RelayPrivateEndpointConnectionData.DeserializeRelayPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -294,7 +293,22 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayNamespacePatch(id, name, type, systemData.Value, sku.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new RelayNamespacePatch(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                provisioningState,
+                status,
+                createdAt,
+                updatedAt,
+                serviceBusEndpoint,
+                metricId,
+                privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayNamespacePatch>.Write(ModelReaderWriterOptions options)
@@ -306,7 +320,7 @@ namespace Azure.ResourceManager.Relay.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -322,7 +336,7 @@ namespace Azure.ResourceManager.Relay.Models
                         return DeserializeRelayNamespacePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

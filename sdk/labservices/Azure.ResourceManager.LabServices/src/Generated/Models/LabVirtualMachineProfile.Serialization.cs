@@ -22,25 +22,25 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVirtualMachineProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabVirtualMachineProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToSerialString());
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue(ImageReference);
+            writer.WriteObjectValue<LabVirtualMachineImageReference>(ImageReference, options);
             if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<LabServicesSku>(Sku, options);
             if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue(AdditionalCapabilities);
+                writer.WriteObjectValue<LabVirtualMachineAdditionalCapability>(AdditionalCapabilities, options);
             }
             writer.WritePropertyName("usageQuota"u8);
             writer.WriteStringValue(UsageQuota, "P");
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStringValue(UseSharedPassword.Value.ToSerialString());
             }
             writer.WritePropertyName("adminUser"u8);
-            writer.WriteObjectValue(AdminUser);
+            writer.WriteObjectValue<LabVirtualMachineCredential>(AdminUser, options);
             if (Optional.IsDefined(NonAdminUser))
             {
                 writer.WritePropertyName("nonAdminUser"u8);
-                writer.WriteObjectValue(NonAdminUser);
+                writer.WriteObjectValue<LabVirtualMachineCredential>(NonAdminUser, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVirtualMachineProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabVirtualMachineProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             LabVirtualMachineCreateOption createOption = default;
             LabVirtualMachineImageReference imageReference = default;
-            Optional<LabVirtualMachineImageOSType> osType = default;
+            LabVirtualMachineImageOSType? osType = default;
             LabServicesSku sku = default;
-            Optional<LabVirtualMachineAdditionalCapability> additionalCapabilities = default;
+            LabVirtualMachineAdditionalCapability additionalCapabilities = default;
             TimeSpan usageQuota = default;
-            Optional<LabServicesEnableState> useSharedPassword = default;
+            LabServicesEnableState? useSharedPassword = default;
             LabVirtualMachineCredential adminUser = default;
-            Optional<LabVirtualMachineCredential> nonAdminUser = default;
+            LabVirtualMachineCredential nonAdminUser = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = LabVirtualMachineImageReference.DeserializeLabVirtualMachineImageReference(property.Value);
+                    imageReference = LabVirtualMachineImageReference.DeserializeLabVirtualMachineImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = LabServicesSku.DeserializeLabServicesSku(property.Value);
+                    sku = LabServicesSku.DeserializeLabServicesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalCapabilities"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    additionalCapabilities = LabVirtualMachineAdditionalCapability.DeserializeLabVirtualMachineAdditionalCapability(property.Value);
+                    additionalCapabilities = LabVirtualMachineAdditionalCapability.DeserializeLabVirtualMachineAdditionalCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("usageQuota"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (property.NameEquals("adminUser"u8))
                 {
-                    adminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value);
+                    adminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nonAdminUser"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    nonAdminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value);
+                    nonAdminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -174,7 +174,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineProfile(createOption, imageReference, Optional.ToNullable(osType), sku, additionalCapabilities.Value, usageQuota, Optional.ToNullable(useSharedPassword), adminUser, nonAdminUser.Value, serializedAdditionalRawData);
+            return new LabVirtualMachineProfile(
+                createOption,
+                imageReference,
+                osType,
+                sku,
+                additionalCapabilities,
+                usageQuota,
+                useSharedPassword,
+                adminUser,
+                nonAdminUser,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineProfile>.Write(ModelReaderWriterOptions options)
@@ -186,7 +196,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabVirtualMachineProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabVirtualMachineProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +212,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabVirtualMachineProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabVirtualMachineProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabVirtualMachineProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

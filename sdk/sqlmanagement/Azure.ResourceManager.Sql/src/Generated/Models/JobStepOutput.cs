@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -94,20 +93,28 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The output destination type. </summary>
+        [WirePath("type")]
         public JobStepOutputType? OutputType { get; set; }
         /// <summary> The output destination subscription id. </summary>
+        [WirePath("subscriptionId")]
         public Guid? SubscriptionId { get; set; }
         /// <summary> The output destination resource group. </summary>
+        [WirePath("resourceGroupName")]
         public string ResourceGroupName { get; set; }
         /// <summary> The output destination server name. </summary>
+        [WirePath("serverName")]
         public string ServerName { get; set; }
         /// <summary> The output destination database. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> The output destination schema. </summary>
+        [WirePath("schemaName")]
         public string SchemaName { get; set; }
         /// <summary> The output destination table. </summary>
+        [WirePath("tableName")]
         public string TableName { get; set; }
         /// <summary> The resource ID of the credential to use to connect to the output destination. </summary>
+        [WirePath("credential")]
         public string Credential { get; set; }
     }
 }

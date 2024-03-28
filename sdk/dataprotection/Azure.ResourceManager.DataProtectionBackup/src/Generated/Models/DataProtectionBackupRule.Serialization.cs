@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupParameters))
             {
                 writer.WritePropertyName("backupParameters"u8);
-                writer.WriteObjectValue(BackupParameters);
+                writer.WriteObjectValue<DataProtectionBackupSettingsBase>(BackupParameters, options);
             }
             writer.WritePropertyName("dataStore"u8);
-            writer.WriteObjectValue(DataStore);
+            writer.WriteObjectValue<DataStoreInfoBase>(DataStore, options);
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger);
+            writer.WriteObjectValue<DataProtectionBackupTriggerContext>(Trigger, options);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("objectType"u8);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<DataProtectionBackupSettingsBase> backupParameters = default;
+            DataProtectionBackupSettingsBase backupParameters = default;
             DataStoreInfoBase dataStore = default;
             DataProtectionBackupTriggerContext trigger = default;
             string name = default;
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    backupParameters = DataProtectionBackupSettingsBase.DeserializeDataProtectionBackupSettingsBase(property.Value);
+                    backupParameters = DataProtectionBackupSettingsBase.DeserializeDataProtectionBackupSettingsBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataStore"u8))
                 {
-                    dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value);
+                    dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trigger"u8))
                 {
-                    trigger = DataProtectionBackupTriggerContext.DeserializeDataProtectionBackupTriggerContext(property.Value);
+                    trigger = DataProtectionBackupTriggerContext.DeserializeDataProtectionBackupTriggerContext(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupRule(name, objectType, serializedAdditionalRawData, backupParameters.Value, dataStore, trigger);
+            return new DataProtectionBackupRule(
+                name,
+                objectType,
+                serializedAdditionalRawData,
+                backupParameters,
+                dataStore,
+                trigger);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupRule>.Write(ModelReaderWriterOptions options)
@@ -133,7 +139,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionBackupRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupRule)} does not support reading '{options.Format}' format.");
             }
         }
 

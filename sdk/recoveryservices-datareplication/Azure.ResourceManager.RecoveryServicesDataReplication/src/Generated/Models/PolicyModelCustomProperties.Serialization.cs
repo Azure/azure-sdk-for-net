@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVToAzStackHCI": return HyperVToAzStackHciPolicyModelCustomProperties.DeserializeHyperVToAzStackHciPolicyModelCustomProperties(element);
-                    case "PolicyModelCustomProperties": return GeneralPolicyModelCustomProperties.DeserializeGeneralPolicyModelCustomProperties(element);
-                    case "VMwareToAzStackHCI": return VMwareToAzStackHciPolicyModelCustomProperties.DeserializeVMwareToAzStackHciPolicyModelCustomProperties(element);
+                    case "HyperVToAzStackHCI": return HyperVToAzStackHciPolicyModelCustomProperties.DeserializeHyperVToAzStackHciPolicyModelCustomProperties(element, options);
+                    case "PolicyModelCustomProperties": return GeneralPolicyModelCustomProperties.DeserializeGeneralPolicyModelCustomProperties(element, options);
+                    case "VMwareToAzStackHCI": return VMwareToAzStackHciPolicyModelCustomProperties.DeserializeVMwareToAzStackHciPolicyModelCustomProperties(element, options);
                 }
             }
-            return UnknownPolicyModelCustomProperties.DeserializeUnknownPolicyModelCustomProperties(element);
+            return UnknownPolicyModelCustomProperties.DeserializeUnknownPolicyModelCustomProperties(element, options);
         }
 
         BinaryData IPersistableModel<PolicyModelCustomProperties>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializePolicyModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLinuxParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLinuxParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLinuxParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLinuxParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLinuxParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLinuxParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IList<VmGuestPatchClassificationLinux>> classificationsToInclude = default;
-            Optional<IList<string>> packageNameMasksToInclude = default;
-            Optional<IList<string>> packageNameMasksToExclude = default;
+            IList<VmGuestPatchClassificationLinux> classificationsToInclude = default;
+            IList<string> packageNameMasksToInclude = default;
+            IList<string> packageNameMasksToExclude = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeLinuxParameters(Optional.ToList(classificationsToInclude), Optional.ToList(packageNameMasksToInclude), Optional.ToList(packageNameMasksToExclude), serializedAdditionalRawData);
+            return new HybridComputeLinuxParameters(classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationLinux>(), packageNameMasksToInclude ?? new ChangeTrackingList<string>(), packageNameMasksToExclude ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeLinuxParameters>.Write(ModelReaderWriterOptions options)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLinuxParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLinuxParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputeLinuxParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLinuxParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLinuxParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

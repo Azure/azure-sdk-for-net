@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsResourceReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsResourceReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsResourceReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsResourceReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WritableSubResource>> dnsResources = default;
-            Optional<WritableSubResource> targetResource = default;
+            IReadOnlyList<WritableSubResource> dnsResources = default;
+            WritableSubResource targetResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsResourceReference(Optional.ToList(dnsResources), targetResource, serializedAdditionalRawData);
+            return new DnsResourceReference(dnsResources ?? new ChangeTrackingList<WritableSubResource>(), targetResource, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsResourceReference>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Dns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsResourceReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsResourceReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Dns.Models
                         return DeserializeDnsResourceReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsResourceReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsResourceReference)} does not support reading '{options.Format}' format.");
             }
         }
 

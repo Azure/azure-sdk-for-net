@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<HardwareInventory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwareInventory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareInventory)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Interfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HardwareInventoryNetworkInterface>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Nics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkCloudNic>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<HardwareInventory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwareInventory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareInventory)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> additionalHostInformation = default;
-            Optional<IReadOnlyList<HardwareInventoryNetworkInterface>> interfaces = default;
-            Optional<IReadOnlyList<NetworkCloudNic>> nics = default;
+            string additionalHostInformation = default;
+            IReadOnlyList<HardwareInventoryNetworkInterface> interfaces = default;
+            IReadOnlyList<NetworkCloudNic> nics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<HardwareInventoryNetworkInterface> array = new List<HardwareInventoryNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HardwareInventoryNetworkInterface.DeserializeHardwareInventoryNetworkInterface(item));
+                        array.Add(HardwareInventoryNetworkInterface.DeserializeHardwareInventoryNetworkInterface(item, options));
                     }
                     interfaces = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudNic> array = new List<NetworkCloudNic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudNic.DeserializeNetworkCloudNic(item));
+                        array.Add(NetworkCloudNic.DeserializeNetworkCloudNic(item, options));
                     }
                     nics = array;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HardwareInventory(additionalHostInformation.Value, Optional.ToList(interfaces), Optional.ToList(nics), serializedAdditionalRawData);
+            return new HardwareInventory(additionalHostInformation, interfaces ?? new ChangeTrackingList<HardwareInventoryNetworkInterface>(), nics ?? new ChangeTrackingList<NetworkCloudNic>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareInventory>.Write(ModelReaderWriterOptions options)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HardwareInventory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareInventory)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeHardwareInventory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HardwareInventory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareInventory)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaAssetStorageContainerSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaAssetStorageContainerSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaAssetContainerPermission> permissions = default;
-            Optional<DateTimeOffset> expiryTime = default;
+            MediaAssetContainerPermission? permissions = default;
+            DateTimeOffset? expiryTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAssetStorageContainerSasContent(Optional.ToNullable(permissions), Optional.ToNullable(expiryTime), serializedAdditionalRawData);
+            return new MediaAssetStorageContainerSasContent(permissions, expiryTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaAssetStorageContainerSasContent>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaAssetStorageContainerSasContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support reading '{options.Format}' format.");
             }
         }
 

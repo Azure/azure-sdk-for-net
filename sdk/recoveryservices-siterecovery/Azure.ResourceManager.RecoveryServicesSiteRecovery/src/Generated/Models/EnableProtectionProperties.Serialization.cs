@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnableProtectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnableProtectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnableProtectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails);
+                writer.WriteObjectValue<EnableProtectionProviderSpecificContent>(ProviderSpecificDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnableProtectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnableProtectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnableProtectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<ResourceIdentifier> protectableItemId = default;
-            Optional<EnableProtectionProviderSpecificContent> providerSpecificDetails = default;
+            ResourceIdentifier policyId = default;
+            ResourceIdentifier protectableItemId = default;
+            EnableProtectionProviderSpecificContent providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = EnableProtectionProviderSpecificContent.DeserializeEnableProtectionProviderSpecificContent(property.Value);
+                    providerSpecificDetails = EnableProtectionProviderSpecificContent.DeserializeEnableProtectionProviderSpecificContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnableProtectionProperties(policyId.Value, protectableItemId.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new EnableProtectionProperties(policyId, protectableItemId, providerSpecificDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnableProtectionProperties>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnableProtectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnableProtectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeEnableProtectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnableProtectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnableProtectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

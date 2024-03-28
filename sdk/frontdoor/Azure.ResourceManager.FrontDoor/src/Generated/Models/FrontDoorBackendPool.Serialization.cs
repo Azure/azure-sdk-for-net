@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorBackendPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorBackendPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorBackendPool)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Backends)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FrontDoorBackend>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorBackendPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorBackendPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorBackendPool)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<IList<FrontDoorBackend>> backends = default;
-            Optional<WritableSubResource> loadBalancingSettings = default;
-            Optional<WritableSubResource> healthProbeSettings = default;
-            Optional<FrontDoorResourceState> resourceState = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            IList<FrontDoorBackend> backends = default;
+            WritableSubResource loadBalancingSettings = default;
+            WritableSubResource healthProbeSettings = default;
+            FrontDoorResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<FrontDoorBackend> array = new List<FrontDoorBackend>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorBackend.DeserializeFrontDoorBackend(item));
+                                array.Add(FrontDoorBackend.DeserializeFrontDoorBackend(item, options));
                             }
                             backends = array;
                             continue;
@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorBackendPool(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToList(backends), loadBalancingSettings, healthProbeSettings, Optional.ToNullable(resourceState));
+            return new FrontDoorBackendPool(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                backends ?? new ChangeTrackingList<FrontDoorBackend>(),
+                loadBalancingSettings,
+                healthProbeSettings,
+                resourceState);
         }
 
         BinaryData IPersistableModel<FrontDoorBackendPool>.Write(ModelReaderWriterOptions options)
@@ -213,7 +221,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorBackendPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorBackendPool)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +237,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeFrontDoorBackendPool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorBackendPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorBackendPool)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadProtectedItemExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadProtectedItemExtendedInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadProtectedItemExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadProtectedItemExtendedInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> oldestRecoveryPoint = default;
-            Optional<DateTimeOffset> oldestRecoveryPointInVault = default;
-            Optional<DateTimeOffset> oldestRecoveryPointInArchive = default;
-            Optional<DateTimeOffset> newestRecoveryPointInArchive = default;
-            Optional<int> recoveryPointCount = default;
-            Optional<string> policyState = default;
-            Optional<string> recoveryModel = default;
+            DateTimeOffset? oldestRecoveryPoint = default;
+            DateTimeOffset? oldestRecoveryPointInVault = default;
+            DateTimeOffset? oldestRecoveryPointInArchive = default;
+            DateTimeOffset? newestRecoveryPointInArchive = default;
+            int? recoveryPointCount = default;
+            string policyState = default;
+            string recoveryModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmWorkloadProtectedItemExtendedInfo(Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(oldestRecoveryPointInVault), Optional.ToNullable(oldestRecoveryPointInArchive), Optional.ToNullable(newestRecoveryPointInArchive), Optional.ToNullable(recoveryPointCount), policyState.Value, recoveryModel.Value, serializedAdditionalRawData);
+            return new VmWorkloadProtectedItemExtendedInfo(
+                oldestRecoveryPoint,
+                oldestRecoveryPointInVault,
+                oldestRecoveryPointInArchive,
+                newestRecoveryPointInArchive,
+                recoveryPointCount,
+                policyState,
+                recoveryModel,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmWorkloadProtectedItemExtendedInfo>.Write(ModelReaderWriterOptions options)
@@ -183,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectedItemExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeVmWorkloadProtectedItemExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectedItemExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

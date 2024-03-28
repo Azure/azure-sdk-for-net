@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.GraphServices;
 
 namespace Azure.ResourceManager.GraphServices.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.GraphServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<GraphServicesAccountResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphServicesAccountResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphServicesAccountResourceList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GraphServicesAccountResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.GraphServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<GraphServicesAccountResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphServicesAccountResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphServicesAccountResourceList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.GraphServices.Models
             {
                 return null;
             }
-            Optional<Uri> nextLink = default;
-            Optional<IReadOnlyList<GraphServicesAccountResourceData>> value = default;
+            Uri nextLink = default;
+            IReadOnlyList<GraphServicesAccountResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                     List<GraphServicesAccountResourceData> array = new List<GraphServicesAccountResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(item));
+                        array.Add(GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GraphServicesAccountResourceList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new GraphServicesAccountResourceList(nextLink, value ?? new ChangeTrackingList<GraphServicesAccountResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GraphServicesAccountResourceList>.Write(ModelReaderWriterOptions options)
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GraphServicesAccountResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphServicesAccountResourceList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                         return DeserializeGraphServicesAccountResourceList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GraphServicesAccountResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphServicesAccountResourceList)} does not support reading '{options.Format}' format.");
             }
         }
 

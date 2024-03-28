@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<ClusterJobProperties>(Properties, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,14 +91,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ClusterJobProperties.DeserializeClusterJobProperties(property.Value);
+                    properties = ClusterJobProperties.DeserializeClusterJobProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterJob(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new ClusterJob(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterJob>.Write(ModelReaderWriterOptions options)
@@ -143,7 +149,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeClusterJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterJob)} does not support reading '{options.Format}' format.");
             }
         }
 

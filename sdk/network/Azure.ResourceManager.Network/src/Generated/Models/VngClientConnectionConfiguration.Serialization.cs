@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VngClientConnectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(VpnClientAddressPool))
             {
                 writer.WritePropertyName("vpnClientAddressPool"u8);
-                writer.WriteObjectValue(VpnClientAddressPool);
+                writer.WriteObjectValue<AddressSpace>(VpnClientAddressPool, options);
             }
             if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
             {
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VngClientConnectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,13 +108,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AddressSpace> vpnClientAddressPool = default;
-            Optional<IList<WritableSubResource>> virtualNetworkGatewayPolicyGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AddressSpace vpnClientAddressPool = default;
+            IList<WritableSubResource> virtualNetworkGatewayPolicyGroups = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkGatewayPolicyGroups"u8))
@@ -202,7 +201,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VngClientConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), vpnClientAddressPool.Value, Optional.ToList(virtualNetworkGatewayPolicyGroups), Optional.ToNullable(provisioningState));
+            return new VngClientConnectionConfiguration(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                vpnClientAddressPool,
+                virtualNetworkGatewayPolicyGroups ?? new ChangeTrackingList<WritableSubResource>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<VngClientConnectionConfiguration>.Write(ModelReaderWriterOptions options)
@@ -214,7 +221,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -230,7 +237,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVngClientConnectionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

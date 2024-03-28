@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerThrottlingInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerThrottlingInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<int> periods = default;
-            Optional<int> throttledPeriods = default;
-            Optional<int> throttledTime = default;
+            int? periods = default;
+            int? throttledPeriods = default;
+            int? throttledTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,64 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerThrottlingInfo(Optional.ToNullable(periods), Optional.ToNullable(throttledPeriods), Optional.ToNullable(throttledTime), serializedAdditionalRawData);
+            return new ContainerThrottlingInfo(periods, throttledPeriods, throttledTime, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Periods), out propertyOverride);
+            if (Optional.IsDefined(Periods) || hasPropertyOverride)
+            {
+                builder.Append("  periods: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Periods.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThrottledPeriods), out propertyOverride);
+            if (Optional.IsDefined(ThrottledPeriods) || hasPropertyOverride)
+            {
+                builder.Append("  throttledPeriods: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ThrottledPeriods.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThrottledTime), out propertyOverride);
+            if (Optional.IsDefined(ThrottledTime) || hasPropertyOverride)
+            {
+                builder.Append("  throttledTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ThrottledTime.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ContainerThrottlingInfo>.Write(ModelReaderWriterOptions options)
@@ -130,8 +188,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +207,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeContainerThrottlingInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

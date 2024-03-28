@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabasePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabasePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,29 +188,29 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> collation = default;
-            Optional<ManagedDatabaseStatus> status = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<DateTimeOffset> earliestRestorePoint = default;
-            Optional<DateTimeOffset> restorePointInTime = default;
-            Optional<AzureLocation> defaultSecondaryLocation = default;
-            Optional<CatalogCollationType> catalogCollation = default;
-            Optional<ManagedDatabaseCreateMode> createMode = default;
-            Optional<Uri> storageContainerUri = default;
-            Optional<ResourceIdentifier> sourceDatabaseId = default;
-            Optional<ResourceIdentifier> crossSubscriptionSourceDatabaseId = default;
-            Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
-            Optional<ResourceIdentifier> crossSubscriptionRestorableDroppedDatabaseId = default;
-            Optional<string> storageContainerIdentity = default;
-            Optional<string> storageContainerSasToken = default;
-            Optional<ResourceIdentifier> failoverGroupId = default;
-            Optional<ResourceIdentifier> recoverableDatabaseId = default;
-            Optional<ResourceIdentifier> longTermRetentionBackupResourceId = default;
-            Optional<bool> autoCompleteRestore = default;
-            Optional<string> lastBackupName = default;
-            Optional<ResourceIdentifier> crossSubscriptionTargetManagedInstanceId = default;
-            Optional<bool> isLedgerOn = default;
+            IDictionary<string, string> tags = default;
+            string collation = default;
+            ManagedDatabaseStatus? status = default;
+            DateTimeOffset? creationDate = default;
+            DateTimeOffset? earliestRestorePoint = default;
+            DateTimeOffset? restorePointInTime = default;
+            AzureLocation? defaultSecondaryLocation = default;
+            CatalogCollationType? catalogCollation = default;
+            ManagedDatabaseCreateMode? createMode = default;
+            Uri storageContainerUri = default;
+            ResourceIdentifier sourceDatabaseId = default;
+            ResourceIdentifier crossSubscriptionSourceDatabaseId = default;
+            ResourceIdentifier restorableDroppedDatabaseId = default;
+            ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = default;
+            string storageContainerIdentity = default;
+            string storageContainerSasToken = default;
+            ResourceIdentifier failoverGroupId = default;
+            ResourceIdentifier recoverableDatabaseId = default;
+            ResourceIdentifier longTermRetentionBackupResourceId = default;
+            bool? autoCompleteRestore = default;
+            string lastBackupName = default;
+            ResourceIdentifier crossSubscriptionTargetManagedInstanceId = default;
+            bool? isLedgerOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -429,7 +429,31 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDatabasePatch(Optional.ToDictionary(tags), collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), Optional.ToNullable(defaultSecondaryLocation), Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, crossSubscriptionSourceDatabaseId.Value, restorableDroppedDatabaseId.Value, crossSubscriptionRestorableDroppedDatabaseId.Value, storageContainerIdentity.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value, crossSubscriptionTargetManagedInstanceId.Value, Optional.ToNullable(isLedgerOn), serializedAdditionalRawData);
+            return new ManagedDatabasePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                collation,
+                status,
+                creationDate,
+                earliestRestorePoint,
+                restorePointInTime,
+                defaultSecondaryLocation,
+                catalogCollation,
+                createMode,
+                storageContainerUri,
+                sourceDatabaseId,
+                crossSubscriptionSourceDatabaseId,
+                restorableDroppedDatabaseId,
+                crossSubscriptionRestorableDroppedDatabaseId,
+                storageContainerIdentity,
+                storageContainerSasToken,
+                failoverGroupId,
+                recoverableDatabaseId,
+                longTermRetentionBackupResourceId,
+                autoCompleteRestore,
+                lastBackupName,
+                crossSubscriptionTargetManagedInstanceId,
+                isLedgerOn,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDatabasePatch>.Write(ModelReaderWriterOptions options)
@@ -441,7 +465,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -457,7 +481,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedDatabasePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

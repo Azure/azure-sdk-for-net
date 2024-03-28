@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterCodeVersionsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterCodeVersionsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCodeVersionsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterCodeVersionsResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterCodeVersionsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterCodeVersionsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCodeVersionsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ClusterCodeVersionsResult>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ClusterCodeVersionsResult> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ClusterCodeVersionsResult> array = new List<ClusterCodeVersionsResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(item));
+                        array.Add(ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterCodeVersionsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ClusterCodeVersionsListResult(value ?? new ChangeTrackingList<ClusterCodeVersionsResult>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterCodeVersionsListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterCodeVersionsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCodeVersionsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeClusterCodeVersionsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterCodeVersionsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCodeVersionsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

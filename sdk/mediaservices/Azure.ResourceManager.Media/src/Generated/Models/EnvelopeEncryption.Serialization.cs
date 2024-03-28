@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnvelopeEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
-                writer.WriteObjectValue(EnabledProtocols);
+                writer.WriteObjectValue<MediaEnabledProtocols>(EnabledProtocols, options);
             }
             if (Optional.IsCollectionDefined(ClearTracks))
             {
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in ClearTracks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaTrackSelection>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
-                writer.WriteObjectValue(ContentKeys);
+                writer.WriteObjectValue<StreamingPolicyContentKeys>(ContentKeys, options);
             }
             if (Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnvelopeEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaEnabledProtocols> enabledProtocols = default;
-            Optional<IList<MediaTrackSelection>> clearTracks = default;
-            Optional<StreamingPolicyContentKeys> contentKeys = default;
-            Optional<string> customKeyAcquisitionUriTemplate = default;
+            MediaEnabledProtocols enabledProtocols = default;
+            IList<MediaTrackSelection> clearTracks = default;
+            StreamingPolicyContentKeys contentKeys = default;
+            string customKeyAcquisitionUriTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
+                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clearTracks"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item, options));
                     }
                     clearTracks = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value);
+                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customKeyAcquisitionUrlTemplate"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnvelopeEncryption(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, customKeyAcquisitionUriTemplate.Value, serializedAdditionalRawData);
+            return new EnvelopeEncryption(enabledProtocols, clearTracks ?? new ChangeTrackingList<MediaTrackSelection>(), contentKeys, customKeyAcquisitionUriTemplate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnvelopeEncryption>.Write(ModelReaderWriterOptions options)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeEnvelopeEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 

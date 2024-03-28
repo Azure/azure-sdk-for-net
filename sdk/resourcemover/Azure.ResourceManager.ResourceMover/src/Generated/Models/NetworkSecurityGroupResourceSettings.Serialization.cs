@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityGroupResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupResourceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in SecurityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkSecurityGroupSecurityRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityGroupResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupResourceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<NetworkSecurityGroupSecurityRule>> securityRules = default;
+            IDictionary<string, string> tags = default;
+            IList<NetworkSecurityGroupSecurityRule> securityRules = default;
             string resourceType = default;
-            Optional<string> targetResourceName = default;
-            Optional<string> targetResourceGroupName = default;
+            string targetResourceName = default;
+            string targetResourceGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<NetworkSecurityGroupSecurityRule> array = new List<NetworkSecurityGroupSecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityGroupSecurityRule.DeserializeNetworkSecurityGroupSecurityRule(item));
+                        array.Add(NetworkSecurityGroupSecurityRule.DeserializeNetworkSecurityGroupSecurityRule(item, options));
                     }
                     securityRules = array;
                     continue;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityGroupResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToList(securityRules));
+            return new NetworkSecurityGroupResourceSettings(
+                resourceType,
+                targetResourceName,
+                targetResourceGroupName,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                securityRules ?? new ChangeTrackingList<NetworkSecurityGroupSecurityRule>());
         }
 
         BinaryData IPersistableModel<NetworkSecurityGroupResourceSettings>.Write(ModelReaderWriterOptions options)
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +189,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeNetworkSecurityGroupResourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

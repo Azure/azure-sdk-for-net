@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DevTestLabs;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabApplicableSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,12 +65,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(LabVmsShutdown))
             {
                 writer.WritePropertyName("labVmsShutdown"u8);
-                writer.WriteObjectValue(LabVmsShutdown);
+                writer.WriteObjectValue<DevTestLabScheduleData>(LabVmsShutdown, options);
             }
             if (Optional.IsDefined(LabVmsStartup))
             {
                 writer.WritePropertyName("labVmsStartup"u8);
-                writer.WriteObjectValue(LabVmsStartup);
+                writer.WriteObjectValue<DevTestLabScheduleData>(LabVmsStartup, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabApplicableSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,14 +111,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabScheduleData> labVmsShutdown = default;
-            Optional<DevTestLabScheduleData> labVmsStartup = default;
+            SystemData systemData = default;
+            DevTestLabScheduleData labVmsShutdown = default;
+            DevTestLabScheduleData labVmsStartup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            labVmsShutdown = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value);
+                            labVmsShutdown = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labVmsStartup"u8))
@@ -191,7 +190,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            labVmsStartup = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value);
+                            labVmsStartup = DevTestLabScheduleData.DeserializeDevTestLabScheduleData(property0.Value, options);
                             continue;
                         }
                     }
@@ -203,7 +202,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabApplicableSchedule(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, labVmsShutdown.Value, labVmsStartup.Value, serializedAdditionalRawData);
+            return new DevTestLabApplicableSchedule(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                labVmsShutdown,
+                labVmsStartup,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabApplicableSchedule>.Write(ModelReaderWriterOptions options)
@@ -215,7 +223,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +239,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabApplicableSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

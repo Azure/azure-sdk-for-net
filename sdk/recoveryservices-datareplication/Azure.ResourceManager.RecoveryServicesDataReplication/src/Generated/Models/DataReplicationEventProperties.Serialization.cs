@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataReplicationHealthErrorInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties);
+            writer.WriteObjectValue<EventModelCustomProperties>(CustomProperties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,15 +116,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<string> resourceName = default;
-            Optional<string> eventType = default;
-            Optional<string> eventName = default;
-            Optional<DateTimeOffset> timeOfOccurrence = default;
-            Optional<string> severity = default;
-            Optional<string> description = default;
-            Optional<string> correlationId = default;
-            Optional<IReadOnlyList<DataReplicationHealthErrorInfo>> healthErrors = default;
+            ResourceType? resourceType = default;
+            string resourceName = default;
+            string eventType = default;
+            string eventName = default;
+            DateTimeOffset? timeOfOccurrence = default;
+            string severity = default;
+            string description = default;
+            string correlationId = default;
+            IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             EventModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationHealthErrorInfo> array = new List<DataReplicationHealthErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item));
+                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = EventModelCustomProperties.DeserializeEventModelCustomProperties(property.Value);
+                    customProperties = EventModelCustomProperties.DeserializeEventModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -203,7 +203,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationEventProperties(Optional.ToNullable(resourceType), resourceName.Value, eventType.Value, eventName.Value, Optional.ToNullable(timeOfOccurrence), severity.Value, description.Value, correlationId.Value, Optional.ToList(healthErrors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationEventProperties(
+                resourceType,
+                resourceName,
+                eventType,
+                eventName,
+                timeOfOccurrence,
+                severity,
+                description,
+                correlationId,
+                healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationEventProperties>.Write(ModelReaderWriterOptions options)
@@ -215,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +242,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDataReplicationEventProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

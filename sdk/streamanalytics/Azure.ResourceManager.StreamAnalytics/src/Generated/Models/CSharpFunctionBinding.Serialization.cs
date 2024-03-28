@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<CSharpFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<CSharpFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> dllPath = default;
-            Optional<string> @class = default;
-            Optional<string> method = default;
-            Optional<StreamingJobFunctionUpdateMode> updateMode = default;
+            string dllPath = default;
+            string @class = default;
+            string method = default;
+            StreamingJobFunctionUpdateMode? updateMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CSharpFunctionBinding(type, serializedAdditionalRawData, dllPath.Value, @class.Value, method.Value, Optional.ToNullable(updateMode));
+            return new CSharpFunctionBinding(
+                type,
+                serializedAdditionalRawData,
+                dllPath,
+                @class,
+                method,
+                updateMode);
         }
 
         BinaryData IPersistableModel<CSharpFunctionBinding>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeCSharpFunctionBinding(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support reading '{options.Format}' format.");
             }
         }
 

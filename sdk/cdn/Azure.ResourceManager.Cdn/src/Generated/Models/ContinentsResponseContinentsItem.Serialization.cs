@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContinentsResponseContinentsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContinentsResponseContinentsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContinentsResponseContinentsItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContinentsResponseContinentsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContinentsResponseContinentsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContinentsResponseContinentsItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContinentsResponseContinentsItem(id.Value, serializedAdditionalRawData);
+            return new ContinentsResponseContinentsItem(id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContinentsResponseContinentsItem>.Write(ModelReaderWriterOptions options)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContinentsResponseContinentsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContinentsResponseContinentsItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeContinentsResponseContinentsItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContinentsResponseContinentsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContinentsResponseContinentsItem)} does not support reading '{options.Format}' format.");
             }
         }
 

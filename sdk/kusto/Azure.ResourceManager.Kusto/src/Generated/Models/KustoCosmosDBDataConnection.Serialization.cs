@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoCosmosDBDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoCosmosDBDataConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoCosmosDBDataConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoCosmosDBDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoCosmosDBDataConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoCosmosDBDataConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,21 +140,21 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             DataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> tableName = default;
-            Optional<string> mappingRuleName = default;
-            Optional<ResourceIdentifier> managedIdentityResourceId = default;
-            Optional<Guid> managedIdentityObjectId = default;
-            Optional<ResourceIdentifier> cosmosDBAccountResourceId = default;
-            Optional<string> cosmosDBDatabase = default;
-            Optional<string> cosmosDBContainer = default;
-            Optional<DateTimeOffset> retrievalStartDate = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string tableName = default;
+            string mappingRuleName = default;
+            ResourceIdentifier managedIdentityResourceId = default;
+            Guid? managedIdentityObjectId = default;
+            ResourceIdentifier cosmosDBAccountResourceId = default;
+            string cosmosDBDatabase = default;
+            string cosmosDBContainer = default;
+            DateTimeOffset? retrievalStartDate = default;
+            KustoProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,7 +280,23 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoCosmosDBDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, tableName.Value, mappingRuleName.Value, managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), cosmosDBAccountResourceId.Value, cosmosDBDatabase.Value, cosmosDBContainer.Value, Optional.ToNullable(retrievalStartDate), Optional.ToNullable(provisioningState));
+            return new KustoCosmosDBDataConnection(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData,
+                tableName,
+                mappingRuleName,
+                managedIdentityResourceId,
+                managedIdentityObjectId,
+                cosmosDBAccountResourceId,
+                cosmosDBDatabase,
+                cosmosDBContainer,
+                retrievalStartDate,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<KustoCosmosDBDataConnection>.Write(ModelReaderWriterOptions options)
@@ -292,7 +308,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoCosmosDBDataConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoCosmosDBDataConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +324,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeKustoCosmosDBDataConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoCosmosDBDataConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoCosmosDBDataConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactFramingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactFramingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> serviceCodeListDirectoryVersion = default;
-            Optional<string> characterEncoding = default;
+            string serviceCodeListDirectoryVersion = default;
+            string characterEncoding = default;
             int protocolVersion = default;
             int dataElementSeparator = default;
             int componentSeparator = default;
@@ -168,7 +168,19 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactFramingSettings(serviceCodeListDirectoryVersion.Value, characterEncoding.Value, protocolVersion, dataElementSeparator, componentSeparator, segmentTerminator, releaseIndicator, repetitionSeparator, characterSet, decimalPointIndicator, segmentTerminatorSuffix, serializedAdditionalRawData);
+            return new EdifactFramingSettings(
+                serviceCodeListDirectoryVersion,
+                characterEncoding,
+                protocolVersion,
+                dataElementSeparator,
+                componentSeparator,
+                segmentTerminator,
+                releaseIndicator,
+                repetitionSeparator,
+                characterSet,
+                decimalPointIndicator,
+                segmentTerminatorSuffix,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactFramingSettings>.Write(ModelReaderWriterOptions options)
@@ -180,7 +192,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +208,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeEdifactFramingSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

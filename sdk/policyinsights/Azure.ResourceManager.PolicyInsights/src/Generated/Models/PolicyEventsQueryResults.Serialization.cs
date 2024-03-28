@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyEventsQueryResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyEventsQueryResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyEventsQueryResults)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PolicyEvent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyEventsQueryResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyEventsQueryResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyEventsQueryResults)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> odataContext = default;
-            Optional<int> odataCount = default;
-            Optional<string> odataNextLink = default;
-            Optional<IReadOnlyList<PolicyEvent>> value = default;
+            string odataContext = default;
+            int? odataCount = default;
+            string odataNextLink = default;
+            IReadOnlyList<PolicyEvent> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyEvent> array = new List<PolicyEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyEvent.DeserializePolicyEvent(item));
+                        array.Add(PolicyEvent.DeserializePolicyEvent(item, options));
                     }
                     value = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyEventsQueryResults(odataContext.Value, Optional.ToNullable(odataCount), odataNextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new PolicyEventsQueryResults(odataContext, odataCount, odataNextLink, value ?? new ChangeTrackingList<PolicyEvent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyEventsQueryResults>.Write(ModelReaderWriterOptions options)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyEventsQueryResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyEventsQueryResults)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicyEventsQueryResults(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyEventsQueryResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyEventsQueryResults)} does not support reading '{options.Format}' format.");
             }
         }
 

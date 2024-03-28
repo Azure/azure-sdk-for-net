@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculateExchangeResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CalculateExchangeResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<CalculateExchangeResultProperties>(Properties, options);
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<OperationResultError>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculateExchangeResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CalculateExchangeResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<CalculateExchangeOperationResultStatus> status = default;
-            Optional<CalculateExchangeResultProperties> properties = default;
-            Optional<OperationResultError> error = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            CalculateExchangeOperationResultStatus? status = default;
+            CalculateExchangeResultProperties properties = default;
+            OperationResultError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = CalculateExchangeResultProperties.DeserializeCalculateExchangeResultProperties(property.Value);
+                    properties = CalculateExchangeResultProperties.DeserializeCalculateExchangeResultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    error = OperationResultError.DeserializeOperationResultError(property.Value);
+                    error = OperationResultError.DeserializeOperationResultError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculateExchangeResult(id.Value, name.Value, Optional.ToNullable(status), properties.Value, error.Value, serializedAdditionalRawData);
+            return new CalculateExchangeResult(
+                id,
+                name,
+                status,
+                properties,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculateExchangeResult>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CalculateExchangeResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CalculateExchangeResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeCalculateExchangeResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CalculateExchangeResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CalculateExchangeResult)} does not support reading '{options.Format}' format.");
             }
         }
 

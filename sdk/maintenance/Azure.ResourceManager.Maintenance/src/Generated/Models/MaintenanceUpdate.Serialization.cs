@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<MaintenanceScope> maintenanceScope = default;
-            Optional<MaintenanceImpactType> impactType = default;
-            Optional<MaintenanceUpdateStatus> status = default;
-            Optional<int> impactDurationInSec = default;
-            Optional<DateTimeOffset> notBefore = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            MaintenanceScope? maintenanceScope = default;
+            MaintenanceImpactType? impactType = default;
+            MaintenanceUpdateStatus? status = default;
+            int? impactDurationInSec = default;
+            DateTimeOffset? notBefore = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceUpdate(Optional.ToNullable(maintenanceScope), Optional.ToNullable(impactType), Optional.ToNullable(status), Optional.ToNullable(impactDurationInSec), Optional.ToNullable(notBefore), resourceId.Value, serializedAdditionalRawData);
+            return new MaintenanceUpdate(
+                maintenanceScope,
+                impactType,
+                status,
+                impactDurationInSec,
+                notBefore,
+                resourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceUpdate>.Write(ModelReaderWriterOptions options)
@@ -191,7 +198,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +214,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                         return DeserializeMaintenanceUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

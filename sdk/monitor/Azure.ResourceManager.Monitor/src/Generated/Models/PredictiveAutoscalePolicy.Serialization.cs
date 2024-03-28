@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictiveAutoscalePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictiveAutoscalePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictiveAutoscalePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictiveAutoscalePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictiveAutoscalePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictiveAutoscalePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             PredictiveAutoscalePolicyScaleMode scaleMode = default;
-            Optional<TimeSpan> scaleLookAheadTime = default;
+            TimeSpan? scaleLookAheadTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictiveAutoscalePolicy(scaleMode, Optional.ToNullable(scaleLookAheadTime), serializedAdditionalRawData);
+            return new PredictiveAutoscalePolicy(scaleMode, scaleLookAheadTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictiveAutoscalePolicy>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PredictiveAutoscalePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictiveAutoscalePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializePredictiveAutoscalePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredictiveAutoscalePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictiveAutoscalePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

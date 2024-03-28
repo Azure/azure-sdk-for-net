@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CurrentConnection))
             {
                 writer.WritePropertyName("currentConnection"u8);
-                writer.WriteObjectValue(CurrentConnection);
+                writer.WriteObjectValue<SqlConnection>(CurrentConnection);
             }
             if (Optional.IsDefined(ResultLimit))
             {
@@ -34,12 +34,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<SqlScriptMetadata>(Metadata);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -51,9 +51,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string query = default;
-            Optional<SqlConnection> currentConnection = default;
-            Optional<int> resultLimit = default;
-            Optional<SqlScriptMetadata> metadata = default;
+            SqlConnection currentConnection = default;
+            int? resultLimit = default;
+            SqlScriptMetadata metadata = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -93,14 +93,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScriptContent(query, currentConnection.Value, Optional.ToNullable(resultLimit), metadata.Value, additionalProperties);
+            return new SqlScriptContent(query, currentConnection, resultLimit, metadata, additionalProperties);
         }
 
         internal partial class SqlScriptContentConverter : JsonConverter<SqlScriptContent>
         {
             public override void Write(Utf8JsonWriter writer, SqlScriptContent model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SqlScriptContent>(model);
             }
             public override SqlScriptContent Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

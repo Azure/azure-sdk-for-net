@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<LineChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LineChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LineChannelProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartArray();
             foreach (var item in LineRegistrations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<LineRegistration>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(CallbackUri))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<LineChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LineChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LineChannelProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             IList<LineRegistration> lineRegistrations = default;
-            Optional<Uri> callbackUrl = default;
-            Optional<bool> isValidated = default;
+            Uri callbackUrl = default;
+            bool? isValidated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<LineRegistration> array = new List<LineRegistration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LineRegistration.DeserializeLineRegistration(item));
+                        array.Add(LineRegistration.DeserializeLineRegistration(item, options));
                     }
                     lineRegistrations = array;
                     continue;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LineChannelProperties(lineRegistrations, callbackUrl.Value, Optional.ToNullable(isValidated), serializedAdditionalRawData);
+            return new LineChannelProperties(lineRegistrations, callbackUrl, isValidated, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LineChannelProperties>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LineChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LineChannelProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeLineChannelProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LineChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LineChannelProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

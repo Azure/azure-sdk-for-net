@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotChannelSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotChannelSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotChannelSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Sites)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BotChannelSite>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotChannelSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotChannelSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotChannelSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> extensionKey1 = default;
-            Optional<string> extensionKey2 = default;
-            Optional<IList<BotChannelSite>> sites = default;
-            Optional<string> channelId = default;
-            Optional<string> channelDisplayName = default;
-            Optional<string> botId = default;
-            Optional<Uri> botIconUrl = default;
-            Optional<bool> isEnabled = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<bool> requireTermsAgreement = default;
+            string extensionKey1 = default;
+            string extensionKey2 = default;
+            IList<BotChannelSite> sites = default;
+            string channelId = default;
+            string channelDisplayName = default;
+            string botId = default;
+            Uri botIconUrl = default;
+            bool? isEnabled = default;
+            bool? disableLocalAuth = default;
+            bool? requireTermsAgreement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotChannelSite> array = new List<BotChannelSite>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotChannelSite.DeserializeBotChannelSite(item));
+                        array.Add(BotChannelSite.DeserializeBotChannelSite(item, options));
                     }
                     sites = array;
                     continue;
@@ -214,7 +214,18 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotChannelSettings(extensionKey1.Value, extensionKey2.Value, Optional.ToList(sites), channelId.Value, channelDisplayName.Value, botId.Value, botIconUrl.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(requireTermsAgreement), serializedAdditionalRawData);
+            return new BotChannelSettings(
+                extensionKey1,
+                extensionKey2,
+                sites ?? new ChangeTrackingList<BotChannelSite>(),
+                channelId,
+                channelDisplayName,
+                botId,
+                botIconUrl,
+                isEnabled,
+                disableLocalAuth,
+                requireTermsAgreement,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotChannelSettings>.Write(ModelReaderWriterOptions options)
@@ -226,7 +237,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotChannelSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotChannelSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +253,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeBotChannelSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotChannelSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotChannelSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

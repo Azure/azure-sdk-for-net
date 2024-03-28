@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionValidateMoveEligibilityError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionValidateMoveEligibilityError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<SubscriptionTransferValidationErrorCode> code = default;
-            Optional<string> message = default;
-            Optional<string> details = default;
+            SubscriptionTransferValidationErrorCode? code = default;
+            string message = default;
+            string details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingSubscriptionValidateMoveEligibilityError(Optional.ToNullable(code), message.Value, details.Value, serializedAdditionalRawData);
+            return new BillingSubscriptionValidateMoveEligibilityError(code, message, details, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingSubscriptionValidateMoveEligibilityError>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Billing.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Billing.Models
                         return DeserializeBillingSubscriptionValidateMoveEligibilityError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support reading '{options.Format}' format.");
             }
         }
 

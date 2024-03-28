@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
@@ -18,7 +17,7 @@ namespace Azure.Communication.Chat
         {
             writer.WriteStartObject();
             writer.WritePropertyName("communicationIdentifier"u8);
-            writer.WriteObjectValue(CommunicationIdentifier);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(CommunicationIdentifier);
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -39,8 +38,8 @@ namespace Azure.Communication.Chat
                 return null;
             }
             CommunicationIdentifierModel communicationIdentifier = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> shareHistoryTime = default;
+            string displayName = default;
+            DateTimeOffset? shareHistoryTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("communicationIdentifier"u8))
@@ -63,7 +62,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatParticipantInternal(communicationIdentifier, displayName.Value, Optional.ToNullable(shareHistoryTime));
+            return new ChatParticipantInternal(communicationIdentifier, displayName, shareHistoryTime);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemArchiveStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemArchiveStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<ArchiveStatusType> state = default;
-            Optional<DateTimeOffset> lastCompletionTime = default;
-            Optional<DateTimeOffset> lastStartedTime = default;
-            Optional<int> percentComplete = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
+            ArchiveStatusType? state = default;
+            DateTimeOffset? lastCompletionTime = default;
+            DateTimeOffset? lastStartedTime = default;
+            int? percentComplete = default;
+            string errorCode = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemArchiveStatus(Optional.ToNullable(state), Optional.ToNullable(lastCompletionTime), Optional.ToNullable(lastStartedTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value, serializedAdditionalRawData);
+            return new AmlFileSystemArchiveStatus(
+                state,
+                lastCompletionTime,
+                lastStartedTime,
+                percentComplete,
+                errorCode,
+                errorMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemArchiveStatus>.Write(ModelReaderWriterOptions options)
@@ -168,7 +175,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +191,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeAmlFileSystemArchiveStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemArchiveStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

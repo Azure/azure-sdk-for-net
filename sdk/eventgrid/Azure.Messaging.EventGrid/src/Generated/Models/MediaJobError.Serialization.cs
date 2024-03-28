@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -19,11 +18,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<MediaJobErrorCode> code = default;
-            Optional<string> message = default;
-            Optional<MediaJobErrorCategory> category = default;
-            Optional<MediaJobRetry> retry = default;
-            Optional<IReadOnlyList<MediaJobErrorDetail>> details = default;
+            MediaJobErrorCode? code = default;
+            string message = default;
+            MediaJobErrorCategory? category = default;
+            MediaJobRetry? retry = default;
+            IReadOnlyList<MediaJobErrorDetail> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -73,7 +72,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobError(Optional.ToNullable(code), message.Value, Optional.ToNullable(category), Optional.ToNullable(retry), Optional.ToList(details));
+            return new MediaJobError(code, message, category, retry, details ?? new ChangeTrackingList<MediaJobErrorDetail>());
         }
     }
 }

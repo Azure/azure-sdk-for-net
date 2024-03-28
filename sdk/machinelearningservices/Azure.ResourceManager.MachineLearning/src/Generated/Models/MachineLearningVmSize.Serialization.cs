@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(EstimatedVmPrices))
             {
                 writer.WritePropertyName("estimatedVMPrices"u8);
-                writer.WriteObjectValue(EstimatedVmPrices);
+                writer.WriteObjectValue<MachineLearningEstimatedVmPrices>(EstimatedVmPrices, options);
             }
             if (Optional.IsCollectionDefined(SupportedComputeTypes))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,17 +124,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> family = default;
-            Optional<int> vCpus = default;
-            Optional<int> gpus = default;
-            Optional<int> osVhdSizeMB = default;
-            Optional<int> maxResourceVolumeMB = default;
-            Optional<double> memoryGB = default;
-            Optional<bool> lowPriorityCapable = default;
-            Optional<bool> premiumIO = default;
-            Optional<MachineLearningEstimatedVmPrices> estimatedVmPrices = default;
-            Optional<IReadOnlyList<string>> supportedComputeTypes = default;
+            string name = default;
+            string family = default;
+            int? vCpus = default;
+            int? gpus = default;
+            int? osVhdSizeMB = default;
+            int? maxResourceVolumeMB = default;
+            double? memoryGB = default;
+            bool? lowPriorityCapable = default;
+            bool? premiumIO = default;
+            MachineLearningEstimatedVmPrices estimatedVmPrices = default;
+            IReadOnlyList<string> supportedComputeTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    estimatedVmPrices = MachineLearningEstimatedVmPrices.DeserializeMachineLearningEstimatedVmPrices(property.Value);
+                    estimatedVmPrices = MachineLearningEstimatedVmPrices.DeserializeMachineLearningEstimatedVmPrices(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedComputeTypes"u8))
@@ -241,7 +241,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningVmSize(name.Value, family.Value, Optional.ToNullable(vCpus), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVmPrices.Value, Optional.ToList(supportedComputeTypes), serializedAdditionalRawData);
+            return new MachineLearningVmSize(
+                name,
+                family,
+                vCpus,
+                gpus,
+                osVhdSizeMB,
+                maxResourceVolumeMB,
+                memoryGB,
+                lowPriorityCapable,
+                premiumIO,
+                estimatedVmPrices,
+                supportedComputeTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningVmSize>.Write(ModelReaderWriterOptions options)
@@ -253,7 +265,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -269,7 +281,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningVmSize(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support reading '{options.Format}' format.");
             }
         }
 

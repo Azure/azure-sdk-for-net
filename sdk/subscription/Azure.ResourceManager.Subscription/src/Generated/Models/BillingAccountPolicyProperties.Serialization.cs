@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingAccountPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceTenants)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceTenant>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingAccountPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceTenant>> serviceTenants = default;
-            Optional<bool> allowTransfers = default;
+            IReadOnlyList<ServiceTenant> serviceTenants = default;
+            bool? allowTransfers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     List<ServiceTenant> array = new List<ServiceTenant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceTenant.DeserializeServiceTenant(item));
+                        array.Add(ServiceTenant.DeserializeServiceTenant(item, options));
                     }
                     serviceTenants = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingAccountPolicyProperties(Optional.ToList(serviceTenants), Optional.ToNullable(allowTransfers), serializedAdditionalRawData);
+            return new BillingAccountPolicyProperties(serviceTenants ?? new ChangeTrackingList<ServiceTenant>(), allowTransfers, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingAccountPolicyProperties>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         return DeserializeBillingAccountPolicyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

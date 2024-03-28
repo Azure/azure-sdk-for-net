@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatencyMetric)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LatencyMetric)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatencyMetric)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LatencyMetric)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DateTimeOffset> endDateTimeUtc = default;
-            Optional<float> aValue = default;
-            Optional<float> bValue = default;
-            Optional<float> delta = default;
-            Optional<float> deltaPercent = default;
-            Optional<float> acLower95CI = default;
-            Optional<float> ahUpper95CI = default;
-            Optional<float> bcLower95CI = default;
-            Optional<float> bUpper95CI = default;
+            string name = default;
+            DateTimeOffset? endDateTimeUtc = default;
+            float? aValue = default;
+            float? bValue = default;
+            float? delta = default;
+            float? deltaPercent = default;
+            float? acLower95CI = default;
+            float? ahUpper95CI = default;
+            float? bcLower95CI = default;
+            float? bUpper95CI = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LatencyMetric(name.Value, Optional.ToNullable(endDateTimeUtc), Optional.ToNullable(aValue), Optional.ToNullable(bValue), Optional.ToNullable(delta), Optional.ToNullable(deltaPercent), Optional.ToNullable(acLower95CI), Optional.ToNullable(ahUpper95CI), Optional.ToNullable(bcLower95CI), Optional.ToNullable(bUpper95CI), serializedAdditionalRawData);
+            return new LatencyMetric(
+                name,
+                endDateTimeUtc,
+                aValue,
+                bValue,
+                delta,
+                deltaPercent,
+                acLower95CI,
+                ahUpper95CI,
+                bcLower95CI,
+                bUpper95CI,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LatencyMetric>.Write(ModelReaderWriterOptions options)
@@ -232,7 +243,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +259,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeLatencyMetric(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support reading '{options.Format}' format.");
             }
         }
 

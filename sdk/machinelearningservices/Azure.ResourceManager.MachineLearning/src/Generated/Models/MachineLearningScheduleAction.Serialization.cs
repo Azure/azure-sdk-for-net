@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningScheduleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningScheduleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningScheduleAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningScheduleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningScheduleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningScheduleAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CreateJob": return MachineLearningJobScheduleAction.DeserializeMachineLearningJobScheduleAction(element);
-                    case "CreateMonitor": return CreateMonitorAction.DeserializeCreateMonitorAction(element);
-                    case "ImportData": return ImportDataAction.DeserializeImportDataAction(element);
-                    case "InvokeBatchEndpoint": return MachineLearningEndpointScheduleAction.DeserializeMachineLearningEndpointScheduleAction(element);
+                    case "CreateJob": return MachineLearningJobScheduleAction.DeserializeMachineLearningJobScheduleAction(element, options);
+                    case "CreateMonitor": return CreateMonitorAction.DeserializeCreateMonitorAction(element, options);
+                    case "ImportData": return ImportDataAction.DeserializeImportDataAction(element, options);
+                    case "InvokeBatchEndpoint": return MachineLearningEndpointScheduleAction.DeserializeMachineLearningEndpointScheduleAction(element, options);
                 }
             }
-            return UnknownScheduleActionBase.DeserializeUnknownScheduleActionBase(element);
+            return UnknownScheduleActionBase.DeserializeUnknownScheduleActionBase(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningScheduleAction>.Write(ModelReaderWriterOptions options)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningScheduleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningScheduleAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningScheduleAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningScheduleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningScheduleAction)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Subnet != null)
                 {
                     writer.WritePropertyName("subnet"u8);
-                    writer.WriteObjectValue(Subnet);
+                    writer.WriteObjectValue<ResourceId>(Subnet, options);
                 }
                 else
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutologgerSettings != null)
                 {
                     writer.WritePropertyName("autologgerSettings"u8);
-                    writer.WriteObjectValue(AutologgerSettings);
+                    writer.WriteObjectValue<ComputeInstanceAutologgerSettings>(AutologgerSettings, options);
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SshSettings != null)
                 {
                     writer.WritePropertyName("sshSettings"u8);
-                    writer.WriteObjectValue(SshSettings);
+                    writer.WriteObjectValue<MachineLearningComputeInstanceSshSettings>(SshSettings, options);
                 }
                 else
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in CustomServices)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<CustomService>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (options.Format != "W" && Optional.IsDefined(OSImageMetadata))
             {
                 writer.WritePropertyName("osImageMetadata"u8);
-                writer.WriteObjectValue(OSImageMetadata);
+                writer.WriteObjectValue<ImageMetadata>(OSImageMetadata, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConnectivityEndpoints))
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
-                writer.WriteObjectValue(ConnectivityEndpoints);
+                writer.WriteObjectValue<MachineLearningComputeInstanceConnectivityEndpoints>(ConnectivityEndpoints, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Applications))
             {
@@ -105,14 +105,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Applications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningComputeInstanceApplication>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                writer.WriteObjectValue<MachineLearningComputeInstanceCreatedBy>(CreatedBy, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (PersonalComputeInstanceSettings != null)
                 {
                     writer.WritePropertyName("personalComputeInstanceSettings"u8);
-                    writer.WriteObjectValue(PersonalComputeInstanceSettings);
+                    writer.WriteObjectValue<PersonalComputeInstanceSettings>(PersonalComputeInstanceSettings, options);
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SetupScriptsSettings != null)
                 {
                     writer.WritePropertyName("setupScripts"u8);
-                    writer.WriteObjectValue(SetupScriptsSettings);
+                    writer.WriteObjectValue<SetupScripts>(SetupScriptsSettings, options);
                 }
                 else
                 {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LastOperation != null)
                 {
                     writer.WritePropertyName("lastOperation"u8);
-                    writer.WriteObjectValue(LastOperation);
+                    writer.WriteObjectValue<MachineLearningComputeInstanceLastOperation>(LastOperation, options);
                 }
                 else
                 {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Schedules != null)
                 {
                     writer.WritePropertyName("schedules"u8);
-                    writer.WriteObjectValue(Schedules);
+                    writer.WriteObjectValue<ComputeSchedules>(Schedules, options);
                 }
                 else
                 {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in Containers)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<MachineLearningComputeInstanceContainer>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in DataDisks)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<MachineLearningComputeInstanceDataDisk>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in DataMounts)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<MachineLearningComputeInstanceDataMount>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (options.Format != "W" && Optional.IsDefined(Versions))
             {
                 writer.WritePropertyName("versions"u8);
-                writer.WriteObjectValue(Versions);
+                writer.WriteObjectValue<ComputeInstanceVersion>(Versions, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -300,29 +300,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> vmSize = default;
-            Optional<ResourceId> subnet = default;
-            Optional<MachineLearningApplicationSharingPolicy> applicationSharingPolicy = default;
-            Optional<ComputeInstanceAutologgerSettings> autologgerSettings = default;
-            Optional<MachineLearningComputeInstanceSshSettings> sshSettings = default;
-            Optional<IList<CustomService>> customServices = default;
-            Optional<ImageMetadata> osImageMetadata = default;
-            Optional<MachineLearningComputeInstanceConnectivityEndpoints> connectivityEndpoints = default;
-            Optional<IReadOnlyList<MachineLearningComputeInstanceApplication>> applications = default;
-            Optional<MachineLearningComputeInstanceCreatedBy> createdBy = default;
-            Optional<IReadOnlyList<MachineLearningError>> errors = default;
-            Optional<MachineLearningComputeInstanceState> state = default;
-            Optional<MachineLearningComputeInstanceAuthorizationType?> computeInstanceAuthorizationType = default;
-            Optional<PersonalComputeInstanceSettings> personalComputeInstanceSettings = default;
-            Optional<SetupScripts> setupScripts = default;
-            Optional<MachineLearningComputeInstanceLastOperation> lastOperation = default;
-            Optional<ComputeSchedules> schedules = default;
-            Optional<string> idleTimeBeforeShutdown = default;
-            Optional<bool?> enableNodePublicIP = default;
-            Optional<IReadOnlyList<MachineLearningComputeInstanceContainer>> containers = default;
-            Optional<IReadOnlyList<MachineLearningComputeInstanceDataDisk>> dataDisks = default;
-            Optional<IReadOnlyList<MachineLearningComputeInstanceDataMount>> dataMounts = default;
-            Optional<ComputeInstanceVersion> versions = default;
+            string vmSize = default;
+            ResourceId subnet = default;
+            MachineLearningApplicationSharingPolicy? applicationSharingPolicy = default;
+            ComputeInstanceAutologgerSettings autologgerSettings = default;
+            MachineLearningComputeInstanceSshSettings sshSettings = default;
+            IList<CustomService> customServices = default;
+            ImageMetadata osImageMetadata = default;
+            MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints = default;
+            IReadOnlyList<MachineLearningComputeInstanceApplication> applications = default;
+            MachineLearningComputeInstanceCreatedBy createdBy = default;
+            IReadOnlyList<MachineLearningError> errors = default;
+            MachineLearningComputeInstanceState? state = default;
+            MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType = default;
+            PersonalComputeInstanceSettings personalComputeInstanceSettings = default;
+            SetupScripts setupScripts = default;
+            MachineLearningComputeInstanceLastOperation lastOperation = default;
+            ComputeSchedules schedules = default;
+            string idleTimeBeforeShutdown = default;
+            bool? enableNodePublicIP = default;
+            IReadOnlyList<MachineLearningComputeInstanceContainer> containers = default;
+            IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks = default;
+            IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts = default;
+            ComputeInstanceVersion versions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         subnet = null;
                         continue;
                     }
-                    subnet = ResourceId.DeserializeResourceId(property.Value);
+                    subnet = ResourceId.DeserializeResourceId(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationSharingPolicy"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         autologgerSettings = null;
                         continue;
                     }
-                    autologgerSettings = ComputeInstanceAutologgerSettings.DeserializeComputeInstanceAutologgerSettings(property.Value);
+                    autologgerSettings = ComputeInstanceAutologgerSettings.DeserializeComputeInstanceAutologgerSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sshSettings"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sshSettings = null;
                         continue;
                     }
-                    sshSettings = MachineLearningComputeInstanceSshSettings.DeserializeMachineLearningComputeInstanceSshSettings(property.Value);
+                    sshSettings = MachineLearningComputeInstanceSshSettings.DeserializeMachineLearningComputeInstanceSshSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customServices"u8))
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<CustomService> array = new List<CustomService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomService.DeserializeCustomService(item));
+                        array.Add(CustomService.DeserializeCustomService(item, options));
                     }
                     customServices = array;
                     continue;
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    osImageMetadata = ImageMetadata.DeserializeImageMetadata(property.Value);
+                    osImageMetadata = ImageMetadata.DeserializeImageMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connectivityEndpoints"u8))
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    connectivityEndpoints = MachineLearningComputeInstanceConnectivityEndpoints.DeserializeMachineLearningComputeInstanceConnectivityEndpoints(property.Value);
+                    connectivityEndpoints = MachineLearningComputeInstanceConnectivityEndpoints.DeserializeMachineLearningComputeInstanceConnectivityEndpoints(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applications"u8))
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningComputeInstanceApplication> array = new List<MachineLearningComputeInstanceApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeInstanceApplication.DeserializeMachineLearningComputeInstanceApplication(item));
+                        array.Add(MachineLearningComputeInstanceApplication.DeserializeMachineLearningComputeInstanceApplication(item, options));
                     }
                     applications = array;
                     continue;
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    createdBy = MachineLearningComputeInstanceCreatedBy.DeserializeMachineLearningComputeInstanceCreatedBy(property.Value);
+                    createdBy = MachineLearningComputeInstanceCreatedBy.DeserializeMachineLearningComputeInstanceCreatedBy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningError> array = new List<MachineLearningError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                        array.Add(MachineLearningError.DeserializeMachineLearningError(item, options));
                     }
                     errors = array;
                     continue;
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         personalComputeInstanceSettings = null;
                         continue;
                     }
-                    personalComputeInstanceSettings = PersonalComputeInstanceSettings.DeserializePersonalComputeInstanceSettings(property.Value);
+                    personalComputeInstanceSettings = PersonalComputeInstanceSettings.DeserializePersonalComputeInstanceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("setupScripts"u8))
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         setupScripts = null;
                         continue;
                     }
-                    setupScripts = SetupScripts.DeserializeSetupScripts(property.Value);
+                    setupScripts = SetupScripts.DeserializeSetupScripts(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastOperation"u8))
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         lastOperation = null;
                         continue;
                     }
-                    lastOperation = MachineLearningComputeInstanceLastOperation.DeserializeMachineLearningComputeInstanceLastOperation(property.Value);
+                    lastOperation = MachineLearningComputeInstanceLastOperation.DeserializeMachineLearningComputeInstanceLastOperation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("schedules"u8))
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         schedules = null;
                         continue;
                     }
-                    schedules = ComputeSchedules.DeserializeComputeSchedules(property.Value);
+                    schedules = ComputeSchedules.DeserializeComputeSchedules(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("idleTimeBeforeShutdown"u8))
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningComputeInstanceContainer> array = new List<MachineLearningComputeInstanceContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeInstanceContainer.DeserializeMachineLearningComputeInstanceContainer(item));
+                        array.Add(MachineLearningComputeInstanceContainer.DeserializeMachineLearningComputeInstanceContainer(item, options));
                     }
                     containers = array;
                     continue;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningComputeInstanceDataDisk> array = new List<MachineLearningComputeInstanceDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeInstanceDataDisk.DeserializeMachineLearningComputeInstanceDataDisk(item));
+                        array.Add(MachineLearningComputeInstanceDataDisk.DeserializeMachineLearningComputeInstanceDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningComputeInstanceDataMount> array = new List<MachineLearningComputeInstanceDataMount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeInstanceDataMount.DeserializeMachineLearningComputeInstanceDataMount(item));
+                        array.Add(MachineLearningComputeInstanceDataMount.DeserializeMachineLearningComputeInstanceDataMount(item, options));
                     }
                     dataMounts = array;
                     continue;
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    versions = ComputeInstanceVersion.DeserializeComputeInstanceVersion(property.Value);
+                    versions = ComputeInstanceVersion.DeserializeComputeInstanceVersion(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -575,7 +575,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), autologgerSettings.Value, sshSettings.Value, Optional.ToList(customServices), osImageMetadata.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, idleTimeBeforeShutdown.Value, Optional.ToNullable(enableNodePublicIP), Optional.ToList(containers), Optional.ToList(dataDisks), Optional.ToList(dataMounts), versions.Value, serializedAdditionalRawData);
+            return new MachineLearningComputeInstanceProperties(
+                vmSize,
+                subnet,
+                applicationSharingPolicy,
+                autologgerSettings,
+                sshSettings,
+                customServices ?? new ChangeTrackingList<CustomService>(),
+                osImageMetadata,
+                connectivityEndpoints,
+                applications ?? new ChangeTrackingList<MachineLearningComputeInstanceApplication>(),
+                createdBy,
+                errors ?? new ChangeTrackingList<MachineLearningError>(),
+                state,
+                computeInstanceAuthorizationType,
+                personalComputeInstanceSettings,
+                setupScripts,
+                lastOperation,
+                schedules,
+                idleTimeBeforeShutdown,
+                enableNodePublicIP,
+                containers ?? new ChangeTrackingList<MachineLearningComputeInstanceContainer>(),
+                dataDisks ?? new ChangeTrackingList<MachineLearningComputeInstanceDataDisk>(),
+                dataMounts ?? new ChangeTrackingList<MachineLearningComputeInstanceDataMount>(),
+                versions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeInstanceProperties>.Write(ModelReaderWriterOptions options)
@@ -587,7 +611,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -603,7 +627,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningComputeInstanceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

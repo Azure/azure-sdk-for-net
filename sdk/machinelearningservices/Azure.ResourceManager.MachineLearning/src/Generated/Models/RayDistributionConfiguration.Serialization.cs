@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RayDistributionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RayDistributionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<int?> dashboardPort = default;
-            Optional<string> headNodeAdditionalArgs = default;
-            Optional<bool?> includeDashboard = default;
-            Optional<int?> port = default;
-            Optional<string> workerNodeAdditionalArgs = default;
+            string address = default;
+            int? dashboardPort = default;
+            string headNodeAdditionalArgs = default;
+            bool? includeDashboard = default;
+            int? port = default;
+            string workerNodeAdditionalArgs = default;
             DistributionType distributionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -220,7 +220,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RayDistributionConfiguration(distributionType, serializedAdditionalRawData, address.Value, Optional.ToNullable(dashboardPort), headNodeAdditionalArgs.Value, Optional.ToNullable(includeDashboard), Optional.ToNullable(port), workerNodeAdditionalArgs.Value);
+            return new RayDistributionConfiguration(
+                distributionType,
+                serializedAdditionalRawData,
+                address,
+                dashboardPort,
+                headNodeAdditionalArgs,
+                includeDashboard,
+                port,
+                workerNodeAdditionalArgs);
         }
 
         BinaryData IPersistableModel<RayDistributionConfiguration>.Write(ModelReaderWriterOptions options)
@@ -232,7 +240,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeRayDistributionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RayDistributionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

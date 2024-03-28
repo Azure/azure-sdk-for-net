@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<TieringCostInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TieringCostInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TieringCostInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<TieringCostInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TieringCostInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TieringCostInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "TieringCostRehydrationInfo": return TieringCostRehydrationInfo.DeserializeTieringCostRehydrationInfo(element);
-                    case "TieringCostSavingInfo": return TieringCostSavingInfo.DeserializeTieringCostSavingInfo(element);
+                    case "TieringCostRehydrationInfo": return TieringCostRehydrationInfo.DeserializeTieringCostRehydrationInfo(element, options);
+                    case "TieringCostSavingInfo": return TieringCostSavingInfo.DeserializeTieringCostSavingInfo(element, options);
                 }
             }
-            return UnknownTieringCostInfo.DeserializeUnknownTieringCostInfo(element);
+            return UnknownTieringCostInfo.DeserializeUnknownTieringCostInfo(element, options);
         }
 
         BinaryData IPersistableModel<TieringCostInfo>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TieringCostInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TieringCostInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeTieringCostInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TieringCostInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TieringCostInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

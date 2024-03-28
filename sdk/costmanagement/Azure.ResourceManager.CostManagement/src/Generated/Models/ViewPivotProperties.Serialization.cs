@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ViewPivotProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ViewPivotProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ViewPivotProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ViewPivotProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ViewPivotProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ViewPivotProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ViewPivotType> type = default;
-            Optional<string> name = default;
+            ViewPivotType? type = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ViewPivotProperties(Optional.ToNullable(type), name.Value, serializedAdditionalRawData);
+            return new ViewPivotProperties(type, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ViewPivotProperties>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ViewPivotProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ViewPivotProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeViewPivotProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ViewPivotProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ViewPivotProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

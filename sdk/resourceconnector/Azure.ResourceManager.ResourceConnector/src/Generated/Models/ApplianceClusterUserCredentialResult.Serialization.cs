@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceClusterUserCredentialResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceClusterUserCredentialResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceClusterUserCredentialResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(HybridConnectionConfig))
             {
                 writer.WritePropertyName("hybridConnectionConfig"u8);
-                writer.WriteObjectValue(HybridConnectionConfig);
+                writer.WriteObjectValue<HybridConnectionConfig>(HybridConnectionConfig, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplianceCredentialKubeconfig>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceClusterUserCredentialResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceClusterUserCredentialResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceClusterUserCredentialResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<HybridConnectionConfig> hybridConnectionConfig = default;
-            Optional<IReadOnlyList<ApplianceCredentialKubeconfig>> kubeconfigs = default;
+            HybridConnectionConfig hybridConnectionConfig = default;
+            IReadOnlyList<ApplianceCredentialKubeconfig> kubeconfigs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value);
+                    hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kubeconfigs"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ApplianceCredentialKubeconfig> array = new List<ApplianceCredentialKubeconfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplianceCredentialKubeconfig.DeserializeApplianceCredentialKubeconfig(item));
+                        array.Add(ApplianceCredentialKubeconfig.DeserializeApplianceCredentialKubeconfig(item, options));
                     }
                     kubeconfigs = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceClusterUserCredentialResult(hybridConnectionConfig.Value, Optional.ToList(kubeconfigs), serializedAdditionalRawData);
+            return new ApplianceClusterUserCredentialResult(hybridConnectionConfig, kubeconfigs ?? new ChangeTrackingList<ApplianceCredentialKubeconfig>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceClusterUserCredentialResult>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceClusterUserCredentialResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceClusterUserCredentialResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                         return DeserializeApplianceClusterUserCredentialResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceClusterUserCredentialResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceClusterUserCredentialResult)} does not support reading '{options.Format}' format.");
             }
         }
 

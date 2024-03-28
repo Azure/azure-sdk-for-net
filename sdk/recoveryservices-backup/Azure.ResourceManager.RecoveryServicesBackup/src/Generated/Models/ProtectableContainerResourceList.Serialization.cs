@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtectableContainerResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProtectableContainerResource>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtectableContainerResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProtectableContainerResource>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ProtectableContainerResource> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<ProtectableContainerResource> array = new List<ProtectableContainerResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProtectableContainerResource.DeserializeProtectableContainerResource(item));
+                        array.Add(ProtectableContainerResource.DeserializeProtectableContainerResource(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtectableContainerResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProtectableContainerResourceList(value ?? new ChangeTrackingList<ProtectableContainerResource>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtectableContainerResourceList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeProtectableContainerResourceList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectableContainerResourceList)} does not support reading '{options.Format}' format.");
             }
         }
 

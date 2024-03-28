@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExclusionManagedRuleGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExclusionManagedRuleGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExclusionManagedRuleGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ExclusionManagedRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExclusionManagedRuleGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExclusionManagedRuleGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExclusionManagedRuleGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ruleGroupName = default;
-            Optional<IList<ExclusionManagedRule>> rules = default;
+            IList<ExclusionManagedRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExclusionManagedRule> array = new List<ExclusionManagedRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExclusionManagedRule.DeserializeExclusionManagedRule(item));
+                        array.Add(ExclusionManagedRule.DeserializeExclusionManagedRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExclusionManagedRuleGroup(ruleGroupName, Optional.ToList(rules), serializedAdditionalRawData);
+            return new ExclusionManagedRuleGroup(ruleGroupName, rules ?? new ChangeTrackingList<ExclusionManagedRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExclusionManagedRuleGroup>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExclusionManagedRuleGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExclusionManagedRuleGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeExclusionManagedRuleGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExclusionManagedRuleGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExclusionManagedRuleGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

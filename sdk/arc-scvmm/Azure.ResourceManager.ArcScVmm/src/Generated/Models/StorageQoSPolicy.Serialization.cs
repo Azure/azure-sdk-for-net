@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageQoSPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageQoSPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<long> iopsMaximum = default;
-            Optional<long> iopsMinimum = default;
-            Optional<long> bandwidthLimit = default;
-            Optional<string> policyId = default;
+            string name = default;
+            string id = default;
+            long? iopsMaximum = default;
+            long? iopsMinimum = default;
+            long? bandwidthLimit = default;
+            string policyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageQoSPolicy(name.Value, id.Value, Optional.ToNullable(iopsMaximum), Optional.ToNullable(iopsMinimum), Optional.ToNullable(bandwidthLimit), policyId.Value, serializedAdditionalRawData);
+            return new StorageQoSPolicy(
+                name,
+                id,
+                iopsMaximum,
+                iopsMinimum,
+                bandwidthLimit,
+                policyId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageQoSPolicy>.Write(ModelReaderWriterOptions options)
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeStorageQoSPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

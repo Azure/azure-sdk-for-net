@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 foreach (var item in InstanceTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<MachineLearningInstanceTypeSchema>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> relayConnectionString = default;
-            Optional<string> serviceBusConnectionString = default;
-            Optional<string> extensionPrincipalId = default;
-            Optional<string> extensionInstanceReleaseTrain = default;
-            Optional<string> vcName = default;
-            Optional<string> @namespace = default;
-            Optional<string> defaultInstanceType = default;
-            Optional<IDictionary<string, MachineLearningInstanceTypeSchema>> instanceTypes = default;
+            string relayConnectionString = default;
+            string serviceBusConnectionString = default;
+            string extensionPrincipalId = default;
+            string extensionInstanceReleaseTrain = default;
+            string vcName = default;
+            string @namespace = default;
+            string defaultInstanceType = default;
+            IDictionary<string, MachineLearningInstanceTypeSchema> instanceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningInstanceTypeSchema> dictionary = new Dictionary<string, MachineLearningInstanceTypeSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningInstanceTypeSchema.DeserializeMachineLearningInstanceTypeSchema(property0.Value));
+                        dictionary.Add(property0.Name, MachineLearningInstanceTypeSchema.DeserializeMachineLearningInstanceTypeSchema(property0.Value, options));
                     }
                     instanceTypes = dictionary;
                     continue;
@@ -213,7 +213,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningKubernetesProperties(relayConnectionString.Value, serviceBusConnectionString.Value, extensionPrincipalId.Value, extensionInstanceReleaseTrain.Value, vcName.Value, @namespace.Value, defaultInstanceType.Value, Optional.ToDictionary(instanceTypes), serializedAdditionalRawData);
+            return new MachineLearningKubernetesProperties(
+                relayConnectionString,
+                serviceBusConnectionString,
+                extensionPrincipalId,
+                extensionInstanceReleaseTrain,
+                vcName,
+                @namespace,
+                defaultInstanceType,
+                instanceTypes ?? new ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningKubernetesProperties>.Write(ModelReaderWriterOptions options)
@@ -225,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -241,7 +250,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningKubernetesProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

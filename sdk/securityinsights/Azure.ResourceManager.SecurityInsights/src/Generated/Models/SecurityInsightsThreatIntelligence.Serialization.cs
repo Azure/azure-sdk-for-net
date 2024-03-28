@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsThreatIntelligence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsThreatIntelligence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<double> confidence = default;
-            Optional<string> providerName = default;
-            Optional<string> reportLink = default;
-            Optional<string> threatDescription = default;
-            Optional<string> threatName = default;
-            Optional<string> threatType = default;
+            double? confidence = default;
+            string providerName = default;
+            string reportLink = default;
+            string threatDescription = default;
+            string threatName = default;
+            string threatType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsThreatIntelligence(Optional.ToNullable(confidence), providerName.Value, reportLink.Value, threatDescription.Value, threatName.Value, threatType.Value, serializedAdditionalRawData);
+            return new SecurityInsightsThreatIntelligence(
+                confidence,
+                providerName,
+                reportLink,
+                threatDescription,
+                threatName,
+                threatType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsThreatIntelligence>.Write(ModelReaderWriterOptions options)
@@ -156,7 +163,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsThreatIntelligence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -74,8 +73,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Gets the name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Gets the resource type. </summary>
+        [WirePath("type")]
         public SqlNameAvailabilityResourceType ResourceType { get; }
     }
 }

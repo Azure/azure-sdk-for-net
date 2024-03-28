@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmServiceTypeHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmServiceTypeHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<int> maxPercentUnhealthyServices = default;
-            Optional<int> maxPercentUnhealthyPartitionsPerService = default;
-            Optional<int> maxPercentUnhealthyReplicasPerPartition = default;
+            int? maxPercentUnhealthyServices = default;
+            int? maxPercentUnhealthyPartitionsPerService = default;
+            int? maxPercentUnhealthyReplicasPerPartition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmServiceTypeHealthPolicy(Optional.ToNullable(maxPercentUnhealthyServices), Optional.ToNullable(maxPercentUnhealthyPartitionsPerService), Optional.ToNullable(maxPercentUnhealthyReplicasPerPartition), serializedAdditionalRawData);
+            return new ArmServiceTypeHealthPolicy(maxPercentUnhealthyServices, maxPercentUnhealthyPartitionsPerService, maxPercentUnhealthyReplicasPerPartition, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmServiceTypeHealthPolicy>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeArmServiceTypeHealthPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceMetricProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceMetricProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> prometheusQueryEndpoint = default;
-            Optional<string> internalId = default;
+            string prometheusQueryEndpoint = default;
+            string internalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorWorkspaceMetricProperties(prometheusQueryEndpoint.Value, internalId.Value, serializedAdditionalRawData);
+            return new MonitorWorkspaceMetricProperties(prometheusQueryEndpoint, internalId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWorkspaceMetricProperties>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorWorkspaceMetricProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

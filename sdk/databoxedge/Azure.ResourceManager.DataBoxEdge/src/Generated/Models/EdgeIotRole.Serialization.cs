@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeIotRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeIotRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeIotRole)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(IotDeviceDetails))
             {
                 writer.WritePropertyName("ioTDeviceDetails"u8);
-                writer.WriteObjectValue(IotDeviceDetails);
+                writer.WriteObjectValue<EdgeIotDeviceInfo>(IotDeviceDetails, options);
             }
             if (Optional.IsDefined(IotEdgeDeviceDetails))
             {
                 writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
-                writer.WriteObjectValue(IotEdgeDeviceDetails);
+                writer.WriteObjectValue<EdgeIotDeviceInfo>(IotEdgeDeviceDetails, options);
             }
             if (Optional.IsCollectionDefined(ShareMappings))
             {
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxEdgeMountPointMap>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IotEdgeAgentInfo))
             {
                 writer.WritePropertyName("ioTEdgeAgentInfo"u8);
-                writer.WriteObjectValue(IotEdgeAgentInfo);
+                writer.WriteObjectValue<IotEdgeAgentInfo>(IotEdgeAgentInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HostPlatformType))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ComputeResource))
             {
                 writer.WritePropertyName("computeResource"u8);
-                writer.WriteObjectValue(ComputeResource);
+                writer.WriteObjectValue<EdgeComputeResourceInfo>(ComputeResource, options);
             }
             if (Optional.IsDefined(RoleStatus))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeIotRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeIotRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeIotRole)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,15 +139,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<EdgeIotDeviceInfo> iotDeviceDetails = default;
-            Optional<EdgeIotDeviceInfo> iotEdgeDeviceDetails = default;
-            Optional<IList<DataBoxEdgeMountPointMap>> shareMappings = default;
-            Optional<IotEdgeAgentInfo> iotEdgeAgentInfo = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<EdgeComputeResourceInfo> computeResource = default;
-            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
+            SystemData systemData = default;
+            DataBoxEdgeOSPlatformType? hostPlatform = default;
+            EdgeIotDeviceInfo iotDeviceDetails = default;
+            EdgeIotDeviceInfo iotEdgeDeviceDetails = default;
+            IList<DataBoxEdgeMountPointMap> shareMappings = default;
+            IotEdgeAgentInfo iotEdgeAgentInfo = default;
+            HostPlatformType? hostPlatformType = default;
+            EdgeComputeResourceInfo computeResource = default;
+            DataBoxEdgeRoleStatus? roleStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            iotDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
+                            iotDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ioTEdgeDeviceDetails"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            iotEdgeDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
+                            iotEdgeDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("shareMappings"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item));
+                                array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item, options));
                             }
                             shareMappings = array;
                             continue;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            iotEdgeAgentInfo = IotEdgeAgentInfo.DeserializeIotEdgeAgentInfo(property0.Value);
+                            iotEdgeAgentInfo = IotEdgeAgentInfo.DeserializeIotEdgeAgentInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hostPlatformType"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            computeResource = EdgeComputeResourceInfo.DeserializeEdgeComputeResourceInfo(property0.Value);
+                            computeResource = EdgeComputeResourceInfo.DeserializeEdgeComputeResourceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("roleStatus"u8))
@@ -276,7 +276,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeIotRole(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(hostPlatform), iotDeviceDetails.Value, iotEdgeDeviceDetails.Value, Optional.ToList(shareMappings), iotEdgeAgentInfo.Value, Optional.ToNullable(hostPlatformType), computeResource.Value, Optional.ToNullable(roleStatus));
+            return new EdgeIotRole(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                hostPlatform,
+                iotDeviceDetails,
+                iotEdgeDeviceDetails,
+                shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(),
+                iotEdgeAgentInfo,
+                hostPlatformType,
+                computeResource,
+                roleStatus);
         }
 
         BinaryData IPersistableModel<EdgeIotRole>.Write(ModelReaderWriterOptions options)
@@ -288,7 +302,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeIotRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeIotRole)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -304,7 +318,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeIotRole(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeIotRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeIotRole)} does not support reading '{options.Format}' format.");
             }
         }
 

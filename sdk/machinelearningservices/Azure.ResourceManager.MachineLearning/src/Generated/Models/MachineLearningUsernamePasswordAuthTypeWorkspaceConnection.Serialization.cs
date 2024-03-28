@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningUsernamePasswordAuthTypeWorkspaceConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningUsernamePasswordAuthTypeWorkspaceConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<MachineLearningWorkspaceConnectionUsernamePassword>(Credentials, options);
             }
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningUsernamePasswordAuthTypeWorkspaceConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningUsernamePasswordAuthTypeWorkspaceConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningWorkspaceConnectionUsernamePassword> credentials = default;
+            MachineLearningWorkspaceConnectionUsernamePassword credentials = default;
             MachineLearningConnectionAuthType authType = default;
-            Optional<MachineLearningConnectionCategory> category = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<BinaryData> metadata = default;
-            Optional<string> target = default;
+            MachineLearningConnectionCategory? category = default;
+            DateTimeOffset? expiryTime = default;
+            BinaryData metadata = default;
+            string target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    credentials = MachineLearningWorkspaceConnectionUsernamePassword.DeserializeMachineLearningWorkspaceConnectionUsernamePassword(property.Value);
+                    credentials = MachineLearningWorkspaceConnectionUsernamePassword.DeserializeMachineLearningWorkspaceConnectionUsernamePassword(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authType"u8))
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(authType, Optional.ToNullable(category), Optional.ToNullable(expiryTime), metadata.Value, target.Value, serializedAdditionalRawData, credentials.Value);
+            return new MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(
+                authType,
+                category,
+                expiryTime,
+                metadata,
+                target,
+                serializedAdditionalRawData,
+                credentials);
         }
 
         BinaryData IPersistableModel<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>.Write(ModelReaderWriterOptions options)
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningUsernamePasswordAuthTypeWorkspaceConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningUsernamePasswordAuthTypeWorkspaceConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +195,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningUsernamePasswordAuthTypeWorkspaceConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningUsernamePasswordAuthTypeWorkspaceConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

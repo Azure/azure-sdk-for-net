@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewPlanNotificationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewPlanNotificationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewPlanNotificationListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in NewPlansNotifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NewPlanNotification>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewPlanNotificationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewPlanNotificationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewPlanNotificationListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NewPlanNotification>> newPlansNotifications = default;
+            IReadOnlyList<NewPlanNotification> newPlansNotifications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<NewPlanNotification> array = new List<NewPlanNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewPlanNotification.DeserializeNewPlanNotification(item));
+                        array.Add(NewPlanNotification.DeserializeNewPlanNotification(item, options));
                     }
                     newPlansNotifications = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewPlanNotificationListResult(Optional.ToList(newPlansNotifications), serializedAdditionalRawData);
+            return new NewPlanNotificationListResult(newPlansNotifications ?? new ChangeTrackingList<NewPlanNotification>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewPlanNotificationListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NewPlanNotificationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewPlanNotificationListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeNewPlanNotificationListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewPlanNotificationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewPlanNotificationListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

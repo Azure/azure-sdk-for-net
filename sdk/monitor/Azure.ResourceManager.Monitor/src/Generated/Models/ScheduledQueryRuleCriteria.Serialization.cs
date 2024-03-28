@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledQueryRuleCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledQueryRuleCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in AllOf)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScheduledQueryRuleCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledQueryRuleCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledQueryRuleCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<ScheduledQueryRuleCondition>> allOf = default;
+            IList<ScheduledQueryRuleCondition> allOf = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<ScheduledQueryRuleCondition> array = new List<ScheduledQueryRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScheduledQueryRuleCondition.DeserializeScheduledQueryRuleCondition(item));
+                        array.Add(ScheduledQueryRuleCondition.DeserializeScheduledQueryRuleCondition(item, options));
                     }
                     allOf = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledQueryRuleCriteria(Optional.ToList(allOf), serializedAdditionalRawData);
+            return new ScheduledQueryRuleCriteria(allOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduledQueryRuleCriteria>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledQueryRuleCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledQueryRuleCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeScheduledQueryRuleCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledQueryRuleCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledQueryRuleCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

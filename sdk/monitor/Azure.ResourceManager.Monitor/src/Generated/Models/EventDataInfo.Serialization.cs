@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventDataInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
-                writer.WriteObjectValue(Authorization);
+                writer.WriteObjectValue<SenderAuthorization>(Authorization, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Claims))
             {
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.Monitor.Models
             if (options.Format != "W" && Optional.IsDefined(EventName))
             {
                 writer.WritePropertyName("eventName"u8);
-                writer.WriteObjectValue(EventName);
+                writer.WriteObjectValue<MonitorLocalizableString>(EventName, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteObjectValue(Category);
+                writer.WriteObjectValue<MonitorLocalizableString>(Category, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HttpRequest))
             {
                 writer.WritePropertyName("httpRequest"u8);
-                writer.WriteObjectValue(HttpRequest);
+                writer.WriteObjectValue<EventDataHttpRequestInfo>(HttpRequest, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Level))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceProviderName))
             {
                 writer.WritePropertyName("resourceProviderName"u8);
-                writer.WriteObjectValue(ResourceProviderName);
+                writer.WriteObjectValue<MonitorLocalizableString>(ResourceProviderName, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteObjectValue(ResourceType);
+                writer.WriteObjectValue<MonitorLocalizableString>(ResourceType, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OperationId))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (options.Format != "W" && Optional.IsDefined(OperationName))
             {
                 writer.WritePropertyName("operationName"u8);
-                writer.WriteObjectValue(OperationName);
+                writer.WriteObjectValue<MonitorLocalizableString>(OperationName, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Properties))
             {
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.Monitor.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<MonitorLocalizableString>(Status, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SubStatus))
             {
                 writer.WritePropertyName("subStatus"u8);
-                writer.WriteObjectValue(SubStatus);
+                writer.WriteObjectValue<MonitorLocalizableString>(SubStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventDataInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -196,30 +196,30 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<SenderAuthorization> authorization = default;
-            Optional<IReadOnlyDictionary<string, string>> claims = default;
-            Optional<string> caller = default;
-            Optional<string> description = default;
-            Optional<string> id = default;
-            Optional<string> eventDataId = default;
-            Optional<string> correlationId = default;
-            Optional<MonitorLocalizableString> eventName = default;
-            Optional<MonitorLocalizableString> category = default;
-            Optional<EventDataHttpRequestInfo> httpRequest = default;
-            Optional<MonitorEventLevel> level = default;
-            Optional<string> resourceGroupName = default;
-            Optional<MonitorLocalizableString> resourceProviderName = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<MonitorLocalizableString> resourceType = default;
-            Optional<string> operationId = default;
-            Optional<MonitorLocalizableString> operationName = default;
-            Optional<IReadOnlyDictionary<string, string>> properties = default;
-            Optional<MonitorLocalizableString> status = default;
-            Optional<MonitorLocalizableString> subStatus = default;
-            Optional<DateTimeOffset> eventTimestamp = default;
-            Optional<DateTimeOffset> submissionTimestamp = default;
-            Optional<string> subscriptionId = default;
-            Optional<Guid> tenantId = default;
+            SenderAuthorization authorization = default;
+            IReadOnlyDictionary<string, string> claims = default;
+            string caller = default;
+            string description = default;
+            string id = default;
+            string eventDataId = default;
+            string correlationId = default;
+            MonitorLocalizableString eventName = default;
+            MonitorLocalizableString category = default;
+            EventDataHttpRequestInfo httpRequest = default;
+            MonitorEventLevel? level = default;
+            string resourceGroupName = default;
+            MonitorLocalizableString resourceProviderName = default;
+            ResourceIdentifier resourceId = default;
+            MonitorLocalizableString resourceType = default;
+            string operationId = default;
+            MonitorLocalizableString operationName = default;
+            IReadOnlyDictionary<string, string> properties = default;
+            MonitorLocalizableString status = default;
+            MonitorLocalizableString subStatus = default;
+            DateTimeOffset? eventTimestamp = default;
+            DateTimeOffset? submissionTimestamp = default;
+            string subscriptionId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    authorization = SenderAuthorization.DeserializeSenderAuthorization(property.Value);
+                    authorization = SenderAuthorization.DeserializeSenderAuthorization(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("claims"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    eventName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    eventName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("category"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    category = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    category = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("httpRequest"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    httpRequest = EventDataHttpRequestInfo.DeserializeEventDataHttpRequestInfo(property.Value);
+                    httpRequest = EventDataHttpRequestInfo.DeserializeEventDataHttpRequestInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("level"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    resourceProviderName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    resourceProviderName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceId"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    resourceType = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    resourceType = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("operationId"u8))
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    operationName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    operationName = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    status = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    status = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subStatus"u8))
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    subStatus = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    subStatus = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eventTimestamp"u8))
@@ -424,7 +424,32 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventDataInfo(authorization.Value, Optional.ToDictionary(claims), caller.Value, description.Value, id.Value, eventDataId.Value, correlationId.Value, eventName.Value, category.Value, httpRequest.Value, Optional.ToNullable(level), resourceGroupName.Value, resourceProviderName.Value, resourceId.Value, resourceType.Value, operationId.Value, operationName.Value, Optional.ToDictionary(properties), status.Value, subStatus.Value, Optional.ToNullable(eventTimestamp), Optional.ToNullable(submissionTimestamp), subscriptionId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new EventDataInfo(
+                authorization,
+                claims ?? new ChangeTrackingDictionary<string, string>(),
+                caller,
+                description,
+                id,
+                eventDataId,
+                correlationId,
+                eventName,
+                category,
+                httpRequest,
+                level,
+                resourceGroupName,
+                resourceProviderName,
+                resourceId,
+                resourceType,
+                operationId,
+                operationName,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                status,
+                subStatus,
+                eventTimestamp,
+                submissionTimestamp,
+                subscriptionId,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventDataInfo>.Write(ModelReaderWriterOptions options)
@@ -436,7 +461,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -452,7 +477,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeEventDataInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

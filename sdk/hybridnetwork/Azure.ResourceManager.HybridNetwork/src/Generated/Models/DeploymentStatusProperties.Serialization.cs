@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources);
+                writer.WriteObjectValue<ComponentKubernetesResources>(Resources, options);
             }
             if (Optional.IsDefined(NextExpectedUpdateOn))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ComponentStatus> status = default;
-            Optional<ComponentKubernetesResources> resources = default;
-            Optional<DateTimeOffset> nextExpectedUpdateAt = default;
+            ComponentStatus? status = default;
+            ComponentKubernetesResources resources = default;
+            DateTimeOffset? nextExpectedUpdateAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    resources = ComponentKubernetesResources.DeserializeComponentKubernetesResources(property.Value);
+                    resources = ComponentKubernetesResources.DeserializeComponentKubernetesResources(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nextExpectedUpdateAt"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentStatusProperties(Optional.ToNullable(status), resources.Value, Optional.ToNullable(nextExpectedUpdateAt), serializedAdditionalRawData);
+            return new DeploymentStatusProperties(status, resources, nextExpectedUpdateAt, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeploymentStatusProperties>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeDeploymentStatusProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

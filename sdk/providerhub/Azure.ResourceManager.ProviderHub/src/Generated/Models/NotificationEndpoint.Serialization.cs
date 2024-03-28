@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> notificationDestination = default;
-            Optional<IList<AzureLocation>> locations = default;
+            ResourceIdentifier notificationDestination = default;
+            IList<AzureLocation> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationEndpoint(notificationDestination.Value, Optional.ToList(locations), serializedAdditionalRawData);
+            return new NotificationEndpoint(notificationDestination, locations ?? new ChangeTrackingList<AzureLocation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationEndpoint>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeNotificationEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

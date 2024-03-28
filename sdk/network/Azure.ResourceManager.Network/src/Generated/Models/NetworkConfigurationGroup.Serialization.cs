@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkConfigurationGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkConfigurationGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkConfigurationGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkConfigurationGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkConfigurationGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkConfigurationGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> description = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            string id = default;
+            string description = default;
+            NetworkProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkConfigurationGroup(id.Value, description.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), serializedAdditionalRawData);
+            return new NetworkConfigurationGroup(id, description, provisioningState, resourceGuid, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkConfigurationGroup>.Write(ModelReaderWriterOptions options)
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkConfigurationGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkConfigurationGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkConfigurationGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkConfigurationGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkConfigurationGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

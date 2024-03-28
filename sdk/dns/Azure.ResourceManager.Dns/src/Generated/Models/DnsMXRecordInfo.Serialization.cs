@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsMXRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsMXRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsMXRecordInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsMXRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsMXRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsMXRecordInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<int> preference = default;
-            Optional<string> exchange = default;
+            int? preference = default;
+            string exchange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsMXRecordInfo(Optional.ToNullable(preference), exchange.Value, serializedAdditionalRawData);
+            return new DnsMXRecordInfo(preference, exchange, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsMXRecordInfo>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Dns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsMXRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsMXRecordInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Dns.Models
                         return DeserializeDnsMXRecordInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsMXRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsMXRecordInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

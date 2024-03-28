@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<StopSellOffersPlansNotificationsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in StopSellNotifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StopSellOffersPlansNotificationsResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<StopSellOffersPlansNotificationsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StopSellOffersPlansNotificationsResult>> stopSellNotifications = default;
+            IReadOnlyList<StopSellOffersPlansNotificationsResult> stopSellNotifications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<StopSellOffersPlansNotificationsResult> array = new List<StopSellOffersPlansNotificationsResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StopSellOffersPlansNotificationsResult.DeserializeStopSellOffersPlansNotificationsResult(item));
+                        array.Add(StopSellOffersPlansNotificationsResult.DeserializeStopSellOffersPlansNotificationsResult(item, options));
                     }
                     stopSellNotifications = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StopSellOffersPlansNotificationsList(Optional.ToList(stopSellNotifications), serializedAdditionalRawData);
+            return new StopSellOffersPlansNotificationsList(stopSellNotifications ?? new ChangeTrackingList<StopSellOffersPlansNotificationsResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StopSellOffersPlansNotificationsList>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeStopSellOffersPlansNotificationsList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsList)} does not support reading '{options.Format}' format.");
             }
         }
 

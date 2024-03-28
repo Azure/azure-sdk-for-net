@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringExchangeConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(BgpSession))
             {
                 writer.WritePropertyName("bgpSession"u8);
-                writer.WriteObjectValue(BgpSession);
+                writer.WriteObjectValue<PeeringBgpSession>(BgpSession, options);
             }
             if (Optional.IsDefined(ConnectionIdentifier))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringExchangeConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<int> peeringDBFacilityId = default;
-            Optional<PeeringConnectionState> connectionState = default;
-            Optional<PeeringBgpSession> bgpSession = default;
-            Optional<Guid> connectionIdentifier = default;
-            Optional<string> errorMessage = default;
+            int? peeringDBFacilityId = default;
+            PeeringConnectionState? connectionState = default;
+            PeeringBgpSession bgpSession = default;
+            Guid? connectionIdentifier = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    bgpSession = PeeringBgpSession.DeserializePeeringBgpSession(property.Value);
+                    bgpSession = PeeringBgpSession.DeserializePeeringBgpSession(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connectionIdentifier"u8))
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringExchangeConnection(Optional.ToNullable(peeringDBFacilityId), Optional.ToNullable(connectionState), bgpSession.Value, Optional.ToNullable(connectionIdentifier), errorMessage.Value, serializedAdditionalRawData);
+            return new PeeringExchangeConnection(
+                peeringDBFacilityId,
+                connectionState,
+                bgpSession,
+                connectionIdentifier,
+                errorMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringExchangeConnection>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringExchangeConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

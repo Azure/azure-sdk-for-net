@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -53,6 +52,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ScriptLinkedService = scriptLinkedService;
             Defines = defines;
             ActivityType = activityType ?? "HDInsightPig";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightPigActivity"/> for deserialization. </summary>
+        internal HDInsightPigActivity()
+        {
         }
 
         /// <summary> Storage linked service references. </summary>

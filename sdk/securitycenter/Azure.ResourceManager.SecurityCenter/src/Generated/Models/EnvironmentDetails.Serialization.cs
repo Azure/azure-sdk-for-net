@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnvironmentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnvironmentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> nativeResourceId = default;
-            Optional<string> environmentHierarchyId = default;
-            Optional<string> organizationalHierarchyId = default;
-            Optional<string> subscriptionId = default;
-            Optional<Guid> tenantId = default;
+            ResourceIdentifier nativeResourceId = default;
+            string environmentHierarchyId = default;
+            string organizationalHierarchyId = default;
+            string subscriptionId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnvironmentDetails(nativeResourceId.Value, environmentHierarchyId.Value, organizationalHierarchyId.Value, subscriptionId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new EnvironmentDetails(
+                nativeResourceId,
+                environmentHierarchyId,
+                organizationalHierarchyId,
+                subscriptionId,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnvironmentDetails>.Write(ModelReaderWriterOptions options)
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeEnvironmentDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

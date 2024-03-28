@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicResourceReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicResourceReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicResourceReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicResourceReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicResourceReference(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new LogicResourceReference(id, name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicResourceReference>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicResourceReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicResourceReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicResourceReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicResourceReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicResourceReference)} does not support reading '{options.Format}' format.");
             }
         }
 

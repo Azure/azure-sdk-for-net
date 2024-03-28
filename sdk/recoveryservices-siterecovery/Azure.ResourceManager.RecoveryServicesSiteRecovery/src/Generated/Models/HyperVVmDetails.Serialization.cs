@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(OSDetails))
             {
                 writer.WritePropertyName("osDetails"u8);
-                writer.WriteObjectValue(OSDetails);
+                writer.WriteObjectValue<SiteRecoveryOSDetails>(OSDetails, options);
             }
             if (Optional.IsCollectionDefined(DiskDetails))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DiskDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,17 +115,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "VmmVirtualMachine": return VmmVmDetails.DeserializeVmmVmDetails(element);
+                    case "VmmVirtualMachine": return VmmVmDetails.DeserializeVmmVmDetails(element, options);
                 }
             }
-            Optional<string> sourceItemId = default;
-            Optional<string> generation = default;
-            Optional<SiteRecoveryOSDetails> osDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryDiskDetails>> diskDetails = default;
-            Optional<HyperVVmDiskPresenceStatus> hasPhysicalDisk = default;
-            Optional<HyperVVmDiskPresenceStatus> hasFibreChannelAdapter = default;
-            Optional<HyperVVmDiskPresenceStatus> hasSharedVhd = default;
-            Optional<string> hyperVHostId = default;
+            string sourceItemId = default;
+            string generation = default;
+            SiteRecoveryOSDetails osDetails = default;
+            IReadOnlyList<SiteRecoveryDiskDetails> diskDetails = default;
+            HyperVVmDiskPresenceStatus? hasPhysicalDisk = default;
+            HyperVVmDiskPresenceStatus? hasFibreChannelAdapter = default;
+            HyperVVmDiskPresenceStatus? hasSharedVhd = default;
+            string hyperVHostId = default;
             string instanceType = "HyperVVirtualMachine";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value);
+                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskDetails"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryDiskDetails> array = new List<SiteRecoveryDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item));
+                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item, options));
                     }
                     diskDetails = array;
                     continue;
@@ -207,7 +207,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVVmDetails(instanceType, serializedAdditionalRawData, sourceItemId.Value, generation.Value, osDetails.Value, Optional.ToList(diskDetails), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
+            return new HyperVVmDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                sourceItemId,
+                generation,
+                osDetails,
+                diskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>(),
+                hasPhysicalDisk,
+                hasFibreChannelAdapter,
+                hasSharedVhd,
+                hyperVHostId);
         }
 
         BinaryData IPersistableModel<HyperVVmDetails>.Write(ModelReaderWriterOptions options)
@@ -219,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeHyperVVmDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

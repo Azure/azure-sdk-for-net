@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlQueryPerformanceInsightResetDataResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlQueryPerformanceInsightResetDataResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlQueryPerformanceInsightResetDataResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlQueryPerformanceInsightResetDataResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlQueryPerformanceInsightResetDataResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlQueryPerformanceInsightResetDataResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<MySqlQueryPerformanceInsightResetDataResultState> status = default;
-            Optional<string> message = default;
+            MySqlQueryPerformanceInsightResetDataResultState? status = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlQueryPerformanceInsightResetDataResult(Optional.ToNullable(status), message.Value, serializedAdditionalRawData);
+            return new MySqlQueryPerformanceInsightResetDataResult(status, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlQueryPerformanceInsightResetDataResult>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlQueryPerformanceInsightResetDataResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlQueryPerformanceInsightResetDataResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlQueryPerformanceInsightResetDataResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlQueryPerformanceInsightResetDataResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlQueryPerformanceInsightResetDataResult)} does not support reading '{options.Format}' format.");
             }
         }
 

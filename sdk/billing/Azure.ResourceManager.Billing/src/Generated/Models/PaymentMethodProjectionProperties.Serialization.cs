@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Logos)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PaymentMethodLogo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<PaymentMethodFamily> family = default;
-            Optional<string> type = default;
-            Optional<string> accountHolderName = default;
-            Optional<string> expiration = default;
-            Optional<string> lastFourDigits = default;
-            Optional<string> displayName = default;
-            Optional<IList<PaymentMethodLogo>> logos = default;
-            Optional<PaymentMethodStatus> status = default;
+            ResourceIdentifier id = default;
+            PaymentMethodFamily? family = default;
+            string type = default;
+            string accountHolderName = default;
+            string expiration = default;
+            string lastFourDigits = default;
+            string displayName = default;
+            IList<PaymentMethodLogo> logos = default;
+            PaymentMethodStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Billing.Models
                     List<PaymentMethodLogo> array = new List<PaymentMethodLogo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaymentMethodLogo.DeserializePaymentMethodLogo(item));
+                        array.Add(PaymentMethodLogo.DeserializePaymentMethodLogo(item, options));
                     }
                     logos = array;
                     continue;
@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaymentMethodProjectionProperties(id.Value, Optional.ToNullable(family), type.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new PaymentMethodProjectionProperties(
+                id,
+                family,
+                type,
+                accountHolderName,
+                expiration,
+                lastFourDigits,
+                displayName,
+                logos ?? new ChangeTrackingList<PaymentMethodLogo>(),
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaymentMethodProjectionProperties>.Write(ModelReaderWriterOptions options)
@@ -211,7 +221,7 @@ namespace Azure.ResourceManager.Billing.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +237,7 @@ namespace Azure.ResourceManager.Billing.Models
                         return DeserializePaymentMethodProjectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

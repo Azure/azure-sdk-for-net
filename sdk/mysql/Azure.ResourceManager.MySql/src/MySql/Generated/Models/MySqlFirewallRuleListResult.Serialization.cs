@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFirewallRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFirewallRuleListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFirewallRuleListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MySqlFirewallRuleData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFirewallRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFirewallRuleListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFirewallRuleListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlFirewallRuleData>> value = default;
+            IReadOnlyList<MySqlFirewallRuleData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlFirewallRuleData> array = new List<MySqlFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(item));
+                        array.Add(MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFirewallRuleListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MySqlFirewallRuleListResult(value ?? new ChangeTrackingList<MySqlFirewallRuleData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFirewallRuleListResult>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFirewallRuleListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFirewallRuleListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlFirewallRuleListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFirewallRuleListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFirewallRuleListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

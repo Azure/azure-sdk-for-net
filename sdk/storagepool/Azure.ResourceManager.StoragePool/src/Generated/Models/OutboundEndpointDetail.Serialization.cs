@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<OutboundEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<OutboundEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipAddress = default;
-            Optional<int> port = default;
-            Optional<double> latency = default;
-            Optional<bool> isAccessible = default;
+            IPAddress ipAddress = default;
+            int? port = default;
+            double? latency = default;
+            bool? isAccessible = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundEndpointDetail(ipAddress.Value, Optional.ToNullable(port), Optional.ToNullable(latency), Optional.ToNullable(isAccessible), serializedAdditionalRawData);
+            return new OutboundEndpointDetail(ipAddress, port, latency, isAccessible, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundEndpointDetail>.Write(ModelReaderWriterOptions options)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                         return DeserializeOutboundEndpointDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

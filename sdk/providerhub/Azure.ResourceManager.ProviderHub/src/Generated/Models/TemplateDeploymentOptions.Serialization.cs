@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<TemplateDeploymentOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<TemplateDeploymentOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<bool> preflightSupported = default;
-            Optional<IList<PreflightOption>> preflightOptions = default;
+            bool? preflightSupported = default;
+            IList<PreflightOption> preflightOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateDeploymentOptions(Optional.ToNullable(preflightSupported), Optional.ToList(preflightOptions), serializedAdditionalRawData);
+            return new TemplateDeploymentOptions(preflightSupported, preflightOptions ?? new ChangeTrackingList<PreflightOption>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TemplateDeploymentOptions>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeTemplateDeploymentOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

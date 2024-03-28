@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             if (Optional.IsDefined(ActionableRemediation))
             {
                 writer.WritePropertyName("actionableRemediation"u8);
-                writer.WriteObjectValue(ActionableRemediation);
+                writer.WriteObjectValue<ActionableRemediation>(ActionableRemediation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> repoId = default;
-            Optional<Uri> repoUrl = default;
-            Optional<string> orgName = default;
-            Optional<string> projectName = default;
-            Optional<string> visibility = default;
-            Optional<ActionableRemediation> actionableRemediation = default;
+            ProvisioningState? provisioningState = default;
+            string repoId = default;
+            Uri repoUrl = default;
+            string orgName = default;
+            string projectName = default;
+            string visibility = default;
+            ActionableRemediation actionableRemediation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     {
                         continue;
                     }
-                    actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value);
+                    actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsRepoProperties(Optional.ToNullable(provisioningState), repoId.Value, repoUrl.Value, orgName.Value, projectName.Value, visibility.Value, actionableRemediation.Value, serializedAdditionalRawData);
+            return new AzureDevOpsRepoProperties(
+                provisioningState,
+                repoId,
+                repoUrl,
+                orgName,
+                projectName,
+                visibility,
+                actionableRemediation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsRepoProperties>.Write(ModelReaderWriterOptions options)
@@ -175,7 +183,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +199,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                         return DeserializeAzureDevOpsRepoProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

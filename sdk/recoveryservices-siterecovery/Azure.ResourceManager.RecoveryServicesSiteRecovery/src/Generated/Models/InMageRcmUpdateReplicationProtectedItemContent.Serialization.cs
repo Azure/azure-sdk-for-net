@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmUpdateReplicationProtectedItemContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmUpdateReplicationProtectedItemContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmUpdateReplicationProtectedItemContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmNicContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmUpdateReplicationProtectedItemContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmUpdateReplicationProtectedItemContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmUpdateReplicationProtectedItemContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> targetVmName = default;
-            Optional<string> targetVmSize = default;
-            Optional<ResourceIdentifier> targetResourceGroupId = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
-            Optional<ResourceIdentifier> targetNetworkId = default;
-            Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<IList<InMageRcmNicContent>> vmNics = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
+            string targetVmName = default;
+            string targetVmSize = default;
+            ResourceIdentifier targetResourceGroupId = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            ResourceIdentifier targetBootDiagnosticsStorageAccountId = default;
+            ResourceIdentifier targetNetworkId = default;
+            ResourceIdentifier testNetworkId = default;
+            IList<InMageRcmNicContent> vmNics = default;
+            SiteRecoveryLicenseType? licenseType = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmNicContent> array = new List<InMageRcmNicContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmNicContent.DeserializeInMageRcmNicContent(item));
+                        array.Add(InMageRcmNicContent.DeserializeInMageRcmNicContent(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmUpdateReplicationProtectedItemContent(instanceType, serializedAdditionalRawData, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, Optional.ToList(vmNics), Optional.ToNullable(licenseType));
+            return new InMageRcmUpdateReplicationProtectedItemContent(
+                instanceType,
+                serializedAdditionalRawData,
+                targetVmName,
+                targetVmSize,
+                targetResourceGroupId,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                targetBootDiagnosticsStorageAccountId,
+                targetNetworkId,
+                testNetworkId,
+                vmNics ?? new ChangeTrackingList<InMageRcmNicContent>(),
+                licenseType);
         }
 
         BinaryData IPersistableModel<InMageRcmUpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options)
@@ -257,7 +270,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmUpdateReplicationProtectedItemContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmUpdateReplicationProtectedItemContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -273,7 +286,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmUpdateReplicationProtectedItemContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmUpdateReplicationProtectedItemContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmUpdateReplicationProtectedItemContent)} does not support reading '{options.Format}' format.");
             }
         }
 

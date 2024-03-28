@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActionTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptActionTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptActionTaskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActionTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptActionTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptActionTaskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> path = default;
-            Optional<string> output = default;
-            Optional<bool> isPrimarySideScript = default;
+            string name = default;
+            string path = default;
+            string output = default;
+            bool? isPrimarySideScript = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActionTaskDetails(instanceType, serializedAdditionalRawData, name.Value, path.Value, output.Value, Optional.ToNullable(isPrimarySideScript));
+            return new ScriptActionTaskDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                name,
+                path,
+                output,
+                isPrimarySideScript);
         }
 
         BinaryData IPersistableModel<ScriptActionTaskDetails>.Write(ModelReaderWriterOptions options)
@@ -142,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScriptActionTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptActionTaskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeScriptActionTaskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScriptActionTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptActionTaskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioEgressGateway>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioEgressGateway>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool enabled = default;
-            Optional<IDictionary<string, string>> nodeSelector = default;
+            IDictionary<string, string> nodeSelector = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IstioEgressGateway(enabled, Optional.ToDictionary(nodeSelector), serializedAdditionalRawData);
+            return new IstioEgressGateway(enabled, nodeSelector ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IstioEgressGateway>.Write(ModelReaderWriterOptions options)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeIstioEgressGateway(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support reading '{options.Format}' format.");
             }
         }
 

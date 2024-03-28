@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserAssignedManagedIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserAssignedManagedIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> identityArmId = default;
-            Optional<string> identityName = default;
-            Optional<UserAssignedIdentity> userAssignedIdentityProperties = default;
+            string identityArmId = default;
+            string identityName = default;
+            UserAssignedIdentity userAssignedIdentityProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserAssignedManagedIdentityDetails(identityArmId.Value, identityName.Value, userAssignedIdentityProperties, serializedAdditionalRawData);
+            return new UserAssignedManagedIdentityDetails(identityArmId, identityName, userAssignedIdentityProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserAssignedManagedIdentityDetails>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeUserAssignedManagedIdentityDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

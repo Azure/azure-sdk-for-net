@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubQuotaMetricInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubQuotaMetricInfoListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubQuotaMetricInfoListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotHubQuotaMetricInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubQuotaMetricInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubQuotaMetricInfoListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubQuotaMetricInfoListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotHubQuotaMetricInfo>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<IotHubQuotaMetricInfo> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubQuotaMetricInfo> array = new List<IotHubQuotaMetricInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo(item));
+                        array.Add(IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubQuotaMetricInfoListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IotHubQuotaMetricInfoListResult(value ?? new ChangeTrackingList<IotHubQuotaMetricInfo>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubQuotaMetricInfoListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubQuotaMetricInfoListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubQuotaMetricInfoListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubQuotaMetricInfoListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubQuotaMetricInfoListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubQuotaMetricInfoListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubNetworkRuleSetIPRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubNetworkRuleSetIPRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubNetworkRuleSetIPRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubNetworkRuleSetIPRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubNetworkRuleSetIPRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubNetworkRuleSetIPRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             string filterName = default;
-            Optional<IotHubNetworkRuleIPAction> action = default;
+            IotHubNetworkRuleIPAction? action = default;
             string ipMask = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubNetworkRuleSetIPRule(filterName, Optional.ToNullable(action), ipMask, serializedAdditionalRawData);
+            return new IotHubNetworkRuleSetIPRule(filterName, action, ipMask, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubNetworkRuleSetIPRule>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubNetworkRuleSetIPRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubNetworkRuleSetIPRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubNetworkRuleSetIPRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubNetworkRuleSetIPRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubNetworkRuleSetIPRule)} does not support reading '{options.Format}' format.");
             }
         }
 

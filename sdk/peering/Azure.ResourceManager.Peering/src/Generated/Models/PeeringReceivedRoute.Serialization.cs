@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringReceivedRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringReceivedRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringReceivedRoute)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringReceivedRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringReceivedRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringReceivedRoute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> prefix = default;
-            Optional<string> nextHop = default;
-            Optional<string> asPath = default;
-            Optional<string> originAsValidationState = default;
-            Optional<string> rpkiValidationState = default;
-            Optional<string> trustAnchor = default;
-            Optional<string> receivedTimestamp = default;
+            string prefix = default;
+            string nextHop = default;
+            string asPath = default;
+            string originAsValidationState = default;
+            string rpkiValidationState = default;
+            string trustAnchor = default;
+            string receivedTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,15 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringReceivedRoute(prefix.Value, nextHop.Value, asPath.Value, originAsValidationState.Value, rpkiValidationState.Value, trustAnchor.Value, receivedTimestamp.Value, serializedAdditionalRawData);
+            return new PeeringReceivedRoute(
+                prefix,
+                nextHop,
+                asPath,
+                originAsValidationState,
+                rpkiValidationState,
+                trustAnchor,
+                receivedTimestamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringReceivedRoute>.Write(ModelReaderWriterOptions options)
@@ -163,7 +171,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringReceivedRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringReceivedRoute)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +187,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringReceivedRoute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringReceivedRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringReceivedRoute)} does not support reading '{options.Format}' format.");
             }
         }
 

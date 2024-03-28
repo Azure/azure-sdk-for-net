@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContinueRequestBody>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContinueRequestBody)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContinueRequestBody)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Responses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TroubleshooterResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContinueRequestBody>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContinueRequestBody)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContinueRequestBody)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> stepId = default;
-            Optional<IList<TroubleshooterResult>> responses = default;
+            string stepId = default;
+            IList<TroubleshooterResult> responses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<TroubleshooterResult> array = new List<TroubleshooterResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TroubleshooterResult.DeserializeTroubleshooterResult(item));
+                        array.Add(TroubleshooterResult.DeserializeTroubleshooterResult(item, options));
                     }
                     responses = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContinueRequestBody(stepId.Value, Optional.ToList(responses), serializedAdditionalRawData);
+            return new ContinueRequestBody(stepId, responses ?? new ChangeTrackingList<TroubleshooterResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContinueRequestBody>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContinueRequestBody)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContinueRequestBody)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeContinueRequestBody(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContinueRequestBody)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContinueRequestBody)} does not support reading '{options.Format}' format.");
             }
         }
 

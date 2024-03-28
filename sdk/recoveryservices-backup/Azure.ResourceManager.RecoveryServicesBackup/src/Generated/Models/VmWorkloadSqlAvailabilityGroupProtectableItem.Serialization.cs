@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in NodesList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DistributedNodesInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(PreBackupValidation))
             {
                 writer.WritePropertyName("prebackupvalidation"u8);
-                writer.WriteObjectValue(PreBackupValidation);
+                writer.WriteObjectValue<PreBackupValidation>(PreBackupValidation, options);
             }
             if (Optional.IsDefined(IsProtectable))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,21 +141,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<DistributedNodesInfo>> nodesList = default;
-            Optional<string> parentName = default;
-            Optional<string> parentUniqueName = default;
-            Optional<string> serverName = default;
-            Optional<bool> isAutoProtectable = default;
-            Optional<bool> isAutoProtected = default;
-            Optional<int> subinquireditemcount = default;
-            Optional<int> subprotectableitemcount = default;
-            Optional<PreBackupValidation> prebackupvalidation = default;
-            Optional<bool> isProtectable = default;
-            Optional<string> backupManagementType = default;
-            Optional<string> workloadType = default;
+            IList<DistributedNodesInfo> nodesList = default;
+            string parentName = default;
+            string parentUniqueName = default;
+            string serverName = default;
+            bool? isAutoProtectable = default;
+            bool? isAutoProtected = default;
+            int? subinquireditemcount = default;
+            int? subprotectableitemcount = default;
+            PreBackupValidation prebackupvalidation = default;
+            bool? isProtectable = default;
+            string backupManagementType = default;
+            string workloadType = default;
             string protectableItemType = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupProtectionStatus> protectionState = default;
+            string friendlyName = default;
+            BackupProtectionStatus? protectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DistributedNodesInfo> array = new List<DistributedNodesInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item));
+                        array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item, options));
                     }
                     nodesList = array;
                     continue;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value);
+                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isProtectable"u8))
@@ -278,7 +278,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmWorkloadSqlAvailabilityGroupProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData, parentName.Value, parentUniqueName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(isAutoProtected), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subprotectableitemcount), prebackupvalidation.Value, Optional.ToNullable(isProtectable), Optional.ToList(nodesList));
+            return new VmWorkloadSqlAvailabilityGroupProtectableItem(
+                backupManagementType,
+                workloadType,
+                protectableItemType,
+                friendlyName,
+                protectionState,
+                serializedAdditionalRawData,
+                parentName,
+                parentUniqueName,
+                serverName,
+                isAutoProtectable,
+                isAutoProtected,
+                subinquireditemcount,
+                subprotectableitemcount,
+                prebackupvalidation,
+                isProtectable,
+                nodesList ?? new ChangeTrackingList<DistributedNodesInfo>());
         }
 
         BinaryData IPersistableModel<VmWorkloadSqlAvailabilityGroupProtectableItem>.Write(ModelReaderWriterOptions options)
@@ -290,7 +306,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -306,7 +322,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeVmWorkloadSqlAvailabilityGroupProtectableItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadSqlAvailabilityGroupProtectableItem)} does not support reading '{options.Format}' format.");
             }
         }
 

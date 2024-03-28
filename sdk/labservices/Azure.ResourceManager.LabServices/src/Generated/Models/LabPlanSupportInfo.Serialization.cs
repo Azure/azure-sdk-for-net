@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabPlanSupportInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabPlanSupportInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabPlanSupportInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabPlanSupportInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabPlanSupportInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabPlanSupportInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<string> email = default;
-            Optional<string> phone = default;
-            Optional<string> instructions = default;
+            Uri url = default;
+            string email = default;
+            string phone = default;
+            string instructions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabPlanSupportInfo(url.Value, email.Value, phone.Value, instructions.Value, serializedAdditionalRawData);
+            return new LabPlanSupportInfo(url, email, phone, instructions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabPlanSupportInfo>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabPlanSupportInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabPlanSupportInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabPlanSupportInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabPlanSupportInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabPlanSupportInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

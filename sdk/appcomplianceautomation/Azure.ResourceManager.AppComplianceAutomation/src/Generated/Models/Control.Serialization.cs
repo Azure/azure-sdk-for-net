@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<Control>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Control)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Control)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in Assessments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Assessment>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<Control>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Control)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Control)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> controlId = default;
-            Optional<string> controlShortName = default;
-            Optional<string> controlFullName = default;
-            Optional<ControlType> controlType = default;
-            Optional<string> controlDescription = default;
-            Optional<string> controlDescriptionHyperLink = default;
-            Optional<ControlStatus> controlStatus = default;
-            Optional<IReadOnlyList<Assessment>> assessments = default;
+            string controlId = default;
+            string controlShortName = default;
+            string controlFullName = default;
+            ControlType? controlType = default;
+            string controlDescription = default;
+            string controlDescriptionHyperLink = default;
+            ControlStatus? controlStatus = default;
+            IReadOnlyList<Assessment> assessments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<Assessment> array = new List<Assessment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Assessment.DeserializeAssessment(item));
+                        array.Add(Assessment.DeserializeAssessment(item, options));
                     }
                     assessments = array;
                     continue;
@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Control(controlId.Value, controlShortName.Value, controlFullName.Value, Optional.ToNullable(controlType), controlDescription.Value, controlDescriptionHyperLink.Value, Optional.ToNullable(controlStatus), Optional.ToList(assessments), serializedAdditionalRawData);
+            return new Control(
+                controlId,
+                controlShortName,
+                controlFullName,
+                controlType,
+                controlDescription,
+                controlDescriptionHyperLink,
+                controlStatus,
+                assessments ?? new ChangeTrackingList<Assessment>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Control>.Write(ModelReaderWriterOptions options)
@@ -196,7 +205,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Control)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Control)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -212,7 +221,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeControl(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Control)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Control)} does not support reading '{options.Format}' format.");
             }
         }
 

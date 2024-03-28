@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringFacility>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringFacility>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,14 +105,14 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> exchangeName = default;
-            Optional<int> bandwidthInMbps = default;
-            Optional<IPAddress> microsoftIPv4Address = default;
-            Optional<IPAddress> microsoftIPv6Address = default;
-            Optional<string> facilityIPv4Prefix = default;
-            Optional<string> facilityIPv6Prefix = default;
-            Optional<int> peeringDBFacilityId = default;
-            Optional<string> peeringDBFacilityLink = default;
+            string exchangeName = default;
+            int? bandwidthInMbps = default;
+            IPAddress microsoftIPv4Address = default;
+            IPAddress microsoftIPv6Address = default;
+            string facilityIPv4Prefix = default;
+            string facilityIPv6Prefix = default;
+            int? peeringDBFacilityId = default;
+            string peeringDBFacilityLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,16 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExchangePeeringFacility(exchangeName.Value, Optional.ToNullable(bandwidthInMbps), microsoftIPv4Address.Value, microsoftIPv6Address.Value, facilityIPv4Prefix.Value, facilityIPv6Prefix.Value, Optional.ToNullable(peeringDBFacilityId), peeringDBFacilityLink.Value, serializedAdditionalRawData);
+            return new ExchangePeeringFacility(
+                exchangeName,
+                bandwidthInMbps,
+                microsoftIPv4Address,
+                microsoftIPv6Address,
+                facilityIPv4Prefix,
+                facilityIPv6Prefix,
+                peeringDBFacilityId,
+                peeringDBFacilityLink,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExchangePeeringFacility>.Write(ModelReaderWriterOptions options)
@@ -191,7 +200,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +216,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializeExchangePeeringFacility(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineCommandSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BareMetalMachineCommandSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BareMetalMachineCommandSpecification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineCommandSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BareMetalMachineCommandSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BareMetalMachineCommandSpecification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IList<string>> arguments = default;
+            IList<string> arguments = default;
             string command = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BareMetalMachineCommandSpecification(Optional.ToList(arguments), command, serializedAdditionalRawData);
+            return new BareMetalMachineCommandSpecification(arguments ?? new ChangeTrackingList<string>(), command, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BareMetalMachineCommandSpecification>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BareMetalMachineCommandSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BareMetalMachineCommandSpecification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeBareMetalMachineCommandSpecification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BareMetalMachineCommandSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BareMetalMachineCommandSpecification)} does not support reading '{options.Format}' format.");
             }
         }
 

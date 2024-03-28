@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressionTraces>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressionTraces)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressionTraces)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LogicExpressionRoot>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressionTraces>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressionTraces)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressionTraces)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LogicExpressionRoot>> inputs = default;
+            IReadOnlyList<LogicExpressionRoot> inputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicExpressionRoot> array = new List<LogicExpressionRoot>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicExpressionRoot.DeserializeLogicExpressionRoot(item));
+                        array.Add(LogicExpressionRoot.DeserializeLogicExpressionRoot(item, options));
                     }
                     inputs = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressionTraces(Optional.ToList(inputs), serializedAdditionalRawData);
+            return new ExpressionTraces(inputs ?? new ChangeTrackingList<LogicExpressionRoot>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressionTraces>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressionTraces)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressionTraces)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeExpressionTraces(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressionTraces)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressionTraces)} does not support reading '{options.Format}' format.");
             }
         }
 

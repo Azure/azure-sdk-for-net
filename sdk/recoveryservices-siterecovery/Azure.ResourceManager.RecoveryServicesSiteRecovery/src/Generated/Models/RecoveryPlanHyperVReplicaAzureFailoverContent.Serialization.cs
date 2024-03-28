@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanHyperVReplicaAzureFailoverContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanHyperVReplicaAzureFailoverContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> primaryKekCertificatePfx = default;
-            Optional<string> secondaryKekCertificatePfx = default;
-            Optional<HyperVReplicaAzureRpRecoveryPointType> recoveryPointType = default;
+            string primaryKekCertificatePfx = default;
+            string secondaryKekCertificatePfx = default;
+            HyperVReplicaAzureRpRecoveryPointType? recoveryPointType = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanHyperVReplicaAzureFailoverContent(instanceType, serializedAdditionalRawData, primaryKekCertificatePfx.Value, secondaryKekCertificatePfx.Value, Optional.ToNullable(recoveryPointType));
+            return new RecoveryPlanHyperVReplicaAzureFailoverContent(instanceType, serializedAdditionalRawData, primaryKekCertificatePfx, secondaryKekCertificatePfx, recoveryPointType);
         }
 
         BinaryData IPersistableModel<RecoveryPlanHyperVReplicaAzureFailoverContent>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeRecoveryPlanHyperVReplicaAzureFailoverContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support reading '{options.Format}' format.");
             }
         }
 

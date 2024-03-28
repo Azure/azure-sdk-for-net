@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppliedReservationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppliedReservationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppliedReservationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservationOrderIds))
             {
                 writer.WritePropertyName("reservationOrderIds"u8);
-                writer.WriteObjectValue(ReservationOrderIds);
+                writer.WriteObjectValue<AppliedReservationList>(ReservationOrderIds, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppliedReservationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppliedReservationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppliedReservationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Reservations.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AppliedReservationList> reservationOrderIds = default;
+            SystemData systemData = default;
+            AppliedReservationList reservationOrderIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            reservationOrderIds = AppliedReservationList.DeserializeAppliedReservationList(property0.Value);
+                            reservationOrderIds = AppliedReservationList.DeserializeAppliedReservationList(property0.Value, options);
                             continue;
                         }
                     }
@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppliedReservationData(id, name, type, systemData.Value, reservationOrderIds.Value, serializedAdditionalRawData);
+            return new AppliedReservationData(
+                id,
+                name,
+                type,
+                systemData,
+                reservationOrderIds,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppliedReservationData>.Write(ModelReaderWriterOptions options)
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppliedReservationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppliedReservationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +187,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeAppliedReservationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppliedReservationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppliedReservationData)} does not support reading '{options.Format}' format.");
             }
         }
 

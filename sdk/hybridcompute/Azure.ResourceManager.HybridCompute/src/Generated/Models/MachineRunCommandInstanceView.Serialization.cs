@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineRunCommandInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineRunCommandInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ExtensionsResourceStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineRunCommandInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineRunCommandInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<HybridComputeExecutionState> executionState = default;
-            Optional<string> executionMessage = default;
-            Optional<int> exitCode = default;
-            Optional<string> output = default;
-            Optional<string> error = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<ExtensionsResourceStatus>> statuses = default;
+            HybridComputeExecutionState? executionState = default;
+            string executionMessage = default;
+            int? exitCode = default;
+            string output = default;
+            string error = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IReadOnlyList<ExtensionsResourceStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<ExtensionsResourceStatus> array = new List<ExtensionsResourceStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionsResourceStatus.DeserializeExtensionsResourceStatus(item));
+                        array.Add(ExtensionsResourceStatus.DeserializeExtensionsResourceStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -192,7 +192,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineRunCommandInstanceView(Optional.ToNullable(executionState), executionMessage.Value, Optional.ToNullable(exitCode), output.Value, error.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(statuses), serializedAdditionalRawData);
+            return new MachineRunCommandInstanceView(
+                executionState,
+                executionMessage,
+                exitCode,
+                output,
+                error,
+                startTime,
+                endTime,
+                statuses ?? new ChangeTrackingList<ExtensionsResourceStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineRunCommandInstanceView>.Write(ModelReaderWriterOptions options)
@@ -204,7 +213,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineRunCommandInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineRunCommandInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +229,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeMachineRunCommandInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineRunCommandInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineRunCommandInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServiceArray>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSyncServiceArray)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSyncServiceArray)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageSyncServiceData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServiceArray>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSyncServiceArray)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSyncServiceArray)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageSyncServiceData>> value = default;
+            IReadOnlyList<StorageSyncServiceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<StorageSyncServiceData> array = new List<StorageSyncServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSyncServiceData.DeserializeStorageSyncServiceData(item));
+                        array.Add(StorageSyncServiceData.DeserializeStorageSyncServiceData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServiceArray(Optional.ToList(value), serializedAdditionalRawData);
+            return new StorageSyncServiceArray(value ?? new ChangeTrackingList<StorageSyncServiceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServiceArray>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageSyncServiceArray)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSyncServiceArray)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeStorageSyncServiceArray(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageSyncServiceArray)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSyncServiceArray)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<FieldRestrictions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FieldRestrictions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FieldRestrictions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FieldRestriction>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<FieldRestrictions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FieldRestrictions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FieldRestrictions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> field = default;
-            Optional<IReadOnlyList<FieldRestriction>> restrictions = default;
+            string field = default;
+            IReadOnlyList<FieldRestriction> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<FieldRestriction> array = new List<FieldRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FieldRestriction.DeserializeFieldRestriction(item));
+                        array.Add(FieldRestriction.DeserializeFieldRestriction(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FieldRestrictions(field.Value, Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new FieldRestrictions(field, restrictions ?? new ChangeTrackingList<FieldRestriction>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FieldRestrictions>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FieldRestrictions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FieldRestrictions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeFieldRestrictions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FieldRestrictions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FieldRestrictions)} does not support reading '{options.Format}' format.");
             }
         }
 

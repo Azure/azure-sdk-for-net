@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightAsyncOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightAsyncOperationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAsyncOperationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightAsyncOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightAsyncOperationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAsyncOperationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,8 +74,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<HDInsightAsyncOperationState> status = default;
-            Optional<ResponseError> error = default;
+            HDInsightAsyncOperationState? status = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAsyncOperationResult(Optional.ToNullable(status), error.Value, serializedAdditionalRawData);
+            return new HDInsightAsyncOperationResult(status, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAsyncOperationResult>.Write(ModelReaderWriterOptions options)
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightAsyncOperationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAsyncOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightAsyncOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightAsyncOperationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAsyncOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

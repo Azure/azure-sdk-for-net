@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorExperimentEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorExperimentEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorExperimentEndpointProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorExperimentEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorExperimentEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorExperimentEndpointProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> endpoint = default;
+            string name = default;
+            string endpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorExperimentEndpointProperties(name.Value, endpoint.Value, serializedAdditionalRawData);
+            return new FrontDoorExperimentEndpointProperties(name, endpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorExperimentEndpointProperties>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorExperimentEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorExperimentEndpointProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeFrontDoorExperimentEndpointProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorExperimentEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorExperimentEndpointProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

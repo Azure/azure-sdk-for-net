@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartArray();
             foreach (var item in ConfigurationFilters)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ConfigurationFilters>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(CustomerSubscriptionDetails))
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
-                writer.WriteObjectValue(CustomerSubscriptionDetails);
+                writer.WriteObjectValue<CustomerSubscriptionDetails>(CustomerSubscriptionDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             IList<ConfigurationFilters> configurationFilters = default;
-            Optional<CustomerSubscriptionDetails> customerSubscriptionDetails = default;
+            CustomerSubscriptionDetails customerSubscriptionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ConfigurationFilters> array = new List<ConfigurationFilters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ConfigurationFilters.DeserializeConfigurationFilters(item));
+                        array.Add(Models.ConfigurationFilters.DeserializeConfigurationFilters(item, options));
                     }
                     configurationFilters = array;
                     continue;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    customerSubscriptionDetails = CustomerSubscriptionDetails.DeserializeCustomerSubscriptionDetails(property.Value);
+                    customerSubscriptionDetails = CustomerSubscriptionDetails.DeserializeCustomerSubscriptionDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationsContent(configurationFilters, customerSubscriptionDetails.Value, serializedAdditionalRawData);
+            return new ConfigurationsContent(configurationFilters, customerSubscriptionDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationsContent>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeConfigurationsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support reading '{options.Format}' format.");
             }
         }
 

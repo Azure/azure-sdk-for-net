@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkTapRuleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkTapRuleAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkTapRuleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkTapRuleAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<TapRuleActionType> type = default;
-            Optional<string> truncate = default;
-            Optional<NetworkFabricBooleanValue> isTimestampEnabled = default;
-            Optional<ResourceIdentifier> destinationId = default;
-            Optional<string> matchConfigurationName = default;
+            TapRuleActionType? type = default;
+            string truncate = default;
+            NetworkFabricBooleanValue? isTimestampEnabled = default;
+            ResourceIdentifier destinationId = default;
+            string matchConfigurationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapRuleAction(Optional.ToNullable(type), truncate.Value, Optional.ToNullable(isTimestampEnabled), destinationId.Value, matchConfigurationName.Value, serializedAdditionalRawData);
+            return new NetworkTapRuleAction(
+                type,
+                truncate,
+                isTimestampEnabled,
+                destinationId,
+                matchConfigurationName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkTapRuleAction>.Write(ModelReaderWriterOptions options)
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkTapRuleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkTapRuleAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkTapRuleAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkTapRuleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkTapRuleAction)} does not support reading '{options.Format}' format.");
             }
         }
 

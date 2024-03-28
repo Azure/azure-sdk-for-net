@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<CsvFormatSerialization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<CsvFormatSerialization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             EventSerializationType type = default;
-            Optional<string> fieldDelimiter = default;
-            Optional<StreamAnalyticsDataSerializationEncoding> encoding = default;
+            string fieldDelimiter = default;
+            StreamAnalyticsDataSerializationEncoding? encoding = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CsvFormatSerialization(type, serializedAdditionalRawData, fieldDelimiter.Value, Optional.ToNullable(encoding));
+            return new CsvFormatSerialization(type, serializedAdditionalRawData, fieldDelimiter, encoding);
         }
 
         BinaryData IPersistableModel<CsvFormatSerialization>.Write(ModelReaderWriterOptions options)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeCsvFormatSerialization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support reading '{options.Format}' format.");
             }
         }
 

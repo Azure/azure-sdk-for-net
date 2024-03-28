@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkUsage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<VirtualNetworkUsageName>(Name, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Unit))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<double> currentValue = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<double> limit = default;
-            Optional<VirtualNetworkUsageName> name = default;
-            Optional<string> unit = default;
+            double? currentValue = default;
+            ResourceIdentifier id = default;
+            double? limit = default;
+            VirtualNetworkUsageName name = default;
+            string unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    name = VirtualNetworkUsageName.DeserializeVirtualNetworkUsageName(property.Value);
+                    name = VirtualNetworkUsageName.DeserializeVirtualNetworkUsageName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkUsage(Optional.ToNullable(currentValue), id.Value, Optional.ToNullable(limit), name.Value, unit.Value, serializedAdditionalRawData);
+            return new VirtualNetworkUsage(
+                currentValue,
+                id,
+                limit,
+                name,
+                unit,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkUsage>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVirtualNetworkUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkUsage)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<X509CertificateName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X509CertificateName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X509CertificateName)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<X509CertificateName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X509CertificateName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X509CertificateName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> issuerCertificateThumbprint = default;
+            string name = default;
+            string issuerCertificateThumbprint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X509CertificateName(name.Value, issuerCertificateThumbprint.Value, serializedAdditionalRawData);
+            return new X509CertificateName(name, issuerCertificateThumbprint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X509CertificateName>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(X509CertificateName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X509CertificateName)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeX509CertificateName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(X509CertificateName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X509CertificateName)} does not support reading '{options.Format}' format.");
             }
         }
 

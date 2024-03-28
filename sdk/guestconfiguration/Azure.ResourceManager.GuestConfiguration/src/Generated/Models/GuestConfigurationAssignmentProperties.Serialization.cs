@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(GuestConfiguration))
             {
                 writer.WritePropertyName("guestConfiguration"u8);
-                writer.WriteObjectValue(GuestConfiguration);
+                writer.WriteObjectValue<GuestConfigurationNavigation>(GuestConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(LatestAssignmentReport))
             {
                 writer.WritePropertyName("latestAssignmentReport"u8);
-                writer.WriteObjectValue(LatestAssignmentReport);
+                writer.WriteObjectValue<GuestConfigurationAssignmentReportInfo>(LatestAssignmentReport, options);
             }
             if (Optional.IsDefined(Context))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteStartArray();
                     foreach (var item in VmssVmList)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<GuestConfigurationVmssVmInfo>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -185,18 +185,18 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<string> targetResourceId = default;
-            Optional<GuestConfigurationNavigation> guestConfiguration = default;
-            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Optional<DateTimeOffset?> lastComplianceStatusChecked = default;
-            Optional<ResourceIdentifier> latestReportId = default;
-            Optional<string> parameterHash = default;
-            Optional<GuestConfigurationAssignmentReportInfo> latestAssignmentReport = default;
-            Optional<string> context = default;
-            Optional<string> assignmentHash = default;
-            Optional<GuestConfigurationProvisioningState?> provisioningState = default;
-            Optional<string> resourceType = default;
-            Optional<IList<GuestConfigurationVmssVmInfo>> vmssVmList = default;
+            string targetResourceId = default;
+            GuestConfigurationNavigation guestConfiguration = default;
+            AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
+            DateTimeOffset? lastComplianceStatusChecked = default;
+            ResourceIdentifier latestReportId = default;
+            string parameterHash = default;
+            GuestConfigurationAssignmentReportInfo latestAssignmentReport = default;
+            string context = default;
+            string assignmentHash = default;
+            GuestConfigurationProvisioningState? provisioningState = default;
+            string resourceType = default;
+            IList<GuestConfigurationVmssVmInfo> vmssVmList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    guestConfiguration = GuestConfigurationNavigation.DeserializeGuestConfigurationNavigation(property.Value);
+                    guestConfiguration = GuestConfigurationNavigation.DeserializeGuestConfigurationNavigation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("complianceStatus"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    latestAssignmentReport = GuestConfigurationAssignmentReportInfo.DeserializeGuestConfigurationAssignmentReportInfo(property.Value);
+                    latestAssignmentReport = GuestConfigurationAssignmentReportInfo.DeserializeGuestConfigurationAssignmentReportInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("context"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<GuestConfigurationVmssVmInfo> array = new List<GuestConfigurationVmssVmInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationVmssVmInfo.DeserializeGuestConfigurationVmssVmInfo(item));
+                        array.Add(GuestConfigurationVmssVmInfo.DeserializeGuestConfigurationVmssVmInfo(item, options));
                     }
                     vmssVmList = array;
                     continue;
@@ -324,7 +324,20 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationAssignmentProperties(targetResourceId.Value, guestConfiguration.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(lastComplianceStatusChecked), latestReportId.Value, parameterHash.Value, latestAssignmentReport.Value, context.Value, assignmentHash.Value, Optional.ToNullable(provisioningState), resourceType.Value, Optional.ToList(vmssVmList), serializedAdditionalRawData);
+            return new GuestConfigurationAssignmentProperties(
+                targetResourceId,
+                guestConfiguration,
+                complianceStatus,
+                lastComplianceStatusChecked,
+                latestReportId,
+                parameterHash,
+                latestAssignmentReport,
+                context,
+                assignmentHash,
+                provisioningState,
+                resourceType,
+                vmssVmList ?? new ChangeTrackingList<GuestConfigurationVmssVmInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationAssignmentProperties>.Write(ModelReaderWriterOptions options)
@@ -336,7 +349,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -352,7 +365,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeGuestConfigurationAssignmentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

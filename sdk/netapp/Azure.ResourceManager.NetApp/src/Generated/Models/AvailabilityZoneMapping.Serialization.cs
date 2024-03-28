@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilityZoneMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityZoneMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilityZoneMapping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilityZoneMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityZoneMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilityZoneMapping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> availabilityZone = default;
-            Optional<bool> isAvailable = default;
+            string availabilityZone = default;
+            bool? isAvailable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityZoneMapping(availabilityZone.Value, Optional.ToNullable(isAvailable), serializedAdditionalRawData);
+            return new AvailabilityZoneMapping(availabilityZone, isAvailable, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityZoneMapping>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityZoneMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilityZoneMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeAvailabilityZoneMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityZoneMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilityZoneMapping)} does not support reading '{options.Format}' format.");
             }
         }
 

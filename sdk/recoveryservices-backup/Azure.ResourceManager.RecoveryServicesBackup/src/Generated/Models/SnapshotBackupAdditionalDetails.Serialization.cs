@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotBackupAdditionalDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotBackupAdditionalDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotBackupAdditionalDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
             {
                 writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
-                writer.WriteObjectValue(UserAssignedManagedIdentityDetails);
+                writer.WriteObjectValue<UserAssignedManagedIdentityDetails>(UserAssignedManagedIdentityDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotBackupAdditionalDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotBackupAdditionalDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotBackupAdditionalDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> instantRpRetentionRangeInDays = default;
-            Optional<string> instantRPDetails = default;
-            Optional<UserAssignedManagedIdentityDetails> userAssignedManagedIdentityDetails = default;
+            int? instantRpRetentionRangeInDays = default;
+            string instantRPDetails = default;
+            UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value);
+                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotBackupAdditionalDetails(Optional.ToNullable(instantRpRetentionRangeInDays), instantRPDetails.Value, userAssignedManagedIdentityDetails.Value, serializedAdditionalRawData);
+            return new SnapshotBackupAdditionalDetails(instantRpRetentionRangeInDays, instantRPDetails, userAssignedManagedIdentityDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotBackupAdditionalDetails>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotBackupAdditionalDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotBackupAdditionalDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeSnapshotBackupAdditionalDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotBackupAdditionalDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotBackupAdditionalDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

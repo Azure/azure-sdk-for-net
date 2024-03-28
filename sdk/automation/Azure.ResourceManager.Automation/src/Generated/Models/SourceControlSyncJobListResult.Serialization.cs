@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJobListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceControlSyncJobListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlSyncJobListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SourceControlSyncJob>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJobListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceControlSyncJobListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlSyncJobListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SourceControlSyncJob>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SourceControlSyncJob> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<SourceControlSyncJob> array = new List<SourceControlSyncJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceControlSyncJob.DeserializeSourceControlSyncJob(item));
+                        array.Add(SourceControlSyncJob.DeserializeSourceControlSyncJob(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSyncJobListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SourceControlSyncJobListResult(value ?? new ChangeTrackingList<SourceControlSyncJob>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSyncJobListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SourceControlSyncJobListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlSyncJobListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeSourceControlSyncJobListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceControlSyncJobListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlSyncJobListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

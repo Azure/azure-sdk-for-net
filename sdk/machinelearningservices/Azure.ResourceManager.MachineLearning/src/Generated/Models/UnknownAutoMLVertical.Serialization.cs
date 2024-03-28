@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoMLVertical)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoMLVertical)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData);
+            writer.WriteObjectValue<MachineLearningTableJobInput>(TrainingData, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoMLVertical)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoMLVertical)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAutoMLVertical(document.RootElement, options);
+            return DeserializeAutoMLVertical(document.RootElement, options);
         }
 
         internal static UnknownAutoMLVertical DeserializeUnknownAutoMLVertical(JsonElement element, ModelReaderWriterOptions options = null)
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
+            MachineLearningLogVerbosity? logVerbosity = default;
+            string targetColumnName = default;
             TaskType taskType = "Unknown";
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"u8))
                 {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownAutoMLVertical(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData);
+            return new UnknownAutoMLVertical(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoMLVertical>.Write(ModelReaderWriterOptions options)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAutoMLVertical(document.RootElement, options);
+                        return DeserializeAutoMLVertical(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support reading '{options.Format}' format.");
             }
         }
 

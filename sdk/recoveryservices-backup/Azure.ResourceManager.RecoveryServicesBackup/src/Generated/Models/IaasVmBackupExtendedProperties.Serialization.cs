@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupExtendedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskExclusionProperties))
             {
                 writer.WritePropertyName("diskExclusionProperties"u8);
-                writer.WriteObjectValue(DiskExclusionProperties);
+                writer.WriteObjectValue<DiskExclusionProperties>(DiskExclusionProperties, options);
             }
             if (Optional.IsDefined(LinuxVmApplicationName))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupExtendedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DiskExclusionProperties> diskExclusionProperties = default;
-            Optional<string> linuxVmApplicationName = default;
+            DiskExclusionProperties diskExclusionProperties = default;
+            string linuxVmApplicationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    diskExclusionProperties = DiskExclusionProperties.DeserializeDiskExclusionProperties(property.Value);
+                    diskExclusionProperties = DiskExclusionProperties.DeserializeDiskExclusionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxVmApplicationName"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmBackupExtendedProperties(diskExclusionProperties.Value, linuxVmApplicationName.Value, serializedAdditionalRawData);
+            return new IaasVmBackupExtendedProperties(diskExclusionProperties, linuxVmApplicationName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IaasVmBackupExtendedProperties>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeIaasVmBackupExtendedProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

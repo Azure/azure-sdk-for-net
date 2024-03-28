@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileArmEsuPropertiesWithoutAssignedLicense>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LicenseProfileArmEsuPropertiesWithoutAssignedLicense)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LicenseProfileArmEsuPropertiesWithoutAssignedLicense)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in EsuKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EsuKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileArmEsuPropertiesWithoutAssignedLicense>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LicenseProfileArmEsuPropertiesWithoutAssignedLicense)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LicenseProfileArmEsuPropertiesWithoutAssignedLicense)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<EsuServerType> serverType = default;
-            Optional<EsuEligibility> esuEligibility = default;
-            Optional<EsuKeyState> esuKeyState = default;
-            Optional<Guid> assignedLicenseImmutableId = default;
-            Optional<IReadOnlyList<EsuKey>> esuKeys = default;
+            EsuServerType? serverType = default;
+            EsuEligibility? esuEligibility = default;
+            EsuKeyState? esuKeyState = default;
+            Guid? assignedLicenseImmutableId = default;
+            IReadOnlyList<EsuKey> esuKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<EsuKey> array = new List<EsuKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EsuKey.DeserializeEsuKey(item));
+                        array.Add(EsuKey.DeserializeEsuKey(item, options));
                     }
                     esuKeys = array;
                     continue;
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LicenseProfileArmEsuPropertiesWithoutAssignedLicense(Optional.ToNullable(assignedLicenseImmutableId), Optional.ToList(esuKeys), serializedAdditionalRawData, Optional.ToNullable(serverType), Optional.ToNullable(esuEligibility), Optional.ToNullable(esuKeyState));
+            return new LicenseProfileArmEsuPropertiesWithoutAssignedLicense(
+                assignedLicenseImmutableId,
+                esuKeys ?? new ChangeTrackingList<EsuKey>(),
+                serializedAdditionalRawData,
+                serverType,
+                esuEligibility,
+                esuKeyState);
         }
 
         BinaryData IPersistableModel<LicenseProfileArmEsuPropertiesWithoutAssignedLicense>.Write(ModelReaderWriterOptions options)
@@ -171,7 +177,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LicenseProfileArmEsuPropertiesWithoutAssignedLicense)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LicenseProfileArmEsuPropertiesWithoutAssignedLicense)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +193,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeLicenseProfileArmEsuPropertiesWithoutAssignedLicense(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LicenseProfileArmEsuPropertiesWithoutAssignedLicense)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LicenseProfileArmEsuPropertiesWithoutAssignedLicense)} does not support reading '{options.Format}' format.");
             }
         }
 

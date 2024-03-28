@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,21 +141,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             ResourceIdentifier hyperVFabricArmId = default;
-            Optional<ResourceIdentifier> hyperVSiteId = default;
+            ResourceIdentifier hyperVSiteId = default;
             ResourceIdentifier azStackHciFabricArmId = default;
-            Optional<ResourceIdentifier> azStackHciSiteId = default;
-            Optional<string> storageAccountId = default;
-            Optional<string> storageAccountSasSecretName = default;
-            Optional<Uri> asrServiceUri = default;
-            Optional<Uri> rcmServiceUri = default;
-            Optional<Uri> gatewayServiceUri = default;
-            Optional<string> sourceGatewayServiceId = default;
-            Optional<string> targetGatewayServiceId = default;
-            Optional<string> sourceStorageContainerName = default;
-            Optional<string> targetStorageContainerName = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
+            ResourceIdentifier azStackHciSiteId = default;
+            string storageAccountId = default;
+            string storageAccountSasSecretName = default;
+            Uri asrServiceUri = default;
+            Uri rcmServiceUri = default;
+            Uri gatewayServiceUri = default;
+            string sourceGatewayServiceId = default;
+            string targetGatewayServiceId = default;
+            string sourceStorageContainerName = default;
+            string targetStorageContainerName = default;
+            string resourceLocation = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -272,7 +272,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciReplicationExtensionModelCustomProperties(instanceType, serializedAdditionalRawData, hyperVFabricArmId, hyperVSiteId.Value, azStackHciFabricArmId, azStackHciSiteId.Value, storageAccountId.Value, storageAccountSasSecretName.Value, asrServiceUri.Value, rcmServiceUri.Value, gatewayServiceUri.Value, sourceGatewayServiceId.Value, targetGatewayServiceId.Value, sourceStorageContainerName.Value, targetStorageContainerName.Value, resourceLocation.Value, subscriptionId.Value, resourceGroup.Value);
+            return new HyperVToAzStackHciReplicationExtensionModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                hyperVFabricArmId,
+                hyperVSiteId,
+                azStackHciFabricArmId,
+                azStackHciSiteId,
+                storageAccountId,
+                storageAccountSasSecretName,
+                asrServiceUri,
+                rcmServiceUri,
+                gatewayServiceUri,
+                sourceGatewayServiceId,
+                targetGatewayServiceId,
+                sourceStorageContainerName,
+                targetStorageContainerName,
+                resourceLocation,
+                subscriptionId,
+                resourceGroup);
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>.Write(ModelReaderWriterOptions options)
@@ -284,7 +302,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +318,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeHyperVToAzStackHciReplicationExtensionModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciReplicationExtensionModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

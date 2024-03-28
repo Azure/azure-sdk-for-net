@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -55,6 +54,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             MLParentRunId = mlParentRunId;
             ContinueOnStepFailure = continueOnStepFailure;
             ActivityType = activityType ?? "AzureMLExecutePipeline";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMLExecutePipelineActivity"/> for deserialization. </summary>
+        internal AzureMLExecutePipelineActivity()
+        {
         }
 
         /// <summary> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </summary>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightVersionsCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightVersionsCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightVersionsCapability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Available)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightVersionSpec>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightVersionsCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightVersionsCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightVersionsCapability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HDInsightVersionSpec>> available = default;
+            IReadOnlyList<HDInsightVersionSpec> available = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightVersionSpec> array = new List<HDInsightVersionSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightVersionSpec.DeserializeHDInsightVersionSpec(item));
+                        array.Add(HDInsightVersionSpec.DeserializeHDInsightVersionSpec(item, options));
                     }
                     available = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightVersionsCapability(Optional.ToList(available), serializedAdditionalRawData);
+            return new HDInsightVersionsCapability(available ?? new ChangeTrackingList<HDInsightVersionSpec>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightVersionsCapability>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightVersionsCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightVersionsCapability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightVersionsCapability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightVersionsCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightVersionsCapability)} does not support reading '{options.Format}' format.");
             }
         }
 

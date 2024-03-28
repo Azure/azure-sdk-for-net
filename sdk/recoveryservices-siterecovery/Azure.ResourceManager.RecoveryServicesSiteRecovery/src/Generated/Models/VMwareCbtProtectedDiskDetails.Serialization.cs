@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtProtectedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtProtectedDiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(GatewayOperationDetails))
             {
                 writer.WritePropertyName("gatewayOperationDetails"u8);
-                writer.WriteObjectValue(GatewayOperationDetails);
+                writer.WriteObjectValue<GatewayOperationDetails>(GatewayOperationDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtProtectedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtProtectedDiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,21 +139,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
-            Optional<string> diskPath = default;
-            Optional<string> isOSDisk = default;
-            Optional<long> capacityInBytes = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<string> logStorageAccountSasSecretName = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<string> seedManagedDiskId = default;
-            Optional<Uri> seedBlobUri = default;
-            Optional<string> targetManagedDiskId = default;
-            Optional<Uri> targetBlobUri = default;
-            Optional<string> targetDiskName = default;
-            Optional<GatewayOperationDetails> gatewayOperationDetails = default;
+            string diskId = default;
+            string diskName = default;
+            SiteRecoveryDiskAccountType? diskType = default;
+            string diskPath = default;
+            string isOSDisk = default;
+            long? capacityInBytes = default;
+            ResourceIdentifier logStorageAccountId = default;
+            string logStorageAccountSasSecretName = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            string seedManagedDiskId = default;
+            Uri seedBlobUri = default;
+            string targetManagedDiskId = default;
+            Uri targetBlobUri = default;
+            string targetDiskName = default;
+            GatewayOperationDetails gatewayOperationDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value);
+                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -267,7 +267,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtProtectedDiskDetails(diskId.Value, diskName.Value, Optional.ToNullable(diskType), diskPath.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, logStorageAccountSasSecretName.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, targetBlobUri.Value, targetDiskName.Value, gatewayOperationDetails.Value, serializedAdditionalRawData);
+            return new VMwareCbtProtectedDiskDetails(
+                diskId,
+                diskName,
+                diskType,
+                diskPath,
+                isOSDisk,
+                capacityInBytes,
+                logStorageAccountId,
+                logStorageAccountSasSecretName,
+                diskEncryptionSetId,
+                seedManagedDiskId,
+                seedBlobUri,
+                targetManagedDiskId,
+                targetBlobUri,
+                targetDiskName,
+                gatewayOperationDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtProtectedDiskDetails>.Write(ModelReaderWriterOptions options)
@@ -279,7 +295,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtProtectedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtProtectedDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -295,7 +311,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareCbtProtectedDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtProtectedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtProtectedDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

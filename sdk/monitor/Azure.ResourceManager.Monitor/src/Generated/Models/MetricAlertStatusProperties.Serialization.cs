@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricAlertStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricAlertStatusProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAlertStatusProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricAlertStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricAlertStatusProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAlertStatusProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> dimensions = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> timestamp = default;
+            IReadOnlyDictionary<string, string> dimensions = default;
+            string status = default;
+            DateTimeOffset? timestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertStatusProperties(Optional.ToDictionary(dimensions), status.Value, Optional.ToNullable(timestamp), serializedAdditionalRawData);
+            return new MetricAlertStatusProperties(dimensions ?? new ChangeTrackingDictionary<string, string>(), status, timestamp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertStatusProperties>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricAlertStatusProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAlertStatusProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMetricAlertStatusProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricAlertStatusProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAlertStatusProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             var format = options.Format == "W" ? ((IPersistableModel<MixedRealitySku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MixedRealitySku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MixedRealitySku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             var format = options.Format == "W" ? ((IPersistableModel<MixedRealitySku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MixedRealitySku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MixedRealitySku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.MixedReality.Models
                 return null;
             }
             string name = default;
-            Optional<MixedRealitySkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
+            MixedRealitySkuTier? tier = default;
+            string size = default;
+            string family = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.MixedReality.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MixedRealitySku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new MixedRealitySku(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MixedRealitySku>.Write(ModelReaderWriterOptions options)
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MixedRealitySku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MixedRealitySku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                         return DeserializeMixedRealitySku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MixedRealitySku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MixedRealitySku)} does not support reading '{options.Format}' format.");
             }
         }
 

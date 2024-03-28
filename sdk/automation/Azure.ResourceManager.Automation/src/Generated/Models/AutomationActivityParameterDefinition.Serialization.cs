@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationActivityParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationActivityParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationActivityParameterDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationSet)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomationActivityParameterValidationSet>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationActivityParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationActivityParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationActivityParameterDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<bool> isMandatory = default;
-            Optional<bool> isDynamic = default;
-            Optional<long> position = default;
-            Optional<bool> valueFromPipeline = default;
-            Optional<bool> valueFromPipelineByPropertyName = default;
-            Optional<bool> valueFromRemainingArguments = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<AutomationActivityParameterValidationSet>> validationSet = default;
+            string name = default;
+            string type = default;
+            bool? isMandatory = default;
+            bool? isDynamic = default;
+            long? position = default;
+            bool? valueFromPipeline = default;
+            bool? valueFromPipelineByPropertyName = default;
+            bool? valueFromRemainingArguments = default;
+            string description = default;
+            IReadOnlyList<AutomationActivityParameterValidationSet> validationSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationActivityParameterValidationSet> array = new List<AutomationActivityParameterValidationSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationActivityParameterValidationSet.DeserializeAutomationActivityParameterValidationSet(item));
+                        array.Add(AutomationActivityParameterValidationSet.DeserializeAutomationActivityParameterValidationSet(item, options));
                     }
                     validationSet = array;
                     continue;
@@ -222,7 +222,18 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationActivityParameterDefinition(name.Value, type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(isDynamic), Optional.ToNullable(position), Optional.ToNullable(valueFromPipeline), Optional.ToNullable(valueFromPipelineByPropertyName), Optional.ToNullable(valueFromRemainingArguments), description.Value, Optional.ToList(validationSet), serializedAdditionalRawData);
+            return new AutomationActivityParameterDefinition(
+                name,
+                type,
+                isMandatory,
+                isDynamic,
+                position,
+                valueFromPipeline,
+                valueFromPipelineByPropertyName,
+                valueFromRemainingArguments,
+                description,
+                validationSet ?? new ChangeTrackingList<AutomationActivityParameterValidationSet>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationActivityParameterDefinition>.Write(ModelReaderWriterOptions options)
@@ -234,7 +245,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationActivityParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationActivityParameterDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -250,7 +261,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationActivityParameterDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationActivityParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationActivityParameterDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Advisor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShortDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShortDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShortDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Advisor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShortDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShortDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShortDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> problem = default;
-            Optional<string> solution = default;
+            string problem = default;
+            string solution = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShortDescription(problem.Value, solution.Value, serializedAdditionalRawData);
+            return new ShortDescription(problem, solution, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShortDescription>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ShortDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShortDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Advisor.Models
                         return DeserializeShortDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ShortDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShortDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

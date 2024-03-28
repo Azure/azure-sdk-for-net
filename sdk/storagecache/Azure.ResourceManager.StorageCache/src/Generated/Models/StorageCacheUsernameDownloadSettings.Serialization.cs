@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<StorageCacheUsernameDownloadCredential>(Credentials, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,18 +124,18 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<bool> extendedGroups = default;
-            Optional<StorageCacheUsernameSourceType> usernameSource = default;
-            Optional<Uri> groupFileUri = default;
-            Optional<Uri> userFileUri = default;
-            Optional<string> ldapServer = default;
-            Optional<string> ldapBaseDN = default;
-            Optional<bool> encryptLdapConnection = default;
-            Optional<bool> requireValidCertificate = default;
-            Optional<bool> autoDownloadCertificate = default;
-            Optional<Uri> caCertificateUri = default;
-            Optional<StorageCacheUsernameDownloadedType> usernameDownloaded = default;
-            Optional<StorageCacheUsernameDownloadCredential> credentials = default;
+            bool? extendedGroups = default;
+            StorageCacheUsernameSourceType? usernameSource = default;
+            Uri groupFileUri = default;
+            Uri userFileUri = default;
+            string ldapServer = default;
+            string ldapBaseDN = default;
+            bool? encryptLdapConnection = default;
+            bool? requireValidCertificate = default;
+            bool? autoDownloadCertificate = default;
+            Uri caCertificateUri = default;
+            StorageCacheUsernameDownloadedType? usernameDownloaded = default;
+            StorageCacheUsernameDownloadCredential credentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    credentials = StorageCacheUsernameDownloadCredential.DeserializeStorageCacheUsernameDownloadCredential(property.Value);
+                    credentials = StorageCacheUsernameDownloadCredential.DeserializeStorageCacheUsernameDownloadCredential(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -246,7 +246,20 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheUsernameDownloadSettings(Optional.ToNullable(extendedGroups), Optional.ToNullable(usernameSource), groupFileUri.Value, userFileUri.Value, ldapServer.Value, ldapBaseDN.Value, Optional.ToNullable(encryptLdapConnection), Optional.ToNullable(requireValidCertificate), Optional.ToNullable(autoDownloadCertificate), caCertificateUri.Value, Optional.ToNullable(usernameDownloaded), credentials.Value, serializedAdditionalRawData);
+            return new StorageCacheUsernameDownloadSettings(
+                extendedGroups,
+                usernameSource,
+                groupFileUri,
+                userFileUri,
+                ldapServer,
+                ldapBaseDN,
+                encryptLdapConnection,
+                requireValidCertificate,
+                autoDownloadCertificate,
+                caCertificateUri,
+                usernameDownloaded,
+                credentials,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheUsernameDownloadSettings>.Write(ModelReaderWriterOptions options)
@@ -258,7 +271,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -274,7 +287,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeStorageCacheUsernameDownloadSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

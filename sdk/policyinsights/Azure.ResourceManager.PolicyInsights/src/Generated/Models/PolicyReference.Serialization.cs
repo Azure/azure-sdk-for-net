@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<ResourceIdentifier> policySetDefinitionId = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<ResourceIdentifier> policyAssignmentId = default;
+            ResourceIdentifier policyDefinitionId = default;
+            ResourceIdentifier policySetDefinitionId = default;
+            string policyDefinitionReferenceId = default;
+            ResourceIdentifier policyAssignmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyReference(policyDefinitionId.Value, policySetDefinitionId.Value, policyDefinitionReferenceId.Value, policyAssignmentId.Value, serializedAdditionalRawData);
+            return new PolicyReference(policyDefinitionId, policySetDefinitionId, policyDefinitionReferenceId, policyAssignmentId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyReference>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicyReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyReference)} does not support reading '{options.Format}' format.");
             }
         }
 

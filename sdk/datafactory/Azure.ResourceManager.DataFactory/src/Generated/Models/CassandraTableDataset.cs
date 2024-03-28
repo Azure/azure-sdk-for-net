@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -42,6 +41,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TableName = tableName;
             Keyspace = keyspace;
             DatasetType = datasetType ?? "CassandraTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CassandraTableDataset"/> for deserialization. </summary>
+        internal CassandraTableDataset()
+        {
         }
 
         /// <summary> The table name of the Cassandra database. Type: string (or Expression with resultType string). </summary>

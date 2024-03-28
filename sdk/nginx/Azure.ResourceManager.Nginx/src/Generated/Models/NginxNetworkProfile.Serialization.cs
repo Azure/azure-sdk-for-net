@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(FrontEndIPConfiguration))
             {
                 writer.WritePropertyName("frontEndIPConfiguration"u8);
-                writer.WriteObjectValue(FrontEndIPConfiguration);
+                writer.WriteObjectValue<NginxFrontendIPConfiguration>(FrontEndIPConfiguration, options);
             }
             if (Optional.IsDefined(NetworkInterfaceConfiguration))
             {
                 writer.WritePropertyName("networkInterfaceConfiguration"u8);
-                writer.WriteObjectValue(NetworkInterfaceConfiguration);
+                writer.WriteObjectValue<NginxNetworkInterfaceConfiguration>(NetworkInterfaceConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<NginxFrontendIPConfiguration> frontEndIPConfiguration = default;
-            Optional<NginxNetworkInterfaceConfiguration> networkInterfaceConfiguration = default;
+            NginxFrontendIPConfiguration frontEndIPConfiguration = default;
+            NginxNetworkInterfaceConfiguration networkInterfaceConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    frontEndIPConfiguration = NginxFrontendIPConfiguration.DeserializeNginxFrontendIPConfiguration(property.Value);
+                    frontEndIPConfiguration = NginxFrontendIPConfiguration.DeserializeNginxFrontendIPConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkInterfaceConfiguration"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    networkInterfaceConfiguration = NginxNetworkInterfaceConfiguration.DeserializeNginxNetworkInterfaceConfiguration(property.Value);
+                    networkInterfaceConfiguration = NginxNetworkInterfaceConfiguration.DeserializeNginxNetworkInterfaceConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxNetworkProfile(frontEndIPConfiguration.Value, networkInterfaceConfiguration.Value, serializedAdditionalRawData);
+            return new NginxNetworkProfile(frontEndIPConfiguration, networkInterfaceConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxNetworkProfile>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

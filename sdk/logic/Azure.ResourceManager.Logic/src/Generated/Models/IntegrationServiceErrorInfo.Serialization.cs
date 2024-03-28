@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IntegrationServiceErrorInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Logic.Models
             }
             IntegrationServiceErrorCode code = default;
             string message = default;
-            Optional<IReadOnlyList<IntegrationServiceErrorInfo>> details = default;
-            Optional<BinaryData> innerError = default;
+            IReadOnlyList<IntegrationServiceErrorInfo> details = default;
+            BinaryData innerError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationServiceErrorInfo> array = new List<IntegrationServiceErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeIntegrationServiceErrorInfo(item));
+                        array.Add(DeserializeIntegrationServiceErrorInfo(item, options));
                     }
                     details = array;
                     continue;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceErrorInfo(code, message, Optional.ToList(details), innerError.Value, serializedAdditionalRawData);
+            return new IntegrationServiceErrorInfo(code, message, details ?? new ChangeTrackingList<IntegrationServiceErrorInfo>(), innerError, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceErrorInfo>.Write(ModelReaderWriterOptions options)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationServiceErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

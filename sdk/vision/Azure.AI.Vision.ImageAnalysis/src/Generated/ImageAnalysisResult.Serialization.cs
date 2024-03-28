@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
@@ -23,48 +22,48 @@ namespace Azure.AI.Vision.ImageAnalysis
             var format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageAnalysisResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageAnalysisResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("captionResult"u8);
-                writer.WriteObjectValue(Caption);
+                writer.WriteObjectValue<CaptionResult>(Caption, options);
             }
             if (Optional.IsDefined(DenseCaptions))
             {
                 writer.WritePropertyName("denseCaptionsResult"u8);
-                writer.WriteObjectValue(DenseCaptions);
+                writer.WriteObjectValue<DenseCaptionsResult>(DenseCaptions, options);
             }
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata);
+            writer.WriteObjectValue<ImageMetadata>(Metadata, options);
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
             if (Optional.IsDefined(Objects))
             {
                 writer.WritePropertyName("objectsResult"u8);
-                writer.WriteObjectValue(Objects);
+                writer.WriteObjectValue<ObjectsResult>(Objects, options);
             }
             if (Optional.IsDefined(People))
             {
                 writer.WritePropertyName("peopleResult"u8);
-                writer.WriteObjectValue(People);
+                writer.WriteObjectValue<PeopleResult>(People, options);
             }
             if (Optional.IsDefined(Read))
             {
                 writer.WritePropertyName("readResult"u8);
-                writer.WriteObjectValue(Read);
+                writer.WriteObjectValue<ReadResult>(Read, options);
             }
             if (Optional.IsDefined(SmartCrops))
             {
                 writer.WritePropertyName("smartCropsResult"u8);
-                writer.WriteObjectValue(SmartCrops);
+                writer.WriteObjectValue<SmartCropsResult>(SmartCrops, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tagsResult"u8);
-                writer.WriteObjectValue(Tags);
+                writer.WriteObjectValue<TagsResult>(Tags, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,7 +88,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             var format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageAnalysisResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageAnalysisResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,15 +103,15 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 return null;
             }
-            Optional<CaptionResult> captionResult = default;
-            Optional<DenseCaptionsResult> denseCaptionsResult = default;
+            CaptionResult captionResult = default;
+            DenseCaptionsResult denseCaptionsResult = default;
             ImageMetadata metadata = default;
             string modelVersion = default;
-            Optional<ObjectsResult> objectsResult = default;
-            Optional<PeopleResult> peopleResult = default;
-            Optional<ReadResult> readResult = default;
-            Optional<SmartCropsResult> smartCropsResult = default;
-            Optional<TagsResult> tagsResult = default;
+            ObjectsResult objectsResult = default;
+            PeopleResult peopleResult = default;
+            ReadResult readResult = default;
+            SmartCropsResult smartCropsResult = default;
+            TagsResult tagsResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +122,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    captionResult = CaptionResult.DeserializeCaptionResult(property.Value);
+                    captionResult = CaptionResult.DeserializeCaptionResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("denseCaptionsResult"u8))
@@ -132,12 +131,12 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    denseCaptionsResult = DenseCaptionsResult.DeserializeDenseCaptionsResult(property.Value);
+                    denseCaptionsResult = DenseCaptionsResult.DeserializeDenseCaptionsResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
                 {
-                    metadata = ImageMetadata.DeserializeImageMetadata(property.Value);
+                    metadata = ImageMetadata.DeserializeImageMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("modelVersion"u8))
@@ -151,7 +150,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    objectsResult = ObjectsResult.DeserializeObjectsResult(property.Value);
+                    objectsResult = ObjectsResult.DeserializeObjectsResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("peopleResult"u8))
@@ -160,7 +159,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    peopleResult = PeopleResult.DeserializePeopleResult(property.Value);
+                    peopleResult = PeopleResult.DeserializePeopleResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("readResult"u8))
@@ -169,7 +168,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    readResult = ReadResult.DeserializeReadResult(property.Value);
+                    readResult = ReadResult.DeserializeReadResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("smartCropsResult"u8))
@@ -178,7 +177,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    smartCropsResult = SmartCropsResult.DeserializeSmartCropsResult(property.Value);
+                    smartCropsResult = SmartCropsResult.DeserializeSmartCropsResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tagsResult"u8))
@@ -187,7 +186,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     {
                         continue;
                     }
-                    tagsResult = TagsResult.DeserializeTagsResult(property.Value);
+                    tagsResult = TagsResult.DeserializeTagsResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -196,7 +195,17 @@ namespace Azure.AI.Vision.ImageAnalysis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageAnalysisResult(captionResult.Value, denseCaptionsResult.Value, metadata, modelVersion, objectsResult.Value, peopleResult.Value, readResult.Value, smartCropsResult.Value, tagsResult.Value, serializedAdditionalRawData);
+            return new ImageAnalysisResult(
+                captionResult,
+                denseCaptionsResult,
+                metadata,
+                modelVersion,
+                objectsResult,
+                peopleResult,
+                readResult,
+                smartCropsResult,
+                tagsResult,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageAnalysisResult>.Write(ModelReaderWriterOptions options)
@@ -208,7 +217,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageAnalysisResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageAnalysisResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +233,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                         return DeserializeImageAnalysisResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageAnalysisResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageAnalysisResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -242,7 +251,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ImageAnalysisResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

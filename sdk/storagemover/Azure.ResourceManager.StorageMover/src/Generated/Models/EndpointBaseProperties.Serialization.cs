@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<EndpointBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<EndpointBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureStorageBlobContainer": return AzureStorageBlobContainerEndpointProperties.DeserializeAzureStorageBlobContainerEndpointProperties(element);
-                    case "AzureStorageSmbFileShare": return AzureStorageSmbFileShareEndpointProperties.DeserializeAzureStorageSmbFileShareEndpointProperties(element);
-                    case "NfsMount": return NfsMountEndpointProperties.DeserializeNfsMountEndpointProperties(element);
-                    case "SmbMount": return SmbMountEndpointProperties.DeserializeSmbMountEndpointProperties(element);
+                    case "AzureStorageBlobContainer": return AzureStorageBlobContainerEndpointProperties.DeserializeAzureStorageBlobContainerEndpointProperties(element, options);
+                    case "AzureStorageSmbFileShare": return AzureStorageSmbFileShareEndpointProperties.DeserializeAzureStorageSmbFileShareEndpointProperties(element, options);
+                    case "NfsMount": return NfsMountEndpointProperties.DeserializeNfsMountEndpointProperties(element, options);
+                    case "SmbMount": return SmbMountEndpointProperties.DeserializeSmbMountEndpointProperties(element, options);
                 }
             }
-            return UnknownEndpointBaseProperties.DeserializeUnknownEndpointBaseProperties(element);
+            return UnknownEndpointBaseProperties.DeserializeUnknownEndpointBaseProperties(element, options);
         }
 
         BinaryData IPersistableModel<EndpointBaseProperties>.Write(ModelReaderWriterOptions options)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                         return DeserializeEndpointBaseProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

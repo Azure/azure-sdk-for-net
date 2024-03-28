@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationAccountPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<AutomationSku>(Sku, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<AutomationEncryptionProperties>(Encryption, options);
             }
             if (Optional.IsDefined(IsPublicNetworkAccessAllowed))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationAccountPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AutomationSku> sku = default;
-            Optional<AutomationEncryptionProperties> encryption = default;
-            Optional<bool> publicNetworkAccess = default;
-            Optional<bool> disableLocalAuth = default;
+            string name = default;
+            AzureLocation? location = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            AutomationSku sku = default;
+            AutomationEncryptionProperties encryption = default;
+            bool? publicNetworkAccess = default;
+            bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            sku = AutomationSku.DeserializeAutomationSku(property0.Value);
+                            sku = AutomationSku.DeserializeAutomationSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            encryption = AutomationEncryptionProperties.DeserializeAutomationEncryptionProperties(property0.Value);
+                            encryption = AutomationEncryptionProperties.DeserializeAutomationEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountPatch(name.Value, Optional.ToNullable(location), identity, Optional.ToDictionary(tags), sku.Value, encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
+            return new AutomationAccountPatch(
+                name,
+                location,
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                encryption,
+                publicNetworkAccess,
+                disableLocalAuth,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountPatch>.Write(ModelReaderWriterOptions options)
@@ -229,7 +238,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationAccountPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +254,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationAccountPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationAccountPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

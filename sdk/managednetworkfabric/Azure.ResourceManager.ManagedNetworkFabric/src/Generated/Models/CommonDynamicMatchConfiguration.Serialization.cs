@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommonDynamicMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MatchConfigurationIPGroupProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in VlanGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VlanGroupProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in PortGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PortGroupProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommonDynamicMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<MatchConfigurationIPGroupProperties>> ipGroups = default;
-            Optional<IList<VlanGroupProperties>> vlanGroups = default;
-            Optional<IList<PortGroupProperties>> portGroups = default;
+            IList<MatchConfigurationIPGroupProperties> ipGroups = default;
+            IList<VlanGroupProperties> vlanGroups = default;
+            IList<PortGroupProperties> portGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<MatchConfigurationIPGroupProperties> array = new List<MatchConfigurationIPGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchConfigurationIPGroupProperties.DeserializeMatchConfigurationIPGroupProperties(item));
+                        array.Add(MatchConfigurationIPGroupProperties.DeserializeMatchConfigurationIPGroupProperties(item, options));
                     }
                     ipGroups = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<VlanGroupProperties> array = new List<VlanGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VlanGroupProperties.DeserializeVlanGroupProperties(item));
+                        array.Add(VlanGroupProperties.DeserializeVlanGroupProperties(item, options));
                     }
                     vlanGroups = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<PortGroupProperties> array = new List<PortGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PortGroupProperties.DeserializePortGroupProperties(item));
+                        array.Add(PortGroupProperties.DeserializePortGroupProperties(item, options));
                     }
                     portGroups = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonDynamicMatchConfiguration(Optional.ToList(ipGroups), Optional.ToList(vlanGroups), Optional.ToList(portGroups), serializedAdditionalRawData);
+            return new CommonDynamicMatchConfiguration(ipGroups ?? new ChangeTrackingList<MatchConfigurationIPGroupProperties>(), vlanGroups ?? new ChangeTrackingList<VlanGroupProperties>(), portGroups ?? new ChangeTrackingList<PortGroupProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonDynamicMatchConfiguration>.Write(ModelReaderWriterOptions options)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeCommonDynamicMatchConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonDynamicMatchConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

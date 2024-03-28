@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverSummaryList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverSummaryList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverSummaryList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Summary)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MoverSummaryItemInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverSummaryList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverSummaryList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverSummaryList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> fieldName = default;
-            Optional<IReadOnlyList<MoverSummaryItemInfo>> summary = default;
+            string fieldName = default;
+            IReadOnlyList<MoverSummaryItemInfo> summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverSummaryItemInfo> array = new List<MoverSummaryItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverSummaryItemInfo.DeserializeMoverSummaryItemInfo(item));
+                        array.Add(MoverSummaryItemInfo.DeserializeMoverSummaryItemInfo(item, options));
                     }
                     summary = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverSummaryList(fieldName.Value, Optional.ToList(summary), serializedAdditionalRawData);
+            return new MoverSummaryList(fieldName, summary ?? new ChangeTrackingList<MoverSummaryItemInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverSummaryList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverSummaryList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverSummaryList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverSummaryList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverSummaryList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverSummaryList)} does not support reading '{options.Format}' format.");
             }
         }
 

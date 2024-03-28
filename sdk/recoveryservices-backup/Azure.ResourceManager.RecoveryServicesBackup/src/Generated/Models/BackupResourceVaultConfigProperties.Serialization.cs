@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceVaultConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceVaultConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupStorageType> storageModelType = default;
-            Optional<BackupStorageType> storageType = default;
-            Optional<BackupStorageTypeState> storageTypeState = default;
-            Optional<EnhancedSecurityState> enhancedSecurityState = default;
-            Optional<SoftDeleteFeatureState> softDeleteFeatureState = default;
-            Optional<int> softDeleteRetentionPeriodInDays = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
-            Optional<bool> isSoftDeleteFeatureStateEditable = default;
+            BackupStorageType? storageModelType = default;
+            BackupStorageType? storageType = default;
+            BackupStorageTypeState? storageTypeState = default;
+            EnhancedSecurityState? enhancedSecurityState = default;
+            SoftDeleteFeatureState? softDeleteFeatureState = default;
+            int? softDeleteRetentionPeriodInDays = default;
+            IList<string> resourceGuardOperationRequests = default;
+            bool? isSoftDeleteFeatureStateEditable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupResourceVaultConfigProperties(Optional.ToNullable(storageModelType), Optional.ToNullable(storageType), Optional.ToNullable(storageTypeState), Optional.ToNullable(enhancedSecurityState), Optional.ToNullable(softDeleteFeatureState), Optional.ToNullable(softDeleteRetentionPeriodInDays), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isSoftDeleteFeatureStateEditable), serializedAdditionalRawData);
+            return new BackupResourceVaultConfigProperties(
+                storageModelType,
+                storageType,
+                storageTypeState,
+                enhancedSecurityState,
+                softDeleteFeatureState,
+                softDeleteRetentionPeriodInDays,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                isSoftDeleteFeatureStateEditable,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupResourceVaultConfigProperties>.Write(ModelReaderWriterOptions options)
@@ -216,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +241,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupResourceVaultConfigProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsCaaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsCaaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<int> flags = default;
-            Optional<string> tag = default;
-            Optional<string> value = default;
+            int? flags = default;
+            string tag = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsCaaRecordInfo(Optional.ToNullable(flags), tag.Value, value.Value, serializedAdditionalRawData);
+            return new DnsCaaRecordInfo(flags, tag, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsCaaRecordInfo>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Dns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Dns.Models
                         return DeserializeDnsCaaRecordInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

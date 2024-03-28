@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<long> cpuCount = default;
-            Optional<long> memoryMB = default;
-            Optional<long> vmCount = default;
+            long? cpuCount = default;
+            long? memoryMB = default;
+            long? vmCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudCapacity(Optional.ToNullable(cpuCount), Optional.ToNullable(memoryMB), Optional.ToNullable(vmCount), serializedAdditionalRawData);
+            return new CloudCapacity(cpuCount, memoryMB, vmCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudCapacity>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeCloudCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

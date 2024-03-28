@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<SmbMountEndpointUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmbMountEndpointUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmbMountEndpointUpdateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<AzureKeyVaultSmbCredentials>(Credentials, options);
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<SmbMountEndpointUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmbMountEndpointUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmbMountEndpointUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<AzureKeyVaultSmbCredentials> credentials = default;
+            AzureKeyVaultSmbCredentials credentials = default;
             EndpointType endpointType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    credentials = AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(property.Value);
+                    credentials = AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endpointType"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmbMountEndpointUpdateProperties(endpointType, description.Value, serializedAdditionalRawData, credentials.Value);
+            return new SmbMountEndpointUpdateProperties(endpointType, description, serializedAdditionalRawData, credentials);
         }
 
         BinaryData IPersistableModel<SmbMountEndpointUpdateProperties>.Write(ModelReaderWriterOptions options)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SmbMountEndpointUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmbMountEndpointUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                         return DeserializeSmbMountEndpointUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SmbMountEndpointUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmbMountEndpointUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

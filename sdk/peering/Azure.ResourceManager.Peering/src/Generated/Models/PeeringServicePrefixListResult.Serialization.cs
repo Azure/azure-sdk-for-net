@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServicePrefixListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServicePrefixListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PeeringServicePrefixData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServicePrefixListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServicePrefixListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PeeringServicePrefixData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PeeringServicePrefixData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringServicePrefixData> array = new List<PeeringServicePrefixData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringServicePrefixData.DeserializePeeringServicePrefixData(item));
+                        array.Add(PeeringServicePrefixData.DeserializePeeringServicePrefixData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServicePrefixListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PeeringServicePrefixListResult(value ?? new ChangeTrackingList<PeeringServicePrefixData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServicePrefixListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServicePrefixListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServicePrefixListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringServicePrefixListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServicePrefixListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServicePrefixListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

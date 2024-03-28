@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightAutoScaleSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightAutoScaleSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAutoScaleSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(TimeAndCapacity))
             {
                 writer.WritePropertyName("timeAndCapacity"u8);
-                writer.WriteObjectValue(TimeAndCapacity);
+                writer.WriteObjectValue<HDInsightAutoScaleTimeAndCapacity>(TimeAndCapacity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightAutoScaleSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightAutoScaleSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAutoScaleSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IList<HDInsightDayOfWeek>> days = default;
-            Optional<HDInsightAutoScaleTimeAndCapacity> timeAndCapacity = default;
+            IList<HDInsightDayOfWeek> days = default;
+            HDInsightAutoScaleTimeAndCapacity timeAndCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    timeAndCapacity = HDInsightAutoScaleTimeAndCapacity.DeserializeHDInsightAutoScaleTimeAndCapacity(property.Value);
+                    timeAndCapacity = HDInsightAutoScaleTimeAndCapacity.DeserializeHDInsightAutoScaleTimeAndCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAutoScaleSchedule(Optional.ToList(days), timeAndCapacity.Value, serializedAdditionalRawData);
+            return new HDInsightAutoScaleSchedule(days ?? new ChangeTrackingList<HDInsightDayOfWeek>(), timeAndCapacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAutoScaleSchedule>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightAutoScaleSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAutoScaleSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightAutoScaleSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightAutoScaleSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAutoScaleSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

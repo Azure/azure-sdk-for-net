@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanPurchase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanPurchase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanPurchase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ReservationsSkuName>(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                writer.WriteObjectValue<AppliedScopeProperties>(AppliedScopeProperties, options);
             }
             if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue(Commitment);
+                writer.WriteObjectValue<BenefitsCommitment>(Commitment, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanPurchase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanPurchase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanPurchase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationsSkuName> sku = default;
-            Optional<string> displayName = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<SavingsPlanTerm> term = default;
-            Optional<SavingsPlanBillingPlan> billingPlan = default;
-            Optional<AppliedScopeType> appliedScopeType = default;
-            Optional<AppliedScopeProperties> appliedScopeProperties = default;
-            Optional<BenefitsCommitment> commitment = default;
+            ReservationsSkuName sku = default;
+            string displayName = default;
+            ResourceIdentifier billingScopeId = default;
+            SavingsPlanTerm? term = default;
+            SavingsPlanBillingPlan? billingPlan = default;
+            AppliedScopeType? appliedScopeType = default;
+            AppliedScopeProperties appliedScopeProperties = default;
+            BenefitsCommitment commitment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    sku = ReservationsSkuName.DeserializeReservationsSkuName(property.Value);
+                    sku = ReservationsSkuName.DeserializeReservationsSkuName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property0.Value);
+                            appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("commitment"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            commitment = BenefitsCommitment.DeserializeBenefitsCommitment(property0.Value);
+                            commitment = BenefitsCommitment.DeserializeBenefitsCommitment(property0.Value, options);
                             continue;
                         }
                     }
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanPurchase(sku.Value, displayName.Value, billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), appliedScopeProperties.Value, commitment.Value, serializedAdditionalRawData);
+            return new SavingsPlanPurchase(
+                sku,
+                displayName,
+                billingScopeId,
+                term,
+                billingPlan,
+                appliedScopeType,
+                appliedScopeProperties,
+                commitment,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanPurchase>.Write(ModelReaderWriterOptions options)
@@ -217,7 +226,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanPurchase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanPurchase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +242,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeSavingsPlanPurchase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanPurchase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanPurchase)} does not support reading '{options.Format}' format.");
             }
         }
 

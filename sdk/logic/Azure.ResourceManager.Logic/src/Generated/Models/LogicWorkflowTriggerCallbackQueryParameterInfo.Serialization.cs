@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerCallbackQueryParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerCallbackQueryParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> apiVersion = default;
-            Optional<string> sp = default;
-            Optional<string> sv = default;
-            Optional<string> sig = default;
-            Optional<string> se = default;
+            string apiVersion = default;
+            string sp = default;
+            string sv = default;
+            string sig = default;
+            string se = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowTriggerCallbackQueryParameterInfo(apiVersion.Value, sp.Value, sv.Value, sig.Value, se.Value, serializedAdditionalRawData);
+            return new LogicWorkflowTriggerCallbackQueryParameterInfo(
+                apiVersion,
+                sp,
+                sv,
+                sig,
+                se,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowTriggerCallbackQueryParameterInfo>.Write(ModelReaderWriterOptions options)
@@ -141,7 +147,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

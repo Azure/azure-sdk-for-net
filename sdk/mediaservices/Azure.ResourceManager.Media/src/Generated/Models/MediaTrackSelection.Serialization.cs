@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaTrackSelection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaTrackSelection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaTrackSelection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in TrackSelections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrackPropertyCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaTrackSelection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaTrackSelection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaTrackSelection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<TrackPropertyCondition>> trackSelections = default;
+            IList<TrackPropertyCondition> trackSelections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<TrackPropertyCondition> array = new List<TrackPropertyCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackPropertyCondition.DeserializeTrackPropertyCondition(item));
+                        array.Add(TrackPropertyCondition.DeserializeTrackPropertyCondition(item, options));
                     }
                     trackSelections = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaTrackSelection(Optional.ToList(trackSelections), serializedAdditionalRawData);
+            return new MediaTrackSelection(trackSelections ?? new ChangeTrackingList<TrackPropertyCondition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaTrackSelection>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaTrackSelection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaTrackSelection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaTrackSelection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaTrackSelection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaTrackSelection)} does not support reading '{options.Format}' format.");
             }
         }
 

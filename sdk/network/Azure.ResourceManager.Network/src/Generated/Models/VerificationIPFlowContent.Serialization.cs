@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VerificationIPFlowContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VerificationIPFlowContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VerificationIPFlowContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VerificationIPFlowContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VerificationIPFlowContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VerificationIPFlowContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             string remotePort = default;
             string localIPAddress = default;
             string remoteIPAddress = default;
-            Optional<ResourceIdentifier> targetNicResourceId = default;
+            ResourceIdentifier targetNicResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VerificationIPFlowContent(targetResourceId, direction, protocol, localPort, remotePort, localIPAddress, remoteIPAddress, targetNicResourceId.Value, serializedAdditionalRawData);
+            return new VerificationIPFlowContent(
+                targetResourceId,
+                direction,
+                protocol,
+                localPort,
+                remotePort,
+                localIPAddress,
+                remoteIPAddress,
+                targetNicResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VerificationIPFlowContent>.Write(ModelReaderWriterOptions options)
@@ -157,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VerificationIPFlowContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VerificationIPFlowContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +182,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVerificationIPFlowContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VerificationIPFlowContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VerificationIPFlowContent)} does not support reading '{options.Format}' format.");
             }
         }
 

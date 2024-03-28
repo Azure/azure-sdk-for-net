@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<DDAudio>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DDAudio)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DDAudio)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<DDAudio>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DDAudio)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DDAudio)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<int> channels = default;
-            Optional<int> samplingRate = default;
-            Optional<int> bitrate = default;
+            int? channels = default;
+            int? samplingRate = default;
+            int? bitrate = default;
             string odataType = default;
-            Optional<string> label = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DDAudio(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate));
+            return new DDAudio(
+                odataType,
+                label,
+                serializedAdditionalRawData,
+                channels,
+                samplingRate,
+                bitrate);
         }
 
         BinaryData IPersistableModel<DDAudio>.Write(ModelReaderWriterOptions options)
@@ -150,7 +156,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DDAudio)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DDAudio)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +172,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeDDAudio(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DDAudio)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DDAudio)} does not support reading '{options.Format}' format.");
             }
         }
 

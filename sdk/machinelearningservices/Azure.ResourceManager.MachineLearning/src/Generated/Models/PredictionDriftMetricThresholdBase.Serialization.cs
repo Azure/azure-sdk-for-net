@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionDriftMetricThresholdBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionDriftMetricThresholdBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionDriftMetricThresholdBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Threshold != null)
                 {
                     writer.WritePropertyName("threshold"u8);
-                    writer.WriteObjectValue(Threshold);
+                    writer.WriteObjectValue<MonitoringThreshold>(Threshold, options);
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionDriftMetricThresholdBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionDriftMetricThresholdBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionDriftMetricThresholdBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Categorical": return CategoricalPredictionDriftMetricThreshold.DeserializeCategoricalPredictionDriftMetricThreshold(element);
-                    case "Numerical": return NumericalPredictionDriftMetricThreshold.DeserializeNumericalPredictionDriftMetricThreshold(element);
+                    case "Categorical": return CategoricalPredictionDriftMetricThreshold.DeserializeCategoricalPredictionDriftMetricThreshold(element, options);
+                    case "Numerical": return NumericalPredictionDriftMetricThreshold.DeserializeNumericalPredictionDriftMetricThreshold(element, options);
                 }
             }
-            return UnknownPredictionDriftMetricThresholdBase.DeserializeUnknownPredictionDriftMetricThresholdBase(element);
+            return UnknownPredictionDriftMetricThresholdBase.DeserializeUnknownPredictionDriftMetricThresholdBase(element, options);
         }
 
         BinaryData IPersistableModel<PredictionDriftMetricThresholdBase>.Write(ModelReaderWriterOptions options)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PredictionDriftMetricThresholdBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionDriftMetricThresholdBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializePredictionDriftMetricThresholdBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredictionDriftMetricThresholdBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionDriftMetricThresholdBase)} does not support reading '{options.Format}' format.");
             }
         }
 

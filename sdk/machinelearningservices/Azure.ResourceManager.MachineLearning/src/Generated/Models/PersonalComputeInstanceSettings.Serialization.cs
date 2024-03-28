@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PersonalComputeInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PersonalComputeInstanceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PersonalComputeInstanceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AssignedUser))
             {
                 writer.WritePropertyName("assignedUser"u8);
-                writer.WriteObjectValue(AssignedUser);
+                writer.WriteObjectValue<MachineLearningComputeInstanceAssignedUser>(AssignedUser, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PersonalComputeInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PersonalComputeInstanceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PersonalComputeInstanceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningComputeInstanceAssignedUser> assignedUser = default;
+            MachineLearningComputeInstanceAssignedUser assignedUser = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    assignedUser = MachineLearningComputeInstanceAssignedUser.DeserializeMachineLearningComputeInstanceAssignedUser(property.Value);
+                    assignedUser = MachineLearningComputeInstanceAssignedUser.DeserializeMachineLearningComputeInstanceAssignedUser(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PersonalComputeInstanceSettings(assignedUser.Value, serializedAdditionalRawData);
+            return new PersonalComputeInstanceSettings(assignedUser, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PersonalComputeInstanceSettings>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PersonalComputeInstanceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PersonalComputeInstanceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializePersonalComputeInstanceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PersonalComputeInstanceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PersonalComputeInstanceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

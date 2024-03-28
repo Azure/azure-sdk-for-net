@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabaseOutputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabaseOutputDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabaseOutputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabaseOutputDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> server = default;
-            Optional<string> database = default;
-            Optional<string> user = default;
-            Optional<string> password = default;
-            Optional<string> table = default;
-            Optional<int> maxBatchCount = default;
-            Optional<int> maxWriterCount = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string server = default;
+            string database = default;
+            string user = default;
+            string password = default;
+            string table = default;
+            int? maxBatchCount = default;
+            int? maxWriterCount = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabaseOutputDataSource(type, serializedAdditionalRawData, server.Value, database.Value, user.Value, password.Value, table.Value, Optional.ToNullable(maxBatchCount), Optional.ToNullable(maxWriterCount), Optional.ToNullable(authenticationMode));
+            return new SqlDatabaseOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                server,
+                database,
+                user,
+                password,
+                table,
+                maxBatchCount,
+                maxWriterCount,
+                authenticationMode);
         }
 
         BinaryData IPersistableModel<SqlDatabaseOutputDataSource>.Write(ModelReaderWriterOptions options)
@@ -209,7 +219,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseOutputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabaseOutputDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +235,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeSqlDatabaseOutputDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseOutputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabaseOutputDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

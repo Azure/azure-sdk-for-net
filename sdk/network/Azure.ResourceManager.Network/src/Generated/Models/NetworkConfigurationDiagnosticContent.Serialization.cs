@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkConfigurationDiagnosticContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkConfigurationDiagnosticContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkConfigurationDiagnosticContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in Profiles)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NetworkConfigurationDiagnosticProfile>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkConfigurationDiagnosticContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkConfigurationDiagnosticContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkConfigurationDiagnosticContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ResourceIdentifier targetResourceId = default;
-            Optional<VerbosityLevel> verbosityLevel = default;
+            VerbosityLevel? verbosityLevel = default;
             IList<NetworkConfigurationDiagnosticProfile> profiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationDiagnosticProfile> array = new List<NetworkConfigurationDiagnosticProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(item));
+                        array.Add(NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(item, options));
                     }
                     profiles = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkConfigurationDiagnosticContent(targetResourceId, Optional.ToNullable(verbosityLevel), profiles, serializedAdditionalRawData);
+            return new NetworkConfigurationDiagnosticContent(targetResourceId, verbosityLevel, profiles, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkConfigurationDiagnosticContent>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkConfigurationDiagnosticContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkConfigurationDiagnosticContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkConfigurationDiagnosticContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkConfigurationDiagnosticContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkConfigurationDiagnosticContent)} does not support reading '{options.Format}' format.");
             }
         }
 

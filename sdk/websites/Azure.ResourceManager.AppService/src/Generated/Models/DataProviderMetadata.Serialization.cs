@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProviderMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProviderMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProviderMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in PropertyBag)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataProviderKeyValuePair>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProviderMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProviderMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProviderMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +81,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> providerName = default;
-            Optional<IReadOnlyList<DataProviderKeyValuePair>> propertyBag = default;
+            string providerName = default;
+            IReadOnlyList<DataProviderKeyValuePair> propertyBag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DataProviderKeyValuePair> array = new List<DataProviderKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item));
+                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item, options));
                     }
                     propertyBag = array;
                     continue;
@@ -110,7 +112,66 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProviderMetadata(providerName.Value, Optional.ToList(propertyBag), serializedAdditionalRawData);
+            return new DataProviderMetadata(providerName, propertyBag ?? new ChangeTrackingList<DataProviderKeyValuePair>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderName), out propertyOverride);
+            if (Optional.IsDefined(ProviderName) || hasPropertyOverride)
+            {
+                builder.Append("  providerName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ProviderName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProviderName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProviderName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PropertyBag), out propertyOverride);
+            if (Optional.IsCollectionDefined(PropertyBag) || hasPropertyOverride)
+            {
+                if (PropertyBag.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  propertyBag: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in PropertyBag)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  propertyBag: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<DataProviderMetadata>.Write(ModelReaderWriterOptions options)
@@ -121,8 +182,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProviderMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProviderMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +201,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeDataProviderMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProviderMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProviderMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

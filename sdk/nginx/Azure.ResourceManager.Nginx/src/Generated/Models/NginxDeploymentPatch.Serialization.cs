@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<NginxResourceSku>(Sku, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<NginxDeploymentUpdateProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<NginxResourceSku> sku = default;
-            Optional<AzureLocation> location = default;
-            Optional<NginxDeploymentUpdateProperties> properties = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            NginxResourceSku sku = default;
+            AzureLocation? location = default;
+            NginxDeploymentUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    sku = NginxResourceSku.DeserializeNginxResourceSku(property.Value);
+                    sku = NginxResourceSku.DeserializeNginxResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    properties = NginxDeploymentUpdateProperties.DeserializeNginxDeploymentUpdateProperties(property.Value);
+                    properties = NginxDeploymentUpdateProperties.DeserializeNginxDeploymentUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentPatch(identity, Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
+            return new NginxDeploymentPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                location,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentPatch>.Write(ModelReaderWriterOptions options)
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +195,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxDeploymentPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

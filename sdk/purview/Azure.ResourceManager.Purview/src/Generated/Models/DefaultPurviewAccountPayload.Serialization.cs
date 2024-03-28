@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefaultPurviewAccountPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefaultPurviewAccountPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> scope = default;
-            Optional<Guid> scopeTenantId = default;
-            Optional<PurviewAccountScopeType> scopeType = default;
-            Optional<string> subscriptionId = default;
+            string accountName = default;
+            string resourceGroupName = default;
+            string scope = default;
+            Guid? scopeTenantId = default;
+            PurviewAccountScopeType? scopeType = default;
+            string subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultPurviewAccountPayload(accountName.Value, resourceGroupName.Value, scope.Value, Optional.ToNullable(scopeTenantId), Optional.ToNullable(scopeType), subscriptionId.Value, serializedAdditionalRawData);
+            return new DefaultPurviewAccountPayload(
+                accountName,
+                resourceGroupName,
+                scope,
+                scopeTenantId,
+                scopeType,
+                subscriptionId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefaultPurviewAccountPayload>.Write(ModelReaderWriterOptions options)
@@ -160,7 +167,7 @@ namespace Azure.ResourceManager.Purview.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.Purview.Models
                         return DeserializeDefaultPurviewAccountPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support reading '{options.Format}' format.");
             }
         }
 

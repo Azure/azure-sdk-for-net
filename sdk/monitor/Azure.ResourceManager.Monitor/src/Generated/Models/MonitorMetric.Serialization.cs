@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorMetric)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorMetric)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetricType);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue(Name);
+            writer.WriteObjectValue<MonitorLocalizableString>(Name, options);
             if (Optional.IsDefined(DisplayDescription))
             {
                 writer.WritePropertyName("displayDescription"u8);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Timeseries)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MonitorTimeSeriesElement>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorMetric)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorMetric)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Monitor.Models
             string id = default;
             string type = default;
             MonitorLocalizableString name = default;
-            Optional<string> displayDescription = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
+            string displayDescription = default;
+            string errorCode = default;
+            string errorMessage = default;
             MonitorMetricUnit unit = default;
             IReadOnlyList<MonitorTimeSeriesElement> timeseries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayDescription"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorTimeSeriesElement> array = new List<MonitorTimeSeriesElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorTimeSeriesElement.DeserializeMonitorTimeSeriesElement(item));
+                        array.Add(MonitorTimeSeriesElement.DeserializeMonitorTimeSeriesElement(item, options));
                     }
                     timeseries = array;
                     continue;
@@ -157,7 +157,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorMetric(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries, serializedAdditionalRawData);
+            return new MonitorMetric(
+                id,
+                type,
+                name,
+                displayDescription,
+                errorCode,
+                errorMessage,
+                unit,
+                timeseries,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorMetric>.Write(ModelReaderWriterOptions options)
@@ -169,7 +178,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorMetric)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorMetric)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +194,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorMetric(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorMetric)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorMetric)} does not support reading '{options.Format}' format.");
             }
         }
 

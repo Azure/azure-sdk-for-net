@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AlertNotificationSetting != null)
                 {
                     writer.WritePropertyName("alertNotificationSetting"u8);
-                    writer.WriteObjectValue(AlertNotificationSetting);
+                    writer.WriteObjectValue<MonitoringAlertNotificationSettingsBase>(AlertNotificationSetting, options);
                 }
                 else
                 {
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("computeConfiguration"u8);
-            writer.WriteObjectValue(ComputeConfiguration);
+            writer.WriteObjectValue<MonitorComputeConfigurationBase>(ComputeConfiguration, options);
             if (Optional.IsDefined(MonitoringTarget))
             {
                 if (MonitoringTarget != null)
                 {
                     writer.WritePropertyName("monitoringTarget"u8);
-                    writer.WriteObjectValue(MonitoringTarget);
+                    writer.WriteObjectValue<MonitoringTarget>(MonitoringTarget, options);
                 }
                 else
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             foreach (var item in Signals)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<MonitoringSignalBase>(item.Value, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MonitoringAlertNotificationSettingsBase> alertNotificationSetting = default;
+            MonitoringAlertNotificationSettingsBase alertNotificationSetting = default;
             MonitorComputeConfigurationBase computeConfiguration = default;
-            Optional<MonitoringTarget> monitoringTarget = default;
+            MonitoringTarget monitoringTarget = default;
             IDictionary<string, MonitoringSignalBase> signals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         alertNotificationSetting = null;
                         continue;
                     }
-                    alertNotificationSetting = MonitoringAlertNotificationSettingsBase.DeserializeMonitoringAlertNotificationSettingsBase(property.Value);
+                    alertNotificationSetting = MonitoringAlertNotificationSettingsBase.DeserializeMonitoringAlertNotificationSettingsBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("computeConfiguration"u8))
                 {
-                    computeConfiguration = MonitorComputeConfigurationBase.DeserializeMonitorComputeConfigurationBase(property.Value);
+                    computeConfiguration = MonitorComputeConfigurationBase.DeserializeMonitorComputeConfigurationBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("monitoringTarget"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         monitoringTarget = null;
                         continue;
                     }
-                    monitoringTarget = MonitoringTarget.DeserializeMonitoringTarget(property.Value);
+                    monitoringTarget = MonitoringTarget.DeserializeMonitoringTarget(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("signals"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MonitoringSignalBase> dictionary = new Dictionary<string, MonitoringSignalBase>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MonitoringSignalBase.DeserializeMonitoringSignalBase(property0.Value));
+                        dictionary.Add(property0.Name, MonitoringSignalBase.DeserializeMonitoringSignalBase(property0.Value, options));
                     }
                     signals = dictionary;
                     continue;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorDefinition(alertNotificationSetting.Value, computeConfiguration, monitoringTarget.Value, signals, serializedAdditionalRawData);
+            return new MonitorDefinition(alertNotificationSetting, computeConfiguration, monitoringTarget, signals, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorDefinition>.Write(ModelReaderWriterOptions options)
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMonitorDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

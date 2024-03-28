@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
@@ -23,7 +22,7 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<ClinicalNoteEvidence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClinicalNoteEvidence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClinicalNoteEvidence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +60,7 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<ClinicalNoteEvidence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClinicalNoteEvidence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClinicalNoteEvidence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +76,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 return null;
             }
             string id = default;
-            Optional<string> text = default;
+            string text = default;
             int offset = default;
             int length = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -110,7 +109,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClinicalNoteEvidence(id, text.Value, offset, length, serializedAdditionalRawData);
+            return new ClinicalNoteEvidence(id, text, offset, length, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClinicalNoteEvidence>.Write(ModelReaderWriterOptions options)
@@ -122,7 +121,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClinicalNoteEvidence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClinicalNoteEvidence)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +137,7 @@ namespace Azure.Health.Insights.CancerProfiling
                         return DeserializeClinicalNoteEvidence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClinicalNoteEvidence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClinicalNoteEvidence)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -156,7 +155,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ClinicalNoteEvidence>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

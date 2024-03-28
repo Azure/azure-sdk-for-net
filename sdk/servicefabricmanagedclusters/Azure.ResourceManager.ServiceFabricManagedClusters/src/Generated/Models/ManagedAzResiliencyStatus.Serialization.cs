@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedAzResiliencyStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in BaseResourceStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceAzStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedAzResiliencyStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceAzStatus>> baseResourceStatus = default;
-            Optional<bool> isClusterZoneResilient = default;
+            IReadOnlyList<ResourceAzStatus> baseResourceStatus = default;
+            bool? isClusterZoneResilient = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ResourceAzStatus> array = new List<ResourceAzStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceAzStatus.DeserializeResourceAzStatus(item));
+                        array.Add(ResourceAzStatus.DeserializeResourceAzStatus(item, options));
                     }
                     baseResourceStatus = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedAzResiliencyStatus(Optional.ToList(baseResourceStatus), Optional.ToNullable(isClusterZoneResilient), serializedAdditionalRawData);
+            return new ManagedAzResiliencyStatus(baseResourceStatus ?? new ChangeTrackingList<ResourceAzStatus>(), isClusterZoneResilient, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedAzResiliencyStatus>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedAzResiliencyStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

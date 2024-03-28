@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorComputeIdentityBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorComputeIdentityBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorComputeIdentityBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorComputeIdentityBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorComputeIdentityBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorComputeIdentityBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AmlToken": return AmlTokenComputeIdentity.DeserializeAmlTokenComputeIdentity(element);
-                    case "ManagedIdentity": return ManagedComputeIdentity.DeserializeManagedComputeIdentity(element);
+                    case "AmlToken": return AmlTokenComputeIdentity.DeserializeAmlTokenComputeIdentity(element, options);
+                    case "ManagedIdentity": return ManagedComputeIdentity.DeserializeManagedComputeIdentity(element, options);
                 }
             }
-            return UnknownMonitorComputeIdentityBase.DeserializeUnknownMonitorComputeIdentityBase(element);
+            return UnknownMonitorComputeIdentityBase.DeserializeUnknownMonitorComputeIdentityBase(element, options);
         }
 
         BinaryData IPersistableModel<MonitorComputeIdentityBase>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorComputeIdentityBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorComputeIdentityBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMonitorComputeIdentityBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorComputeIdentityBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorComputeIdentityBase)} does not support reading '{options.Format}' format.");
             }
         }
 

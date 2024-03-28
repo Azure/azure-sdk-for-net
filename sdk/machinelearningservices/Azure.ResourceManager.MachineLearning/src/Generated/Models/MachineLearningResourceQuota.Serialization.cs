@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningResourceQuota)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningResourceQuota)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<MachineLearningResourceName>(Name, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Limit))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningResourceQuota)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningResourceQuota)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> amlWorkspaceLocation = default;
-            Optional<string> type = default;
-            Optional<MachineLearningResourceName> name = default;
-            Optional<long> limit = default;
-            Optional<MachineLearningQuotaUnit> unit = default;
+            string id = default;
+            string amlWorkspaceLocation = default;
+            string type = default;
+            MachineLearningResourceName name = default;
+            long? limit = default;
+            MachineLearningQuotaUnit? unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    name = MachineLearningResourceName.DeserializeMachineLearningResourceName(property.Value);
+                    name = MachineLearningResourceName.DeserializeMachineLearningResourceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limit"u8))
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningResourceQuota(id.Value, amlWorkspaceLocation.Value, type.Value, name.Value, Optional.ToNullable(limit), Optional.ToNullable(unit), serializedAdditionalRawData);
+            return new MachineLearningResourceQuota(
+                id,
+                amlWorkspaceLocation,
+                type,
+                name,
+                limit,
+                unit,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningResourceQuota>.Write(ModelReaderWriterOptions options)
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningResourceQuota)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningResourceQuota)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningResourceQuota(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningResourceQuota)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningResourceQuota)} does not support reading '{options.Format}' format.");
             }
         }
 

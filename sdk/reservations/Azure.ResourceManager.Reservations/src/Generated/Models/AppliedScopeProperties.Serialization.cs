@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppliedScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppliedScopeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppliedScopeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppliedScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppliedScopeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppliedScopeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<ResourceIdentifier> managementGroupId = default;
-            Optional<ResourceIdentifier> subscriptionId = default;
-            Optional<ResourceIdentifier> resourceGroupId = default;
-            Optional<string> displayName = default;
+            Guid? tenantId = default;
+            ResourceIdentifier managementGroupId = default;
+            ResourceIdentifier subscriptionId = default;
+            ResourceIdentifier resourceGroupId = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppliedScopeProperties(Optional.ToNullable(tenantId), managementGroupId.Value, subscriptionId.Value, resourceGroupId.Value, displayName.Value, serializedAdditionalRawData);
+            return new AppliedScopeProperties(
+                tenantId,
+                managementGroupId,
+                subscriptionId,
+                resourceGroupId,
+                displayName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppliedScopeProperties>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppliedScopeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppliedScopeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeAppliedScopeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppliedScopeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppliedScopeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

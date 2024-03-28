@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiscoveredSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiscoveredSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             SecurityFamily securityFamily = default;
             string offer = default;
             string publisher = default;
@@ -185,7 +185,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiscoveredSecuritySolution(id, name, type, systemData.Value, securityFamily, offer, publisher, sku, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new DiscoveredSecuritySolution(
+                id,
+                name,
+                type,
+                systemData,
+                securityFamily,
+                offer,
+                publisher,
+                sku,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiscoveredSecuritySolution>.Write(ModelReaderWriterOptions options)
@@ -197,7 +207,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -213,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDiscoveredSecuritySolution(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support reading '{options.Format}' format.");
             }
         }
 

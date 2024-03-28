@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DisksToInclude)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmDiskContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DisksDefault))
             {
                 writer.WritePropertyName("disksDefault"u8);
-                writer.WriteObjectValue(DisksDefault);
+                writer.WriteObjectValue<InMageRcmDisksDefaultContent>(DisksDefault, options);
             }
             writer.WritePropertyName("targetResourceGroupId"u8);
             writer.WriteStringValue(TargetResourceGroupId);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,23 +153,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string fabricDiscoveryMachineId = default;
-            Optional<IList<InMageRcmDiskContent>> disksToInclude = default;
-            Optional<InMageRcmDisksDefaultContent> disksDefault = default;
+            IList<InMageRcmDiskContent> disksToInclude = default;
+            InMageRcmDisksDefaultContent disksDefault = default;
             ResourceIdentifier targetResourceGroupId = default;
-            Optional<ResourceIdentifier> targetNetworkId = default;
-            Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<string> targetSubnetName = default;
-            Optional<string> testSubnetName = default;
-            Optional<string> targetVmName = default;
-            Optional<string> targetVmSize = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
-            Optional<string> runAsAccountId = default;
+            ResourceIdentifier targetNetworkId = default;
+            ResourceIdentifier testNetworkId = default;
+            string targetSubnetName = default;
+            string testSubnetName = default;
+            string targetVmName = default;
+            string targetVmSize = default;
+            SiteRecoveryLicenseType? licenseType = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            ResourceIdentifier targetBootDiagnosticsStorageAccountId = default;
+            string runAsAccountId = default;
             Guid processServerId = default;
-            Optional<string> multiVmGroupName = default;
+            string multiVmGroupName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmDiskContent> array = new List<InMageRcmDiskContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmDiskContent.DeserializeInMageRcmDiskContent(item));
+                        array.Add(InMageRcmDiskContent.DeserializeInMageRcmDiskContent(item, options));
                     }
                     disksToInclude = array;
                     continue;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    disksDefault = InMageRcmDisksDefaultContent.DeserializeInMageRcmDisksDefaultContent(property.Value);
+                    disksDefault = InMageRcmDisksDefaultContent.DeserializeInMageRcmDisksDefaultContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetResourceGroupId"u8))
@@ -313,7 +313,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmEnableProtectionContent(instanceType, serializedAdditionalRawData, fabricDiscoveryMachineId, Optional.ToList(disksToInclude), disksDefault.Value, targetResourceGroupId, targetNetworkId.Value, testNetworkId.Value, targetSubnetName.Value, testSubnetName.Value, targetVmName.Value, targetVmSize.Value, Optional.ToNullable(licenseType), targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, runAsAccountId.Value, processServerId, multiVmGroupName.Value);
+            return new InMageRcmEnableProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                fabricDiscoveryMachineId,
+                disksToInclude ?? new ChangeTrackingList<InMageRcmDiskContent>(),
+                disksDefault,
+                targetResourceGroupId,
+                targetNetworkId,
+                testNetworkId,
+                targetSubnetName,
+                testSubnetName,
+                targetVmName,
+                targetVmSize,
+                licenseType,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                targetBootDiagnosticsStorageAccountId,
+                runAsAccountId,
+                processServerId,
+                multiVmGroupName);
         }
 
         BinaryData IPersistableModel<InMageRcmEnableProtectionContent>.Write(ModelReaderWriterOptions options)
@@ -325,7 +345,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -341,7 +361,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmEnableProtectionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
-                writer.WriteObjectValue(Description);
+                writer.WriteObjectValue<ProductDescription>(Description, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ImageInformation))
             {
@@ -44,24 +44,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in ImageInformation)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdgeOrderProductImageInformation>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(CostInformation))
             {
                 writer.WritePropertyName("costInformation"u8);
-                writer.WriteObjectValue(CostInformation);
+                writer.WriteObjectValue<EdgeOrderProductCostInformation>(CostInformation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AvailabilityInformation))
             {
                 writer.WritePropertyName("availabilityInformation"u8);
-                writer.WriteObjectValue(AvailabilityInformation);
+                writer.WriteObjectValue<ProductAvailabilityInformation>(AvailabilityInformation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HierarchyInformation))
             {
                 writer.WritePropertyName("hierarchyInformation"u8);
-                writer.WriteObjectValue(HierarchyInformation);
+                writer.WriteObjectValue<HierarchyInformation>(HierarchyInformation, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(FilterableProperties))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in FilterableProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FilterableProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in Specifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProductSpecification>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                writer.WriteObjectValue<ProductDimensions>(Dimensions, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,15 +127,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<ProductDescription> description = default;
-            Optional<IReadOnlyList<EdgeOrderProductImageInformation>> imageInformation = default;
-            Optional<EdgeOrderProductCostInformation> costInformation = default;
-            Optional<ProductAvailabilityInformation> availabilityInformation = default;
-            Optional<HierarchyInformation> hierarchyInformation = default;
-            Optional<IReadOnlyList<FilterableProperty>> filterableProperties = default;
-            Optional<IReadOnlyList<ProductSpecification>> specifications = default;
-            Optional<ProductDimensions> dimensions = default;
+            string displayName = default;
+            ProductDescription description = default;
+            IReadOnlyList<EdgeOrderProductImageInformation> imageInformation = default;
+            EdgeOrderProductCostInformation costInformation = default;
+            ProductAvailabilityInformation availabilityInformation = default;
+            HierarchyInformation hierarchyInformation = default;
+            IReadOnlyList<FilterableProperty> filterableProperties = default;
+            IReadOnlyList<ProductSpecification> specifications = default;
+            ProductDimensions dimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            description = ProductDescription.DeserializeProductDescription(property0.Value);
+                            description = ProductDescription.DeserializeProductDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("imageInformation"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             List<EdgeOrderProductImageInformation> array = new List<EdgeOrderProductImageInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EdgeOrderProductImageInformation.DeserializeEdgeOrderProductImageInformation(item));
+                                array.Add(EdgeOrderProductImageInformation.DeserializeEdgeOrderProductImageInformation(item, options));
                             }
                             imageInformation = array;
                             continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            costInformation = EdgeOrderProductCostInformation.DeserializeEdgeOrderProductCostInformation(property0.Value);
+                            costInformation = EdgeOrderProductCostInformation.DeserializeEdgeOrderProductCostInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("availabilityInformation"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            availabilityInformation = ProductAvailabilityInformation.DeserializeProductAvailabilityInformation(property0.Value);
+                            availabilityInformation = ProductAvailabilityInformation.DeserializeProductAvailabilityInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hierarchyInformation"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property0.Value);
+                            hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("filterableProperties"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             List<FilterableProperty> array = new List<FilterableProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FilterableProperty.DeserializeFilterableProperty(item));
+                                array.Add(FilterableProperty.DeserializeFilterableProperty(item, options));
                             }
                             filterableProperties = array;
                             continue;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             List<ProductSpecification> array = new List<ProductSpecification>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProductSpecification.DeserializeProductSpecification(item));
+                                array.Add(ProductSpecification.DeserializeProductSpecification(item, options));
                             }
                             specifications = array;
                             continue;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            dimensions = ProductDimensions.DeserializeProductDimensions(property0.Value);
+                            dimensions = ProductDimensions.DeserializeProductDimensions(property0.Value, options);
                             continue;
                         }
                     }
@@ -250,7 +250,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductConfiguration(displayName.Value, description.Value, Optional.ToList(imageInformation), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, Optional.ToList(filterableProperties), Optional.ToList(specifications), dimensions.Value, serializedAdditionalRawData);
+            return new ProductConfiguration(
+                displayName,
+                description,
+                imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties ?? new ChangeTrackingList<FilterableProperty>(),
+                specifications ?? new ChangeTrackingList<ProductSpecification>(),
+                dimensions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductConfiguration>.Write(ModelReaderWriterOptions options)
@@ -262,7 +272,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProductConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -278,7 +288,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeProductConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProductConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

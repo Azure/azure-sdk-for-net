@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventGridNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<NamespaceSku>(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TopicSpacesConfiguration))
             {
                 writer.WritePropertyName("topicSpacesConfiguration"u8);
-                writer.WriteObjectValue(TopicSpacesConfiguration);
+                writer.WriteObjectValue<UpdateTopicSpacesConfigurationInfo>(TopicSpacesConfiguration, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundIPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventGridInboundIPRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventGridNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<NamespaceSku> sku = default;
-            Optional<UpdateTopicSpacesConfigurationInfo> topicSpacesConfiguration = default;
-            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            NamespaceSku sku = default;
+            UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration = default;
+            EventGridPublicNetworkAccess? publicNetworkAccess = default;
+            IList<EventGridInboundIPRule> inboundIPRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    sku = NamespaceSku.DeserializeNamespaceSku(property.Value);
+                    sku = NamespaceSku.DeserializeNamespaceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            topicSpacesConfiguration = UpdateTopicSpacesConfigurationInfo.DeserializeUpdateTopicSpacesConfigurationInfo(property0.Value);
+                            topicSpacesConfiguration = UpdateTopicSpacesConfigurationInfo.DeserializeUpdateTopicSpacesConfigurationInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             List<EventGridInboundIPRule> array = new List<EventGridInboundIPRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
+                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item, options));
                             }
                             inboundIPRules = array;
                             continue;
@@ -201,7 +201,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridNamespacePatch(Optional.ToDictionary(tags), identity, sku.Value, topicSpacesConfiguration.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), serializedAdditionalRawData);
+            return new EventGridNamespacePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                sku,
+                topicSpacesConfiguration,
+                publicNetworkAccess,
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridNamespacePatch>.Write(ModelReaderWriterOptions options)
@@ -213,7 +220,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +236,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeEventGridNamespacePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridNamespacePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

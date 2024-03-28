@@ -20,16 +20,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteObjectValue(Type);
+            writer.WriteObjectValue<object>(Type);
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
-                writer.WriteObjectValue(Level);
+                writer.WriteObjectValue<object>(Level);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             object type = default;
-            Optional<object> level = default;
+            object level = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -63,14 +63,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetCompression(type, level.Value, additionalProperties);
+            return new DatasetCompression(type, level, additionalProperties);
         }
 
         internal partial class DatasetCompressionConverter : JsonConverter<DatasetCompression>
         {
             public override void Write(Utf8JsonWriter writer, DatasetCompression model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DatasetCompression>(model);
             }
             public override DatasetCompression Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

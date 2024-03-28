@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobExternal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobExternal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobExternal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue(StorageAccount);
+                writer.WriteObjectValue<StreamAnalyticsStorageAccount>(StorageAccount, options);
             }
             if (Optional.IsDefined(Container))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(RefreshConfiguration))
             {
                 writer.WritePropertyName("refreshConfiguration"u8);
-                writer.WriteObjectValue(RefreshConfiguration);
+                writer.WriteObjectValue<StreamingJobRefreshConfiguration>(RefreshConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobExternal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobExternal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobExternal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<StreamAnalyticsStorageAccount> storageAccount = default;
-            Optional<string> container = default;
-            Optional<string> path = default;
-            Optional<StreamingJobRefreshConfiguration> refreshConfiguration = default;
+            StreamAnalyticsStorageAccount storageAccount = default;
+            string container = default;
+            string path = default;
+            StreamingJobRefreshConfiguration refreshConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    storageAccount = StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(property.Value);
+                    storageAccount = StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("container"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    refreshConfiguration = StreamingJobRefreshConfiguration.DeserializeStreamingJobRefreshConfiguration(property.Value);
+                    refreshConfiguration = StreamingJobRefreshConfiguration.DeserializeStreamingJobRefreshConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobExternal(storageAccount.Value, container.Value, path.Value, refreshConfiguration.Value, serializedAdditionalRawData);
+            return new StreamingJobExternal(storageAccount, container, path, refreshConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobExternal>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobExternal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobExternal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamingJobExternal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobExternal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobExternal)} does not support reading '{options.Format}' format.");
             }
         }
 

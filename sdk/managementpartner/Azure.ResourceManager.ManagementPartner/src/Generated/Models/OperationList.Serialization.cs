@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationResponse>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationResponse>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<OperationResponse> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                     List<OperationResponse> array = new List<OperationResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationResponse.DeserializeOperationResponse(item));
+                        array.Add(OperationResponse.DeserializeOperationResponse(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new OperationList(value ?? new ChangeTrackingList<OperationResponse>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                         return DeserializeOperationList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationList)} does not support reading '{options.Format}' format.");
             }
         }
 

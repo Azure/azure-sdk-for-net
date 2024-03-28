@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplica2012R2EventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplica2012R2EventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplica2012R2EventDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplica2012R2EventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplica2012R2EventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplica2012R2EventDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> containerName = default;
-            Optional<string> fabricName = default;
-            Optional<string> remoteContainerName = default;
-            Optional<string> remoteFabricName = default;
+            string containerName = default;
+            string fabricName = default;
+            string remoteContainerName = default;
+            string remoteFabricName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplica2012R2EventDetails(instanceType, serializedAdditionalRawData, containerName.Value, fabricName.Value, remoteContainerName.Value, remoteFabricName.Value);
+            return new HyperVReplica2012R2EventDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                containerName,
+                fabricName,
+                remoteContainerName,
+                remoteFabricName);
         }
 
         BinaryData IPersistableModel<HyperVReplica2012R2EventDetails>.Write(ModelReaderWriterOptions options)
@@ -138,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplica2012R2EventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplica2012R2EventDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeHyperVReplica2012R2EventDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplica2012R2EventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplica2012R2EventDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AcsClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(OrchestratorProperties))
             {
                 writer.WritePropertyName("orchestratorProperties"u8);
-                writer.WriteObjectValue(OrchestratorProperties);
+                writer.WriteObjectValue<KubernetesClusterProperties>(OrchestratorProperties, options);
             }
             if (Optional.IsCollectionDefined(SystemServices))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in SystemServices)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SystemService>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AcsClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> clusterFqdn = default;
+            string clusterFqdn = default;
             OrchestratorType orchestratorType = default;
-            Optional<KubernetesClusterProperties> orchestratorProperties = default;
-            Optional<IList<SystemService>> systemServices = default;
-            Optional<int> masterCount = default;
-            Optional<int> agentCount = default;
-            Optional<AgentVmSizeType> agentVmSize = default;
+            KubernetesClusterProperties orchestratorProperties = default;
+            IList<SystemService> systemServices = default;
+            int? masterCount = default;
+            int? agentCount = default;
+            AgentVmSizeType? agentVmSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    orchestratorProperties = KubernetesClusterProperties.DeserializeKubernetesClusterProperties(property.Value);
+                    orchestratorProperties = KubernetesClusterProperties.DeserializeKubernetesClusterProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("systemServices"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     List<SystemService> array = new List<SystemService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SystemService.DeserializeSystemService(item));
+                        array.Add(SystemService.DeserializeSystemService(item, options));
                     }
                     systemServices = array;
                     continue;
@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcsClusterProperties(clusterFqdn.Value, orchestratorType, orchestratorProperties.Value, Optional.ToList(systemServices), Optional.ToNullable(masterCount), Optional.ToNullable(agentCount), Optional.ToNullable(agentVmSize), serializedAdditionalRawData);
+            return new AcsClusterProperties(
+                clusterFqdn,
+                orchestratorType,
+                orchestratorProperties,
+                systemServices ?? new ChangeTrackingList<SystemService>(),
+                masterCount,
+                agentCount,
+                agentVmSize,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcsClusterProperties>.Write(ModelReaderWriterOptions options)
@@ -190,7 +198,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +214,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                         return DeserializeAcsClusterProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

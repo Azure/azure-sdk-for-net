@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeExportPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeExportPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,21 +139,21 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<int> ruleIndex = default;
-            Optional<bool> unixReadOnly = default;
-            Optional<bool> unixReadWrite = default;
-            Optional<bool> kerberos5ReadOnly = default;
-            Optional<bool> kerberos5ReadWrite = default;
-            Optional<bool> kerberos5iReadOnly = default;
-            Optional<bool> kerberos5iReadWrite = default;
-            Optional<bool> kerberos5pReadOnly = default;
-            Optional<bool> kerberos5pReadWrite = default;
-            Optional<bool> cifs = default;
-            Optional<bool> nfsv3 = default;
-            Optional<bool> nfsv41 = default;
-            Optional<string> allowedClients = default;
-            Optional<bool> hasRootAccess = default;
-            Optional<NetAppChownMode> chownMode = default;
+            int? ruleIndex = default;
+            bool? unixReadOnly = default;
+            bool? unixReadWrite = default;
+            bool? kerberos5ReadOnly = default;
+            bool? kerberos5ReadWrite = default;
+            bool? kerberos5iReadOnly = default;
+            bool? kerberos5iReadWrite = default;
+            bool? kerberos5pReadOnly = default;
+            bool? kerberos5pReadWrite = default;
+            bool? cifs = default;
+            bool? nfsv3 = default;
+            bool? nfsv41 = default;
+            string allowedClients = default;
+            bool? hasRootAccess = default;
+            NetAppChownMode? chownMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -295,7 +295,23 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeExportPolicyRule(Optional.ToNullable(ruleIndex), Optional.ToNullable(unixReadOnly), Optional.ToNullable(unixReadWrite), Optional.ToNullable(kerberos5ReadOnly), Optional.ToNullable(kerberos5ReadWrite), Optional.ToNullable(kerberos5iReadOnly), Optional.ToNullable(kerberos5iReadWrite), Optional.ToNullable(kerberos5pReadOnly), Optional.ToNullable(kerberos5pReadWrite), Optional.ToNullable(cifs), Optional.ToNullable(nfsv3), Optional.ToNullable(nfsv41), allowedClients.Value, Optional.ToNullable(hasRootAccess), Optional.ToNullable(chownMode), serializedAdditionalRawData);
+            return new NetAppVolumeExportPolicyRule(
+                ruleIndex,
+                unixReadOnly,
+                unixReadWrite,
+                kerberos5ReadOnly,
+                kerberos5ReadWrite,
+                kerberos5iReadOnly,
+                kerberos5iReadWrite,
+                kerberos5pReadOnly,
+                kerberos5pReadWrite,
+                cifs,
+                nfsv3,
+                nfsv41,
+                allowedClients,
+                hasRootAccess,
+                chownMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeExportPolicyRule>.Write(ModelReaderWriterOptions options)
@@ -307,7 +323,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -323,7 +339,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumeExportPolicyRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support reading '{options.Format}' format.");
             }
         }
 

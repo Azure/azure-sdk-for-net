@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningNodeStateCounts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningNodeStateCounts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> idleNodeCount = default;
-            Optional<int> runningNodeCount = default;
-            Optional<int> preparingNodeCount = default;
-            Optional<int> unusableNodeCount = default;
-            Optional<int> leavingNodeCount = default;
-            Optional<int> preemptedNodeCount = default;
+            int? idleNodeCount = default;
+            int? runningNodeCount = default;
+            int? preparingNodeCount = default;
+            int? unusableNodeCount = default;
+            int? leavingNodeCount = default;
+            int? preemptedNodeCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningNodeStateCounts(Optional.ToNullable(idleNodeCount), Optional.ToNullable(runningNodeCount), Optional.ToNullable(preparingNodeCount), Optional.ToNullable(unusableNodeCount), Optional.ToNullable(leavingNodeCount), Optional.ToNullable(preemptedNodeCount), serializedAdditionalRawData);
+            return new MachineLearningNodeStateCounts(
+                idleNodeCount,
+                runningNodeCount,
+                preparingNodeCount,
+                unusableNodeCount,
+                leavingNodeCount,
+                preemptedNodeCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningNodeStateCounts>.Write(ModelReaderWriterOptions options)
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningNodeStateCounts(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support reading '{options.Format}' format.");
             }
         }
 

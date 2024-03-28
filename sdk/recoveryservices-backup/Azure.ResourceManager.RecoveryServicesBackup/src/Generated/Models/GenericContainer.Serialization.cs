@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenericContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenericContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenericContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInformation))
             {
                 writer.WritePropertyName("extendedInformation"u8);
-                writer.WriteObjectValue(ExtendedInformation);
+                writer.WriteObjectValue<GenericContainerExtendedInfo>(ExtendedInformation, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenericContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenericContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenericContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> fabricName = default;
-            Optional<GenericContainerExtendedInfo> extendedInformation = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> registrationStatus = default;
-            Optional<string> healthStatus = default;
+            string fabricName = default;
+            GenericContainerExtendedInfo extendedInformation = default;
+            string friendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string registrationStatus = default;
+            string healthStatus = default;
             ProtectableContainerType containerType = default;
-            Optional<string> protectableObjectType = default;
+            string protectableObjectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInformation = GenericContainerExtendedInfo.DeserializeGenericContainerExtendedInfo(property.Value);
+                    extendedInformation = GenericContainerExtendedInfo.DeserializeGenericContainerExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("friendlyName"u8))
@@ -167,7 +167,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenericContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, fabricName.Value, extendedInformation.Value);
+            return new GenericContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                containerType,
+                protectableObjectType,
+                serializedAdditionalRawData,
+                fabricName,
+                extendedInformation);
         }
 
         BinaryData IPersistableModel<GenericContainer>.Write(ModelReaderWriterOptions options)
@@ -179,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GenericContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenericContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeGenericContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenericContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenericContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

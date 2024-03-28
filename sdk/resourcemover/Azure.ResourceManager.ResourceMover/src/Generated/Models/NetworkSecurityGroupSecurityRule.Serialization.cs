@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> access = default;
-            Optional<string> description = default;
-            Optional<string> destinationAddressPrefix = default;
-            Optional<string> destinationPortRange = default;
-            Optional<string> direction = default;
-            Optional<int> priority = default;
-            Optional<string> protocol = default;
-            Optional<string> sourceAddressPrefix = default;
-            Optional<string> sourcePortRange = default;
+            string name = default;
+            string access = default;
+            string description = default;
+            string destinationAddressPrefix = default;
+            string destinationPortRange = default;
+            string direction = default;
+            int? priority = default;
+            string protocol = default;
+            string sourceAddressPrefix = default;
+            string sourcePortRange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,18 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityGroupSecurityRule(name.Value, access.Value, description.Value, destinationAddressPrefix.Value, destinationPortRange.Value, direction.Value, Optional.ToNullable(priority), protocol.Value, sourceAddressPrefix.Value, sourcePortRange.Value, serializedAdditionalRawData);
+            return new NetworkSecurityGroupSecurityRule(
+                name,
+                access,
+                description,
+                destinationAddressPrefix,
+                destinationPortRange,
+                direction,
+                priority,
+                protocol,
+                sourceAddressPrefix,
+                sourcePortRange,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityGroupSecurityRule>.Write(ModelReaderWriterOptions options)
@@ -200,7 +211,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +227,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeNetworkSecurityGroupSecurityRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<StoragePoolOutboundEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StoragePoolOutboundEnvironment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StoragePoolOutboundEnvironment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OutboundEndpointDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<StoragePoolOutboundEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StoragePoolOutboundEnvironment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StoragePoolOutboundEnvironment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<IReadOnlyList<OutboundEndpointDependency>> endpoints = default;
+            string category = default;
+            IReadOnlyList<OutboundEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<OutboundEndpointDependency> array = new List<OutboundEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundEndpointDependency.DeserializeOutboundEndpointDependency(item));
+                        array.Add(OutboundEndpointDependency.DeserializeOutboundEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolOutboundEnvironment(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new StoragePoolOutboundEnvironment(category, endpoints ?? new ChangeTrackingList<OutboundEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolOutboundEnvironment>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StoragePoolOutboundEnvironment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StoragePoolOutboundEnvironment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                         return DeserializeStoragePoolOutboundEnvironment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StoragePoolOutboundEnvironment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StoragePoolOutboundEnvironment)} does not support reading '{options.Format}' format.");
             }
         }
 

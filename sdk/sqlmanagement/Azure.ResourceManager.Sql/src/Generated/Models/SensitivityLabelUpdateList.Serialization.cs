@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SensitivityLabelUpdateList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SensitivityLabelUpdate>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SensitivityLabelUpdateList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IList<SensitivityLabelUpdate>> operations = default;
+            IList<SensitivityLabelUpdate> operations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SensitivityLabelUpdate> array = new List<SensitivityLabelUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SensitivityLabelUpdate.DeserializeSensitivityLabelUpdate(item));
+                        array.Add(SensitivityLabelUpdate.DeserializeSensitivityLabelUpdate(item, options));
                     }
                     operations = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivityLabelUpdateList(Optional.ToList(operations), serializedAdditionalRawData);
+            return new SensitivityLabelUpdateList(operations ?? new ChangeTrackingList<SensitivityLabelUpdate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivityLabelUpdateList>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSensitivityLabelUpdateList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support reading '{options.Format}' format.");
             }
         }
 

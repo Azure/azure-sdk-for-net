@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningProbeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningProbeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> failureThreshold = default;
-            Optional<TimeSpan?> initialDelay = default;
-            Optional<TimeSpan> period = default;
-            Optional<int> successThreshold = default;
-            Optional<TimeSpan> timeout = default;
+            int? failureThreshold = default;
+            TimeSpan? initialDelay = default;
+            TimeSpan? period = default;
+            int? successThreshold = default;
+            TimeSpan? timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningProbeSettings(Optional.ToNullable(failureThreshold), Optional.ToNullable(initialDelay), Optional.ToNullable(period), Optional.ToNullable(successThreshold), Optional.ToNullable(timeout), serializedAdditionalRawData);
+            return new MachineLearningProbeSettings(
+                failureThreshold,
+                initialDelay,
+                period,
+                successThreshold,
+                timeout,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningProbeSettings>.Write(ModelReaderWriterOptions options)
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningProbeSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

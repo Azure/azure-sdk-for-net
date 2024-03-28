@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<MachineLearningSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<EncryptionUpdateProperties>(Encryption, options);
             }
             if (Optional.IsDefined(FeatureStoreSettings))
             {
                 writer.WritePropertyName("featureStoreSettings"u8);
-                writer.WriteObjectValue(FeatureStoreSettings);
+                writer.WriteObjectValue<FeatureStoreSettings>(FeatureStoreSettings, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ManagedNetwork))
             {
                 writer.WritePropertyName("managedNetwork"u8);
-                writer.WriteObjectValue(ManagedNetwork);
+                writer.WriteObjectValue<ManagedNetworkSettings>(ManagedNetwork, options);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentity))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {
                 writer.WritePropertyName("serviceManagedResourcesSettings"u8);
-                writer.WriteObjectValue(ServiceManagedResourcesSettings);
+                writer.WriteObjectValue<ServiceManagedResourcesSettings>(ServiceManagedResourcesSettings, options);
             }
             if (Optional.IsDefined(SoftDeleteRetentionInDays))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,23 +160,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MachineLearningSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> applicationInsights = default;
-            Optional<string> containerRegistry = default;
-            Optional<string> description = default;
-            Optional<bool> enableDataIsolation = default;
-            Optional<EncryptionUpdateProperties> encryption = default;
-            Optional<FeatureStoreSettings> featureStoreSettings = default;
-            Optional<string> friendlyName = default;
-            Optional<string> imageBuildCompute = default;
-            Optional<ManagedNetworkSettings> managedNetwork = default;
-            Optional<string> primaryUserAssignedIdentity = default;
-            Optional<MachineLearningPublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<ServiceManagedResourcesSettings> serviceManagedResourcesSettings = default;
-            Optional<int> softDeleteRetentionInDays = default;
-            Optional<bool> v1LegacyMode = default;
+            ManagedServiceIdentity identity = default;
+            MachineLearningSku sku = default;
+            IDictionary<string, string> tags = default;
+            string applicationInsights = default;
+            string containerRegistry = default;
+            string description = default;
+            bool? enableDataIsolation = default;
+            EncryptionUpdateProperties encryption = default;
+            FeatureStoreSettings featureStoreSettings = default;
+            string friendlyName = default;
+            string imageBuildCompute = default;
+            ManagedNetworkSettings managedNetwork = default;
+            string primaryUserAssignedIdentity = default;
+            MachineLearningPublicNetworkAccessType? publicNetworkAccess = default;
+            ServiceManagedResourcesSettings serviceManagedResourcesSettings = default;
+            int? softDeleteRetentionInDays = default;
+            bool? v1LegacyMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            encryption = EncryptionUpdateProperties.DeserializeEncryptionUpdateProperties(property0.Value);
+                            encryption = EncryptionUpdateProperties.DeserializeEncryptionUpdateProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("featureStoreSettings"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value);
+                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value);
+                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("primaryUserAssignedIdentity"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value);
+                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("softDeleteRetentionInDays"u8))
@@ -334,7 +334,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspacePatch(identity, sku.Value, Optional.ToDictionary(tags), applicationInsights.Value, containerRegistry.Value, description.Value, Optional.ToNullable(enableDataIsolation), encryption.Value, featureStoreSettings.Value, friendlyName.Value, imageBuildCompute.Value, managedNetwork.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(publicNetworkAccess), serviceManagedResourcesSettings.Value, Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(v1LegacyMode), serializedAdditionalRawData);
+            return new MachineLearningWorkspacePatch(
+                identity,
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                applicationInsights,
+                containerRegistry,
+                description,
+                enableDataIsolation,
+                encryption,
+                featureStoreSettings,
+                friendlyName,
+                imageBuildCompute,
+                managedNetwork,
+                primaryUserAssignedIdentity,
+                publicNetworkAccess,
+                serviceManagedResourcesSettings,
+                softDeleteRetentionInDays,
+                v1LegacyMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspacePatch>.Write(ModelReaderWriterOptions options)
@@ -346,7 +364,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -362,7 +380,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningWorkspacePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspacePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

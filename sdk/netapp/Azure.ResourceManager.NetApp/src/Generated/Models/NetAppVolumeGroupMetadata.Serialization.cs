@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeGroupMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeGroupMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,14 +47,9 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in GlobalPlacementRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetAppVolumePlacementRule>(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(DeploymentSpecId))
-            {
-                writer.WritePropertyName("deploymentSpecId"u8);
-                writer.WriteStringValue(DeploymentSpecId);
             }
             if (options.Format != "W" && Optional.IsDefined(VolumesCount))
             {
@@ -84,7 +79,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeGroupMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeGroupMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,12 +94,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> groupDescription = default;
-            Optional<NetAppApplicationType> applicationType = default;
-            Optional<string> applicationIdentifier = default;
-            Optional<IList<NetAppVolumePlacementRule>> globalPlacementRules = default;
-            Optional<string> deploymentSpecId = default;
-            Optional<long> volumesCount = default;
+            string groupDescription = default;
+            NetAppApplicationType? applicationType = default;
+            string applicationIdentifier = default;
+            IList<NetAppVolumePlacementRule> globalPlacementRules = default;
+            long? volumesCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,14 +131,9 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumePlacementRule> array = new List<NetAppVolumePlacementRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item));
+                        array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item, options));
                     }
                     globalPlacementRules = array;
-                    continue;
-                }
-                if (property.NameEquals("deploymentSpecId"u8))
-                {
-                    deploymentSpecId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("volumesCount"u8))
@@ -162,7 +151,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeGroupMetadata(groupDescription.Value, Optional.ToNullable(applicationType), applicationIdentifier.Value, Optional.ToList(globalPlacementRules), deploymentSpecId.Value, Optional.ToNullable(volumesCount), serializedAdditionalRawData);
+            return new NetAppVolumeGroupMetadata(
+                groupDescription,
+                applicationType,
+                applicationIdentifier,
+                globalPlacementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>(),
+                volumesCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeGroupMetadata>.Write(ModelReaderWriterOptions options)
@@ -174,7 +169,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeGroupMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeGroupMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -190,7 +185,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumeGroupMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeGroupMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeGroupMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

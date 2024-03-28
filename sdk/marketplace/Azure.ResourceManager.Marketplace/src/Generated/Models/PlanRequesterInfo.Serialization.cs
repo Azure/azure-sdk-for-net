@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlanRequesterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlanRequesterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> user = default;
-            Optional<string> date = default;
-            Optional<string> justification = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> subscriptionName = default;
+            string user = default;
+            string date = default;
+            string justification = default;
+            string subscriptionId = default;
+            string subscriptionName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlanRequesterInfo(user.Value, date.Value, justification.Value, subscriptionId.Value, subscriptionName.Value, serializedAdditionalRawData);
+            return new PlanRequesterInfo(
+                user,
+                date,
+                justification,
+                subscriptionId,
+                subscriptionName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlanRequesterInfo>.Write(ModelReaderWriterOptions options)
@@ -141,7 +147,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializePlanRequesterInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

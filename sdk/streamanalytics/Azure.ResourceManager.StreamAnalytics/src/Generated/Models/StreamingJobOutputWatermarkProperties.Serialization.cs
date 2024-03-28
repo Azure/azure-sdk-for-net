@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobOutputWatermarkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobOutputWatermarkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobOutputWatermarkProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobOutputWatermarkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobOutputWatermarkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobOutputWatermarkProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<StreamingJobOutputWatermarkMode> watermarkMode = default;
-            Optional<string> maxWatermarkDifferenceAcrossPartitions = default;
+            StreamingJobOutputWatermarkMode? watermarkMode = default;
+            string maxWatermarkDifferenceAcrossPartitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobOutputWatermarkProperties(Optional.ToNullable(watermarkMode), maxWatermarkDifferenceAcrossPartitions.Value, serializedAdditionalRawData);
+            return new StreamingJobOutputWatermarkProperties(watermarkMode, maxWatermarkDifferenceAcrossPartitions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobOutputWatermarkProperties>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobOutputWatermarkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobOutputWatermarkProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamingJobOutputWatermarkProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobOutputWatermarkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobOutputWatermarkProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

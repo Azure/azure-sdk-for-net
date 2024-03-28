@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontendPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontendPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontendPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontendPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontendPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontendPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontendPatch(Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new FrontendPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontendPatch>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontendPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontendPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                         return DeserializeFrontendPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontendPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontendPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

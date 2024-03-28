@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsForwardingRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetDnsServers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TargetDnsServer>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsForwardingRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<IList<TargetDnsServer>> targetDnsServers = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<DnsForwardingRuleState> forwardingRuleState = default;
+            IList<TargetDnsServer> targetDnsServers = default;
+            IDictionary<string, string> metadata = default;
+            DnsForwardingRuleState? forwardingRuleState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                             List<TargetDnsServer> array = new List<TargetDnsServer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TargetDnsServer.DeserializeTargetDnsServer(item));
+                                array.Add(TargetDnsServer.DeserializeTargetDnsServer(item, options));
                             }
                             targetDnsServers = array;
                             continue;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsForwardingRulePatch(Optional.ToList(targetDnsServers), Optional.ToDictionary(metadata), Optional.ToNullable(forwardingRuleState), serializedAdditionalRawData);
+            return new DnsForwardingRulePatch(targetDnsServers ?? new ChangeTrackingList<TargetDnsServer>(), metadata ?? new ChangeTrackingDictionary<string, string>(), forwardingRuleState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsForwardingRulePatch>.Write(ModelReaderWriterOptions options)
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         return DeserializeDnsForwardingRulePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

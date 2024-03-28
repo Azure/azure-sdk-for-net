@@ -43,9 +43,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> tenantId = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
+            string tenantId = default;
+            string clientId = default;
+            string clientSecret = default;
             string workspaceId = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
@@ -76,7 +76,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureLogAnalyticsParameter(tenantId.Value, clientId.Value, clientSecret.Value, workspaceId, query);
+            return new AzureLogAnalyticsParameter(tenantId, clientId, clientSecret, workspaceId, query);
         }
     }
 }

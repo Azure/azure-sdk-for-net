@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotConnectorCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotConnectorCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotConnectorCollection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HealthcareApisIotConnectorData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotConnectorCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotConnectorCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotConnectorCollection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<HealthcareApisIotConnectorData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<HealthcareApisIotConnectorData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisIotConnectorData> array = new List<HealthcareApisIotConnectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(item));
+                        array.Add(HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotConnectorCollection(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new IotConnectorCollection(nextLink, value ?? new ChangeTrackingList<HealthcareApisIotConnectorData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotConnectorCollection>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotConnectorCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotConnectorCollection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         return DeserializeIotConnectorCollection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotConnectorCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotConnectorCollection)} does not support reading '{options.Format}' format.");
             }
         }
 

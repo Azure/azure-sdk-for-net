@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<SphereDeviceGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<SphereDeviceGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<SphereOSFeedType> osFeedType = default;
-            Optional<SphereUpdatePolicy> updatePolicy = default;
-            Optional<SphereAllowCrashDumpCollectionStatus> allowCrashDumpsCollection = default;
-            Optional<RegionalDataBoundary> regionalDataBoundary = default;
+            string description = default;
+            SphereOSFeedType? osFeedType = default;
+            SphereUpdatePolicy? updatePolicy = default;
+            SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection = default;
+            RegionalDataBoundary? regionalDataBoundary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereDeviceGroupPatch(description.Value, Optional.ToNullable(osFeedType), Optional.ToNullable(updatePolicy), Optional.ToNullable(allowCrashDumpsCollection), Optional.ToNullable(regionalDataBoundary), serializedAdditionalRawData);
+            return new SphereDeviceGroupPatch(
+                description,
+                osFeedType,
+                updatePolicy,
+                allowCrashDumpsCollection,
+                regionalDataBoundary,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereDeviceGroupPatch>.Write(ModelReaderWriterOptions options)
@@ -172,7 +178,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +194,7 @@ namespace Azure.ResourceManager.Sphere.Models
                         return DeserializeSphereDeviceGroupPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

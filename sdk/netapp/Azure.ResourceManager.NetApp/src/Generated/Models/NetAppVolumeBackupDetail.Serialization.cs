@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> volumeName = default;
-            Optional<int> backupsCount = default;
-            Optional<bool> policyEnabled = default;
+            string volumeName = default;
+            int? backupsCount = default;
+            bool? policyEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeBackupDetail(volumeName.Value, Optional.ToNullable(backupsCount), Optional.ToNullable(policyEnabled), serializedAdditionalRawData);
+            return new NetAppVolumeBackupDetail(volumeName, backupsCount, policyEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeBackupDetail>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumeBackupDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

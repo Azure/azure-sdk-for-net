@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorAutomationRunbookReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorAutomationRunbookReceiver)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorAutomationRunbookReceiver)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorAutomationRunbookReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorAutomationRunbookReceiver)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorAutomationRunbookReceiver)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Monitor.Models
             string runbookName = default;
             ResourceIdentifier webhookResourceId = default;
             bool isGlobalRunbook = default;
-            Optional<string> name = default;
-            Optional<Uri> serviceUri = default;
-            Optional<bool> useCommonAlertSchema = default;
+            string name = default;
+            Uri serviceUri = default;
+            bool? useCommonAlertSchema = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,15 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorAutomationRunbookReceiver(automationAccountId, runbookName, webhookResourceId, isGlobalRunbook, name.Value, serviceUri.Value, Optional.ToNullable(useCommonAlertSchema), serializedAdditionalRawData);
+            return new MonitorAutomationRunbookReceiver(
+                automationAccountId,
+                runbookName,
+                webhookResourceId,
+                isGlobalRunbook,
+                name,
+                serviceUri,
+                useCommonAlertSchema,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorAutomationRunbookReceiver>.Write(ModelReaderWriterOptions options)
@@ -159,7 +167,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorAutomationRunbookReceiver)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorAutomationRunbookReceiver)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +183,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorAutomationRunbookReceiver(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorAutomationRunbookReceiver)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorAutomationRunbookReceiver)} does not support reading '{options.Format}' format.");
             }
         }
 

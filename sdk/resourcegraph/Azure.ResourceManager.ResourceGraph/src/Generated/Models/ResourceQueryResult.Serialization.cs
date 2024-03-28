@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceQueryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceQueryResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 writer.WriteStartArray();
                 foreach (var item in Facets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Facet>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceQueryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceQueryResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             long totalRecords = default;
             long count = default;
             ResultTruncated resultTruncated = default;
-            Optional<string> skipToken = default;
+            string skipToken = default;
             BinaryData data = default;
-            Optional<IReadOnlyList<Facet>> facets = default;
+            IReadOnlyList<Facet> facets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     List<Facet> array = new List<Facet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Facet.DeserializeFacet(item));
+                        array.Add(Facet.DeserializeFacet(item, options));
                     }
                     facets = array;
                     continue;
@@ -149,7 +149,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceQueryResult(totalRecords, count, resultTruncated, skipToken.Value, data, Optional.ToList(facets), serializedAdditionalRawData);
+            return new ResourceQueryResult(
+                totalRecords,
+                count,
+                resultTruncated,
+                skipToken,
+                data,
+                facets ?? new ChangeTrackingList<Facet>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceQueryResult>.Write(ModelReaderWriterOptions options)
@@ -161,7 +168,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceQueryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceQueryResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +184,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                         return DeserializeResourceQueryResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceQueryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceQueryResult)} does not support reading '{options.Format}' format.");
             }
         }
 

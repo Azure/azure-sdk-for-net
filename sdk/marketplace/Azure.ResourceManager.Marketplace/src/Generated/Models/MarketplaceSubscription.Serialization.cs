@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSubscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceSubscription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceSubscription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSubscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceSubscription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceSubscription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> displayName = default;
-            Optional<MarketplaceSubscriptionState> state = default;
+            string id = default;
+            string subscriptionId = default;
+            string displayName = default;
+            MarketplaceSubscriptionState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceSubscription(id.Value, subscriptionId.Value, displayName.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new MarketplaceSubscription(id, subscriptionId, displayName, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceSubscription>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceSubscription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceSubscription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeMarketplaceSubscription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceSubscription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceSubscription)} does not support reading '{options.Format}' format.");
             }
         }
 

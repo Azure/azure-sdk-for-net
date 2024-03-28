@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreCapabilityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreCapabilityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<Guid> subscriptionId = default;
-            Optional<DataLakeStoreSubscriptionState> state = default;
-            Optional<int> maxAccountCount = default;
-            Optional<int> accountCount = default;
-            Optional<bool> migrationState = default;
+            Guid? subscriptionId = default;
+            DataLakeStoreSubscriptionState? state = default;
+            int? maxAccountCount = default;
+            int? accountCount = default;
+            bool? migrationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreCapabilityInformation(Optional.ToNullable(subscriptionId), Optional.ToNullable(state), Optional.ToNullable(maxAccountCount), Optional.ToNullable(accountCount), Optional.ToNullable(migrationState), serializedAdditionalRawData);
+            return new DataLakeStoreCapabilityInformation(
+                subscriptionId,
+                state,
+                maxAccountCount,
+                accountCount,
+                migrationState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreCapabilityInformation>.Write(ModelReaderWriterOptions options)
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                         return DeserializeDataLakeStoreCapabilityInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

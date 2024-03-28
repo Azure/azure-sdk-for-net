@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> serviceResourceId = default;
-            Optional<bool> sparkEnabled = default;
-            Optional<OutboundRuleStatus> sparkStatus = default;
-            Optional<string> subresourceTarget = default;
+            string serviceResourceId = default;
+            bool? sparkEnabled = default;
+            OutboundRuleStatus? sparkStatus = default;
+            string subresourceTarget = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointDestination(serviceResourceId.Value, Optional.ToNullable(sparkEnabled), Optional.ToNullable(sparkStatus), subresourceTarget.Value, serializedAdditionalRawData);
+            return new PrivateEndpointDestination(serviceResourceId, sparkEnabled, sparkStatus, subresourceTarget, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointDestination>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializePrivateEndpointDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

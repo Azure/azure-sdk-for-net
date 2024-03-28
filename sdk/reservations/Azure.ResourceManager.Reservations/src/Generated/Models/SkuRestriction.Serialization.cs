@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkuRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuRestriction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkuRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuRestriction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<IReadOnlyList<string>> values = default;
-            Optional<string> reasonCode = default;
+            string type = default;
+            IReadOnlyList<string> values = default;
+            string reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuRestriction(type.Value, Optional.ToList(values), reasonCode.Value, serializedAdditionalRawData);
+            return new SkuRestriction(type, values ?? new ChangeTrackingList<string>(), reasonCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuRestriction>.Write(ModelReaderWriterOptions options)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuRestriction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeSkuRestriction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuRestriction)} does not support reading '{options.Format}' format.");
             }
         }
 

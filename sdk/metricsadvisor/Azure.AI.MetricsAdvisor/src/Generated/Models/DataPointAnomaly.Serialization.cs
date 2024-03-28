@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -20,12 +19,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> dataFeedId = default;
-            Optional<string> metricId = default;
-            Optional<string> anomalyDetectionConfigurationId = default;
+            string dataFeedId = default;
+            string metricId = default;
+            string anomalyDetectionConfigurationId = default;
             DateTimeOffset timestamp = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> modifiedTime = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? modifiedTime = default;
             IReadOnlyDictionary<string, string> dimension = default;
             AnomalyProperty property = default;
             foreach (var property0 in element.EnumerateObject())
@@ -84,7 +83,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataPointAnomaly(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, timestamp, Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), dimension, property);
+            return new DataPointAnomaly(
+                dataFeedId,
+                metricId,
+                anomalyDetectionConfigurationId,
+                timestamp,
+                createdTime,
+                modifiedTime,
+                dimension,
+                property);
         }
     }
 }

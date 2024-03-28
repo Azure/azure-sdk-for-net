@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> address = default;
-            Optional<int> port = default;
+            ResourceIdentifier resourceId = default;
+            string address = default;
+            int? port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityDestination(resourceId.Value, address.Value, Optional.ToNullable(port), serializedAdditionalRawData);
+            return new ConnectivityDestination(resourceId, address, port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityDestination>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectivityDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnableProtectionProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnableProtectionProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AEnableProtectionContent.DeserializeA2AEnableProtectionContent(element);
-                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationEnableProtectionContent.DeserializeA2ACrossClusterMigrationEnableProtectionContent(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureEnableProtectionContent.DeserializeHyperVReplicaAzureEnableProtectionContent(element);
-                    case "InMage": return InMageEnableProtectionContent.DeserializeInMageEnableProtectionContent(element);
-                    case "InMageAzureV2": return InMageAzureV2EnableProtectionContent.DeserializeInMageAzureV2EnableProtectionContent(element);
-                    case "InMageRcm": return InMageRcmEnableProtectionContent.DeserializeInMageRcmEnableProtectionContent(element);
+                    case "A2A": return A2AEnableProtectionContent.DeserializeA2AEnableProtectionContent(element, options);
+                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationEnableProtectionContent.DeserializeA2ACrossClusterMigrationEnableProtectionContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureEnableProtectionContent.DeserializeHyperVReplicaAzureEnableProtectionContent(element, options);
+                    case "InMage": return InMageEnableProtectionContent.DeserializeInMageEnableProtectionContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2EnableProtectionContent.DeserializeInMageAzureV2EnableProtectionContent(element, options);
+                    case "InMageRcm": return InMageRcmEnableProtectionContent.DeserializeInMageRcmEnableProtectionContent(element, options);
                 }
             }
-            return UnknownEnableProtectionProviderSpecificContent.DeserializeUnknownEnableProtectionProviderSpecificContent(element);
+            return UnknownEnableProtectionProviderSpecificContent.DeserializeUnknownEnableProtectionProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<EnableProtectionProviderSpecificContent>.Write(ModelReaderWriterOptions options)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeEnableProtectionProviderSpecificContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnableProtectionProviderSpecificContent)} does not support reading '{options.Format}' format.");
             }
         }
 

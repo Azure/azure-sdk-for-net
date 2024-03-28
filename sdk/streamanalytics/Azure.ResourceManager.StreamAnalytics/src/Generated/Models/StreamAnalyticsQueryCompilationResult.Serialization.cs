@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsQueryCompilationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamAnalyticsQueryCompilationError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsQueryCompilationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamAnalyticsQueryCompilationError>> errors = default;
-            Optional<IReadOnlyList<string>> warnings = default;
-            Optional<IReadOnlyList<string>> inputs = default;
-            Optional<IReadOnlyList<string>> outputs = default;
-            Optional<IReadOnlyList<string>> functions = default;
+            IReadOnlyList<StreamAnalyticsQueryCompilationError> errors = default;
+            IReadOnlyList<string> warnings = default;
+            IReadOnlyList<string> inputs = default;
+            IReadOnlyList<string> outputs = default;
+            IReadOnlyList<string> functions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsQueryCompilationError> array = new List<StreamAnalyticsQueryCompilationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsQueryCompilationError.DeserializeStreamAnalyticsQueryCompilationError(item));
+                        array.Add(StreamAnalyticsQueryCompilationError.DeserializeStreamAnalyticsQueryCompilationError(item, options));
                     }
                     errors = array;
                     continue;
@@ -199,7 +199,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsQueryCompilationResult(Optional.ToList(errors), Optional.ToList(warnings), Optional.ToList(inputs), Optional.ToList(outputs), Optional.ToList(functions), serializedAdditionalRawData);
+            return new StreamAnalyticsQueryCompilationResult(
+                errors ?? new ChangeTrackingList<StreamAnalyticsQueryCompilationError>(),
+                warnings ?? new ChangeTrackingList<string>(),
+                inputs ?? new ChangeTrackingList<string>(),
+                outputs ?? new ChangeTrackingList<string>(),
+                functions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsQueryCompilationResult>.Write(ModelReaderWriterOptions options)
@@ -211,7 +217,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +233,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamAnalyticsQueryCompilationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

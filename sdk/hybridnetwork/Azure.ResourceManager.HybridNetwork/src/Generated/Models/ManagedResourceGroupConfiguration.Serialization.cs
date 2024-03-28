@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedResourceGroupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedResourceGroupConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedResourceGroupConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedResourceGroupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedResourceGroupConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedResourceGroupConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
+            string name = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedResourceGroupConfiguration(name.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ManagedResourceGroupConfiguration(name, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedResourceGroupConfiguration>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedResourceGroupConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedResourceGroupConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeManagedResourceGroupConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedResourceGroupConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedResourceGroupConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

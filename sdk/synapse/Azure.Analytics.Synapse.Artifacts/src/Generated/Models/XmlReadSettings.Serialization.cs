@@ -22,34 +22,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue(CompressionProperties);
+                writer.WriteObjectValue<CompressionReadSettings>(CompressionProperties);
             }
             if (Optional.IsDefined(ValidationMode))
             {
                 writer.WritePropertyName("validationMode"u8);
-                writer.WriteObjectValue(ValidationMode);
+                writer.WriteObjectValue<object>(ValidationMode);
             }
             if (Optional.IsDefined(DetectDataType))
             {
                 writer.WritePropertyName("detectDataType"u8);
-                writer.WriteObjectValue(DetectDataType);
+                writer.WriteObjectValue<object>(DetectDataType);
             }
             if (Optional.IsDefined(Namespaces))
             {
                 writer.WritePropertyName("namespaces"u8);
-                writer.WriteObjectValue(Namespaces);
+                writer.WriteObjectValue<object>(Namespaces);
             }
             if (Optional.IsDefined(NamespacePrefixes))
             {
                 writer.WritePropertyName("namespacePrefixes"u8);
-                writer.WriteObjectValue(NamespacePrefixes);
+                writer.WriteObjectValue<object>(NamespacePrefixes);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -60,11 +60,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<CompressionReadSettings> compressionProperties = default;
-            Optional<object> validationMode = default;
-            Optional<object> detectDataType = default;
-            Optional<object> namespaces = default;
-            Optional<object> namespacePrefixes = default;
+            CompressionReadSettings compressionProperties = default;
+            object validationMode = default;
+            object detectDataType = default;
+            object namespaces = default;
+            object namespacePrefixes = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -123,14 +123,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new XmlReadSettings(type, additionalProperties, compressionProperties.Value, validationMode.Value, detectDataType.Value, namespaces.Value, namespacePrefixes.Value);
+            return new XmlReadSettings(
+                type,
+                additionalProperties,
+                compressionProperties,
+                validationMode,
+                detectDataType,
+                namespaces,
+                namespacePrefixes);
         }
 
         internal partial class XmlReadSettingsConverter : JsonConverter<XmlReadSettings>
         {
             public override void Write(Utf8JsonWriter writer, XmlReadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<XmlReadSettings>(model);
             }
             public override XmlReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

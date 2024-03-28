@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridNetworkSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridNetworkSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridNetworkSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridNetworkSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridNetworkSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridNetworkSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             HybridNetworkSkuName name = default;
-            Optional<HybridNetworkSkuTier> tier = default;
+            HybridNetworkSkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridNetworkSku(name, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new HybridNetworkSku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridNetworkSku>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridNetworkSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridNetworkSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeHybridNetworkSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridNetworkSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridNetworkSku)} does not support reading '{options.Format}' format.");
             }
         }
 

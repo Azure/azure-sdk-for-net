@@ -88,7 +88,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue"u8);
-                writer.WriteObjectValue(Queue);
+                writer.WriteObjectValue<object>(Queue);
             }
             if (Optional.IsCollectionDefined(Configuration))
             {
@@ -145,23 +145,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> kind = default;
-            Optional<string> proxyUser = default;
-            Optional<string> name = default;
-            Optional<IList<string>> jars = default;
-            Optional<IList<string>> pyFiles = default;
-            Optional<IList<string>> files = default;
-            Optional<IList<string>> archives = default;
-            Optional<object> queue = default;
-            Optional<IDictionary<string, string>> conf = default;
-            Optional<string> driverMemory = default;
-            Optional<int> driverCores = default;
-            Optional<string> executorMemory = default;
-            Optional<int> executorCores = default;
-            Optional<int> numExecutors = default;
-            Optional<bool> isQueueable = default;
-            Optional<int> heartbeatTimeoutInSecond = default;
+            IDictionary<string, string> tags = default;
+            string kind = default;
+            string proxyUser = default;
+            string name = default;
+            IList<string> jars = default;
+            IList<string> pyFiles = default;
+            IList<string> files = default;
+            IList<string> archives = default;
+            object queue = default;
+            IDictionary<string, string> conf = default;
+            string driverMemory = default;
+            int? driverCores = default;
+            string executorMemory = default;
+            int? executorCores = default;
+            int? numExecutors = default;
+            bool? isQueueable = default;
+            int? heartbeatTimeoutInSecond = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -328,14 +328,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookSparkSessionOptions(Optional.ToDictionary(tags), kind.Value, proxyUser.Value, name.Value, Optional.ToList(jars), Optional.ToList(pyFiles), Optional.ToList(files), Optional.ToList(archives), queue.Value, Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors), Optional.ToNullable(isQueueable), Optional.ToNullable(heartbeatTimeoutInSecond));
+            return new RunNotebookSparkSessionOptions(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind,
+                proxyUser,
+                name,
+                jars ?? new ChangeTrackingList<string>(),
+                pyFiles ?? new ChangeTrackingList<string>(),
+                files ?? new ChangeTrackingList<string>(),
+                archives ?? new ChangeTrackingList<string>(),
+                queue,
+                conf ?? new ChangeTrackingDictionary<string, string>(),
+                driverMemory,
+                driverCores,
+                executorMemory,
+                executorCores,
+                numExecutors,
+                isQueueable,
+                heartbeatTimeoutInSecond);
         }
 
         internal partial class RunNotebookSparkSessionOptionsConverter : JsonConverter<RunNotebookSparkSessionOptions>
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookSparkSessionOptions model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<RunNotebookSparkSessionOptions>(model);
             }
             public override RunNotebookSparkSessionOptions Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

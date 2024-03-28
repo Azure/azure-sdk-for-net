@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsConnectorStatsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsConnectorStatsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<long> orgsCount = default;
-            Optional<long> projectsCount = default;
-            Optional<long> reposCount = default;
+            ProvisioningState? provisioningState = default;
+            long? orgsCount = default;
+            long? projectsCount = default;
+            long? reposCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsConnectorStatsProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(orgsCount), Optional.ToNullable(projectsCount), Optional.ToNullable(reposCount), serializedAdditionalRawData);
+            return new AzureDevOpsConnectorStatsProperties(provisioningState, orgsCount, projectsCount, reposCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsConnectorStatsProperties>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                         return DeserializeAzureDevOpsConnectorStatsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

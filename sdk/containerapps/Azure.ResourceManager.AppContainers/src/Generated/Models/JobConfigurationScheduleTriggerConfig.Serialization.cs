@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobConfigurationScheduleTriggerConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobConfigurationScheduleTriggerConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> replicaCompletionCount = default;
+            int? replicaCompletionCount = default;
             string cronExpression = default;
-            Optional<int> parallelism = default;
+            int? parallelism = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobConfigurationScheduleTriggerConfig(Optional.ToNullable(replicaCompletionCount), cronExpression, Optional.ToNullable(parallelism), serializedAdditionalRawData);
+            return new JobConfigurationScheduleTriggerConfig(replicaCompletionCount, cronExpression, parallelism, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobConfigurationScheduleTriggerConfig>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeJobConfigurationScheduleTriggerConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

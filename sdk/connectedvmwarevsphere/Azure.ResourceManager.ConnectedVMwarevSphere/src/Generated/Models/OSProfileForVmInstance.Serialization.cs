@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSProfileForVmInstance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSProfileForVmInstance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> computerName = default;
-            Optional<string> adminUsername = default;
-            Optional<string> adminPassword = default;
-            Optional<string> guestId = default;
-            Optional<VMwareOSType> osType = default;
-            Optional<string> osSku = default;
-            Optional<string> toolsRunningStatus = default;
-            Optional<string> toolsVersionStatus = default;
-            Optional<string> toolsVersion = default;
+            string computerName = default;
+            string adminUsername = default;
+            string adminPassword = default;
+            string guestId = default;
+            VMwareOSType? osType = default;
+            string osSku = default;
+            string toolsRunningStatus = default;
+            string toolsVersionStatus = default;
+            string toolsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSProfileForVmInstance(computerName.Value, adminUsername.Value, adminPassword.Value, guestId.Value, Optional.ToNullable(osType), osSku.Value, toolsRunningStatus.Value, toolsVersionStatus.Value, toolsVersion.Value, serializedAdditionalRawData);
+            return new OSProfileForVmInstance(
+                computerName,
+                adminUsername,
+                adminPassword,
+                guestId,
+                osType,
+                osSku,
+                toolsRunningStatus,
+                toolsVersionStatus,
+                toolsVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSProfileForVmInstance>.Write(ModelReaderWriterOptions options)
@@ -189,7 +199,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +215,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeOSProfileForVmInstance(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support reading '{options.Format}' format.");
             }
         }
 

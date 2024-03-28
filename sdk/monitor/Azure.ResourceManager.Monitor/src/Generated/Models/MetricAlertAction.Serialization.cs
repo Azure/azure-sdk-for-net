@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricAlertAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricAlertAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAlertAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricAlertAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricAlertAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAlertAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> actionGroupId = default;
-            Optional<IDictionary<string, string>> webHookProperties = default;
+            ResourceIdentifier actionGroupId = default;
+            IDictionary<string, string> webHookProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertAction(actionGroupId.Value, Optional.ToDictionary(webHookProperties), serializedAdditionalRawData);
+            return new MetricAlertAction(actionGroupId, webHookProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertAction>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricAlertAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAlertAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMetricAlertAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricAlertAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAlertAction)} does not support reading '{options.Format}' format.");
             }
         }
 

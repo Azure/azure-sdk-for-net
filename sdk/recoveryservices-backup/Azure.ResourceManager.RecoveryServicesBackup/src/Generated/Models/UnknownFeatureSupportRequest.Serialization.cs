@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<FeatureSupportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<FeatureSupportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFeatureSupportRequest(document.RootElement, options);
+            return DeserializeFeatureSupportContent(document.RootElement, options);
         }
 
         internal static UnknownFeatureSupportRequest DeserializeUnknownFeatureSupportRequest(JsonElement element, ModelReaderWriterOptions options = null)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFeatureSupportRequest(document.RootElement, options);
+                        return DeserializeFeatureSupportContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support reading '{options.Format}' format.");
             }
         }
 

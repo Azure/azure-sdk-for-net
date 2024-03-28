@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomContainerUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformCustomContainerUserSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformCustomContainerUserSourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomContainer))
             {
                 writer.WritePropertyName("customContainer"u8);
-                writer.WriteObjectValue(CustomContainer);
+                writer.WriteObjectValue<AppPlatformCustomContainer>(CustomContainer, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomContainerUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformCustomContainerUserSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformCustomContainerUserSourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformCustomContainer> customContainer = default;
+            AppPlatformCustomContainer customContainer = default;
             string type = default;
-            Optional<string> version = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    customContainer = AppPlatformCustomContainer.DeserializeAppPlatformCustomContainer(property.Value);
+                    customContainer = AppPlatformCustomContainer.DeserializeAppPlatformCustomContainer(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformCustomContainerUserSourceInfo(type, version.Value, serializedAdditionalRawData, customContainer.Value);
+            return new AppPlatformCustomContainerUserSourceInfo(type, version, serializedAdditionalRawData, customContainer);
         }
 
         BinaryData IPersistableModel<AppPlatformCustomContainerUserSourceInfo>.Write(ModelReaderWriterOptions options)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformCustomContainerUserSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformCustomContainerUserSourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformCustomContainerUserSourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformCustomContainerUserSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformCustomContainerUserSourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<WinRMConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WinRMConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WinRMConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Listeners)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WinRMListener>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<WinRMConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WinRMConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WinRMConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<WinRMListener>> listeners = default;
+            IList<WinRMListener> listeners = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<WinRMListener> array = new List<WinRMListener>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WinRMListener.DeserializeWinRMListener(item));
+                        array.Add(WinRMListener.DeserializeWinRMListener(item, options));
                     }
                     listeners = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WinRMConfiguration(Optional.ToList(listeners), serializedAdditionalRawData);
+            return new WinRMConfiguration(listeners ?? new ChangeTrackingList<WinRMListener>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WinRMConfiguration>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WinRMConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WinRMConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeWinRMConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WinRMConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WinRMConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

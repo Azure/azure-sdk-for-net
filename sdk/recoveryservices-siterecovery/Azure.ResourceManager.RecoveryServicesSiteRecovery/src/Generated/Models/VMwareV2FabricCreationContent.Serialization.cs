@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricCreationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricCreationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vmwareSiteId = default;
-            Optional<ResourceIdentifier> physicalSiteId = default;
+            ResourceIdentifier vmwareSiteId = default;
+            ResourceIdentifier physicalSiteId = default;
             ResourceIdentifier migrationSolutionId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareV2FabricCreationContent(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, migrationSolutionId);
+            return new VMwareV2FabricCreationContent(instanceType, serializedAdditionalRawData, vmwareSiteId, physicalSiteId, migrationSolutionId);
         }
 
         BinaryData IPersistableModel<VMwareV2FabricCreationContent>.Write(ModelReaderWriterOptions options)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareV2FabricCreationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

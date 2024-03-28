@@ -9,10 +9,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -25,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorBaseData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorBaseData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,11 +77,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorBaseData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorBaseData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownThreatIntelligenceInformation(document.RootElement, options);
+            return DeserializeSecurityInsightsThreatIntelligenceIndicatorBaseData(document.RootElement, options);
         }
 
         internal static UnknownThreatIntelligenceInformation DeserializeUnknownThreatIntelligenceInformation(JsonElement element, ModelReaderWriterOptions options = null)
@@ -95,11 +93,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             ThreatIntelligenceResourceInnerKind kind = "Unknown";
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +146,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownThreatIntelligenceInformation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new UnknownThreatIntelligenceInformation(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Write(ModelReaderWriterOptions options)
@@ -160,7 +165,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorBaseData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorBaseData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,10 +178,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownThreatIntelligenceInformation(document.RootElement, options);
+                        return DeserializeSecurityInsightsThreatIntelligenceIndicatorBaseData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorBaseData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorBaseData)} does not support reading '{options.Format}' format.");
             }
         }
 

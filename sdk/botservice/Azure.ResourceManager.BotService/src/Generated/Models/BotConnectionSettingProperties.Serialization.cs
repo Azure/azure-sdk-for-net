@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotConnectionSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BotConnectionSettingParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotConnectionSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> settingId = default;
-            Optional<string> clientSecret = default;
-            Optional<string> scopes = default;
-            Optional<string> serviceProviderId = default;
-            Optional<string> serviceProviderDisplayName = default;
-            Optional<IList<BotConnectionSettingParameter>> parameters = default;
-            Optional<string> provisioningState = default;
+            string clientId = default;
+            string settingId = default;
+            string clientSecret = default;
+            string scopes = default;
+            string serviceProviderId = default;
+            string serviceProviderDisplayName = default;
+            IList<BotConnectionSettingParameter> parameters = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotConnectionSettingParameter> array = new List<BotConnectionSettingParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotConnectionSettingParameter.DeserializeBotConnectionSettingParameter(item));
+                        array.Add(BotConnectionSettingParameter.DeserializeBotConnectionSettingParameter(item, options));
                     }
                     parameters = array;
                     continue;
@@ -176,7 +176,16 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotConnectionSettingProperties(clientId.Value, settingId.Value, clientSecret.Value, scopes.Value, serviceProviderId.Value, serviceProviderDisplayName.Value, Optional.ToList(parameters), provisioningState.Value, serializedAdditionalRawData);
+            return new BotConnectionSettingProperties(
+                clientId,
+                settingId,
+                clientSecret,
+                scopes,
+                serviceProviderId,
+                serviceProviderDisplayName,
+                parameters ?? new ChangeTrackingList<BotConnectionSettingParameter>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotConnectionSettingProperties>.Write(ModelReaderWriterOptions options)
@@ -188,7 +197,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +213,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeBotConnectionSettingProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

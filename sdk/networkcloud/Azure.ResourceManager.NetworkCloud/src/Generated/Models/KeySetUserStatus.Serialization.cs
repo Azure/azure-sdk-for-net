@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeySetUserStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeySetUserStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> azureUserName = default;
-            Optional<BareMetalMachineKeySetUserSetupStatus> status = default;
-            Optional<string> statusMessage = default;
+            string azureUserName = default;
+            BareMetalMachineKeySetUserSetupStatus? status = default;
+            string statusMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeySetUserStatus(azureUserName.Value, Optional.ToNullable(status), statusMessage.Value, serializedAdditionalRawData);
+            return new KeySetUserStatus(azureUserName, status, statusMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeySetUserStatus>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeKeySetUserStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

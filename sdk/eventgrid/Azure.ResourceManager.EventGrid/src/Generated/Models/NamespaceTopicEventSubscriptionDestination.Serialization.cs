@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NamespaceTopicEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NamespaceTopicEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespaceTopicEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value);
+            return new NamespaceTopicEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId);
         }
 
         BinaryData IPersistableModel<NamespaceTopicEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeNamespaceTopicEventSubscriptionDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

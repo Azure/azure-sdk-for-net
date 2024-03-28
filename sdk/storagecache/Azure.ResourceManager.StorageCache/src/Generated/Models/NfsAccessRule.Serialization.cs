@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<NfsAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NfsAccessRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NfsAccessRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<NfsAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NfsAccessRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NfsAccessRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             NfsAccessRuleScope scope = default;
-            Optional<string> filter = default;
+            string filter = default;
             NfsAccessRuleAccess access = default;
-            Optional<bool> suid = default;
-            Optional<bool> submountAccess = default;
-            Optional<bool> rootSquash = default;
-            Optional<string> anonymousUID = default;
-            Optional<string> anonymousGID = default;
+            bool? suid = default;
+            bool? submountAccess = default;
+            bool? rootSquash = default;
+            string anonymousUID = default;
+            string anonymousGID = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,16 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NfsAccessRule(scope, filter.Value, access, Optional.ToNullable(suid), Optional.ToNullable(submountAccess), Optional.ToNullable(rootSquash), anonymousUID.Value, anonymousGID.Value, serializedAdditionalRawData);
+            return new NfsAccessRule(
+                scope,
+                filter,
+                access,
+                suid,
+                submountAccess,
+                rootSquash,
+                anonymousUID,
+                anonymousGID,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NfsAccessRule>.Write(ModelReaderWriterOptions options)
@@ -180,7 +189,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NfsAccessRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NfsAccessRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +205,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeNfsAccessRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NfsAccessRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NfsAccessRule)} does not support reading '{options.Format}' format.");
             }
         }
 

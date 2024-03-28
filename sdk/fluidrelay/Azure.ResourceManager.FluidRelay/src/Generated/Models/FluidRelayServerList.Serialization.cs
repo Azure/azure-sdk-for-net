@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.FluidRelay;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             var format = options.Format == "W" ? ((IPersistableModel<FluidRelayServerList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluidRelayServerList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluidRelayServerList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<FluidRelayServerData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             var format = options.Format == "W" ? ((IPersistableModel<FluidRelayServerList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluidRelayServerList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluidRelayServerList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 return null;
             }
             IReadOnlyList<FluidRelayServerData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     List<FluidRelayServerData> array = new List<FluidRelayServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FluidRelayServerData.DeserializeFluidRelayServerData(item));
+                        array.Add(FluidRelayServerData.DeserializeFluidRelayServerData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FluidRelayServerList(value, nextLink.Value, serializedAdditionalRawData);
+            return new FluidRelayServerList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FluidRelayServerList>.Write(ModelReaderWriterOptions options)
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FluidRelayServerList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluidRelayServerList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                         return DeserializeFluidRelayServerList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FluidRelayServerList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluidRelayServerList)} does not support reading '{options.Format}' format.");
             }
         }
 

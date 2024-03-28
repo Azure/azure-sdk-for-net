@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightApplicationHttpsEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightApplicationHttpsEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightApplicationHttpsEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightApplicationHttpsEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightApplicationHttpsEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightApplicationHttpsEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,13 +105,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IList<string>> accessModes = default;
-            Optional<string> location = default;
-            Optional<int> destinationPort = default;
-            Optional<int> publicPort = default;
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<string> subDomainSuffix = default;
-            Optional<bool> disableGatewayAuth = default;
+            IList<string> accessModes = default;
+            string location = default;
+            int? destinationPort = default;
+            int? publicPort = default;
+            IPAddress privateIPAddress = default;
+            string subDomainSuffix = default;
+            bool? disableGatewayAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightApplicationHttpsEndpoint(Optional.ToList(accessModes), location.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(publicPort), privateIPAddress.Value, subDomainSuffix.Value, Optional.ToNullable(disableGatewayAuth), serializedAdditionalRawData);
+            return new HDInsightApplicationHttpsEndpoint(
+                accessModes ?? new ChangeTrackingList<string>(),
+                location,
+                destinationPort,
+                publicPort,
+                privateIPAddress,
+                subDomainSuffix,
+                disableGatewayAuth,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightApplicationHttpsEndpoint>.Write(ModelReaderWriterOptions options)
@@ -194,7 +202,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightApplicationHttpsEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightApplicationHttpsEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -210,7 +218,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightApplicationHttpsEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightApplicationHttpsEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightApplicationHttpsEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

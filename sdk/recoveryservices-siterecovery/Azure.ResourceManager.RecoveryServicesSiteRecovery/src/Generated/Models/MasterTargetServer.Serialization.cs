@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MasterTargetServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MasterTargetServer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in RetentionVolumes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryRetentionVolume>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DataStores)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryDataStore>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AgentVersionDetails))
             {
                 writer.WritePropertyName("agentVersionDetails"u8);
-                writer.WriteObjectValue(AgentVersionDetails);
+                writer.WriteObjectValue<SiteRecoveryVersionDetails>(AgentVersionDetails, options);
             }
             if (Optional.IsDefined(MarsAgentVersionDetails))
             {
                 writer.WritePropertyName("marsAgentVersionDetails"u8);
-                writer.WriteObjectValue(MarsAgentVersionDetails);
+                writer.WriteObjectValue<SiteRecoveryVersionDetails>(MarsAgentVersionDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MasterTargetServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MasterTargetServer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,24 +175,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> name = default;
-            Optional<string> osType = default;
-            Optional<string> agentVersion = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> versionStatus = default;
-            Optional<IReadOnlyList<SiteRecoveryRetentionVolume>> retentionVolumes = default;
-            Optional<IReadOnlyList<SiteRecoveryDataStore>> dataStores = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
-            Optional<int> diskCount = default;
-            Optional<string> osVersion = default;
-            Optional<DateTimeOffset> agentExpireOn = default;
-            Optional<string> marsAgentVersion = default;
-            Optional<DateTimeOffset> marsAgentExpireOn = default;
-            Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
-            Optional<SiteRecoveryVersionDetails> marsAgentVersionDetails = default;
+            string id = default;
+            IPAddress ipAddress = default;
+            string name = default;
+            string osType = default;
+            string agentVersion = default;
+            DateTimeOffset? lastHeartbeat = default;
+            string versionStatus = default;
+            IReadOnlyList<SiteRecoveryRetentionVolume> retentionVolumes = default;
+            IReadOnlyList<SiteRecoveryDataStore> dataStores = default;
+            IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
+            int? diskCount = default;
+            string osVersion = default;
+            DateTimeOffset? agentExpireOn = default;
+            string marsAgentVersion = default;
+            DateTimeOffset? marsAgentExpireOn = default;
+            SiteRecoveryVersionDetails agentVersionDetails = default;
+            SiteRecoveryVersionDetails marsAgentVersionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryRetentionVolume> array = new List<SiteRecoveryRetentionVolume>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryRetentionVolume.DeserializeSiteRecoveryRetentionVolume(item));
+                        array.Add(SiteRecoveryRetentionVolume.DeserializeSiteRecoveryRetentionVolume(item, options));
                     }
                     retentionVolumes = array;
                     continue;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryDataStore> array = new List<SiteRecoveryDataStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDataStore.DeserializeSiteRecoveryDataStore(item));
+                        array.Add(SiteRecoveryDataStore.DeserializeSiteRecoveryDataStore(item, options));
                     }
                     dataStores = array;
                     continue;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
+                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("marsAgentVersionDetails"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    marsAgentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
+                    marsAgentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -357,7 +357,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(retentionVolumes), Optional.ToList(dataStores), Optional.ToList(validationErrors), Optional.ToList(healthErrors), Optional.ToNullable(diskCount), osVersion.Value, Optional.ToNullable(agentExpireOn), marsAgentVersion.Value, Optional.ToNullable(marsAgentExpireOn), agentVersionDetails.Value, marsAgentVersionDetails.Value, serializedAdditionalRawData);
+            return new MasterTargetServer(
+                id,
+                ipAddress,
+                name,
+                osType,
+                agentVersion,
+                lastHeartbeat,
+                versionStatus,
+                retentionVolumes ?? new ChangeTrackingList<SiteRecoveryRetentionVolume>(),
+                dataStores ?? new ChangeTrackingList<SiteRecoveryDataStore>(),
+                validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                diskCount,
+                osVersion,
+                agentExpireOn,
+                marsAgentVersion,
+                marsAgentExpireOn,
+                agentVersionDetails,
+                marsAgentVersionDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MasterTargetServer>.Write(ModelReaderWriterOptions options)
@@ -369,7 +388,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MasterTargetServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MasterTargetServer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -385,7 +404,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeMasterTargetServer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MasterTargetServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MasterTargetServer)} does not support reading '{options.Format}' format.");
             }
         }
 

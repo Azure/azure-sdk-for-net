@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticCloudUser>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticCloudUser)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticCloudUser)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticCloudUser>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticCloudUser)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticCloudUser)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> emailAddress = default;
-            Optional<string> id = default;
-            Optional<Uri> elasticCloudSsoDefaultUrl = default;
+            string emailAddress = default;
+            string id = default;
+            Uri elasticCloudSsoDefaultUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticCloudUser(emailAddress.Value, id.Value, elasticCloudSsoDefaultUrl.Value, serializedAdditionalRawData);
+            return new ElasticCloudUser(emailAddress, id, elasticCloudSsoDefaultUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticCloudUser>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticCloudUser)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticCloudUser)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeElasticCloudUser(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticCloudUser)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticCloudUser)} does not support reading '{options.Format}' format.");
             }
         }
 

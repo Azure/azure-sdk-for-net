@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettingsGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in EncryptionSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EncryptionSettingsElement>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettingsGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             bool enabled = default;
-            Optional<IList<EncryptionSettingsElement>> encryptionSettings = default;
-            Optional<string> encryptionSettingsVersion = default;
+            IList<EncryptionSettingsElement> encryptionSettings = default;
+            string encryptionSettingsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<EncryptionSettingsElement> array = new List<EncryptionSettingsElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EncryptionSettingsElement.DeserializeEncryptionSettingsElement(item));
+                        array.Add(EncryptionSettingsElement.DeserializeEncryptionSettingsElement(item, options));
                     }
                     encryptionSettings = array;
                     continue;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionSettingsGroup(enabled, Optional.ToList(encryptionSettings), encryptionSettingsVersion.Value, serializedAdditionalRawData);
+            return new EncryptionSettingsGroup(enabled, encryptionSettings ?? new ChangeTrackingList<EncryptionSettingsElement>(), encryptionSettingsVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionSettingsGroup>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeEncryptionSettingsGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

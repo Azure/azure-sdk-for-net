@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetResourceEndpointAccess>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetResourceEndpointAccess)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetResourceEndpointAccess)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetResourceEndpointAccess>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetResourceEndpointAccess)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetResourceEndpointAccess)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            Optional<string> namespaceName = default;
-            Optional<string> namespaceNameSuffix = default;
-            Optional<string> hybridConnectionName = default;
-            Optional<string> accessKey = default;
-            Optional<long> expiresOn = default;
+            string namespaceName = default;
+            string namespaceNameSuffix = default;
+            string hybridConnectionName = default;
+            string accessKey = default;
+            long? expiresOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetResourceEndpointAccess(namespaceName.Value, namespaceNameSuffix.Value, hybridConnectionName.Value, accessKey.Value, Optional.ToNullable(expiresOn), serializedAdditionalRawData);
+            return new TargetResourceEndpointAccess(
+                namespaceName,
+                namespaceNameSuffix,
+                hybridConnectionName,
+                accessKey,
+                expiresOn,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetResourceEndpointAccess>.Write(ModelReaderWriterOptions options)
@@ -160,7 +166,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TargetResourceEndpointAccess)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetResourceEndpointAccess)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +182,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                         return DeserializeTargetResourceEndpointAccess(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetResourceEndpointAccess)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetResourceEndpointAccess)} does not support reading '{options.Format}' format.");
             }
         }
 

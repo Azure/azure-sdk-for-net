@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NSDArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NSDArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> artifactStoreReference = default;
-            Optional<string> artifactName = default;
-            Optional<string> artifactVersion = default;
+            WritableSubResource artifactStoreReference = default;
+            string artifactName = default;
+            string artifactVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NSDArtifactProfile(artifactStoreReference, artifactName.Value, artifactVersion.Value, serializedAdditionalRawData);
+            return new NSDArtifactProfile(artifactStoreReference, artifactName, artifactVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NSDArtifactProfile>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeNSDArtifactProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

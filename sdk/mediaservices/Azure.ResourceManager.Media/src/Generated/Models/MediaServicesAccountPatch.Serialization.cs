@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Media;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaServicesAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaServicesAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaServicesAccountPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaServicesStorageAccount>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,12 +75,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<AccountEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(KeyDelivery))
             {
                 writer.WritePropertyName("keyDelivery"u8);
-                writer.WriteObjectValue(KeyDelivery);
+                writer.WriteObjectValue<MediaKeyDelivery>(KeyDelivery, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaServicesPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaServicesAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaServicesAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaServicesAccountPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,17 +153,17 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<Guid> mediaServiceId = default;
-            Optional<IList<MediaServicesStorageAccount>> storageAccounts = default;
-            Optional<MediaStorageAuthentication?> storageAuthentication = default;
-            Optional<AccountEncryption> encryption = default;
-            Optional<MediaKeyDelivery> keyDelivery = default;
-            Optional<MediaServicesPublicNetworkAccess?> publicNetworkAccess = default;
-            Optional<MediaServicesProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<MediaServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<MediaServicesMinimumTlsVersion> minimumTlsVersion = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            Guid? mediaServiceId = default;
+            IList<MediaServicesStorageAccount> storageAccounts = default;
+            MediaStorageAuthentication? storageAuthentication = default;
+            AccountEncryption encryption = default;
+            MediaKeyDelivery keyDelivery = default;
+            MediaServicesPublicNetworkAccess? publicNetworkAccess = default;
+            MediaServicesProvisioningState? provisioningState = default;
+            IReadOnlyList<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
+            MediaServicesMinimumTlsVersion? minimumTlsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +218,7 @@ namespace Azure.ResourceManager.Media.Models
                             List<MediaServicesStorageAccount> array = new List<MediaServicesStorageAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaServicesStorageAccount.DeserializeMediaServicesStorageAccount(item));
+                                array.Add(MediaServicesStorageAccount.DeserializeMediaServicesStorageAccount(item, options));
                             }
                             storageAccounts = array;
                             continue;
@@ -240,7 +239,7 @@ namespace Azure.ResourceManager.Media.Models
                             {
                                 continue;
                             }
-                            encryption = AccountEncryption.DeserializeAccountEncryption(property0.Value);
+                            encryption = AccountEncryption.DeserializeAccountEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("keyDelivery"u8))
@@ -249,7 +248,7 @@ namespace Azure.ResourceManager.Media.Models
                             {
                                 continue;
                             }
-                            keyDelivery = MediaKeyDelivery.DeserializeMediaKeyDelivery(property0.Value);
+                            keyDelivery = MediaKeyDelivery.DeserializeMediaKeyDelivery(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -280,7 +279,7 @@ namespace Azure.ResourceManager.Media.Models
                             List<MediaServicesPrivateEndpointConnectionData> array = new List<MediaServicesPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item));
+                                array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -303,7 +302,19 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesAccountPatch(Optional.ToDictionary(tags), identity, Optional.ToNullable(mediaServiceId), Optional.ToList(storageAccounts), Optional.ToNullable(storageAuthentication), encryption.Value, keyDelivery.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), Optional.ToNullable(minimumTlsVersion), serializedAdditionalRawData);
+            return new MediaServicesAccountPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                mediaServiceId,
+                storageAccounts ?? new ChangeTrackingList<MediaServicesStorageAccount>(),
+                storageAuthentication,
+                encryption,
+                keyDelivery,
+                publicNetworkAccess,
+                provisioningState,
+                privateEndpointConnections ?? new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>(),
+                minimumTlsVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesAccountPatch>.Write(ModelReaderWriterOptions options)
@@ -315,7 +326,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaServicesAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaServicesAccountPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -331,7 +342,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaServicesAccountPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaServicesAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaServicesAccountPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

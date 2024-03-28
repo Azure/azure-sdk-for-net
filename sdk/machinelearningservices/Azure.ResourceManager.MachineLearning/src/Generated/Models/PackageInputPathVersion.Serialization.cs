@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PackageInputPathVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageInputPathVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PackageInputPathVersion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PackageInputPathVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageInputPathVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PackageInputPathVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> resourceName = default;
-            Optional<string> resourceVersion = default;
+            string resourceName = default;
+            string resourceVersion = default;
             InputPathType inputPathType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PackageInputPathVersion(inputPathType, serializedAdditionalRawData, resourceName.Value, resourceVersion.Value);
+            return new PackageInputPathVersion(inputPathType, serializedAdditionalRawData, resourceName, resourceVersion);
         }
 
         BinaryData IPersistableModel<PackageInputPathVersion>.Write(ModelReaderWriterOptions options)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PackageInputPathVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PackageInputPathVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializePackageInputPathVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PackageInputPathVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PackageInputPathVersion)} does not support reading '{options.Format}' format.");
             }
         }
 

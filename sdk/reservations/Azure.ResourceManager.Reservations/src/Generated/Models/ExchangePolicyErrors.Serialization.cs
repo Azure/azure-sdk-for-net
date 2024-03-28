@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExchangePolicyErrors>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExchangePolicyErrors)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExchangePolicyErrors)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     writer.WriteStartArray();
                     foreach (var item in PolicyErrors)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<ExchangePolicyError>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExchangePolicyErrors>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExchangePolicyErrors)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExchangePolicyErrors)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExchangePolicyError>> policyErrors = default;
+            IReadOnlyList<ExchangePolicyError> policyErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ExchangePolicyError> array = new List<ExchangePolicyError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExchangePolicyError.DeserializeExchangePolicyError(item));
+                        array.Add(ExchangePolicyError.DeserializeExchangePolicyError(item, options));
                     }
                     policyErrors = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExchangePolicyErrors(Optional.ToList(policyErrors), serializedAdditionalRawData);
+            return new ExchangePolicyErrors(policyErrors ?? new ChangeTrackingList<ExchangePolicyError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExchangePolicyErrors>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExchangePolicyErrors)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExchangePolicyErrors)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeExchangePolicyErrors(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExchangePolicyErrors)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExchangePolicyErrors)} does not support reading '{options.Format}' format.");
             }
         }
 

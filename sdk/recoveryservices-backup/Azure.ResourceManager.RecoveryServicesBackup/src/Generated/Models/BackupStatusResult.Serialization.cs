@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupStatusResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupStatusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupProtectionStatus> protectionStatus = default;
-            Optional<ResourceIdentifier> vaultId = default;
-            Optional<BackupFabricName> fabricName = default;
-            Optional<string> containerName = default;
-            Optional<string> protectedItemName = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> policyName = default;
-            Optional<string> registrationStatus = default;
-            Optional<int> protectedItemsCount = default;
-            Optional<AcquireStorageAccountLock> acquireStorageAccountLock = default;
+            BackupProtectionStatus? protectionStatus = default;
+            ResourceIdentifier vaultId = default;
+            BackupFabricName? fabricName = default;
+            string containerName = default;
+            string protectedItemName = default;
+            string errorCode = default;
+            string errorMessage = default;
+            string policyName = default;
+            string registrationStatus = default;
+            int? protectedItemsCount = default;
+            AcquireStorageAccountLock? acquireStorageAccountLock = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +215,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupStatusResult(Optional.ToNullable(protectionStatus), vaultId.Value, Optional.ToNullable(fabricName), containerName.Value, protectedItemName.Value, errorCode.Value, errorMessage.Value, policyName.Value, registrationStatus.Value, Optional.ToNullable(protectedItemsCount), Optional.ToNullable(acquireStorageAccountLock), serializedAdditionalRawData);
+            return new BackupStatusResult(
+                protectionStatus,
+                vaultId,
+                fabricName,
+                containerName,
+                protectedItemName,
+                errorCode,
+                errorMessage,
+                policyName,
+                registrationStatus,
+                protectedItemsCount,
+                acquireStorageAccountLock,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupStatusResult>.Write(ModelReaderWriterOptions options)
@@ -227,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +255,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 

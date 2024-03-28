@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyValuesChangedCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyValuesChangedCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRulePropertyChangedConditionSupportedPropertyType> propertyName = default;
-            Optional<AutomationRulePropertyChangedConditionSupportedChangedType> changeType = default;
-            Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
-            Optional<IList<string>> propertyValues = default;
+            AutomationRulePropertyChangedConditionSupportedPropertyType? propertyName = default;
+            AutomationRulePropertyChangedConditionSupportedChangedType? changeType = default;
+            AutomationRulePropertyConditionSupportedOperator? @operator = default;
+            IList<string> propertyValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRulePropertyValuesChangedCondition(Optional.ToNullable(propertyName), Optional.ToNullable(changeType), Optional.ToNullable(@operator), Optional.ToList(propertyValues), serializedAdditionalRawData);
+            return new AutomationRulePropertyValuesChangedCondition(propertyName, changeType, @operator, propertyValues ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRulePropertyValuesChangedCondition>.Write(ModelReaderWriterOptions options)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeAutomationRulePropertyValuesChangedCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

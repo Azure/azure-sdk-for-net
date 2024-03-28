@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPPrefixRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPPrefixRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPPrefixRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPPrefixRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPPrefixRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPPrefixRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             CommunityActionType action = default;
             long sequenceNumber = default;
             string networkPrefix = default;
-            Optional<IPPrefixRuleCondition> condition = default;
-            Optional<string> subnetMaskLength = default;
+            IPPrefixRuleCondition? condition = default;
+            string subnetMaskLength = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPPrefixRule(action, sequenceNumber, networkPrefix, Optional.ToNullable(condition), subnetMaskLength.Value, serializedAdditionalRawData);
+            return new IPPrefixRule(
+                action,
+                sequenceNumber,
+                networkPrefix,
+                condition,
+                subnetMaskLength,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPPrefixRule>.Write(ModelReaderWriterOptions options)
@@ -136,7 +142,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPPrefixRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPPrefixRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +158,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeIPPrefixRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPPrefixRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPPrefixRule)} does not support reading '{options.Format}' format.");
             }
         }
 

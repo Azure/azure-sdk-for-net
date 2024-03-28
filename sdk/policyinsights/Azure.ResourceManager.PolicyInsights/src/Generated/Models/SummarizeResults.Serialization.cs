@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SummarizeResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SummarizeResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SummarizeResults)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PolicySummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SummarizeResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SummarizeResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SummarizeResults)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> odataContext = default;
-            Optional<int> odataCount = default;
-            Optional<IReadOnlyList<PolicySummary>> value = default;
+            string odataContext = default;
+            int? odataCount = default;
+            IReadOnlyList<PolicySummary> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicySummary> array = new List<PolicySummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicySummary.DeserializePolicySummary(item));
+                        array.Add(PolicySummary.DeserializePolicySummary(item, options));
                     }
                     value = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SummarizeResults(odataContext.Value, Optional.ToNullable(odataCount), Optional.ToList(value), serializedAdditionalRawData);
+            return new SummarizeResults(odataContext, odataCount, value ?? new ChangeTrackingList<PolicySummary>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SummarizeResults>.Write(ModelReaderWriterOptions options)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SummarizeResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SummarizeResults)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeSummarizeResults(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SummarizeResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SummarizeResults)} does not support reading '{options.Format}' format.");
             }
         }
 

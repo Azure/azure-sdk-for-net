@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAccountEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsAccountEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsAccountEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAccountEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsAccountEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsAccountEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -182,21 +182,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> aadTenantId = default;
-            Optional<string> aadUserId = default;
-            Optional<string> accountName = default;
-            Optional<string> displayName = default;
-            Optional<string> hostEntityId = default;
-            Optional<bool> isDomainJoined = default;
-            Optional<string> ntDomain = default;
-            Optional<Guid> objectGuid = default;
-            Optional<string> puid = default;
-            Optional<string> sid = default;
-            Optional<string> upnSuffix = default;
-            Optional<string> dnsDomain = default;
+            SystemData systemData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
+            string friendlyName = default;
+            string aadTenantId = default;
+            string aadUserId = default;
+            string accountName = default;
+            string displayName = default;
+            string hostEntityId = default;
+            bool? isDomainJoined = default;
+            string ntDomain = default;
+            Guid? objectGuid = default;
+            string puid = default;
+            string sid = default;
+            string upnSuffix = default;
+            string dnsDomain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -342,7 +342,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAccountEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, aadTenantId.Value, aadUserId.Value, accountName.Value, displayName.Value, hostEntityId.Value, Optional.ToNullable(isDomainJoined), ntDomain.Value, Optional.ToNullable(objectGuid), puid.Value, sid.Value, upnSuffix.Value, dnsDomain.Value);
+            return new SecurityInsightsAccountEntity(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName,
+                aadTenantId,
+                aadUserId,
+                accountName,
+                displayName,
+                hostEntityId,
+                isDomainJoined,
+                ntDomain,
+                objectGuid,
+                puid,
+                sid,
+                upnSuffix,
+                dnsDomain);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAccountEntity>.Write(ModelReaderWriterOptions options)
@@ -354,7 +374,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAccountEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsAccountEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -370,7 +390,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsAccountEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAccountEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsAccountEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

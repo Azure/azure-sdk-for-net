@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Contexts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SummaryContextInternal>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             string text = default;
-            Optional<IList<SummaryContextInternal>> contexts = default;
+            IList<SummaryContextInternal> contexts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -61,7 +61,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummaryInternal(text, Optional.ToList(contexts));
+            return new AbstractiveSummaryInternal(text, contexts ?? new ChangeTrackingList<SummaryContextInternal>());
         }
     }
 }

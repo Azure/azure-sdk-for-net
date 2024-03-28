@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleMetricDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleMetricDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> metricName = default;
+            string metricName = default;
             string odataType = default;
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<ResourceIdentifier> legacyResourceId = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> metricNamespace = default;
+            ResourceIdentifier resourceUri = default;
+            ResourceIdentifier legacyResourceId = default;
+            string resourceLocation = default;
+            string metricNamespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleMetricDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, serializedAdditionalRawData, metricName.Value);
+            return new RuleMetricDataSource(
+                odataType,
+                resourceUri,
+                legacyResourceId,
+                resourceLocation,
+                metricNamespace,
+                serializedAdditionalRawData,
+                metricName);
         }
 
         BinaryData IPersistableModel<RuleMetricDataSource>.Write(ModelReaderWriterOptions options)
@@ -157,7 +164,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeRuleMetricDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

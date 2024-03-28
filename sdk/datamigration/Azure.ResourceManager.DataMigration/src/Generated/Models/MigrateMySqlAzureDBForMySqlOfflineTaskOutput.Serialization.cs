@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(element);
-                    case "ErrorOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputError.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputError(element);
-                    case "MigrationLevelOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(element);
-                    case "TableLevelOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(element);
+                    case "DatabaseLevelOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(element, options);
+                    case "ErrorOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputError.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputError(element, options);
+                    case "MigrationLevelOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(element, options);
+                    case "TableLevelOutput": return MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel.DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(element, options);
                 }
             }
-            return UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput.DeserializeUnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(element);
+            return UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput.DeserializeUnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>.Write(ModelReaderWriterOptions options)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwitchProtectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwitchProtectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwitchProtectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails);
+                writer.WriteObjectValue<SwitchProtectionProviderSpecificContent>(ProviderSpecificDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwitchProtectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwitchProtectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwitchProtectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> replicationProtectedItemName = default;
-            Optional<SwitchProtectionProviderSpecificContent> providerSpecificDetails = default;
+            string replicationProtectedItemName = default;
+            SwitchProtectionProviderSpecificContent providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = SwitchProtectionProviderSpecificContent.DeserializeSwitchProtectionProviderSpecificContent(property.Value);
+                    providerSpecificDetails = SwitchProtectionProviderSpecificContent.DeserializeSwitchProtectionProviderSpecificContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwitchProtectionProperties(replicationProtectedItemName.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new SwitchProtectionProperties(replicationProtectedItemName, providerSpecificDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwitchProtectionProperties>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SwitchProtectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwitchProtectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSwitchProtectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SwitchProtectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwitchProtectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

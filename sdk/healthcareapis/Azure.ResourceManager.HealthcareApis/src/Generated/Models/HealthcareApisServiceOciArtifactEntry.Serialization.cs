@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceOciArtifactEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceOciArtifactEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> loginServer = default;
-            Optional<string> imageName = default;
-            Optional<string> digest = default;
+            string loginServer = default;
+            string imageName = default;
+            string digest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisServiceOciArtifactEntry(loginServer.Value, imageName.Value, digest.Value, serializedAdditionalRawData);
+            return new HealthcareApisServiceOciArtifactEntry(loginServer, imageName, digest, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisServiceOciArtifactEntry>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         return DeserializeHealthcareApisServiceOciArtifactEntry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support reading '{options.Format}' format.");
             }
         }
 

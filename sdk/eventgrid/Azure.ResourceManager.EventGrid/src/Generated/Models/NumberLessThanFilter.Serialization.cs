@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NumberLessThanFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NumberLessThanFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NumberLessThanFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NumberLessThanFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NumberLessThanFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NumberLessThanFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<double> value = default;
+            double? value = default;
             FilterOperatorType operatorType = default;
-            Optional<string> key = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NumberLessThanFilter(operatorType, key.Value, serializedAdditionalRawData, Optional.ToNullable(value));
+            return new NumberLessThanFilter(operatorType, key, serializedAdditionalRawData, value);
         }
 
         BinaryData IPersistableModel<NumberLessThanFilter>.Write(ModelReaderWriterOptions options)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NumberLessThanFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NumberLessThanFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeNumberLessThanFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NumberLessThanFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NumberLessThanFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

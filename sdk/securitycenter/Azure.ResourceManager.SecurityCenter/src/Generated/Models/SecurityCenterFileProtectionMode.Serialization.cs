@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterFileProtectionMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterFileProtectionMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AdaptiveApplicationControlEnforcementMode> exe = default;
-            Optional<AdaptiveApplicationControlEnforcementMode> msi = default;
-            Optional<AdaptiveApplicationControlEnforcementMode> script = default;
-            Optional<AdaptiveApplicationControlEnforcementMode> executable = default;
+            AdaptiveApplicationControlEnforcementMode? exe = default;
+            AdaptiveApplicationControlEnforcementMode? msi = default;
+            AdaptiveApplicationControlEnforcementMode? script = default;
+            AdaptiveApplicationControlEnforcementMode? executable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterFileProtectionMode(Optional.ToNullable(exe), Optional.ToNullable(msi), Optional.ToNullable(script), Optional.ToNullable(executable), serializedAdditionalRawData);
+            return new SecurityCenterFileProtectionMode(exe, msi, script, executable, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterFileProtectionMode>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityCenterFileProtectionMode(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support reading '{options.Format}' format.");
             }
         }
 

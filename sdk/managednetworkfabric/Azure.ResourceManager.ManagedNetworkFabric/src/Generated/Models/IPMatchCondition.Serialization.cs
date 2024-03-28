@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPMatchCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPMatchCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<SourceDestinationType> type = default;
-            Optional<IPMatchConditionPrefixType> prefixType = default;
-            Optional<IList<string>> ipPrefixValues = default;
-            Optional<IList<string>> ipGroupNames = default;
+            SourceDestinationType? type = default;
+            IPMatchConditionPrefixType? prefixType = default;
+            IList<string> ipPrefixValues = default;
+            IList<string> ipGroupNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPMatchCondition(Optional.ToNullable(type), Optional.ToNullable(prefixType), Optional.ToList(ipPrefixValues), Optional.ToList(ipGroupNames), serializedAdditionalRawData);
+            return new IPMatchCondition(type, prefixType, ipPrefixValues ?? new ChangeTrackingList<string>(), ipGroupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPMatchCondition>.Write(ModelReaderWriterOptions options)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPMatchCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeIPMatchCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPMatchCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

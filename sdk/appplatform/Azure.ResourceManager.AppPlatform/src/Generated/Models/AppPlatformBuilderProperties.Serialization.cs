@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuilderProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformBuilderProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformBuilderProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Stack))
             {
                 writer.WritePropertyName("stack"u8);
-                writer.WriteObjectValue(Stack);
+                writer.WriteObjectValue<AppPlatformClusterStackProperties>(Stack, options);
             }
             if (Optional.IsCollectionDefined(BuildpackGroups))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in BuildpackGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BuildpacksGroupProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuilderProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformBuilderProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformBuilderProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformBuilderProvisioningState> provisioningState = default;
-            Optional<AppPlatformClusterStackProperties> stack = default;
-            Optional<IList<BuildpacksGroupProperties>> buildpackGroups = default;
+            AppPlatformBuilderProvisioningState? provisioningState = default;
+            AppPlatformClusterStackProperties stack = default;
+            IList<BuildpacksGroupProperties> buildpackGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    stack = AppPlatformClusterStackProperties.DeserializeAppPlatformClusterStackProperties(property.Value);
+                    stack = AppPlatformClusterStackProperties.DeserializeAppPlatformClusterStackProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("buildpackGroups"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<BuildpacksGroupProperties> array = new List<BuildpacksGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BuildpacksGroupProperties.DeserializeBuildpacksGroupProperties(item));
+                        array.Add(BuildpacksGroupProperties.DeserializeBuildpacksGroupProperties(item, options));
                     }
                     buildpackGroups = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuilderProperties(Optional.ToNullable(provisioningState), stack.Value, Optional.ToList(buildpackGroups), serializedAdditionalRawData);
+            return new AppPlatformBuilderProperties(provisioningState, stack, buildpackGroups ?? new ChangeTrackingList<BuildpacksGroupProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuilderProperties>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformBuilderProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformBuilderProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformBuilderProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformBuilderProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformBuilderProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

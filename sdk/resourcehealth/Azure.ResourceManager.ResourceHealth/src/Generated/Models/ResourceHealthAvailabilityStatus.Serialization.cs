@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ResourceHealthAvailabilityStatusProperties>(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ResourceHealthAvailabilityStatusProperties> properties = default;
+            AzureLocation? location = default;
+            ResourceHealthAvailabilityStatusProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    properties = ResourceHealthAvailabilityStatusProperties.DeserializeResourceHealthAvailabilityStatusProperties(property.Value);
+                    properties = ResourceHealthAvailabilityStatusProperties.DeserializeResourceHealthAvailabilityStatusProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthAvailabilityStatus(id, name, type, systemData.Value, Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
+            return new ResourceHealthAvailabilityStatus(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthAvailabilityStatus>.Write(ModelReaderWriterOptions options)
@@ -165,7 +172,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +188,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeResourceHealthAvailabilityStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

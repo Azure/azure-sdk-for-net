@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilterTrackSelection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilterTrackSelection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilterTrackSelection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartArray();
             foreach (var item in TrackSelections)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<FilterTrackPropertyCondition>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilterTrackSelection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilterTrackSelection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilterTrackSelection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<FilterTrackPropertyCondition> array = new List<FilterTrackPropertyCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FilterTrackPropertyCondition.DeserializeFilterTrackPropertyCondition(item));
+                        array.Add(FilterTrackPropertyCondition.DeserializeFilterTrackPropertyCondition(item, options));
                     }
                     trackSelections = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FilterTrackSelection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilterTrackSelection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeFilterTrackSelection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FilterTrackSelection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilterTrackSelection)} does not support reading '{options.Format}' format.");
             }
         }
 

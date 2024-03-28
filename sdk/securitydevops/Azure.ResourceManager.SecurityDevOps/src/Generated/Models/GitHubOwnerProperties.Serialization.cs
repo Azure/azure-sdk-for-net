@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitHubOwnerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubOwnerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubOwnerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitHubOwnerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubOwnerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubOwnerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<Uri> ownerUrl = default;
+            ProvisioningState? provisioningState = default;
+            Uri ownerUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubOwnerProperties(Optional.ToNullable(provisioningState), ownerUrl.Value, serializedAdditionalRawData);
+            return new GitHubOwnerProperties(provisioningState, ownerUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubOwnerProperties>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GitHubOwnerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubOwnerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                         return DeserializeGitHubOwnerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitHubOwnerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubOwnerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

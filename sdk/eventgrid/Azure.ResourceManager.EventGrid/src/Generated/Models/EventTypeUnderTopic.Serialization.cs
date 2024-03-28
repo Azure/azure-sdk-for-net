@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventTypeUnderTopic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventTypeUnderTopic)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventTypeUnderTopic)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventTypeUnderTopic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventTypeUnderTopic)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventTypeUnderTopic)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> schemaUri = default;
-            Optional<bool> isInDefaultSet = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            Uri schemaUri = default;
+            bool? isInDefaultSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventTypeUnderTopic(id, name, type, systemData.Value, displayName.Value, description.Value, schemaUri.Value, Optional.ToNullable(isInDefaultSet), serializedAdditionalRawData);
+            return new EventTypeUnderTopic(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                description,
+                schemaUri,
+                isInDefaultSet,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventTypeUnderTopic>.Write(ModelReaderWriterOptions options)
@@ -202,7 +211,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventTypeUnderTopic)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventTypeUnderTopic)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +227,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeEventTypeUnderTopic(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventTypeUnderTopic)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventTypeUnderTopic)} does not support reading '{options.Format}' format.");
             }
         }
 

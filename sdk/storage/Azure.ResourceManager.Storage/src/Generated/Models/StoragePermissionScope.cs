@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -81,10 +80,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The permissions for the local user. Possible values include: Read (r), Write (w), Delete (d), List (l), and Create (c). </summary>
+        [WirePath("permissions")]
         public string Permissions { get; set; }
         /// <summary> The service used by the local user, e.g. blob, file. </summary>
+        [WirePath("service")]
         public string Service { get; set; }
         /// <summary> The name of resource, normally the container name or the file share name, used by the local user. </summary>
+        [WirePath("resourceName")]
         public string ResourceName { get; set; }
     }
 }

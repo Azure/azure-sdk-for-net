@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxConfigurationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in Files)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NginxConfigurationFile>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NginxConfigurationFile>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Package))
             {
                 writer.WritePropertyName("package"u8);
-                writer.WriteObjectValue(Package);
+                writer.WriteObjectValue<NginxConfigurationPackage>(Package, options);
             }
             if (Optional.IsDefined(RootFile))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxConfigurationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<NginxProvisioningState> provisioningState = default;
-            Optional<IList<NginxConfigurationFile>> files = default;
-            Optional<IList<NginxConfigurationFile>> protectedFiles = default;
-            Optional<NginxConfigurationPackage> package = default;
-            Optional<string> rootFile = default;
+            NginxProvisioningState? provisioningState = default;
+            IList<NginxConfigurationFile> files = default;
+            IList<NginxConfigurationFile> protectedFiles = default;
+            NginxConfigurationPackage package = default;
+            string rootFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxConfigurationFile> array = new List<NginxConfigurationFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item));
+                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item, options));
                     }
                     files = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxConfigurationFile> array = new List<NginxConfigurationFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item));
+                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item, options));
                     }
                     protectedFiles = array;
                     continue;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    package = NginxConfigurationPackage.DeserializeNginxConfigurationPackage(property.Value);
+                    package = NginxConfigurationPackage.DeserializeNginxConfigurationPackage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rootFile"u8))
@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxConfigurationProperties(Optional.ToNullable(provisioningState), Optional.ToList(files), Optional.ToList(protectedFiles), package.Value, rootFile.Value, serializedAdditionalRawData);
+            return new NginxConfigurationProperties(
+                provisioningState,
+                files ?? new ChangeTrackingList<NginxConfigurationFile>(),
+                protectedFiles ?? new ChangeTrackingList<NginxConfigurationFile>(),
+                package,
+                rootFile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxConfigurationProperties>.Write(ModelReaderWriterOptions options)
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxConfigurationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +199,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxConfigurationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxConfigurationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

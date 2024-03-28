@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.LoadTesting.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isAvailable = default;
-            Optional<string> availabilityStatus = default;
+            SystemData systemData = default;
+            bool? isAvailable = default;
+            string availabilityStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingQuotaAvailabilityResult(id, name, type, systemData.Value, Optional.ToNullable(isAvailable), availabilityStatus.Value, serializedAdditionalRawData);
+            return new LoadTestingQuotaAvailabilityResult(
+                id,
+                name,
+                type,
+                systemData,
+                isAvailable,
+                availabilityStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingQuotaAvailabilityResult>.Write(ModelReaderWriterOptions options)
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         return DeserializeLoadTestingQuotaAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 

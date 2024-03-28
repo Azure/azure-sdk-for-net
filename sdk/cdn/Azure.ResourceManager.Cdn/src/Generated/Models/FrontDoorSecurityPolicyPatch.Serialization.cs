@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorSecurityPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorSecurityPolicyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorSecurityPolicyPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<SecurityPolicyProperties>(Properties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorSecurityPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorSecurityPolicyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorSecurityPolicyPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<SecurityPolicyProperties> parameters = default;
+            SecurityPolicyProperties parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            parameters = SecurityPolicyProperties.DeserializeSecurityPolicyProperties(property0.Value);
+                            parameters = SecurityPolicyProperties.DeserializeSecurityPolicyProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorSecurityPolicyPatch(parameters.Value, serializedAdditionalRawData);
+            return new FrontDoorSecurityPolicyPatch(parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorSecurityPolicyPatch>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorSecurityPolicyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorSecurityPolicyPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeFrontDoorSecurityPolicyPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorSecurityPolicyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorSecurityPolicyPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

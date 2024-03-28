@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductAvailabilityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductAvailabilityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductAvailabilityInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductAvailabilityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductAvailabilityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductAvailabilityInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<ProductAvailabilityStage> availabilityStage = default;
-            Optional<ProductDisabledReason> disabledReason = default;
-            Optional<string> disabledReasonMessage = default;
+            ProductAvailabilityStage? availabilityStage = default;
+            ProductDisabledReason? disabledReason = default;
+            string disabledReasonMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductAvailabilityInformation(Optional.ToNullable(availabilityStage), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, serializedAdditionalRawData);
+            return new ProductAvailabilityInformation(availabilityStage, disabledReason, disabledReasonMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductAvailabilityInformation>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProductAvailabilityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductAvailabilityInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeProductAvailabilityInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProductAvailabilityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductAvailabilityInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

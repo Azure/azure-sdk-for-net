@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,11 +22,38 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AzureCosmosDBFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCosmosDBFieldMappingOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureCosmosDBFieldMappingOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("vectorFields"u8);
+            if (Optional.IsDefined(TitleFieldName))
+            {
+                writer.WritePropertyName("title_field"u8);
+                writer.WriteStringValue(TitleFieldName);
+            }
+            if (Optional.IsDefined(UrlFieldName))
+            {
+                writer.WritePropertyName("url_field"u8);
+                writer.WriteStringValue(UrlFieldName);
+            }
+            if (Optional.IsDefined(FilepathFieldName))
+            {
+                writer.WritePropertyName("filepath_field"u8);
+                writer.WriteStringValue(FilepathFieldName);
+            }
+            writer.WritePropertyName("content_fields"u8);
+            writer.WriteStartArray();
+            foreach (var item in ContentFieldNames)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(ContentFieldSeparator))
+            {
+                writer.WritePropertyName("content_fields_separator"u8);
+                writer.WriteStringValue(ContentFieldSeparator);
+            }
+            writer.WritePropertyName("vector_fields"u8);
             writer.WriteStartArray();
             foreach (var item in VectorFieldNames)
             {
@@ -57,7 +83,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AzureCosmosDBFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCosmosDBFieldMappingOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureCosmosDBFieldMappingOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,12 +98,47 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
+            string titleField = default;
+            string urlField = default;
+            string filepathField = default;
+            IList<string> contentFields = default;
+            string contentFieldsSeparator = default;
             IList<string> vectorFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vectorFields"u8))
+                if (property.NameEquals("title_field"u8))
+                {
+                    titleField = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("url_field"u8))
+                {
+                    urlField = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("filepath_field"u8))
+                {
+                    filepathField = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("content_fields"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    contentFields = array;
+                    continue;
+                }
+                if (property.NameEquals("content_fields_separator"u8))
+                {
+                    contentFieldsSeparator = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("vector_fields"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -93,7 +154,14 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCosmosDBFieldMappingOptions(vectorFields, serializedAdditionalRawData);
+            return new AzureCosmosDBFieldMappingOptions(
+                titleField,
+                urlField,
+                filepathField,
+                contentFields,
+                contentFieldsSeparator,
+                vectorFields,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureCosmosDBFieldMappingOptions>.Write(ModelReaderWriterOptions options)
@@ -105,7 +173,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureCosmosDBFieldMappingOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureCosmosDBFieldMappingOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +189,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeAzureCosmosDBFieldMappingOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureCosmosDBFieldMappingOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureCosmosDBFieldMappingOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -139,7 +207,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AzureCosmosDBFieldMappingOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

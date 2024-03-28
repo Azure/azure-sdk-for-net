@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArtifactContentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArtifactContentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArtifactContentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink);
+                writer.WriteObjectValue<LogicContentLink>(ContentLink, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArtifactContentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArtifactContentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArtifactContentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<BinaryData> content = default;
-            Optional<ContentType> contentType = default;
-            Optional<LogicContentLink> contentLink = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<BinaryData> metadata = default;
+            BinaryData content = default;
+            ContentType? contentType = default;
+            LogicContentLink contentLink = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contentLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    contentLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdTime"u8))
@@ -178,7 +178,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArtifactContentProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, serializedAdditionalRawData, content.Value, Optional.ToNullable(contentType), contentLink.Value);
+            return new ArtifactContentProperties(
+                createdTime,
+                changedTime,
+                metadata,
+                serializedAdditionalRawData,
+                content,
+                contentType,
+                contentLink);
         }
 
         BinaryData IPersistableModel<ArtifactContentProperties>.Write(ModelReaderWriterOptions options)
@@ -190,7 +197,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArtifactContentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArtifactContentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +213,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeArtifactContentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArtifactContentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArtifactContentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

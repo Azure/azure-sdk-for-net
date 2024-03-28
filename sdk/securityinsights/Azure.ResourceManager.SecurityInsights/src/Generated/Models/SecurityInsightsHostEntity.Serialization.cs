@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHostEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHostEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,18 +167,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> azureId = default;
-            Optional<string> dnsDomain = default;
-            Optional<string> hostName = default;
-            Optional<bool> isDomainJoined = default;
-            Optional<string> netBiosName = default;
-            Optional<string> ntDomain = default;
-            Optional<string> omsAgentId = default;
-            Optional<SecurityInsightsHostOSFamily> osFamily = default;
-            Optional<string> osVersion = default;
+            SystemData systemData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
+            string friendlyName = default;
+            ResourceIdentifier azureId = default;
+            string dnsDomain = default;
+            string hostName = default;
+            bool? isDomainJoined = default;
+            string netBiosName = default;
+            string ntDomain = default;
+            string omsAgentId = default;
+            SecurityInsightsHostOSFamily? osFamily = default;
+            string osVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -313,7 +313,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsHostEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, azureId.Value, dnsDomain.Value, hostName.Value, Optional.ToNullable(isDomainJoined), netBiosName.Value, ntDomain.Value, omsAgentId.Value, Optional.ToNullable(osFamily), osVersion.Value);
+            return new SecurityInsightsHostEntity(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName,
+                azureId,
+                dnsDomain,
+                hostName,
+                isDomainJoined,
+                netBiosName,
+                ntDomain,
+                omsAgentId,
+                osFamily,
+                osVersion);
         }
 
         BinaryData IPersistableModel<SecurityInsightsHostEntity>.Write(ModelReaderWriterOptions options)
@@ -325,7 +342,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -341,7 +358,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsHostEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

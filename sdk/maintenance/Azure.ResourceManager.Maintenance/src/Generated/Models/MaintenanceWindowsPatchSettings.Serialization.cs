@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowsPatchSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowsPatchSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<IList<string>> kbNumbersToExclude = default;
-            Optional<IList<string>> kbNumbersToInclude = default;
-            Optional<IList<string>> classificationsToInclude = default;
-            Optional<bool> excludeKbsRequiringReboot = default;
+            IList<string> kbNumbersToExclude = default;
+            IList<string> kbNumbersToInclude = default;
+            IList<string> classificationsToInclude = default;
+            bool? excludeKbsRequiringReboot = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceWindowsPatchSettings(Optional.ToList(kbNumbersToExclude), Optional.ToList(kbNumbersToInclude), Optional.ToList(classificationsToInclude), Optional.ToNullable(excludeKbsRequiringReboot), serializedAdditionalRawData);
+            return new MaintenanceWindowsPatchSettings(kbNumbersToExclude ?? new ChangeTrackingList<string>(), kbNumbersToInclude ?? new ChangeTrackingList<string>(), classificationsToInclude ?? new ChangeTrackingList<string>(), excludeKbsRequiringReboot, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceWindowsPatchSettings>.Write(ModelReaderWriterOptions options)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                         return DeserializeMaintenanceWindowsPatchSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

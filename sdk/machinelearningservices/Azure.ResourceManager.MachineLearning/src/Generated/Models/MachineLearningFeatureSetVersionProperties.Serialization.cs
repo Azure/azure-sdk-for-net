@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFeatureSetVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningFeatureSetVersionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningFeatureSetVersionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (MaterializationSettings != null)
                 {
                     writer.WritePropertyName("materializationSettings"u8);
-                    writer.WriteObjectValue(MaterializationSettings);
+                    writer.WriteObjectValue<MaterializationSettings>(MaterializationSettings, options);
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Specification != null)
                 {
                     writer.WritePropertyName("specification"u8);
-                    writer.WriteObjectValue(Specification);
+                    writer.WriteObjectValue<FeaturesetSpecification>(Specification, options);
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting);
+                    writer.WriteObjectValue<AutoDeleteSetting>(AutoDeleteSetting, options);
                 }
                 else
                 {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFeatureSetVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningFeatureSetVersionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningFeatureSetVersionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -192,17 +192,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<string>> entities = default;
-            Optional<MaterializationSettings> materializationSettings = default;
-            Optional<RegistryAssetProvisioningState> provisioningState = default;
-            Optional<FeaturesetSpecification> specification = default;
-            Optional<string> stage = default;
-            Optional<AutoDeleteSetting> autoDeleteSetting = default;
-            Optional<bool> isAnonymous = default;
-            Optional<bool> isArchived = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> entities = default;
+            MaterializationSettings materializationSettings = default;
+            RegistryAssetProvisioningState? provisioningState = default;
+            FeaturesetSpecification specification = default;
+            string stage = default;
+            AutoDeleteSetting autoDeleteSetting = default;
+            bool? isAnonymous = default;
+            bool? isArchived = default;
+            string description = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         materializationSettings = null;
                         continue;
                     }
-                    materializationSettings = MaterializationSettings.DeserializeMaterializationSettings(property.Value);
+                    materializationSettings = MaterializationSettings.DeserializeMaterializationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         specification = null;
                         continue;
                     }
-                    specification = FeaturesetSpecification.DeserializeFeaturesetSpecification(property.Value);
+                    specification = FeaturesetSpecification.DeserializeFeaturesetSpecification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stage"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         autoDeleteSetting = null;
                         continue;
                     }
-                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value);
+                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"u8))
@@ -335,7 +335,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningFeatureSetVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToList(entities), materializationSettings.Value, Optional.ToNullable(provisioningState), specification.Value, stage.Value);
+            return new MachineLearningFeatureSetVersionProperties(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                autoDeleteSetting,
+                isAnonymous,
+                isArchived,
+                entities ?? new ChangeTrackingList<string>(),
+                materializationSettings,
+                provisioningState,
+                specification,
+                stage);
         }
 
         BinaryData IPersistableModel<MachineLearningFeatureSetVersionProperties>.Write(ModelReaderWriterOptions options)
@@ -347,7 +359,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningFeatureSetVersionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningFeatureSetVersionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -363,7 +375,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningFeatureSetVersionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningFeatureSetVersionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningFeatureSetVersionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

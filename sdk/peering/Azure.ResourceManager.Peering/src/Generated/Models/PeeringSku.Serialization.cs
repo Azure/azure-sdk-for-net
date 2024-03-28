@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<PeeringTier> tier = default;
-            Optional<PeeringFamily> family = default;
-            Optional<PeeringSize> size = default;
+            string name = default;
+            PeeringTier? tier = default;
+            PeeringFamily? family = default;
+            PeeringSize? size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringSku(name.Value, Optional.ToNullable(tier), Optional.ToNullable(family), Optional.ToNullable(size), serializedAdditionalRawData);
+            return new PeeringSku(name, tier, family, size, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringSku>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringSku)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<PodEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PodEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PodEvent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<PodEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PodEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PodEvent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<PodEventType> type = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> lastSeenTime = default;
+            PodEventType? type = default;
+            string reason = default;
+            string message = default;
+            DateTimeOffset? lastSeenTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PodEvent(Optional.ToNullable(type), reason.Value, message.Value, Optional.ToNullable(lastSeenTime), serializedAdditionalRawData);
+            return new PodEvent(type, reason, message, lastSeenTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PodEvent>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PodEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PodEvent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializePodEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PodEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PodEvent)} does not support reading '{options.Format}' format.");
             }
         }
 

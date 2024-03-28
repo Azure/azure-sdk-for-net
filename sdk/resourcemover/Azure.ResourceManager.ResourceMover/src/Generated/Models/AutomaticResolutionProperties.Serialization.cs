@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticResolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticResolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> moveResourceId = default;
+            ResourceIdentifier moveResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomaticResolutionProperties(moveResourceId.Value, serializedAdditionalRawData);
+            return new AutomaticResolutionProperties(moveResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomaticResolutionProperties>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeAutomaticResolutionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticResolutionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingCmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingCmkEncryptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingCmkEncryptionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<LoadTestingCmkIdentity>(Identity, options);
             }
             if (Optional.IsDefined(KeyUri))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingCmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingCmkEncryptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingCmkEncryptionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<LoadTestingCmkIdentity> identity = default;
-            Optional<Uri> keyUrl = default;
+            LoadTestingCmkIdentity identity = default;
+            Uri keyUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     {
                         continue;
                     }
-                    identity = LoadTestingCmkIdentity.DeserializeLoadTestingCmkIdentity(property.Value);
+                    identity = LoadTestingCmkIdentity.DeserializeLoadTestingCmkIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyUrl"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingCmkEncryptionProperties(identity.Value, keyUrl.Value, serializedAdditionalRawData);
+            return new LoadTestingCmkEncryptionProperties(identity, keyUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingCmkEncryptionProperties>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingCmkEncryptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingCmkEncryptionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         return DeserializeLoadTestingCmkEncryptionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingCmkEncryptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingCmkEncryptionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

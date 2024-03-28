@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppRegionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppRegionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppRegionInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailabilityZoneMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailabilityZoneMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppRegionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppRegionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppRegionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<RegionStorageToNetworkProximity> storageToNetworkProximity = default;
-            Optional<IReadOnlyList<AvailabilityZoneMapping>> availabilityZoneMappings = default;
+            RegionStorageToNetworkProximity? storageToNetworkProximity = default;
+            IReadOnlyList<AvailabilityZoneMapping> availabilityZoneMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<AvailabilityZoneMapping> array = new List<AvailabilityZoneMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilityZoneMapping.DeserializeAvailabilityZoneMapping(item));
+                        array.Add(AvailabilityZoneMapping.DeserializeAvailabilityZoneMapping(item, options));
                     }
                     availabilityZoneMappings = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppRegionInfo(Optional.ToNullable(storageToNetworkProximity), Optional.ToList(availabilityZoneMappings), serializedAdditionalRawData);
+            return new NetAppRegionInfo(storageToNetworkProximity, availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMapping>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppRegionInfo>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppRegionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppRegionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppRegionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppRegionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppRegionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

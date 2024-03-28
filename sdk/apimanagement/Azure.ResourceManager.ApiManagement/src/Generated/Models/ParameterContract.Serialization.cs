@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParameterContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParameterContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParameterContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 foreach (var item in Examples)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterExampleContract>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParameterContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParameterContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParameterContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,14 +115,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             string type = default;
-            Optional<string> defaultValue = default;
-            Optional<bool> required = default;
-            Optional<IList<string>> values = default;
-            Optional<string> schemaId = default;
-            Optional<string> typeName = default;
-            Optional<IDictionary<string, ParameterExampleContract>> examples = default;
+            string defaultValue = default;
+            bool? required = default;
+            IList<string> values = default;
+            string schemaId = default;
+            string typeName = default;
+            IDictionary<string, ParameterExampleContract> examples = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     Dictionary<string, ParameterExampleContract> dictionary = new Dictionary<string, ParameterExampleContract>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ParameterExampleContract.DeserializeParameterExampleContract(property0.Value));
+                        dictionary.Add(property0.Name, ParameterExampleContract.DeserializeParameterExampleContract(property0.Value, options));
                     }
                     examples = dictionary;
                     continue;
@@ -200,7 +200,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParameterContract(name, description.Value, type, defaultValue.Value, Optional.ToNullable(required), Optional.ToList(values), schemaId.Value, typeName.Value, Optional.ToDictionary(examples), serializedAdditionalRawData);
+            return new ParameterContract(
+                name,
+                description,
+                type,
+                defaultValue,
+                required,
+                values ?? new ChangeTrackingList<string>(),
+                schemaId,
+                typeName,
+                examples ?? new ChangeTrackingDictionary<string, ParameterExampleContract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ParameterContract>.Write(ModelReaderWriterOptions options)
@@ -212,7 +222,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ParameterContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParameterContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeParameterContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ParameterContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParameterContract)} does not support reading '{options.Format}' format.");
             }
         }
 

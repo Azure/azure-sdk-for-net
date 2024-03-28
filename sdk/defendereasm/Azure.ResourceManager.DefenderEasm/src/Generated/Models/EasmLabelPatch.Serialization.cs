@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             var format = options.Format == "W" ? ((IPersistableModel<EasmLabelPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmLabelPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EasmLabelPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             var format = options.Format == "W" ? ((IPersistableModel<EasmLabelPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmLabelPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EasmLabelPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EasmResourceProvisioningState> provisioningState = default;
-            Optional<string> displayName = default;
-            Optional<string> color = default;
+            SystemData systemData = default;
+            EasmResourceProvisioningState? provisioningState = default;
+            string displayName = default;
+            string color = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmLabelPatch(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), displayName.Value, color.Value, serializedAdditionalRawData);
+            return new EasmLabelPatch(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                displayName,
+                color,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmLabelPatch>.Write(ModelReaderWriterOptions options)
@@ -187,7 +195,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EasmLabelPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EasmLabelPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +211,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                         return DeserializeEasmLabelPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EasmLabelPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EasmLabelPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

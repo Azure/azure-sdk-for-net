@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -23,7 +22,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<ClinicalTrialMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClinicalTrialMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClinicalTrialMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +69,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Contacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContactDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +79,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Facilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClinicalTrialResearchFacility>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +106,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<ClinicalTrialMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClinicalTrialMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClinicalTrialMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,13 +121,13 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            Optional<IList<ClinicalTrialPhase>> phases = default;
-            Optional<ClinicalTrialStudyType> studyType = default;
-            Optional<ClinicalTrialRecruitmentStatus> recruitmentStatus = default;
+            IList<ClinicalTrialPhase> phases = default;
+            ClinicalTrialStudyType? studyType = default;
+            ClinicalTrialRecruitmentStatus? recruitmentStatus = default;
             IList<string> conditions = default;
-            Optional<IList<string>> sponsors = default;
-            Optional<IList<ContactDetails>> contacts = default;
-            Optional<IList<ClinicalTrialResearchFacility>> facilities = default;
+            IList<string> sponsors = default;
+            IList<ContactDetails> contacts = default;
+            IList<ClinicalTrialResearchFacility> facilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +197,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ContactDetails> array = new List<ContactDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContactDetails.DeserializeContactDetails(item));
+                        array.Add(ContactDetails.DeserializeContactDetails(item, options));
                     }
                     contacts = array;
                     continue;
@@ -212,7 +211,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialResearchFacility> array = new List<ClinicalTrialResearchFacility>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalTrialResearchFacility.DeserializeClinicalTrialResearchFacility(item));
+                        array.Add(ClinicalTrialResearchFacility.DeserializeClinicalTrialResearchFacility(item, options));
                     }
                     facilities = array;
                     continue;
@@ -223,7 +222,15 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClinicalTrialMetadata(Optional.ToList(phases), Optional.ToNullable(studyType), Optional.ToNullable(recruitmentStatus), conditions, Optional.ToList(sponsors), Optional.ToList(contacts), Optional.ToList(facilities), serializedAdditionalRawData);
+            return new ClinicalTrialMetadata(
+                phases ?? new ChangeTrackingList<ClinicalTrialPhase>(),
+                studyType,
+                recruitmentStatus,
+                conditions,
+                sponsors ?? new ChangeTrackingList<string>(),
+                contacts ?? new ChangeTrackingList<ContactDetails>(),
+                facilities ?? new ChangeTrackingList<ClinicalTrialResearchFacility>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClinicalTrialMetadata>.Write(ModelReaderWriterOptions options)
@@ -235,7 +242,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClinicalTrialMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClinicalTrialMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -251,7 +258,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                         return DeserializeClinicalTrialMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClinicalTrialMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClinicalTrialMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -269,7 +276,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ClinicalTrialMetadata>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

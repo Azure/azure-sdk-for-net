@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPath>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPath)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPath)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPath>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPath)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPath)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             StreamingPolicyStreamingProtocol streamingProtocol = default;
             StreamingPathEncryptionScheme encryptionScheme = default;
-            Optional<IReadOnlyList<string>> paths = default;
+            IReadOnlyList<string> paths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPath(streamingProtocol, encryptionScheme, Optional.ToList(paths), serializedAdditionalRawData);
+            return new StreamingPath(streamingProtocol, encryptionScheme, paths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPath>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPath)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPath)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingPath(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPath)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPath)} does not support reading '{options.Format}' format.");
             }
         }
 

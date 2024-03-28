@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<SshProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SshProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in PublicKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightSshPublicKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<SshProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SshProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IList<HDInsightSshPublicKey>> publicKeys = default;
+            IList<HDInsightSshPublicKey> publicKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightSshPublicKey> array = new List<HDInsightSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightSshPublicKey.DeserializeHDInsightSshPublicKey(item));
+                        array.Add(HDInsightSshPublicKey.DeserializeHDInsightSshPublicKey(item, options));
                     }
                     publicKeys = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SshProfile(Optional.ToList(publicKeys), serializedAdditionalRawData);
+            return new SshProfile(publicKeys ?? new ChangeTrackingList<HDInsightSshPublicKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SshProfile>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SshProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SshProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeSshProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SshProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SshProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

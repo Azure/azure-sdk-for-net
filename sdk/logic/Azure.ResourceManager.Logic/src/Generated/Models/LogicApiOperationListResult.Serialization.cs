@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiOperationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiOperationListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LogicApiOperationInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiOperationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiOperationListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LogicApiOperationInfo>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<LogicApiOperationInfo> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicApiOperationInfo> array = new List<LogicApiOperationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicApiOperationInfo.DeserializeLogicApiOperationInfo(item));
+                        array.Add(LogicApiOperationInfo.DeserializeLogicApiOperationInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiOperationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LogicApiOperationListResult(value ?? new ChangeTrackingList<LogicApiOperationInfo>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiOperationListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiOperationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiOperationListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicApiOperationListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiOperationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiOperationListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

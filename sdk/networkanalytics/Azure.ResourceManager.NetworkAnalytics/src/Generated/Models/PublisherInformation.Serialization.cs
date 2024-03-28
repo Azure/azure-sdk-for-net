@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<PublisherInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublisherInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublisherInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in DataProducts)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataProductInformation>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<PublisherInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublisherInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublisherInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<DataProductInformation> array = new List<DataProductInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProductInformation.DeserializeDataProductInformation(item));
+                        array.Add(DataProductInformation.DeserializeDataProductInformation(item, options));
                     }
                     dataProducts = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PublisherInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublisherInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                         return DeserializePublisherInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PublisherInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublisherInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

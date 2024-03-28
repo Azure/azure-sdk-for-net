@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabServicesUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabServicesUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<string> localizedValue = default;
-            Optional<IReadOnlyList<string>> skuInstances = default;
-            Optional<string> value = default;
+            string localizedValue = default;
+            IReadOnlyList<string> skuInstances = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesUsageName(localizedValue.Value, Optional.ToList(skuInstances), value.Value, serializedAdditionalRawData);
+            return new LabServicesUsageName(localizedValue, skuInstances ?? new ChangeTrackingList<string>(), value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesUsageName>.Write(ModelReaderWriterOptions options)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabServicesUsageName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support reading '{options.Format}' format.");
             }
         }
 

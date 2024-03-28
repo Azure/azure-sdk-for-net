@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxCertificateListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxCertificateListResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxCertificateListResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NginxCertificateData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxCertificateListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxCertificateListResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxCertificateListResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NginxCertificateData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<NginxCertificateData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxCertificateData> array = new List<NginxCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxCertificateData.DeserializeNginxCertificateData(item));
+                        array.Add(NginxCertificateData.DeserializeNginxCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxCertificateListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NginxCertificateListResponse(value ?? new ChangeTrackingList<NginxCertificateData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxCertificateListResponse>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxCertificateListResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxCertificateListResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxCertificateListResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxCertificateListResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxCertificateListResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

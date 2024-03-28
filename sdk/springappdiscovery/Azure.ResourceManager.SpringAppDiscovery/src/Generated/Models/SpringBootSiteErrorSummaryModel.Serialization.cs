@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteErrorSummaryModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteErrorSummaryModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<string> affectedResourceType = default;
-            Optional<long> affectedObjectsCount = default;
+            string affectedResourceType = default;
+            long? affectedObjectsCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootSiteErrorSummaryModel(affectedResourceType.Value, Optional.ToNullable(affectedObjectsCount), serializedAdditionalRawData);
+            return new SpringBootSiteErrorSummaryModel(affectedResourceType, affectedObjectsCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootSiteErrorSummaryModel>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         return DeserializeSpringBootSiteErrorSummaryModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support reading '{options.Format}' format.");
             }
         }
 

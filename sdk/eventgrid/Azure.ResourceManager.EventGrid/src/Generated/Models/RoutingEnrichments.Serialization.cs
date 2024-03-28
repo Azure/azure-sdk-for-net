@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingEnrichments>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Static)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StaticRoutingEnrichment>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Dynamic)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DynamicRoutingEnrichment>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingEnrichments>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IList<StaticRoutingEnrichment>> @static = default;
-            Optional<IList<DynamicRoutingEnrichment>> @dynamic = default;
+            IList<StaticRoutingEnrichment> @static = default;
+            IList<DynamicRoutingEnrichment> @dynamic = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<StaticRoutingEnrichment> array = new List<StaticRoutingEnrichment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRoutingEnrichment.DeserializeStaticRoutingEnrichment(item));
+                        array.Add(StaticRoutingEnrichment.DeserializeStaticRoutingEnrichment(item, options));
                     }
                     @static = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<DynamicRoutingEnrichment> array = new List<DynamicRoutingEnrichment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynamicRoutingEnrichment.DeserializeDynamicRoutingEnrichment(item));
+                        array.Add(DynamicRoutingEnrichment.DeserializeDynamicRoutingEnrichment(item, options));
                     }
                     @dynamic = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingEnrichments(Optional.ToList(@static), Optional.ToList(@dynamic), serializedAdditionalRawData);
+            return new RoutingEnrichments(@static ?? new ChangeTrackingList<StaticRoutingEnrichment>(), @dynamic ?? new ChangeTrackingList<DynamicRoutingEnrichment>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingEnrichments>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeRoutingEnrichments(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotCentralAppTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotCentralAppTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotCentralAppTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotCentralAppTemplateLocation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotCentralAppTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotCentralAppTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotCentralAppTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Optional<string> manifestId = default;
-            Optional<string> manifestVersion = default;
-            Optional<string> name = default;
-            Optional<string> title = default;
-            Optional<int> order = default;
-            Optional<string> description = default;
-            Optional<string> industry = default;
-            Optional<IReadOnlyList<IotCentralAppTemplateLocation>> locations = default;
+            string manifestId = default;
+            string manifestVersion = default;
+            string name = default;
+            string title = default;
+            int? order = default;
+            string description = default;
+            string industry = default;
+            IReadOnlyList<IotCentralAppTemplateLocation> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     List<IotCentralAppTemplateLocation> array = new List<IotCentralAppTemplateLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotCentralAppTemplateLocation.DeserializeIotCentralAppTemplateLocation(item));
+                        array.Add(IotCentralAppTemplateLocation.DeserializeIotCentralAppTemplateLocation(item, options));
                     }
                     locations = array;
                     continue;
@@ -180,7 +180,16 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralAppTemplate(manifestId.Value, manifestVersion.Value, name.Value, title.Value, Optional.ToNullable(order), description.Value, industry.Value, Optional.ToList(locations), serializedAdditionalRawData);
+            return new IotCentralAppTemplate(
+                manifestId,
+                manifestVersion,
+                name,
+                title,
+                order,
+                description,
+                industry,
+                locations ?? new ChangeTrackingList<IotCentralAppTemplateLocation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralAppTemplate>.Write(ModelReaderWriterOptions options)
@@ -192,7 +201,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotCentralAppTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotCentralAppTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +217,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                         return DeserializeIotCentralAppTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotCentralAppTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotCentralAppTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

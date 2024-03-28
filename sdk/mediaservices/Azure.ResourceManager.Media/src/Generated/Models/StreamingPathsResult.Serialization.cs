@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPathsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in StreamingPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingPath>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPathsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingPath>> streamingPaths = default;
-            Optional<IReadOnlyList<string>> downloadPaths = default;
+            IReadOnlyList<StreamingPath> streamingPaths = default;
+            IReadOnlyList<string> downloadPaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingPath> array = new List<StreamingPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingPath.DeserializeStreamingPath(item));
+                        array.Add(StreamingPath.DeserializeStreamingPath(item, options));
                     }
                     streamingPaths = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPathsResult(Optional.ToList(streamingPaths), Optional.ToList(downloadPaths), serializedAdditionalRawData);
+            return new StreamingPathsResult(streamingPaths ?? new ChangeTrackingList<StreamingPath>(), downloadPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPathsResult>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingPathsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support reading '{options.Format}' format.");
             }
         }
 

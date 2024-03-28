@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkDnsForwardingRulesetListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkDnsForwardingRulesetListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkDnsForwardingRulesetListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualNetworkDnsForwardingRuleset>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkDnsForwardingRulesetListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkDnsForwardingRulesetListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkDnsForwardingRulesetListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualNetworkDnsForwardingRuleset>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<VirtualNetworkDnsForwardingRuleset> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     List<VirtualNetworkDnsForwardingRuleset> array = new List<VirtualNetworkDnsForwardingRuleset>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkDnsForwardingRuleset.DeserializeVirtualNetworkDnsForwardingRuleset(item));
+                        array.Add(VirtualNetworkDnsForwardingRuleset.DeserializeVirtualNetworkDnsForwardingRuleset(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkDnsForwardingRulesetListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VirtualNetworkDnsForwardingRulesetListResult(value ?? new ChangeTrackingList<VirtualNetworkDnsForwardingRuleset>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkDnsForwardingRulesetListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkDnsForwardingRulesetListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkDnsForwardingRulesetListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         return DeserializeVirtualNetworkDnsForwardingRulesetListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkDnsForwardingRulesetListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkDnsForwardingRulesetListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

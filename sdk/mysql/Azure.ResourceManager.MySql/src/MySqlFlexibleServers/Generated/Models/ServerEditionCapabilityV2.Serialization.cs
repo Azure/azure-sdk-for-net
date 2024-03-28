@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEditionCapabilityV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEditionCapabilityV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEditionCapabilityV2)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageEditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MySqlFlexibleServerStorageEditionCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedSkus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SkuCapabilityV2>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEditionCapabilityV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEditionCapabilityV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEditionCapabilityV2)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> defaultSku = default;
-            Optional<int> defaultStorageSize = default;
-            Optional<IReadOnlyList<MySqlFlexibleServerStorageEditionCapability>> supportedStorageEditions = default;
-            Optional<IReadOnlyList<SkuCapabilityV2>> supportedSkus = default;
+            string name = default;
+            string defaultSku = default;
+            int? defaultStorageSize = default;
+            IReadOnlyList<MySqlFlexibleServerStorageEditionCapability> supportedStorageEditions = default;
+            IReadOnlyList<SkuCapabilityV2> supportedSkus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerStorageEditionCapability> array = new List<MySqlFlexibleServerStorageEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerStorageEditionCapability.DeserializeMySqlFlexibleServerStorageEditionCapability(item));
+                        array.Add(MySqlFlexibleServerStorageEditionCapability.DeserializeMySqlFlexibleServerStorageEditionCapability(item, options));
                     }
                     supportedStorageEditions = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<SkuCapabilityV2> array = new List<SkuCapabilityV2>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuCapabilityV2.DeserializeSkuCapabilityV2(item));
+                        array.Add(SkuCapabilityV2.DeserializeSkuCapabilityV2(item, options));
                     }
                     supportedSkus = array;
                     continue;
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEditionCapabilityV2(name.Value, defaultSku.Value, Optional.ToNullable(defaultStorageSize), Optional.ToList(supportedStorageEditions), Optional.ToList(supportedSkus), serializedAdditionalRawData);
+            return new ServerEditionCapabilityV2(
+                name,
+                defaultSku,
+                defaultStorageSize,
+                supportedStorageEditions ?? new ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability>(),
+                supportedSkus ?? new ChangeTrackingList<SkuCapabilityV2>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEditionCapabilityV2>.Write(ModelReaderWriterOptions options)
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerEditionCapabilityV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEditionCapabilityV2)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +195,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         return DeserializeServerEditionCapabilityV2(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerEditionCapabilityV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEditionCapabilityV2)} does not support reading '{options.Format}' format.");
             }
         }
 

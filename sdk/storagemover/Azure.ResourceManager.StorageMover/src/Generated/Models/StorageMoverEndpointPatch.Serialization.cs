@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageMoverEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageMoverEndpointPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageMoverEndpointPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<EndpointBaseUpdateProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageMoverEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageMoverEndpointPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageMoverEndpointPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<EndpointBaseUpdateProperties> properties = default;
+            EndpointBaseUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    properties = EndpointBaseUpdateProperties.DeserializeEndpointBaseUpdateProperties(property.Value);
+                    properties = EndpointBaseUpdateProperties.DeserializeEndpointBaseUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageMoverEndpointPatch(properties.Value, serializedAdditionalRawData);
+            return new StorageMoverEndpointPatch(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMoverEndpointPatch>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageMoverEndpointPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageMoverEndpointPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                         return DeserializeStorageMoverEndpointPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageMoverEndpointPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageMoverEndpointPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

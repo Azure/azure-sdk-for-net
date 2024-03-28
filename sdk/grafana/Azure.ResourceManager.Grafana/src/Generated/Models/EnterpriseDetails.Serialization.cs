@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnterpriseDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(SaasSubscriptionDetails))
             {
                 writer.WritePropertyName("saasSubscriptionDetails"u8);
-                writer.WriteObjectValue(SaasSubscriptionDetails);
+                writer.WriteObjectValue<SaasSubscriptionDetails>(SaasSubscriptionDetails, options);
             }
             if (Optional.IsDefined(MarketplaceTrialQuota))
             {
                 writer.WritePropertyName("marketplaceTrialQuota"u8);
-                writer.WriteObjectValue(MarketplaceTrialQuota);
+                writer.WriteObjectValue<MarketplaceTrialQuota>(MarketplaceTrialQuota, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnterpriseDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<SaasSubscriptionDetails> saasSubscriptionDetails = default;
-            Optional<MarketplaceTrialQuota> marketplaceTrialQuota = default;
+            SaasSubscriptionDetails saasSubscriptionDetails = default;
+            MarketplaceTrialQuota marketplaceTrialQuota = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    saasSubscriptionDetails = SaasSubscriptionDetails.DeserializeSaasSubscriptionDetails(property.Value);
+                    saasSubscriptionDetails = SaasSubscriptionDetails.DeserializeSaasSubscriptionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("marketplaceTrialQuota"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    marketplaceTrialQuota = MarketplaceTrialQuota.DeserializeMarketplaceTrialQuota(property.Value);
+                    marketplaceTrialQuota = MarketplaceTrialQuota.DeserializeMarketplaceTrialQuota(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnterpriseDetails(saasSubscriptionDetails.Value, marketplaceTrialQuota.Value, serializedAdditionalRawData);
+            return new EnterpriseDetails(saasSubscriptionDetails, marketplaceTrialQuota, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnterpriseDetails>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Grafana.Models
                         return DeserializeEnterpriseDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

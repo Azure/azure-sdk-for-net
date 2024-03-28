@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerXml>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerXml)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerXml)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerXml>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerXml)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerXml)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<string> prefix = default;
-            Optional<bool> attribute = default;
-            Optional<bool> wrapped = default;
-            Optional<IDictionary<string, BinaryData>> extensions = default;
+            string name = default;
+            string @namespace = default;
+            string prefix = default;
+            bool? attribute = default;
+            bool? wrapped = default;
+            IDictionary<string, BinaryData> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerXml(name.Value, @namespace.Value, prefix.Value, Optional.ToNullable(attribute), Optional.ToNullable(wrapped), Optional.ToDictionary(extensions), serializedAdditionalRawData);
+            return new SwaggerXml(
+                name,
+                @namespace,
+                prefix,
+                attribute,
+                wrapped,
+                extensions ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerXml>.Write(ModelReaderWriterOptions options)
@@ -194,7 +201,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerXml)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerXml)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -210,7 +217,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeSwaggerXml(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerXml)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerXml)} does not support reading '{options.Format}' format.");
             }
         }
 

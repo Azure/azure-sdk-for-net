@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallSupportInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallSupportInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,18 +124,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<string> productSku = default;
-            Optional<string> productSerial = default;
-            Optional<FirewallBooleanType> accountRegistered = default;
-            Optional<string> accountId = default;
-            Optional<FirewallBooleanType> userDomainSupported = default;
-            Optional<FirewallBooleanType> userRegistered = default;
-            Optional<FirewallBooleanType> freeTrial = default;
-            Optional<int> freeTrialDaysLeft = default;
-            Optional<int> freeTrialCreditLeft = default;
-            Optional<string> helpURL = default;
-            Optional<string> supportURL = default;
-            Optional<string> registerURL = default;
+            string productSku = default;
+            string productSerial = default;
+            FirewallBooleanType? accountRegistered = default;
+            string accountId = default;
+            FirewallBooleanType? userDomainSupported = default;
+            FirewallBooleanType? userRegistered = default;
+            FirewallBooleanType? freeTrial = default;
+            int? freeTrialDaysLeft = default;
+            int? freeTrialCreditLeft = default;
+            string helpURL = default;
+            string supportURL = default;
+            string registerURL = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallSupportInfo(productSku.Value, productSerial.Value, Optional.ToNullable(accountRegistered), accountId.Value, Optional.ToNullable(userDomainSupported), Optional.ToNullable(userRegistered), Optional.ToNullable(freeTrial), Optional.ToNullable(freeTrialDaysLeft), Optional.ToNullable(freeTrialCreditLeft), helpURL.Value, supportURL.Value, registerURL.Value, serializedAdditionalRawData);
+            return new FirewallSupportInfo(
+                productSku,
+                productSerial,
+                accountRegistered,
+                accountId,
+                userDomainSupported,
+                userRegistered,
+                freeTrial,
+                freeTrialDaysLeft,
+                freeTrialCreditLeft,
+                helpURL,
+                supportURL,
+                registerURL,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallSupportInfo>.Write(ModelReaderWriterOptions options)
@@ -242,7 +255,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -258,7 +271,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeFirewallSupportInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

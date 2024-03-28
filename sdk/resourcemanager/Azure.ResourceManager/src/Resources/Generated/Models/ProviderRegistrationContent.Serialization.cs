@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderRegistrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderRegistrationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderRegistrationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ThirdPartyProviderConsent))
             {
                 writer.WritePropertyName("thirdPartyProviderConsent"u8);
-                writer.WriteObjectValue(ThirdPartyProviderConsent);
+                writer.WriteObjectValue<ProviderConsentDefinition>(ThirdPartyProviderConsent, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderRegistrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderRegistrationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderRegistrationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ProviderConsentDefinition> thirdPartyProviderConsent = default;
+            ProviderConsentDefinition thirdPartyProviderConsent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    thirdPartyProviderConsent = ProviderConsentDefinition.DeserializeProviderConsentDefinition(property.Value);
+                    thirdPartyProviderConsent = ProviderConsentDefinition.DeserializeProviderConsentDefinition(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderRegistrationContent(thirdPartyProviderConsent.Value, serializedAdditionalRawData);
+            return new ProviderRegistrationContent(thirdPartyProviderConsent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderRegistrationContent>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderRegistrationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderRegistrationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeProviderRegistrationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderRegistrationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderRegistrationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

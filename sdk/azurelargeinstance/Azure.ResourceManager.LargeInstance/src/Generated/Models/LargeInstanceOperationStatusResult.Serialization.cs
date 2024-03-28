@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LargeInstance.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LargeInstanceOperationStatusResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,15 +111,15 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> name = default;
+            ResourceIdentifier id = default;
+            ResourceIdentifier resourceId = default;
+            string name = default;
             string status = default;
-            Optional<float> percentComplete = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<LargeInstanceOperationStatusResult>> operations = default;
-            Optional<ResponseError> error = default;
+            float? percentComplete = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IReadOnlyList<LargeInstanceOperationStatusResult> operations = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     List<LargeInstanceOperationStatusResult> array = new List<LargeInstanceOperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeLargeInstanceOperationStatusResult(item));
+                        array.Add(DeserializeLargeInstanceOperationStatusResult(item, options));
                     }
                     operations = array;
                     continue;
@@ -209,7 +208,17 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceOperationStatusResult(id.Value, resourceId.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value, serializedAdditionalRawData);
+            return new LargeInstanceOperationStatusResult(
+                id,
+                resourceId,
+                name,
+                status,
+                percentComplete,
+                startTime,
+                endTime,
+                operations ?? new ChangeTrackingList<LargeInstanceOperationStatusResult>(),
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceOperationStatusResult>.Write(ModelReaderWriterOptions options)
@@ -221,7 +230,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +246,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                         return DeserializeLargeInstanceOperationStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 

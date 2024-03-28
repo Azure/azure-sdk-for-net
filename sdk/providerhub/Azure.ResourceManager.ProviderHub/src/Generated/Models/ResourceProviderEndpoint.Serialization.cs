@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProviderEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceProviderEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue(FeaturesRule);
+                writer.WriteObjectValue<FeaturesRule>(FeaturesRule, options);
             }
             if (Optional.IsDefined(Timeout))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProviderEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceProviderEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<Uri> endpointUri = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<string>> requiredFeatures = default;
-            Optional<FeaturesRule> featuresRule = default;
-            Optional<TimeSpan> timeout = default;
+            bool? enabled = default;
+            IReadOnlyList<string> apiVersions = default;
+            Uri endpointUri = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<string> requiredFeatures = default;
+            FeaturesRule featuresRule = default;
+            TimeSpan? timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value);
+                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timeout"u8))
@@ -209,7 +209,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderEndpoint(Optional.ToNullable(enabled), Optional.ToList(apiVersions), endpointUri.Value, Optional.ToList(locations), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToNullable(timeout), serializedAdditionalRawData);
+            return new ResourceProviderEndpoint(
+                enabled,
+                apiVersions ?? new ChangeTrackingList<string>(),
+                endpointUri,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                featuresRule,
+                timeout,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderEndpoint>.Write(ModelReaderWriterOptions options)
@@ -221,7 +229,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProviderEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceProviderEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +245,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeResourceProviderEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProviderEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceProviderEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

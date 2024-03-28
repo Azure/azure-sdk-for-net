@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteGatewayList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteGatewayList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteGatewayList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ExpressRouteGatewayData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteGatewayList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteGatewayList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteGatewayList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExpressRouteGatewayData>> value = default;
+            IReadOnlyList<ExpressRouteGatewayData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExpressRouteGatewayData> array = new List<ExpressRouteGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(item));
+                        array.Add(ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteGatewayList(Optional.ToList(value), serializedAdditionalRawData);
+            return new ExpressRouteGatewayList(value ?? new ChangeTrackingList<ExpressRouteGatewayData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteGatewayList>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteGatewayList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteGatewayList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeExpressRouteGatewayList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteGatewayList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteGatewayList)} does not support reading '{options.Format}' format.");
             }
         }
 

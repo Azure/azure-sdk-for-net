@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxScheduleAvailabilityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxScheduleAvailabilityContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxScheduleAvailabilityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxScheduleAvailabilityContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             AzureLocation storageLocation = default;
             DataBoxSkuName skuName = default;
-            Optional<string> country = default;
+            string country = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxScheduleAvailabilityContent(storageLocation, skuName, country.Value, serializedAdditionalRawData);
+            return new DataBoxScheduleAvailabilityContent(storageLocation, skuName, country, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxScheduleAvailabilityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxScheduleAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxScheduleAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxScheduleAvailabilityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxScheduleAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 

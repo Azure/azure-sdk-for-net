@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsQueryFunction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsQueryFunction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsQueryFunction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<StreamingJobFunctionInput>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("output"u8);
-            writer.WriteObjectValue(Output);
+            writer.WriteObjectValue<StreamingJobFunctionOutput>(Output, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsQueryFunction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsQueryFunction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsQueryFunction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamingJobFunctionInput> array = new List<StreamingJobFunctionInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item));
+                        array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item, options));
                     }
                     inputs = array;
                     continue;
                 }
                 if (property.NameEquals("output"u8))
                 {
-                    output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property.Value);
+                    output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsQueryFunction(name, type, bindingType, inputs, output, serializedAdditionalRawData);
+            return new StreamAnalyticsQueryFunction(
+                name,
+                type,
+                bindingType,
+                inputs,
+                output,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsQueryFunction>.Write(ModelReaderWriterOptions options)
@@ -136,7 +142,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsQueryFunction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsQueryFunction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +158,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamAnalyticsQueryFunction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsQueryFunction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsQueryFunction)} does not support reading '{options.Format}' format.");
             }
         }
 

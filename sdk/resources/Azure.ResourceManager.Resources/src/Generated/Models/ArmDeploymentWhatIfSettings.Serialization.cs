@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentWhatIfSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentWhatIfSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentWhatIfSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentWhatIfSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<WhatIfResultFormat> resultFormat = default;
+            WhatIfResultFormat? resultFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentWhatIfSettings(Optional.ToNullable(resultFormat), serializedAdditionalRawData);
+            return new ArmDeploymentWhatIfSettings(resultFormat, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentWhatIfSettings>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmDeploymentWhatIfSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

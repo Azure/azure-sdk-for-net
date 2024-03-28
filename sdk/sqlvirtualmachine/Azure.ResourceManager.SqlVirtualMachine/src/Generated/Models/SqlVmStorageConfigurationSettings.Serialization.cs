@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmStorageConfigurationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmStorageConfigurationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmStorageConfigurationSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlDataSettings))
             {
                 writer.WritePropertyName("sqlDataSettings"u8);
-                writer.WriteObjectValue(SqlDataSettings);
+                writer.WriteObjectValue<SqlStorageSettings>(SqlDataSettings, options);
             }
             if (Optional.IsDefined(SqlLogSettings))
             {
                 writer.WritePropertyName("sqlLogSettings"u8);
-                writer.WriteObjectValue(SqlLogSettings);
+                writer.WriteObjectValue<SqlStorageSettings>(SqlLogSettings, options);
             }
             if (Optional.IsDefined(SqlTempDBSettings))
             {
                 writer.WritePropertyName("sqlTempDbSettings"u8);
-                writer.WriteObjectValue(SqlTempDBSettings);
+                writer.WriteObjectValue<SqlTempDBSettings>(SqlTempDBSettings, options);
             }
             if (Optional.IsDefined(IsSqlSystemDBOnDataDisk))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmStorageConfigurationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmStorageConfigurationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmStorageConfigurationSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<SqlStorageSettings> sqlDataSettings = default;
-            Optional<SqlStorageSettings> sqlLogSettings = default;
-            Optional<SqlTempDBSettings> sqlTempDBSettings = default;
-            Optional<bool> sqlSystemDBOnDataDisk = default;
-            Optional<SqlVmDiskConfigurationType> diskConfigurationType = default;
-            Optional<SqlVmStorageWorkloadType> storageWorkloadType = default;
+            SqlStorageSettings sqlDataSettings = default;
+            SqlStorageSettings sqlLogSettings = default;
+            SqlTempDBSettings sqlTempDBSettings = default;
+            bool? sqlSystemDBOnDataDisk = default;
+            SqlVmDiskConfigurationType? diskConfigurationType = default;
+            SqlVmStorageWorkloadType? storageWorkloadType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlDataSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value);
+                    sqlDataSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlLogSettings"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlLogSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value);
+                    sqlLogSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlTempDbSettings"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlTempDBSettings = SqlTempDBSettings.DeserializeSqlTempDBSettings(property.Value);
+                    sqlTempDBSettings = SqlTempDBSettings.DeserializeSqlTempDBSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlSystemDbOnDataDisk"u8))
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmStorageConfigurationSettings(sqlDataSettings.Value, sqlLogSettings.Value, sqlTempDBSettings.Value, Optional.ToNullable(sqlSystemDBOnDataDisk), Optional.ToNullable(diskConfigurationType), Optional.ToNullable(storageWorkloadType), serializedAdditionalRawData);
+            return new SqlVmStorageConfigurationSettings(
+                sqlDataSettings,
+                sqlLogSettings,
+                sqlTempDBSettings,
+                sqlSystemDBOnDataDisk,
+                diskConfigurationType,
+                storageWorkloadType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmStorageConfigurationSettings>.Write(ModelReaderWriterOptions options)
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmStorageConfigurationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmStorageConfigurationSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeSqlVmStorageConfigurationSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmStorageConfigurationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmStorageConfigurationSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

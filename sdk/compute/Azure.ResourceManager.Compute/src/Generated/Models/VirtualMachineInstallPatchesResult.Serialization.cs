@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Patches)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PatchInstallationDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<ComputeApiError>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<PatchOperationStatus> status = default;
-            Optional<string> installationActivityId = default;
-            Optional<VmGuestPatchRebootStatus> rebootStatus = default;
-            Optional<bool> maintenanceWindowExceeded = default;
-            Optional<int> excludedPatchCount = default;
-            Optional<int> notSelectedPatchCount = default;
-            Optional<int> pendingPatchCount = default;
-            Optional<int> installedPatchCount = default;
-            Optional<int> failedPatchCount = default;
-            Optional<IReadOnlyList<PatchInstallationDetail>> patches = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<ComputeApiError> error = default;
+            PatchOperationStatus? status = default;
+            string installationActivityId = default;
+            VmGuestPatchRebootStatus? rebootStatus = default;
+            bool? maintenanceWindowExceeded = default;
+            int? excludedPatchCount = default;
+            int? notSelectedPatchCount = default;
+            int? pendingPatchCount = default;
+            int? installedPatchCount = default;
+            int? failedPatchCount = default;
+            IReadOnlyList<PatchInstallationDetail> patches = default;
+            DateTimeOffset? startDateTime = default;
+            ComputeApiError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<PatchInstallationDetail> array = new List<PatchInstallationDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PatchInstallationDetail.DeserializePatchInstallationDetail(item));
+                        array.Add(PatchInstallationDetail.DeserializePatchInstallationDetail(item, options));
                     }
                     patches = array;
                     continue;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    error = ComputeApiError.DeserializeComputeApiError(property.Value);
+                    error = ComputeApiError.DeserializeComputeApiError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -260,7 +260,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstallPatchesResult(Optional.ToNullable(status), installationActivityId.Value, Optional.ToNullable(rebootStatus), Optional.ToNullable(maintenanceWindowExceeded), Optional.ToNullable(excludedPatchCount), Optional.ToNullable(notSelectedPatchCount), Optional.ToNullable(pendingPatchCount), Optional.ToNullable(installedPatchCount), Optional.ToNullable(failedPatchCount), Optional.ToList(patches), Optional.ToNullable(startDateTime), error.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstallPatchesResult(
+                status,
+                installationActivityId,
+                rebootStatus,
+                maintenanceWindowExceeded,
+                excludedPatchCount,
+                notSelectedPatchCount,
+                pendingPatchCount,
+                installedPatchCount,
+                failedPatchCount,
+                patches ?? new ChangeTrackingList<PatchInstallationDetail>(),
+                startDateTime,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstallPatchesResult>.Write(ModelReaderWriterOptions options)
@@ -272,7 +285,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -288,7 +301,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineInstallPatchesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

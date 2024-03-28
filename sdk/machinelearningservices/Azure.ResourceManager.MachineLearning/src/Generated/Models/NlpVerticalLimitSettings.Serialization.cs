@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<NlpVerticalLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<NlpVerticalLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> maxConcurrentTrials = default;
-            Optional<int> maxNodes = default;
-            Optional<int> maxTrials = default;
-            Optional<TimeSpan> timeout = default;
-            Optional<TimeSpan> trialTimeout = default;
+            int? maxConcurrentTrials = default;
+            int? maxNodes = default;
+            int? maxTrials = default;
+            TimeSpan? timeout = default;
+            TimeSpan? trialTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NlpVerticalLimitSettings(Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxNodes), Optional.ToNullable(maxTrials), Optional.ToNullable(timeout), Optional.ToNullable(trialTimeout), serializedAdditionalRawData);
+            return new NlpVerticalLimitSettings(
+                maxConcurrentTrials,
+                maxNodes,
+                maxTrials,
+                timeout,
+                trialTimeout,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NlpVerticalLimitSettings>.Write(ModelReaderWriterOptions options)
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeNlpVerticalLimitSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

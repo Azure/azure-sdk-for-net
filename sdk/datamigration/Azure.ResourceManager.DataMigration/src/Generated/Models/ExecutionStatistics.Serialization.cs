@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecutionStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 foreach (var item in WaitStats)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<WaitStatistics>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecutionStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<long> executionCount = default;
-            Optional<float> cpuTimeMs = default;
-            Optional<float> elapsedTimeMs = default;
-            Optional<IReadOnlyDictionary<string, WaitStatistics>> waitStats = default;
-            Optional<bool> hasErrors = default;
-            Optional<IReadOnlyList<string>> sqlErrors = default;
+            long? executionCount = default;
+            float? cpuTimeMs = default;
+            float? elapsedTimeMs = default;
+            IReadOnlyDictionary<string, WaitStatistics> waitStats = default;
+            bool? hasErrors = default;
+            IReadOnlyList<string> sqlErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, WaitStatistics> dictionary = new Dictionary<string, WaitStatistics>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, WaitStatistics.DeserializeWaitStatistics(property0.Value));
+                        dictionary.Add(property0.Name, WaitStatistics.DeserializeWaitStatistics(property0.Value, options));
                     }
                     waitStats = dictionary;
                     continue;
@@ -185,7 +185,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExecutionStatistics(Optional.ToNullable(executionCount), Optional.ToNullable(cpuTimeMs), Optional.ToNullable(elapsedTimeMs), Optional.ToDictionary(waitStats), Optional.ToNullable(hasErrors), Optional.ToList(sqlErrors), serializedAdditionalRawData);
+            return new ExecutionStatistics(
+                executionCount,
+                cpuTimeMs,
+                elapsedTimeMs,
+                waitStats ?? new ChangeTrackingDictionary<string, WaitStatistics>(),
+                hasErrors,
+                sqlErrors ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExecutionStatistics>.Write(ModelReaderWriterOptions options)
@@ -197,7 +204,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -213,7 +220,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeExecutionStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

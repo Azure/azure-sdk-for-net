@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SiteData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<SiteData> array = new List<SiteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteData.DeserializeSiteData(item));
+                        array.Add(SiteData.DeserializeSiteData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SiteListResult(value ?? new ChangeTrackingList<SiteData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeSiteListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

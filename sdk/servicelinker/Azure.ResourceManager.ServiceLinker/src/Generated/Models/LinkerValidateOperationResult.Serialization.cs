@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkerValidateOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteStartArray();
                     foreach (var item in ValidationDetail)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<LinkerValidationResultItemInfo>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkerValidateOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -192,16 +192,16 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> status = default;
-            Optional<string> linkerName = default;
-            Optional<bool?> isConnectionAvailable = default;
-            Optional<DateTimeOffset?> reportStartTimeUtc = default;
-            Optional<DateTimeOffset?> reportEndTimeUtc = default;
-            Optional<ResourceIdentifier> sourceId = default;
-            Optional<ResourceIdentifier> targetId = default;
-            Optional<LinkerAuthType?> authType = default;
-            Optional<IReadOnlyList<LinkerValidationResultItemInfo>> validationDetail = default;
+            ResourceIdentifier resourceId = default;
+            string status = default;
+            string linkerName = default;
+            bool? isConnectionAvailable = default;
+            DateTimeOffset? reportStartTimeUtc = default;
+            DateTimeOffset? reportEndTimeUtc = default;
+            ResourceIdentifier sourceId = default;
+            ResourceIdentifier targetId = default;
+            LinkerAuthType? authType = default;
+            IReadOnlyList<LinkerValidationResultItemInfo> validationDetail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             List<LinkerValidationResultItemInfo> array = new List<LinkerValidationResultItemInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkerValidationResultItemInfo.DeserializeLinkerValidationResultItemInfo(item));
+                                array.Add(LinkerValidationResultItemInfo.DeserializeLinkerValidationResultItemInfo(item, options));
                             }
                             validationDetail = array;
                             continue;
@@ -329,7 +329,18 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkerValidateOperationResult(resourceId.Value, status.Value, linkerName.Value, Optional.ToNullable(isConnectionAvailable), Optional.ToNullable(reportStartTimeUtc), Optional.ToNullable(reportEndTimeUtc), sourceId.Value, targetId.Value, Optional.ToNullable(authType), Optional.ToList(validationDetail), serializedAdditionalRawData);
+            return new LinkerValidateOperationResult(
+                resourceId,
+                status,
+                linkerName,
+                isConnectionAvailable,
+                reportStartTimeUtc,
+                reportEndTimeUtc,
+                sourceId,
+                targetId,
+                authType,
+                validationDetail ?? new ChangeTrackingList<LinkerValidationResultItemInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkerValidateOperationResult>.Write(ModelReaderWriterOptions options)
@@ -341,7 +352,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -357,7 +368,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         return DeserializeLinkerValidateOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerValidateOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

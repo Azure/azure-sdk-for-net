@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadBackupJobTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadBackupJobTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadBackupJobTaskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadBackupJobTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadBackupJobTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadBackupJobTaskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> taskId = default;
-            Optional<string> status = default;
+            string taskId = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadBackupJobTaskDetails(taskId.Value, status.Value, serializedAdditionalRawData);
+            return new WorkloadBackupJobTaskDetails(taskId, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadBackupJobTaskDetails>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadBackupJobTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadBackupJobTaskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeWorkloadBackupJobTaskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadBackupJobTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadBackupJobTaskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

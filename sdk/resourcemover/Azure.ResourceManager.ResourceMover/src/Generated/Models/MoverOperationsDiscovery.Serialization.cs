@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverOperationsDiscovery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display);
+                writer.WriteObjectValue<MoverDisplayInfo>(Display, options);
             }
             if (Optional.IsDefined(Origin))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverOperationsDiscovery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isDataAction = default;
-            Optional<MoverDisplayInfo> display = default;
-            Optional<string> origin = default;
-            Optional<BinaryData> properties = default;
+            string name = default;
+            bool? isDataAction = default;
+            MoverDisplayInfo display = default;
+            string origin = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    display = MoverDisplayInfo.DeserializeMoverDisplayInfo(property.Value);
+                    display = MoverDisplayInfo.DeserializeMoverDisplayInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverOperationsDiscovery(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value, serializedAdditionalRawData);
+            return new MoverOperationsDiscovery(
+                name,
+                isDataAction,
+                display,
+                origin,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverOperationsDiscovery>.Write(ModelReaderWriterOptions options)
@@ -160,7 +166,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +182,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverOperationsDiscovery(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support reading '{options.Format}' format.");
             }
         }
 

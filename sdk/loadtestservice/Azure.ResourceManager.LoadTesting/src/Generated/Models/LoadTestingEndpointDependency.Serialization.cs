@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingEndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingEndpointDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingEndpointDependency)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoadTestingEndpointDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingEndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingEndpointDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingEndpointDependency)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<LoadTestingEndpointDetail>> endpointDetails = default;
+            string domainName = default;
+            string description = default;
+            IReadOnlyList<LoadTestingEndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     List<LoadTestingEndpointDetail> array = new List<LoadTestingEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadTestingEndpointDetail.DeserializeLoadTestingEndpointDetail(item));
+                        array.Add(LoadTestingEndpointDetail.DeserializeLoadTestingEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingEndpointDependency(domainName.Value, description.Value, Optional.ToList(endpointDetails), serializedAdditionalRawData);
+            return new LoadTestingEndpointDependency(domainName, description, endpointDetails ?? new ChangeTrackingList<LoadTestingEndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingEndpointDependency>.Write(ModelReaderWriterOptions options)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingEndpointDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingEndpointDependency)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         return DeserializeLoadTestingEndpointDependency(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingEndpointDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingEndpointDependency)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
-                writer.WriteObjectValue(Authorization);
+                writer.WriteObjectValue<AuthorizationInfo>(Authorization, options);
             }
             if (Optional.IsCollectionDefined(Orgs))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WriteStartArray();
                 foreach (var item in Orgs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureDevOpsOrgMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<AuthorizationInfo> authorization = default;
-            Optional<IList<AzureDevOpsOrgMetadata>> orgs = default;
+            ProvisioningState? provisioningState = default;
+            AuthorizationInfo authorization = default;
+            IList<AzureDevOpsOrgMetadata> orgs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     {
                         continue;
                     }
-                    authorization = AuthorizationInfo.DeserializeAuthorizationInfo(property.Value);
+                    authorization = AuthorizationInfo.DeserializeAuthorizationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("orgs"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<AzureDevOpsOrgMetadata> array = new List<AzureDevOpsOrgMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureDevOpsOrgMetadata.DeserializeAzureDevOpsOrgMetadata(item));
+                        array.Add(AzureDevOpsOrgMetadata.DeserializeAzureDevOpsOrgMetadata(item, options));
                     }
                     orgs = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsConnectorProperties(Optional.ToNullable(provisioningState), authorization.Value, Optional.ToList(orgs), serializedAdditionalRawData);
+            return new AzureDevOpsConnectorProperties(provisioningState, authorization, orgs ?? new ChangeTrackingList<AzureDevOpsOrgMetadata>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsConnectorProperties>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                         return DeserializeAzureDevOpsConnectorProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

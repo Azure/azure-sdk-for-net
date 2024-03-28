@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaItemList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionQuotaItemList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionQuotaItemList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetAppSubscriptionQuotaItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaItemList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionQuotaItemList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionQuotaItemList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppSubscriptionQuotaItem>> value = default;
+            IReadOnlyList<NetAppSubscriptionQuotaItem> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppSubscriptionQuotaItem> array = new List<NetAppSubscriptionQuotaItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(item));
+                        array.Add(NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionQuotaItemList(Optional.ToList(value), serializedAdditionalRawData);
+            return new SubscriptionQuotaItemList(value ?? new ChangeTrackingList<NetAppSubscriptionQuotaItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionQuotaItemList>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionQuotaItemList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionQuotaItemList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeSubscriptionQuotaItemList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionQuotaItemList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionQuotaItemList)} does not support reading '{options.Format}' format.");
             }
         }
 

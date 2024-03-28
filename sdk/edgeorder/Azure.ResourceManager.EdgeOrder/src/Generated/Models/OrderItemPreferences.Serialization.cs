@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrderItemPreferences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in NotificationPreferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NotificationPreference>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue(TransportPreferences);
+                writer.WriteObjectValue<TransportPreferences>(TransportPreferences, options);
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
-                writer.WriteObjectValue(EncryptionPreferences);
+                writer.WriteObjectValue<EncryptionPreferences>(EncryptionPreferences, options);
             }
             if (Optional.IsDefined(ManagementResourcePreferences))
             {
                 writer.WritePropertyName("managementResourcePreferences"u8);
-                writer.WriteObjectValue(ManagementResourcePreferences);
+                writer.WriteObjectValue<ManagementResourcePreferences>(ManagementResourcePreferences, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrderItemPreferences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IList<NotificationPreference>> notificationPreferences = default;
-            Optional<TransportPreferences> transportPreferences = default;
-            Optional<EncryptionPreferences> encryptionPreferences = default;
-            Optional<ManagementResourcePreferences> managementResourcePreferences = default;
+            IList<NotificationPreference> notificationPreferences = default;
+            TransportPreferences transportPreferences = default;
+            EncryptionPreferences encryptionPreferences = default;
+            ManagementResourcePreferences managementResourcePreferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<NotificationPreference> array = new List<NotificationPreference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationPreference.DeserializeNotificationPreference(item));
+                        array.Add(NotificationPreference.DeserializeNotificationPreference(item, options));
                     }
                     notificationPreferences = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value);
+                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptionPreferences"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    encryptionPreferences = EncryptionPreferences.DeserializeEncryptionPreferences(property.Value);
+                    encryptionPreferences = EncryptionPreferences.DeserializeEncryptionPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managementResourcePreferences"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    managementResourcePreferences = ManagementResourcePreferences.DeserializeManagementResourcePreferences(property.Value);
+                    managementResourcePreferences = ManagementResourcePreferences.DeserializeManagementResourcePreferences(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrderItemPreferences(Optional.ToList(notificationPreferences), transportPreferences.Value, encryptionPreferences.Value, managementResourcePreferences.Value, serializedAdditionalRawData);
+            return new OrderItemPreferences(notificationPreferences ?? new ChangeTrackingList<NotificationPreference>(), transportPreferences, encryptionPreferences, managementResourcePreferences, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrderItemPreferences>.Write(ModelReaderWriterOptions options)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeOrderItemPreferences(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support reading '{options.Format}' format.");
             }
         }
 

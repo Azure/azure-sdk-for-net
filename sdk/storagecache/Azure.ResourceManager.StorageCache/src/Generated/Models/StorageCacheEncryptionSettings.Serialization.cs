@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheEncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheEncryptionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheEncryptionSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                writer.WriteObjectValue<StorageCacheEncryptionKeyVaultKeyReference>(KeyEncryptionKey, options);
             }
             if (Optional.IsDefined(EnableRotationToLatestKeyVersion))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheEncryptionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheEncryptionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheEncryptionSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<StorageCacheEncryptionKeyVaultKeyReference> keyEncryptionKey = default;
-            Optional<bool> rotationToLatestKeyVersionEnabled = default;
+            StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default;
+            bool? rotationToLatestKeyVersionEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    keyEncryptionKey = StorageCacheEncryptionKeyVaultKeyReference.DeserializeStorageCacheEncryptionKeyVaultKeyReference(property.Value);
+                    keyEncryptionKey = StorageCacheEncryptionKeyVaultKeyReference.DeserializeStorageCacheEncryptionKeyVaultKeyReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rotationToLatestKeyVersionEnabled"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheEncryptionSettings(keyEncryptionKey.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), serializedAdditionalRawData);
+            return new StorageCacheEncryptionSettings(keyEncryptionKey, rotationToLatestKeyVersionEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheEncryptionSettings>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheEncryptionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheEncryptionSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeStorageCacheEncryptionSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheEncryptionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheEncryptionSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

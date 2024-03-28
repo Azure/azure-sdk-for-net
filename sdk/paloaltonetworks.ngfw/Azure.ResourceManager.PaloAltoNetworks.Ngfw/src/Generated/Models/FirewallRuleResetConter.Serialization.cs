@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleResetConter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleResetConter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<string> priority = default;
-            Optional<string> ruleStackName = default;
-            Optional<string> ruleListName = default;
-            Optional<string> firewallName = default;
-            Optional<string> ruleName = default;
+            string priority = default;
+            string ruleStackName = default;
+            string ruleListName = default;
+            string firewallName = default;
+            string ruleName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallRuleResetConter(priority.Value, ruleStackName.Value, ruleListName.Value, firewallName.Value, ruleName.Value, serializedAdditionalRawData);
+            return new FirewallRuleResetConter(
+                priority,
+                ruleStackName,
+                ruleListName,
+                firewallName,
+                ruleName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallRuleResetConter>.Write(ModelReaderWriterOptions options)
@@ -141,7 +147,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeFirewallRuleResetConter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support reading '{options.Format}' format.");
             }
         }
 

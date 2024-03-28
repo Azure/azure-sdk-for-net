@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningUriFolderJobInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningUriFolderJobInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningUriFolderJobInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningUriFolderJobInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningUriFolderJobInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningUriFolderJobInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningInputDeliveryMode> mode = default;
+            MachineLearningInputDeliveryMode? mode = default;
             Uri uri = default;
-            Optional<string> description = default;
+            string description = default;
             JobInputType jobInputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningUriFolderJobInput(description.Value, jobInputType, serializedAdditionalRawData, Optional.ToNullable(mode), uri);
+            return new MachineLearningUriFolderJobInput(description, jobInputType, serializedAdditionalRawData, mode, uri);
         }
 
         BinaryData IPersistableModel<MachineLearningUriFolderJobInput>.Write(ModelReaderWriterOptions options)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningUriFolderJobInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningUriFolderJobInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningUriFolderJobInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningUriFolderJobInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningUriFolderJobInput)} does not support reading '{options.Format}' format.");
             }
         }
 

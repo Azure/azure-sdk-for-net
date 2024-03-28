@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionDriftMonitoringSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionDriftMonitoringSignal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<PredictionDriftMetricThresholdBase>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("modelType"u8);
             writer.WriteStringValue(ModelType.ToString());
             writer.WritePropertyName("productionData"u8);
-            writer.WriteObjectValue(ProductionData);
+            writer.WriteObjectValue<MonitoringInputDataBase>(ProductionData, options);
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData);
+            writer.WriteObjectValue<MonitoringInputDataBase>(ReferenceData, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionDriftMonitoringSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionDriftMonitoringSignal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MonitoringModelType modelType = default;
             MonitoringInputDataBase productionData = default;
             MonitoringInputDataBase referenceData = default;
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<PredictionDriftMetricThresholdBase> array = new List<PredictionDriftMetricThresholdBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredictionDriftMetricThresholdBase.DeserializePredictionDriftMetricThresholdBase(item));
+                        array.Add(PredictionDriftMetricThresholdBase.DeserializePredictionDriftMetricThresholdBase(item, options));
                     }
                     metricThresholds = array;
                     continue;
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("productionData"u8))
                 {
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("referenceData"u8))
                 {
-                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionDriftMonitoringSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, metricThresholds, modelType, productionData, referenceData);
+            return new PredictionDriftMonitoringSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThresholds,
+                modelType,
+                productionData,
+                referenceData);
         }
 
         BinaryData IPersistableModel<PredictionDriftMonitoringSignal>.Write(ModelReaderWriterOptions options)
@@ -185,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PredictionDriftMonitoringSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionDriftMonitoringSignal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +209,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializePredictionDriftMonitoringSignal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredictionDriftMonitoringSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionDriftMonitoringSignal)} does not support reading '{options.Format}' format.");
             }
         }
 

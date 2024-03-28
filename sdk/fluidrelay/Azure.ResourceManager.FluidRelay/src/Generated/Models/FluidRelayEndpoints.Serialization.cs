@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             var format = options.Format == "W" ? ((IPersistableModel<FluidRelayEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             var format = options.Format == "W" ? ((IPersistableModel<FluidRelayEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> ordererEndpoints = default;
-            Optional<IReadOnlyList<string>> storageEndpoints = default;
-            Optional<IReadOnlyList<string>> serviceEndpoints = default;
+            IReadOnlyList<string> ordererEndpoints = default;
+            IReadOnlyList<string> storageEndpoints = default;
+            IReadOnlyList<string> serviceEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FluidRelayEndpoints(Optional.ToList(ordererEndpoints), Optional.ToList(storageEndpoints), Optional.ToList(serviceEndpoints), serializedAdditionalRawData);
+            return new FluidRelayEndpoints(ordererEndpoints ?? new ChangeTrackingList<string>(), storageEndpoints ?? new ChangeTrackingList<string>(), serviceEndpoints ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FluidRelayEndpoints>.Write(ModelReaderWriterOptions options)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                         return DeserializeFluidRelayEndpoints(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support reading '{options.Format}' format.");
             }
         }
 

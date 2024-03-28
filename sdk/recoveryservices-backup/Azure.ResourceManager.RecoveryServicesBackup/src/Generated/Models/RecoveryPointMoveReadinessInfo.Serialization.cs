@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointMoveReadinessInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPointMoveReadinessInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointMoveReadinessInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointMoveReadinessInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPointMoveReadinessInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointMoveReadinessInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<bool> isReadyForMove = default;
-            Optional<string> additionalInfo = default;
+            bool? isReadyForMove = default;
+            string additionalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPointMoveReadinessInfo(Optional.ToNullable(isReadyForMove), additionalInfo.Value, serializedAdditionalRawData);
+            return new RecoveryPointMoveReadinessInfo(isReadyForMove, additionalInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPointMoveReadinessInfo>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPointMoveReadinessInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointMoveReadinessInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeRecoveryPointMoveReadinessInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPointMoveReadinessInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointMoveReadinessInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

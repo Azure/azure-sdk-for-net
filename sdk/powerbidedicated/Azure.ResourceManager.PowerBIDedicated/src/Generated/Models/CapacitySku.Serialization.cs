@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacitySku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacitySku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacitySku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacitySku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacitySku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacitySku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 return null;
             }
             string name = default;
-            Optional<CapacitySkuTier> tier = default;
-            Optional<int> capacity = default;
+            CapacitySkuTier? tier = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacitySku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new CapacitySku(name, tier, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacitySku>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapacitySku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacitySku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                         return DeserializeCapacitySku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapacitySku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacitySku)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetComputeSizeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetComputeSizeListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetComputeSizeListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TargetComputeSize>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetComputeSizeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetComputeSizeListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetComputeSizeListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TargetComputeSize>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<TargetComputeSize> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<TargetComputeSize> array = new List<TargetComputeSize>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetComputeSize.DeserializeTargetComputeSize(item));
+                        array.Add(TargetComputeSize.DeserializeTargetComputeSize(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetComputeSizeListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new TargetComputeSizeListResult(value ?? new ChangeTrackingList<TargetComputeSize>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetComputeSizeListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TargetComputeSizeListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetComputeSizeListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeTargetComputeSizeListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetComputeSizeListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetComputeSizeListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

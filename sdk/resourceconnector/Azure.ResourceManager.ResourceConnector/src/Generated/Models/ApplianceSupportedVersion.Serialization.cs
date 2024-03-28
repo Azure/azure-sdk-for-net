@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceSupportedVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceSupportedVersion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<ApplianceSupportedVersionMetadata>(Metadata, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceSupportedVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceSupportedVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<ApplianceSupportedVersionMetadata> metadata = default;
-            Optional<string> version = default;
+            ApplianceSupportedVersionMetadata metadata = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    metadata = ApplianceSupportedVersionMetadata.DeserializeApplianceSupportedVersionMetadata(property.Value);
+                    metadata = ApplianceSupportedVersionMetadata.DeserializeApplianceSupportedVersionMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("version"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceSupportedVersion(metadata.Value, version.Value, serializedAdditionalRawData);
+            return new ApplianceSupportedVersion(metadata, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceSupportedVersion>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceSupportedVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceSupportedVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                         return DeserializeApplianceSupportedVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceSupportedVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceSupportedVersion)} does not support reading '{options.Format}' format.");
             }
         }
 

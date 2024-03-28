@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlPerformanceTier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlPerformanceTier)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlPerformanceTier)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceLevelObjectives)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MySqlPerformanceTierServiceLevelObjectives>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlPerformanceTier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlPerformanceTier)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlPerformanceTier)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<int> maxBackupRetentionDays = default;
-            Optional<int> minBackupRetentionDays = default;
-            Optional<int> maxStorageMB = default;
-            Optional<int> minLargeStorageMB = default;
-            Optional<int> maxLargeStorageMB = default;
-            Optional<int> minStorageMB = default;
-            Optional<IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives>> serviceLevelObjectives = default;
+            string id = default;
+            int? maxBackupRetentionDays = default;
+            int? minBackupRetentionDays = default;
+            int? maxStorageMB = default;
+            int? minLargeStorageMB = default;
+            int? maxLargeStorageMB = default;
+            int? minStorageMB = default;
+            IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlPerformanceTierServiceLevelObjectives> array = new List<MySqlPerformanceTierServiceLevelObjectives>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlPerformanceTierServiceLevelObjectives.DeserializeMySqlPerformanceTierServiceLevelObjectives(item));
+                        array.Add(MySqlPerformanceTierServiceLevelObjectives.DeserializeMySqlPerformanceTierServiceLevelObjectives(item, options));
                     }
                     serviceLevelObjectives = array;
                     continue;
@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlPerformanceTier(id.Value, Optional.ToNullable(maxBackupRetentionDays), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxStorageMB), Optional.ToNullable(minLargeStorageMB), Optional.ToNullable(maxLargeStorageMB), Optional.ToNullable(minStorageMB), Optional.ToList(serviceLevelObjectives), serializedAdditionalRawData);
+            return new MySqlPerformanceTier(
+                id,
+                maxBackupRetentionDays,
+                minBackupRetentionDays,
+                maxStorageMB,
+                minLargeStorageMB,
+                maxLargeStorageMB,
+                minStorageMB,
+                serviceLevelObjectives ?? new ChangeTrackingList<MySqlPerformanceTierServiceLevelObjectives>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlPerformanceTier>.Write(ModelReaderWriterOptions options)
@@ -212,7 +221,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlPerformanceTier)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlPerformanceTier)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +237,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlPerformanceTier(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlPerformanceTier)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlPerformanceTier)} does not support reading '{options.Format}' format.");
             }
         }
 

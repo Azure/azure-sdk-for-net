@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumePatchDataProtection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumePatchDataProtection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumePatchDataProtection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
-                writer.WriteObjectValue(Snapshot);
+                writer.WriteObjectValue<VolumeSnapshotProperties>(Snapshot, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumePatchDataProtection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumePatchDataProtection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumePatchDataProtection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<VolumeSnapshotProperties> snapshot = default;
+            VolumeSnapshotProperties snapshot = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    snapshot = VolumeSnapshotProperties.DeserializeVolumeSnapshotProperties(property.Value);
+                    snapshot = VolumeSnapshotProperties.DeserializeVolumeSnapshotProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumePatchDataProtection(snapshot.Value, serializedAdditionalRawData);
+            return new NetAppVolumePatchDataProtection(snapshot, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumePatchDataProtection>.Write(ModelReaderWriterOptions options)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumePatchDataProtection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumePatchDataProtection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumePatchDataProtection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumePatchDataProtection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumePatchDataProtection)} does not support reading '{options.Format}' format.");
             }
         }
 

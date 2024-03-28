@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAssistConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningAssistConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningAssistConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAssistConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningAssistConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningAssistConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Disabled": return MLAssistConfigurationDisabled.DeserializeMLAssistConfigurationDisabled(element);
-                    case "Enabled": return MachineLearningAssistEnabledConfiguration.DeserializeMachineLearningAssistEnabledConfiguration(element);
+                    case "Disabled": return MLAssistConfigurationDisabled.DeserializeMLAssistConfigurationDisabled(element, options);
+                    case "Enabled": return MachineLearningAssistEnabledConfiguration.DeserializeMachineLearningAssistEnabledConfiguration(element, options);
                 }
             }
-            return UnknownMLAssistConfiguration.DeserializeUnknownMLAssistConfiguration(element);
+            return UnknownMLAssistConfiguration.DeserializeUnknownMLAssistConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningAssistConfiguration>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningAssistConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningAssistConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningAssistConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningAssistConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningAssistConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

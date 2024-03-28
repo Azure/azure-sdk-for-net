@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesEligibleApprover>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesEligibleApprover>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             Guid principalId = default;
-            Optional<string> principalIdDisplayName = default;
+            string principalIdDisplayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesEligibleApprover(principalId, principalIdDisplayName.Value, serializedAdditionalRawData);
+            return new ManagedServicesEligibleApprover(principalId, principalIdDisplayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesEligibleApprover>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                         return DeserializeManagedServicesEligibleApprover(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support reading '{options.Format}' format.");
             }
         }
 

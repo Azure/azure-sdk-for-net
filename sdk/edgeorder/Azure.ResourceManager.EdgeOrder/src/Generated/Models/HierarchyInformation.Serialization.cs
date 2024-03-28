@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<HierarchyInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HierarchyInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HierarchyInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<HierarchyInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HierarchyInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HierarchyInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> productFamilyName = default;
-            Optional<string> productLineName = default;
-            Optional<string> productName = default;
-            Optional<string> configurationName = default;
+            string productFamilyName = default;
+            string productLineName = default;
+            string productName = default;
+            string configurationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HierarchyInformation(productFamilyName.Value, productLineName.Value, productName.Value, configurationName.Value, serializedAdditionalRawData);
+            return new HierarchyInformation(productFamilyName, productLineName, productName, configurationName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HierarchyInformation>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HierarchyInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HierarchyInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeHierarchyInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HierarchyInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HierarchyInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

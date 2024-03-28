@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenerationSafetyQualityMetricThreshold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerationSafetyQualityMetricThreshold)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerationSafetyQualityMetricThreshold)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Threshold != null)
                 {
                     writer.WritePropertyName("threshold"u8);
-                    writer.WriteObjectValue(Threshold);
+                    writer.WriteObjectValue<MonitoringThreshold>(Threshold, options);
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenerationSafetyQualityMetricThreshold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerationSafetyQualityMetricThreshold)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerationSafetyQualityMetricThreshold)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             GenerationSafetyQualityMetric metric = default;
-            Optional<MonitoringThreshold> threshold = default;
+            MonitoringThreshold threshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         threshold = null;
                         continue;
                     }
-                    threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value);
+                    threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenerationSafetyQualityMetricThreshold(metric, threshold.Value, serializedAdditionalRawData);
+            return new GenerationSafetyQualityMetricThreshold(metric, threshold, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GenerationSafetyQualityMetricThreshold>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GenerationSafetyQualityMetricThreshold)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerationSafetyQualityMetricThreshold)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeGenerationSafetyQualityMetricThreshold(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenerationSafetyQualityMetricThreshold)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerationSafetyQualityMetricThreshold)} does not support reading '{options.Format}' format.");
             }
         }
 

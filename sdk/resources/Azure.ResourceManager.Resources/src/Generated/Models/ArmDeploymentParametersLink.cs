@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -73,8 +72,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The URI of the parameters file. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; set; }
         /// <summary> If included, must match the ContentVersion in the template. </summary>
+        [WirePath("contentVersion")]
         public string ContentVersion { get; set; }
     }
 }

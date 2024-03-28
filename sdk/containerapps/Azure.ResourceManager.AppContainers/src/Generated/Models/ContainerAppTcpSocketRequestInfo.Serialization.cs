@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppTcpSocketRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppTcpSocketRequestInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppTcpSocketRequestInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppTcpSocketRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppTcpSocketRequestInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppTcpSocketRequestInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> host = default;
+            string host = default;
             int port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppTcpSocketRequestInfo(host.Value, port, serializedAdditionalRawData);
+            return new ContainerAppTcpSocketRequestInfo(host, port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppTcpSocketRequestInfo>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppTcpSocketRequestInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppTcpSocketRequestInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppTcpSocketRequestInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppTcpSocketRequestInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppTcpSocketRequestInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

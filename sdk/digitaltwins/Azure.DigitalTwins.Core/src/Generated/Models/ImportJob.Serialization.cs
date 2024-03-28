@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,6 +26,105 @@ namespace Azure.DigitalTwins.Core
                 SerializeErrorValue(writer);
             }
             writer.WriteEndObject();
+        }
+
+        internal static ImportJob DeserializeImportJob(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            Uri inputBlobUri = default;
+            Uri outputBlobUri = default;
+            ImportJobStatus? status = default;
+            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? lastActionDateTime = default;
+            DateTimeOffset? finishedDateTime = default;
+            DateTimeOffset? purgeDateTime = default;
+            ResponseError error = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("inputBlobUri"u8))
+                {
+                    inputBlobUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("outputBlobUri"u8))
+                {
+                    outputBlobUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = new ImportJobStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("createdDateTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("lastActionDateTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastActionDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("finishedDateTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    finishedDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("purgeDateTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    purgeDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    continue;
+                }
+            }
+            return new ImportJob(
+                id,
+                inputBlobUri,
+                outputBlobUri,
+                status,
+                createdDateTime,
+                lastActionDateTime,
+                finishedDateTime,
+                purgeDateTime,
+                error);
         }
     }
 }

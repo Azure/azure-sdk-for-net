@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabRosterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabRosterProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabRosterProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabRosterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabRosterProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabRosterProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<string> activeDirectoryGroupId = default;
-            Optional<string> ltiContextId = default;
-            Optional<Uri> lmsInstance = default;
-            Optional<string> ltiClientId = default;
-            Optional<Uri> ltiRosterEndpoint = default;
+            string activeDirectoryGroupId = default;
+            string ltiContextId = default;
+            Uri lmsInstance = default;
+            string ltiClientId = default;
+            Uri ltiRosterEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabRosterProfile(activeDirectoryGroupId.Value, ltiContextId.Value, lmsInstance.Value, ltiClientId.Value, ltiRosterEndpoint.Value, serializedAdditionalRawData);
+            return new LabRosterProfile(
+                activeDirectoryGroupId,
+                ltiContextId,
+                lmsInstance,
+                ltiClientId,
+                ltiRosterEndpoint,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabRosterProfile>.Write(ModelReaderWriterOptions options)
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabRosterProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabRosterProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabRosterProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabRosterProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabRosterProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

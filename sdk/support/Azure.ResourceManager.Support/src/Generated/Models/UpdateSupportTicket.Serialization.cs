@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateSupportTicket>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Support.Models
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails);
+                writer.WriteObjectValue<SupportContactProfileContent>(ContactDetails, options);
             }
             if (Optional.IsDefined(AdvancedDiagnosticConsent))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsent)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecondaryConsent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateSupportTicket>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<SupportSeverityLevel> severity = default;
-            Optional<SupportTicketStatus> status = default;
-            Optional<SupportContactProfileContent> contactDetails = default;
-            Optional<AdvancedDiagnosticConsent> advancedDiagnosticConsent = default;
-            Optional<IList<SecondaryConsent>> secondaryConsent = default;
+            SupportSeverityLevel? severity = default;
+            SupportTicketStatus? status = default;
+            SupportContactProfileContent contactDetails = default;
+            AdvancedDiagnosticConsent? advancedDiagnosticConsent = default;
+            IList<SecondaryConsent> secondaryConsent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    contactDetails = SupportContactProfileContent.DeserializeSupportContactProfileContent(property.Value);
+                    contactDetails = SupportContactProfileContent.DeserializeSupportContactProfileContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("advancedDiagnosticConsent"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<SecondaryConsent> array = new List<SecondaryConsent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item));
+                        array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item, options));
                     }
                     secondaryConsent = array;
                     continue;
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateSupportTicket(Optional.ToNullable(severity), Optional.ToNullable(status), contactDetails.Value, Optional.ToNullable(advancedDiagnosticConsent), Optional.ToList(secondaryConsent), serializedAdditionalRawData);
+            return new UpdateSupportTicket(
+                severity,
+                status,
+                contactDetails,
+                advancedDiagnosticConsent,
+                secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateSupportTicket>.Write(ModelReaderWriterOptions options)
@@ -171,7 +177,7 @@ namespace Azure.ResourceManager.Support.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +193,7 @@ namespace Azure.ResourceManager.Support.Models
                         return DeserializeUpdateSupportTicket(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support reading '{options.Format}' format.");
             }
         }
 

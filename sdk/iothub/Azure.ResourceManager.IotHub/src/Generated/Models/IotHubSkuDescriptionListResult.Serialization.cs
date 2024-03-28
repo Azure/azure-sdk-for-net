@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubSkuDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubSkuDescriptionListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubSkuDescriptionListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotHubSkuDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubSkuDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubSkuDescriptionListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubSkuDescriptionListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotHubSkuDescription>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<IotHubSkuDescription> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubSkuDescription> array = new List<IotHubSkuDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubSkuDescription.DeserializeIotHubSkuDescription(item));
+                        array.Add(IotHubSkuDescription.DeserializeIotHubSkuDescription(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubSkuDescriptionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IotHubSkuDescriptionListResult(value ?? new ChangeTrackingList<IotHubSkuDescription>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubSkuDescriptionListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubSkuDescriptionListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubSkuDescriptionListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubSkuDescriptionListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubSkuDescriptionListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubSkuDescriptionListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

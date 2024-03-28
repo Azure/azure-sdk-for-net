@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<LcmConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<LcmConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<LcmConfigurationMode> configurationMode = default;
-            Optional<bool> allowModuleOverwrite = default;
-            Optional<ActionAfterReboot> actionAfterReboot = default;
-            Optional<float> refreshFrequencyMins = default;
-            Optional<bool> rebootIfNeeded = default;
-            Optional<float> configurationModeFrequencyMins = default;
+            LcmConfigurationMode? configurationMode = default;
+            bool? allowModuleOverwrite = default;
+            ActionAfterReboot? actionAfterReboot = default;
+            float? refreshFrequencyMins = default;
+            bool? rebootIfNeeded = default;
+            float? configurationModeFrequencyMins = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LcmConfigurationSetting(Optional.ToNullable(configurationMode), Optional.ToNullable(allowModuleOverwrite), Optional.ToNullable(actionAfterReboot), Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(rebootIfNeeded), Optional.ToNullable(configurationModeFrequencyMins), serializedAdditionalRawData);
+            return new LcmConfigurationSetting(
+                configurationMode,
+                allowModuleOverwrite,
+                actionAfterReboot,
+                refreshFrequencyMins,
+                rebootIfNeeded,
+                configurationModeFrequencyMins,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LcmConfigurationSetting>.Write(ModelReaderWriterOptions options)
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeLcmConfigurationSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

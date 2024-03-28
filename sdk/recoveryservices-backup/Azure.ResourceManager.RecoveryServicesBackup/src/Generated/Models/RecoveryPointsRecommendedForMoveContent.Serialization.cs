@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointsRecommendedForMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPointsRecommendedForMoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointsRecommendedForMoveContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointsRecommendedForMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPointsRecommendedForMoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointsRecommendedForMoveContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> objectType = default;
-            Optional<IList<string>> excludedRPList = default;
+            string objectType = default;
+            IList<string> excludedRPList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPointsRecommendedForMoveContent(objectType.Value, Optional.ToList(excludedRPList), serializedAdditionalRawData);
+            return new RecoveryPointsRecommendedForMoveContent(objectType, excludedRPList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPointsRecommendedForMoveContent>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPointsRecommendedForMoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointsRecommendedForMoveContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeRecoveryPointsRecommendedForMoveContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPointsRecommendedForMoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointsRecommendedForMoveContent)} does not support reading '{options.Format}' format.");
             }
         }
 

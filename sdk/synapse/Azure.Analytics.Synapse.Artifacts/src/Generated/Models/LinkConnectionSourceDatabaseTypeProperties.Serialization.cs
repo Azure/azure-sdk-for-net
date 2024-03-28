@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
-            Optional<string> principalId = default;
+            string resourceId = default;
+            string principalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -52,14 +52,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionSourceDatabaseTypeProperties(resourceId.Value, principalId.Value);
+            return new LinkConnectionSourceDatabaseTypeProperties(resourceId, principalId);
         }
 
         internal partial class LinkConnectionSourceDatabaseTypePropertiesConverter : JsonConverter<LinkConnectionSourceDatabaseTypeProperties>
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionSourceDatabaseTypeProperties model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkConnectionSourceDatabaseTypeProperties>(model);
             }
             public override LinkConnectionSourceDatabaseTypeProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

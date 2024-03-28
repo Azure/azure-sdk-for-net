@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreementListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfluentAgreementListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentAgreementListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConfluentAgreement>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreementListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfluentAgreementListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentAgreementListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConfluentAgreement>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ConfluentAgreement> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     List<ConfluentAgreement> array = new List<ConfluentAgreement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfluentAgreement.DeserializeConfluentAgreement(item));
+                        array.Add(ConfluentAgreement.DeserializeConfluentAgreement(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentAgreementListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ConfluentAgreementListResult(value ?? new ChangeTrackingList<ConfluentAgreement>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentAgreementListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfluentAgreementListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentAgreementListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Confluent.Models
                         return DeserializeConfluentAgreementListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfluentAgreementListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentAgreementListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

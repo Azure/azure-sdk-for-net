@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProtectableItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryProtectableItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryProtectableItemProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
-                writer.WriteObjectValue(CustomDetails);
+                writer.WriteObjectValue<SiteRecoveryReplicationProviderSettings>(CustomDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProtectableItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryProtectableItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryProtectableItemProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> protectionStatus = default;
-            Optional<ResourceIdentifier> replicationProtectedItemId = default;
-            Optional<ResourceIdentifier> recoveryServicesProviderId = default;
-            Optional<IReadOnlyList<string>> protectionReadinessErrors = default;
-            Optional<IReadOnlyList<string>> supportedReplicationProviders = default;
-            Optional<SiteRecoveryReplicationProviderSettings> customDetails = default;
+            string friendlyName = default;
+            string protectionStatus = default;
+            ResourceIdentifier replicationProtectedItemId = default;
+            ResourceIdentifier recoveryServicesProviderId = default;
+            IReadOnlyList<string> protectionReadinessErrors = default;
+            IReadOnlyList<string> supportedReplicationProviders = default;
+            SiteRecoveryReplicationProviderSettings customDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = SiteRecoveryReplicationProviderSettings.DeserializeSiteRecoveryReplicationProviderSettings(property.Value);
+                    customDetails = SiteRecoveryReplicationProviderSettings.DeserializeSiteRecoveryReplicationProviderSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -191,7 +191,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryProtectableItemProperties(friendlyName.Value, protectionStatus.Value, replicationProtectedItemId.Value, recoveryServicesProviderId.Value, Optional.ToList(protectionReadinessErrors), Optional.ToList(supportedReplicationProviders), customDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryProtectableItemProperties(
+                friendlyName,
+                protectionStatus,
+                replicationProtectedItemId,
+                recoveryServicesProviderId,
+                protectionReadinessErrors ?? new ChangeTrackingList<string>(),
+                supportedReplicationProviders ?? new ChangeTrackingList<string>(),
+                customDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryProtectableItemProperties>.Write(ModelReaderWriterOptions options)
@@ -203,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryProtectableItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryProtectableItemProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryProtectableItemProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryProtectableItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryProtectableItemProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

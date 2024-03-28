@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,7 +22,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<UnivariateLastDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnivariateLastDetectionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnivariateLastDetectionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +70,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<UnivariateLastDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnivariateLastDetectionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnivariateLastDetectionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +93,7 @@ namespace Azure.AI.AnomalyDetector
             bool isAnomaly = default;
             bool isNegativeAnomaly = default;
             bool isPositiveAnomaly = default;
-            Optional<float> severity = default;
+            float? severity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +153,17 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnivariateLastDetectionResult(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, Optional.ToNullable(severity), serializedAdditionalRawData);
+            return new UnivariateLastDetectionResult(
+                period,
+                suggestedWindow,
+                expectedValue,
+                upperMargin,
+                lowerMargin,
+                isAnomaly,
+                isNegativeAnomaly,
+                isPositiveAnomaly,
+                severity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnivariateLastDetectionResult>.Write(ModelReaderWriterOptions options)
@@ -166,7 +175,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateLastDetectionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnivariateLastDetectionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +191,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeUnivariateLastDetectionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateLastDetectionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnivariateLastDetectionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -200,7 +209,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<UnivariateLastDetectionResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

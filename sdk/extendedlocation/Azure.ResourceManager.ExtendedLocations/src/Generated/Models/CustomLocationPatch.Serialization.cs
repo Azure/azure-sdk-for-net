@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<CustomLocationAuthentication>(Authentication, options);
             }
             if (Optional.IsCollectionDefined(ClusterExtensionIds))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,15 +129,15 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<CustomLocationAuthentication> authentication = default;
-            Optional<IList<ResourceIdentifier>> clusterExtensionIds = default;
-            Optional<string> displayName = default;
-            Optional<ResourceIdentifier> hostResourceId = default;
-            Optional<CustomLocationHostType> hostType = default;
-            Optional<string> @namespace = default;
-            Optional<string> provisioningState = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            CustomLocationAuthentication authentication = default;
+            IList<ResourceIdentifier> clusterExtensionIds = default;
+            string displayName = default;
+            ResourceIdentifier hostResourceId = default;
+            CustomLocationHostType? hostType = default;
+            string @namespace = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                             {
                                 continue;
                             }
-                            authentication = CustomLocationAuthentication.DeserializeCustomLocationAuthentication(property0.Value);
+                            authentication = CustomLocationAuthentication.DeserializeCustomLocationAuthentication(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterExtensionIds"u8))
@@ -246,7 +246,17 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationPatch(identity, Optional.ToDictionary(tags), authentication.Value, Optional.ToList(clusterExtensionIds), displayName.Value, hostResourceId.Value, Optional.ToNullable(hostType), @namespace.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new CustomLocationPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                authentication,
+                clusterExtensionIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                displayName,
+                hostResourceId,
+                hostType,
+                @namespace,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationPatch>.Write(ModelReaderWriterOptions options)
@@ -258,7 +268,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -274,7 +284,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                         return DeserializeCustomLocationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorSelectedConfigurations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightAzureMonitorSelectedConfigurations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAzureMonitorSelectedConfigurations)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in TableList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightAzureMonitorTableConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorSelectedConfigurations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightAzureMonitorSelectedConfigurations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAzureMonitorSelectedConfigurations)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> configurationVersion = default;
-            Optional<IDictionary<string, string>> globalConfigurations = default;
-            Optional<IList<HDInsightAzureMonitorTableConfiguration>> tableList = default;
+            string configurationVersion = default;
+            IDictionary<string, string> globalConfigurations = default;
+            IList<HDInsightAzureMonitorTableConfiguration> tableList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightAzureMonitorTableConfiguration> array = new List<HDInsightAzureMonitorTableConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightAzureMonitorTableConfiguration.DeserializeHDInsightAzureMonitorTableConfiguration(item));
+                        array.Add(HDInsightAzureMonitorTableConfiguration.DeserializeHDInsightAzureMonitorTableConfiguration(item, options));
                     }
                     tableList = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAzureMonitorSelectedConfigurations(configurationVersion.Value, Optional.ToDictionary(globalConfigurations), Optional.ToList(tableList), serializedAdditionalRawData);
+            return new HDInsightAzureMonitorSelectedConfigurations(configurationVersion, globalConfigurations ?? new ChangeTrackingDictionary<string, string>(), tableList ?? new ChangeTrackingList<HDInsightAzureMonitorTableConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAzureMonitorSelectedConfigurations>.Write(ModelReaderWriterOptions options)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightAzureMonitorSelectedConfigurations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAzureMonitorSelectedConfigurations)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightAzureMonitorSelectedConfigurations(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightAzureMonitorSelectedConfigurations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAzureMonitorSelectedConfigurations)} does not support reading '{options.Format}' format.");
             }
         }
 

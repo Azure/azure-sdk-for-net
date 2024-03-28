@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<DestinationAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<DestinationAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<IList<string>> cidrs = default;
-            Optional<IList<string>> countries = default;
-            Optional<IList<string>> feeds = default;
-            Optional<IList<string>> prefixLists = default;
-            Optional<IList<string>> fqdnLists = default;
+            IList<string> cidrs = default;
+            IList<string> countries = default;
+            IList<string> feeds = default;
+            IList<string> prefixLists = default;
+            IList<string> fqdnLists = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DestinationAddressInfo(Optional.ToList(cidrs), Optional.ToList(countries), Optional.ToList(feeds), Optional.ToList(prefixLists), Optional.ToList(fqdnLists), serializedAdditionalRawData);
+            return new DestinationAddressInfo(
+                cidrs ?? new ChangeTrackingList<string>(),
+                countries ?? new ChangeTrackingList<string>(),
+                feeds ?? new ChangeTrackingList<string>(),
+                prefixLists ?? new ChangeTrackingList<string>(),
+                fqdnLists ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DestinationAddressInfo>.Write(ModelReaderWriterOptions options)
@@ -211,7 +217,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +233,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeDestinationAddressInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

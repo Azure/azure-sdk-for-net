@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<BaseEnvironmentSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaseEnvironmentSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BaseEnvironmentSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<BaseEnvironmentSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaseEnvironmentSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BaseEnvironmentSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "EnvironmentAsset": return BaseEnvironmentType.DeserializeBaseEnvironmentType(element);
+                    case "EnvironmentAsset": return BaseEnvironmentType.DeserializeBaseEnvironmentType(element, options);
                 }
             }
-            return UnknownBaseEnvironmentSource.DeserializeUnknownBaseEnvironmentSource(element);
+            return UnknownBaseEnvironmentSource.DeserializeUnknownBaseEnvironmentSource(element, options);
         }
 
         BinaryData IPersistableModel<BaseEnvironmentSource>.Write(ModelReaderWriterOptions options)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BaseEnvironmentSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BaseEnvironmentSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeBaseEnvironmentSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BaseEnvironmentSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BaseEnvironmentSource)} does not support reading '{options.Format}' format.");
             }
         }
 

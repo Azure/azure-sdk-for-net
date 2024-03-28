@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobScheduleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningJobScheduleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningJobScheduleAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("jobDefinition"u8);
-            writer.WriteObjectValue(JobDefinition);
+            writer.WriteObjectValue<MachineLearningJobProperties>(JobDefinition, options);
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobScheduleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningJobScheduleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningJobScheduleAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("jobDefinition"u8))
                 {
-                    jobDefinition = MachineLearningJobProperties.DeserializeMachineLearningJobProperties(property.Value);
+                    jobDefinition = MachineLearningJobProperties.DeserializeMachineLearningJobProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actionType"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningJobScheduleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningJobScheduleAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningJobScheduleAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningJobScheduleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningJobScheduleAction)} does not support reading '{options.Format}' format.");
             }
         }
 

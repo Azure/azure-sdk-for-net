@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataConnectionValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataConnectionValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataConnectionValidationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<KustoDataConnectionData>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataConnectionValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataConnectionValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataConnectionValidationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,8 +74,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> dataConnectionName = default;
-            Optional<KustoDataConnectionData> properties = default;
+            string dataConnectionName = default;
+            KustoDataConnectionData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    properties = KustoDataConnectionData.DeserializeKustoDataConnectionData(property.Value);
+                    properties = KustoDataConnectionData.DeserializeKustoDataConnectionData(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataConnectionValidationContent(dataConnectionName.Value, properties.Value, serializedAdditionalRawData);
+            return new DataConnectionValidationContent(dataConnectionName, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataConnectionValidationContent>.Write(ModelReaderWriterOptions options)
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataConnectionValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataConnectionValidationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeDataConnectionValidationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataConnectionValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataConnectionValidationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

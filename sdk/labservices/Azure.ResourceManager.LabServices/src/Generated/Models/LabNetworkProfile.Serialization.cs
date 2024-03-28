@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<ResourceIdentifier> loadBalancerId = default;
-            Optional<ResourceIdentifier> publicIPId = default;
+            ResourceIdentifier subnetId = default;
+            ResourceIdentifier loadBalancerId = default;
+            ResourceIdentifier publicIPId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabNetworkProfile(subnetId.Value, loadBalancerId.Value, publicIPId.Value, serializedAdditionalRawData);
+            return new LabNetworkProfile(subnetId, loadBalancerId, publicIPId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabNetworkProfile>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

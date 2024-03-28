@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
-                writer.WriteObjectValue(Email);
+                writer.WriteObjectValue<EmailNotification>(Email, options);
             }
             if (Optional.IsCollectionDefined(Webhooks))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Webhooks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebhookNotification>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             MonitorOperationType operation = default;
-            Optional<EmailNotification> email = default;
-            Optional<IList<WebhookNotification>> webhooks = default;
+            EmailNotification email = default;
+            IList<WebhookNotification> webhooks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    email = EmailNotification.DeserializeEmailNotification(property.Value);
+                    email = EmailNotification.DeserializeEmailNotification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("webhooks"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<WebhookNotification> array = new List<WebhookNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebhookNotification.DeserializeWebhookNotification(item));
+                        array.Add(WebhookNotification.DeserializeWebhookNotification(item, options));
                     }
                     webhooks = array;
                     continue;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleNotification(operation, email.Value, Optional.ToList(webhooks), serializedAdditionalRawData);
+            return new AutoscaleNotification(operation, email, webhooks ?? new ChangeTrackingList<WebhookNotification>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleNotification>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeAutoscaleNotification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support reading '{options.Format}' format.");
             }
         }
 

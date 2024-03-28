@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineSkuSlot>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineDisk>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkCloudNetworkInterface>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineSkuSlot>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<long> rackSlot = default;
-            Optional<BootstrapProtocol> bootstrapProtocol = default;
-            Optional<long> cpuCores = default;
-            Optional<long> cpuSockets = default;
-            Optional<IReadOnlyList<MachineDisk>> disks = default;
-            Optional<string> generation = default;
-            Optional<string> hardwareVersion = default;
-            Optional<long> memoryCapacityGB = default;
-            Optional<string> model = default;
-            Optional<IReadOnlyList<NetworkCloudNetworkInterface>> networkInterfaces = default;
-            Optional<long> totalThreads = default;
-            Optional<string> vendor = default;
+            long? rackSlot = default;
+            BootstrapProtocol? bootstrapProtocol = default;
+            long? cpuCores = default;
+            long? cpuSockets = default;
+            IReadOnlyList<MachineDisk> disks = default;
+            string generation = default;
+            string hardwareVersion = default;
+            long? memoryCapacityGB = default;
+            string model = default;
+            IReadOnlyList<NetworkCloudNetworkInterface> networkInterfaces = default;
+            long? totalThreads = default;
+            string vendor = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<MachineDisk> array = new List<MachineDisk>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineDisk.DeserializeMachineDisk(item));
+                                array.Add(MachineDisk.DeserializeMachineDisk(item, options));
                             }
                             disks = array;
                             continue;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<NetworkCloudNetworkInterface> array = new List<NetworkCloudNetworkInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkCloudNetworkInterface.DeserializeNetworkCloudNetworkInterface(item));
+                                array.Add(NetworkCloudNetworkInterface.DeserializeNetworkCloudNetworkInterface(item, options));
                             }
                             networkInterfaces = array;
                             continue;
@@ -273,7 +273,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(bootstrapProtocol), Optional.ToNullable(cpuCores), Optional.ToNullable(cpuSockets), Optional.ToList(disks), generation.Value, hardwareVersion.Value, Optional.ToNullable(memoryCapacityGB), model.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(totalThreads), vendor.Value, serializedAdditionalRawData);
+            return new MachineSkuSlot(
+                rackSlot,
+                bootstrapProtocol,
+                cpuCores,
+                cpuSockets,
+                disks ?? new ChangeTrackingList<MachineDisk>(),
+                generation,
+                hardwareVersion,
+                memoryCapacityGB,
+                model,
+                networkInterfaces ?? new ChangeTrackingList<NetworkCloudNetworkInterface>(),
+                totalThreads,
+                vendor,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineSkuSlot>.Write(ModelReaderWriterOptions options)
@@ -285,7 +298,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -301,7 +314,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeMachineSkuSlot(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support reading '{options.Format}' format.");
             }
         }
 

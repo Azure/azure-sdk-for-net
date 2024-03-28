@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsBookmarkIncidentInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsBookmarkIncidentInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsBookmarkIncidentInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsBookmarkIncidentInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsBookmarkIncidentInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsBookmarkIncidentInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<Guid> incidentId = default;
-            Optional<SecurityInsightsIncidentSeverity> severity = default;
-            Optional<string> title = default;
-            Optional<string> relationName = default;
+            Guid? incidentId = default;
+            SecurityInsightsIncidentSeverity? severity = default;
+            string title = default;
+            string relationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsBookmarkIncidentInfo(Optional.ToNullable(incidentId), Optional.ToNullable(severity), title.Value, relationName.Value, serializedAdditionalRawData);
+            return new SecurityInsightsBookmarkIncidentInfo(incidentId, severity, title, relationName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsBookmarkIncidentInfo>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsBookmarkIncidentInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsBookmarkIncidentInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsBookmarkIncidentInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsBookmarkIncidentInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsBookmarkIncidentInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

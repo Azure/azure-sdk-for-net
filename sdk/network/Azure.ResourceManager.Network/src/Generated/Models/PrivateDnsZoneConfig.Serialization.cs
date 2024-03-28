@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsZoneConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateDnsZoneConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateDnsZoneConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RecordSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecordSet>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsZoneConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateDnsZoneConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateDnsZoneConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> privateDnsZoneId = default;
-            Optional<IReadOnlyList<RecordSet>> recordSets = default;
+            string name = default;
+            string privateDnsZoneId = default;
+            IReadOnlyList<RecordSet> recordSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<RecordSet> array = new List<RecordSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecordSet.DeserializeRecordSet(item));
+                                array.Add(RecordSet.DeserializeRecordSet(item, options));
                             }
                             recordSets = array;
                             continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsZoneConfig(name.Value, privateDnsZoneId.Value, Optional.ToList(recordSets), serializedAdditionalRawData);
+            return new PrivateDnsZoneConfig(name, privateDnsZoneId, recordSets ?? new ChangeTrackingList<RecordSet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsZoneConfig>.Write(ModelReaderWriterOptions options)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateDnsZoneConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateDnsZoneConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePrivateDnsZoneConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateDnsZoneConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateDnsZoneConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

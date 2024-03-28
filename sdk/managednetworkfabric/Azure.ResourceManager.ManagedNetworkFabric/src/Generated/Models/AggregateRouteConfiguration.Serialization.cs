@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<AggregateRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AggregateRouteConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AggregateRouteConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv4Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AggregateRoute>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv6Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AggregateRoute>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<AggregateRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AggregateRouteConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AggregateRouteConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<AggregateRoute>> ipv4Routes = default;
-            Optional<IList<AggregateRoute>> ipv6Routes = default;
+            IList<AggregateRoute> ipv4Routes = default;
+            IList<AggregateRoute> ipv6Routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AggregateRoute> array = new List<AggregateRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AggregateRoute.DeserializeAggregateRoute(item));
+                        array.Add(AggregateRoute.DeserializeAggregateRoute(item, options));
                     }
                     ipv4Routes = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AggregateRoute> array = new List<AggregateRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AggregateRoute.DeserializeAggregateRoute(item));
+                        array.Add(AggregateRoute.DeserializeAggregateRoute(item, options));
                     }
                     ipv6Routes = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AggregateRouteConfiguration(Optional.ToList(ipv4Routes), Optional.ToList(ipv6Routes), serializedAdditionalRawData);
+            return new AggregateRouteConfiguration(ipv4Routes ?? new ChangeTrackingList<AggregateRoute>(), ipv6Routes ?? new ChangeTrackingList<AggregateRoute>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AggregateRouteConfiguration>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AggregateRouteConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AggregateRouteConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeAggregateRouteConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AggregateRouteConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AggregateRouteConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

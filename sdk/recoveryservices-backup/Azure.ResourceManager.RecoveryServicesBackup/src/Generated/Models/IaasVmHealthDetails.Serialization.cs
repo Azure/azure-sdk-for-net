@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> code = default;
-            Optional<string> title = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<string>> recommendations = default;
+            int? code = default;
+            string title = default;
+            string message = default;
+            IReadOnlyList<string> recommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmHealthDetails(Optional.ToNullable(code), title.Value, message.Value, Optional.ToList(recommendations), serializedAdditionalRawData);
+            return new IaasVmHealthDetails(code, title, message, recommendations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IaasVmHealthDetails>.Write(ModelReaderWriterOptions options)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeIaasVmHealthDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

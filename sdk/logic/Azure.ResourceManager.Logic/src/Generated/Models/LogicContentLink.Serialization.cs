@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicContentLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicContentLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicContentLink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (options.Format != "W" && Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
-                writer.WriteObjectValue(ContentHash);
+                writer.WriteObjectValue<LogicContentHash>(ContentHash, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicContentLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicContentLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicContentLink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
-            Optional<string> contentVersion = default;
-            Optional<long> contentSize = default;
-            Optional<LogicContentHash> contentHash = default;
-            Optional<BinaryData> metadata = default;
+            Uri uri = default;
+            string contentVersion = default;
+            long? contentSize = default;
+            LogicContentHash contentHash = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contentHash = LogicContentHash.DeserializeLogicContentHash(property.Value);
+                    contentHash = LogicContentHash.DeserializeLogicContentHash(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicContentLink(uri.Value, contentVersion.Value, Optional.ToNullable(contentSize), contentHash.Value, metadata.Value, serializedAdditionalRawData);
+            return new LogicContentLink(
+                uri,
+                contentVersion,
+                contentSize,
+                contentHash,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicContentLink>.Write(ModelReaderWriterOptions options)
@@ -164,7 +170,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicContentLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicContentLink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +186,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicContentLink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicContentLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicContentLink)} does not support reading '{options.Format}' format.");
             }
         }
 

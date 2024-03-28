@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicTreeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicTreeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<bool> canSelectParentNodes = default;
-            Optional<bool> canSelectLeafNodes = default;
+            bool? canSelectParentNodes = default;
+            bool? canSelectLeafNodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicTreeSettings(Optional.ToNullable(canSelectParentNodes), Optional.ToNullable(canSelectLeafNodes), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicTreeSettings(canSelectParentNodes, canSelectLeafNodes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicTreeSettings>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeSwaggerCustomDynamicTreeSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

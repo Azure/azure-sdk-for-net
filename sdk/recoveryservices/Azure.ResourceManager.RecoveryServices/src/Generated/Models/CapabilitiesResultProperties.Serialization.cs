@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapabilitiesResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilitiesResultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapabilitiesResultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsZones)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DnsZoneResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapabilitiesResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilitiesResultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapabilitiesResultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<IList<DnsZoneResult>> dnsZones = default;
+            IList<DnsZoneResult> dnsZones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<DnsZoneResult> array = new List<DnsZoneResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsZoneResult.DeserializeDnsZoneResult(item));
+                        array.Add(DnsZoneResult.DeserializeDnsZoneResult(item, options));
                     }
                     dnsZones = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapabilitiesResultProperties(Optional.ToList(dnsZones), serializedAdditionalRawData);
+            return new CapabilitiesResultProperties(dnsZones ?? new ChangeTrackingList<DnsZoneResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapabilitiesResultProperties>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapabilitiesResultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapabilitiesResultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeCapabilitiesResultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapabilitiesResultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapabilitiesResultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

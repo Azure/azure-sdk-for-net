@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzStackHciFabricModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzStackHciFabricModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzStackHciFabricModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("cluster"u8);
-            writer.WriteObjectValue(Cluster);
+            writer.WriteObjectValue<AzStackHciClusterProperties>(Cluster, options);
             if (options.Format != "W" && Optional.IsDefined(FabricResourceId))
             {
                 writer.WritePropertyName("fabricResourceId"u8);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzStackHciFabricModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzStackHciFabricModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzStackHciFabricModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             ResourceIdentifier azStackHciSiteId = default;
-            Optional<IReadOnlyList<string>> applianceName = default;
+            IReadOnlyList<string> applianceName = default;
             AzStackHciClusterProperties cluster = default;
-            Optional<ResourceIdentifier> fabricResourceId = default;
-            Optional<string> fabricContainerId = default;
+            ResourceIdentifier fabricResourceId = default;
+            string fabricContainerId = default;
             ResourceIdentifier migrationSolutionId = default;
-            Optional<Uri> migrationHubUri = default;
+            Uri migrationHubUri = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("cluster"u8))
                 {
-                    cluster = AzStackHciClusterProperties.DeserializeAzStackHciClusterProperties(property.Value);
+                    cluster = AzStackHciClusterProperties.DeserializeAzStackHciClusterProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fabricResourceId"u8))
@@ -172,7 +172,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzStackHciFabricModelCustomProperties(instanceType, serializedAdditionalRawData, azStackHciSiteId, Optional.ToList(applianceName), cluster, fabricResourceId.Value, fabricContainerId.Value, migrationSolutionId, migrationHubUri.Value);
+            return new AzStackHciFabricModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                azStackHciSiteId,
+                applianceName ?? new ChangeTrackingList<string>(),
+                cluster,
+                fabricResourceId,
+                fabricContainerId,
+                migrationSolutionId,
+                migrationHubUri);
         }
 
         BinaryData IPersistableModel<AzStackHciFabricModelCustomProperties>.Write(ModelReaderWriterOptions options)
@@ -184,7 +193,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzStackHciFabricModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzStackHciFabricModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeAzStackHciFabricModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzStackHciFabricModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzStackHciFabricModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

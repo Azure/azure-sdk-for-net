@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobInputDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobInputDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in IncludedTracks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrackDescriptor>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobInputDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobInputDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.FromAllInputFile": return FromAllInputFile.DeserializeFromAllInputFile(element);
-                    case "#Microsoft.Media.FromEachInputFile": return FromEachInputFile.DeserializeFromEachInputFile(element);
-                    case "#Microsoft.Media.InputFile": return MediaJobInputFile.DeserializeMediaJobInputFile(element);
+                    case "#Microsoft.Media.FromAllInputFile": return FromAllInputFile.DeserializeFromAllInputFile(element, options);
+                    case "#Microsoft.Media.FromEachInputFile": return FromEachInputFile.DeserializeFromEachInputFile(element, options);
+                    case "#Microsoft.Media.InputFile": return MediaJobInputFile.DeserializeMediaJobInputFile(element, options);
                 }
             }
-            return UnknownInputDefinition.DeserializeUnknownInputDefinition(element);
+            return UnknownInputDefinition.DeserializeUnknownInputDefinition(element, options);
         }
 
         BinaryData IPersistableModel<MediaJobInputDefinition>.Write(ModelReaderWriterOptions options)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobInputDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobInputDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaJobInputDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobInputDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobInputDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

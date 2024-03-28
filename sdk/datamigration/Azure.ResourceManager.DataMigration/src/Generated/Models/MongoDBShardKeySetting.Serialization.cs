@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBShardKeySetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in Fields)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MongoDBShardKeyField>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(IsUnique))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBShardKeySetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MongoDBShardKeyField> fields = default;
-            Optional<bool> isUnique = default;
+            bool? isUnique = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MongoDBShardKeyField> array = new List<MongoDBShardKeyField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBShardKeyField.DeserializeMongoDBShardKeyField(item));
+                        array.Add(MongoDBShardKeyField.DeserializeMongoDBShardKeyField(item, options));
                     }
                     fields = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBShardKeySetting(fields, Optional.ToNullable(isUnique), serializedAdditionalRawData);
+            return new MongoDBShardKeySetting(fields, isUnique, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBShardKeySetting>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMongoDBShardKeySetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBShardKeySetting)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmRollingUpgradeMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmRollingUpgradeMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<ArmUpgradeFailureAction> failureAction = default;
-            Optional<TimeSpan> healthCheckWaitDuration = default;
-            Optional<TimeSpan> healthCheckStableDuration = default;
-            Optional<TimeSpan> healthCheckRetryTimeout = default;
-            Optional<TimeSpan> upgradeTimeout = default;
-            Optional<TimeSpan> upgradeDomainTimeout = default;
+            ArmUpgradeFailureAction? failureAction = default;
+            TimeSpan? healthCheckWaitDuration = default;
+            TimeSpan? healthCheckStableDuration = default;
+            TimeSpan? healthCheckRetryTimeout = default;
+            TimeSpan? upgradeTimeout = default;
+            TimeSpan? upgradeDomainTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmRollingUpgradeMonitoringPolicy(Optional.ToNullable(failureAction), Optional.ToNullable(healthCheckWaitDuration), Optional.ToNullable(healthCheckStableDuration), Optional.ToNullable(healthCheckRetryTimeout), Optional.ToNullable(upgradeTimeout), Optional.ToNullable(upgradeDomainTimeout), serializedAdditionalRawData);
+            return new ArmRollingUpgradeMonitoringPolicy(
+                failureAction,
+                healthCheckWaitDuration,
+                healthCheckStableDuration,
+                healthCheckRetryTimeout,
+                upgradeTimeout,
+                upgradeDomainTimeout,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmRollingUpgradeMonitoringPolicy>.Write(ModelReaderWriterOptions options)
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeArmRollingUpgradeMonitoringPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

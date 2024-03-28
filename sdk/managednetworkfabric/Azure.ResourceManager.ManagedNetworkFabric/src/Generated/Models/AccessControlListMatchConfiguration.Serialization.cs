@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in MatchConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AccessControlListMatchCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AccessControlListAction>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> matchConfigurationName = default;
-            Optional<long> sequenceNumber = default;
-            Optional<NetworkFabricIPAddressType> ipAddressType = default;
-            Optional<IList<AccessControlListMatchCondition>> matchConditions = default;
-            Optional<IList<AccessControlListAction>> actions = default;
+            string matchConfigurationName = default;
+            long? sequenceNumber = default;
+            NetworkFabricIPAddressType? ipAddressType = default;
+            IList<AccessControlListMatchCondition> matchConditions = default;
+            IList<AccessControlListAction> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AccessControlListMatchCondition> array = new List<AccessControlListMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlListMatchCondition.DeserializeAccessControlListMatchCondition(item));
+                        array.Add(AccessControlListMatchCondition.DeserializeAccessControlListMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AccessControlListAction> array = new List<AccessControlListAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlListAction.DeserializeAccessControlListAction(item));
+                        array.Add(AccessControlListAction.DeserializeAccessControlListAction(item, options));
                     }
                     actions = array;
                     continue;
@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessControlListMatchConfiguration(matchConfigurationName.Value, Optional.ToNullable(sequenceNumber), Optional.ToNullable(ipAddressType), Optional.ToList(matchConditions), Optional.ToList(actions), serializedAdditionalRawData);
+            return new AccessControlListMatchConfiguration(
+                matchConfigurationName,
+                sequenceNumber,
+                ipAddressType,
+                matchConditions ?? new ChangeTrackingList<AccessControlListMatchCondition>(),
+                actions ?? new ChangeTrackingList<AccessControlListAction>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessControlListMatchConfiguration>.Write(ModelReaderWriterOptions options)
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +199,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeAccessControlListMatchConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

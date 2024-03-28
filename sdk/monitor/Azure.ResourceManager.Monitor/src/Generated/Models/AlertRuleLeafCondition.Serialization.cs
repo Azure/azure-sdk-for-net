@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertRuleLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertRuleLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> field = default;
-            Optional<string> @equals = default;
-            Optional<IList<string>> containsAny = default;
+            string field = default;
+            string @equals = default;
+            IList<string> containsAny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRuleLeafCondition(field.Value, @equals.Value, Optional.ToList(containsAny), serializedAdditionalRawData);
+            return new AlertRuleLeafCondition(field, @equals, containsAny ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRuleLeafCondition>.Write(ModelReaderWriterOptions options)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeAlertRuleLeafCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

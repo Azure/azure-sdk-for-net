@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleBcdrFailoverConfigurationSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleBcdrFailoverConfigurationSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleBcdrFailoverConfigurationSpec)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataCollectionRuleBcdrLocationSpec>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleBcdrFailoverConfigurationSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleBcdrFailoverConfigurationSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleBcdrFailoverConfigurationSpec)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> activeLocation = default;
-            Optional<IReadOnlyList<DataCollectionRuleBcdrLocationSpec>> locations = default;
+            string activeLocation = default;
+            IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleBcdrLocationSpec> array = new List<DataCollectionRuleBcdrLocationSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleBcdrLocationSpec.DeserializeDataCollectionRuleBcdrLocationSpec(item));
+                        array.Add(DataCollectionRuleBcdrLocationSpec.DeserializeDataCollectionRuleBcdrLocationSpec(item, options));
                     }
                     locations = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleBcdrFailoverConfigurationSpec(activeLocation.Value, Optional.ToList(locations), serializedAdditionalRawData);
+            return new DataCollectionRuleBcdrFailoverConfigurationSpec(activeLocation, locations ?? new ChangeTrackingList<DataCollectionRuleBcdrLocationSpec>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleBcdrFailoverConfigurationSpec>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleBcdrFailoverConfigurationSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleBcdrFailoverConfigurationSpec)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDataCollectionRuleBcdrFailoverConfigurationSpec(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleBcdrFailoverConfigurationSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleBcdrFailoverConfigurationSpec)} does not support reading '{options.Format}' format.");
             }
         }
 

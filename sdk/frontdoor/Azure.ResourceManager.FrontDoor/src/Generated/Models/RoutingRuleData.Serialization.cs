@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(RouteConfiguration))
             {
                 writer.WritePropertyName("routeConfiguration"u8);
-                writer.WriteObjectValue(RouteConfiguration);
+                writer.WriteObjectValue<RouteConfiguration>(RouteConfiguration, options);
             }
             if (Optional.IsDefined(RulesEngine))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,17 +138,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<IList<WritableSubResource>> frontendEndpoints = default;
-            Optional<IList<FrontDoorProtocol>> acceptedProtocols = default;
-            Optional<IList<string>> patternsToMatch = default;
-            Optional<RoutingRuleEnabledState> enabledState = default;
-            Optional<RouteConfiguration> routeConfiguration = default;
-            Optional<WritableSubResource> rulesEngine = default;
-            Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
-            Optional<FrontDoorResourceState> resourceState = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            IList<WritableSubResource> frontendEndpoints = default;
+            IList<FrontDoorProtocol> acceptedProtocols = default;
+            IList<string> patternsToMatch = default;
+            RoutingRuleEnabledState? enabledState = default;
+            RouteConfiguration routeConfiguration = default;
+            WritableSubResource rulesEngine = default;
+            WritableSubResource webApplicationFirewallPolicyLink = default;
+            FrontDoorResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            routeConfiguration = RouteConfiguration.DeserializeRouteConfiguration(property0.Value);
+                            routeConfiguration = RouteConfiguration.DeserializeRouteConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rulesEngine"u8))
@@ -281,7 +281,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToList(frontendEndpoints), Optional.ToList(acceptedProtocols), Optional.ToList(patternsToMatch), Optional.ToNullable(enabledState), routeConfiguration.Value, rulesEngine, webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState));
+            return new RoutingRuleData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                frontendEndpoints ?? new ChangeTrackingList<WritableSubResource>(),
+                acceptedProtocols ?? new ChangeTrackingList<FrontDoorProtocol>(),
+                patternsToMatch ?? new ChangeTrackingList<string>(),
+                enabledState,
+                routeConfiguration,
+                rulesEngine,
+                webApplicationFirewallPolicyLink,
+                resourceState);
         }
 
         BinaryData IPersistableModel<RoutingRuleData>.Write(ModelReaderWriterOptions options)
@@ -293,7 +305,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -309,7 +321,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeRoutingRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

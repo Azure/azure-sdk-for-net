@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEventHubDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEventHubDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> consumerGroup = default;
-            Optional<string> stream = default;
+            string name = default;
+            string consumerGroup = default;
+            string stream = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleEventHubDataSource(name.Value, consumerGroup.Value, stream.Value, serializedAdditionalRawData);
+            return new DataCollectionRuleEventHubDataSource(name, consumerGroup, stream, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleEventHubDataSource>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDataCollectionRuleEventHubDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

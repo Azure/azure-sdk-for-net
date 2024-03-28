@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryCreateRecoveryPlanProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryCreateRecoveryPlanProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryCreateRecoveryPlanProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartArray();
             foreach (var item in Groups)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SiteRecoveryPlanGroup>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ProviderSpecificContent))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderSpecificContent)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecoveryPlanProviderSpecificContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryCreateRecoveryPlanProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryCreateRecoveryPlanProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryCreateRecoveryPlanProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             ResourceIdentifier primaryFabricId = default;
             ResourceIdentifier recoveryFabricId = default;
-            Optional<FailoverDeploymentModel> failoverDeploymentModel = default;
+            FailoverDeploymentModel? failoverDeploymentModel = default;
             IList<SiteRecoveryPlanGroup> groups = default;
-            Optional<IList<RecoveryPlanProviderSpecificContent>> providerSpecificContent = default;
+            IList<RecoveryPlanProviderSpecificContent> providerSpecificContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryPlanGroup> array = new List<SiteRecoveryPlanGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryPlanGroup.DeserializeSiteRecoveryPlanGroup(item));
+                        array.Add(SiteRecoveryPlanGroup.DeserializeSiteRecoveryPlanGroup(item, options));
                     }
                     groups = array;
                     continue;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RecoveryPlanProviderSpecificContent> array = new List<RecoveryPlanProviderSpecificContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPlanProviderSpecificContent.DeserializeRecoveryPlanProviderSpecificContent(item));
+                        array.Add(RecoveryPlanProviderSpecificContent.DeserializeRecoveryPlanProviderSpecificContent(item, options));
                     }
                     providerSpecificContent = array;
                     continue;
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryCreateRecoveryPlanProperties(primaryFabricId, recoveryFabricId, Optional.ToNullable(failoverDeploymentModel), groups, Optional.ToList(providerSpecificContent), serializedAdditionalRawData);
+            return new SiteRecoveryCreateRecoveryPlanProperties(
+                primaryFabricId,
+                recoveryFabricId,
+                failoverDeploymentModel,
+                groups,
+                providerSpecificContent ?? new ChangeTrackingList<RecoveryPlanProviderSpecificContent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryCreateRecoveryPlanProperties>.Write(ModelReaderWriterOptions options)
@@ -160,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryCreateRecoveryPlanProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryCreateRecoveryPlanProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryCreateRecoveryPlanProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryCreateRecoveryPlanProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryCreateRecoveryPlanProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

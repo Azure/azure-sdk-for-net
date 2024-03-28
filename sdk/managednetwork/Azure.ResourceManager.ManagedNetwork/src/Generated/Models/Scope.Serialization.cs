@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<Scope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Scope)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Scope)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<Scope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Scope)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Scope)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             {
                 return null;
             }
-            Optional<IList<WritableSubResource>> managementGroups = default;
-            Optional<IList<WritableSubResource>> subscriptions = default;
-            Optional<IList<WritableSubResource>> virtualNetworks = default;
-            Optional<IList<WritableSubResource>> subnets = default;
+            IList<WritableSubResource> managementGroups = default;
+            IList<WritableSubResource> subscriptions = default;
+            IList<WritableSubResource> virtualNetworks = default;
+            IList<WritableSubResource> subnets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Scope(Optional.ToList(managementGroups), Optional.ToList(subscriptions), Optional.ToList(virtualNetworks), Optional.ToList(subnets), serializedAdditionalRawData);
+            return new Scope(managementGroups ?? new ChangeTrackingList<WritableSubResource>(), subscriptions ?? new ChangeTrackingList<WritableSubResource>(), virtualNetworks ?? new ChangeTrackingList<WritableSubResource>(), subnets ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Scope>.Write(ModelReaderWriterOptions options)
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Scope)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Scope)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                         return DeserializeScope(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Scope)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Scope)} does not support reading '{options.Format}' format.");
             }
         }
 

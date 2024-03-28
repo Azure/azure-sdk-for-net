@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<OnlineEndpointTrackedResourceArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnlineEndpointTrackedResourceArmPaginatedResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnlineEndpointTrackedResourceArmPaginatedResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningOnlineEndpointData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<OnlineEndpointTrackedResourceArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnlineEndpointTrackedResourceArmPaginatedResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnlineEndpointTrackedResourceArmPaginatedResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningOnlineEndpointData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<MachineLearningOnlineEndpointData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningOnlineEndpointData> array = new List<MachineLearningOnlineEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(item));
+                        array.Add(MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OnlineEndpointTrackedResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new OnlineEndpointTrackedResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<MachineLearningOnlineEndpointData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OnlineEndpointTrackedResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OnlineEndpointTrackedResourceArmPaginatedResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnlineEndpointTrackedResourceArmPaginatedResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeOnlineEndpointTrackedResourceArmPaginatedResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OnlineEndpointTrackedResourceArmPaginatedResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnlineEndpointTrackedResourceArmPaginatedResult)} does not support reading '{options.Format}' format.");
             }
         }
 

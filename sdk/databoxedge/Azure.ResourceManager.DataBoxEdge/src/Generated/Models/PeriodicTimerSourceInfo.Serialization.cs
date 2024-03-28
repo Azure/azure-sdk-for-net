@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeriodicTimerSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeriodicTimerSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeriodicTimerSourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeriodicTimerSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeriodicTimerSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeriodicTimerSourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             DateTimeOffset startTime = default;
             string schedule = default;
-            Optional<string> topic = default;
+            string topic = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeriodicTimerSourceInfo(startTime, schedule, topic.Value, serializedAdditionalRawData);
+            return new PeriodicTimerSourceInfo(startTime, schedule, topic, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeriodicTimerSourceInfo>.Write(ModelReaderWriterOptions options)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeriodicTimerSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeriodicTimerSourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializePeriodicTimerSourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeriodicTimerSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeriodicTimerSourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

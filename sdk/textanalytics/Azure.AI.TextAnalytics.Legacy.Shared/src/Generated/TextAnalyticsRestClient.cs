@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -56,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
+                content.JsonWriter.WriteObjectValue<AnalyzeBatchInput>(body);
                 request.Content = content;
             }
             return message;
@@ -344,7 +343,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input);
+            content.JsonWriter.WriteObjectValue<MultiLanguageBatchInput>(input);
             request.Content = content;
             return message;
         }
@@ -433,7 +432,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input);
+            content.JsonWriter.WriteObjectValue<MultiLanguageBatchInput>(input);
             request.Content = content;
             return message;
         }
@@ -532,7 +531,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            if (piiCategories != null && Optional.IsCollectionDefined(piiCategories))
+            if (piiCategories != null && !(piiCategories is ChangeTrackingList<PiiEntityLegacyCategory> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("piiCategories", piiCategories, ",", true);
             }
@@ -540,7 +539,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input);
+            content.JsonWriter.WriteObjectValue<MultiLanguageBatchInput>(input);
             request.Content = content;
             return message;
         }
@@ -649,7 +648,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input);
+            content.JsonWriter.WriteObjectValue<MultiLanguageBatchInput>(input);
             request.Content = content;
             return message;
         }
@@ -744,7 +743,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input);
+            content.JsonWriter.WriteObjectValue<MultiLanguageBatchInput>(input);
             request.Content = content;
             return message;
         }
@@ -837,7 +836,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input);
+            content.JsonWriter.WriteObjectValue<LanguageBatchInput>(input);
             request.Content = content;
             return message;
         }
@@ -938,7 +937,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input);
+            content.JsonWriter.WriteObjectValue<MultiLanguageBatchInput>(input);
             request.Content = content;
             return message;
         }

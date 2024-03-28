@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventTypesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventTypesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventTypesListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventTypeUnderTopic>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventTypesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventTypesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventTypesListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventTypeUnderTopic>> value = default;
+            IReadOnlyList<EventTypeUnderTopic> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventTypeUnderTopic> array = new List<EventTypeUnderTopic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventTypeUnderTopic.DeserializeEventTypeUnderTopic(item));
+                        array.Add(EventTypeUnderTopic.DeserializeEventTypeUnderTopic(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventTypesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new EventTypesListResult(value ?? new ChangeTrackingList<EventTypeUnderTopic>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventTypesListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventTypesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventTypesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeEventTypesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventTypesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventTypesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

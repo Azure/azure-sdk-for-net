@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetCopySetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetCopySetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetCopySetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("copyAfter"u8);
-            writer.WriteObjectValue(CopyAfter);
+            writer.WriteObjectValue<DataProtectionBackupCopySetting>(CopyAfter, options);
             writer.WritePropertyName("dataStore"u8);
-            writer.WriteObjectValue(DataStore);
+            writer.WriteObjectValue<DataStoreInfoBase>(DataStore, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetCopySetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetCopySetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetCopySetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("copyAfter"u8))
                 {
-                    copyAfter = DataProtectionBackupCopySetting.DeserializeDataProtectionBackupCopySetting(property.Value);
+                    copyAfter = DataProtectionBackupCopySetting.DeserializeDataProtectionBackupCopySetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataStore"u8))
                 {
-                    dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value);
+                    dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TargetCopySetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetCopySetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeTargetCopySetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetCopySetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetCopySetting)} does not support reading '{options.Format}' format.");
             }
         }
 

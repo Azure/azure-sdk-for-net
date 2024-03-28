@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorWebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorWebhookReceiver)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWebhookReceiver)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorWebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorWebhookReceiver)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWebhookReceiver)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             string name = default;
             Uri serviceUri = default;
-            Optional<bool> useCommonAlertSchema = default;
-            Optional<bool> useAadAuth = default;
-            Optional<string> objectId = default;
-            Optional<Uri> identifierUri = default;
-            Optional<Guid> tenantId = default;
+            bool? useCommonAlertSchema = default;
+            bool? useAadAuth = default;
+            string objectId = default;
+            Uri identifierUri = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,15 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorWebhookReceiver(name, serviceUri, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(useAadAuth), objectId.Value, identifierUri.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new MonitorWebhookReceiver(
+                name,
+                serviceUri,
+                useCommonAlertSchema,
+                useAadAuth,
+                objectId,
+                identifierUri,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWebhookReceiver>.Write(ModelReaderWriterOptions options)
@@ -173,7 +181,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorWebhookReceiver)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWebhookReceiver)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +197,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorWebhookReceiver(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorWebhookReceiver)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWebhookReceiver)} does not support reading '{options.Format}' format.");
             }
         }
 

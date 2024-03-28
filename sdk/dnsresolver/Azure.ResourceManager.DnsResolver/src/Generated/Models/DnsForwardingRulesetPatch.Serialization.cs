@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsForwardingRulesetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsForwardingRulesetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsForwardingRulesetPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsForwardingRulesetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsForwardingRulesetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsForwardingRulesetPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<IList<WritableSubResource>> dnsResolverOutboundEndpoints = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<WritableSubResource> dnsResolverOutboundEndpoints = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsForwardingRulesetPatch(Optional.ToList(dnsResolverOutboundEndpoints), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new DnsForwardingRulesetPatch(dnsResolverOutboundEndpoints ?? new ChangeTrackingList<WritableSubResource>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsForwardingRulesetPatch>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsForwardingRulesetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsForwardingRulesetPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         return DeserializeDnsForwardingRulesetPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsForwardingRulesetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsForwardingRulesetPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

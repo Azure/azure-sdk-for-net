@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionAliasCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionAliasCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Subscription.Models
             if (Optional.IsDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
-                writer.WriteObjectValue(AdditionalProperties);
+                writer.WriteObjectValue<SubscriptionAliasAdditionalProperties>(AdditionalProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionAliasCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionAliasCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<SubscriptionWorkload> workload = default;
-            Optional<string> billingScope = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resellerId = default;
-            Optional<SubscriptionAliasAdditionalProperties> additionalProperties = default;
+            string displayName = default;
+            SubscriptionWorkload? workload = default;
+            string billingScope = default;
+            string subscriptionId = default;
+            string resellerId = default;
+            SubscriptionAliasAdditionalProperties additionalProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Subscription.Models
                             {
                                 continue;
                             }
-                            additionalProperties = SubscriptionAliasAdditionalProperties.DeserializeSubscriptionAliasAdditionalProperties(property0.Value);
+                            additionalProperties = SubscriptionAliasAdditionalProperties.DeserializeSubscriptionAliasAdditionalProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasCreateOrUpdateContent(displayName.Value, Optional.ToNullable(workload), billingScope.Value, subscriptionId.Value, resellerId.Value, additionalProperties.Value, serializedAdditionalRawData);
+            return new SubscriptionAliasCreateOrUpdateContent(
+                displayName,
+                workload,
+                billingScope,
+                subscriptionId,
+                resellerId,
+                additionalProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -175,7 +182,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionAliasCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionAliasCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +198,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         return DeserializeSubscriptionAliasCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionAliasCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionAliasCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

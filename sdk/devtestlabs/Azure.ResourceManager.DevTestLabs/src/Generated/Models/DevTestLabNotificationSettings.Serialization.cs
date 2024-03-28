@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabNotificationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabNotificationSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabNotificationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabNotificationSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<DevTestLabEnableStatus> status = default;
-            Optional<int> timeInMinutes = default;
-            Optional<Uri> webhookUrl = default;
-            Optional<string> emailRecipient = default;
-            Optional<string> notificationLocale = default;
+            DevTestLabEnableStatus? status = default;
+            int? timeInMinutes = default;
+            Uri webhookUrl = default;
+            string emailRecipient = default;
+            string notificationLocale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabNotificationSettings(Optional.ToNullable(status), Optional.ToNullable(timeInMinutes), webhookUrl.Value, emailRecipient.Value, notificationLocale.Value, serializedAdditionalRawData);
+            return new DevTestLabNotificationSettings(
+                status,
+                timeInMinutes,
+                webhookUrl,
+                emailRecipient,
+                notificationLocale,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabNotificationSettings>.Write(ModelReaderWriterOptions options)
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabNotificationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabNotificationSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabNotificationSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabNotificationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabNotificationSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemContainerStorageInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemContainerStorageInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> persistentVolumeClaim = default;
-            Optional<string> persistentVolume = default;
-            Optional<string> storageClass = default;
+            string persistentVolumeClaim = default;
+            string persistentVolume = default;
+            string storageClass = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim.Value, persistentVolume.Value, storageClass.Value, serializedAdditionalRawData);
+            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim, persistentVolume, storageClass, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemContainerStorageInterface>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeAmlFileSystemContainerStorageInterface(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemContainerStorageInterface)} does not support reading '{options.Format}' format.");
             }
         }
 

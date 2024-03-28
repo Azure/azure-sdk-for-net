@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetworkFunction;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             var format = options.Format == "W" ? ((IPersistableModel<CollectorPolicyListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CollectorPolicyListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CollectorPolicyListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CollectorPolicyData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             var format = options.Format == "W" ? ((IPersistableModel<CollectorPolicyListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CollectorPolicyListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CollectorPolicyListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CollectorPolicyData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CollectorPolicyData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     List<CollectorPolicyData> array = new List<CollectorPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CollectorPolicyData.DeserializeCollectorPolicyData(item));
+                        array.Add(CollectorPolicyData.DeserializeCollectorPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectorPolicyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CollectorPolicyListResult(value ?? new ChangeTrackingList<CollectorPolicyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectorPolicyListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CollectorPolicyListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CollectorPolicyListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                         return DeserializeCollectorPolicyListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CollectorPolicyListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CollectorPolicyListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

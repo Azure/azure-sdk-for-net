@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdlsGen1FileDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdlsGen1FileDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdlsGen1FileDataSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdlsGen1FileDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdlsGen1FileDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdlsGen1FileDataSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string accountName = default;
-            Optional<Guid> dataSetId = default;
+            Guid? dataSetId = default;
             string fileName = default;
             string folderPath = default;
             string resourceGroup = default;
@@ -201,7 +201,19 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdlsGen1FileDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, accountName, Optional.ToNullable(dataSetId), fileName, folderPath, resourceGroup, subscriptionId);
+            return new AdlsGen1FileDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                accountName,
+                dataSetId,
+                fileName,
+                folderPath,
+                resourceGroup,
+                subscriptionId);
         }
 
         BinaryData IPersistableModel<AdlsGen1FileDataSet>.Write(ModelReaderWriterOptions options)
@@ -213,7 +225,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdlsGen1FileDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdlsGen1FileDataSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +241,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeAdlsGen1FileDataSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdlsGen1FileDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdlsGen1FileDataSet)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyVaultProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventHubsKeyVaultProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +71,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +86,9 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IList<EventHubsKeyVaultProperties>> keyVaultProperties = default;
-            Optional<EventHubsKeySource> keySource = default;
-            Optional<bool> requireInfrastructureEncryption = default;
+            IList<EventHubsKeyVaultProperties> keyVaultProperties = default;
+            EventHubsKeySource? keySource = default;
+            bool? requireInfrastructureEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsKeyVaultProperties> array = new List<EventHubsKeyVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsKeyVaultProperties.DeserializeEventHubsKeyVaultProperties(item));
+                        array.Add(EventHubsKeyVaultProperties.DeserializeEventHubsKeyVaultProperties(item, options));
                     }
                     keyVaultProperties = array;
                     continue;
@@ -129,7 +131,73 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsEncryption(Optional.ToList(keyVaultProperties), Optional.ToNullable(keySource), Optional.ToNullable(requireInfrastructureEncryption), serializedAdditionalRawData);
+            return new EventHubsEncryption(keyVaultProperties ?? new ChangeTrackingList<EventHubsKeyVaultProperties>(), keySource, requireInfrastructureEncryption, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultProperties), out propertyOverride);
+            if (Optional.IsCollectionDefined(KeyVaultProperties) || hasPropertyOverride)
+            {
+                if (KeyVaultProperties.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  keyVaultProperties: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in KeyVaultProperties)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  keyVaultProperties: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeySource), out propertyOverride);
+            if (Optional.IsDefined(KeySource) || hasPropertyOverride)
+            {
+                builder.Append("  keySource: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{KeySource.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequireInfrastructureEncryption), out propertyOverride);
+            if (Optional.IsDefined(RequireInfrastructureEncryption) || hasPropertyOverride)
+            {
+                builder.Append("  requireInfrastructureEncryption: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = RequireInfrastructureEncryption.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<EventHubsEncryption>.Write(ModelReaderWriterOptions options)
@@ -140,8 +208,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +227,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeEventHubsEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 

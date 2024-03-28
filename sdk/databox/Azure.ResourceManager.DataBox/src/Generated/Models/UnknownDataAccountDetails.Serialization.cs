@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataAccountDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataAccountDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataAccountDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataAccountDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataAccountDetails(document.RootElement, options);
+            return DeserializeDataAccountDetails(document.RootElement, options);
         }
 
         internal static UnknownDataAccountDetails DeserializeUnknownDataAccountDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataAccountType dataAccountType = default;
-            Optional<string> sharePassword = default;
+            string sharePassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataAccountDetails(dataAccountType, sharePassword.Value, serializedAdditionalRawData);
+            return new UnknownDataAccountDetails(dataAccountType, sharePassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataAccountDetails>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataAccountDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataAccountDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataAccountDetails(document.RootElement, options);
+                        return DeserializeDataAccountDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataAccountDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataAccountDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

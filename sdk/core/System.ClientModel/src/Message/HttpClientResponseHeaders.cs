@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
@@ -21,10 +22,18 @@ internal class HttpClientResponseHeaders : PipelineResponseHeaders
     }
 
     public override bool TryGetValue(string name, out string? value)
-        => TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out value);
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+        return TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out value);
+    }
 
     public override bool TryGetValues(string name, out IEnumerable<string>? values)
-        => TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out values);
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+        return TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out values);
+    }
 
     public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
         => GetHeadersStringValues(_httpResponse.Headers, _httpResponseContent).GetEnumerator();
@@ -146,35 +155,4 @@ internal class HttpClientResponseHeaders : PipelineResponseHeaders
     }
 #endif
     #endregion
-
-    private static IEnumerable<KeyValuePair<string, IEnumerable<string>>> GetHeadersListValues(HttpHeaders headers, HttpContent? content)
-    {
-#if NET6_0_OR_GREATER
-        foreach (var (key, value) in headers.NonValidated)
-        {
-            yield return new KeyValuePair<string, IEnumerable<string>>(key, value);
-        }
-
-        if (content is not null)
-        {
-            foreach (var (key, value) in content.Headers.NonValidated)
-            {
-                yield return new KeyValuePair<string, IEnumerable<string>>(key, value);
-            }
-        }
-#else
-        foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
-        {
-            yield return new KeyValuePair<string, IEnumerable<string>>(header.Key, header.Value);
-        }
-
-        if (content != null)
-        {
-            foreach (KeyValuePair<string, IEnumerable<string>> header in content.Headers)
-            {
-                yield return new KeyValuePair<string, IEnumerable<string>>(header.Key, header.Value);
-            }
-        }
-#endif
-    }
 }

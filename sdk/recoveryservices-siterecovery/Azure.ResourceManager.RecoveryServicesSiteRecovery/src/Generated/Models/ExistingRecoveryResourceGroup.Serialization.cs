@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryResourceGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryResourceGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryResourceGroupId = default;
+            ResourceIdentifier recoveryResourceGroupId = default;
             string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExistingRecoveryResourceGroup(resourceType, serializedAdditionalRawData, recoveryResourceGroupId.Value);
+            return new ExistingRecoveryResourceGroup(resourceType, serializedAdditionalRawData, recoveryResourceGroupId);
         }
 
         BinaryData IPersistableModel<ExistingRecoveryResourceGroup>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeExistingRecoveryResourceGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExistingRecoveryResourceGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

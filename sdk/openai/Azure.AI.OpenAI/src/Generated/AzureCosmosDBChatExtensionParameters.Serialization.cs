@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,23 +22,23 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AzureCosmosDBChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCosmosDBChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureCosmosDBChatExtensionParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<OnYourDataAuthenticationOptions>(Authentication, options);
             }
             if (Optional.IsDefined(DocumentCount))
             {
-                writer.WritePropertyName("topNDocuments"u8);
+                writer.WritePropertyName("top_n_documents"u8);
                 writer.WriteNumberValue(DocumentCount.Value);
             }
             if (Optional.IsDefined(ShouldRestrictResultScope))
             {
-                writer.WritePropertyName("inScope"u8);
+                writer.WritePropertyName("in_scope"u8);
                 writer.WriteBooleanValue(ShouldRestrictResultScope.Value);
             }
             if (Optional.IsDefined(Strictness))
@@ -49,22 +48,19 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(RoleInformation))
             {
-                writer.WritePropertyName("roleInformation"u8);
+                writer.WritePropertyName("role_information"u8);
                 writer.WriteStringValue(RoleInformation);
             }
-            writer.WritePropertyName("databaseName"u8);
+            writer.WritePropertyName("database_name"u8);
             writer.WriteStringValue(DatabaseName);
-            writer.WritePropertyName("containerName"u8);
+            writer.WritePropertyName("container_name"u8);
             writer.WriteStringValue(ContainerName);
-            writer.WritePropertyName("indexName"u8);
+            writer.WritePropertyName("index_name"u8);
             writer.WriteStringValue(IndexName);
-            writer.WritePropertyName("fieldsMapping"u8);
-            writer.WriteObjectValue(FieldMappingOptions);
-            if (Optional.IsDefined(EmbeddingDependency))
-            {
-                writer.WritePropertyName("embeddingDependency"u8);
-                writer.WriteObjectValue(EmbeddingDependency);
-            }
+            writer.WritePropertyName("fields_mapping"u8);
+            writer.WriteObjectValue<AzureCosmosDBFieldMappingOptions>(FieldMappingOptions, options);
+            writer.WritePropertyName("embedding_dependency"u8);
+            writer.WriteObjectValue<OnYourDataVectorizationSource>(EmbeddingDependency, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +84,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AzureCosmosDBChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCosmosDBChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureCosmosDBChatExtensionParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,16 +99,16 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<OnYourDataAuthenticationOptions> authentication = default;
-            Optional<int> topNDocuments = default;
-            Optional<bool> inScope = default;
-            Optional<int> strictness = default;
-            Optional<string> roleInformation = default;
+            OnYourDataAuthenticationOptions authentication = default;
+            int? topNDocuments = default;
+            bool? inScope = default;
+            int? strictness = default;
+            string roleInformation = default;
             string databaseName = default;
             string containerName = default;
             string indexName = default;
             AzureCosmosDBFieldMappingOptions fieldsMapping = default;
-            Optional<OnYourDataVectorizationSource> embeddingDependency = default;
+            OnYourDataVectorizationSource embeddingDependency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,10 +119,10 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value);
+                    authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("topNDocuments"u8))
+                if (property.NameEquals("top_n_documents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,7 +131,7 @@ namespace Azure.AI.OpenAI
                     topNDocuments = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inScope"u8))
+                if (property.NameEquals("in_scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,38 +149,34 @@ namespace Azure.AI.OpenAI
                     strictness = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("roleInformation"u8))
+                if (property.NameEquals("role_information"u8))
                 {
                     roleInformation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseName"u8))
+                if (property.NameEquals("database_name"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerName"u8))
+                if (property.NameEquals("container_name"u8))
                 {
                     containerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("indexName"u8))
+                if (property.NameEquals("index_name"u8))
                 {
                     indexName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fieldsMapping"u8))
+                if (property.NameEquals("fields_mapping"u8))
                 {
-                    fieldsMapping = AzureCosmosDBFieldMappingOptions.DeserializeAzureCosmosDBFieldMappingOptions(property.Value);
+                    fieldsMapping = AzureCosmosDBFieldMappingOptions.DeserializeAzureCosmosDBFieldMappingOptions(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("embeddingDependency"u8))
+                if (property.NameEquals("embedding_dependency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    embeddingDependency = OnYourDataVectorizationSource.DeserializeOnYourDataVectorizationSource(property.Value);
+                    embeddingDependency = OnYourDataVectorizationSource.DeserializeOnYourDataVectorizationSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -193,7 +185,18 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCosmosDBChatExtensionParameters(authentication.Value, Optional.ToNullable(topNDocuments), Optional.ToNullable(inScope), Optional.ToNullable(strictness), roleInformation.Value, databaseName, containerName, indexName, fieldsMapping, embeddingDependency.Value, serializedAdditionalRawData);
+            return new AzureCosmosDBChatExtensionParameters(
+                authentication,
+                topNDocuments,
+                inScope,
+                strictness,
+                roleInformation,
+                databaseName,
+                containerName,
+                indexName,
+                fieldsMapping,
+                embeddingDependency,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureCosmosDBChatExtensionParameters>.Write(ModelReaderWriterOptions options)
@@ -205,7 +208,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureCosmosDBChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureCosmosDBChatExtensionParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +224,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeAzureCosmosDBChatExtensionParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureCosmosDBChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureCosmosDBChatExtensionParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -239,7 +242,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AzureCosmosDBChatExtensionParameters>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

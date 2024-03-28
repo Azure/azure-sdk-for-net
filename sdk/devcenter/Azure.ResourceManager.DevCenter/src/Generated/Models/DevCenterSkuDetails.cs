@@ -31,14 +31,20 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
         /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
         /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceType"> The name of the resource type. </param>
         /// <param name="locations"> SKU supported locations. </param>
         /// <param name="capabilities"> Collection of name/value pairs to describe the SKU capabilities. </param>
-        internal DevCenterSkuDetails(string name, DevCenterSkuTier? tier, string size, string family, int? capacity, ResourceType? resourceType, IReadOnlyList<string> locations, IReadOnlyList<DevCenterCapability> capabilities) : base(name, tier, size, family, capacity)
+        internal DevCenterSkuDetails(string name, DevCenterSkuTier? tier, string size, string family, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceType? resourceType, IReadOnlyList<string> locations, IReadOnlyList<DevCenterCapability> capabilities) : base(name, tier, size, family, capacity, serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Locations = locations;
             Capabilities = capabilities;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterSkuDetails"/> for deserialization. </summary>
+        internal DevCenterSkuDetails()
+        {
         }
 
         /// <summary> The name of the resource type. </summary>

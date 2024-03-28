@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtocolConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtocolConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtocolConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(HttpProtocolConfiguration))
             {
                 writer.WritePropertyName("HTTPConfiguration"u8);
-                writer.WriteObjectValue(HttpProtocolConfiguration);
+                writer.WriteObjectValue<NetworkHttpConfiguration>(HttpProtocolConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtocolConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtocolConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtocolConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NetworkHttpConfiguration> httpConfiguration = default;
+            NetworkHttpConfiguration httpConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    httpConfiguration = NetworkHttpConfiguration.DeserializeNetworkHttpConfiguration(property.Value);
+                    httpConfiguration = NetworkHttpConfiguration.DeserializeNetworkHttpConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtocolConfiguration(httpConfiguration.Value, serializedAdditionalRawData);
+            return new ProtocolConfiguration(httpConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtocolConfiguration>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProtocolConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtocolConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeProtocolConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProtocolConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtocolConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

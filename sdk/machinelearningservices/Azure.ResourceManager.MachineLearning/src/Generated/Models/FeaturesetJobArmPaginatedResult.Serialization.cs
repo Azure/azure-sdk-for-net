@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<FeaturesetJobArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeaturesetJobArmPaginatedResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FeaturesetJobArmPaginatedResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningFeatureSetJob>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<FeaturesetJobArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeaturesetJobArmPaginatedResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FeaturesetJobArmPaginatedResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningFeatureSetJob>> value = default;
+            string nextLink = default;
+            IReadOnlyList<MachineLearningFeatureSetJob> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningFeatureSetJob> array = new List<MachineLearningFeatureSetJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob(item));
+                        array.Add(MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeaturesetJobArmPaginatedResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new FeaturesetJobArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<MachineLearningFeatureSetJob>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeaturesetJobArmPaginatedResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FeaturesetJobArmPaginatedResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeaturesetJobArmPaginatedResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeFeaturesetJobArmPaginatedResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FeaturesetJobArmPaginatedResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeaturesetJobArmPaginatedResult)} does not support reading '{options.Format}' format.");
             }
         }
 

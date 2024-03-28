@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateReplicationProtectedItemProviderContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateReplicationProtectedItemProviderContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AUpdateReplicationProtectedItemContent.DeserializeA2AUpdateReplicationProtectedItemContent(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureUpdateReplicationProtectedItemContent.DeserializeHyperVReplicaAzureUpdateReplicationProtectedItemContent(element);
-                    case "InMageAzureV2": return InMageAzureV2UpdateReplicationProtectedItemContent.DeserializeInMageAzureV2UpdateReplicationProtectedItemContent(element);
-                    case "InMageRcm": return InMageRcmUpdateReplicationProtectedItemContent.DeserializeInMageRcmUpdateReplicationProtectedItemContent(element);
+                    case "A2A": return A2AUpdateReplicationProtectedItemContent.DeserializeA2AUpdateReplicationProtectedItemContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureUpdateReplicationProtectedItemContent.DeserializeHyperVReplicaAzureUpdateReplicationProtectedItemContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2UpdateReplicationProtectedItemContent.DeserializeInMageAzureV2UpdateReplicationProtectedItemContent(element, options);
+                    case "InMageRcm": return InMageRcmUpdateReplicationProtectedItemContent.DeserializeInMageRcmUpdateReplicationProtectedItemContent(element, options);
                 }
             }
-            return UnknownUpdateReplicationProtectedItemProviderContent.DeserializeUnknownUpdateReplicationProtectedItemProviderContent(element);
+            return UnknownUpdateReplicationProtectedItemProviderContent.DeserializeUnknownUpdateReplicationProtectedItemProviderContent(element, options);
         }
 
         BinaryData IPersistableModel<UpdateReplicationProtectedItemProviderContent>.Write(ModelReaderWriterOptions options)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeUpdateReplicationProtectedItemProviderContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support reading '{options.Format}' format.");
             }
         }
 

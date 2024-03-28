@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmNicContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmNicContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             string nicId = default;
             string isPrimaryNic = default;
-            Optional<string> isSelectedForFailover = default;
-            Optional<string> targetSubnetName = default;
-            Optional<IPAddress> targetStaticIPAddress = default;
-            Optional<string> testSubnetName = default;
-            Optional<IPAddress> testStaticIPAddress = default;
+            string isSelectedForFailover = default;
+            string targetSubnetName = default;
+            IPAddress targetStaticIPAddress = default;
+            string testSubnetName = default;
+            IPAddress testStaticIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmNicContent(nicId, isPrimaryNic, isSelectedForFailover.Value, targetSubnetName.Value, targetStaticIPAddress.Value, testSubnetName.Value, testStaticIPAddress.Value, serializedAdditionalRawData);
+            return new InMageRcmNicContent(
+                nicId,
+                isPrimaryNic,
+                isSelectedForFailover,
+                targetSubnetName,
+                targetStaticIPAddress,
+                testSubnetName,
+                testStaticIPAddress,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmNicContent>.Write(ModelReaderWriterOptions options)
@@ -166,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmNicContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<TestFailoverProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestFailoverProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TestFailoverProviderSpecificContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<TestFailoverProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestFailoverProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TestFailoverProviderSpecificContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2ATestFailoverContent.DeserializeA2ATestFailoverContent(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureTestFailoverContent.DeserializeHyperVReplicaAzureTestFailoverContent(element);
-                    case "InMage": return InMageTestFailoverContent.DeserializeInMageTestFailoverContent(element);
-                    case "InMageAzureV2": return InMageAzureV2TestFailoverContent.DeserializeInMageAzureV2TestFailoverContent(element);
-                    case "InMageRcm": return InMageRcmTestFailoverContent.DeserializeInMageRcmTestFailoverContent(element);
+                    case "A2A": return A2ATestFailoverContent.DeserializeA2ATestFailoverContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureTestFailoverContent.DeserializeHyperVReplicaAzureTestFailoverContent(element, options);
+                    case "InMage": return InMageTestFailoverContent.DeserializeInMageTestFailoverContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2TestFailoverContent.DeserializeInMageAzureV2TestFailoverContent(element, options);
+                    case "InMageRcm": return InMageRcmTestFailoverContent.DeserializeInMageRcmTestFailoverContent(element, options);
                 }
             }
-            return UnknownTestFailoverProviderSpecificContent.DeserializeUnknownTestFailoverProviderSpecificContent(element);
+            return UnknownTestFailoverProviderSpecificContent.DeserializeUnknownTestFailoverProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<TestFailoverProviderSpecificContent>.Write(ModelReaderWriterOptions options)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TestFailoverProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestFailoverProviderSpecificContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeTestFailoverProviderSpecificContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TestFailoverProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestFailoverProviderSpecificContent)} does not support reading '{options.Format}' format.");
             }
         }
 

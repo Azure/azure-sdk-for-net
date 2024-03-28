@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             string type = default;
             string name = default;
             string url = default;
-            Optional<string> parameters = default;
+            string parameters = default;
             IList<string> services = default;
-            Optional<int> timeoutInMinutes = default;
-            Optional<bool> shouldPersist = default;
+            int? timeoutInMinutes = default;
+            bool? shouldPersist = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActionProfile(type, name, url, parameters.Value, services, Optional.ToNullable(timeoutInMinutes), Optional.ToNullable(shouldPersist), serializedAdditionalRawData);
+            return new ScriptActionProfile(
+                type,
+                name,
+                url,
+                parameters,
+                services,
+                timeoutInMinutes,
+                shouldPersist,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptActionProfile>.Write(ModelReaderWriterOptions options)
@@ -169,7 +177,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +193,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeScriptActionProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

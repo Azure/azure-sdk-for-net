@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "secret": return SecretAuthInfo.DeserializeSecretAuthInfo(element);
-                    case "servicePrincipalCertificate": return ServicePrincipalCertificateAuthInfo.DeserializeServicePrincipalCertificateAuthInfo(element);
-                    case "servicePrincipalSecret": return ServicePrincipalSecretAuthInfo.DeserializeServicePrincipalSecretAuthInfo(element);
-                    case "systemAssignedIdentity": return SystemAssignedIdentityAuthInfo.DeserializeSystemAssignedIdentityAuthInfo(element);
-                    case "userAssignedIdentity": return UserAssignedIdentityAuthInfo.DeserializeUserAssignedIdentityAuthInfo(element);
+                    case "secret": return SecretAuthInfo.DeserializeSecretAuthInfo(element, options);
+                    case "servicePrincipalCertificate": return ServicePrincipalCertificateAuthInfo.DeserializeServicePrincipalCertificateAuthInfo(element, options);
+                    case "servicePrincipalSecret": return ServicePrincipalSecretAuthInfo.DeserializeServicePrincipalSecretAuthInfo(element, options);
+                    case "systemAssignedIdentity": return SystemAssignedIdentityAuthInfo.DeserializeSystemAssignedIdentityAuthInfo(element, options);
+                    case "userAssignedIdentity": return UserAssignedIdentityAuthInfo.DeserializeUserAssignedIdentityAuthInfo(element, options);
                 }
             }
-            return UnknownAuthInfoBase.DeserializeUnknownAuthInfoBase(element);
+            return UnknownAuthInfoBase.DeserializeUnknownAuthInfoBase(element, options);
         }
 
         BinaryData IPersistableModel<AuthBaseInfo>.Write(ModelReaderWriterOptions options)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         return DeserializeAuthBaseInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

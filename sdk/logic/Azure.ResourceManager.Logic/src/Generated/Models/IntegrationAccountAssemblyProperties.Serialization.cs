@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountAssemblyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink);
+                writer.WriteObjectValue<LogicContentLink>(ContentLink, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountAssemblyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,15 +126,15 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             string assemblyName = default;
-            Optional<string> assemblyVersion = default;
-            Optional<string> assemblyCulture = default;
-            Optional<string> assemblyPublicKeyToken = default;
-            Optional<BinaryData> content = default;
-            Optional<ContentType> contentType = default;
-            Optional<LogicContentLink> contentLink = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<BinaryData> metadata = default;
+            string assemblyVersion = default;
+            string assemblyCulture = default;
+            string assemblyPublicKeyToken = default;
+            BinaryData content = default;
+            ContentType? contentType = default;
+            LogicContentLink contentLink = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contentLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    contentLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdTime"u8))
@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountAssemblyProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, serializedAdditionalRawData, content.Value, Optional.ToNullable(contentType), contentLink.Value, assemblyName, assemblyVersion.Value, assemblyCulture.Value, assemblyPublicKeyToken.Value);
+            return new IntegrationAccountAssemblyProperties(
+                createdTime,
+                changedTime,
+                metadata,
+                serializedAdditionalRawData,
+                content,
+                contentType,
+                contentLink,
+                assemblyName,
+                assemblyVersion,
+                assemblyCulture,
+                assemblyPublicKeyToken);
         }
 
         BinaryData IPersistableModel<IntegrationAccountAssemblyProperties>.Write(ModelReaderWriterOptions options)
@@ -231,7 +242,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -247,7 +258,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationAccountAssemblyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

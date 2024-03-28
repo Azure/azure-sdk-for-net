@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtUpdateMigrationItemContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareCbtNicContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareCbtUpdateDiskContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtUpdateMigrationItemContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,23 +179,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> targetVmName = default;
-            Optional<string> targetVmSize = default;
-            Optional<ResourceIdentifier> targetResourceGroupId = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
-            Optional<ResourceIdentifier> targetNetworkId = default;
-            Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<IList<VMwareCbtNicContent>> vmNics = default;
-            Optional<IList<VMwareCbtUpdateDiskContent>> vmDisks = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
-            Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
-            Optional<string> performAutoResync = default;
-            Optional<IDictionary<string, string>> targetVmTags = default;
-            Optional<IDictionary<string, string>> targetDiskTags = default;
-            Optional<IDictionary<string, string>> targetNicTags = default;
+            string targetVmName = default;
+            string targetVmSize = default;
+            ResourceIdentifier targetResourceGroupId = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            ResourceIdentifier targetBootDiagnosticsStorageAccountId = default;
+            ResourceIdentifier targetNetworkId = default;
+            ResourceIdentifier testNetworkId = default;
+            IList<VMwareCbtNicContent> vmNics = default;
+            IList<VMwareCbtUpdateDiskContent> vmDisks = default;
+            SiteRecoveryLicenseType? licenseType = default;
+            SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
+            string performAutoResync = default;
+            IDictionary<string, string> targetVmTags = default;
+            IDictionary<string, string> targetDiskTags = default;
+            IDictionary<string, string> targetNicTags = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VMwareCbtNicContent> array = new List<VMwareCbtNicContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtNicContent.DeserializeVMwareCbtNicContent(item));
+                        array.Add(VMwareCbtNicContent.DeserializeVMwareCbtNicContent(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VMwareCbtUpdateDiskContent> array = new List<VMwareCbtUpdateDiskContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtUpdateDiskContent.DeserializeVMwareCbtUpdateDiskContent(item));
+                        array.Add(VMwareCbtUpdateDiskContent.DeserializeVMwareCbtUpdateDiskContent(item, options));
                     }
                     vmDisks = array;
                     continue;
@@ -374,7 +374,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtUpdateMigrationItemContent(instanceType, serializedAdditionalRawData, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, Optional.ToList(vmNics), Optional.ToList(vmDisks), Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), performAutoResync.Value, Optional.ToDictionary(targetVmTags), Optional.ToDictionary(targetDiskTags), Optional.ToDictionary(targetNicTags));
+            return new VMwareCbtUpdateMigrationItemContent(
+                instanceType,
+                serializedAdditionalRawData,
+                targetVmName,
+                targetVmSize,
+                targetResourceGroupId,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                targetBootDiagnosticsStorageAccountId,
+                targetNetworkId,
+                testNetworkId,
+                vmNics ?? new ChangeTrackingList<VMwareCbtNicContent>(),
+                vmDisks ?? new ChangeTrackingList<VMwareCbtUpdateDiskContent>(),
+                licenseType,
+                sqlServerLicenseType,
+                performAutoResync,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<VMwareCbtUpdateMigrationItemContent>.Write(ModelReaderWriterOptions options)
@@ -386,7 +405,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -402,7 +421,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareCbtUpdateMigrationItemContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support reading '{options.Format}' format.");
             }
         }
 

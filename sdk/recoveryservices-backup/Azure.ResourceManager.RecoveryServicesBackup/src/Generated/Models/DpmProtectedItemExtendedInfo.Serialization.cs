@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DpmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DpmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,20 +140,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> protectableObjectLoadPath = default;
-            Optional<bool> @protected = default;
-            Optional<bool> isPresentOnCloud = default;
-            Optional<string> lastBackupStatus = default;
-            Optional<DateTimeOffset> lastRefreshedAt = default;
-            Optional<DateTimeOffset> oldestRecoveryPoint = default;
-            Optional<int> recoveryPointCount = default;
-            Optional<DateTimeOffset> onPremiseOldestRecoveryPoint = default;
-            Optional<DateTimeOffset> onPremiseLatestRecoveryPoint = default;
-            Optional<int> onPremiseRecoveryPointCount = default;
-            Optional<bool> isCollocated = default;
-            Optional<string> protectionGroupName = default;
-            Optional<string> diskStorageUsedInBytes = default;
-            Optional<string> totalDiskStorageSizeInBytes = default;
+            IDictionary<string, string> protectableObjectLoadPath = default;
+            bool? @protected = default;
+            bool? isPresentOnCloud = default;
+            string lastBackupStatus = default;
+            DateTimeOffset? lastRefreshedAt = default;
+            DateTimeOffset? oldestRecoveryPoint = default;
+            int? recoveryPointCount = default;
+            DateTimeOffset? onPremiseOldestRecoveryPoint = default;
+            DateTimeOffset? onPremiseLatestRecoveryPoint = default;
+            int? onPremiseRecoveryPointCount = default;
+            bool? isCollocated = default;
+            string protectionGroupName = default;
+            string diskStorageUsedInBytes = default;
+            string totalDiskStorageSizeInBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,7 +279,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DpmProtectedItemExtendedInfo(Optional.ToDictionary(protectableObjectLoadPath), Optional.ToNullable(@protected), Optional.ToNullable(isPresentOnCloud), lastBackupStatus.Value, Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount), Optional.ToNullable(onPremiseOldestRecoveryPoint), Optional.ToNullable(onPremiseLatestRecoveryPoint), Optional.ToNullable(onPremiseRecoveryPointCount), Optional.ToNullable(isCollocated), protectionGroupName.Value, diskStorageUsedInBytes.Value, totalDiskStorageSizeInBytes.Value, serializedAdditionalRawData);
+            return new DpmProtectedItemExtendedInfo(
+                protectableObjectLoadPath ?? new ChangeTrackingDictionary<string, string>(),
+                @protected,
+                isPresentOnCloud,
+                lastBackupStatus,
+                lastRefreshedAt,
+                oldestRecoveryPoint,
+                recoveryPointCount,
+                onPremiseOldestRecoveryPoint,
+                onPremiseLatestRecoveryPoint,
+                onPremiseRecoveryPointCount,
+                isCollocated,
+                protectionGroupName,
+                diskStorageUsedInBytes,
+                totalDiskStorageSizeInBytes,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DpmProtectedItemExtendedInfo>.Write(ModelReaderWriterOptions options)
@@ -291,7 +306,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -307,7 +322,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeDpmProtectedItemExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

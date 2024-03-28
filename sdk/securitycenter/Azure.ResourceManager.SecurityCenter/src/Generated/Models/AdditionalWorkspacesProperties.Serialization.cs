@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdditionalWorkspacesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdditionalWorkspacesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> workspace = default;
-            Optional<AdditionalWorkspaceType> type = default;
-            Optional<IList<AdditionalWorkspaceDataType>> dataTypes = default;
+            string workspace = default;
+            AdditionalWorkspaceType? type = default;
+            IList<AdditionalWorkspaceDataType> dataTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalWorkspacesProperties(workspace.Value, Optional.ToNullable(type), Optional.ToList(dataTypes), serializedAdditionalRawData);
+            return new AdditionalWorkspacesProperties(workspace, type, dataTypes ?? new ChangeTrackingList<AdditionalWorkspaceDataType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalWorkspacesProperties>.Write(ModelReaderWriterOptions options)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAdditionalWorkspacesProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

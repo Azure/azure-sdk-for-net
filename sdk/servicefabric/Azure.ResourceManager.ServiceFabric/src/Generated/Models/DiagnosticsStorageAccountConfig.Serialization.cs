@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsStorageAccountConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsStorageAccountConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             string storageAccountName = default;
             string protectedAccountKeyName = default;
-            Optional<string> protectedAccountKeyName2 = default;
+            string protectedAccountKeyName2 = default;
             Uri blobEndpoint = default;
             Uri queueEndpoint = default;
             Uri tableEndpoint = default;
@@ -125,7 +125,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticsStorageAccountConfig(storageAccountName, protectedAccountKeyName, protectedAccountKeyName2.Value, blobEndpoint, queueEndpoint, tableEndpoint, serializedAdditionalRawData);
+            return new DiagnosticsStorageAccountConfig(
+                storageAccountName,
+                protectedAccountKeyName,
+                protectedAccountKeyName2,
+                blobEndpoint,
+                queueEndpoint,
+                tableEndpoint,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticsStorageAccountConfig>.Write(ModelReaderWriterOptions options)
@@ -137,7 +144,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +160,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeDiagnosticsStorageAccountConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

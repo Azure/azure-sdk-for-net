@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeUsageDataEventHub>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeUsageDataEventHub>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<string> token = default;
+            string name = default;
+            string @namespace = default;
+            string token = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeUsageDataEventHub(name.Value, @namespace.Value, token.Value, serializedAdditionalRawData);
+            return new EdgeUsageDataEventHub(name, @namespace, token, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeUsageDataEventHub>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeEdgeUsageDataEventHub(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<RemediationDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RemediationDeployment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RemediationDeployment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<RemediationDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RemediationDeployment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RemediationDeployment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,13 +99,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> remediatedResourceId = default;
-            Optional<ResourceIdentifier> deploymentId = default;
-            Optional<string> status = default;
-            Optional<AzureLocation> resourceLocation = default;
-            Optional<ResponseError> error = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> lastUpdatedOn = default;
+            ResourceIdentifier remediatedResourceId = default;
+            ResourceIdentifier deploymentId = default;
+            string status = default;
+            AzureLocation? resourceLocation = default;
+            ResponseError error = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? lastUpdatedOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +175,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemediationDeployment(remediatedResourceId.Value, deploymentId.Value, status.Value, Optional.ToNullable(resourceLocation), error.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn), serializedAdditionalRawData);
+            return new RemediationDeployment(
+                remediatedResourceId,
+                deploymentId,
+                status,
+                resourceLocation,
+                error,
+                createdOn,
+                lastUpdatedOn,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemediationDeployment>.Write(ModelReaderWriterOptions options)
@@ -188,7 +195,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RemediationDeployment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RemediationDeployment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +211,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeRemediationDeployment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RemediationDeployment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RemediationDeployment)} does not support reading '{options.Format}' format.");
             }
         }
 

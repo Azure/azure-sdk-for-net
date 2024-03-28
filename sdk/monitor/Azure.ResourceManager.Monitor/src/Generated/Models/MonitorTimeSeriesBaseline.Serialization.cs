@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorTimeSeriesBaseline>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorMetricSingleDimension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MonitorSingleBaseline>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(MetadataValues))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MetadataValues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorBaselineMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorTimeSeriesBaseline>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string aggregation = default;
-            Optional<IReadOnlyList<MonitorMetricSingleDimension>> dimensions = default;
+            IReadOnlyList<MonitorMetricSingleDimension> dimensions = default;
             IReadOnlyList<DateTimeOffset> timestamps = default;
             IReadOnlyList<MonitorSingleBaseline> data = default;
-            Optional<IReadOnlyList<MonitorBaselineMetadata>> metadataValues = default;
+            IReadOnlyList<MonitorBaselineMetadata> metadataValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricSingleDimension> array = new List<MonitorMetricSingleDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricSingleDimension.DeserializeMonitorMetricSingleDimension(item));
+                        array.Add(MonitorMetricSingleDimension.DeserializeMonitorMetricSingleDimension(item, options));
                     }
                     dimensions = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorSingleBaseline> array = new List<MonitorSingleBaseline>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorSingleBaseline.DeserializeMonitorSingleBaseline(item));
+                        array.Add(MonitorSingleBaseline.DeserializeMonitorSingleBaseline(item, options));
                     }
                     data = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorBaselineMetadata> array = new List<MonitorBaselineMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorBaselineMetadata.DeserializeMonitorBaselineMetadata(item));
+                        array.Add(MonitorBaselineMetadata.DeserializeMonitorBaselineMetadata(item, options));
                     }
                     metadataValues = array;
                     continue;
@@ -168,7 +168,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorTimeSeriesBaseline(aggregation, Optional.ToList(dimensions), timestamps, data, Optional.ToList(metadataValues), serializedAdditionalRawData);
+            return new MonitorTimeSeriesBaseline(
+                aggregation,
+                dimensions ?? new ChangeTrackingList<MonitorMetricSingleDimension>(),
+                timestamps,
+                data,
+                metadataValues ?? new ChangeTrackingList<MonitorBaselineMetadata>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorTimeSeriesBaseline>.Write(ModelReaderWriterOptions options)
@@ -180,7 +186,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +202,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorTimeSeriesBaseline(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support reading '{options.Format}' format.");
             }
         }
 

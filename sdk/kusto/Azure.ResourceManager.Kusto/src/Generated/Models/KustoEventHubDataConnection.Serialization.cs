@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoEventHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoEventHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,24 +160,24 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             DataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> eventHubResourceId = default;
-            Optional<string> consumerGroup = default;
-            Optional<string> tableName = default;
-            Optional<string> mappingRuleName = default;
-            Optional<KustoEventHubDataFormat> dataFormat = default;
-            Optional<IList<string>> eventSystemProperties = default;
-            Optional<EventHubMessagesCompressionType> compression = default;
-            Optional<KustoProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> managedIdentityResourceId = default;
-            Optional<Guid> managedIdentityObjectId = default;
-            Optional<KustoDatabaseRouting> databaseRouting = default;
-            Optional<DateTimeOffset> retrievalStartDate = default;
+            SystemData systemData = default;
+            ResourceIdentifier eventHubResourceId = default;
+            string consumerGroup = default;
+            string tableName = default;
+            string mappingRuleName = default;
+            KustoEventHubDataFormat? dataFormat = default;
+            IList<string> eventSystemProperties = default;
+            EventHubMessagesCompressionType? compression = default;
+            KustoProvisioningState? provisioningState = default;
+            ResourceIdentifier managedIdentityResourceId = default;
+            Guid? managedIdentityObjectId = default;
+            KustoDatabaseRouting? databaseRouting = default;
+            DateTimeOffset? retrievalStartDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -339,7 +339,26 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoEventHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), Optional.ToNullable(compression), Optional.ToNullable(provisioningState), managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), Optional.ToNullable(databaseRouting), Optional.ToNullable(retrievalStartDate));
+            return new KustoEventHubDataConnection(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData,
+                eventHubResourceId,
+                consumerGroup,
+                tableName,
+                mappingRuleName,
+                dataFormat,
+                eventSystemProperties ?? new ChangeTrackingList<string>(),
+                compression,
+                provisioningState,
+                managedIdentityResourceId,
+                managedIdentityObjectId,
+                databaseRouting,
+                retrievalStartDate);
         }
 
         BinaryData IPersistableModel<KustoEventHubDataConnection>.Write(ModelReaderWriterOptions options)
@@ -351,7 +370,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -367,7 +386,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeKustoEventHubDataConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

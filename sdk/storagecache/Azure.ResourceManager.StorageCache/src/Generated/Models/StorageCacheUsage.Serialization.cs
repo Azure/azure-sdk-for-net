@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheUsage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<StorageCacheUsageName>(Name, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<int> limit = default;
-            Optional<string> unit = default;
-            Optional<int> currentValue = default;
-            Optional<StorageCacheUsageName> name = default;
+            int? limit = default;
+            string unit = default;
+            int? currentValue = default;
+            StorageCacheUsageName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    name = StorageCacheUsageName.DeserializeStorageCacheUsageName(property.Value);
+                    name = StorageCacheUsageName.DeserializeStorageCacheUsageName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheUsage(Optional.ToNullable(limit), unit.Value, Optional.ToNullable(currentValue), name.Value, serializedAdditionalRawData);
+            return new StorageCacheUsage(limit, unit, currentValue, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheUsage>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeStorageCacheUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheUsage)} does not support reading '{options.Format}' format.");
             }
         }
 

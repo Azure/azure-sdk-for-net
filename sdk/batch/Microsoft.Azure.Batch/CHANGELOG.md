@@ -1,5 +1,29 @@
 # Release History
 
+## 16.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 16.2.0 (2024-02-29)
+
+### Features Added
+
+- Add `UpgradePolicy` support to Pool Creation
+  - Added `upgradePolicy` property to `PoolSpecification`definition
+  - Added `upgradePolicy` property to `CloudPool`definition
+  - Added `upgradePolicy` property to `PoolAddParameter`definition
+  - Added `upgradingOS` value to `ComputeNodeState` enum
+  - Added `upgradingOS` property to `NodeCounts`definition
+  - Added `UpgradePolicy`definition
+  - Added `AutomaticOSUpgradePolicy`definition
+  - Added `RollingUpgradePolicy`definition
+
 ## 16.1.0 (2024-01-01)
 
 ### Features Added

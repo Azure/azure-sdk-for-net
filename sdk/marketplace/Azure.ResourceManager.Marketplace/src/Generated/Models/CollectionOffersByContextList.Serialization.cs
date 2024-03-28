@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<CollectionOffersByContextList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CollectionOffersByContextList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CollectionOffersByContextList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CollectionOffersByContext>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<CollectionOffersByContextList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CollectionOffersByContextList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CollectionOffersByContextList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CollectionOffersByContext>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CollectionOffersByContext> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<CollectionOffersByContext> array = new List<CollectionOffersByContext>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CollectionOffersByContext.DeserializeCollectionOffersByContext(item));
+                        array.Add(CollectionOffersByContext.DeserializeCollectionOffersByContext(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectionOffersByContextList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CollectionOffersByContextList(value ?? new ChangeTrackingList<CollectionOffersByContext>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectionOffersByContextList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CollectionOffersByContextList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CollectionOffersByContextList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeCollectionOffersByContextList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CollectionOffersByContextList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CollectionOffersByContextList)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataMasking>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataMasking)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataMasking)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in QueryParams)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataMaskingEntity>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataMaskingEntity>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataMasking>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataMasking)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataMasking)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IList<DataMaskingEntity>> queryParams = default;
-            Optional<IList<DataMaskingEntity>> headers = default;
+            IList<DataMaskingEntity> queryParams = default;
+            IList<DataMaskingEntity> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<DataMaskingEntity> array = new List<DataMaskingEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item));
+                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item, options));
                     }
                     queryParams = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<DataMaskingEntity> array = new List<DataMaskingEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item));
+                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item, options));
                     }
                     headers = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMasking(Optional.ToList(queryParams), Optional.ToList(headers), serializedAdditionalRawData);
+            return new DataMasking(queryParams ?? new ChangeTrackingList<DataMaskingEntity>(), headers ?? new ChangeTrackingList<DataMaskingEntity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMasking>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataMasking)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataMasking)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeDataMasking(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataMasking)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataMasking)} does not support reading '{options.Format}' format.");
             }
         }
 

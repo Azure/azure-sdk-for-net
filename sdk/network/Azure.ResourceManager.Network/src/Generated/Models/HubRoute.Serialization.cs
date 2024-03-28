@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<HubRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HubRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HubRoute)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<HubRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HubRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HubRoute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubRoute(name, destinationType, destinations, nextHopType, nextHop, serializedAdditionalRawData);
+            return new HubRoute(
+                name,
+                destinationType,
+                destinations,
+                nextHopType,
+                nextHop,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HubRoute>.Write(ModelReaderWriterOptions options)
@@ -136,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HubRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HubRoute)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +158,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeHubRoute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HubRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HubRoute)} does not support reading '{options.Format}' format.");
             }
         }
 

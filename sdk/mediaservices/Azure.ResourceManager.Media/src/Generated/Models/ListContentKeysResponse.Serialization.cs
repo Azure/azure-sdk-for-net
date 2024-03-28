@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ListContentKeysResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListContentKeysResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ListContentKeysResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in ContentKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingLocatorContentKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ListContentKeysResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListContentKeysResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ListContentKeysResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingLocatorContentKey>> contentKeys = default;
+            IReadOnlyList<StreamingLocatorContentKey> contentKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingLocatorContentKey> array = new List<StreamingLocatorContentKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item));
+                        array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item, options));
                     }
                     contentKeys = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListContentKeysResponse(Optional.ToList(contentKeys), serializedAdditionalRawData);
+            return new ListContentKeysResponse(contentKeys ?? new ChangeTrackingList<StreamingLocatorContentKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListContentKeysResponse>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ListContentKeysResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListContentKeysResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeListContentKeysResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListContentKeysResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListContentKeysResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

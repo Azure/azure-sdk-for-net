@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SystemService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SystemService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 return null;
             }
             SystemServiceType systemServiceType = default;
-            Optional<string> publicIPAddress = default;
-            Optional<string> version = default;
+            string publicIPAddress = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SystemService(systemServiceType, publicIPAddress.Value, version.Value, serializedAdditionalRawData);
+            return new SystemService(systemServiceType, publicIPAddress, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SystemService>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SystemService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                         return DeserializeSystemService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SystemService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemService)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxConfigurationListResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxConfigurationListResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NginxConfigurationData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxConfigurationListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxConfigurationListResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxConfigurationListResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NginxConfigurationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<NginxConfigurationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxConfigurationData> array = new List<NginxConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationData.DeserializeNginxConfigurationData(item));
+                        array.Add(NginxConfigurationData.DeserializeNginxConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxConfigurationListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NginxConfigurationListResponse(value ?? new ChangeTrackingList<NginxConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxConfigurationListResponse>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxConfigurationListResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxConfigurationListResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxConfigurationListResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxConfigurationListResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxConfigurationListResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

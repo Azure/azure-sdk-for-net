@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualHubRouteV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualHubRouteV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> destinationType = default;
-            Optional<IList<string>> destinations = default;
-            Optional<string> nextHopType = default;
-            Optional<IList<string>> nextHops = default;
+            string destinationType = default;
+            IList<string> destinations = default;
+            string nextHopType = default;
+            IList<string> nextHops = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubRouteV2(destinationType.Value, Optional.ToList(destinations), nextHopType.Value, Optional.ToList(nextHops), serializedAdditionalRawData);
+            return new VirtualHubRouteV2(destinationType, destinations ?? new ChangeTrackingList<string>(), nextHopType, nextHops ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHubRouteV2>.Write(ModelReaderWriterOptions options)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVirtualHubRouteV2(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHubRouteV2)} does not support reading '{options.Format}' format.");
             }
         }
 

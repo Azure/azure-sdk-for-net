@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<RankingsResponseTablesPropertiesItemsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RankingsResponseTablesPropertiesItemsMetricsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<RankingsResponseTablesPropertiesItemsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<RankingsResponseTablesPropertiesItemsMetricsItem>> metrics = default;
+            string name = default;
+            IReadOnlyList<RankingsResponseTablesPropertiesItemsMetricsItem> metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<RankingsResponseTablesPropertiesItemsMetricsItem> array = new List<RankingsResponseTablesPropertiesItemsMetricsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RankingsResponseTablesPropertiesItemsMetricsItem.DeserializeRankingsResponseTablesPropertiesItemsMetricsItem(item));
+                        array.Add(RankingsResponseTablesPropertiesItemsMetricsItem.DeserializeRankingsResponseTablesPropertiesItemsMetricsItem(item, options));
                     }
                     metrics = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RankingsResponseTablesPropertiesItemsItem(name.Value, Optional.ToList(metrics), serializedAdditionalRawData);
+            return new RankingsResponseTablesPropertiesItemsItem(name, metrics ?? new ChangeTrackingList<RankingsResponseTablesPropertiesItemsMetricsItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RankingsResponseTablesPropertiesItemsItem>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeRankingsResponseTablesPropertiesItemsItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support reading '{options.Format}' format.");
             }
         }
 

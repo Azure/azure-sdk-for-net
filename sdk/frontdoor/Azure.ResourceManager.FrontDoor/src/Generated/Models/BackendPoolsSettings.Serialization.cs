@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackendPoolsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackendPoolsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<EnforceCertificateNameCheckEnabledState> enforceCertificateNameCheck = default;
-            Optional<int> sendRecvTimeoutSeconds = default;
+            EnforceCertificateNameCheckEnabledState? enforceCertificateNameCheck = default;
+            int? sendRecvTimeoutSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendPoolsSettings(Optional.ToNullable(enforceCertificateNameCheck), Optional.ToNullable(sendRecvTimeoutSeconds), serializedAdditionalRawData);
+            return new BackendPoolsSettings(enforceCertificateNameCheck, sendRecvTimeoutSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendPoolsSettings>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeBackendPoolsSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendPoolsSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

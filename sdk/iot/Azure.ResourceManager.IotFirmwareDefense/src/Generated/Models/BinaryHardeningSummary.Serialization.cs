@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BinaryHardeningSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BinaryHardeningSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,66 +31,68 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("totalFiles"u8);
                 writer.WriteNumberValue(TotalFiles.Value);
             }
-            if (Optional.IsDefined(Nx))
+            if (Optional.IsDefined(NXPercentage))
             {
-                if (Nx != null)
+                if (NXPercentage != null)
                 {
                     writer.WritePropertyName("nx"u8);
-                    writer.WriteNumberValue(Nx.Value);
+                    writer.WriteNumberValue(NXPercentage.Value);
                 }
                 else
                 {
                     writer.WriteNull("nx");
                 }
             }
-            if (Optional.IsDefined(Pie))
+            if (Optional.IsDefined(PiePercentage))
             {
-                if (Pie != null)
+                if (PiePercentage != null)
                 {
                     writer.WritePropertyName("pie"u8);
-                    writer.WriteNumberValue(Pie.Value);
+                    writer.WriteNumberValue(PiePercentage.Value);
                 }
                 else
                 {
                     writer.WriteNull("pie");
                 }
             }
-            if (Optional.IsDefined(Relro))
+            if (Optional.IsDefined(RelroPercentage))
             {
-                if (Relro != null)
+                if (RelroPercentage != null)
                 {
                     writer.WritePropertyName("relro"u8);
-                    writer.WriteNumberValue(Relro.Value);
+                    writer.WriteNumberValue(RelroPercentage.Value);
                 }
                 else
                 {
                     writer.WriteNull("relro");
                 }
             }
-            if (Optional.IsDefined(Canary))
+            if (Optional.IsDefined(CanaryPercentage))
             {
-                if (Canary != null)
+                if (CanaryPercentage != null)
                 {
                     writer.WritePropertyName("canary"u8);
-                    writer.WriteNumberValue(Canary.Value);
+                    writer.WriteNumberValue(CanaryPercentage.Value);
                 }
                 else
                 {
                     writer.WriteNull("canary");
                 }
             }
-            if (Optional.IsDefined(Stripped))
+            if (Optional.IsDefined(StrippedPercentage))
             {
-                if (Stripped != null)
+                if (StrippedPercentage != null)
                 {
                     writer.WritePropertyName("stripped"u8);
-                    writer.WriteNumberValue(Stripped.Value);
+                    writer.WriteNumberValue(StrippedPercentage.Value);
                 }
                 else
                 {
                     writer.WriteNull("stripped");
                 }
             }
+            writer.WritePropertyName("summaryType"u8);
+            writer.WriteStringValue(SummaryType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -114,7 +116,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BinaryHardeningSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BinaryHardeningSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,12 +131,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<long> totalFiles = default;
-            Optional<int?> nx = default;
-            Optional<int?> pie = default;
-            Optional<int?> relro = default;
-            Optional<int?> canary = default;
-            Optional<int?> stripped = default;
+            long? totalFiles = default;
+            int? nx = default;
+            int? pie = default;
+            int? relro = default;
+            int? canary = default;
+            int? stripped = default;
+            FirmwareAnalysisSummaryType summaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,13 +201,26 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     stripped = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("summaryType"u8))
+                {
+                    summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BinaryHardeningSummary(Optional.ToNullable(totalFiles), Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped), serializedAdditionalRawData);
+            return new BinaryHardeningSummary(
+                summaryType,
+                serializedAdditionalRawData,
+                totalFiles,
+                nx,
+                pie,
+                relro,
+                canary,
+                stripped);
         }
 
         BinaryData IPersistableModel<BinaryHardeningSummary>.Write(ModelReaderWriterOptions options)
@@ -216,7 +232,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BinaryHardeningSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BinaryHardeningSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +248,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeBinaryHardeningSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BinaryHardeningSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BinaryHardeningSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

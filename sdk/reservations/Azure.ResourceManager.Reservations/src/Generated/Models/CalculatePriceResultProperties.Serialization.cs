@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CalculatePriceResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculatePriceResultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CalculatePriceResultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue(BillingCurrencyTotal);
+                writer.WriteObjectValue<CalculatePriceResultPropertiesBillingCurrencyTotal>(BillingCurrencyTotal, options);
             }
             if (Optional.IsDefined(NetTotal))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal);
+                writer.WriteObjectValue<CalculatePriceResultPropertiesPricingCurrencyTotal>(PricingCurrencyTotal, options);
             }
             if (Optional.IsCollectionDefined(PaymentSchedule))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in PaymentSchedule)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PaymentDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CalculatePriceResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculatePriceResultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CalculatePriceResultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,17 +124,17 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<CalculatePriceResultPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
-            Optional<double> netTotal = default;
-            Optional<double> taxTotal = default;
-            Optional<double> grandTotal = default;
-            Optional<bool> isTaxIncluded = default;
-            Optional<bool> isBillingPartnerManaged = default;
-            Optional<Guid> reservationOrderId = default;
-            Optional<string> skuTitle = default;
-            Optional<string> skuDescription = default;
-            Optional<CalculatePriceResultPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
-            Optional<IReadOnlyList<PaymentDetail>> paymentSchedule = default;
+            CalculatePriceResultPropertiesBillingCurrencyTotal billingCurrencyTotal = default;
+            double? netTotal = default;
+            double? taxTotal = default;
+            double? grandTotal = default;
+            bool? isTaxIncluded = default;
+            bool? isBillingPartnerManaged = default;
+            Guid? reservationOrderId = default;
+            string skuTitle = default;
+            string skuDescription = default;
+            CalculatePriceResultPropertiesPricingCurrencyTotal pricingCurrencyTotal = default;
+            IReadOnlyList<PaymentDetail> paymentSchedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = CalculatePriceResultPropertiesBillingCurrencyTotal.DeserializeCalculatePriceResultPropertiesBillingCurrencyTotal(property.Value);
+                    billingCurrencyTotal = CalculatePriceResultPropertiesBillingCurrencyTotal.DeserializeCalculatePriceResultPropertiesBillingCurrencyTotal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("netTotal"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = CalculatePriceResultPropertiesPricingCurrencyTotal.DeserializeCalculatePriceResultPropertiesPricingCurrencyTotal(property.Value);
+                    pricingCurrencyTotal = CalculatePriceResultPropertiesPricingCurrencyTotal.DeserializeCalculatePriceResultPropertiesPricingCurrencyTotal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("paymentSchedule"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<PaymentDetail> array = new List<PaymentDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaymentDetail.DeserializePaymentDetail(item));
+                        array.Add(PaymentDetail.DeserializePaymentDetail(item, options));
                     }
                     paymentSchedule = array;
                     continue;
@@ -241,7 +241,19 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculatePriceResultProperties(billingCurrencyTotal.Value, Optional.ToNullable(netTotal), Optional.ToNullable(taxTotal), Optional.ToNullable(grandTotal), Optional.ToNullable(isTaxIncluded), Optional.ToNullable(isBillingPartnerManaged), Optional.ToNullable(reservationOrderId), skuTitle.Value, skuDescription.Value, pricingCurrencyTotal.Value, Optional.ToList(paymentSchedule), serializedAdditionalRawData);
+            return new CalculatePriceResultProperties(
+                billingCurrencyTotal,
+                netTotal,
+                taxTotal,
+                grandTotal,
+                isTaxIncluded,
+                isBillingPartnerManaged,
+                reservationOrderId,
+                skuTitle,
+                skuDescription,
+                pricingCurrencyTotal,
+                paymentSchedule ?? new ChangeTrackingList<PaymentDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculatePriceResultProperties>.Write(ModelReaderWriterOptions options)
@@ -253,7 +265,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CalculatePriceResultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CalculatePriceResultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -269,7 +281,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeCalculatePriceResultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CalculatePriceResultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CalculatePriceResultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

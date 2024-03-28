@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<TypedErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<TypedErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             string type = default;
-            Optional<BinaryData> info = default;
+            BinaryData info = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TypedErrorInfo(type, info.Value, serializedAdditionalRawData);
+            return new TypedErrorInfo(type, info, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TypedErrorInfo>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeTypedErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

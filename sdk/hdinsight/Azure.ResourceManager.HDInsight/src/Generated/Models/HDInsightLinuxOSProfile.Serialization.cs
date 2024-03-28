@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightLinuxOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
-                writer.WriteObjectValue(SshProfile);
+                writer.WriteObjectValue<SshProfile>(SshProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightLinuxOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<SshProfile> sshProfile = default;
+            string username = default;
+            string password = default;
+            SshProfile sshProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    sshProfile = SshProfile.DeserializeSshProfile(property.Value);
+                    sshProfile = SshProfile.DeserializeSshProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightLinuxOSProfile(username.Value, password.Value, sshProfile.Value, serializedAdditionalRawData);
+            return new HDInsightLinuxOSProfile(username, password, sshProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightLinuxOSProfile>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightLinuxOSProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

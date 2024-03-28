@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchVmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchVmConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchVmConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue(ImageReference);
+            writer.WriteObjectValue<BatchImageReference>(ImageReference, options);
             writer.WritePropertyName("nodeAgentSkuId"u8);
             writer.WriteStringValue(NodeAgentSkuId);
             if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue(WindowsConfiguration);
+                writer.WriteObjectValue<WindowsConfiguration>(WindowsConfiguration, options);
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchVmDataDisk>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
-                writer.WriteObjectValue(ContainerConfiguration);
+                writer.WriteObjectValue<BatchVmContainerConfiguration>(ContainerConfiguration, options);
             }
             if (Optional.IsDefined(DiskEncryptionConfiguration))
             {
                 writer.WritePropertyName("diskEncryptionConfiguration"u8);
-                writer.WriteObjectValue(DiskEncryptionConfiguration);
+                writer.WriteObjectValue<DiskEncryptionConfiguration>(DiskEncryptionConfiguration, options);
             }
             if (Optional.IsDefined(NodePlacementConfiguration))
             {
                 writer.WritePropertyName("nodePlacementConfiguration"u8);
-                writer.WriteObjectValue(NodePlacementConfiguration);
+                writer.WriteObjectValue<NodePlacementConfiguration>(NodePlacementConfiguration, options);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchVmExtension>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk);
+                writer.WriteObjectValue<BatchOSDisk>(OSDisk, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<BatchSecurityProfile>(SecurityProfile, options);
             }
             if (Optional.IsDefined(ServiceArtifactReference))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchVmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchVmConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchVmConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,23 +131,23 @@ namespace Azure.ResourceManager.Batch.Models
             }
             BatchImageReference imageReference = default;
             string nodeAgentSkuId = default;
-            Optional<WindowsConfiguration> windowsConfiguration = default;
-            Optional<IList<BatchVmDataDisk>> dataDisks = default;
-            Optional<string> licenseType = default;
-            Optional<BatchVmContainerConfiguration> containerConfiguration = default;
-            Optional<DiskEncryptionConfiguration> diskEncryptionConfiguration = default;
-            Optional<NodePlacementConfiguration> nodePlacementConfiguration = default;
-            Optional<IList<BatchVmExtension>> extensions = default;
-            Optional<BatchOSDisk> osDisk = default;
-            Optional<BatchSecurityProfile> securityProfile = default;
-            Optional<WritableSubResource> serviceArtifactReference = default;
+            WindowsConfiguration windowsConfiguration = default;
+            IList<BatchVmDataDisk> dataDisks = default;
+            string licenseType = default;
+            BatchVmContainerConfiguration containerConfiguration = default;
+            DiskEncryptionConfiguration diskEncryptionConfiguration = default;
+            NodePlacementConfiguration nodePlacementConfiguration = default;
+            IList<BatchVmExtension> extensions = default;
+            BatchOSDisk osDisk = default;
+            BatchSecurityProfile securityProfile = default;
+            WritableSubResource serviceArtifactReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = BatchImageReference.DeserializeBatchImageReference(property.Value);
+                    imageReference = BatchImageReference.DeserializeBatchImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodeAgentSkuId"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value);
+                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDisks"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchVmDataDisk> array = new List<BatchVmDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchVmDataDisk.DeserializeBatchVmDataDisk(item));
+                        array.Add(BatchVmDataDisk.DeserializeBatchVmDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    containerConfiguration = BatchVmContainerConfiguration.DeserializeBatchVmContainerConfiguration(property.Value);
+                    containerConfiguration = BatchVmContainerConfiguration.DeserializeBatchVmContainerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionConfiguration"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    diskEncryptionConfiguration = DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(property.Value);
+                    diskEncryptionConfiguration = DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodePlacementConfiguration"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nodePlacementConfiguration = NodePlacementConfiguration.DeserializeNodePlacementConfiguration(property.Value);
+                    nodePlacementConfiguration = NodePlacementConfiguration.DeserializeNodePlacementConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchVmExtension> array = new List<BatchVmExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchVmExtension.DeserializeBatchVmExtension(item));
+                        array.Add(BatchVmExtension.DeserializeBatchVmExtension(item, options));
                     }
                     extensions = array;
                     continue;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    osDisk = BatchOSDisk.DeserializeBatchOSDisk(property.Value);
+                    osDisk = BatchOSDisk.DeserializeBatchOSDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    securityProfile = BatchSecurityProfile.DeserializeBatchSecurityProfile(property.Value);
+                    securityProfile = BatchSecurityProfile.DeserializeBatchSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceArtifactReference"u8))
@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmConfiguration(imageReference, nodeAgentSkuId, windowsConfiguration.Value, Optional.ToList(dataDisks), licenseType.Value, containerConfiguration.Value, diskEncryptionConfiguration.Value, nodePlacementConfiguration.Value, Optional.ToList(extensions), osDisk.Value, securityProfile.Value, serviceArtifactReference, serializedAdditionalRawData);
+            return new BatchVmConfiguration(
+                imageReference,
+                nodeAgentSkuId,
+                windowsConfiguration,
+                dataDisks ?? new ChangeTrackingList<BatchVmDataDisk>(),
+                licenseType,
+                containerConfiguration,
+                diskEncryptionConfiguration,
+                nodePlacementConfiguration,
+                extensions ?? new ChangeTrackingList<BatchVmExtension>(),
+                osDisk,
+                securityProfile,
+                serviceArtifactReference,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmConfiguration>.Write(ModelReaderWriterOptions options)
@@ -269,7 +282,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchVmConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchVmConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -285,7 +298,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchVmConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchVmConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchVmConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

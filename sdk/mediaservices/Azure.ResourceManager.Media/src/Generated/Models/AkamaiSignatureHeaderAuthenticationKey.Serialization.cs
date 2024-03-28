@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<AkamaiSignatureHeaderAuthenticationKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<AkamaiSignatureHeaderAuthenticationKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> identifier = default;
-            Optional<string> base64Key = default;
-            Optional<DateTimeOffset> expiration = default;
+            string identifier = default;
+            string base64Key = default;
+            DateTimeOffset? expiration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AkamaiSignatureHeaderAuthenticationKey(identifier.Value, base64Key.Value, Optional.ToNullable(expiration), serializedAdditionalRawData);
+            return new AkamaiSignatureHeaderAuthenticationKey(identifier, base64Key, expiration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AkamaiSignatureHeaderAuthenticationKey>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeAkamaiSignatureHeaderAuthenticationKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support reading '{options.Format}' format.");
             }
         }
 

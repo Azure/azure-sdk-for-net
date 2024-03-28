@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVToAzStackHCI": return HyperVToAzStackHciPlannedFailoverModelCustomProperties.DeserializeHyperVToAzStackHciPlannedFailoverModelCustomProperties(element);
-                    case "PlannedFailoverModelCustomProperties": return GeneralPlannedFailoverModelCustomProperties.DeserializeGeneralPlannedFailoverModelCustomProperties(element);
-                    case "VMwareToAzStackHCI": return VMwareToAzStackHciPlannedFailoverModelCustomProperties.DeserializeVMwareToAzStackHciPlannedFailoverModelCustomProperties(element);
+                    case "HyperVToAzStackHCI": return HyperVToAzStackHciPlannedFailoverModelCustomProperties.DeserializeHyperVToAzStackHciPlannedFailoverModelCustomProperties(element, options);
+                    case "PlannedFailoverModelCustomProperties": return GeneralPlannedFailoverModelCustomProperties.DeserializeGeneralPlannedFailoverModelCustomProperties(element, options);
+                    case "VMwareToAzStackHCI": return VMwareToAzStackHciPlannedFailoverModelCustomProperties.DeserializeVMwareToAzStackHciPlannedFailoverModelCustomProperties(element, options);
                 }
             }
-            return UnknownPlannedFailoverModelCustomProperties.DeserializeUnknownPlannedFailoverModelCustomProperties(element);
+            return UnknownPlannedFailoverModelCustomProperties.DeserializeUnknownPlannedFailoverModelCustomProperties(element, options);
         }
 
         BinaryData IPersistableModel<PlannedFailoverModelCustomProperties>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializePlannedFailoverModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

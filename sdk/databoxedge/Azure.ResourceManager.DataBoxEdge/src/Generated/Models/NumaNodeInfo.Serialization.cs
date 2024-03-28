@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<NumaNodeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<NumaNodeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<int> numaNodeIndex = default;
-            Optional<long> totalMemoryInMb = default;
-            Optional<int> logicalCoreCountPerCore = default;
-            Optional<long> effectiveAvailableMemoryInMb = default;
-            Optional<IList<int>> freeVCpuIndexesForHpn = default;
-            Optional<IList<int>> vCpuIndexesForHpn = default;
-            Optional<IList<int>> vCpuIndexesForRoot = default;
+            int? numaNodeIndex = default;
+            long? totalMemoryInMb = default;
+            int? logicalCoreCountPerCore = default;
+            long? effectiveAvailableMemoryInMb = default;
+            IList<int> freeVCpuIndexesForHpn = default;
+            IList<int> vCpuIndexesForHpn = default;
+            IList<int> vCpuIndexesForRoot = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NumaNodeInfo(Optional.ToNullable(numaNodeIndex), Optional.ToNullable(totalMemoryInMb), Optional.ToNullable(logicalCoreCountPerCore), Optional.ToNullable(effectiveAvailableMemoryInMb), Optional.ToList(freeVCpuIndexesForHpn), Optional.ToList(vCpuIndexesForHpn), Optional.ToList(vCpuIndexesForRoot), serializedAdditionalRawData);
+            return new NumaNodeInfo(
+                numaNodeIndex,
+                totalMemoryInMb,
+                logicalCoreCountPerCore,
+                effectiveAvailableMemoryInMb,
+                freeVCpuIndexesForHpn ?? new ChangeTrackingList<int>(),
+                vCpuIndexesForHpn ?? new ChangeTrackingList<int>(),
+                vCpuIndexesForRoot ?? new ChangeTrackingList<int>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NumaNodeInfo>.Write(ModelReaderWriterOptions options)
@@ -221,7 +229,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +245,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeNumaNodeInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

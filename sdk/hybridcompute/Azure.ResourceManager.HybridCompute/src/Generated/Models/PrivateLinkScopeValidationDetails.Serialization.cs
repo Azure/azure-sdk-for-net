@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkScopeValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HybridComputeConnectionDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkScopeValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<HybridComputePublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<IReadOnlyList<HybridComputeConnectionDetail>> connectionDetails = default;
+            ResourceIdentifier id = default;
+            HybridComputePublicNetworkAccessType? publicNetworkAccess = default;
+            IReadOnlyList<HybridComputeConnectionDetail> connectionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeConnectionDetail> array = new List<HybridComputeConnectionDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeConnectionDetail.DeserializeHybridComputeConnectionDetail(item));
+                        array.Add(HybridComputeConnectionDetail.DeserializeHybridComputeConnectionDetail(item, options));
                     }
                     connectionDetails = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkScopeValidationDetails(id.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(connectionDetails), serializedAdditionalRawData);
+            return new PrivateLinkScopeValidationDetails(id, publicNetworkAccess, connectionDetails ?? new ChangeTrackingList<HybridComputeConnectionDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkScopeValidationDetails>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializePrivateLinkScopeValidationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

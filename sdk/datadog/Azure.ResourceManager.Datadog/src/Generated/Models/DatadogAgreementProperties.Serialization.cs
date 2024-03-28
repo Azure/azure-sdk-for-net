@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> publisher = default;
-            Optional<string> product = default;
-            Optional<string> plan = default;
-            Optional<string> licenseTextLink = default;
-            Optional<string> privacyPolicyLink = default;
-            Optional<DateTimeOffset> retrieveDatetime = default;
-            Optional<string> signature = default;
-            Optional<bool> accepted = default;
+            string publisher = default;
+            string product = default;
+            string plan = default;
+            string licenseTextLink = default;
+            string privacyPolicyLink = default;
+            DateTimeOffset? retrieveDatetime = default;
+            string signature = default;
+            bool? accepted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +170,16 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogAgreementProperties(publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted), serializedAdditionalRawData);
+            return new DatadogAgreementProperties(
+                publisher,
+                product,
+                plan,
+                licenseTextLink,
+                privacyPolicyLink,
+                retrieveDatetime,
+                signature,
+                accepted,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogAgreementProperties>.Write(ModelReaderWriterOptions options)
@@ -182,7 +191,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -198,7 +207,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeDatadogAgreementProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

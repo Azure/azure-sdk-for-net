@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
@@ -23,7 +22,7 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<OncoPhenotypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OncoPhenotypeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OncoPhenotypeData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,13 +30,13 @@ namespace Azure.Health.Insights.CancerProfiling
             writer.WriteStartArray();
             foreach (var item in Patients)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<PatientRecord>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<OncoPhenotypeModelConfiguration>(Configuration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -62,7 +61,7 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<OncoPhenotypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OncoPhenotypeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OncoPhenotypeData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +77,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 return null;
             }
             IList<PatientRecord> patients = default;
-            Optional<OncoPhenotypeModelConfiguration> configuration = default;
+            OncoPhenotypeModelConfiguration configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +87,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     List<PatientRecord> array = new List<PatientRecord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PatientRecord.DeserializePatientRecord(item));
+                        array.Add(PatientRecord.DeserializePatientRecord(item, options));
                     }
                     patients = array;
                     continue;
@@ -99,7 +98,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         continue;
                     }
-                    configuration = OncoPhenotypeModelConfiguration.DeserializeOncoPhenotypeModelConfiguration(property.Value);
+                    configuration = OncoPhenotypeModelConfiguration.DeserializeOncoPhenotypeModelConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +107,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OncoPhenotypeData(patients, configuration.Value, serializedAdditionalRawData);
+            return new OncoPhenotypeData(patients, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OncoPhenotypeData>.Write(ModelReaderWriterOptions options)
@@ -120,7 +119,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OncoPhenotypeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OncoPhenotypeData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +135,7 @@ namespace Azure.Health.Insights.CancerProfiling
                         return DeserializeOncoPhenotypeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OncoPhenotypeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OncoPhenotypeData)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -154,7 +153,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<OncoPhenotypeData>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

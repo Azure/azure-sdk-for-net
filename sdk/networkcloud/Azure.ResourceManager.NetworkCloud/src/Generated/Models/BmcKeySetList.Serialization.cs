@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<BmcKeySetList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BmcKeySetList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BmcKeySetList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkCloudBmcKeySetData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<BmcKeySetList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BmcKeySetList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BmcKeySetList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<NetworkCloudBmcKeySetData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<NetworkCloudBmcKeySetData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudBmcKeySetData> array = new List<NetworkCloudBmcKeySetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(item));
+                        array.Add(NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BmcKeySetList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new BmcKeySetList(nextLink, value ?? new ChangeTrackingList<NetworkCloudBmcKeySetData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BmcKeySetList>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BmcKeySetList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BmcKeySetList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeBmcKeySetList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BmcKeySetList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BmcKeySetList)} does not support reading '{options.Format}' format.");
             }
         }
 

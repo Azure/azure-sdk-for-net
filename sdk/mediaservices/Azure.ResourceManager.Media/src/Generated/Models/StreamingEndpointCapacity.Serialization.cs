@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingEndpointCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingEndpointCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingEndpointCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingEndpointCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> scaleType = default;
-            Optional<int> @default = default;
-            Optional<int> minimum = default;
-            Optional<int> maximum = default;
+            string scaleType = default;
+            int? @default = default;
+            int? minimum = default;
+            int? maximum = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingEndpointCapacity(scaleType.Value, Optional.ToNullable(@default), Optional.ToNullable(minimum), Optional.ToNullable(maximum), serializedAdditionalRawData);
+            return new StreamingEndpointCapacity(scaleType, @default, minimum, maximum, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingEndpointCapacity>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingEndpointCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingEndpointCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingEndpointCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingEndpointCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingEndpointCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

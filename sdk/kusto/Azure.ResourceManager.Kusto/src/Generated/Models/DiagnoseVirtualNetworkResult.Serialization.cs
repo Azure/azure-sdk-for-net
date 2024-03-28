@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnoseVirtualNetworkResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnoseVirtualNetworkResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnoseVirtualNetworkResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnoseVirtualNetworkResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnoseVirtualNetworkResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnoseVirtualNetworkResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> findings = default;
+            IReadOnlyList<string> findings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnoseVirtualNetworkResult(Optional.ToList(findings), serializedAdditionalRawData);
+            return new DiagnoseVirtualNetworkResult(findings ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnoseVirtualNetworkResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnoseVirtualNetworkResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnoseVirtualNetworkResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeDiagnoseVirtualNetworkResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnoseVirtualNetworkResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnoseVirtualNetworkResult)} does not support reading '{options.Format}' format.");
             }
         }
 

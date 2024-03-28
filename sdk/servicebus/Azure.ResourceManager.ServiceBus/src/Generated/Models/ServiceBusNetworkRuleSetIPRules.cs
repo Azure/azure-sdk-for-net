@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> IP Mask. </summary>
+        [WirePath("ipMask")]
         public string IPMask { get; set; }
         /// <summary> The IP Filter Action. </summary>
+        [WirePath("action")]
         public ServiceBusNetworkRuleIPAction? Action { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyContentKeyLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyContentKeyLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyContentKeyLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyContentKeyLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyContentKeyLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyContentKeyLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader": return ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader.DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader(element);
-                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier": return ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier.DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(element);
+                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader": return ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader.DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier": return ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier.DeserializeContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier(element, options);
                 }
             }
-            return UnknownContentKeyPolicyPlayReadyContentKeyLocation.DeserializeUnknownContentKeyPolicyPlayReadyContentKeyLocation(element);
+            return UnknownContentKeyPolicyPlayReadyContentKeyLocation.DeserializeUnknownContentKeyPolicyPlayReadyContentKeyLocation(element, options);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyPlayReadyContentKeyLocation>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyContentKeyLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyContentKeyLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeContentKeyPolicyPlayReadyContentKeyLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyContentKeyLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyContentKeyLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

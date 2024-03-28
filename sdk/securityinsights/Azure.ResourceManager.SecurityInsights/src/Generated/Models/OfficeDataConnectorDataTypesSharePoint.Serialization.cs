@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OfficeDataConnectorDataTypesSharePoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfficeDataConnectorDataTypesSharePoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OfficeDataConnectorDataTypesSharePoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OfficeDataConnectorDataTypesSharePoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfficeDataConnectorDataTypesSharePoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OfficeDataConnectorDataTypesSharePoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<SecurityInsightsDataTypeConnectionState> state = default;
+            SecurityInsightsDataTypeConnectionState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OfficeDataConnectorDataTypesSharePoint(Optional.ToNullable(state), serializedAdditionalRawData);
+            return new OfficeDataConnectorDataTypesSharePoint(state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OfficeDataConnectorDataTypesSharePoint>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OfficeDataConnectorDataTypesSharePoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OfficeDataConnectorDataTypesSharePoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeOfficeDataConnectorDataTypesSharePoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OfficeDataConnectorDataTypesSharePoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OfficeDataConnectorDataTypesSharePoint)} does not support reading '{options.Format}' format.");
             }
         }
 

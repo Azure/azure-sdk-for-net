@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(SecretParameters))
             {
                 writer.WritePropertyName("secretParameters"u8);
-                writer.WriteObjectValue(SecretParameters);
+                writer.WriteObjectValue<PostgreSqlMigrationSecretParameters>(SecretParameters, options);
             }
             if (Optional.IsCollectionDefined(DbsToMigrate))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,21 +163,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ResourceIdentifier> sourceDbServerResourceId = default;
-            Optional<string> sourceDbServerFullyQualifiedDomainName = default;
-            Optional<string> targetDbServerFullyQualifiedDomainName = default;
-            Optional<PostgreSqlMigrationSecretParameters> secretParameters = default;
-            Optional<IList<string>> dbsToMigrate = default;
-            Optional<PostgreSqlMigrationLogicalReplicationOnSourceDb> setupLogicalReplicationOnSourceDbIfNeeded = default;
-            Optional<PostgreSqlMigrationOverwriteDbsInTarget> overwriteDbsInTarget = default;
-            Optional<DateTimeOffset> migrationWindowStartTimeInUtc = default;
-            Optional<PostgreSqlMigrationStartDataMigration> startDataMigration = default;
-            Optional<PostgreSqlMigrationTriggerCutover> triggerCutover = default;
-            Optional<IList<string>> dbsToTriggerCutoverOn = default;
-            Optional<PostgreSqlMigrationCancel> cancel = default;
-            Optional<IList<string>> dbsToCancelMigrationOn = default;
-            Optional<PostgreSqlMigrationMode> migrationMode = default;
+            IDictionary<string, string> tags = default;
+            ResourceIdentifier sourceDbServerResourceId = default;
+            string sourceDbServerFullyQualifiedDomainName = default;
+            string targetDbServerFullyQualifiedDomainName = default;
+            PostgreSqlMigrationSecretParameters secretParameters = default;
+            IList<string> dbsToMigrate = default;
+            PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default;
+            PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default;
+            DateTimeOffset? migrationWindowStartTimeInUtc = default;
+            PostgreSqlMigrationStartDataMigration? startDataMigration = default;
+            PostgreSqlMigrationTriggerCutover? triggerCutover = default;
+            IList<string> dbsToTriggerCutoverOn = default;
+            PostgreSqlMigrationCancel? cancel = default;
+            IList<string> dbsToCancelMigrationOn = default;
+            PostgreSqlMigrationMode? migrationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            secretParameters = PostgreSqlMigrationSecretParameters.DeserializePostgreSqlMigrationSecretParameters(property0.Value);
+                            secretParameters = PostgreSqlMigrationSecretParameters.DeserializePostgreSqlMigrationSecretParameters(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dbsToMigrate"u8))
@@ -347,7 +347,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlMigrationPatch(Optional.ToDictionary(tags), sourceDbServerResourceId.Value, sourceDbServerFullyQualifiedDomainName.Value, targetDbServerFullyQualifiedDomainName.Value, secretParameters.Value, Optional.ToList(dbsToMigrate), Optional.ToNullable(setupLogicalReplicationOnSourceDbIfNeeded), Optional.ToNullable(overwriteDbsInTarget), Optional.ToNullable(migrationWindowStartTimeInUtc), Optional.ToNullable(startDataMigration), Optional.ToNullable(triggerCutover), Optional.ToList(dbsToTriggerCutoverOn), Optional.ToNullable(cancel), Optional.ToList(dbsToCancelMigrationOn), Optional.ToNullable(migrationMode), serializedAdditionalRawData);
+            return new PostgreSqlMigrationPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sourceDbServerResourceId,
+                sourceDbServerFullyQualifiedDomainName,
+                targetDbServerFullyQualifiedDomainName,
+                secretParameters,
+                dbsToMigrate ?? new ChangeTrackingList<string>(),
+                setupLogicalReplicationOnSourceDbIfNeeded,
+                overwriteDbsInTarget,
+                migrationWindowStartTimeInUtc,
+                startDataMigration,
+                triggerCutover,
+                dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>(),
+                cancel,
+                dbsToCancelMigrationOn ?? new ChangeTrackingList<string>(),
+                migrationMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlMigrationPatch>.Write(ModelReaderWriterOptions options)
@@ -359,7 +375,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -375,7 +391,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         return DeserializePostgreSqlMigrationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmResourceFeatureSupportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmResourceFeatureSupportContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmResourceFeatureSupportContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmResourceFeatureSupportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmResourceFeatureSupportContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmResourceFeatureSupportContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> vmSize = default;
-            Optional<string> vmSku = default;
+            string vmSize = default;
+            string vmSku = default;
             string featureType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmResourceFeatureSupportContent(featureType, serializedAdditionalRawData, vmSize.Value, vmSku.Value);
+            return new VmResourceFeatureSupportContent(featureType, serializedAdditionalRawData, vmSize, vmSku);
         }
 
         BinaryData IPersistableModel<VmResourceFeatureSupportContent>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmResourceFeatureSupportContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmResourceFeatureSupportContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeVmResourceFeatureSupportContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmResourceFeatureSupportContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmResourceFeatureSupportContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmKeyVaultCredentialSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmKeyVaultCredentialSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<bool> enable = default;
-            Optional<string> credentialName = default;
-            Optional<Uri> azureKeyVaultUrl = default;
-            Optional<string> servicePrincipalName = default;
-            Optional<string> servicePrincipalSecret = default;
+            bool? enable = default;
+            string credentialName = default;
+            Uri azureKeyVaultUrl = default;
+            string servicePrincipalName = default;
+            string servicePrincipalSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmKeyVaultCredentialSettings(Optional.ToNullable(enable), credentialName.Value, azureKeyVaultUrl.Value, servicePrincipalName.Value, servicePrincipalSecret.Value, serializedAdditionalRawData);
+            return new SqlVmKeyVaultCredentialSettings(
+                enable,
+                credentialName,
+                azureKeyVaultUrl,
+                servicePrincipalName,
+                servicePrincipalSecret,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmKeyVaultCredentialSettings>.Write(ModelReaderWriterOptions options)
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeSqlVmKeyVaultCredentialSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WeeklyRetentionSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WeeklyRetentionSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WeeklyRetentionSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RetentionDuration))
             {
                 writer.WritePropertyName("retentionDuration"u8);
-                writer.WriteObjectValue(RetentionDuration);
+                writer.WriteObjectValue<RetentionDuration>(RetentionDuration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WeeklyRetentionSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WeeklyRetentionSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WeeklyRetentionSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<BackupDayOfWeek>> daysOfTheWeek = default;
-            Optional<IList<DateTimeOffset>> retentionTimes = default;
-            Optional<RetentionDuration> retentionDuration = default;
+            IList<BackupDayOfWeek> daysOfTheWeek = default;
+            IList<DateTimeOffset> retentionTimes = default;
+            RetentionDuration retentionDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value);
+                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WeeklyRetentionSchedule(Optional.ToList(daysOfTheWeek), Optional.ToList(retentionTimes), retentionDuration.Value, serializedAdditionalRawData);
+            return new WeeklyRetentionSchedule(daysOfTheWeek ?? new ChangeTrackingList<BackupDayOfWeek>(), retentionTimes ?? new ChangeTrackingList<DateTimeOffset>(), retentionDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WeeklyRetentionSchedule>.Write(ModelReaderWriterOptions options)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WeeklyRetentionSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WeeklyRetentionSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeWeeklyRetentionSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WeeklyRetentionSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WeeklyRetentionSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,7 +22,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<UnivariateChangePointDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +74,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<UnivariateChangePointDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,9 +89,9 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            Optional<int> period = default;
-            Optional<IReadOnlyList<bool>> isChangePoint = default;
-            Optional<IReadOnlyList<float>> confidenceScores = default;
+            int? period = default;
+            IReadOnlyList<bool> isChangePoint = default;
+            IReadOnlyList<float> confidenceScores = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +139,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnivariateChangePointDetectionResult(Optional.ToNullable(period), Optional.ToList(isChangePoint), Optional.ToList(confidenceScores), serializedAdditionalRawData);
+            return new UnivariateChangePointDetectionResult(period, isChangePoint ?? new ChangeTrackingList<bool>(), confidenceScores ?? new ChangeTrackingList<float>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnivariateChangePointDetectionResult>.Write(ModelReaderWriterOptions options)
@@ -152,7 +151,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +167,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeUnivariateChangePointDetectionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -186,7 +185,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<UnivariateChangePointDetectionResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

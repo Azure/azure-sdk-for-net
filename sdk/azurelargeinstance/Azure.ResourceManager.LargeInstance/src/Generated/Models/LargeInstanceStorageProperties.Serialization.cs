@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceStorageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceStorageProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceStorageProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             if (Optional.IsDefined(StorageBillingProperties))
             {
                 writer.WritePropertyName("storageBillingProperties"u8);
-                writer.WriteObjectValue(StorageBillingProperties);
+                writer.WriteObjectValue<LargeInstanceStorageBillingProperties>(StorageBillingProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceStorageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceStorageProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceStorageProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<LargeInstanceProvisioningState> provisioningState = default;
-            Optional<string> offeringType = default;
-            Optional<string> storageType = default;
-            Optional<string> generation = default;
-            Optional<LargeInstanceHardwareTypeName> hardwareType = default;
-            Optional<string> workloadType = default;
-            Optional<LargeInstanceStorageBillingProperties> storageBillingProperties = default;
+            LargeInstanceProvisioningState? provisioningState = default;
+            string offeringType = default;
+            string storageType = default;
+            string generation = default;
+            LargeInstanceHardwareTypeName? hardwareType = default;
+            string workloadType = default;
+            LargeInstanceStorageBillingProperties storageBillingProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     {
                         continue;
                     }
-                    storageBillingProperties = LargeInstanceStorageBillingProperties.DeserializeLargeInstanceStorageBillingProperties(property.Value);
+                    storageBillingProperties = LargeInstanceStorageBillingProperties.DeserializeLargeInstanceStorageBillingProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceStorageProperties(Optional.ToNullable(provisioningState), offeringType.Value, storageType.Value, generation.Value, Optional.ToNullable(hardwareType), workloadType.Value, storageBillingProperties.Value, serializedAdditionalRawData);
+            return new LargeInstanceStorageProperties(
+                provisioningState,
+                offeringType,
+                storageType,
+                generation,
+                hardwareType,
+                workloadType,
+                storageBillingProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceStorageProperties>.Write(ModelReaderWriterOptions options)
@@ -175,7 +183,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceStorageProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceStorageProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +199,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                         return DeserializeLargeInstanceStorageProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceStorageProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceStorageProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

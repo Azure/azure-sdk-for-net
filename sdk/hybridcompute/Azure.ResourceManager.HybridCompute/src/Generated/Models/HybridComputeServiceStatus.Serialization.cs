@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeServiceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeServiceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeServiceStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeServiceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeServiceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeServiceStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> startupType = default;
+            string status = default;
+            string startupType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeServiceStatus(status.Value, startupType.Value, serializedAdditionalRawData);
+            return new HybridComputeServiceStatus(status, startupType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeServiceStatus>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeServiceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeServiceStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputeServiceStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeServiceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeServiceStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

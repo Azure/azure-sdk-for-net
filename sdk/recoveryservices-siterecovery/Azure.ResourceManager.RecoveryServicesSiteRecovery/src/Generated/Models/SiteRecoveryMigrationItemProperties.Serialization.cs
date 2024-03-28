@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentJob))
             {
                 writer.WritePropertyName("currentJob"u8);
-                writer.WriteObjectValue(CurrentJob);
+                writer.WriteObjectValue<CurrentJobDetails>(CurrentJob, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CriticalJobHistory))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in CriticalJobHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CriticalJobHistoryDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails);
+                writer.WriteObjectValue<MigrationProviderSpecificSettings>(ProviderSpecificDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,26 +179,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> machineName = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<string> policyFriendlyName = default;
-            Optional<string> recoveryServicesProviderId = default;
-            Optional<string> replicationStatus = default;
-            Optional<SiteRecoveryMigrationState> migrationState = default;
-            Optional<string> migrationStateDescription = default;
-            Optional<DateTimeOffset> lastTestMigrationTime = default;
-            Optional<string> lastTestMigrationStatus = default;
-            Optional<DateTimeOffset> lastMigrationTime = default;
-            Optional<string> lastMigrationStatus = default;
-            Optional<TestMigrationState> testMigrateState = default;
-            Optional<string> testMigrateStateDescription = default;
-            Optional<SiteRecoveryProtectionHealth> health = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
-            Optional<IReadOnlyList<MigrationItemOperation>> allowedOperations = default;
-            Optional<CurrentJobDetails> currentJob = default;
-            Optional<IReadOnlyList<CriticalJobHistoryDetails>> criticalJobHistory = default;
-            Optional<string> eventCorrelationId = default;
-            Optional<MigrationProviderSpecificSettings> providerSpecificDetails = default;
+            string machineName = default;
+            ResourceIdentifier policyId = default;
+            string policyFriendlyName = default;
+            string recoveryServicesProviderId = default;
+            string replicationStatus = default;
+            SiteRecoveryMigrationState? migrationState = default;
+            string migrationStateDescription = default;
+            DateTimeOffset? lastTestMigrationTime = default;
+            string lastTestMigrationStatus = default;
+            DateTimeOffset? lastMigrationTime = default;
+            string lastMigrationStatus = default;
+            TestMigrationState? testMigrateState = default;
+            string testMigrateStateDescription = default;
+            SiteRecoveryProtectionHealth? health = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
+            IReadOnlyList<MigrationItemOperation> allowedOperations = default;
+            CurrentJobDetails currentJob = default;
+            IReadOnlyList<CriticalJobHistoryDetails> criticalJobHistory = default;
+            string eventCorrelationId = default;
+            MigrationProviderSpecificSettings providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    currentJob = CurrentJobDetails.DeserializeCurrentJobDetails(property.Value);
+                    currentJob = CurrentJobDetails.DeserializeCurrentJobDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("criticalJobHistory"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<CriticalJobHistoryDetails> array = new List<CriticalJobHistoryDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CriticalJobHistoryDetails.DeserializeCriticalJobHistoryDetails(item));
+                        array.Add(CriticalJobHistoryDetails.DeserializeCriticalJobHistoryDetails(item, options));
                     }
                     criticalJobHistory = array;
                     continue;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = MigrationProviderSpecificSettings.DeserializeMigrationProviderSpecificSettings(property.Value);
+                    providerSpecificDetails = MigrationProviderSpecificSettings.DeserializeMigrationProviderSpecificSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -368,7 +368,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryMigrationItemProperties(machineName.Value, policyId.Value, policyFriendlyName.Value, recoveryServicesProviderId.Value, replicationStatus.Value, Optional.ToNullable(migrationState), migrationStateDescription.Value, Optional.ToNullable(lastTestMigrationTime), lastTestMigrationStatus.Value, Optional.ToNullable(lastMigrationTime), lastMigrationStatus.Value, Optional.ToNullable(testMigrateState), testMigrateStateDescription.Value, Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToList(allowedOperations), currentJob.Value, Optional.ToList(criticalJobHistory), eventCorrelationId.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryMigrationItemProperties(
+                machineName,
+                policyId,
+                policyFriendlyName,
+                recoveryServicesProviderId,
+                replicationStatus,
+                migrationState,
+                migrationStateDescription,
+                lastTestMigrationTime,
+                lastTestMigrationStatus,
+                lastMigrationTime,
+                lastMigrationStatus,
+                testMigrateState,
+                testMigrateStateDescription,
+                health,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                allowedOperations ?? new ChangeTrackingList<MigrationItemOperation>(),
+                currentJob,
+                criticalJobHistory ?? new ChangeTrackingList<CriticalJobHistoryDetails>(),
+                eventCorrelationId,
+                providerSpecificDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryMigrationItemProperties>.Write(ModelReaderWriterOptions options)
@@ -380,7 +401,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -396,7 +417,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryMigrationItemProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

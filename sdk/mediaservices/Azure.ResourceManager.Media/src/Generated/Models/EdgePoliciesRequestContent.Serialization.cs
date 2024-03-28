@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgePoliciesRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgePoliciesRequestContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgePoliciesRequestContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgePoliciesRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgePoliciesRequestContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgePoliciesRequestContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> deviceId = default;
+            string deviceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgePoliciesRequestContent(deviceId.Value, serializedAdditionalRawData);
+            return new EdgePoliciesRequestContent(deviceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgePoliciesRequestContent>.Write(ModelReaderWriterOptions options)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgePoliciesRequestContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgePoliciesRequestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeEdgePoliciesRequestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgePoliciesRequestContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgePoliciesRequestContent)} does not support reading '{options.Format}' format.");
             }
         }
 

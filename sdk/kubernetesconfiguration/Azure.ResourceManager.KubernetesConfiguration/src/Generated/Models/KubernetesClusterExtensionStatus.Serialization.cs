@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterExtensionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterExtensionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> displayStatus = default;
-            Optional<KubernetesClusterExtensionStatusLevel> level = default;
-            Optional<string> message = default;
-            Optional<string> time = default;
+            string code = default;
+            string displayStatus = default;
+            KubernetesClusterExtensionStatusLevel? level = default;
+            string message = default;
+            string time = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterExtensionStatus(code.Value, displayStatus.Value, Optional.ToNullable(level), message.Value, time.Value, serializedAdditionalRawData);
+            return new KubernetesClusterExtensionStatus(
+                code,
+                displayStatus,
+                level,
+                message,
+                time,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterExtensionStatus>.Write(ModelReaderWriterOptions options)
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesClusterExtensionStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

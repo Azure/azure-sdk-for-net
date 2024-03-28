@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrometheusForwarderDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrometheusForwarderDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrometheusForwarderDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrometheusForwarderDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrometheusForwarderDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrometheusForwarderDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>> streams = default;
-            Optional<IDictionary<string, string>> labelIncludeFilter = default;
-            Optional<string> name = default;
+            IList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream> streams = default;
+            IDictionary<string, string> labelIncludeFilter = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrometheusForwarderDataSource(Optional.ToList(streams), Optional.ToDictionary(labelIncludeFilter), name.Value, serializedAdditionalRawData);
+            return new PrometheusForwarderDataSource(streams ?? new ChangeTrackingList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>(), labelIncludeFilter ?? new ChangeTrackingDictionary<string, string>(), name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrometheusForwarderDataSource>.Write(ModelReaderWriterOptions options)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrometheusForwarderDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrometheusForwarderDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializePrometheusForwarderDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrometheusForwarderDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrometheusForwarderDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

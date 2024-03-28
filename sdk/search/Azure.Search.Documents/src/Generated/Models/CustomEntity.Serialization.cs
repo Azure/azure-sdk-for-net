@@ -146,7 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteStartArray();
                     foreach (var item in Aliases)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<CustomEntityAlias>(item);
                     }
                     writer.WriteEndArray();
                 }
@@ -165,17 +165,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
-            Optional<string> type = default;
-            Optional<string> subtype = default;
-            Optional<string> id = default;
-            Optional<bool?> caseSensitive = default;
-            Optional<bool?> accentSensitive = default;
-            Optional<int?> fuzzyEditDistance = default;
-            Optional<bool?> defaultCaseSensitive = default;
-            Optional<bool?> defaultAccentSensitive = default;
-            Optional<int?> defaultFuzzyEditDistance = default;
-            Optional<IList<CustomEntityAlias>> aliases = default;
+            string description = default;
+            string type = default;
+            string subtype = default;
+            string id = default;
+            bool? caseSensitive = default;
+            bool? accentSensitive = default;
+            int? fuzzyEditDistance = default;
+            bool? defaultCaseSensitive = default;
+            bool? defaultAccentSensitive = default;
+            int? defaultFuzzyEditDistance = default;
+            IList<CustomEntityAlias> aliases = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -299,7 +299,19 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomEntity(name, description.Value, type.Value, subtype.Value, id.Value, Optional.ToNullable(caseSensitive), Optional.ToNullable(accentSensitive), Optional.ToNullable(fuzzyEditDistance), Optional.ToNullable(defaultCaseSensitive), Optional.ToNullable(defaultAccentSensitive), Optional.ToNullable(defaultFuzzyEditDistance), Optional.ToList(aliases));
+            return new CustomEntity(
+                name,
+                description,
+                type,
+                subtype,
+                id,
+                caseSensitive,
+                accentSensitive,
+                fuzzyEditDistance,
+                defaultCaseSensitive,
+                defaultAccentSensitive,
+                defaultFuzzyEditDistance,
+                aliases ?? new ChangeTrackingList<CustomEntityAlias>());
         }
     }
 }

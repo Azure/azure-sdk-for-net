@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppReplicationObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppReplicationObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> replicationId = default;
-            Optional<NetAppEndpointType> endpointType = default;
-            Optional<NetAppReplicationSchedule> replicationSchedule = default;
+            string replicationId = default;
+            NetAppEndpointType? endpointType = default;
+            NetAppReplicationSchedule? replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
-            Optional<string> remoteVolumeRegion = default;
+            string remoteVolumeRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppReplicationObject(replicationId.Value, Optional.ToNullable(endpointType), Optional.ToNullable(replicationSchedule), remoteVolumeResourceId, remoteVolumeRegion.Value, serializedAdditionalRawData);
+            return new NetAppReplicationObject(
+                replicationId,
+                endpointType,
+                replicationSchedule,
+                remoteVolumeResourceId,
+                remoteVolumeRegion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppReplicationObject>.Write(ModelReaderWriterOptions options)
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppReplicationObject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support reading '{options.Format}' format.");
             }
         }
 

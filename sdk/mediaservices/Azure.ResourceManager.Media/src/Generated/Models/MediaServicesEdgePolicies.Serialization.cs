@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaServicesEdgePolicies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaServicesEdgePolicies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaServicesEdgePolicies)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(UsageDataCollectionPolicy))
             {
                 writer.WritePropertyName("usageDataCollectionPolicy"u8);
-                writer.WriteObjectValue(UsageDataCollectionPolicy);
+                writer.WriteObjectValue<EdgeUsageDataCollectionPolicy>(UsageDataCollectionPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaServicesEdgePolicies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaServicesEdgePolicies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaServicesEdgePolicies)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<EdgeUsageDataCollectionPolicy> usageDataCollectionPolicy = default;
+            EdgeUsageDataCollectionPolicy usageDataCollectionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    usageDataCollectionPolicy = EdgeUsageDataCollectionPolicy.DeserializeEdgeUsageDataCollectionPolicy(property.Value);
+                    usageDataCollectionPolicy = EdgeUsageDataCollectionPolicy.DeserializeEdgeUsageDataCollectionPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesEdgePolicies(usageDataCollectionPolicy.Value, serializedAdditionalRawData);
+            return new MediaServicesEdgePolicies(usageDataCollectionPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesEdgePolicies>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaServicesEdgePolicies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaServicesEdgePolicies)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaServicesEdgePolicies(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaServicesEdgePolicies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaServicesEdgePolicies)} does not support reading '{options.Format}' format.");
             }
         }
 

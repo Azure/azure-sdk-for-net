@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,7 +22,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<VariableState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VariableState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VariableState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +74,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<VariableState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VariableState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VariableState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,11 +89,11 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            Optional<string> variable = default;
-            Optional<float> filledNARatio = default;
-            Optional<int> effectiveCount = default;
-            Optional<DateTimeOffset> firstTimestamp = default;
-            Optional<DateTimeOffset> lastTimestamp = default;
+            string variable = default;
+            float? filledNARatio = default;
+            int? effectiveCount = default;
+            DateTimeOffset? firstTimestamp = default;
+            DateTimeOffset? lastTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +145,13 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VariableState(variable.Value, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp), serializedAdditionalRawData);
+            return new VariableState(
+                variable,
+                filledNARatio,
+                effectiveCount,
+                firstTimestamp,
+                lastTimestamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VariableState>.Write(ModelReaderWriterOptions options)
@@ -158,7 +163,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VariableState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VariableState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +179,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeVariableState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VariableState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VariableState)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -192,7 +197,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<VariableState>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<KafkaRestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KafkaRestProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KafkaRestProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientGroupInfo))
             {
                 writer.WritePropertyName("clientGroupInfo"u8);
-                writer.WriteObjectValue(ClientGroupInfo);
+                writer.WriteObjectValue<ClientGroupInfo>(ClientGroupInfo, options);
             }
             if (Optional.IsCollectionDefined(ConfigurationOverride))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<KafkaRestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KafkaRestProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KafkaRestProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<ClientGroupInfo> clientGroupInfo = default;
-            Optional<IDictionary<string, string>> configurationOverride = default;
+            ClientGroupInfo clientGroupInfo = default;
+            IDictionary<string, string> configurationOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    clientGroupInfo = ClientGroupInfo.DeserializeClientGroupInfo(property.Value);
+                    clientGroupInfo = ClientGroupInfo.DeserializeClientGroupInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationOverride"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KafkaRestProperties(clientGroupInfo.Value, Optional.ToDictionary(configurationOverride), serializedAdditionalRawData);
+            return new KafkaRestProperties(clientGroupInfo, configurationOverride ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KafkaRestProperties>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KafkaRestProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KafkaRestProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeKafkaRestProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KafkaRestProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KafkaRestProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<bool> imageExists = default;
-            Optional<Uri> contentUrl = default;
-            Optional<string> relativePath = default;
+            bool? imageExists = default;
+            Uri contentUrl = default;
+            string relativePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageDefinition(Optional.ToNullable(imageExists), contentUrl.Value, relativePath.Value, serializedAdditionalRawData);
+            return new ImageDefinition(imageExists, contentUrl, relativePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageDefinition>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeImageDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

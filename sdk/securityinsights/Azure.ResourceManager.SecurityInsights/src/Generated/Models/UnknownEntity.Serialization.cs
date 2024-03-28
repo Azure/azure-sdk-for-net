@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEntity(document.RootElement, options);
+            return DeserializeSecurityInsightsEntity(document.RootElement, options);
         }
 
         internal static UnknownEntity DeserializeUnknownEntity(JsonElement element, ModelReaderWriterOptions options = null)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownEntity(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsEntity>.Write(ModelReaderWriterOptions options)
@@ -143,7 +149,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,10 +162,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownEntity(document.RootElement, options);
+                        return DeserializeSecurityInsightsEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenerateCertResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerateCertResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerateCertResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenerateCertResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerateCertResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerateCertResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> publicKey = default;
-            Optional<string> privateKey = default;
-            Optional<DateTimeOffset> expiryTimeInUtc = default;
+            string publicKey = default;
+            string privateKey = default;
+            DateTimeOffset? expiryTimeInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenerateCertResult(publicKey.Value, privateKey.Value, Optional.ToNullable(expiryTimeInUtc), serializedAdditionalRawData);
+            return new GenerateCertResult(publicKey, privateKey, expiryTimeInUtc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GenerateCertResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GenerateCertResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerateCertResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeGenerateCertResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenerateCertResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerateCertResult)} does not support reading '{options.Format}' format.");
             }
         }
 

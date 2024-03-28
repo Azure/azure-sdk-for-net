@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InconsistentVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InconsistentVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InconsistentVmDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InconsistentVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InconsistentVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InconsistentVmDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vmName = default;
-            Optional<string> cloudName = default;
-            Optional<IReadOnlyList<string>> details = default;
-            Optional<IReadOnlyList<string>> errorIds = default;
+            string vmName = default;
+            string cloudName = default;
+            IReadOnlyList<string> details = default;
+            IReadOnlyList<string> errorIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InconsistentVmDetails(vmName.Value, cloudName.Value, Optional.ToList(details), Optional.ToList(errorIds), serializedAdditionalRawData);
+            return new InconsistentVmDetails(vmName, cloudName, details ?? new ChangeTrackingList<string>(), errorIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InconsistentVmDetails>.Write(ModelReaderWriterOptions options)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InconsistentVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InconsistentVmDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInconsistentVmDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InconsistentVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InconsistentVmDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

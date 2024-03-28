@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceValidateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AppServiceEnvironment))
             {
                 writer.WritePropertyName("appServiceEnvironment"u8);
-                writer.WriteObjectValue(AppServiceEnvironment);
+                writer.WriteObjectValue<AppServiceEnvironmentProperties>(AppServiceEnvironment, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceValidateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,20 +146,20 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ValidateResourceType type = default;
             AzureLocation location = default;
-            Optional<ResourceIdentifier> serverFarmId = default;
-            Optional<string> skuName = default;
-            Optional<bool> needLinuxWorkers = default;
-            Optional<bool> isSpot = default;
-            Optional<int> capacity = default;
-            Optional<string> hostingEnvironment = default;
-            Optional<bool> isXenon = default;
-            Optional<Uri> containerRegistryBaseUrl = default;
-            Optional<string> containerRegistryUsername = default;
-            Optional<string> containerRegistryPassword = default;
-            Optional<string> containerImageRepository = default;
-            Optional<string> containerImageTag = default;
-            Optional<string> containerImagePlatform = default;
-            Optional<AppServiceEnvironmentProperties> appServiceEnvironment = default;
+            ResourceIdentifier serverFarmId = default;
+            string skuName = default;
+            bool? needLinuxWorkers = default;
+            bool? isSpot = default;
+            int? capacity = default;
+            string hostingEnvironment = default;
+            bool? isXenon = default;
+            Uri containerRegistryBaseUrl = default;
+            string containerRegistryUsername = default;
+            string containerRegistryPassword = default;
+            string containerImageRepository = default;
+            string containerImageTag = default;
+            string containerImagePlatform = default;
+            AppServiceEnvironmentProperties appServiceEnvironment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            appServiceEnvironment = AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(property0.Value);
+                            appServiceEnvironment = AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -295,7 +295,25 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceValidateContent(name, type, location, serverFarmId.Value, skuName.Value, Optional.ToNullable(needLinuxWorkers), Optional.ToNullable(isSpot), Optional.ToNullable(capacity), hostingEnvironment.Value, Optional.ToNullable(isXenon), containerRegistryBaseUrl.Value, containerRegistryUsername.Value, containerRegistryPassword.Value, containerImageRepository.Value, containerImageTag.Value, containerImagePlatform.Value, appServiceEnvironment.Value, serializedAdditionalRawData);
+            return new AppServiceValidateContent(
+                name,
+                type,
+                location,
+                serverFarmId,
+                skuName,
+                needLinuxWorkers,
+                isSpot,
+                capacity,
+                hostingEnvironment,
+                isXenon,
+                containerRegistryBaseUrl,
+                containerRegistryUsername,
+                containerRegistryPassword,
+                containerImageRepository,
+                containerImageTag,
+                containerImagePlatform,
+                appServiceEnvironment,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceValidateContent>.Write(ModelReaderWriterOptions options)
@@ -307,7 +325,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -323,7 +341,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceValidateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

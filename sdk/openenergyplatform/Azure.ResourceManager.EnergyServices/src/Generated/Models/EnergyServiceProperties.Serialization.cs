@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnergyServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 writer.WriteStartArray();
                 foreach (var item in DataPartitionNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataPartitionName>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnergyServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.EnergyServices.Models
             {
                 return null;
             }
-            Optional<string> dnsName = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> authAppId = default;
-            Optional<IList<DataPartitionName>> dataPartitionNames = default;
+            string dnsName = default;
+            ProvisioningState? provisioningState = default;
+            string authAppId = default;
+            IList<DataPartitionName> dataPartitionNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     List<DataPartitionName> array = new List<DataPartitionName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataPartitionName.DeserializeDataPartitionName(item));
+                        array.Add(DataPartitionName.DeserializeDataPartitionName(item, options));
                     }
                     dataPartitionNames = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnergyServiceProperties(dnsName.Value, Optional.ToNullable(provisioningState), authAppId.Value, Optional.ToList(dataPartitionNames), serializedAdditionalRawData);
+            return new EnergyServiceProperties(dnsName, provisioningState, authAppId, dataPartitionNames ?? new ChangeTrackingList<DataPartitionName>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnergyServiceProperties>.Write(ModelReaderWriterOptions options)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                         return DeserializeEnergyServiceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

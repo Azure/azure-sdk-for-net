@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkInstallation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkInstallation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<DesiredInstallationState> desiredState = default;
-            Optional<MobileNetworkInstallationState> state = default;
-            Optional<MobileNetworkReinstallRequired> reinstallRequired = default;
-            Optional<IReadOnlyList<MobileNetworkInstallationReason>> reasons = default;
-            Optional<SubResource> operation = default;
+            DesiredInstallationState? desiredState = default;
+            MobileNetworkInstallationState? state = default;
+            MobileNetworkReinstallRequired? reinstallRequired = default;
+            IReadOnlyList<MobileNetworkInstallationReason> reasons = default;
+            SubResource operation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkInstallation(Optional.ToNullable(desiredState), Optional.ToNullable(state), Optional.ToNullable(reinstallRequired), Optional.ToList(reasons), operation, serializedAdditionalRawData);
+            return new MobileNetworkInstallation(
+                desiredState,
+                state,
+                reinstallRequired,
+                reasons ?? new ChangeTrackingList<MobileNetworkInstallationReason>(),
+                operation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkInstallation>.Write(ModelReaderWriterOptions options)
@@ -172,7 +178,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +194,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkInstallation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support reading '{options.Format}' format.");
             }
         }
 

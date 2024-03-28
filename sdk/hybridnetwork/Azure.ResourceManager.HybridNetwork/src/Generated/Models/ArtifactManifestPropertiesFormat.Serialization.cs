@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArtifactManifestPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArtifactManifestPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArtifactManifestPropertiesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManifestArtifactFormat>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArtifactManifestPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArtifactManifestPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArtifactManifestPropertiesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ArtifactManifestState> artifactManifestState = default;
-            Optional<IList<ManifestArtifactFormat>> artifacts = default;
+            ProvisioningState? provisioningState = default;
+            ArtifactManifestState? artifactManifestState = default;
+            IList<ManifestArtifactFormat> artifacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ManifestArtifactFormat> array = new List<ManifestArtifactFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManifestArtifactFormat.DeserializeManifestArtifactFormat(item));
+                        array.Add(ManifestArtifactFormat.DeserializeManifestArtifactFormat(item, options));
                     }
                     artifacts = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArtifactManifestPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(artifactManifestState), Optional.ToList(artifacts), serializedAdditionalRawData);
+            return new ArtifactManifestPropertiesFormat(provisioningState, artifactManifestState, artifacts ?? new ChangeTrackingList<ManifestArtifactFormat>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArtifactManifestPropertiesFormat>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArtifactManifestPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArtifactManifestPropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeArtifactManifestPropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArtifactManifestPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArtifactManifestPropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

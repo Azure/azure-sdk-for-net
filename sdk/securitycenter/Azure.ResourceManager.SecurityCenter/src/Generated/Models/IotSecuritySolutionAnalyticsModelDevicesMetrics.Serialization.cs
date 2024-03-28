@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelDevicesMetrics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelDevicesMetrics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(DevicesMetrics))
             {
                 writer.WritePropertyName("devicesMetrics"u8);
-                writer.WriteObjectValue(DevicesMetrics);
+                writer.WriteObjectValue<IotSeverityMetrics>(DevicesMetrics, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelDevicesMetrics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelDevicesMetrics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> date = default;
-            Optional<IotSeverityMetrics> devicesMetrics = default;
+            DateTimeOffset? date = default;
+            IotSeverityMetrics devicesMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    devicesMetrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property.Value);
+                    devicesMetrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(Optional.ToNullable(date), devicesMetrics.Value, serializedAdditionalRawData);
+            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(date, devicesMetrics, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelDevicesMetrics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelDevicesMetrics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelDevicesMetrics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelDevicesMetrics)} does not support reading '{options.Format}' format.");
             }
         }
 

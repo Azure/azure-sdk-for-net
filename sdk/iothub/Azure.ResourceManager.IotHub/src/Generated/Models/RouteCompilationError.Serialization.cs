@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteCompilationError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteCompilationError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteCompilationError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteObjectValue(Location);
+                writer.WriteObjectValue<RouteErrorRange>(Location, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteCompilationError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteCompilationError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteCompilationError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<RouteErrorSeverity> severity = default;
-            Optional<RouteErrorRange> location = default;
+            string message = default;
+            RouteErrorSeverity? severity = default;
+            RouteErrorRange location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    location = RouteErrorRange.DeserializeRouteErrorRange(property.Value);
+                    location = RouteErrorRange.DeserializeRouteErrorRange(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteCompilationError(message.Value, Optional.ToNullable(severity), location.Value, serializedAdditionalRawData);
+            return new RouteCompilationError(message, severity, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteCompilationError>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouteCompilationError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteCompilationError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeRouteCompilationError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouteCompilationError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteCompilationError)} does not support reading '{options.Format}' format.");
             }
         }
 

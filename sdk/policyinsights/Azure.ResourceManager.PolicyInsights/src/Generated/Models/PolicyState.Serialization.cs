@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (Optional.IsDefined(PolicyEvaluationDetails))
             {
                 writer.WritePropertyName("policyEvaluationDetails"u8);
-                writer.WriteObjectValue(PolicyEvaluationDetails);
+                writer.WriteObjectValue<PolicyEvaluationDetails>(PolicyEvaluationDetails, options);
             }
             if (Optional.IsCollectionDefined(PolicyDefinitionGroupNames))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComponentStateDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -241,40 +241,40 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> odataId = default;
-            Optional<string> odataContext = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<ResourceIdentifier> policyAssignmentId = default;
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<string> effectiveParameters = default;
-            Optional<bool> isCompliant = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceType = default;
-            Optional<AzureLocation> resourceLocation = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> resourceTags = default;
-            Optional<string> policyAssignmentName = default;
-            Optional<string> policyAssignmentOwner = default;
-            Optional<string> policyAssignmentParameters = default;
-            Optional<string> policyAssignmentScope = default;
-            Optional<string> policyDefinitionName = default;
-            Optional<string> policyDefinitionAction = default;
-            Optional<string> policyDefinitionCategory = default;
-            Optional<ResourceIdentifier> policySetDefinitionId = default;
-            Optional<string> policySetDefinitionName = default;
-            Optional<string> policySetDefinitionOwner = default;
-            Optional<string> policySetDefinitionCategory = default;
-            Optional<string> policySetDefinitionParameters = default;
-            Optional<string> managementGroupIds = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<string> complianceState = default;
-            Optional<PolicyEvaluationDetails> policyEvaluationDetails = default;
-            Optional<IReadOnlyList<string>> policyDefinitionGroupNames = default;
-            Optional<IReadOnlyList<ComponentStateDetails>> components = default;
-            Optional<string> policyDefinitionVersion = default;
-            Optional<string> policySetDefinitionVersion = default;
-            Optional<string> policyAssignmentVersion = default;
+            string odataId = default;
+            string odataContext = default;
+            DateTimeOffset? timestamp = default;
+            ResourceIdentifier resourceId = default;
+            ResourceIdentifier policyAssignmentId = default;
+            ResourceIdentifier policyDefinitionId = default;
+            string effectiveParameters = default;
+            bool? isCompliant = default;
+            string subscriptionId = default;
+            string resourceType = default;
+            AzureLocation? resourceLocation = default;
+            string resourceGroup = default;
+            string resourceTags = default;
+            string policyAssignmentName = default;
+            string policyAssignmentOwner = default;
+            string policyAssignmentParameters = default;
+            string policyAssignmentScope = default;
+            string policyDefinitionName = default;
+            string policyDefinitionAction = default;
+            string policyDefinitionCategory = default;
+            ResourceIdentifier policySetDefinitionId = default;
+            string policySetDefinitionName = default;
+            string policySetDefinitionOwner = default;
+            string policySetDefinitionCategory = default;
+            string policySetDefinitionParameters = default;
+            string managementGroupIds = default;
+            string policyDefinitionReferenceId = default;
+            string complianceState = default;
+            PolicyEvaluationDetails policyEvaluationDetails = default;
+            IReadOnlyList<string> policyDefinitionGroupNames = default;
+            IReadOnlyList<ComponentStateDetails> components = default;
+            string policyDefinitionVersion = default;
+            string policySetDefinitionVersion = default;
+            string policyAssignmentVersion = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyEvaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(property.Value);
+                    policyEvaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyDefinitionGroupNames"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<ComponentStateDetails> array = new List<ComponentStateDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentStateDetails.DeserializeComponentStateDetails(item));
+                        array.Add(ComponentStateDetails.DeserializeComponentStateDetails(item, options));
                     }
                     components = array;
                     continue;
@@ -502,7 +502,42 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PolicyState(odataId.Value, odataContext.Value, Optional.ToNullable(timestamp), resourceId.Value, policyAssignmentId.Value, policyDefinitionId.Value, effectiveParameters.Value, Optional.ToNullable(isCompliant), subscriptionId.Value, resourceType.Value, Optional.ToNullable(resourceLocation), resourceGroup.Value, resourceTags.Value, policyAssignmentName.Value, policyAssignmentOwner.Value, policyAssignmentParameters.Value, policyAssignmentScope.Value, policyDefinitionName.Value, policyDefinitionAction.Value, policyDefinitionCategory.Value, policySetDefinitionId.Value, policySetDefinitionName.Value, policySetDefinitionOwner.Value, policySetDefinitionCategory.Value, policySetDefinitionParameters.Value, managementGroupIds.Value, policyDefinitionReferenceId.Value, complianceState.Value, policyEvaluationDetails.Value, Optional.ToList(policyDefinitionGroupNames), Optional.ToList(components), policyDefinitionVersion.Value, policySetDefinitionVersion.Value, policyAssignmentVersion.Value, additionalProperties);
+            return new PolicyState(
+                odataId,
+                odataContext,
+                timestamp,
+                resourceId,
+                policyAssignmentId,
+                policyDefinitionId,
+                effectiveParameters,
+                isCompliant,
+                subscriptionId,
+                resourceType,
+                resourceLocation,
+                resourceGroup,
+                resourceTags,
+                policyAssignmentName,
+                policyAssignmentOwner,
+                policyAssignmentParameters,
+                policyAssignmentScope,
+                policyDefinitionName,
+                policyDefinitionAction,
+                policyDefinitionCategory,
+                policySetDefinitionId,
+                policySetDefinitionName,
+                policySetDefinitionOwner,
+                policySetDefinitionCategory,
+                policySetDefinitionParameters,
+                managementGroupIds,
+                policyDefinitionReferenceId,
+                complianceState,
+                policyEvaluationDetails,
+                policyDefinitionGroupNames ?? new ChangeTrackingList<string>(),
+                components ?? new ChangeTrackingList<ComponentStateDetails>(),
+                policyDefinitionVersion,
+                policySetDefinitionVersion,
+                policyAssignmentVersion,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<PolicyState>.Write(ModelReaderWriterOptions options)
@@ -514,7 +549,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -530,7 +565,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicyState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyState)} does not support reading '{options.Format}' format.");
             }
         }
 

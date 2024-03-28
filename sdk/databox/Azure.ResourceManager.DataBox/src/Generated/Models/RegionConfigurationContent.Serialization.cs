@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegionConfigurationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionConfigurationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegionConfigurationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ScheduleAvailabilityRequest))
             {
                 writer.WritePropertyName("scheduleAvailabilityRequest"u8);
-                writer.WriteObjectValue(ScheduleAvailabilityRequest);
+                writer.WriteObjectValue<ScheduleAvailabilityContent>(ScheduleAvailabilityRequest, options);
             }
             if (Optional.IsDefined(TransportAvailabilityRequest))
             {
                 writer.WritePropertyName("transportAvailabilityRequest"u8);
-                writer.WriteObjectValue(TransportAvailabilityRequest);
+                writer.WriteObjectValue<TransportAvailabilityRequest>(TransportAvailabilityRequest, options);
             }
             if (Optional.IsDefined(DataCenterAddressRequest))
             {
                 writer.WritePropertyName("datacenterAddressRequest"u8);
-                writer.WriteObjectValue(DataCenterAddressRequest);
+                writer.WriteObjectValue<DataCenterAddressContent>(DataCenterAddressRequest, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegionConfigurationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionConfigurationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegionConfigurationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<ScheduleAvailabilityContent> scheduleAvailabilityRequest = default;
-            Optional<TransportAvailabilityRequest> transportAvailabilityRequest = default;
-            Optional<DataCenterAddressContent> dataCenterAddressRequest = default;
+            ScheduleAvailabilityContent scheduleAvailabilityRequest = default;
+            TransportAvailabilityRequest transportAvailabilityRequest = default;
+            DataCenterAddressContent dataCenterAddressRequest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    scheduleAvailabilityRequest = ScheduleAvailabilityContent.DeserializeScheduleAvailabilityContent(property.Value);
+                    scheduleAvailabilityRequest = ScheduleAvailabilityContent.DeserializeScheduleAvailabilityContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("transportAvailabilityRequest"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transportAvailabilityRequest = TransportAvailabilityRequest.DeserializeTransportAvailabilityRequest(property.Value);
+                    transportAvailabilityRequest = TransportAvailabilityRequest.DeserializeTransportAvailabilityRequest(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datacenterAddressRequest"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddressRequest = DataCenterAddressContent.DeserializeDataCenterAddressContent(property.Value);
+                    dataCenterAddressRequest = DataCenterAddressContent.DeserializeDataCenterAddressContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionConfigurationContent(scheduleAvailabilityRequest.Value, transportAvailabilityRequest.Value, dataCenterAddressRequest.Value, serializedAdditionalRawData);
+            return new RegionConfigurationContent(scheduleAvailabilityRequest, transportAvailabilityRequest, dataCenterAddressRequest, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionConfigurationContent>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegionConfigurationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegionConfigurationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeRegionConfigurationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegionConfigurationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegionConfigurationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterPropertiesEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterPropertiesEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterPropertiesEncryption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomerManagedKeyEncryption))
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
-                writer.WriteObjectValue(CustomerManagedKeyEncryption);
+                writer.WriteObjectValue<RedisEnterpriseCustomerManagedKeyEncryption>(CustomerManagedKeyEncryption, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterPropertiesEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterPropertiesEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterPropertiesEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<RedisEnterpriseCustomerManagedKeyEncryption> customerManagedKeyEncryption = default;
+            RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    customerManagedKeyEncryption = RedisEnterpriseCustomerManagedKeyEncryption.DeserializeRedisEnterpriseCustomerManagedKeyEncryption(property.Value);
+                    customerManagedKeyEncryption = RedisEnterpriseCustomerManagedKeyEncryption.DeserializeRedisEnterpriseCustomerManagedKeyEncryption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterPropertiesEncryption(customerManagedKeyEncryption.Value, serializedAdditionalRawData);
+            return new ClusterPropertiesEncryption(customerManagedKeyEncryption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterPropertiesEncryption>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterPropertiesEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterPropertiesEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         return DeserializeClusterPropertiesEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterPropertiesEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterPropertiesEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 

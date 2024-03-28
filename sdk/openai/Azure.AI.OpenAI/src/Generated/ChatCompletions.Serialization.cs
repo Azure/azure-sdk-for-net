@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -22,7 +21,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatCompletions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatCompletions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +33,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Choices)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ChatChoice>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(PromptFilterResults))
@@ -43,7 +42,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in PromptFilterResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContentFilterResultsForPrompt>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +52,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(SystemFingerprint);
             }
             writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue(Usage);
+            writer.WriteObjectValue<CompletionsUsage>(Usage, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,7 +76,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatCompletions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatCompletions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +92,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatCompletions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -109,7 +108,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeChatCompletions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatCompletions)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -127,7 +126,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ChatCompletions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

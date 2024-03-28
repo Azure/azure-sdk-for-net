@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SensitivitySettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SensitivitySettingsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SensitivitySettingsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(MipInformation))
             {
                 writer.WritePropertyName("mipInformation"u8);
-                writer.WriteObjectValue(MipInformation);
+                writer.WriteObjectValue<GetSensitivitySettingsResponsePropertiesMipInformation>(MipInformation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SensitivitySettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SensitivitySettingsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SensitivitySettingsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<Guid>> sensitiveInfoTypesIds = default;
-            Optional<float> sensitivityThresholdLabelOrder = default;
-            Optional<Guid> sensitivityThresholdLabelId = default;
-            Optional<GetSensitivitySettingsResponsePropertiesMipInformation> mipInformation = default;
+            IReadOnlyList<Guid> sensitiveInfoTypesIds = default;
+            float? sensitivityThresholdLabelOrder = default;
+            Guid? sensitivityThresholdLabelId = default;
+            GetSensitivitySettingsResponsePropertiesMipInformation mipInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mipInformation = GetSensitivitySettingsResponsePropertiesMipInformation.DeserializeGetSensitivitySettingsResponsePropertiesMipInformation(property.Value);
+                    mipInformation = GetSensitivitySettingsResponsePropertiesMipInformation.DeserializeGetSensitivitySettingsResponsePropertiesMipInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivitySettingsProperties(Optional.ToList(sensitiveInfoTypesIds), Optional.ToNullable(sensitivityThresholdLabelOrder), Optional.ToNullable(sensitivityThresholdLabelId), mipInformation.Value, serializedAdditionalRawData);
+            return new SensitivitySettingsProperties(sensitiveInfoTypesIds ?? new ChangeTrackingList<Guid>(), sensitivityThresholdLabelOrder, sensitivityThresholdLabelId, mipInformation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivitySettingsProperties>.Write(ModelReaderWriterOptions options)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SensitivitySettingsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SensitivitySettingsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSensitivitySettingsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SensitivitySettingsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SensitivitySettingsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

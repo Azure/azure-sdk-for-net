@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableVerticalFeaturizationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         writer.WriteStartArray();
                         foreach (var item0 in item.Value)
                         {
-                            writer.WriteObjectValue(item0);
+                            writer.WriteObjectValue<ColumnTransformer>(item0, options);
                         }
                         writer.WriteEndArray();
                     }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableVerticalFeaturizationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<BlockedTransformer>> blockedTransformers = default;
-            Optional<IDictionary<string, string>> columnNameAndTypes = default;
-            Optional<bool> enableDnnFeaturization = default;
-            Optional<MachineLearningFeaturizationMode> mode = default;
-            Optional<IDictionary<string, IList<ColumnTransformer>>> transformerParams = default;
-            Optional<string> datasetLanguage = default;
+            IList<BlockedTransformer> blockedTransformers = default;
+            IDictionary<string, string> columnNameAndTypes = default;
+            bool? enableDnnFeaturization = default;
+            MachineLearningFeaturizationMode? mode = default;
+            IDictionary<string, IList<ColumnTransformer>> transformerParams = default;
+            string datasetLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             List<ColumnTransformer> array = new List<ColumnTransformer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ColumnTransformer.DeserializeColumnTransformer(item));
+                                array.Add(ColumnTransformer.DeserializeColumnTransformer(item, options));
                             }
                             dictionary.Add(property0.Name, array);
                         }
@@ -250,7 +250,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableVerticalFeaturizationSettings(datasetLanguage.Value, serializedAdditionalRawData, Optional.ToList(blockedTransformers), Optional.ToDictionary(columnNameAndTypes), Optional.ToNullable(enableDnnFeaturization), Optional.ToNullable(mode), Optional.ToDictionary(transformerParams));
+            return new TableVerticalFeaturizationSettings(
+                datasetLanguage,
+                serializedAdditionalRawData,
+                blockedTransformers ?? new ChangeTrackingList<BlockedTransformer>(),
+                columnNameAndTypes ?? new ChangeTrackingDictionary<string, string>(),
+                enableDnnFeaturization,
+                mode,
+                transformerParams ?? new ChangeTrackingDictionary<string, IList<ColumnTransformer>>());
         }
 
         BinaryData IPersistableModel<TableVerticalFeaturizationSettings>.Write(ModelReaderWriterOptions options)
@@ -262,7 +269,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -278,7 +285,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeTableVerticalFeaturizationSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

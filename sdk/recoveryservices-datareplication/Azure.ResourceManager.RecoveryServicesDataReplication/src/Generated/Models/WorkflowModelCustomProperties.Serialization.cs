@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkflowModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkflowModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FailoverWorkflowDetails": return FailoverWorkflowModelCustomProperties.DeserializeFailoverWorkflowModelCustomProperties(element);
-                    case "TestFailoverCleanupWorkflowDetails": return TestFailoverCleanupWorkflowModelCustomProperties.DeserializeTestFailoverCleanupWorkflowModelCustomProperties(element);
-                    case "TestFailoverWorkflowDetails": return TestFailoverWorkflowModelCustomProperties.DeserializeTestFailoverWorkflowModelCustomProperties(element);
+                    case "FailoverWorkflowDetails": return FailoverWorkflowModelCustomProperties.DeserializeFailoverWorkflowModelCustomProperties(element, options);
+                    case "TestFailoverCleanupWorkflowDetails": return TestFailoverCleanupWorkflowModelCustomProperties.DeserializeTestFailoverCleanupWorkflowModelCustomProperties(element, options);
+                    case "TestFailoverWorkflowDetails": return TestFailoverWorkflowModelCustomProperties.DeserializeTestFailoverWorkflowModelCustomProperties(element, options);
                 }
             }
-            return UnknownWorkflowModelCustomProperties.DeserializeUnknownWorkflowModelCustomProperties(element);
+            return UnknownWorkflowModelCustomProperties.DeserializeUnknownWorkflowModelCustomProperties(element, options);
         }
 
         BinaryData IPersistableModel<WorkflowModelCustomProperties>.Write(ModelReaderWriterOptions options)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeWorkflowModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

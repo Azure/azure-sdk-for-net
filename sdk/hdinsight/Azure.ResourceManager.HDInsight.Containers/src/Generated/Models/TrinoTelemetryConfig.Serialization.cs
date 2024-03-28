@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrinoTelemetryConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrinoTelemetryConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrinoTelemetryConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrinoTelemetryConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrinoTelemetryConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrinoTelemetryConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<string> hivecatalogName = default;
-            Optional<string> hivecatalogSchema = default;
-            Optional<int> partitionRetentionInDays = default;
-            Optional<string> path = default;
+            string hivecatalogName = default;
+            string hivecatalogSchema = default;
+            int? partitionRetentionInDays = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrinoTelemetryConfig(hivecatalogName.Value, hivecatalogSchema.Value, Optional.ToNullable(partitionRetentionInDays), path.Value, serializedAdditionalRawData);
+            return new TrinoTelemetryConfig(hivecatalogName, hivecatalogSchema, partitionRetentionInDays, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoTelemetryConfig>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrinoTelemetryConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrinoTelemetryConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeTrinoTelemetryConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrinoTelemetryConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrinoTelemetryConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

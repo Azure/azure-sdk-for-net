@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Confluent.Models;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Confluent
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-12-01";
+            _apiVersion = apiVersion ?? "2024-02-13";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<ConfluentOrganizationData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue<ConfluentOrganizationPatch>(patch, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -495,6 +495,901 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal HttpMessage CreateListEnvironmentsRequest(string subscriptionId, string resourceGroupName, string organizationName, int? pageSize, string pageToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (pageToken != null)
+            {
+                uri.AppendQuery("pageToken", pageToken, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists of all the environments in a organization. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<GetEnvironmentsResponse>> ListEnvironmentsAsync(string subscriptionId, string resourceGroupName, string organizationName, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
+            using var message = CreateListEnvironmentsRequest(subscriptionId, resourceGroupName, organizationName, pageSize, pageToken);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetEnvironmentsResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = GetEnvironmentsResponse.DeserializeGetEnvironmentsResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists of all the environments in a organization. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<GetEnvironmentsResponse> ListEnvironments(string subscriptionId, string resourceGroupName, string organizationName, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
+            using var message = CreateListEnvironmentsRequest(subscriptionId, resourceGroupName, organizationName, pageSize, pageToken);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetEnvironmentsResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = GetEnvironmentsResponse.DeserializeGetEnvironmentsResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetEnvironmentByIdRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get Environment details by environment Id. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SCEnvironmentRecord>> GetEnvironmentByIdAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+
+            using var message = CreateGetEnvironmentByIdRequest(subscriptionId, resourceGroupName, organizationName, environmentId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SCEnvironmentRecord value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = SCEnvironmentRecord.DeserializeSCEnvironmentRecord(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get Environment details by environment Id. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SCEnvironmentRecord> GetEnvironmentById(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+
+            using var message = CreateGetEnvironmentByIdRequest(subscriptionId, resourceGroupName, organizationName, environmentId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SCEnvironmentRecord value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = SCEnvironmentRecord.DeserializeSCEnvironmentRecord(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListClustersRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/clusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (pageToken != null)
+            {
+                uri.AppendQuery("pageToken", pageToken, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists of all the clusters in a environment. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ListClustersSuccessResponse>> ListClustersAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+
+            using var message = CreateListClustersRequest(subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListClustersSuccessResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ListClustersSuccessResponse.DeserializeListClustersSuccessResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists of all the clusters in a environment. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ListClustersSuccessResponse> ListClusters(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+
+            using var message = CreateListClustersRequest(subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListClustersSuccessResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ListClustersSuccessResponse.DeserializeListClustersSuccessResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListSchemaRegistryClustersRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/schemaRegistryClusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (pageToken != null)
+            {
+                uri.AppendQuery("pageToken", pageToken, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get schema registry clusters. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ListSchemaRegistryClustersResponse>> ListSchemaRegistryClustersAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+
+            using var message = CreateListSchemaRegistryClustersRequest(subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListSchemaRegistryClustersResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ListSchemaRegistryClustersResponse.DeserializeListSchemaRegistryClustersResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get schema registry clusters. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ListSchemaRegistryClustersResponse> ListSchemaRegistryClusters(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+
+            using var message = CreateListSchemaRegistryClustersRequest(subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListSchemaRegistryClustersResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ListSchemaRegistryClustersResponse.DeserializeListSchemaRegistryClustersResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListRegionsRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/listRegions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue<AccessListContent>(content, new ModelReaderWriterOptions("W"));
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> cloud provider regions available for creating Schema Registry clusters. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="content"> List Access Request Model. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ConfluentRegionListResult>> ListRegionsAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateListRegionsRequest(subscriptionId, resourceGroupName, organizationName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConfluentRegionListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ConfluentRegionListResult.DeserializeConfluentRegionListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> cloud provider regions available for creating Schema Registry clusters. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="content"> List Access Request Model. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ConfluentRegionListResult> ListRegions(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateListRegionsRequest(subscriptionId, resourceGroupName, organizationName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConfluentRegionListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ConfluentRegionListResult.DeserializeConfluentRegionListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCreateApiKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, ConfluentApiKeyCreateContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterId, true);
+            uri.AppendPath("/createAPIKey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue<ConfluentApiKeyCreateContent>(content, new ModelReaderWriterOptions("W"));
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Creates API key for a schema registry Cluster ID or Kafka Cluster ID under a environment. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
+        /// <param name="content"> Request payload for get creating API Key for schema registry Cluster ID or Kafka Cluster ID under a environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ConfluentApiKeyRecord>> CreateApiKeyAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, ConfluentApiKeyCreateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCreateApiKeyRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConfluentApiKeyRecord value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates API key for a schema registry Cluster ID or Kafka Cluster ID under a environment. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
+        /// <param name="content"> Request payload for get creating API Key for schema registry Cluster ID or Kafka Cluster ID under a environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ConfluentApiKeyRecord> CreateApiKey(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, ConfluentApiKeyCreateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCreateApiKeyRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConfluentApiKeyRecord value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteClusterApiKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/apiKeys/", false);
+            uri.AppendPath(apiKeyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes API key of a kafka or schema registry cluster. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="apiKeyId"> Confluent API Key id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteClusterApiKeyAsync(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
+
+            using var message = CreateDeleteClusterApiKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes API key of a kafka or schema registry cluster. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="apiKeyId"> Confluent API Key id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteClusterApiKey(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
+
+            using var message = CreateDeleteClusterApiKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetClusterApiKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/apiKeys/", false);
+            uri.AppendPath(apiKeyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get API key details of a kafka or schema registry cluster. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="apiKeyId"> Confluent API Key id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ConfluentApiKeyRecord>> GetClusterApiKeyAsync(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
+
+            using var message = CreateGetClusterApiKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConfluentApiKeyRecord value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get API key details of a kafka or schema registry cluster. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="apiKeyId"> Confluent API Key id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ConfluentApiKeyRecord> GetClusterApiKey(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
+
+            using var message = CreateGetClusterApiKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConfluentApiKeyRecord value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetSchemaRegistryClusterByIdRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/schemaRegistryClusters/", false);
+            uri.AppendPath(clusterId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get schema registry cluster by Id. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SchemaRegistryClusterRecord>> GetSchemaRegistryClusterByIdAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
+
+            using var message = CreateGetSchemaRegistryClusterByIdRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SchemaRegistryClusterRecord value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = SchemaRegistryClusterRecord.DeserializeSchemaRegistryClusterRecord(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get schema registry cluster by Id. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SchemaRegistryClusterRecord> GetSchemaRegistryClusterById(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
+
+            using var message = CreateGetSchemaRegistryClusterByIdRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SchemaRegistryClusterRecord value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = SchemaRegistryClusterRecord.DeserializeSchemaRegistryClusterRecord(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetClusterByIdRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get cluster by Id. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SCClusterRecord>> GetClusterByIdAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
+
+            using var message = CreateGetClusterByIdRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SCClusterRecord value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = SCClusterRecord.DeserializeSCClusterRecord(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get cluster by Id. </summary>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SCClusterRecord> GetClusterById(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
+
+            using var message = CreateGetClusterByIdRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SCClusterRecord value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = SCClusterRecord.DeserializeSCClusterRecord(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -628,6 +1523,254 @@ namespace Azure.ResourceManager.Confluent
                         ConfluentOrganizationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ConfluentOrganizationListResult.DeserializeConfluentOrganizationListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListEnvironmentsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, int? pageSize, string pageToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists of all the environments in a organization. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<GetEnvironmentsResponse>> ListEnvironmentsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
+            using var message = CreateListEnvironmentsNextPageRequest(nextLink, subscriptionId, resourceGroupName, organizationName, pageSize, pageToken);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetEnvironmentsResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = GetEnvironmentsResponse.DeserializeGetEnvironmentsResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists of all the environments in a organization. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<GetEnvironmentsResponse> ListEnvironmentsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
+            using var message = CreateListEnvironmentsNextPageRequest(nextLink, subscriptionId, resourceGroupName, organizationName, pageSize, pageToken);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetEnvironmentsResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = GetEnvironmentsResponse.DeserializeGetEnvironmentsResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListClustersNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists of all the clusters in a environment. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ListClustersSuccessResponse>> ListClustersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+
+            using var message = CreateListClustersNextPageRequest(nextLink, subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListClustersSuccessResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ListClustersSuccessResponse.DeserializeListClustersSuccessResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists of all the clusters in a environment. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ListClustersSuccessResponse> ListClustersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+
+            using var message = CreateListClustersNextPageRequest(nextLink, subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListClustersSuccessResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ListClustersSuccessResponse.DeserializeListClustersSuccessResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListSchemaRegistryClustersNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get schema registry clusters. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ListSchemaRegistryClustersResponse>> ListSchemaRegistryClustersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+
+            using var message = CreateListSchemaRegistryClustersNextPageRequest(nextLink, subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListSchemaRegistryClustersResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ListSchemaRegistryClustersResponse.DeserializeListSchemaRegistryClustersResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get schema registry clusters. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ListSchemaRegistryClustersResponse> ListSchemaRegistryClustersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+
+            using var message = CreateListSchemaRegistryClustersNextPageRequest(nextLink, subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListSchemaRegistryClustersResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ListSchemaRegistryClustersResponse.DeserializeListSchemaRegistryClustersResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

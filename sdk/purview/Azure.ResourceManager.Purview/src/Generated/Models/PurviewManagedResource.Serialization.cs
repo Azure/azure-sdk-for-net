@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<PurviewManagedResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<PurviewManagedResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> eventHubNamespace = default;
-            Optional<ResourceIdentifier> resourceGroup = default;
-            Optional<ResourceIdentifier> storageAccount = default;
+            ResourceIdentifier eventHubNamespace = default;
+            ResourceIdentifier resourceGroup = default;
+            ResourceIdentifier storageAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewManagedResource(eventHubNamespace.Value, resourceGroup.Value, storageAccount.Value, serializedAdditionalRawData);
+            return new PurviewManagedResource(eventHubNamespace, resourceGroup, storageAccount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewManagedResource>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Purview.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Purview.Models
                         return DeserializePurviewManagedResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support reading '{options.Format}' format.");
             }
         }
 

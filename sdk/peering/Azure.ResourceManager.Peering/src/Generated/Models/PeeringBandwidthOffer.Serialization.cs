@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringBandwidthOffer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringBandwidthOffer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> offerName = default;
-            Optional<int> valueInMbps = default;
+            string offerName = default;
+            int? valueInMbps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringBandwidthOffer(offerName.Value, Optional.ToNullable(valueInMbps), serializedAdditionalRawData);
+            return new PeeringBandwidthOffer(offerName, valueInMbps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringBandwidthOffer>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringBandwidthOffer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support reading '{options.Format}' format.");
             }
         }
 

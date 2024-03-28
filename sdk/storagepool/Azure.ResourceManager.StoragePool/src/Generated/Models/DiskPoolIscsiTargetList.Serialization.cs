@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DiskPoolIscsiTargetData>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 return null;
             }
             IReadOnlyList<DiskPoolIscsiTargetData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<DiskPoolIscsiTargetData> array = new List<DiskPoolIscsiTargetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(item));
+                        array.Add(DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolIscsiTargetList(value, nextLink.Value, serializedAdditionalRawData);
+            return new DiskPoolIscsiTargetList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolIscsiTargetList>.Write(ModelReaderWriterOptions options)
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                         return DeserializeDiskPoolIscsiTargetList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetList)} does not support reading '{options.Format}' format.");
             }
         }
 

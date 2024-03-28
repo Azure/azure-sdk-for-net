@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogFilesDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogFilesDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogFilesDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                writer.WriteObjectValue<LogFilesDataSourceSettings>(Settings, options);
             }
             if (Optional.IsDefined(Name))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogFilesDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogFilesDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogFilesDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<string> streams = default;
             IList<string> filePatterns = default;
             LogFilesDataSourceFormat format = default;
-            Optional<LogFilesDataSourceSettings> settings = default;
-            Optional<string> name = default;
+            LogFilesDataSourceSettings settings = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    settings = LogFilesDataSourceSettings.DeserializeLogFilesDataSourceSettings(property.Value);
+                    settings = LogFilesDataSourceSettings.DeserializeLogFilesDataSourceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -144,7 +144,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogFilesDataSource(streams, filePatterns, format, settings.Value, name.Value, serializedAdditionalRawData);
+            return new LogFilesDataSource(
+                streams,
+                filePatterns,
+                format,
+                settings,
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogFilesDataSource>.Write(ModelReaderWriterOptions options)
@@ -156,7 +162,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogFilesDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogFilesDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +178,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeLogFilesDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogFilesDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogFilesDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

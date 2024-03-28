@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolZoneListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolZoneListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolZoneListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiskPoolZoneInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolZoneListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolZoneListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolZoneListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DiskPoolZoneInfo>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DiskPoolZoneInfo> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<DiskPoolZoneInfo> array = new List<DiskPoolZoneInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskPoolZoneInfo.DeserializeDiskPoolZoneInfo(item));
+                        array.Add(DiskPoolZoneInfo.DeserializeDiskPoolZoneInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolZoneListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DiskPoolZoneListResult(value ?? new ChangeTrackingList<DiskPoolZoneInfo>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolZoneListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolZoneListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolZoneListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                         return DeserializeDiskPoolZoneListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolZoneListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolZoneListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

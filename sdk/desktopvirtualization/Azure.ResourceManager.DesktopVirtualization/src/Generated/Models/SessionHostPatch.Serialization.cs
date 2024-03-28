@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionHostPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionHostPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionHostPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionHostPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> allowNewSession = default;
-            Optional<string> assignedUser = default;
-            Optional<string> friendlyName = default;
+            SystemData systemData = default;
+            bool? allowNewSession = default;
+            string assignedUser = default;
+            string friendlyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SessionHostPatch(id, name, type, systemData.Value, Optional.ToNullable(allowNewSession), assignedUser.Value, friendlyName.Value, serializedAdditionalRawData);
+            return new SessionHostPatch(
+                id,
+                name,
+                type,
+                systemData,
+                allowNewSession,
+                assignedUser,
+                friendlyName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SessionHostPatch>.Write(ModelReaderWriterOptions options)
@@ -187,7 +195,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SessionHostPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionHostPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +211,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeSessionHostPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionHostPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionHostPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

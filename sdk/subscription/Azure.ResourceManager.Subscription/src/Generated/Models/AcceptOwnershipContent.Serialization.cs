@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<AcceptOwnershipContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcceptOwnershipContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AcceptOwnershipContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<AcceptOwnershipRequestProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<AcceptOwnershipContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcceptOwnershipContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AcceptOwnershipContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<AcceptOwnershipRequestProperties> properties = default;
+            AcceptOwnershipRequestProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     {
                         continue;
                     }
-                    properties = AcceptOwnershipRequestProperties.DeserializeAcceptOwnershipRequestProperties(property.Value);
+                    properties = AcceptOwnershipRequestProperties.DeserializeAcceptOwnershipRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcceptOwnershipContent(properties.Value, serializedAdditionalRawData);
+            return new AcceptOwnershipContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcceptOwnershipContent>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AcceptOwnershipContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcceptOwnershipContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         return DeserializeAcceptOwnershipContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcceptOwnershipContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcceptOwnershipContent)} does not support reading '{options.Format}' format.");
             }
         }
 

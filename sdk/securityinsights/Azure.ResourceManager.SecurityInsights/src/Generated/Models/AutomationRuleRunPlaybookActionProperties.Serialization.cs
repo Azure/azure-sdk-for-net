@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRuleRunPlaybookActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookActionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRuleRunPlaybookActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookActionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             ResourceIdentifier logicAppResourceId = default;
-            Optional<Guid> tenantId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRuleRunPlaybookActionProperties(logicAppResourceId, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new AutomationRuleRunPlaybookActionProperties(logicAppResourceId, tenantId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRuleRunPlaybookActionProperties>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookActionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeAutomationRuleRunPlaybookActionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookActionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

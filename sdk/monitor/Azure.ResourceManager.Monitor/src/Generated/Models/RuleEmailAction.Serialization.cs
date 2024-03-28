@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleEmailAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleEmailAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleEmailAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleEmailAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleEmailAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleEmailAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<bool> sendToServiceOwners = default;
-            Optional<IList<string>> customEmails = default;
+            bool? sendToServiceOwners = default;
+            IList<string> customEmails = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleEmailAction(odataType, serializedAdditionalRawData, Optional.ToNullable(sendToServiceOwners), Optional.ToList(customEmails));
+            return new RuleEmailAction(odataType, serializedAdditionalRawData, sendToServiceOwners, customEmails ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<RuleEmailAction>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RuleEmailAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleEmailAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeRuleEmailAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuleEmailAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleEmailAction)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductLink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductLink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<ProductLinkType> linkType = default;
-            Optional<Uri> linkUrl = default;
+            ProductLinkType? linkType = default;
+            Uri linkUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductLink(Optional.ToNullable(linkType), linkUrl.Value, serializedAdditionalRawData);
+            return new ProductLink(linkType, linkUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductLink>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProductLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductLink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeProductLink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProductLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductLink)} does not support reading '{options.Format}' format.");
             }
         }
 

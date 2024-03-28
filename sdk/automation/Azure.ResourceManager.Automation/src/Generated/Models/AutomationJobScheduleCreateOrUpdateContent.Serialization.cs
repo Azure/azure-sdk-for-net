@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobScheduleCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobScheduleCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobScheduleCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule);
+            writer.WriteObjectValue<ScheduleAssociationProperty>(Schedule, options);
             writer.WritePropertyName("runbook"u8);
-            writer.WriteObjectValue(Runbook);
+            writer.WriteObjectValue<RunbookAssociationProperty>(Runbook, options);
             if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobScheduleCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobScheduleCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobScheduleCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Automation.Models
             }
             ScheduleAssociationProperty schedule = default;
             RunbookAssociationProperty runbook = default;
-            Optional<string> runOn = default;
-            Optional<IDictionary<string, string>> parameters = default;
+            string runOn = default;
+            IDictionary<string, string> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         if (property0.NameEquals("schedule"u8))
                         {
-                            schedule = ScheduleAssociationProperty.DeserializeScheduleAssociationProperty(property0.Value);
+                            schedule = ScheduleAssociationProperty.DeserializeScheduleAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runbook"u8))
                         {
-                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value);
+                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runOn"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobScheduleCreateOrUpdateContent(schedule, runbook, runOn.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new AutomationJobScheduleCreateOrUpdateContent(schedule, runbook, runOn, parameters ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobScheduleCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobScheduleCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobScheduleCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationJobScheduleCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobScheduleCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobScheduleCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

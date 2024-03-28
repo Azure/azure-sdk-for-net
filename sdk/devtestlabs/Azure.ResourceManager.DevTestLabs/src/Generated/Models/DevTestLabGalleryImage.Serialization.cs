@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabGalleryImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabGalleryImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabGalleryImage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference);
+                writer.WriteObjectValue<DevTestLabGalleryImageReference>(ImageReference, options);
             }
             if (Optional.IsDefined(Icon))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabGalleryImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabGalleryImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabGalleryImage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,20 +141,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> author = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> description = default;
-            Optional<DevTestLabGalleryImageReference> imageReference = default;
-            Optional<string> icon = default;
-            Optional<bool> enabled = default;
-            Optional<string> planId = default;
-            Optional<bool> isPlanAuthorized = default;
+            SystemData systemData = default;
+            string author = default;
+            DateTimeOffset? createdDate = default;
+            string description = default;
+            DevTestLabGalleryImageReference imageReference = default;
+            string icon = default;
+            bool? enabled = default;
+            string planId = default;
+            bool? isPlanAuthorized = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            imageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value);
+                            imageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("icon"u8))
@@ -276,7 +276,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabGalleryImage(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, author.Value, Optional.ToNullable(createdDate), description.Value, imageReference.Value, icon.Value, Optional.ToNullable(enabled), planId.Value, Optional.ToNullable(isPlanAuthorized), serializedAdditionalRawData);
+            return new DevTestLabGalleryImage(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                author,
+                createdDate,
+                description,
+                imageReference,
+                icon,
+                enabled,
+                planId,
+                isPlanAuthorized,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabGalleryImage>.Write(ModelReaderWriterOptions options)
@@ -288,7 +303,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabGalleryImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabGalleryImage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -304,7 +319,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabGalleryImage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabGalleryImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabGalleryImage)} does not support reading '{options.Format}' format.");
             }
         }
 

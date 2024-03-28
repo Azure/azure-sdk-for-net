@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactEnvelopeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactEnvelopeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -227,47 +227,47 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> groupAssociationAssignedCode = default;
-            Optional<string> communicationAgreementId = default;
+            string groupAssociationAssignedCode = default;
+            string communicationAgreementId = default;
             bool applyDelimiterStringAdvice = default;
             bool createGroupingSegments = default;
             bool enableDefaultGroupHeaders = default;
-            Optional<string> recipientReferencePasswordValue = default;
-            Optional<string> recipientReferencePasswordQualifier = default;
-            Optional<string> applicationReferenceId = default;
-            Optional<string> processingPriorityCode = default;
+            string recipientReferencePasswordValue = default;
+            string recipientReferencePasswordQualifier = default;
+            string applicationReferenceId = default;
+            string processingPriorityCode = default;
             long interchangeControlNumberLowerBound = default;
             long interchangeControlNumberUpperBound = default;
             bool rolloverInterchangeControlNumber = default;
-            Optional<string> interchangeControlNumberPrefix = default;
-            Optional<string> interchangeControlNumberSuffix = default;
-            Optional<string> senderReverseRoutingAddress = default;
-            Optional<string> receiverReverseRoutingAddress = default;
-            Optional<string> functionalGroupId = default;
-            Optional<string> groupControllingAgencyCode = default;
-            Optional<string> groupMessageVersion = default;
-            Optional<string> groupMessageRelease = default;
+            string interchangeControlNumberPrefix = default;
+            string interchangeControlNumberSuffix = default;
+            string senderReverseRoutingAddress = default;
+            string receiverReverseRoutingAddress = default;
+            string functionalGroupId = default;
+            string groupControllingAgencyCode = default;
+            string groupMessageVersion = default;
+            string groupMessageRelease = default;
             long groupControlNumberLowerBound = default;
             long groupControlNumberUpperBound = default;
             bool rolloverGroupControlNumber = default;
-            Optional<string> groupControlNumberPrefix = default;
-            Optional<string> groupControlNumberSuffix = default;
-            Optional<string> groupApplicationReceiverQualifier = default;
-            Optional<string> groupApplicationReceiverId = default;
-            Optional<string> groupApplicationSenderQualifier = default;
-            Optional<string> groupApplicationSenderId = default;
-            Optional<string> groupApplicationPassword = default;
+            string groupControlNumberPrefix = default;
+            string groupControlNumberSuffix = default;
+            string groupApplicationReceiverQualifier = default;
+            string groupApplicationReceiverId = default;
+            string groupApplicationSenderQualifier = default;
+            string groupApplicationSenderId = default;
+            string groupApplicationPassword = default;
             bool overwriteExistingTransactionSetControlNumber = default;
-            Optional<string> transactionSetControlNumberPrefix = default;
-            Optional<string> transactionSetControlNumberSuffix = default;
+            string transactionSetControlNumberPrefix = default;
+            string transactionSetControlNumberSuffix = default;
             long transactionSetControlNumberLowerBound = default;
             long transactionSetControlNumberUpperBound = default;
             bool rolloverTransactionSetControlNumber = default;
             bool isTestInterchange = default;
-            Optional<string> senderInternalIdentification = default;
-            Optional<string> senderInternalSubIdentification = default;
-            Optional<string> receiverInternalIdentification = default;
-            Optional<string> receiverInternalSubIdentification = default;
+            string senderInternalIdentification = default;
+            string senderInternalSubIdentification = default;
+            string receiverInternalIdentification = default;
+            string receiverInternalSubIdentification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -483,7 +483,49 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactEnvelopeSettings(groupAssociationAssignedCode.Value, communicationAgreementId.Value, applyDelimiterStringAdvice, createGroupingSegments, enableDefaultGroupHeaders, recipientReferencePasswordValue.Value, recipientReferencePasswordQualifier.Value, applicationReferenceId.Value, processingPriorityCode.Value, interchangeControlNumberLowerBound, interchangeControlNumberUpperBound, rolloverInterchangeControlNumber, interchangeControlNumberPrefix.Value, interchangeControlNumberSuffix.Value, senderReverseRoutingAddress.Value, receiverReverseRoutingAddress.Value, functionalGroupId.Value, groupControllingAgencyCode.Value, groupMessageVersion.Value, groupMessageRelease.Value, groupControlNumberLowerBound, groupControlNumberUpperBound, rolloverGroupControlNumber, groupControlNumberPrefix.Value, groupControlNumberSuffix.Value, groupApplicationReceiverQualifier.Value, groupApplicationReceiverId.Value, groupApplicationSenderQualifier.Value, groupApplicationSenderId.Value, groupApplicationPassword.Value, overwriteExistingTransactionSetControlNumber, transactionSetControlNumberPrefix.Value, transactionSetControlNumberSuffix.Value, transactionSetControlNumberLowerBound, transactionSetControlNumberUpperBound, rolloverTransactionSetControlNumber, isTestInterchange, senderInternalIdentification.Value, senderInternalSubIdentification.Value, receiverInternalIdentification.Value, receiverInternalSubIdentification.Value, serializedAdditionalRawData);
+            return new EdifactEnvelopeSettings(
+                groupAssociationAssignedCode,
+                communicationAgreementId,
+                applyDelimiterStringAdvice,
+                createGroupingSegments,
+                enableDefaultGroupHeaders,
+                recipientReferencePasswordValue,
+                recipientReferencePasswordQualifier,
+                applicationReferenceId,
+                processingPriorityCode,
+                interchangeControlNumberLowerBound,
+                interchangeControlNumberUpperBound,
+                rolloverInterchangeControlNumber,
+                interchangeControlNumberPrefix,
+                interchangeControlNumberSuffix,
+                senderReverseRoutingAddress,
+                receiverReverseRoutingAddress,
+                functionalGroupId,
+                groupControllingAgencyCode,
+                groupMessageVersion,
+                groupMessageRelease,
+                groupControlNumberLowerBound,
+                groupControlNumberUpperBound,
+                rolloverGroupControlNumber,
+                groupControlNumberPrefix,
+                groupControlNumberSuffix,
+                groupApplicationReceiverQualifier,
+                groupApplicationReceiverId,
+                groupApplicationSenderQualifier,
+                groupApplicationSenderId,
+                groupApplicationPassword,
+                overwriteExistingTransactionSetControlNumber,
+                transactionSetControlNumberPrefix,
+                transactionSetControlNumberSuffix,
+                transactionSetControlNumberLowerBound,
+                transactionSetControlNumberUpperBound,
+                rolloverTransactionSetControlNumber,
+                isTestInterchange,
+                senderInternalIdentification,
+                senderInternalSubIdentification,
+                receiverInternalIdentification,
+                receiverInternalSubIdentification,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactEnvelopeSettings>.Write(ModelReaderWriterOptions options)
@@ -495,7 +537,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -511,7 +553,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeEdifactEnvelopeSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactEnvelopeSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

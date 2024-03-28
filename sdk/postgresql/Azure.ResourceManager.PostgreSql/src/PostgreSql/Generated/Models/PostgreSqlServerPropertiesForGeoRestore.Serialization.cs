@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlServerPropertiesForGeoRestore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForGeoRestore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForGeoRestore)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<PostgreSqlStorageProfile>(StorageProfile, options);
             }
             writer.WritePropertyName("createMode"u8);
             writer.WriteStringValue(CreateMode.ToString());
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlServerPropertiesForGeoRestore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForGeoRestore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForGeoRestore)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 return null;
             }
             ResourceIdentifier sourceServerId = default;
-            Optional<PostgreSqlServerVersion> version = default;
-            Optional<PostgreSqlSslEnforcementEnum> sslEnforcement = default;
-            Optional<PostgreSqlMinimalTlsVersionEnum> minimalTlsVersion = default;
-            Optional<PostgreSqlInfrastructureEncryption> infrastructureEncryption = default;
-            Optional<PostgreSqlPublicNetworkAccessEnum> publicNetworkAccess = default;
-            Optional<PostgreSqlStorageProfile> storageProfile = default;
+            PostgreSqlServerVersion? version = default;
+            PostgreSqlSslEnforcementEnum? sslEnforcement = default;
+            PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = default;
+            PostgreSqlInfrastructureEncryption? infrastructureEncryption = default;
+            PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = default;
+            PostgreSqlStorageProfile storageProfile = default;
             PostgreSqlCreateMode createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property.Value);
+                    storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))
@@ -180,7 +180,16 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerPropertiesForGeoRestore(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, serializedAdditionalRawData, sourceServerId);
+            return new PostgreSqlServerPropertiesForGeoRestore(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                createMode,
+                serializedAdditionalRawData,
+                sourceServerId);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerPropertiesForGeoRestore>.Write(ModelReaderWriterOptions options)
@@ -192,7 +201,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForGeoRestore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForGeoRestore)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +217,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                         return DeserializePostgreSqlServerPropertiesForGeoRestore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForGeoRestore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForGeoRestore)} does not support reading '{options.Format}' format.");
             }
         }
 

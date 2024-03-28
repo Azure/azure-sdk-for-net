@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolVolume)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolVolume)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Avs.Models
             }
             ResourceIdentifier targetId = default;
             string lunName = default;
-            Optional<LunMountMode> mountOption = default;
-            Optional<string> path = default;
+            LunMountMode? mountOption = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolVolume(targetId, lunName, Optional.ToNullable(mountOption), path.Value, serializedAdditionalRawData);
+            return new DiskPoolVolume(targetId, lunName, mountOption, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolVolume>.Write(ModelReaderWriterOptions options)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolVolume)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeDiskPoolVolume(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolVolume)} does not support reading '{options.Format}' format.");
             }
         }
 

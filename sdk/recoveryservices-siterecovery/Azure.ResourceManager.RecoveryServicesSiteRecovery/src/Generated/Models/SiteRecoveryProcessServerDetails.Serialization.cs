@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServerDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryProcessServerDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryProcessServerDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServerDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryProcessServerDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryProcessServerDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -225,35 +225,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> biosId = default;
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<string> fqdn = default;
-            Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Optional<long> totalMemoryInBytes = default;
-            Optional<long> availableMemoryInBytes = default;
-            Optional<long> usedMemoryInBytes = default;
-            Optional<double> memoryUsagePercentage = default;
-            Optional<long> totalSpaceInBytes = default;
-            Optional<long> availableSpaceInBytes = default;
-            Optional<long> usedSpaceInBytes = default;
-            Optional<double> freeSpacePercentage = default;
-            Optional<long> throughputUploadPendingDataInBytes = default;
-            Optional<long> throughputInBytes = default;
-            Optional<double> processorUsagePercentage = default;
-            Optional<RcmComponentStatus> throughputStatus = default;
-            Optional<long> systemLoad = default;
-            Optional<RcmComponentStatus> systemLoadStatus = default;
-            Optional<RcmComponentStatus> diskUsageStatus = default;
-            Optional<RcmComponentStatus> memoryUsageStatus = default;
-            Optional<RcmComponentStatus> processorUsageStatus = default;
-            Optional<SiteRecoveryProtectionHealth> health = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
-            Optional<int> protectedItemCount = default;
-            Optional<SiteRecoveryProtectionHealth> historicHealth = default;
+            string id = default;
+            string name = default;
+            string biosId = default;
+            ResourceIdentifier fabricObjectId = default;
+            string fqdn = default;
+            IReadOnlyList<IPAddress> ipAddresses = default;
+            string version = default;
+            DateTimeOffset? lastHeartbeatUtc = default;
+            long? totalMemoryInBytes = default;
+            long? availableMemoryInBytes = default;
+            long? usedMemoryInBytes = default;
+            double? memoryUsagePercentage = default;
+            long? totalSpaceInBytes = default;
+            long? availableSpaceInBytes = default;
+            long? usedSpaceInBytes = default;
+            double? freeSpacePercentage = default;
+            long? throughputUploadPendingDataInBytes = default;
+            long? throughputInBytes = default;
+            double? processorUsagePercentage = default;
+            RcmComponentStatus? throughputStatus = default;
+            long? systemLoad = default;
+            RcmComponentStatus? systemLoadStatus = default;
+            RcmComponentStatus? diskUsageStatus = default;
+            RcmComponentStatus? memoryUsageStatus = default;
+            RcmComponentStatus? processorUsageStatus = default;
+            SiteRecoveryProtectionHealth? health = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
+            int? protectedItemCount = default;
+            SiteRecoveryProtectionHealth? historicHealth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
@@ -522,7 +522,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryProcessServerDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, Optional.ToList(ipAddresses), version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), Optional.ToNullable(usedMemoryInBytes), Optional.ToNullable(memoryUsagePercentage), Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), Optional.ToNullable(usedSpaceInBytes), Optional.ToNullable(freeSpacePercentage), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInBytes), Optional.ToNullable(processorUsagePercentage), Optional.ToNullable(throughputStatus), Optional.ToNullable(systemLoad), Optional.ToNullable(systemLoadStatus), Optional.ToNullable(diskUsageStatus), Optional.ToNullable(memoryUsageStatus), Optional.ToNullable(processorUsageStatus), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToNullable(historicHealth), serializedAdditionalRawData);
+            return new SiteRecoveryProcessServerDetails(
+                id,
+                name,
+                biosId,
+                fabricObjectId,
+                fqdn,
+                ipAddresses ?? new ChangeTrackingList<IPAddress>(),
+                version,
+                lastHeartbeatUtc,
+                totalMemoryInBytes,
+                availableMemoryInBytes,
+                usedMemoryInBytes,
+                memoryUsagePercentage,
+                totalSpaceInBytes,
+                availableSpaceInBytes,
+                usedSpaceInBytes,
+                freeSpacePercentage,
+                throughputUploadPendingDataInBytes,
+                throughputInBytes,
+                processorUsagePercentage,
+                throughputStatus,
+                systemLoad,
+                systemLoadStatus,
+                diskUsageStatus,
+                memoryUsageStatus,
+                processorUsageStatus,
+                health,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                protectedItemCount,
+                historicHealth,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryProcessServerDetails>.Write(ModelReaderWriterOptions options)
@@ -534,7 +564,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServerDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServerDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -550,7 +580,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryProcessServerDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServerDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServerDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

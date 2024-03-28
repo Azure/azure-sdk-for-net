@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBareMetalMachineKeySetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in UserList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KeySetUser>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBareMetalMachineKeySetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<DateTimeOffset> expiration = default;
-            Optional<IList<IPAddress>> jumpHostsAllowed = default;
-            Optional<IList<KeySetUser>> userList = default;
+            IDictionary<string, string> tags = default;
+            DateTimeOffset? expiration = default;
+            IList<IPAddress> jumpHostsAllowed = default;
+            IList<KeySetUser> userList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<KeySetUser> array = new List<KeySetUser>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KeySetUser.DeserializeKeySetUser(item));
+                                array.Add(KeySetUser.DeserializeKeySetUser(item, options));
                             }
                             userList = array;
                             continue;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudBareMetalMachineKeySetPatch(Optional.ToDictionary(tags), Optional.ToNullable(expiration), Optional.ToList(jumpHostsAllowed), Optional.ToList(userList), serializedAdditionalRawData);
+            return new NetworkCloudBareMetalMachineKeySetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), expiration, jumpHostsAllowed ?? new ChangeTrackingList<IPAddress>(), userList ?? new ChangeTrackingList<KeySetUser>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBareMetalMachineKeySetPatch>.Write(ModelReaderWriterOptions options)
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeNetworkCloudBareMetalMachineKeySetPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

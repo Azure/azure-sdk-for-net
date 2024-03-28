@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentIntelligenceError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentIntelligenceError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +41,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentIntelligenceError>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror);
+                writer.WriteObjectValue<InnerError>(Innererror, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +73,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentIntelligenceError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentIntelligenceError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,9 +90,9 @@ namespace Azure.AI.DocumentIntelligence
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<IReadOnlyList<DocumentIntelligenceError>> details = default;
-            Optional<InnerError> innererror = default;
+            string target = default;
+            IReadOnlyList<DocumentIntelligenceError> details = default;
+            InnerError innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +121,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentIntelligenceError> array = new List<DocumentIntelligenceError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeDocumentIntelligenceError(item));
+                        array.Add(DeserializeDocumentIntelligenceError(item, options));
                     }
                     details = array;
                     continue;
@@ -133,7 +132,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    innererror = InnerError.DeserializeInnerError(property.Value);
+                    innererror = InnerError.DeserializeInnerError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -142,7 +141,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentIntelligenceError(code, message, target.Value, Optional.ToList(details), innererror.Value, serializedAdditionalRawData);
+            return new DocumentIntelligenceError(
+                code,
+                message,
+                target,
+                details ?? new ChangeTrackingList<DocumentIntelligenceError>(),
+                innererror,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentIntelligenceError>.Write(ModelReaderWriterOptions options)
@@ -154,7 +159,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentIntelligenceError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentIntelligenceError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +175,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentIntelligenceError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentIntelligenceError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentIntelligenceError)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -188,7 +193,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentIntelligenceError>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

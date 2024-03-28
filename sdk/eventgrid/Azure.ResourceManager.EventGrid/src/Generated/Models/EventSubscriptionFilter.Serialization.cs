@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in AdvancedFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AdvancedFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> subjectBeginsWith = default;
-            Optional<string> subjectEndsWith = default;
-            Optional<IList<string>> includedEventTypes = default;
-            Optional<bool> isSubjectCaseSensitive = default;
-            Optional<bool> enableAdvancedFilteringOnArrays = default;
-            Optional<IList<AdvancedFilter>> advancedFilters = default;
+            string subjectBeginsWith = default;
+            string subjectEndsWith = default;
+            IList<string> includedEventTypes = default;
+            bool? isSubjectCaseSensitive = default;
+            bool? enableAdvancedFilteringOnArrays = default;
+            IList<AdvancedFilter> advancedFilters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<AdvancedFilter> array = new List<AdvancedFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdvancedFilter.DeserializeAdvancedFilter(item));
+                        array.Add(AdvancedFilter.DeserializeAdvancedFilter(item, options));
                     }
                     advancedFilters = array;
                     continue;
@@ -176,7 +176,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventSubscriptionFilter(subjectBeginsWith.Value, subjectEndsWith.Value, Optional.ToList(includedEventTypes), Optional.ToNullable(isSubjectCaseSensitive), Optional.ToNullable(enableAdvancedFilteringOnArrays), Optional.ToList(advancedFilters), serializedAdditionalRawData);
+            return new EventSubscriptionFilter(
+                subjectBeginsWith,
+                subjectEndsWith,
+                includedEventTypes ?? new ChangeTrackingList<string>(),
+                isSubjectCaseSensitive,
+                enableAdvancedFilteringOnArrays,
+                advancedFilters ?? new ChangeTrackingList<AdvancedFilter>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventSubscriptionFilter>.Write(ModelReaderWriterOptions options)
@@ -188,7 +195,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +211,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeEventSubscriptionFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 if (SecretInfo != null)
                 {
                     writer.WritePropertyName("secretInfo"u8);
-                    writer.WriteObjectValue(SecretInfo);
+                    writer.WriteObjectValue<SecretBaseInfo>(SecretInfo, options);
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<SecretBaseInfo> secretInfo = default;
+            string name = default;
+            SecretBaseInfo secretInfo = default;
             LinkerAuthType authType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         secretInfo = null;
                         continue;
                     }
-                    secretInfo = SecretBaseInfo.DeserializeSecretBaseInfo(property.Value);
+                    secretInfo = SecretBaseInfo.DeserializeSecretBaseInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authType"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretAuthInfo(authType, serializedAdditionalRawData, name.Value, secretInfo.Value);
+            return new SecretAuthInfo(authType, serializedAdditionalRawData, name, secretInfo);
         }
 
         BinaryData IPersistableModel<SecretAuthInfo>.Write(ModelReaderWriterOptions options)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         return DeserializeSecretAuthInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

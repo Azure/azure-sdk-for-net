@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupRehydrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupRehydrationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupRehydrationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupRehydrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupRehydrationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupRehydrationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             string recoveryPointId = default;
-            Optional<BackupRehydrationPriority> rehydrationPriority = default;
+            BackupRehydrationPriority? rehydrationPriority = default;
             TimeSpan rehydrationRetentionDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupRehydrationContent(recoveryPointId, Optional.ToNullable(rehydrationPriority), rehydrationRetentionDuration, serializedAdditionalRawData);
+            return new BackupRehydrationContent(recoveryPointId, rehydrationPriority, rehydrationRetentionDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupRehydrationContent>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupRehydrationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupRehydrationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupRehydrationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupRehydrationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupRehydrationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

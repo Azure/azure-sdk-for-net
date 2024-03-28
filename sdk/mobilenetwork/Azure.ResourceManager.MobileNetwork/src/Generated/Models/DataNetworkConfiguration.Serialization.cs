@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("dataNetwork"u8);
             JsonSerializer.Serialize(writer, DataNetwork);
             writer.WritePropertyName("sessionAmbr"u8);
-            writer.WriteObjectValue(SessionAmbr);
+            writer.WriteObjectValue<Ambr>(SessionAmbr, options);
             if (Optional.IsDefined(FiveQi))
             {
                 writer.WritePropertyName("5qi"u8);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             WritableSubResource dataNetwork = default;
             Ambr sessionAmbr = default;
-            Optional<int> _5qi = default;
-            Optional<int> allocationAndRetentionPriorityLevel = default;
-            Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
-            Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
-            Optional<MobileNetworkPduSessionType> defaultSessionType = default;
-            Optional<IList<MobileNetworkPduSessionType>> additionalAllowedSessionTypes = default;
+            int? _5qi = default;
+            int? allocationAndRetentionPriorityLevel = default;
+            MobileNetworkPreemptionCapability? preemptionCapability = default;
+            MobileNetworkPreemptionVulnerability? preemptionVulnerability = default;
+            MobileNetworkPduSessionType? defaultSessionType = default;
+            IList<MobileNetworkPduSessionType> additionalAllowedSessionTypes = default;
             IList<WritableSubResource> allowedServices = default;
-            Optional<int> maximumNumberOfBufferedPackets = default;
+            int? maximumNumberOfBufferedPackets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 if (property.NameEquals("sessionAmbr"u8))
                 {
-                    sessionAmbr = Ambr.DeserializeAmbr(property.Value);
+                    sessionAmbr = Ambr.DeserializeAmbr(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("5qi"u8))
@@ -224,7 +224,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataNetworkConfiguration(dataNetwork, sessionAmbr, Optional.ToNullable(_5qi), Optional.ToNullable(allocationAndRetentionPriorityLevel), Optional.ToNullable(preemptionCapability), Optional.ToNullable(preemptionVulnerability), Optional.ToNullable(defaultSessionType), Optional.ToList(additionalAllowedSessionTypes), allowedServices, Optional.ToNullable(maximumNumberOfBufferedPackets), serializedAdditionalRawData);
+            return new DataNetworkConfiguration(
+                dataNetwork,
+                sessionAmbr,
+                _5qi,
+                allocationAndRetentionPriorityLevel,
+                preemptionCapability,
+                preemptionVulnerability,
+                defaultSessionType,
+                additionalAllowedSessionTypes ?? new ChangeTrackingList<MobileNetworkPduSessionType>(),
+                allowedServices,
+                maximumNumberOfBufferedPackets,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataNetworkConfiguration>.Write(ModelReaderWriterOptions options)
@@ -236,7 +247,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +263,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeDataNetworkConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

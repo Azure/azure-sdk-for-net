@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> managedResources = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<DateTimeOffset> lastModified = default;
+            IReadOnlyList<string> managedResources = default;
+            DateTimeOffset? timeCreated = default;
+            DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentStatus(Optional.ToNullable(timeCreated), Optional.ToNullable(lastModified), serializedAdditionalRawData, Optional.ToList(managedResources));
+            return new AssignmentStatus(timeCreated, lastModified, serializedAdditionalRawData, managedResources ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<AssignmentStatus>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeAssignmentStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

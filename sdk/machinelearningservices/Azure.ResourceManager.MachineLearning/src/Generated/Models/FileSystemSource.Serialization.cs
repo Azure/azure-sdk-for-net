@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileSystemSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileSystemSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileSystemSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileSystemSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<string> connection = default;
+            string path = default;
+            string connection = default;
             DataImportSourceType sourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileSystemSource(connection.Value, sourceType, serializedAdditionalRawData, path.Value);
+            return new FileSystemSource(connection, sourceType, serializedAdditionalRawData, path);
         }
 
         BinaryData IPersistableModel<FileSystemSource>.Write(ModelReaderWriterOptions options)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FileSystemSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeFileSystemSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileSystemSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemSource)} does not support reading '{options.Format}' format.");
             }
         }
 

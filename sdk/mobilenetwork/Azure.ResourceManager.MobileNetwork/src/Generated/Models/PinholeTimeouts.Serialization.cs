@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<PinholeTimeouts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<PinholeTimeouts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<int> tcp = default;
-            Optional<int> udp = default;
-            Optional<int> icmp = default;
+            int? tcp = default;
+            int? udp = default;
+            int? icmp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PinholeTimeouts(Optional.ToNullable(tcp), Optional.ToNullable(udp), Optional.ToNullable(icmp), serializedAdditionalRawData);
+            return new PinholeTimeouts(tcp, udp, icmp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PinholeTimeouts>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializePinholeTimeouts(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support reading '{options.Format}' format.");
             }
         }
 

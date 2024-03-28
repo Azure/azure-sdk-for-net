@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,18 +135,18 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<string> vmSize = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<string> name = default;
-            Optional<HybridContainerServiceOSType> osType = default;
-            Optional<HybridContainerServiceOSSku> ossku = default;
-            Optional<IDictionary<string, string>> nodeLabels = default;
-            Optional<IList<string>> nodeTaints = default;
-            Optional<int> maxCount = default;
-            Optional<int> minCount = default;
-            Optional<bool> enableAutoScaling = default;
-            Optional<int> maxPods = default;
+            int? count = default;
+            string vmSize = default;
+            string kubernetesVersion = default;
+            string name = default;
+            HybridContainerServiceOSType? osType = default;
+            HybridContainerServiceOSSku? ossku = default;
+            IDictionary<string, string> nodeLabels = default;
+            IList<string> nodeTaints = default;
+            int? maxCount = default;
+            int? minCount = default;
+            bool? enableAutoScaling = default;
+            int? maxPods = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceNamedAgentPoolProfile(Optional.ToNullable(osType), Optional.ToNullable(ossku), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(maxPods), serializedAdditionalRawData, Optional.ToNullable(count), vmSize.Value, kubernetesVersion.Value, name.Value);
+            return new HybridContainerServiceNamedAgentPoolProfile(
+                osType,
+                ossku,
+                nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                nodeTaints ?? new ChangeTrackingList<string>(),
+                maxCount,
+                minCount,
+                enableAutoScaling,
+                maxPods,
+                serializedAdditionalRawData,
+                count,
+                vmSize,
+                kubernetesVersion,
+                name);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>.Write(ModelReaderWriterOptions options)
@@ -275,7 +288,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -291,7 +304,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeHybridContainerServiceNamedAgentPoolProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

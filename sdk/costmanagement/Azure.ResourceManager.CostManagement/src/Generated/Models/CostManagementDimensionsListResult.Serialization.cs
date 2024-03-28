@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<CostManagementDimensionsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostManagementDimensionsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementDimensionsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CostManagementDimension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<CostManagementDimensionsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostManagementDimensionsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementDimensionsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CostManagementDimension>> value = default;
+            IReadOnlyList<CostManagementDimension> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<CostManagementDimension> array = new List<CostManagementDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CostManagementDimension.DeserializeCostManagementDimension(item));
+                        array.Add(CostManagementDimension.DeserializeCostManagementDimension(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementDimensionsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CostManagementDimensionsListResult(value ?? new ChangeTrackingList<CostManagementDimension>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementDimensionsListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CostManagementDimensionsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementDimensionsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeCostManagementDimensionsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CostManagementDimensionsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementDimensionsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

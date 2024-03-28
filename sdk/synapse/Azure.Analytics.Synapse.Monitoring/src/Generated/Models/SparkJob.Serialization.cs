@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
@@ -20,21 +19,21 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             {
                 return null;
             }
-            Optional<string> state = default;
-            Optional<string> name = default;
-            Optional<string> submitter = default;
-            Optional<string> compute = default;
-            Optional<string> sparkApplicationId = default;
-            Optional<string> livyId = default;
-            Optional<IReadOnlyList<string>> timing = default;
-            Optional<string> sparkJobDefinition = default;
-            Optional<IReadOnlyList<SparkJob>> pipeline = default;
-            Optional<string> jobType = default;
-            Optional<DateTimeOffset?> submitTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<string> queuedDuration = default;
-            Optional<string> runningDuration = default;
-            Optional<string> totalDuration = default;
+            string state = default;
+            string name = default;
+            string submitter = default;
+            string compute = default;
+            string sparkApplicationId = default;
+            string livyId = default;
+            IReadOnlyList<string> timing = default;
+            string sparkJobDefinition = default;
+            IReadOnlyList<SparkJob> pipeline = default;
+            string jobType = default;
+            DateTimeOffset? submitTime = default;
+            DateTimeOffset? endTime = default;
+            string queuedDuration = default;
+            string runningDuration = default;
+            string totalDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -146,7 +145,22 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     continue;
                 }
             }
-            return new SparkJob(state.Value, name.Value, submitter.Value, compute.Value, sparkApplicationId.Value, livyId.Value, Optional.ToList(timing), sparkJobDefinition.Value, Optional.ToList(pipeline), jobType.Value, Optional.ToNullable(submitTime), Optional.ToNullable(endTime), queuedDuration.Value, runningDuration.Value, totalDuration.Value);
+            return new SparkJob(
+                state,
+                name,
+                submitter,
+                compute,
+                sparkApplicationId,
+                livyId,
+                timing ?? new ChangeTrackingList<string>(),
+                sparkJobDefinition,
+                pipeline ?? new ChangeTrackingList<SparkJob>(),
+                jobType,
+                submitTime,
+                endTime,
+                queuedDuration,
+                runningDuration,
+                totalDuration);
         }
     }
 }

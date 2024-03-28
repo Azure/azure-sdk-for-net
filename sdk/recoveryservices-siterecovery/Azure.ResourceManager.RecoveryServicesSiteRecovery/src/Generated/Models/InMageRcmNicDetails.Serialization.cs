@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmNicDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmNicDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,19 +130,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> nicId = default;
-            Optional<string> isPrimaryNic = default;
-            Optional<string> isSelectedForFailover = default;
-            Optional<IPAddress> sourceIPAddress = default;
-            Optional<SiteRecoveryEthernetAddressType> sourceIPAddressType = default;
-            Optional<ResourceIdentifier> sourceNetworkId = default;
-            Optional<string> sourceSubnetName = default;
-            Optional<IPAddress> targetIPAddress = default;
-            Optional<SiteRecoveryEthernetAddressType> targetIPAddressType = default;
-            Optional<string> targetSubnetName = default;
-            Optional<string> testSubnetName = default;
-            Optional<IPAddress> testIPAddress = default;
-            Optional<SiteRecoveryEthernetAddressType> testIPAddressType = default;
+            string nicId = default;
+            string isPrimaryNic = default;
+            string isSelectedForFailover = default;
+            IPAddress sourceIPAddress = default;
+            SiteRecoveryEthernetAddressType? sourceIPAddressType = default;
+            ResourceIdentifier sourceNetworkId = default;
+            string sourceSubnetName = default;
+            IPAddress targetIPAddress = default;
+            SiteRecoveryEthernetAddressType? targetIPAddressType = default;
+            string targetSubnetName = default;
+            string testSubnetName = default;
+            IPAddress testIPAddress = default;
+            SiteRecoveryEthernetAddressType? testIPAddressType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,7 +246,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmNicDetails(nicId.Value, isPrimaryNic.Value, isSelectedForFailover.Value, sourceIPAddress.Value, Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, sourceSubnetName.Value, targetIPAddress.Value, Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testSubnetName.Value, testIPAddress.Value, Optional.ToNullable(testIPAddressType), serializedAdditionalRawData);
+            return new InMageRcmNicDetails(
+                nicId,
+                isPrimaryNic,
+                isSelectedForFailover,
+                sourceIPAddress,
+                sourceIPAddressType,
+                sourceNetworkId,
+                sourceSubnetName,
+                targetIPAddress,
+                targetIPAddressType,
+                targetSubnetName,
+                testSubnetName,
+                testIPAddress,
+                testIPAddressType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmNicDetails>.Write(ModelReaderWriterOptions options)
@@ -258,7 +272,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -274,7 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmNicDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

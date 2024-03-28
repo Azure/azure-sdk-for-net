@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableLabServicesSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<AvailableLabServicesSkuCapacity>(Capacity, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableLabServicesSkuCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableLabServicesSkuCost>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableLabServicesSkuRestrictions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableLabServicesSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,16 +134,16 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<AvailableLabServicesSkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<AvailableLabServicesSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<AvailableLabServicesSkuCapability>> capabilities = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<AvailableLabServicesSkuCost>> costs = default;
-            Optional<IReadOnlyList<AvailableLabServicesSkuRestrictions>> restrictions = default;
+            string resourceType = default;
+            string name = default;
+            AvailableLabServicesSkuTier? tier = default;
+            string size = default;
+            string family = default;
+            AvailableLabServicesSkuCapacity capacity = default;
+            IReadOnlyList<AvailableLabServicesSkuCapability> capabilities = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<AvailableLabServicesSkuCost> costs = default;
+            IReadOnlyList<AvailableLabServicesSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    capacity = AvailableLabServicesSkuCapacity.DeserializeAvailableLabServicesSkuCapacity(property.Value);
+                    capacity = AvailableLabServicesSkuCapacity.DeserializeAvailableLabServicesSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capabilities"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<AvailableLabServicesSkuCapability> array = new List<AvailableLabServicesSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSkuCapability.DeserializeAvailableLabServicesSkuCapability(item));
+                        array.Add(AvailableLabServicesSkuCapability.DeserializeAvailableLabServicesSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<AvailableLabServicesSkuCost> array = new List<AvailableLabServicesSkuCost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSkuCost.DeserializeAvailableLabServicesSkuCost(item));
+                        array.Add(AvailableLabServicesSkuCost.DeserializeAvailableLabServicesSkuCost(item, options));
                     }
                     costs = array;
                     continue;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<AvailableLabServicesSkuRestrictions> array = new List<AvailableLabServicesSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSkuRestrictions.DeserializeAvailableLabServicesSkuRestrictions(item));
+                        array.Add(AvailableLabServicesSkuRestrictions.DeserializeAvailableLabServicesSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -248,7 +248,18 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableLabServicesSku(resourceType.Value, name.Value, Optional.ToNullable(tier), size.Value, family.Value, capacity.Value, Optional.ToList(capabilities), Optional.ToList(locations), Optional.ToList(costs), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new AvailableLabServicesSku(
+                resourceType,
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                capabilities ?? new ChangeTrackingList<AvailableLabServicesSkuCapability>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                costs ?? new ChangeTrackingList<AvailableLabServicesSkuCost>(),
+                restrictions ?? new ChangeTrackingList<AvailableLabServicesSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableLabServicesSku>.Write(ModelReaderWriterOptions options)
@@ -260,7 +271,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -276,7 +287,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeAvailableLabServicesSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableLabServicesSku)} does not support reading '{options.Format}' format.");
             }
         }
 

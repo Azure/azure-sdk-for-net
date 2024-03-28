@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action);
+            writer.WriteObjectValue<MachineLearningScheduleAction>(Action, options);
             if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger);
+            writer.WriteObjectValue<MachineLearningTriggerBase>(Trigger, options);
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,20 +139,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningScheduleAction action = default;
-            Optional<string> displayName = default;
-            Optional<bool> isEnabled = default;
-            Optional<MachineLearningScheduleProvisioningStatus> provisioningState = default;
+            string displayName = default;
+            bool? isEnabled = default;
+            MachineLearningScheduleProvisioningStatus? provisioningState = default;
             MachineLearningTriggerBase trigger = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string description = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
                 {
-                    action = MachineLearningScheduleAction.DeserializeMachineLearningScheduleAction(property.Value);
+                    action = MachineLearningScheduleAction.DeserializeMachineLearningScheduleAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trigger"u8))
                 {
-                    trigger = MachineLearningTriggerBase.DeserializeMachineLearningTriggerBase(property.Value);
+                    trigger = MachineLearningTriggerBase.DeserializeMachineLearningTriggerBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -234,7 +234,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningScheduleProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, action, displayName.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(provisioningState), trigger);
+            return new MachineLearningScheduleProperties(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                action,
+                displayName,
+                isEnabled,
+                provisioningState,
+                trigger);
         }
 
         BinaryData IPersistableModel<MachineLearningScheduleProperties>.Write(ModelReaderWriterOptions options)
@@ -246,7 +255,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -262,7 +271,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningScheduleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningScheduleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

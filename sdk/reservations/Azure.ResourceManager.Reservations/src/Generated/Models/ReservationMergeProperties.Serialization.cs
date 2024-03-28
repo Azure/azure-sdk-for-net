@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationMergeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationMergeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> mergeDestination = default;
-            Optional<IReadOnlyList<string>> mergeSources = default;
+            string mergeDestination = default;
+            IReadOnlyList<string> mergeSources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationMergeProperties(mergeDestination.Value, Optional.ToList(mergeSources), serializedAdditionalRawData);
+            return new ReservationMergeProperties(mergeDestination, mergeSources ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationMergeProperties>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationMergeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

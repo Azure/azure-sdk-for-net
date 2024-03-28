@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrinoCoordinator>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrinoCoordinator)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrinoCoordinator)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrinoCoordinator>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrinoCoordinator)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrinoCoordinator)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<bool> highAvailabilityEnabled = default;
-            Optional<bool> enable = default;
-            Optional<int> port = default;
-            Optional<bool> suspend = default;
+            bool? highAvailabilityEnabled = default;
+            bool? enable = default;
+            int? port = default;
+            bool? suspend = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrinoCoordinator(Optional.ToNullable(highAvailabilityEnabled), Optional.ToNullable(enable), Optional.ToNullable(port), Optional.ToNullable(suspend), serializedAdditionalRawData);
+            return new TrinoCoordinator(highAvailabilityEnabled, enable, port, suspend, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoCoordinator>.Write(ModelReaderWriterOptions options)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrinoCoordinator)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrinoCoordinator)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeTrinoCoordinator(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrinoCoordinator)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrinoCoordinator)} does not support reading '{options.Format}' format.");
             }
         }
 

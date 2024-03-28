@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabPlanPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabPlanPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabPlanPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(DefaultConnectionProfile))
             {
                 writer.WritePropertyName("defaultConnectionProfile"u8);
-                writer.WriteObjectValue(DefaultConnectionProfile);
+                writer.WriteObjectValue<LabConnectionProfile>(DefaultConnectionProfile, options);
             }
             if (Optional.IsDefined(DefaultAutoShutdownProfile))
             {
                 writer.WritePropertyName("defaultAutoShutdownProfile"u8);
-                writer.WriteObjectValue(DefaultAutoShutdownProfile);
+                writer.WriteObjectValue<LabAutoShutdownProfile>(DefaultAutoShutdownProfile, options);
             }
             if (Optional.IsDefined(DefaultNetworkProfile))
             {
                 writer.WritePropertyName("defaultNetworkProfile"u8);
-                writer.WriteObjectValue(DefaultNetworkProfile);
+                writer.WriteObjectValue<LabPlanNetworkProfile>(DefaultNetworkProfile, options);
             }
             if (Optional.IsCollectionDefined(AllowedRegions))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(SupportInfo))
             {
                 writer.WritePropertyName("supportInfo"u8);
-                writer.WriteObjectValue(SupportInfo);
+                writer.WriteObjectValue<LabPlanSupportInfo>(SupportInfo, options);
             }
             if (Optional.IsDefined(LinkedLmsInstance))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabPlanPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabPlanPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabPlanPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,15 +123,15 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IList<string>> tags = default;
-            Optional<LabConnectionProfile> defaultConnectionProfile = default;
-            Optional<LabAutoShutdownProfile> defaultAutoShutdownProfile = default;
-            Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
-            Optional<IList<AzureLocation>> allowedRegions = default;
-            Optional<ResourceIdentifier> sharedGalleryId = default;
-            Optional<LabPlanSupportInfo> supportInfo = default;
-            Optional<Uri> linkedLmsInstance = default;
+            ManagedServiceIdentity identity = default;
+            IList<string> tags = default;
+            LabConnectionProfile defaultConnectionProfile = default;
+            LabAutoShutdownProfile defaultAutoShutdownProfile = default;
+            LabPlanNetworkProfile defaultNetworkProfile = default;
+            IList<AzureLocation> allowedRegions = default;
+            ResourceIdentifier sharedGalleryId = default;
+            LabPlanSupportInfo supportInfo = default;
+            Uri linkedLmsInstance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultConnectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value);
+                            defaultConnectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultAutoShutdownProfile"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultAutoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value);
+                            defaultAutoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultNetworkProfile"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultNetworkProfile = LabPlanNetworkProfile.DeserializeLabPlanNetworkProfile(property0.Value);
+                            defaultNetworkProfile = LabPlanNetworkProfile.DeserializeLabPlanNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("allowedRegions"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            supportInfo = LabPlanSupportInfo.DeserializeLabPlanSupportInfo(property0.Value);
+                            supportInfo = LabPlanSupportInfo.DeserializeLabPlanSupportInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("linkedLmsInstance"u8))
@@ -245,7 +245,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabPlanPatch(Optional.ToList(tags), serializedAdditionalRawData, identity, defaultConnectionProfile.Value, defaultAutoShutdownProfile.Value, defaultNetworkProfile.Value, Optional.ToList(allowedRegions), sharedGalleryId.Value, supportInfo.Value, linkedLmsInstance.Value);
+            return new LabPlanPatch(
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                identity,
+                defaultConnectionProfile,
+                defaultAutoShutdownProfile,
+                defaultNetworkProfile,
+                allowedRegions ?? new ChangeTrackingList<AzureLocation>(),
+                sharedGalleryId,
+                supportInfo,
+                linkedLmsInstance);
         }
 
         BinaryData IPersistableModel<LabPlanPatch>.Write(ModelReaderWriterOptions options)
@@ -257,7 +267,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabPlanPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabPlanPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -273,7 +283,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabPlanPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabPlanPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabPlanPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

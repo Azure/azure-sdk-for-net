@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<HelmReleaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (HelmChartRef != null)
                 {
                     writer.WritePropertyName("helmChartRef"u8);
-                    writer.WriteObjectValue(HelmChartRef);
+                    writer.WriteObjectValue<KubernetesObjectReference>(HelmChartRef, options);
                 }
                 else
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<HelmReleaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<long?> lastRevisionApplied = default;
-            Optional<KubernetesObjectReference> helmChartRef = default;
-            Optional<long?> failureCount = default;
-            Optional<long?> installFailureCount = default;
-            Optional<long?> upgradeFailureCount = default;
+            long? lastRevisionApplied = default;
+            KubernetesObjectReference helmChartRef = default;
+            long? failureCount = default;
+            long? installFailureCount = default;
+            long? upgradeFailureCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         helmChartRef = null;
                         continue;
                     }
-                    helmChartRef = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value);
+                    helmChartRef = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("failureCount"u8))
@@ -189,7 +189,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HelmReleaseProperties(Optional.ToNullable(lastRevisionApplied), helmChartRef.Value, Optional.ToNullable(failureCount), Optional.ToNullable(installFailureCount), Optional.ToNullable(upgradeFailureCount), serializedAdditionalRawData);
+            return new HelmReleaseProperties(
+                lastRevisionApplied,
+                helmChartRef,
+                failureCount,
+                installFailureCount,
+                upgradeFailureCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HelmReleaseProperties>.Write(ModelReaderWriterOptions options)
@@ -201,7 +207,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,7 +223,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeHelmReleaseProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

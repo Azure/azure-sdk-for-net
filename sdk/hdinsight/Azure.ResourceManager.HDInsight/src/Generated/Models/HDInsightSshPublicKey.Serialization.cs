@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightSshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightSshPublicKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightSshPublicKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightSshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightSshPublicKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightSshPublicKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> certificateData = default;
+            string certificateData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightSshPublicKey(certificateData.Value, serializedAdditionalRawData);
+            return new HDInsightSshPublicKey(certificateData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightSshPublicKey>.Write(ModelReaderWriterOptions options)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightSshPublicKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightSshPublicKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightSshPublicKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightSshPublicKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightSshPublicKey)} does not support reading '{options.Format}' format.");
             }
         }
 

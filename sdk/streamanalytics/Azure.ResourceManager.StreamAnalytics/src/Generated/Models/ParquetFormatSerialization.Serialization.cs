@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParquetFormatSerialization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParquetFormatSerialization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<BinaryData> properties = default;
+            BinaryData properties = default;
             EventSerializationType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParquetFormatSerialization(type, serializedAdditionalRawData, properties.Value);
+            return new ParquetFormatSerialization(type, serializedAdditionalRawData, properties);
         }
 
         BinaryData IPersistableModel<ParquetFormatSerialization>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeParquetFormatSerialization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support reading '{options.Format}' format.");
             }
         }
 

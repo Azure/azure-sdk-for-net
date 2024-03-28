@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeMountTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeMountTarget)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeMountTarget)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeMountTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeMountTarget)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeMountTarget)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<Guid> mountTargetId = default;
+            Guid? mountTargetId = default;
             Guid fileSystemId = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> smbServerFqdn = default;
+            IPAddress ipAddress = default;
+            string smbServerFqdn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeMountTarget(Optional.ToNullable(mountTargetId), fileSystemId, ipAddress.Value, smbServerFqdn.Value, serializedAdditionalRawData);
+            return new NetAppVolumeMountTarget(mountTargetId, fileSystemId, ipAddress, smbServerFqdn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeMountTarget>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeMountTarget)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeMountTarget)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumeMountTarget(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeMountTarget)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeMountTarget)} does not support reading '{options.Format}' format.");
             }
         }
 

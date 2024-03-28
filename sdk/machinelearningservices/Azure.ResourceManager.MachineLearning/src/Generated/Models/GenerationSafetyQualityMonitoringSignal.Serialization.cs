@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenerationSafetyQualityMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerationSafetyQualityMonitoringSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerationSafetyQualityMonitoringSignal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<GenerationSafetyQualityMetricThreshold>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ProductionData))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in ProductionData)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<MonitoringInputDataBase>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenerationSafetyQualityMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerationSafetyQualityMonitoringSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerationSafetyQualityMonitoringSignal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IList<GenerationSafetyQualityMetricThreshold> metricThresholds = default;
-            Optional<IList<MonitoringInputDataBase>> productionData = default;
+            IList<MonitoringInputDataBase> productionData = default;
             double samplingRate = default;
-            Optional<string> workspaceConnectionId = default;
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            string workspaceConnectionId = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<GenerationSafetyQualityMetricThreshold> array = new List<GenerationSafetyQualityMetricThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GenerationSafetyQualityMetricThreshold.DeserializeGenerationSafetyQualityMetricThreshold(item));
+                        array.Add(GenerationSafetyQualityMetricThreshold.DeserializeGenerationSafetyQualityMetricThreshold(item, options));
                     }
                     metricThresholds = array;
                     continue;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MonitoringInputDataBase> array = new List<MonitoringInputDataBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item));
+                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item, options));
                     }
                     productionData = array;
                     continue;
@@ -213,7 +213,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenerationSafetyQualityMonitoringSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, metricThresholds, Optional.ToList(productionData), samplingRate, workspaceConnectionId.Value);
+            return new GenerationSafetyQualityMonitoringSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThresholds,
+                productionData ?? new ChangeTrackingList<MonitoringInputDataBase>(),
+                samplingRate,
+                workspaceConnectionId);
         }
 
         BinaryData IPersistableModel<GenerationSafetyQualityMonitoringSignal>.Write(ModelReaderWriterOptions options)
@@ -225,7 +233,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GenerationSafetyQualityMonitoringSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerationSafetyQualityMonitoringSignal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -241,7 +249,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeGenerationSafetyQualityMonitoringSignal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenerationSafetyQualityMonitoringSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerationSafetyQualityMonitoringSignal)} does not support reading '{options.Format}' format.");
             }
         }
 

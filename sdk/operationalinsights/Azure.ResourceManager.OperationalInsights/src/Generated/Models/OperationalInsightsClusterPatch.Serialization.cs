@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsClusterPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<OperationalInsightsClusterSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue<OperationalInsightsKeyVaultProperties>(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(BillingType))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsClusterPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<OperationalInsightsClusterSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<OperationalInsightsKeyVaultProperties> keyVaultProperties = default;
-            Optional<OperationalInsightsBillingType> billingType = default;
+            ManagedServiceIdentity identity = default;
+            OperationalInsightsClusterSku sku = default;
+            IDictionary<string, string> tags = default;
+            OperationalInsightsKeyVaultProperties keyVaultProperties = default;
+            OperationalInsightsBillingType? billingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    sku = OperationalInsightsClusterSku.DeserializeOperationalInsightsClusterSku(property.Value);
+                    sku = OperationalInsightsClusterSku.DeserializeOperationalInsightsClusterSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            keyVaultProperties = OperationalInsightsKeyVaultProperties.DeserializeOperationalInsightsKeyVaultProperties(property0.Value);
+                            keyVaultProperties = OperationalInsightsKeyVaultProperties.DeserializeOperationalInsightsKeyVaultProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("billingType"u8))
@@ -176,7 +176,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsClusterPatch(identity, sku.Value, Optional.ToDictionary(tags), keyVaultProperties.Value, Optional.ToNullable(billingType), serializedAdditionalRawData);
+            return new OperationalInsightsClusterPatch(
+                identity,
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                keyVaultProperties,
+                billingType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsClusterPatch>.Write(ModelReaderWriterOptions options)
@@ -188,7 +194,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsClusterPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +210,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsClusterPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsClusterPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

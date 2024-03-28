@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionRetentionRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionRetentionRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionRetentionRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartArray();
             foreach (var item in Lifecycles)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SourceLifeCycle>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("name"u8);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionRetentionRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionRetentionRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionRetentionRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<bool> isDefault = default;
+            bool? isDefault = default;
             IList<SourceLifeCycle> lifecycles = default;
             string name = default;
             string objectType = default;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<SourceLifeCycle> array = new List<SourceLifeCycle>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceLifeCycle.DeserializeSourceLifeCycle(item));
+                        array.Add(SourceLifeCycle.DeserializeSourceLifeCycle(item, options));
                     }
                     lifecycles = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionRetentionRule(name, objectType, serializedAdditionalRawData, Optional.ToNullable(isDefault), lifecycles);
+            return new DataProtectionRetentionRule(name, objectType, serializedAdditionalRawData, isDefault, lifecycles);
         }
 
         BinaryData IPersistableModel<DataProtectionRetentionRule>.Write(ModelReaderWriterOptions options)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionRetentionRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionRetentionRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionRetentionRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionRetentionRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionRetentionRule)} does not support reading '{options.Format}' format.");
             }
         }
 

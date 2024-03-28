@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkBgpCommunities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkBgpCommunities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkBgpCommunities)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkBgpCommunities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkBgpCommunities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkBgpCommunities)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string virtualNetworkCommunity = default;
-            Optional<string> regionalCommunity = default;
+            string regionalCommunity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkBgpCommunities(virtualNetworkCommunity, regionalCommunity.Value, serializedAdditionalRawData);
+            return new VirtualNetworkBgpCommunities(virtualNetworkCommunity, regionalCommunity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkBgpCommunities>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkBgpCommunities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkBgpCommunities)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVirtualNetworkBgpCommunities(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkBgpCommunities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkBgpCommunities)} does not support reading '{options.Format}' format.");
             }
         }
 

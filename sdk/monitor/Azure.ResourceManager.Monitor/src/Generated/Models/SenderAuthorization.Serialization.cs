@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<SenderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SenderAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SenderAuthorization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<SenderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SenderAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SenderAuthorization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> action = default;
-            Optional<string> role = default;
-            Optional<string> scope = default;
+            string action = default;
+            string role = default;
+            string scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SenderAuthorization(action.Value, role.Value, scope.Value, serializedAdditionalRawData);
+            return new SenderAuthorization(action, role, scope, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SenderAuthorization>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SenderAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SenderAuthorization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeSenderAuthorization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SenderAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SenderAuthorization)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustomizationUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustomizationUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustomizationUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustomizationUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustomizationUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustomizationUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,13 +153,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<IList<string>> dependsOn = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<long?> retryIntervalInSeconds = default;
-            Optional<bool?> prune = default;
-            Optional<bool?> force = default;
+            string path = default;
+            IList<string> dependsOn = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            long? retryIntervalInSeconds = default;
+            bool? prune = default;
+            bool? force = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustomizationUpdateContent(path.Value, Optional.ToList(dependsOn), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(prune), Optional.ToNullable(force), serializedAdditionalRawData);
+            return new KustomizationUpdateContent(
+                path,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                retryIntervalInSeconds,
+                prune,
+                force,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustomizationUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -257,7 +265,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustomizationUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustomizationUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -273,7 +281,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKustomizationUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustomizationUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustomizationUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

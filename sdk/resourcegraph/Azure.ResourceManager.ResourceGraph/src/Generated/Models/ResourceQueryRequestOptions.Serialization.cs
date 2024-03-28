@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceQueryRequestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceQueryRequestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 return null;
             }
-            Optional<string> skipToken = default;
-            Optional<int> top = default;
-            Optional<int> skip = default;
-            Optional<ResultFormat> resultFormat = default;
-            Optional<bool> allowPartialScopes = default;
-            Optional<AuthorizationScopeFilter> authorizationScopeFilter = default;
+            string skipToken = default;
+            int? top = default;
+            int? skip = default;
+            ResultFormat? resultFormat = default;
+            bool? allowPartialScopes = default;
+            AuthorizationScopeFilter? authorizationScopeFilter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceQueryRequestOptions(skipToken.Value, Optional.ToNullable(top), Optional.ToNullable(skip), Optional.ToNullable(resultFormat), Optional.ToNullable(allowPartialScopes), Optional.ToNullable(authorizationScopeFilter), serializedAdditionalRawData);
+            return new ResourceQueryRequestOptions(
+                skipToken,
+                top,
+                skip,
+                resultFormat,
+                allowPartialScopes,
+                authorizationScopeFilter,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceQueryRequestOptions>.Write(ModelReaderWriterOptions options)
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +195,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                         return DeserializeResourceQueryRequestOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

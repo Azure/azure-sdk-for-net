@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionAliasListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionAliasListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SubscriptionAliasData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionAliasListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionAliasListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SubscriptionAliasData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SubscriptionAliasData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     List<SubscriptionAliasData> array = new List<SubscriptionAliasData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionAliasData.DeserializeSubscriptionAliasData(item));
+                        array.Add(SubscriptionAliasData.DeserializeSubscriptionAliasData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SubscriptionAliasListResult(value ?? new ChangeTrackingList<SubscriptionAliasData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionAliasListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionAliasListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         return DeserializeSubscriptionAliasListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionAliasListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionAliasListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

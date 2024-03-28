@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserCreatedAcrAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserCreatedAcrAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserCreatedAcrAccount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ArmResourceIdentifier != null)
                 {
                     writer.WritePropertyName("armResourceId"u8);
-                    writer.WriteObjectValue(ArmResourceIdentifier);
+                    writer.WriteObjectValue<ArmResourceId>(ArmResourceIdentifier, options);
                 }
                 else
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserCreatedAcrAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserCreatedAcrAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserCreatedAcrAccount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ArmResourceId> armResourceId = default;
+            ArmResourceId armResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         armResourceId = null;
                         continue;
                     }
-                    armResourceId = Models.ArmResourceId.DeserializeArmResourceId(property.Value);
+                    armResourceId = Models.ArmResourceId.DeserializeArmResourceId(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserCreatedAcrAccount(armResourceId.Value, serializedAdditionalRawData);
+            return new UserCreatedAcrAccount(armResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserCreatedAcrAccount>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserCreatedAcrAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserCreatedAcrAccount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeUserCreatedAcrAccount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserCreatedAcrAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserCreatedAcrAccount)} does not support reading '{options.Format}' format.");
             }
         }
 

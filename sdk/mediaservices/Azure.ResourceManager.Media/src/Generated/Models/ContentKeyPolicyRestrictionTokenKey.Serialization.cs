@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyRestrictionTokenKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyRestrictionTokenKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyRestrictionTokenKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyRestrictionTokenKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyRestrictionTokenKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyRestrictionTokenKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.ContentKeyPolicyRsaTokenKey": return ContentKeyPolicyRsaTokenKey.DeserializeContentKeyPolicyRsaTokenKey(element);
-                    case "#Microsoft.Media.ContentKeyPolicySymmetricTokenKey": return ContentKeyPolicySymmetricTokenKey.DeserializeContentKeyPolicySymmetricTokenKey(element);
-                    case "#Microsoft.Media.ContentKeyPolicyX509CertificateTokenKey": return ContentKeyPolicyX509CertificateTokenKey.DeserializeContentKeyPolicyX509CertificateTokenKey(element);
+                    case "#Microsoft.Media.ContentKeyPolicyRsaTokenKey": return ContentKeyPolicyRsaTokenKey.DeserializeContentKeyPolicyRsaTokenKey(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicySymmetricTokenKey": return ContentKeyPolicySymmetricTokenKey.DeserializeContentKeyPolicySymmetricTokenKey(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyX509CertificateTokenKey": return ContentKeyPolicyX509CertificateTokenKey.DeserializeContentKeyPolicyX509CertificateTokenKey(element, options);
                 }
             }
-            return UnknownContentKeyPolicyRestrictionTokenKey.DeserializeUnknownContentKeyPolicyRestrictionTokenKey(element);
+            return UnknownContentKeyPolicyRestrictionTokenKey.DeserializeUnknownContentKeyPolicyRestrictionTokenKey(element, options);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyRestrictionTokenKey>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyRestrictionTokenKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyRestrictionTokenKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeContentKeyPolicyRestrictionTokenKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyRestrictionTokenKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyRestrictionTokenKey)} does not support reading '{options.Format}' format.");
             }
         }
 

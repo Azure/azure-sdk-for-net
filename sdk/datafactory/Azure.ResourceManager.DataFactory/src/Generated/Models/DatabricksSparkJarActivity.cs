@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -50,6 +49,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = parameters;
             Libraries = libraries;
             ActivityType = activityType ?? "DatabricksSparkJar";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkJarActivity"/> for deserialization. </summary>
+        internal DatabricksSparkJarActivity()
+        {
         }
 
         /// <summary> The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library. Type: string (or Expression with resultType string). </summary>

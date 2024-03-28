@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KpiResourceHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceHealthDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceHealthDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KpiResourceHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ResourceHealthStatus> resourceHealthStatus = default;
-            Optional<IList<ResourceHealthDetails>> resourceHealthDetails = default;
+            ResourceHealthStatus? resourceHealthStatus = default;
+            IList<ResourceHealthDetails> resourceHealthDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<ResourceHealthDetails> array = new List<ResourceHealthDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ResourceHealthDetails.DeserializeResourceHealthDetails(item));
+                        array.Add(Models.ResourceHealthDetails.DeserializeResourceHealthDetails(item, options));
                     }
                     resourceHealthDetails = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiResourceHealthDetails(Optional.ToNullable(resourceHealthStatus), Optional.ToList(resourceHealthDetails), serializedAdditionalRawData);
+            return new KpiResourceHealthDetails(resourceHealthStatus, resourceHealthDetails ?? new ChangeTrackingList<ResourceHealthDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiResourceHealthDetails>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeKpiResourceHealthDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

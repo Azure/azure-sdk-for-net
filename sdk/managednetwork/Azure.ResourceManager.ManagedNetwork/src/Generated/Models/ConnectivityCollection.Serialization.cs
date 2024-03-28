@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetwork;
 
 namespace Azure.ResourceManager.ManagedNetwork.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityCollection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedNetworkGroupData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Peerings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedNetworkPeeringPolicyData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityCollection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,8 +84,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedNetworkGroupData>> groups = default;
-            Optional<IReadOnlyList<ManagedNetworkPeeringPolicyData>> peerings = default;
+            IReadOnlyList<ManagedNetworkGroupData> groups = default;
+            IReadOnlyList<ManagedNetworkPeeringPolicyData> peerings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<ManagedNetworkGroupData> array = new List<ManagedNetworkGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(item));
+                        array.Add(ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(item, options));
                     }
                     groups = array;
                     continue;
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<ManagedNetworkPeeringPolicyData> array = new List<ManagedNetworkPeeringPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(item));
+                        array.Add(ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(item, options));
                     }
                     peerings = array;
                     continue;
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityCollection(Optional.ToList(groups), Optional.ToList(peerings), serializedAdditionalRawData);
+            return new ConnectivityCollection(groups ?? new ChangeTrackingList<ManagedNetworkGroupData>(), peerings ?? new ChangeTrackingList<ManagedNetworkPeeringPolicyData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityCollection>.Write(ModelReaderWriterOptions options)
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityCollection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                         return DeserializeConnectivityCollection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityCollection)} does not support reading '{options.Format}' format.");
             }
         }
 

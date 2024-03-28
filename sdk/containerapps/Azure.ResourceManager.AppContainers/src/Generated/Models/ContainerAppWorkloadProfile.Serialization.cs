@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppWorkloadProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppWorkloadProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppWorkloadProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppWorkloadProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppWorkloadProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppWorkloadProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             string name = default;
             string workloadProfileType = default;
-            Optional<int> minimumCount = default;
-            Optional<int> maximumCount = default;
+            int? minimumCount = default;
+            int? maximumCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppWorkloadProfile(name, workloadProfileType, Optional.ToNullable(minimumCount), Optional.ToNullable(maximumCount), serializedAdditionalRawData);
+            return new ContainerAppWorkloadProfile(name, workloadProfileType, minimumCount, maximumCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppWorkloadProfile>.Write(ModelReaderWriterOptions options)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppWorkloadProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppWorkloadProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppWorkloadProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppWorkloadProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppWorkloadProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

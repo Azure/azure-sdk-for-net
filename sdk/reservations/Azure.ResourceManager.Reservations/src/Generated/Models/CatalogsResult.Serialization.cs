@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CatalogsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CatalogsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CatalogsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReservationCatalog>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CatalogsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CatalogsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CatalogsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReservationCatalog>> value = default;
-            Optional<string> nextLink = default;
-            Optional<long> totalItems = default;
+            IReadOnlyList<ReservationCatalog> value = default;
+            string nextLink = default;
+            long? totalItems = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationCatalog> array = new List<ReservationCatalog>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationCatalog.DeserializeReservationCatalog(item));
+                        array.Add(ReservationCatalog.DeserializeReservationCatalog(item, options));
                     }
                     value = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CatalogsResult(Optional.ToList(value), nextLink.Value, Optional.ToNullable(totalItems), serializedAdditionalRawData);
+            return new CatalogsResult(value ?? new ChangeTrackingList<ReservationCatalog>(), nextLink, totalItems, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CatalogsResult>.Write(ModelReaderWriterOptions options)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CatalogsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CatalogsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeCatalogsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CatalogsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CatalogsResult)} does not support reading '{options.Format}' format.");
             }
         }
 

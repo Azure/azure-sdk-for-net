@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableLabServicesSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableLabServicesSkuCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableLabServicesSkuCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableLabServicesSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableLabServicesSkuCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableLabServicesSkuCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<long> @default = default;
-            Optional<long> minimum = default;
-            Optional<long> maximum = default;
-            Optional<LabServicesSkuCapacityScaleType> scaleType = default;
+            long? @default = default;
+            long? minimum = default;
+            long? maximum = default;
+            LabServicesSkuCapacityScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableLabServicesSkuCapacity(Optional.ToNullable(@default), Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new AvailableLabServicesSkuCapacity(@default, minimum, maximum, scaleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableLabServicesSkuCapacity>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableLabServicesSkuCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableLabServicesSkuCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeAvailableLabServicesSkuCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableLabServicesSkuCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableLabServicesSkuCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

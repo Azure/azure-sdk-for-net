@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtSecurityProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtSecurityProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryVmSecurityType> targetVmSecurityType = default;
-            Optional<string> isTargetVmSecureBootEnabled = default;
-            Optional<string> isTargetVmTpmEnabled = default;
-            Optional<string> isTargetVmIntegrityMonitoringEnabled = default;
-            Optional<string> isTargetVmConfidentialEncryptionEnabled = default;
+            SiteRecoveryVmSecurityType? targetVmSecurityType = default;
+            string isTargetVmSecureBootEnabled = default;
+            string isTargetVmTpmEnabled = default;
+            string isTargetVmIntegrityMonitoringEnabled = default;
+            string isTargetVmConfidentialEncryptionEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtSecurityProfileProperties(Optional.ToNullable(targetVmSecurityType), isTargetVmSecureBootEnabled.Value, isTargetVmTpmEnabled.Value, isTargetVmIntegrityMonitoringEnabled.Value, isTargetVmConfidentialEncryptionEnabled.Value, serializedAdditionalRawData);
+            return new VMwareCbtSecurityProfileProperties(
+                targetVmSecurityType,
+                isTargetVmSecureBootEnabled,
+                isTargetVmTpmEnabled,
+                isTargetVmIntegrityMonitoringEnabled,
+                isTargetVmConfidentialEncryptionEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtSecurityProfileProperties>.Write(ModelReaderWriterOptions options)
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareCbtSecurityProfileProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceUploadedUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceUploadedUserSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceUploadedUserSourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceUploadedUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceUploadedUserSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceUploadedUserSourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> artifactSelector = default;
-            Optional<string> runtimeVersion = default;
-            Optional<string> relativePath = default;
+            string artifactSelector = default;
+            string runtimeVersion = default;
+            string relativePath = default;
             string type = default;
-            Optional<string> version = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceUploadedUserSourceInfo(type, version.Value, serializedAdditionalRawData, relativePath.Value, artifactSelector.Value, runtimeVersion.Value);
+            return new SourceUploadedUserSourceInfo(
+                type,
+                version,
+                serializedAdditionalRawData,
+                relativePath,
+                artifactSelector,
+                runtimeVersion);
         }
 
         BinaryData IPersistableModel<SourceUploadedUserSourceInfo>.Write(ModelReaderWriterOptions options)
@@ -138,7 +144,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SourceUploadedUserSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceUploadedUserSourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeSourceUploadedUserSourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceUploadedUserSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceUploadedUserSourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

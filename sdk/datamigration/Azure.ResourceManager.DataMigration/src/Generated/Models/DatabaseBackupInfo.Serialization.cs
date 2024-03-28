@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseBackupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseBackupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<BackupType> backupType = default;
-            Optional<IReadOnlyList<string>> backupFiles = default;
-            Optional<int> position = default;
-            Optional<bool> isDamaged = default;
-            Optional<bool> isCompressed = default;
-            Optional<int> familyCount = default;
-            Optional<DateTimeOffset> backupFinishDate = default;
+            string databaseName = default;
+            BackupType? backupType = default;
+            IReadOnlyList<string> backupFiles = default;
+            int? position = default;
+            bool? isDamaged = default;
+            bool? isCompressed = default;
+            int? familyCount = default;
+            DateTimeOffset? backupFinishDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseBackupInfo(databaseName.Value, Optional.ToNullable(backupType), Optional.ToList(backupFiles), Optional.ToNullable(position), Optional.ToNullable(isDamaged), Optional.ToNullable(isCompressed), Optional.ToNullable(familyCount), Optional.ToNullable(backupFinishDate), serializedAdditionalRawData);
+            return new DatabaseBackupInfo(
+                databaseName,
+                backupType,
+                backupFiles ?? new ChangeTrackingList<string>(),
+                position,
+                isDamaged,
+                isCompressed,
+                familyCount,
+                backupFinishDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseBackupInfo>.Write(ModelReaderWriterOptions options)
@@ -212,7 +221,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +237,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeDatabaseBackupInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

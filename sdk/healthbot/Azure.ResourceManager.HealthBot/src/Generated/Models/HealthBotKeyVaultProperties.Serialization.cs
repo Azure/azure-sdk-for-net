@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthBotKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthBotKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HealthBot.Models
                 return null;
             }
             string keyName = default;
-            Optional<string> keyVersion = default;
+            string keyVersion = default;
             Uri keyVaultUri = default;
-            Optional<string> userIdentity = default;
+            string userIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthBotKeyVaultProperties(keyName, keyVersion.Value, keyVaultUri, userIdentity.Value, serializedAdditionalRawData);
+            return new HealthBotKeyVaultProperties(keyName, keyVersion, keyVaultUri, userIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthBotKeyVaultProperties>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                         return DeserializeHealthBotKeyVaultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

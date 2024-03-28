@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementGroupPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementGroupPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> parentGroupId = default;
+            string displayName = default;
+            string parentGroupId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupPatch(displayName.Value, parentGroupId.Value, serializedAdditionalRawData);
+            return new ManagementGroupPatch(displayName, parentGroupId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupPatch>.Write(ModelReaderWriterOptions options)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementGroupPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                         return DeserializeManagementGroupPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementGroupPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<SupportQuotaChangeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportQuotaChangeContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportQuotaChangeContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<SupportQuotaChangeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportQuotaChangeContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportQuotaChangeContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<string> region = default;
-            Optional<string> payload = default;
+            string region = default;
+            string payload = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportQuotaChangeContent(region.Value, payload.Value, serializedAdditionalRawData);
+            return new SupportQuotaChangeContent(region, payload, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportQuotaChangeContent>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Support.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SupportQuotaChangeContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportQuotaChangeContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Support.Models
                         return DeserializeSupportQuotaChangeContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SupportQuotaChangeContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportQuotaChangeContent)} does not support reading '{options.Format}' format.");
             }
         }
 

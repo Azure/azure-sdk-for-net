@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaTransformPreset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaTransformPreset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.AudioAnalyzerPreset": return AudioAnalyzerPreset.DeserializeAudioAnalyzerPreset(element);
-                    case "#Microsoft.Media.BuiltInStandardEncoderPreset": return BuiltInStandardEncoderPreset.DeserializeBuiltInStandardEncoderPreset(element);
-                    case "#Microsoft.Media.StandardEncoderPreset": return StandardEncoderPreset.DeserializeStandardEncoderPreset(element);
-                    case "#Microsoft.Media.VideoAnalyzerPreset": return VideoAnalyzerPreset.DeserializeVideoAnalyzerPreset(element);
+                    case "#Microsoft.Media.AudioAnalyzerPreset": return AudioAnalyzerPreset.DeserializeAudioAnalyzerPreset(element, options);
+                    case "#Microsoft.Media.BuiltInStandardEncoderPreset": return BuiltInStandardEncoderPreset.DeserializeBuiltInStandardEncoderPreset(element, options);
+                    case "#Microsoft.Media.StandardEncoderPreset": return StandardEncoderPreset.DeserializeStandardEncoderPreset(element, options);
+                    case "#Microsoft.Media.VideoAnalyzerPreset": return VideoAnalyzerPreset.DeserializeVideoAnalyzerPreset(element, options);
                 }
             }
-            return UnknownPreset.DeserializeUnknownPreset(element);
+            return UnknownPreset.DeserializeUnknownPreset(element, options);
         }
 
         BinaryData IPersistableModel<MediaTransformPreset>.Write(ModelReaderWriterOptions options)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaTransformPreset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaTransformPreset)} does not support reading '{options.Format}' format.");
             }
         }
 

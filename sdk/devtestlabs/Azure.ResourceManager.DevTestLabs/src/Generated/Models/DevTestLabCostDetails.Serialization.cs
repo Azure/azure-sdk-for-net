@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> date = default;
-            Optional<double> cost = default;
-            Optional<DevTestLabCostType> costType = default;
+            DateTimeOffset? date = default;
+            double? cost = default;
+            DevTestLabCostType? costType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCostDetails(Optional.ToNullable(date), Optional.ToNullable(cost), Optional.ToNullable(costType), serializedAdditionalRawData);
+            return new DevTestLabCostDetails(date, cost, costType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCostDetails>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabCostDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCostDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

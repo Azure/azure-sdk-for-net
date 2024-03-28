@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicExpression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicExpression)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicExpression)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Subexpressions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LogicExpression>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<LogicExpressionErrorInfo>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicExpression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicExpression)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicExpression)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> text = default;
-            Optional<BinaryData> value = default;
-            Optional<IReadOnlyList<LogicExpression>> subexpressions = default;
-            Optional<LogicExpressionErrorInfo> error = default;
+            string text = default;
+            BinaryData value = default;
+            IReadOnlyList<LogicExpression> subexpressions = default;
+            LogicExpressionErrorInfo error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicExpression> array = new List<LogicExpression>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeLogicExpression(item));
+                        array.Add(DeserializeLogicExpression(item, options));
                     }
                     subexpressions = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = LogicExpressionErrorInfo.DeserializeLogicExpressionErrorInfo(property.Value);
+                    error = LogicExpressionErrorInfo.DeserializeLogicExpressionErrorInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicExpression(text.Value, value.Value, Optional.ToList(subexpressions), error.Value, serializedAdditionalRawData);
+            return new LogicExpression(text, value, subexpressions ?? new ChangeTrackingList<LogicExpression>(), error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicExpression>.Write(ModelReaderWriterOptions options)
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicExpression)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicExpression)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicExpression(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicExpression)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicExpression)} does not support reading '{options.Format}' format.");
             }
         }
 

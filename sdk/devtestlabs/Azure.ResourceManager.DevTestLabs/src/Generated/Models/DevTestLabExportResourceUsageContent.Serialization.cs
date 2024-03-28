@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabExportResourceUsageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabExportResourceUsageContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabExportResourceUsageContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabExportResourceUsageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabExportResourceUsageContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabExportResourceUsageContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<Uri> blobStorageAbsoluteSasUri = default;
-            Optional<DateTimeOffset> usageStartDate = default;
+            Uri blobStorageAbsoluteSasUri = default;
+            DateTimeOffset? usageStartDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabExportResourceUsageContent(blobStorageAbsoluteSasUri.Value, Optional.ToNullable(usageStartDate), serializedAdditionalRawData);
+            return new DevTestLabExportResourceUsageContent(blobStorageAbsoluteSasUri, usageStartDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabExportResourceUsageContent>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabExportResourceUsageContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabExportResourceUsageContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabExportResourceUsageContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabExportResourceUsageContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabExportResourceUsageContent)} does not support reading '{options.Format}' format.");
             }
         }
 

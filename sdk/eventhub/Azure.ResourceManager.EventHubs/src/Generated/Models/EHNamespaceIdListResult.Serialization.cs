@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EHNamespaceIdListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EHNamespaceIdListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EHNamespaceIdListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +62,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EHNamespaceIdListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EHNamespaceIdListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EHNamespaceIdListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +77,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SubResource>> value = default;
+            IReadOnlyList<SubResource> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +102,44 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EHNamespaceIdListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new EHNamespaceIdListResult(value ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (Optional.IsCollectionDefined(Value) || hasPropertyOverride)
+            {
+                if (Value.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  value: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Value)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  value: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<EHNamespaceIdListResult>.Write(ModelReaderWriterOptions options)
@@ -111,8 +150,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(EHNamespaceIdListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EHNamespaceIdListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +169,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeEHNamespaceIdListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EHNamespaceIdListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EHNamespaceIdListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

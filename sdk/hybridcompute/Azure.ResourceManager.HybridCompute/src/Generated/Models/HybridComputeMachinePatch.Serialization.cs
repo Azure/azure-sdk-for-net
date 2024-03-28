@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeMachinePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeMachinePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeMachinePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,22 +53,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
-                writer.WriteObjectValue(LocationData);
+                writer.WriteObjectValue<HybridComputeLocation>(LocationData, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<HybridComputeOSProfile>(OSProfile, options);
             }
             if (Optional.IsDefined(CloudMetadata))
             {
                 writer.WritePropertyName("cloudMetadata"u8);
-                writer.WriteObjectValue(CloudMetadata);
+                writer.WriteObjectValue<HybridComputeCloudMetadata>(CloudMetadata, options);
             }
             if (Optional.IsDefined(AgentUpgrade))
             {
                 writer.WritePropertyName("agentUpgrade"u8);
-                writer.WriteObjectValue(AgentUpgrade);
+                writer.WriteObjectValue<AgentUpgrade>(AgentUpgrade, options);
             }
             if (Optional.IsDefined(ParentClusterResourceId))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeMachinePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeMachinePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeMachinePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ArcKindEnum> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<HybridComputeLocation> locationData = default;
-            Optional<HybridComputeOSProfile> osProfile = default;
-            Optional<HybridComputeCloudMetadata> cloudMetadata = default;
-            Optional<AgentUpgrade> agentUpgrade = default;
-            Optional<ResourceIdentifier> parentClusterResourceId = default;
-            Optional<ResourceIdentifier> privateLinkScopeResourceId = default;
+            ManagedServiceIdentity identity = default;
+            ArcKindEnum? kind = default;
+            IDictionary<string, string> tags = default;
+            HybridComputeLocation locationData = default;
+            HybridComputeOSProfile osProfile = default;
+            HybridComputeCloudMetadata cloudMetadata = default;
+            AgentUpgrade agentUpgrade = default;
+            ResourceIdentifier parentClusterResourceId = default;
+            ResourceIdentifier privateLinkScopeResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            locationData = HybridComputeLocation.DeserializeHybridComputeLocation(property0.Value);
+                            locationData = HybridComputeLocation.DeserializeHybridComputeLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            osProfile = HybridComputeOSProfile.DeserializeHybridComputeOSProfile(property0.Value);
+                            osProfile = HybridComputeOSProfile.DeserializeHybridComputeOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cloudMetadata"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            cloudMetadata = HybridComputeCloudMetadata.DeserializeHybridComputeCloudMetadata(property0.Value);
+                            cloudMetadata = HybridComputeCloudMetadata.DeserializeHybridComputeCloudMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentUpgrade"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            agentUpgrade = AgentUpgrade.DeserializeAgentUpgrade(property0.Value);
+                            agentUpgrade = AgentUpgrade.DeserializeAgentUpgrade(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parentClusterResourceId"u8))
@@ -236,7 +236,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeMachinePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, identity, Optional.ToNullable(kind), locationData.Value, osProfile.Value, cloudMetadata.Value, agentUpgrade.Value, parentClusterResourceId.Value, privateLinkScopeResourceId.Value);
+            return new HybridComputeMachinePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                identity,
+                kind,
+                locationData,
+                osProfile,
+                cloudMetadata,
+                agentUpgrade,
+                parentClusterResourceId,
+                privateLinkScopeResourceId);
         }
 
         BinaryData IPersistableModel<HybridComputeMachinePatch>.Write(ModelReaderWriterOptions options)
@@ -248,7 +258,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeMachinePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeMachinePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +274,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputeMachinePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeMachinePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeMachinePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

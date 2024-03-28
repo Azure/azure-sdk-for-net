@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoScaleConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoScaleConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoScaleConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoScaleConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<Status> status = default;
-            Optional<int> minReplicas = default;
-            Optional<int> maxReplicas = default;
-            Optional<float> targetUtilization = default;
-            Optional<int> refreshPeriodInSeconds = default;
+            Status? status = default;
+            int? minReplicas = default;
+            int? maxReplicas = default;
+            float? targetUtilization = default;
+            int? refreshPeriodInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoScaleConfiguration(Optional.ToNullable(status), Optional.ToNullable(minReplicas), Optional.ToNullable(maxReplicas), Optional.ToNullable(targetUtilization), Optional.ToNullable(refreshPeriodInSeconds), serializedAdditionalRawData);
+            return new AutoScaleConfiguration(
+                status,
+                minReplicas,
+                maxReplicas,
+                targetUtilization,
+                refreshPeriodInSeconds,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoScaleConfiguration>.Write(ModelReaderWriterOptions options)
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoScaleConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoScaleConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                         return DeserializeAutoScaleConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoScaleConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoScaleConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

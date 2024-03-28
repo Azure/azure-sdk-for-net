@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequiredAmlFileSystemSubnetsSizeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequiredAmlFileSystemSubnetsSizeContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequiredAmlFileSystemSubnetsSizeContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<StorageCacheSkuName>(Sku, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequiredAmlFileSystemSubnetsSizeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequiredAmlFileSystemSubnetsSizeContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequiredAmlFileSystemSubnetsSizeContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<float> storageCapacityTiB = default;
-            Optional<StorageCacheSkuName> sku = default;
+            float? storageCapacityTiB = default;
+            StorageCacheSkuName sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value);
+                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequiredAmlFileSystemSubnetsSizeContent(Optional.ToNullable(storageCapacityTiB), sku.Value, serializedAdditionalRawData);
+            return new RequiredAmlFileSystemSubnetsSizeContent(storageCapacityTiB, sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequiredAmlFileSystemSubnetsSizeContent>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RequiredAmlFileSystemSubnetsSizeContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequiredAmlFileSystemSubnetsSizeContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeRequiredAmlFileSystemSubnetsSizeContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequiredAmlFileSystemSubnetsSizeContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequiredAmlFileSystemSubnetsSizeContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterVersion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> clusterCodeVersion = default;
-            Optional<DateTimeOffset> supportExpiryUtc = default;
-            Optional<ServiceFabricManagedClusterOSType> osType = default;
+            SystemData systemData = default;
+            string clusterCodeVersion = default;
+            DateTimeOffset? supportExpiryUtc = default;
+            ServiceFabricManagedClusterOSType? osType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedClusterVersion(id, name, type, systemData.Value, clusterCodeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(osType), serializedAdditionalRawData);
+            return new ServiceFabricManagedClusterVersion(
+                id,
+                name,
+                type,
+                systemData,
+                clusterCodeVersion,
+                supportExpiryUtc,
+                osType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedClusterVersion>.Write(ModelReaderWriterOptions options)
@@ -191,7 +199,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +215,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeServiceFabricManagedClusterVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterVersion)} does not support reading '{options.Format}' format.");
             }
         }
 

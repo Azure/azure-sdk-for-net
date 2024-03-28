@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertDetailsOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertDetailsOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> alertDisplayNameFormat = default;
-            Optional<string> alertDescriptionFormat = default;
-            Optional<string> alertTacticsColumnName = default;
-            Optional<string> alertSeverityColumnName = default;
+            string alertDisplayNameFormat = default;
+            string alertDescriptionFormat = default;
+            string alertTacticsColumnName = default;
+            string alertSeverityColumnName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAlertDetailsOverride(alertDisplayNameFormat.Value, alertDescriptionFormat.Value, alertTacticsColumnName.Value, alertSeverityColumnName.Value, serializedAdditionalRawData);
+            return new SecurityInsightsAlertDetailsOverride(alertDisplayNameFormat, alertDescriptionFormat, alertTacticsColumnName, alertSeverityColumnName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlertDetailsOverride>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsAlertDetailsOverride(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support reading '{options.Format}' format.");
             }
         }
 

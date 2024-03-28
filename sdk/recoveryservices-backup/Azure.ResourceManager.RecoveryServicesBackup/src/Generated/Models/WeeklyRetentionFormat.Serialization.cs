@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WeeklyRetentionFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WeeklyRetentionFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WeeklyRetentionFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WeeklyRetentionFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WeeklyRetentionFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WeeklyRetentionFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<BackupDayOfWeek>> daysOfTheWeek = default;
-            Optional<IList<BackupWeekOfMonth>> weeksOfTheMonth = default;
+            IList<BackupDayOfWeek> daysOfTheWeek = default;
+            IList<BackupWeekOfMonth> weeksOfTheMonth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WeeklyRetentionFormat(Optional.ToList(daysOfTheWeek), Optional.ToList(weeksOfTheMonth), serializedAdditionalRawData);
+            return new WeeklyRetentionFormat(daysOfTheWeek ?? new ChangeTrackingList<BackupDayOfWeek>(), weeksOfTheMonth ?? new ChangeTrackingList<BackupWeekOfMonth>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WeeklyRetentionFormat>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WeeklyRetentionFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WeeklyRetentionFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeWeeklyRetentionFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WeeklyRetentionFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WeeklyRetentionFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

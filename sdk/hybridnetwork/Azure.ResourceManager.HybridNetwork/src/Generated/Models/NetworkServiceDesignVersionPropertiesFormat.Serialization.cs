@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkServiceDesignVersionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in NfvisFromSite)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<NfviDetails>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceElementTemplates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceElementTemplate>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkServiceDesignVersionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<VersionState> versionState = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, WritableSubResource>> configurationGroupSchemaReferences = default;
-            Optional<IDictionary<string, NfviDetails>> nfvisFromSite = default;
-            Optional<IList<ResourceElementTemplate>> resourceElementTemplates = default;
+            ProvisioningState? provisioningState = default;
+            VersionState? versionState = default;
+            string description = default;
+            IDictionary<string, WritableSubResource> configurationGroupSchemaReferences = default;
+            IDictionary<string, NfviDetails> nfvisFromSite = default;
+            IList<ResourceElementTemplate> resourceElementTemplates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, NfviDetails> dictionary = new Dictionary<string, NfviDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, NfviDetails.DeserializeNfviDetails(property0.Value));
+                        dictionary.Add(property0.Name, NfviDetails.DeserializeNfviDetails(property0.Value, options));
                     }
                     nfvisFromSite = dictionary;
                     continue;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ResourceElementTemplate> array = new List<ResourceElementTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceElementTemplate.DeserializeResourceElementTemplate(item));
+                        array.Add(ResourceElementTemplate.DeserializeResourceElementTemplate(item, options));
                     }
                     resourceElementTemplates = array;
                     continue;
@@ -193,7 +193,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkServiceDesignVersionPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, Optional.ToDictionary(configurationGroupSchemaReferences), Optional.ToDictionary(nfvisFromSite), Optional.ToList(resourceElementTemplates), serializedAdditionalRawData);
+            return new NetworkServiceDesignVersionPropertiesFormat(
+                provisioningState,
+                versionState,
+                description,
+                configurationGroupSchemaReferences ?? new ChangeTrackingDictionary<string, WritableSubResource>(),
+                nfvisFromSite ?? new ChangeTrackingDictionary<string, NfviDetails>(),
+                resourceElementTemplates ?? new ChangeTrackingList<ResourceElementTemplate>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkServiceDesignVersionPropertiesFormat>.Write(ModelReaderWriterOptions options)
@@ -205,7 +212,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +228,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeNetworkServiceDesignVersionPropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

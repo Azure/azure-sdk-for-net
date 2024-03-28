@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<MaintenanceConfigurationAssignmentFilter>(Filter, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<MaintenanceConfigurationAssignmentFilter> filter = default;
+            SystemData systemData = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
+            ResourceIdentifier resourceId = default;
+            MaintenanceConfigurationAssignmentFilter filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                             {
                                 continue;
                             }
-                            filter = MaintenanceConfigurationAssignmentFilter.DeserializeMaintenanceConfigurationAssignmentFilter(property0.Value);
+                            filter = MaintenanceConfigurationAssignmentFilter.DeserializeMaintenanceConfigurationAssignmentFilter(property0.Value, options);
                             continue;
                         }
                     }
@@ -198,7 +198,16 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceConfigurationAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), maintenanceConfigurationId.Value, resourceId.Value, filter.Value, serializedAdditionalRawData);
+            return new MaintenanceConfigurationAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                maintenanceConfigurationId,
+                resourceId,
+                filter,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceConfigurationAssignmentData>.Write(ModelReaderWriterOptions options)
@@ -210,7 +219,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +235,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                         return DeserializeMaintenanceConfigurationAssignmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

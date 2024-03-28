@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubResourceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubResourceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WritableSubResource>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<WritableSubResource> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubResourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SubResourceListResult(value ?? new ChangeTrackingList<WritableSubResource>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubResourceListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         return DeserializeSubResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

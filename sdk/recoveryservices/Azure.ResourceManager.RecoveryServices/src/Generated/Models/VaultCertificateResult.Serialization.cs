@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultCertificateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultCertificateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultCertificateResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ResourceCertificateDetails>(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultCertificateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultCertificateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultCertificateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<ResourceCertificateDetails> properties = default;
+            ResourceCertificateDetails properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    properties = ResourceCertificateDetails.DeserializeResourceCertificateDetails(property.Value);
+                    properties = ResourceCertificateDetails.DeserializeResourceCertificateDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultCertificateResult(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new VaultCertificateResult(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultCertificateResult>.Write(ModelReaderWriterOptions options)
@@ -150,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VaultCertificateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultCertificateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeVaultCertificateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VaultCertificateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultCertificateResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventSubscriptionIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventSubscriptionIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventSubscriptionIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventSubscriptionIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<EventSubscriptionIdentityType> type = default;
-            Optional<string> userAssignedIdentity = default;
+            EventSubscriptionIdentityType? type = default;
+            string userAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventSubscriptionIdentity(Optional.ToNullable(type), userAssignedIdentity.Value, serializedAdditionalRawData);
+            return new EventSubscriptionIdentity(type, userAssignedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventSubscriptionIdentity>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventSubscriptionIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventSubscriptionIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeEventSubscriptionIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventSubscriptionIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventSubscriptionIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilterGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilterGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilterGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Filter)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SelfHelpFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilterGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilterGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilterGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<IList<SelfHelpFilter>> filter = default;
+            IList<SelfHelpFilter> filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpFilter> array = new List<SelfHelpFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpFilter.DeserializeSelfHelpFilter(item));
+                        array.Add(SelfHelpFilter.DeserializeSelfHelpFilter(item, options));
                     }
                     filter = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FilterGroup(Optional.ToList(filter), serializedAdditionalRawData);
+            return new FilterGroup(filter ?? new ChangeTrackingList<SelfHelpFilter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FilterGroup>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FilterGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilterGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeFilterGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FilterGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilterGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

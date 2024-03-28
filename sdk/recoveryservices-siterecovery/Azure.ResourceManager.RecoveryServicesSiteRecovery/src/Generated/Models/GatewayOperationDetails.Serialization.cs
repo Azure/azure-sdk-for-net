@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> state = default;
-            Optional<int> progressPercentage = default;
-            Optional<long> timeElapsed = default;
-            Optional<long> timeRemaining = default;
-            Optional<long> uploadSpeed = default;
-            Optional<string> hostName = default;
-            Optional<IReadOnlyList<string>> dataStores = default;
-            Optional<long> vmwareReadThroughput = default;
+            string state = default;
+            int? progressPercentage = default;
+            long? timeElapsed = default;
+            long? timeRemaining = default;
+            long? uploadSpeed = default;
+            string hostName = default;
+            IReadOnlyList<string> dataStores = default;
+            long? vmwareReadThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayOperationDetails(state.Value, Optional.ToNullable(progressPercentage), Optional.ToNullable(timeElapsed), Optional.ToNullable(timeRemaining), Optional.ToNullable(uploadSpeed), hostName.Value, Optional.ToList(dataStores), Optional.ToNullable(vmwareReadThroughput), serializedAdditionalRawData);
+            return new GatewayOperationDetails(
+                state,
+                progressPercentage,
+                timeElapsed,
+                timeRemaining,
+                uploadSpeed,
+                hostName,
+                dataStores ?? new ChangeTrackingList<string>(),
+                vmwareReadThroughput,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayOperationDetails>.Write(ModelReaderWriterOptions options)
@@ -208,7 +217,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeGatewayOperationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

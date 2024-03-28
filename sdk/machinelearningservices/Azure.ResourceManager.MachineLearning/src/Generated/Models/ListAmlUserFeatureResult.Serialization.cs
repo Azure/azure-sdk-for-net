@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ListAmlUserFeatureResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListAmlUserFeatureResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ListAmlUserFeatureResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningUserFeature>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ListAmlUserFeatureResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListAmlUserFeatureResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ListAmlUserFeatureResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningUserFeature>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MachineLearningUserFeature> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningUserFeature> array = new List<MachineLearningUserFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningUserFeature.DeserializeMachineLearningUserFeature(item));
+                        array.Add(MachineLearningUserFeature.DeserializeMachineLearningUserFeature(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListAmlUserFeatureResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListAmlUserFeatureResult(value ?? new ChangeTrackingList<MachineLearningUserFeature>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListAmlUserFeatureResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ListAmlUserFeatureResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListAmlUserFeatureResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeListAmlUserFeatureResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListAmlUserFeatureResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListAmlUserFeatureResult)} does not support reading '{options.Format}' format.");
             }
         }
 

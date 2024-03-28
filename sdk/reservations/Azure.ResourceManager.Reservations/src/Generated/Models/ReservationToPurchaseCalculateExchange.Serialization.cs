@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationToPurchaseCalculateExchange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationToPurchaseCalculateExchange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationToPurchaseCalculateExchange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ReservationPurchaseContent>(Properties, options);
             }
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue(BillingCurrencyTotal);
+                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyTotal, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationToPurchaseCalculateExchange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationToPurchaseCalculateExchange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationToPurchaseCalculateExchange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationPurchaseContent> properties = default;
-            Optional<PurchasePrice> billingCurrencyTotal = default;
+            ReservationPurchaseContent properties = default;
+            PurchasePrice billingCurrencyTotal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value);
+                    properties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationToPurchaseCalculateExchange(properties.Value, billingCurrencyTotal.Value, serializedAdditionalRawData);
+            return new ReservationToPurchaseCalculateExchange(properties, billingCurrencyTotal, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationToPurchaseCalculateExchange>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationToPurchaseCalculateExchange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationToPurchaseCalculateExchange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationToPurchaseCalculateExchange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationToPurchaseCalculateExchange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationToPurchaseCalculateExchange)} does not support reading '{options.Format}' format.");
             }
         }
 

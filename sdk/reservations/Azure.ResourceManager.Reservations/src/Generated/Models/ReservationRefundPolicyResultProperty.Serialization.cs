@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundPolicyResultProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationRefundPolicyResultProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationRefundPolicyResultProperty)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ConsumedRefundsTotal))
             {
                 writer.WritePropertyName("consumedRefundsTotal"u8);
-                writer.WriteObjectValue(ConsumedRefundsTotal);
+                writer.WriteObjectValue<PurchasePrice>(ConsumedRefundsTotal, options);
             }
             if (Optional.IsDefined(MaxRefundLimit))
             {
                 writer.WritePropertyName("maxRefundLimit"u8);
-                writer.WriteObjectValue(MaxRefundLimit);
+                writer.WriteObjectValue<PurchasePrice>(MaxRefundLimit, options);
             }
             if (Optional.IsCollectionDefined(PolicyErrors))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReservationRefundPolicyError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundPolicyResultProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationRefundPolicyResultProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationRefundPolicyResultProperty)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<PurchasePrice> consumedRefundsTotal = default;
-            Optional<PurchasePrice> maxRefundLimit = default;
-            Optional<IReadOnlyList<ReservationRefundPolicyError>> policyErrors = default;
+            PurchasePrice consumedRefundsTotal = default;
+            PurchasePrice maxRefundLimit = default;
+            IReadOnlyList<ReservationRefundPolicyError> policyErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    consumedRefundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    consumedRefundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maxRefundLimit"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    maxRefundLimit = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    maxRefundLimit = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyErrors"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationRefundPolicyError> array = new List<ReservationRefundPolicyError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationRefundPolicyError.DeserializeReservationRefundPolicyError(item));
+                        array.Add(ReservationRefundPolicyError.DeserializeReservationRefundPolicyError(item, options));
                     }
                     policyErrors = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationRefundPolicyResultProperty(consumedRefundsTotal.Value, maxRefundLimit.Value, Optional.ToList(policyErrors), serializedAdditionalRawData);
+            return new ReservationRefundPolicyResultProperty(consumedRefundsTotal, maxRefundLimit, policyErrors ?? new ChangeTrackingList<ReservationRefundPolicyError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationRefundPolicyResultProperty>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationRefundPolicyResultProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationRefundPolicyResultProperty)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationRefundPolicyResultProperty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationRefundPolicyResultProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationRefundPolicyResultProperty)} does not support reading '{options.Format}' format.");
             }
         }
 

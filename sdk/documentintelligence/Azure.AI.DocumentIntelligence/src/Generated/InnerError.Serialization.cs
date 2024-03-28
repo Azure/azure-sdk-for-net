@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InnerError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InnerError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +39,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(InnerErrorObject))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(InnerErrorObject);
+                writer.WriteObjectValue<InnerError>(InnerErrorObject, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +64,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InnerError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InnerError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,9 +79,9 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<InnerError> innererror = default;
+            string code = default;
+            string message = default;
+            InnerError innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +102,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    innererror = DeserializeInnerError(property.Value);
+                    innererror = DeserializeInnerError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +111,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InnerError(code.Value, message.Value, innererror.Value, serializedAdditionalRawData);
+            return new InnerError(code, message, innererror, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InnerError>.Write(ModelReaderWriterOptions options)
@@ -124,7 +123,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InnerError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InnerError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +139,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeInnerError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InnerError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InnerError)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -158,7 +157,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<InnerError>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

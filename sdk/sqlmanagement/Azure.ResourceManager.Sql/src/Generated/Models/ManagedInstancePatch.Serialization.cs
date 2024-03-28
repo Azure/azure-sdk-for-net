@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SqlSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedInstancePecProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Administrators))
             {
                 writer.WritePropertyName("administrators"u8);
-                writer.WriteObjectValue(Administrators);
+                writer.WriteObjectValue<ManagedInstanceExternalAdministrator>(Administrators, options);
             }
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal);
+                writer.WriteObjectValue<SqlServicePrincipal>(ServicePrincipal, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,38 +240,38 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedInstancePropertiesProvisioningState> provisioningState = default;
-            Optional<ManagedServerCreateMode> managedInstanceCreateMode = default;
-            Optional<string> fullyQualifiedDomainName = default;
-            Optional<string> administratorLogin = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<string> state = default;
-            Optional<ManagedInstanceLicenseType> licenseType = default;
-            Optional<int> vCores = default;
-            Optional<int> storageSizeInGB = default;
-            Optional<string> collation = default;
-            Optional<string> dnsZone = default;
-            Optional<ResourceIdentifier> dnsZonePartner = default;
-            Optional<bool> publicDataEndpointEnabled = default;
-            Optional<ResourceIdentifier> sourceManagedInstanceId = default;
-            Optional<DateTimeOffset> restorePointInTime = default;
-            Optional<ManagedInstanceProxyOverride> proxyOverride = default;
-            Optional<string> timezoneId = default;
-            Optional<ResourceIdentifier> instancePoolId = default;
-            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
-            Optional<IReadOnlyList<ManagedInstancePecProperty>> privateEndpointConnections = default;
-            Optional<string> minimalTlsVersion = default;
-            Optional<SqlBackupStorageRedundancy> currentBackupStorageRedundancy = default;
-            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
-            Optional<Uri> keyId = default;
-            Optional<ManagedInstanceExternalAdministrator> administrators = default;
-            Optional<SqlServicePrincipal> servicePrincipal = default;
+            SqlSku sku = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            ManagedInstancePropertiesProvisioningState? provisioningState = default;
+            ManagedServerCreateMode? managedInstanceCreateMode = default;
+            string fullyQualifiedDomainName = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            ResourceIdentifier subnetId = default;
+            string state = default;
+            ManagedInstanceLicenseType? licenseType = default;
+            int? vCores = default;
+            int? storageSizeInGB = default;
+            string collation = default;
+            string dnsZone = default;
+            ResourceIdentifier dnsZonePartner = default;
+            bool? publicDataEndpointEnabled = default;
+            ResourceIdentifier sourceManagedInstanceId = default;
+            DateTimeOffset? restorePointInTime = default;
+            ManagedInstanceProxyOverride? proxyOverride = default;
+            string timezoneId = default;
+            ResourceIdentifier instancePoolId = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
+            IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections = default;
+            string minimalTlsVersion = default;
+            SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default;
+            SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default;
+            bool? zoneRedundant = default;
+            ResourceIdentifier primaryUserAssignedIdentityId = default;
+            Uri keyId = default;
+            ManagedInstanceExternalAdministrator administrators = default;
+            SqlServicePrincipal servicePrincipal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Sql.Models
                             List<ManagedInstancePecProperty> array = new List<ManagedInstancePecProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedInstancePecProperty.DeserializeManagedInstancePecProperty(item));
+                                array.Add(ManagedInstancePecProperty.DeserializeManagedInstancePecProperty(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            administrators = ManagedInstanceExternalAdministrator.DeserializeManagedInstanceExternalAdministrator(property0.Value);
+                            administrators = ManagedInstanceExternalAdministrator.DeserializeManagedInstanceExternalAdministrator(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipal"u8))
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            servicePrincipal = SqlServicePrincipal.DeserializeSqlServicePrincipal(property0.Value);
+                            servicePrincipal = SqlServicePrincipal.DeserializeSqlServicePrincipal(property0.Value, options);
                             continue;
                         }
                     }
@@ -561,7 +561,40 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstancePatch(sku.Value, identity, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), Optional.ToNullable(managedInstanceCreateMode), fullyQualifiedDomainName.Value, administratorLogin.Value, administratorLoginPassword.Value, subnetId.Value, state.Value, Optional.ToNullable(licenseType), Optional.ToNullable(vCores), Optional.ToNullable(storageSizeInGB), collation.Value, dnsZone.Value, dnsZonePartner.Value, Optional.ToNullable(publicDataEndpointEnabled), sourceManagedInstanceId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(proxyOverride), timezoneId.Value, instancePoolId.Value, maintenanceConfigurationId.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(zoneRedundant), primaryUserAssignedIdentityId.Value, keyId.Value, administrators.Value, servicePrincipal.Value, serializedAdditionalRawData);
+            return new ManagedInstancePatch(
+                sku,
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                provisioningState,
+                managedInstanceCreateMode,
+                fullyQualifiedDomainName,
+                administratorLogin,
+                administratorLoginPassword,
+                subnetId,
+                state,
+                licenseType,
+                vCores,
+                storageSizeInGB,
+                collation,
+                dnsZone,
+                dnsZonePartner,
+                publicDataEndpointEnabled,
+                sourceManagedInstanceId,
+                restorePointInTime,
+                proxyOverride,
+                timezoneId,
+                instancePoolId,
+                maintenanceConfigurationId,
+                privateEndpointConnections ?? new ChangeTrackingList<ManagedInstancePecProperty>(),
+                minimalTlsVersion,
+                currentBackupStorageRedundancy,
+                requestedBackupStorageRedundancy,
+                zoneRedundant,
+                primaryUserAssignedIdentityId,
+                keyId,
+                administrators,
+                servicePrincipal,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstancePatch>.Write(ModelReaderWriterOptions options)
@@ -573,7 +606,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -589,7 +622,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedInstancePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -23,7 +22,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<TrialMatcherInferenceEvidence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,12 +34,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(PatientDataEvidence))
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
-                writer.WriteObjectValue(PatientDataEvidence);
+                writer.WriteObjectValue<ClinicalNoteEvidence>(PatientDataEvidence, options);
             }
             if (Optional.IsDefined(PatientInfoEvidence))
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
-                writer.WriteObjectValue(PatientInfoEvidence);
+                writer.WriteObjectValue<ClinicalCodedElement>(PatientInfoEvidence, options);
             }
             if (Optional.IsDefined(Importance))
             {
@@ -70,7 +69,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<TrialMatcherInferenceEvidence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,10 +84,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            Optional<string> eligibilityCriteriaEvidence = default;
-            Optional<ClinicalNoteEvidence> patientDataEvidence = default;
-            Optional<ClinicalCodedElement> patientInfoEvidence = default;
-            Optional<float> importance = default;
+            string eligibilityCriteriaEvidence = default;
+            ClinicalNoteEvidence patientDataEvidence = default;
+            ClinicalCodedElement patientInfoEvidence = default;
+            float? importance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +103,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    patientDataEvidence = ClinicalNoteEvidence.DeserializeClinicalNoteEvidence(property.Value);
+                    patientDataEvidence = ClinicalNoteEvidence.DeserializeClinicalNoteEvidence(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("patientInfoEvidence"u8))
@@ -113,7 +112,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    patientInfoEvidence = ClinicalCodedElement.DeserializeClinicalCodedElement(property.Value);
+                    patientInfoEvidence = ClinicalCodedElement.DeserializeClinicalCodedElement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("importance"u8))
@@ -131,7 +130,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence.Value, patientDataEvidence.Value, patientInfoEvidence.Value, Optional.ToNullable(importance), serializedAdditionalRawData);
+            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence, patientDataEvidence, patientInfoEvidence, importance, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherInferenceEvidence>.Write(ModelReaderWriterOptions options)
@@ -143,7 +142,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +158,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                         return DeserializeTrialMatcherInferenceEvidence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -177,7 +176,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TrialMatcherInferenceEvidence>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

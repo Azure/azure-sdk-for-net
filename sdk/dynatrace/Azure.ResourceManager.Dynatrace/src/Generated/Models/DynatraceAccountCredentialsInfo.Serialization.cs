@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceAccountCredentialsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceAccountCredentialsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> accountId = default;
-            Optional<string> apiKey = default;
-            Optional<string> regionId = default;
+            string accountId = default;
+            string apiKey = default;
+            string regionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceAccountCredentialsInfo(accountId.Value, apiKey.Value, regionId.Value, serializedAdditionalRawData);
+            return new DynatraceAccountCredentialsInfo(accountId, apiKey, regionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceAccountCredentialsInfo>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceAccountCredentialsInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

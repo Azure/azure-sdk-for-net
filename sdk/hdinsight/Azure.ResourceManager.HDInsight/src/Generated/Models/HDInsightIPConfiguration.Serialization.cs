@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             string name = default;
-            Optional<ResourceType> type = default;
-            Optional<HDInsightPrivateLinkConfigurationProvisioningState> provisioningState = default;
-            Optional<bool> primary = default;
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<HDInsightPrivateIPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<WritableSubResource> subnet = default;
+            ResourceType? type = default;
+            HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = default;
+            bool? primary = default;
+            IPAddress privateIPAddress = default;
+            HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod = default;
+            WritableSubResource subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,16 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightIPConfiguration(id.Value, name, Optional.ToNullable(type), Optional.ToNullable(provisioningState), Optional.ToNullable(primary), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, serializedAdditionalRawData);
+            return new HDInsightIPConfiguration(
+                id,
+                name,
+                type,
+                provisioningState,
+                primary,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                subnet,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightIPConfiguration>.Write(ModelReaderWriterOptions options)
@@ -216,7 +225,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +241,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightIPConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

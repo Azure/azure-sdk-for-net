@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdateCommonPostActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdateCommonPostActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,10 +94,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<IReadOnlyList<string>> successfulDevices = default;
-            Optional<IReadOnlyList<string>> failedDevices = default;
-            Optional<ResponseError> error = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            IReadOnlyList<string> successfulDevices = default;
+            IReadOnlyList<string> failedDevices = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateCommonPostActionResult(error.Value, serializedAdditionalRawData, Optional.ToNullable(configurationState), Optional.ToList(successfulDevices), Optional.ToList(failedDevices));
+            return new DeviceUpdateCommonPostActionResult(error, serializedAdditionalRawData, configurationState, successfulDevices ?? new ChangeTrackingList<string>(), failedDevices ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<DeviceUpdateCommonPostActionResult>.Write(ModelReaderWriterOptions options)
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeDeviceUpdateCommonPostActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 

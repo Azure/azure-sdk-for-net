@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourcePropertiesMoveStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourcePropertiesMoveStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourcePropertiesMoveStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (JobStatus != null)
                 {
                     writer.WritePropertyName("jobStatus"u8);
-                    writer.WriteObjectValue(JobStatus);
+                    writer.WriteObjectValue<MoverResourceJobStatus>(JobStatus, options);
                 }
                 else
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (Errors != null)
                 {
                     writer.WritePropertyName("errors"u8);
-                    writer.WriteObjectValue(Errors);
+                    writer.WriteObjectValue<MoveResourceError>(Errors, options);
                 }
                 else
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourcePropertiesMoveStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourcePropertiesMoveStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourcePropertiesMoveStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<MoverResourceMoveState> moveState = default;
-            Optional<MoverResourceJobStatus> jobStatus = default;
-            Optional<MoveResourceError> errors = default;
+            MoverResourceMoveState? moveState = default;
+            MoverResourceJobStatus jobStatus = default;
+            MoveResourceError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         jobStatus = null;
                         continue;
                     }
-                    jobStatus = MoverResourceJobStatus.DeserializeMoverResourceJobStatus(property.Value);
+                    jobStatus = MoverResourceJobStatus.DeserializeMoverResourceJobStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         errors = null;
                         continue;
                     }
-                    errors = MoveResourceError.DeserializeMoveResourceError(property.Value);
+                    errors = MoveResourceError.DeserializeMoveResourceError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourcePropertiesMoveStatus(Optional.ToNullable(moveState), jobStatus.Value, errors.Value, serializedAdditionalRawData);
+            return new MoverResourcePropertiesMoveStatus(moveState, jobStatus, errors, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourcePropertiesMoveStatus>.Write(ModelReaderWriterOptions options)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourcePropertiesMoveStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourcePropertiesMoveStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverResourcePropertiesMoveStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourcePropertiesMoveStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourcePropertiesMoveStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

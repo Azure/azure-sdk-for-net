@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<GroupConnectivityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<GroupConnectivityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<string> groupId = default;
-            Optional<string> memberName = default;
-            Optional<IList<string>> customerVisibleFqdns = default;
-            Optional<string> internalFqdn = default;
-            Optional<string> redirectMapId = default;
-            Optional<AzureLocation> privateLinkServiceArmRegion = default;
+            string groupId = default;
+            string memberName = default;
+            IList<string> customerVisibleFqdns = default;
+            string internalFqdn = default;
+            string redirectMapId = default;
+            AzureLocation? privateLinkServiceArmRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +158,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GroupConnectivityInformation(groupId.Value, memberName.Value, Optional.ToList(customerVisibleFqdns), internalFqdn.Value, redirectMapId.Value, Optional.ToNullable(privateLinkServiceArmRegion), serializedAdditionalRawData);
+            return new GroupConnectivityInformation(
+                groupId,
+                memberName,
+                customerVisibleFqdns ?? new ChangeTrackingList<string>(),
+                internalFqdn,
+                redirectMapId,
+                privateLinkServiceArmRegion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GroupConnectivityInformation>.Write(ModelReaderWriterOptions options)
@@ -170,7 +177,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -186,7 +193,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         return DeserializeGroupConnectivityInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

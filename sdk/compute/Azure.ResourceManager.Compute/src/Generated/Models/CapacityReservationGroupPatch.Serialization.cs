@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<CapacityReservationGroupInstanceView>(InstanceView, options);
             }
             if (Optional.IsDefined(SharingProfile))
             {
                 writer.WritePropertyName("sharingProfile"u8);
-                writer.WriteObjectValue(SharingProfile);
+                writer.WriteObjectValue<ResourceSharingProfile>(SharingProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IReadOnlyList<SubResource>> capacityReservations = default;
-            Optional<IReadOnlyList<SubResource>> virtualMachinesAssociated = default;
-            Optional<CapacityReservationGroupInstanceView> instanceView = default;
-            Optional<ResourceSharingProfile> sharingProfile = default;
+            IDictionary<string, string> tags = default;
+            IReadOnlyList<SubResource> capacityReservations = default;
+            IReadOnlyList<SubResource> virtualMachinesAssociated = default;
+            CapacityReservationGroupInstanceView instanceView = default;
+            ResourceSharingProfile sharingProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            instanceView = CapacityReservationGroupInstanceView.DeserializeCapacityReservationGroupInstanceView(property0.Value);
+                            instanceView = CapacityReservationGroupInstanceView.DeserializeCapacityReservationGroupInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sharingProfile"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            sharingProfile = ResourceSharingProfile.DeserializeResourceSharingProfile(property0.Value);
+                            sharingProfile = ResourceSharingProfile.DeserializeResourceSharingProfile(property0.Value, options);
                             continue;
                         }
                     }
@@ -196,7 +196,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationGroupPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToList(capacityReservations), Optional.ToList(virtualMachinesAssociated), instanceView.Value, sharingProfile.Value);
+            return new CapacityReservationGroupPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                capacityReservations ?? new ChangeTrackingList<SubResource>(),
+                virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(),
+                instanceView,
+                sharingProfile);
         }
 
         BinaryData IPersistableModel<CapacityReservationGroupPatch>.Write(ModelReaderWriterOptions options)
@@ -208,7 +214,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +230,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCapacityReservationGroupPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

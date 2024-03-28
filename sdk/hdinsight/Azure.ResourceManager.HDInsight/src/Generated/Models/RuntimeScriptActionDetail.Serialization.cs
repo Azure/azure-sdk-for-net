@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuntimeScriptActionDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ExecutionSummary)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptActionExecutionSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuntimeScriptActionDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,18 +125,18 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<long> scriptExecutionId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> status = default;
-            Optional<string> operation = default;
-            Optional<IReadOnlyList<ScriptActionExecutionSummary>> executionSummary = default;
-            Optional<string> debugInformation = default;
+            long? scriptExecutionId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string status = default;
+            string operation = default;
+            IReadOnlyList<ScriptActionExecutionSummary> executionSummary = default;
+            string debugInformation = default;
             string name = default;
             Uri uri = default;
-            Optional<string> parameters = default;
+            string parameters = default;
             IList<string> roles = default;
-            Optional<string> applicationName = default;
+            string applicationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<ScriptActionExecutionSummary> array = new List<ScriptActionExecutionSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptActionExecutionSummary.DeserializeScriptActionExecutionSummary(item));
+                        array.Add(ScriptActionExecutionSummary.DeserializeScriptActionExecutionSummary(item, options));
                     }
                     executionSummary = array;
                     continue;
@@ -233,7 +233,20 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuntimeScriptActionDetail(name, uri, parameters.Value, roles, applicationName.Value, serializedAdditionalRawData, Optional.ToNullable(scriptExecutionId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, operation.Value, Optional.ToList(executionSummary), debugInformation.Value);
+            return new RuntimeScriptActionDetail(
+                name,
+                uri,
+                parameters,
+                roles,
+                applicationName,
+                serializedAdditionalRawData,
+                scriptExecutionId,
+                startTime,
+                endTime,
+                status,
+                operation,
+                executionSummary ?? new ChangeTrackingList<ScriptActionExecutionSummary>(),
+                debugInformation);
         }
 
         BinaryData IPersistableModel<RuntimeScriptActionDetail>.Write(ModelReaderWriterOptions options)
@@ -245,7 +258,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -261,7 +274,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeRuntimeScriptActionDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

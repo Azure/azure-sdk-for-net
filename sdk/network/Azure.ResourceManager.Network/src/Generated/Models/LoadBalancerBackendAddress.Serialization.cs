@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerBackendAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundNatRulesPortMapping)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NatRulePortMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerBackendAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<WritableSubResource> virtualNetwork = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<string> ipAddress = default;
-            Optional<WritableSubResource> networkInterfaceIPConfiguration = default;
-            Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
-            Optional<IReadOnlyList<NatRulePortMapping>> inboundNatRulesPortMapping = default;
-            Optional<LoadBalancerBackendAddressAdminState> adminState = default;
+            string name = default;
+            WritableSubResource virtualNetwork = default;
+            WritableSubResource subnet = default;
+            string ipAddress = default;
+            WritableSubResource networkInterfaceIPConfiguration = default;
+            WritableSubResource loadBalancerFrontendIPConfiguration = default;
+            IReadOnlyList<NatRulePortMapping> inboundNatRulesPortMapping = default;
+            LoadBalancerBackendAddressAdminState? adminState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<NatRulePortMapping> array = new List<NatRulePortMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NatRulePortMapping.DeserializeNatRulePortMapping(item));
+                                array.Add(NatRulePortMapping.DeserializeNatRulePortMapping(item, options));
                             }
                             inboundNatRulesPortMapping = array;
                             continue;
@@ -212,7 +212,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerBackendAddress(name.Value, virtualNetwork, subnet, ipAddress.Value, networkInterfaceIPConfiguration, loadBalancerFrontendIPConfiguration, Optional.ToList(inboundNatRulesPortMapping), Optional.ToNullable(adminState), serializedAdditionalRawData);
+            return new LoadBalancerBackendAddress(
+                name,
+                virtualNetwork,
+                subnet,
+                ipAddress,
+                networkInterfaceIPConfiguration,
+                loadBalancerFrontendIPConfiguration,
+                inboundNatRulesPortMapping ?? new ChangeTrackingList<NatRulePortMapping>(),
+                adminState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerBackendAddress>.Write(ModelReaderWriterOptions options)
@@ -224,7 +233,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -240,7 +249,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeLoadBalancerBackendAddress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support reading '{options.Format}' format.");
             }
         }
 

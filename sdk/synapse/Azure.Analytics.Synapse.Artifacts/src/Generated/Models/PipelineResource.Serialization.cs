@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Activities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Activity>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Variables)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<VariableSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -90,20 +90,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue<PipelineFolder>(Folder);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -114,18 +114,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> etag = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> description = default;
-            Optional<IList<Activity>> activities = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IDictionary<string, VariableSpecification>> variables = default;
-            Optional<int> concurrency = default;
-            Optional<IList<object>> annotations = default;
-            Optional<IDictionary<string, object>> runDimensions = default;
-            Optional<PipelineFolder> folder = default;
+            string etag = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            string description = default;
+            IList<Activity> activities = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IDictionary<string, VariableSpecification> variables = default;
+            int? concurrency = default;
+            IList<object> annotations = default;
+            IDictionary<string, object> runDimensions = default;
+            PipelineFolder folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -272,14 +272,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineResource(id.Value, name.Value, type.Value, etag.Value, description.Value, Optional.ToList(activities), Optional.ToDictionary(parameters), Optional.ToDictionary(variables), Optional.ToNullable(concurrency), Optional.ToList(annotations), Optional.ToDictionary(runDimensions), folder.Value, additionalProperties);
+            return new PipelineResource(
+                id,
+                name,
+                type,
+                etag,
+                description,
+                activities ?? new ChangeTrackingList<Activity>(),
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                variables ?? new ChangeTrackingDictionary<string, VariableSpecification>(),
+                concurrency,
+                annotations ?? new ChangeTrackingList<object>(),
+                runDimensions ?? new ChangeTrackingDictionary<string, object>(),
+                folder,
+                additionalProperties);
         }
 
         internal partial class PipelineResourceConverter : JsonConverter<PipelineResource>
         {
             public override void Write(Utf8JsonWriter writer, PipelineResource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<PipelineResource>(model);
             }
             public override PipelineResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

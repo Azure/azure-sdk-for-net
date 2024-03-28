@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SolutionResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SolutionResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionResourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in TriggerCriteria)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TriggerCriterion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(ReplacementMaps))
             {
                 writer.WritePropertyName("replacementMaps"u8);
-                writer.WriteObjectValue(ReplacementMaps);
+                writer.WriteObjectValue<ReplacementMaps>(ReplacementMaps, options);
             }
             if (Optional.IsCollectionDefined(Sections))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Sections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SelfHelpSection>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SolutionResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SolutionResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<IList<TriggerCriterion>> triggerCriteria = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<string> solutionId = default;
-            Optional<SolutionProvisioningState> provisioningState = default;
-            Optional<string> title = default;
-            Optional<string> content = default;
-            Optional<ReplacementMaps> replacementMaps = default;
-            Optional<IList<SelfHelpSection>> sections = default;
+            IList<TriggerCriterion> triggerCriteria = default;
+            IDictionary<string, string> parameters = default;
+            string solutionId = default;
+            SolutionProvisioningState? provisioningState = default;
+            string title = default;
+            string content = default;
+            ReplacementMaps replacementMaps = default;
+            IList<SelfHelpSection> sections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<TriggerCriterion> array = new List<TriggerCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggerCriterion.DeserializeTriggerCriterion(item));
+                        array.Add(TriggerCriterion.DeserializeTriggerCriterion(item, options));
                     }
                     triggerCriteria = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property.Value);
+                    replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sections"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpSection> array = new List<SelfHelpSection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpSection.DeserializeSelfHelpSection(item));
+                        array.Add(SelfHelpSection.DeserializeSelfHelpSection(item, options));
                     }
                     sections = array;
                     continue;
@@ -213,7 +213,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionResourceProperties(Optional.ToList(triggerCriteria), Optional.ToDictionary(parameters), solutionId.Value, Optional.ToNullable(provisioningState), title.Value, content.Value, replacementMaps.Value, Optional.ToList(sections), serializedAdditionalRawData);
+            return new SolutionResourceProperties(
+                triggerCriteria ?? new ChangeTrackingList<TriggerCriterion>(),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                solutionId,
+                provisioningState,
+                title,
+                content,
+                replacementMaps,
+                sections ?? new ChangeTrackingList<SelfHelpSection>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionResourceProperties>.Write(ModelReaderWriterOptions options)
@@ -225,7 +234,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SolutionResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -241,7 +250,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeSolutionResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SolutionResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

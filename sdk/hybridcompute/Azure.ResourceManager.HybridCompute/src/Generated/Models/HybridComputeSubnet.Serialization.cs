@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeSubnet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeSubnet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeSubnet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeSubnet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeSubnet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeSubnet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> addressPrefix = default;
+            string addressPrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeSubnet(addressPrefix.Value, serializedAdditionalRawData);
+            return new HybridComputeSubnet(addressPrefix, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeSubnet>.Write(ModelReaderWriterOptions options)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeSubnet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeSubnet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputeSubnet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeSubnet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeSubnet)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoringWorkspaceConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringWorkspaceConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringWorkspaceConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoringWorkspaceConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringWorkspaceConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringWorkspaceConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<IDictionary<string, string>> secrets = default;
+            IDictionary<string, string> environmentVariables = default;
+            IDictionary<string, string> secrets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoringWorkspaceConnection(Optional.ToDictionary(environmentVariables), Optional.ToDictionary(secrets), serializedAdditionalRawData);
+            return new MonitoringWorkspaceConnection(environmentVariables ?? new ChangeTrackingDictionary<string, string>(), secrets ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringWorkspaceConnection>.Write(ModelReaderWriterOptions options)
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringWorkspaceConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringWorkspaceConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMonitoringWorkspaceConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringWorkspaceConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringWorkspaceConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

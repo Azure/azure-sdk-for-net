@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<Category>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Category)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Category)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ControlFamilies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ControlFamily>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<Category>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Category)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Category)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> categoryName = default;
-            Optional<CategoryType> categoryType = default;
-            Optional<CategoryStatus> categoryStatus = default;
-            Optional<IReadOnlyList<ControlFamily>> controlFamilies = default;
+            string categoryName = default;
+            CategoryType? categoryType = default;
+            CategoryStatus? categoryStatus = default;
+            IReadOnlyList<ControlFamily> controlFamilies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ControlFamily> array = new List<ControlFamily>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ControlFamily.DeserializeControlFamily(item));
+                        array.Add(ControlFamily.DeserializeControlFamily(item, options));
                     }
                     controlFamilies = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Category(categoryName.Value, Optional.ToNullable(categoryType), Optional.ToNullable(categoryStatus), Optional.ToList(controlFamilies), serializedAdditionalRawData);
+            return new Category(categoryName, categoryType, categoryStatus, controlFamilies ?? new ChangeTrackingList<ControlFamily>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Category>.Write(ModelReaderWriterOptions options)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Category)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Category)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeCategory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Category)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Category)} does not support reading '{options.Format}' format.");
             }
         }
 

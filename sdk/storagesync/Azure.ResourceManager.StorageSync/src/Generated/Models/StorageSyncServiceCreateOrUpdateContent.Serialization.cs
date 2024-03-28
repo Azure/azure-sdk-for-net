@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServiceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSyncServiceCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSyncServiceCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServiceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSyncServiceCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSyncServiceCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.StorageSync.Models
                 return null;
             }
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IncomingTrafficPolicy> incomingTrafficPolicy = default;
+            IDictionary<string, string> tags = default;
+            IncomingTrafficPolicy? incomingTrafficPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServiceCreateOrUpdateContent(location, Optional.ToDictionary(tags), Optional.ToNullable(incomingTrafficPolicy), serializedAdditionalRawData);
+            return new StorageSyncServiceCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), incomingTrafficPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServiceCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageSyncServiceCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSyncServiceCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeStorageSyncServiceCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageSyncServiceCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSyncServiceCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

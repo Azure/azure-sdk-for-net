@@ -15,6 +15,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("methodName"u8);
+            writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
@@ -30,7 +32,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string methodName = "Unknown";
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("methodName"u8))
@@ -44,7 +46,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new UnknownMethodRequest(methodName, apiVersion.Value);
+            return new UnknownMethodRequest(methodName, apiVersion);
         }
     }
 }

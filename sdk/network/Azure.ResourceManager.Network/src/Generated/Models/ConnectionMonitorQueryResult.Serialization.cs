@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in States)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectionStateSnapshot>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ConnectionMonitorSourceStatus> sourceStatus = default;
-            Optional<IReadOnlyList<ConnectionStateSnapshot>> states = default;
+            ConnectionMonitorSourceStatus? sourceStatus = default;
+            IReadOnlyList<ConnectionStateSnapshot> states = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectionStateSnapshot> array = new List<ConnectionStateSnapshot>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionStateSnapshot.DeserializeConnectionStateSnapshot(item));
+                        array.Add(ConnectionStateSnapshot.DeserializeConnectionStateSnapshot(item, options));
                     }
                     states = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorQueryResult(Optional.ToNullable(sourceStatus), Optional.ToList(states), serializedAdditionalRawData);
+            return new ConnectionMonitorQueryResult(sourceStatus, states ?? new ChangeTrackingList<ConnectionStateSnapshot>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorQueryResult>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectionMonitorQueryResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support reading '{options.Format}' format.");
             }
         }
 

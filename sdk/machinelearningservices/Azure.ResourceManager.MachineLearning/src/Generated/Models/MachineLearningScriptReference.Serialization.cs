@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningScriptReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningScriptReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> scriptSource = default;
-            Optional<string> scriptData = default;
-            Optional<string> scriptArguments = default;
-            Optional<string> timeout = default;
+            string scriptSource = default;
+            string scriptData = default;
+            string scriptArguments = default;
+            string timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningScriptReference(scriptSource.Value, scriptData.Value, scriptArguments.Value, timeout.Value, serializedAdditionalRawData);
+            return new MachineLearningScriptReference(scriptSource, scriptData, scriptArguments, timeout, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningScriptReference>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningScriptReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support reading '{options.Format}' format.");
             }
         }
 

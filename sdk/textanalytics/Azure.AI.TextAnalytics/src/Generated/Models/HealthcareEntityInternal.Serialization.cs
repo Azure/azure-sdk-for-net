@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -35,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Assertion))
             {
                 writer.WritePropertyName("assertion"u8);
-                writer.WriteObjectValue(Assertion);
+                writer.WriteObjectValue<HealthcareEntityAssertion>(Assertion);
             }
             if (Optional.IsDefined(Name))
             {
@@ -48,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EntityDataSource>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -63,13 +62,13 @@ namespace Azure.AI.TextAnalytics.Models
             }
             string text = default;
             HealthcareEntityCategory category = default;
-            Optional<string> subcategory = default;
+            string subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
-            Optional<HealthcareEntityAssertion> assertion = default;
-            Optional<string> name = default;
-            Optional<IList<EntityDataSource>> links = default;
+            HealthcareEntityAssertion assertion = default;
+            string name = default;
+            IList<EntityDataSource> links = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -131,7 +130,16 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareEntityInternal(text, category, subcategory.Value, offset, length, confidenceScore, assertion.Value, name.Value, Optional.ToList(links));
+            return new HealthcareEntityInternal(
+                text,
+                category,
+                subcategory,
+                offset,
+                length,
+                confidenceScore,
+                assertion,
+                name,
+                links ?? new ChangeTrackingList<EntityDataSource>());
         }
     }
 }

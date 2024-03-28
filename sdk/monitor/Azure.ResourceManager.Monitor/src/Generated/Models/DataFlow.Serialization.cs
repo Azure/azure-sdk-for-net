@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFlow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFlow)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFlow)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFlow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFlow)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFlow)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<DataFlowStream>> streams = default;
-            Optional<IList<string>> destinations = default;
-            Optional<string> transformKql = default;
-            Optional<string> outputStream = default;
-            Optional<string> builtInTransform = default;
+            IList<DataFlowStream> streams = default;
+            IList<string> destinations = default;
+            string transformKql = default;
+            string outputStream = default;
+            string builtInTransform = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlow(Optional.ToList(streams), Optional.ToList(destinations), transformKql.Value, outputStream.Value, builtInTransform.Value, serializedAdditionalRawData);
+            return new DataFlow(
+                streams ?? new ChangeTrackingList<DataFlowStream>(),
+                destinations ?? new ChangeTrackingList<string>(),
+                transformKql,
+                outputStream,
+                builtInTransform,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFlow>.Write(ModelReaderWriterOptions options)
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFlow)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFlow)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +191,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDataFlow(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFlow)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFlow)} does not support reading '{options.Format}' format.");
             }
         }
 

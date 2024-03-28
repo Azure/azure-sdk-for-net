@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusRegenerateAccessKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusRegenerateAccessKeyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusRegenerateAccessKeyContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusRegenerateAccessKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusRegenerateAccessKeyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusRegenerateAccessKeyContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 return null;
             }
             ServiceBusAccessKeyType keyType = default;
-            Optional<string> key = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusRegenerateAccessKeyContent(keyType, key.Value, serializedAdditionalRawData);
+            return new ServiceBusRegenerateAccessKeyContent(keyType, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusRegenerateAccessKeyContent>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusRegenerateAccessKeyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusRegenerateAccessKeyContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         return DeserializeServiceBusRegenerateAccessKeyContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusRegenerateAccessKeyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusRegenerateAccessKeyContent)} does not support reading '{options.Format}' format.");
             }
         }
 

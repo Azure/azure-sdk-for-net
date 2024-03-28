@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NFVIs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NFVIs)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NFVIs)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NFVIs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NFVIs)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NFVIs)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownNFVIs(document.RootElement, options);
+            return DeserializeNFVIs(document.RootElement, options);
         }
 
         internal static UnknownNFVIs DeserializeUnknownNFVIs(JsonElement element, ModelReaderWriterOptions options = null)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             NfviType nfviType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownNFVIs(name.Value, nfviType, serializedAdditionalRawData);
+            return new UnknownNFVIs(name, nfviType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NFVIs>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NFVIs)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NFVIs)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownNFVIs(document.RootElement, options);
+                        return DeserializeNFVIs(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NFVIs)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NFVIs)} does not support reading '{options.Format}' format.");
             }
         }
 

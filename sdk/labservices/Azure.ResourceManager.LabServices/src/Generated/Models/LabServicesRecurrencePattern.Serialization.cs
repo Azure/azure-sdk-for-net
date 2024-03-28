@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabServicesRecurrencePattern>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabServicesRecurrencePattern)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesRecurrencePattern)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabServicesRecurrencePattern>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabServicesRecurrencePattern)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesRecurrencePattern)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.LabServices.Models
                 return null;
             }
             LabServicesRecurrenceFrequency frequency = default;
-            Optional<IList<LabServicesDayOfWeek>> weekDays = default;
-            Optional<int> interval = default;
+            IList<LabServicesDayOfWeek> weekDays = default;
+            int? interval = default;
             DateTimeOffset expirationDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesRecurrencePattern(frequency, Optional.ToList(weekDays), Optional.ToNullable(interval), expirationDate, serializedAdditionalRawData);
+            return new LabServicesRecurrencePattern(frequency, weekDays ?? new ChangeTrackingList<LabServicesDayOfWeek>(), interval, expirationDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesRecurrencePattern>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabServicesRecurrencePattern)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesRecurrencePattern)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabServicesRecurrencePattern(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabServicesRecurrencePattern)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesRecurrencePattern)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -40,7 +39,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="ServiceLinker.LinkerResourceData"/> instance for mocking. </returns>
         public static LinkerResourceData LinkerResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolutionType? solutionType = null, ResourceIdentifier secretStoreKeyVaultId = null, string scope = null)
         {
-            return new LinkerResourceData(id, name, resourceType, systemData, targetService, authInfo, clientType, provisioningState, solutionType != null ? new VnetSolution(solutionType, serializedAdditionalRawData: null) : null, secretStoreKeyVaultId != null ? new LinkerSecretStore(secretStoreKeyVaultId, serializedAdditionalRawData: null) : null, scope, serializedAdditionalRawData: null);
+            return new LinkerResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                targetService,
+                authInfo,
+                clientType,
+                provisioningState,
+                solutionType != null ? new VnetSolution(solutionType, serializedAdditionalRawData: null) : null,
+                secretStoreKeyVaultId != null ? new LinkerSecretStore(secretStoreKeyVaultId, serializedAdditionalRawData: null) : null,
+                scope,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkerResourcePatch"/>. </summary>
@@ -62,7 +73,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.LinkerResourcePatch"/> instance for mocking. </returns>
         public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolutionType? solutionType = null, ResourceIdentifier secretStoreKeyVaultId = null, string scope = null)
         {
-            return new LinkerResourcePatch(targetService, authInfo, clientType, provisioningState, solutionType != null ? new VnetSolution(solutionType, serializedAdditionalRawData: null) : null, secretStoreKeyVaultId != null ? new LinkerSecretStore(secretStoreKeyVaultId, serializedAdditionalRawData: null) : null, scope, serializedAdditionalRawData: null);
+            return new LinkerResourcePatch(
+                targetService,
+                authInfo,
+                clientType,
+                provisioningState,
+                solutionType != null ? new VnetSolution(solutionType, serializedAdditionalRawData: null) : null,
+                secretStoreKeyVaultId != null ? new LinkerSecretStore(secretStoreKeyVaultId, serializedAdditionalRawData: null) : null,
+                scope,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkerValidateOperationResult"/>. </summary>
@@ -81,7 +100,18 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         {
             validationDetail ??= new List<LinkerValidationResultItemInfo>();
 
-            return new LinkerValidateOperationResult(resourceId, status, linkerName, isConnectionAvailable, reportStartOn, reportEndOn, sourceId, targetId, authType, validationDetail?.ToList(), serializedAdditionalRawData: null);
+            return new LinkerValidateOperationResult(
+                resourceId,
+                status,
+                linkerName,
+                isConnectionAvailable,
+                reportStartOn,
+                reportEndOn,
+                sourceId,
+                targetId,
+                authType,
+                validationDetail?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkerValidationResultItemInfo"/>. </summary>
@@ -93,7 +123,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.LinkerValidationResultItemInfo"/> instance for mocking. </returns>
         public static LinkerValidationResultItemInfo LinkerValidationResultItemInfo(string name = null, string description = null, LinkerValidationResultStatus? result = null, string errorMessage = null, string errorCode = null)
         {
-            return new LinkerValidationResultItemInfo(name, description, result, errorMessage, errorCode, serializedAdditionalRawData: null);
+            return new LinkerValidationResultItemInfo(
+                name,
+                description,
+                result,
+                errorMessage,
+                errorCode,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SourceConfigurationResult"/>. </summary>

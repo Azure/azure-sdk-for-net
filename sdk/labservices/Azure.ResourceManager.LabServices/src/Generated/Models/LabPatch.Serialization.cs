@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,27 +41,27 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(AutoShutdownProfile))
             {
                 writer.WritePropertyName("autoShutdownProfile"u8);
-                writer.WriteObjectValue(AutoShutdownProfile);
+                writer.WriteObjectValue<LabAutoShutdownProfile>(AutoShutdownProfile, options);
             }
             if (Optional.IsDefined(ConnectionProfile))
             {
                 writer.WritePropertyName("connectionProfile"u8);
-                writer.WriteObjectValue(ConnectionProfile);
+                writer.WriteObjectValue<LabConnectionProfile>(ConnectionProfile, options);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                writer.WriteObjectValue(VirtualMachineProfile);
+                writer.WriteObjectValue<LabVirtualMachineProfile>(VirtualMachineProfile, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<LabSecurityProfile>(SecurityProfile, options);
             }
             if (Optional.IsDefined(RosterProfile))
             {
                 writer.WritePropertyName("rosterProfile"u8);
-                writer.WriteObjectValue(RosterProfile);
+                writer.WriteObjectValue<LabRosterProfile>(RosterProfile, options);
             }
             if (Optional.IsDefined(LabPlanId))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,15 +117,15 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<IList<string>> tags = default;
-            Optional<LabAutoShutdownProfile> autoShutdownProfile = default;
-            Optional<LabConnectionProfile> connectionProfile = default;
-            Optional<LabVirtualMachineProfile> virtualMachineProfile = default;
-            Optional<LabSecurityProfile> securityProfile = default;
-            Optional<LabRosterProfile> rosterProfile = default;
-            Optional<ResourceIdentifier> labPlanId = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
+            IList<string> tags = default;
+            LabAutoShutdownProfile autoShutdownProfile = default;
+            LabConnectionProfile connectionProfile = default;
+            LabVirtualMachineProfile virtualMachineProfile = default;
+            LabSecurityProfile securityProfile = default;
+            LabRosterProfile rosterProfile = default;
+            ResourceIdentifier labPlanId = default;
+            string title = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            autoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value);
+                            autoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("connectionProfile"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            connectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value);
+                            connectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineProfile"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            virtualMachineProfile = LabVirtualMachineProfile.DeserializeLabVirtualMachineProfile(property0.Value);
+                            virtualMachineProfile = LabVirtualMachineProfile.DeserializeLabVirtualMachineProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            securityProfile = LabSecurityProfile.DeserializeLabSecurityProfile(property0.Value);
+                            securityProfile = LabSecurityProfile.DeserializeLabSecurityProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rosterProfile"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            rosterProfile = LabRosterProfile.DeserializeLabRosterProfile(property0.Value);
+                            rosterProfile = LabRosterProfile.DeserializeLabRosterProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labPlanId"u8))
@@ -226,7 +226,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabPatch(Optional.ToList(tags), serializedAdditionalRawData, autoShutdownProfile.Value, connectionProfile.Value, virtualMachineProfile.Value, securityProfile.Value, rosterProfile.Value, labPlanId.Value, title.Value, description.Value);
+            return new LabPatch(
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                autoShutdownProfile,
+                connectionProfile,
+                virtualMachineProfile,
+                securityProfile,
+                rosterProfile,
+                labPlanId,
+                title,
+                description);
         }
 
         BinaryData IPersistableModel<LabPatch>.Write(ModelReaderWriterOptions options)
@@ -238,7 +248,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -254,7 +264,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

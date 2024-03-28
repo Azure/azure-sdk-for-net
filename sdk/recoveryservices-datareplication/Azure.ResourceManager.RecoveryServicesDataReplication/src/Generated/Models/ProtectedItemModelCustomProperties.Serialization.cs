@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtectedItemModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectedItemModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectedItemModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtectedItemModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectedItemModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectedItemModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVToAzStackHCI": return HyperVToAzStackHciProtectedItemModelCustomProperties.DeserializeHyperVToAzStackHciProtectedItemModelCustomProperties(element);
-                    case "ProtectedItemModelCustomProperties": return GeneralProtectedItemModelCustomProperties.DeserializeGeneralProtectedItemModelCustomProperties(element);
-                    case "VMwareToAzStackHCI": return VMwareToAzStackHciProtectedItemModelCustomProperties.DeserializeVMwareToAzStackHciProtectedItemModelCustomProperties(element);
+                    case "HyperVToAzStackHCI": return HyperVToAzStackHciProtectedItemModelCustomProperties.DeserializeHyperVToAzStackHciProtectedItemModelCustomProperties(element, options);
+                    case "ProtectedItemModelCustomProperties": return GeneralProtectedItemModelCustomProperties.DeserializeGeneralProtectedItemModelCustomProperties(element, options);
+                    case "VMwareToAzStackHCI": return VMwareToAzStackHciProtectedItemModelCustomProperties.DeserializeVMwareToAzStackHciProtectedItemModelCustomProperties(element, options);
                 }
             }
-            return UnknownProtectedItemModelCustomProperties.DeserializeUnknownProtectedItemModelCustomProperties(element);
+            return UnknownProtectedItemModelCustomProperties.DeserializeUnknownProtectedItemModelCustomProperties(element, options);
         }
 
         BinaryData IPersistableModel<ProtectedItemModelCustomProperties>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProtectedItemModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectedItemModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeProtectedItemModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProtectedItemModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectedItemModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

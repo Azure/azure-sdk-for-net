@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentLockSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentLockSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<AssignmentLockMode> mode = default;
-            Optional<IList<string>> excludedPrincipals = default;
-            Optional<IList<string>> excludedActions = default;
+            AssignmentLockMode? mode = default;
+            IList<string> excludedPrincipals = default;
+            IList<string> excludedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentLockSettings(Optional.ToNullable(mode), Optional.ToList(excludedPrincipals), Optional.ToList(excludedActions), serializedAdditionalRawData);
+            return new AssignmentLockSettings(mode, excludedPrincipals ?? new ChangeTrackingList<string>(), excludedActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentLockSettings>.Write(ModelReaderWriterOptions options)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeAssignmentLockSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComponentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComponentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComponentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
-                writer.WriteObjectValue(DeploymentStatus);
+                writer.WriteObjectValue<DeploymentStatusProperties>(DeploymentStatus, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComponentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComponentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComponentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> deploymentProfile = default;
-            Optional<DeploymentStatusProperties> deploymentStatus = default;
+            ProvisioningState? provisioningState = default;
+            string deploymentProfile = default;
+            DeploymentStatusProperties deploymentStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    deploymentStatus = DeploymentStatusProperties.DeserializeDeploymentStatusProperties(property.Value);
+                    deploymentStatus = DeploymentStatusProperties.DeserializeDeploymentStatusProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComponentProperties(Optional.ToNullable(provisioningState), deploymentProfile.Value, deploymentStatus.Value, serializedAdditionalRawData);
+            return new ComponentProperties(provisioningState, deploymentProfile, deploymentStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComponentProperties>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComponentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComponentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeComponentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComponentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComponentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

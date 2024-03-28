@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterAvailableVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterAvailableVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> supportExpiryDate = default;
-            Optional<string> targetClusterVersion = default;
+            string supportExpiryDate = default;
+            string targetClusterVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterAvailableVersion(supportExpiryDate.Value, targetClusterVersion.Value, serializedAdditionalRawData);
+            return new ClusterAvailableVersion(supportExpiryDate, targetClusterVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterAvailableVersion>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeClusterAvailableVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="privateKey"> The Azure key vault secret reference of privateKey for KeyPair auth. </param>
         /// <param name="privateKeyPassphrase"> The Azure key vault secret reference of private key password for KeyPair auth with encrypted private key. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SnowflakeV2LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accountIdentifier, DataFactoryElement<string> user, DataFactorySecretBaseDefinition password, DataFactoryElement<string> database, DataFactoryElement<string> warehouse, SnowflakeAuthenticationType? authenticationType, DataFactoryElement<string> clientId, DataFactorySecretBaseDefinition clientSecret, DataFactoryElement<string> tenantId, DataFactoryElement<string> scope, DataFactorySecretBaseDefinition privateKey, DataFactorySecretBaseDefinition privateKeyPassphrase, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SnowflakeV2LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accountIdentifier, DataFactoryElement<string> user, DataFactorySecret password, DataFactoryElement<string> database, DataFactoryElement<string> warehouse, SnowflakeAuthenticationType? authenticationType, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> tenantId, DataFactoryElement<string> scope, DataFactorySecret privateKey, DataFactorySecret privateKeyPassphrase, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountIdentifier = accountIdentifier;
             User = user;
@@ -70,12 +69,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "SnowflakeV2";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SnowflakeV2LinkedService"/> for deserialization. </summary>
+        internal SnowflakeV2LinkedService()
+        {
+        }
+
         /// <summary> The account identifier of your Snowflake account, e.g. xy12345.east-us-2.azure. </summary>
         public DataFactoryElement<string> AccountIdentifier { get; set; }
         /// <summary> The name of the Snowflake user. </summary>
         public DataFactoryElement<string> User { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The name of the Snowflake database. </summary>
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> The name of the Snowflake warehouse. </summary>
@@ -85,15 +89,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The client ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The Azure key vault secret reference of client secret for AADServicePrincipal authentication. </summary>
-        public DataFactorySecretBaseDefinition ClientSecret { get; set; }
+        public DataFactorySecret ClientSecret { get; set; }
         /// <summary> The tenant ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
         public DataFactoryElement<string> TenantId { get; set; }
         /// <summary> The scope of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
         public DataFactoryElement<string> Scope { get; set; }
         /// <summary> The Azure key vault secret reference of privateKey for KeyPair auth. </summary>
-        public DataFactorySecretBaseDefinition PrivateKey { get; set; }
+        public DataFactorySecret PrivateKey { get; set; }
         /// <summary> The Azure key vault secret reference of private key password for KeyPair auth with encrypted private key. </summary>
-        public DataFactorySecretBaseDefinition PrivateKeyPassphrase { get; set; }
+        public DataFactorySecret PrivateKeyPassphrase { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

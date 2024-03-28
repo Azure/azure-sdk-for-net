@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration": return ContentKeyPolicyClearKeyConfiguration.DeserializeContentKeyPolicyClearKeyConfiguration(element);
-                    case "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration": return ContentKeyPolicyFairPlayConfiguration.DeserializeContentKeyPolicyFairPlayConfiguration(element);
-                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration": return ContentKeyPolicyPlayReadyConfiguration.DeserializeContentKeyPolicyPlayReadyConfiguration(element);
-                    case "#Microsoft.Media.ContentKeyPolicyUnknownConfiguration": return ContentKeyPolicyUnknownConfiguration.DeserializeContentKeyPolicyUnknownConfiguration(element);
-                    case "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration": return ContentKeyPolicyWidevineConfiguration.DeserializeContentKeyPolicyWidevineConfiguration(element);
+                    case "#Microsoft.Media.ContentKeyPolicyClearKeyConfiguration": return ContentKeyPolicyClearKeyConfiguration.DeserializeContentKeyPolicyClearKeyConfiguration(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyFairPlayConfiguration": return ContentKeyPolicyFairPlayConfiguration.DeserializeContentKeyPolicyFairPlayConfiguration(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration": return ContentKeyPolicyPlayReadyConfiguration.DeserializeContentKeyPolicyPlayReadyConfiguration(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyUnknownConfiguration": return ContentKeyPolicyUnknownConfiguration.DeserializeContentKeyPolicyUnknownConfiguration(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration": return ContentKeyPolicyWidevineConfiguration.DeserializeContentKeyPolicyWidevineConfiguration(element, options);
                 }
             }
-            return UnknownContentKeyPolicyConfiguration.DeserializeUnknownContentKeyPolicyConfiguration(element);
+            return UnknownContentKeyPolicyConfiguration.DeserializeUnknownContentKeyPolicyConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyConfiguration>.Write(ModelReaderWriterOptions options)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeContentKeyPolicyConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

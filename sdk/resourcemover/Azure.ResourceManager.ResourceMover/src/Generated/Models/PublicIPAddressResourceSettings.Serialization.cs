@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIPAddressResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicIPAddressResourceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIPAddressResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicIPAddressResourceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> domainNameLabel = default;
-            Optional<string> fqdn = default;
-            Optional<string> publicIPAllocationMethod = default;
-            Optional<string> sku = default;
-            Optional<string> zones = default;
+            IDictionary<string, string> tags = default;
+            string domainNameLabel = default;
+            string fqdn = default;
+            string publicIPAllocationMethod = default;
+            string sku = default;
+            string zones = default;
             string resourceType = default;
-            Optional<string> targetResourceName = default;
-            Optional<string> targetResourceGroupName = default;
+            string targetResourceName = default;
+            string targetResourceGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicIPAddressResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), domainNameLabel.Value, fqdn.Value, publicIPAllocationMethod.Value, sku.Value, zones.Value);
+            return new PublicIPAddressResourceSettings(
+                resourceType,
+                targetResourceName,
+                targetResourceGroupName,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                domainNameLabel,
+                fqdn,
+                publicIPAllocationMethod,
+                sku,
+                zones);
         }
 
         BinaryData IPersistableModel<PublicIPAddressResourceSettings>.Write(ModelReaderWriterOptions options)
@@ -197,7 +207,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PublicIPAddressResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicIPAddressResourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -213,7 +223,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializePublicIPAddressResourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PublicIPAddressResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicIPAddressResourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

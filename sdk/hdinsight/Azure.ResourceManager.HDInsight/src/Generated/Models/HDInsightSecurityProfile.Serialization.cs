@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightSecurityProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightSecurityProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,15 +124,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<AuthenticationDirectoryType> directoryType = default;
-            Optional<string> domain = default;
-            Optional<string> organizationalUnitDN = default;
-            Optional<IList<Uri>> ldapsUrls = default;
-            Optional<string> domainUsername = default;
-            Optional<string> domainUserPassword = default;
-            Optional<IList<string>> clusterUsersGroupDNs = default;
-            Optional<ResourceIdentifier> aaddsResourceId = default;
-            Optional<ResourceIdentifier> msiResourceId = default;
+            AuthenticationDirectoryType? directoryType = default;
+            string domain = default;
+            string organizationalUnitDN = default;
+            IList<Uri> ldapsUrls = default;
+            string domainUsername = default;
+            string domainUserPassword = default;
+            IList<string> clusterUsersGroupDNs = default;
+            ResourceIdentifier aaddsResourceId = default;
+            ResourceIdentifier msiResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightSecurityProfile(Optional.ToNullable(directoryType), domain.Value, organizationalUnitDN.Value, Optional.ToList(ldapsUrls), domainUsername.Value, domainUserPassword.Value, Optional.ToList(clusterUsersGroupDNs), aaddsResourceId.Value, msiResourceId.Value, serializedAdditionalRawData);
+            return new HDInsightSecurityProfile(
+                directoryType,
+                domain,
+                organizationalUnitDN,
+                ldapsUrls ?? new ChangeTrackingList<Uri>(),
+                domainUsername,
+                domainUserPassword,
+                clusterUsersGroupDNs ?? new ChangeTrackingList<string>(),
+                aaddsResourceId,
+                msiResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightSecurityProfile>.Write(ModelReaderWriterOptions options)
@@ -237,7 +247,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightSecurityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -253,7 +263,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightSecurityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightSecurityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

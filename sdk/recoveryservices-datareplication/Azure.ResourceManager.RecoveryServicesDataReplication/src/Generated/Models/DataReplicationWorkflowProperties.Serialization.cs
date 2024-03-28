@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationWorkflowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationWorkflowProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationWorkflowProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in Tasks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataReplicationTask>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataReplicationErrorInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties);
+            writer.WriteObjectValue<WorkflowModelCustomProperties>(CustomProperties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationWorkflowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationWorkflowProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationWorkflowProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,22 +161,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<DataReplicationWorkflowState> state = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> objectId = default;
-            Optional<string> objectName = default;
-            Optional<string> objectInternalId = default;
-            Optional<string> objectInternalName = default;
-            Optional<WorkflowObjectType> objectType = default;
-            Optional<string> replicationProviderId = default;
-            Optional<string> sourceFabricProviderId = default;
-            Optional<string> targetFabricProviderId = default;
-            Optional<IReadOnlyList<string>> allowedActions = default;
-            Optional<string> activityId = default;
-            Optional<IReadOnlyList<DataReplicationTask>> tasks = default;
-            Optional<IReadOnlyList<DataReplicationErrorInfo>> errors = default;
+            string displayName = default;
+            DataReplicationWorkflowState? state = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string objectId = default;
+            string objectName = default;
+            string objectInternalId = default;
+            string objectInternalName = default;
+            WorkflowObjectType? objectType = default;
+            string replicationProviderId = default;
+            string sourceFabricProviderId = default;
+            string targetFabricProviderId = default;
+            IReadOnlyList<string> allowedActions = default;
+            string activityId = default;
+            IReadOnlyList<DataReplicationTask> tasks = default;
+            IReadOnlyList<DataReplicationErrorInfo> errors = default;
             WorkflowModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationTask> array = new List<DataReplicationTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationTask.DeserializeDataReplicationTask(item));
+                        array.Add(DataReplicationTask.DeserializeDataReplicationTask(item, options));
                     }
                     tasks = array;
                     continue;
@@ -300,14 +300,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationErrorInfo> array = new List<DataReplicationErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationErrorInfo.DeserializeDataReplicationErrorInfo(item));
+                        array.Add(DataReplicationErrorInfo.DeserializeDataReplicationErrorInfo(item, options));
                     }
                     errors = array;
                     continue;
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = WorkflowModelCustomProperties.DeserializeWorkflowModelCustomProperties(property.Value);
+                    customProperties = WorkflowModelCustomProperties.DeserializeWorkflowModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -316,7 +316,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationWorkflowProperties(displayName.Value, Optional.ToNullable(state), Optional.ToNullable(startTime), Optional.ToNullable(endTime), objectId.Value, objectName.Value, objectInternalId.Value, objectInternalName.Value, Optional.ToNullable(objectType), replicationProviderId.Value, sourceFabricProviderId.Value, targetFabricProviderId.Value, Optional.ToList(allowedActions), activityId.Value, Optional.ToList(tasks), Optional.ToList(errors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationWorkflowProperties(
+                displayName,
+                state,
+                startTime,
+                endTime,
+                objectId,
+                objectName,
+                objectInternalId,
+                objectInternalName,
+                objectType,
+                replicationProviderId,
+                sourceFabricProviderId,
+                targetFabricProviderId,
+                allowedActions ?? new ChangeTrackingList<string>(),
+                activityId,
+                tasks ?? new ChangeTrackingList<DataReplicationTask>(),
+                errors ?? new ChangeTrackingList<DataReplicationErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationWorkflowProperties>.Write(ModelReaderWriterOptions options)
@@ -328,7 +346,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationWorkflowProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationWorkflowProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -344,7 +362,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDataReplicationWorkflowProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationWorkflowProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationWorkflowProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

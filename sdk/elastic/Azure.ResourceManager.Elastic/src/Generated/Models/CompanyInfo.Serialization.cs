@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<CompanyInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CompanyInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CompanyInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<CompanyInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CompanyInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CompanyInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> domain = default;
-            Optional<string> business = default;
-            Optional<string> employeesNumber = default;
-            Optional<string> state = default;
-            Optional<string> country = default;
+            string domain = default;
+            string business = default;
+            string employeesNumber = default;
+            string state = default;
+            string country = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CompanyInfo(domain.Value, business.Value, employeesNumber.Value, state.Value, country.Value, serializedAdditionalRawData);
+            return new CompanyInfo(
+                domain,
+                business,
+                employeesNumber,
+                state,
+                country,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CompanyInfo>.Write(ModelReaderWriterOptions options)
@@ -141,7 +147,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CompanyInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CompanyInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeCompanyInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CompanyInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CompanyInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

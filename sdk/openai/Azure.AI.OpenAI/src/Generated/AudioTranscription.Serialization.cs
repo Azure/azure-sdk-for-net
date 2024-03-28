@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AudioTranscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioTranscription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioTranscription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +49,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in Segments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AudioTranscriptionSegment>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +76,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AudioTranscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioTranscription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioTranscription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,10 +92,10 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string text = default;
-            Optional<AudioTaskLabel> task = default;
-            Optional<string> language = default;
-            Optional<TimeSpan> duration = default;
-            Optional<IReadOnlyList<AudioTranscriptionSegment>> segments = default;
+            AudioTaskLabel? task = default;
+            string language = default;
+            TimeSpan? duration = default;
+            IReadOnlyList<AudioTranscriptionSegment> segments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +137,7 @@ namespace Azure.AI.OpenAI
                     List<AudioTranscriptionSegment> array = new List<AudioTranscriptionSegment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AudioTranscriptionSegment.DeserializeAudioTranscriptionSegment(item));
+                        array.Add(AudioTranscriptionSegment.DeserializeAudioTranscriptionSegment(item, options));
                     }
                     segments = array;
                     continue;
@@ -149,7 +148,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTranscription(text, Optional.ToNullable(task), language.Value, Optional.ToNullable(duration), Optional.ToList(segments), serializedAdditionalRawData);
+            return new AudioTranscription(
+                text,
+                task,
+                language,
+                duration,
+                segments ?? new ChangeTrackingList<AudioTranscriptionSegment>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AudioTranscription>.Write(ModelReaderWriterOptions options)
@@ -161,7 +166,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AudioTranscription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioTranscription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +182,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeAudioTranscription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AudioTranscription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioTranscription)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -187,7 +192,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AudioTranscription>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

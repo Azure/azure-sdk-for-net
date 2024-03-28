@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerInquiryInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadContainerInquiryInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadContainerInquiryInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("errorDetail"u8);
-                writer.WriteObjectValue(ErrorDetail);
+                writer.WriteObjectValue<BackupErrorDetail>(ErrorDetail, options);
             }
             if (Optional.IsCollectionDefined(InquiryDetails))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in InquiryDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WorkloadInquiryDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerInquiryInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadContainerInquiryInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadContainerInquiryInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<BackupErrorDetail> errorDetail = default;
-            Optional<IList<WorkloadInquiryDetails>> inquiryDetails = default;
+            string status = default;
+            BackupErrorDetail errorDetail = default;
+            IList<WorkloadInquiryDetails> inquiryDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
+                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inquiryDetails"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<WorkloadInquiryDetails> array = new List<WorkloadInquiryDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadInquiryDetails.DeserializeWorkloadInquiryDetails(item));
+                        array.Add(WorkloadInquiryDetails.DeserializeWorkloadInquiryDetails(item, options));
                     }
                     inquiryDetails = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadContainerInquiryInfo(status.Value, errorDetail.Value, Optional.ToList(inquiryDetails), serializedAdditionalRawData);
+            return new WorkloadContainerInquiryInfo(status, errorDetail, inquiryDetails ?? new ChangeTrackingList<WorkloadInquiryDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadContainerInquiryInfo>.Write(ModelReaderWriterOptions options)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadContainerInquiryInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadContainerInquiryInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeWorkloadContainerInquiryInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadContainerInquiryInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadContainerInquiryInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteErrorSummariesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteErrorSummariesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteErrorSummariesProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DiscoveryScopeErrorSummaries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootSiteErrorSummaryModel>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootSiteError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteErrorSummariesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteErrorSummariesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteErrorSummariesProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<IList<SpringBootSiteErrorSummaryModel>> discoveryScopeErrorSummaries = default;
-            Optional<IList<SpringBootSiteError>> errors = default;
-            Optional<SpringAppDiscoveryProvisioningState> provisioningState = default;
+            IList<SpringBootSiteErrorSummaryModel> discoveryScopeErrorSummaries = default;
+            IList<SpringBootSiteError> errors = default;
+            SpringAppDiscoveryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootSiteErrorSummaryModel> array = new List<SpringBootSiteErrorSummaryModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootSiteErrorSummaryModel.DeserializeSpringBootSiteErrorSummaryModel(item));
+                        array.Add(SpringBootSiteErrorSummaryModel.DeserializeSpringBootSiteErrorSummaryModel(item, options));
                     }
                     discoveryScopeErrorSummaries = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootSiteError> array = new List<SpringBootSiteError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item));
+                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item, options));
                     }
                     errors = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootSiteErrorSummariesProperties(Optional.ToList(discoveryScopeErrorSummaries), Optional.ToList(errors), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SpringBootSiteErrorSummariesProperties(discoveryScopeErrorSummaries ?? new ChangeTrackingList<SpringBootSiteErrorSummaryModel>(), errors ?? new ChangeTrackingList<SpringBootSiteError>(), provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootSiteErrorSummariesProperties>.Write(ModelReaderWriterOptions options)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteErrorSummariesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteErrorSummariesProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         return DeserializeSpringBootSiteErrorSummariesProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteErrorSummariesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteErrorSummariesProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

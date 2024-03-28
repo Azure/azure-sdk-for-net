@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<StoragePoolSkuInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StoragePoolSkuInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StoragePoolSkuInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StoragePoolSkuCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(LocationInfo))
             {
                 writer.WritePropertyName("locationInfo"u8);
-                writer.WriteObjectValue(LocationInfo);
+                writer.WriteObjectValue<StoragePoolSkuLocationInfo>(LocationInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StoragePoolSkuRestrictions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<StoragePoolSkuInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StoragePoolSkuInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StoragePoolSkuInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> apiVersion = default;
-            Optional<string> resourceType = default;
-            Optional<IReadOnlyList<StoragePoolSkuCapability>> capabilities = default;
-            Optional<StoragePoolSkuLocationInfo> locationInfo = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<IReadOnlyList<StoragePoolSkuRestrictions>> restrictions = default;
+            string apiVersion = default;
+            string resourceType = default;
+            IReadOnlyList<StoragePoolSkuCapability> capabilities = default;
+            StoragePoolSkuLocationInfo locationInfo = default;
+            string name = default;
+            string tier = default;
+            IReadOnlyList<StoragePoolSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolSkuCapability> array = new List<StoragePoolSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuCapability.DeserializeStoragePoolSkuCapability(item));
+                        array.Add(StoragePoolSkuCapability.DeserializeStoragePoolSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     {
                         continue;
                     }
-                    locationInfo = StoragePoolSkuLocationInfo.DeserializeStoragePoolSkuLocationInfo(property.Value);
+                    locationInfo = StoragePoolSkuLocationInfo.DeserializeStoragePoolSkuLocationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolSkuRestrictions> array = new List<StoragePoolSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuRestrictions.DeserializeStoragePoolSkuRestrictions(item));
+                        array.Add(StoragePoolSkuRestrictions.DeserializeStoragePoolSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -183,7 +183,15 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolSkuInfo(apiVersion.Value, resourceType.Value, Optional.ToList(capabilities), locationInfo.Value, name.Value, tier.Value, Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new StoragePoolSkuInfo(
+                apiVersion,
+                resourceType,
+                capabilities ?? new ChangeTrackingList<StoragePoolSkuCapability>(),
+                locationInfo,
+                name,
+                tier,
+                restrictions ?? new ChangeTrackingList<StoragePoolSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolSkuInfo>.Write(ModelReaderWriterOptions options)
@@ -195,7 +203,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StoragePoolSkuInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StoragePoolSkuInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +219,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                         return DeserializeStoragePoolSkuInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StoragePoolSkuInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StoragePoolSkuInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

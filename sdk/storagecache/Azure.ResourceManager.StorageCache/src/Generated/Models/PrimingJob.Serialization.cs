@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrimingJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrimingJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrimingJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrimingJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrimingJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrimingJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             string primingJobName = default;
             Uri primingManifestUrl = default;
-            Optional<string> primingJobId = default;
-            Optional<PrimingJobState> primingJobState = default;
-            Optional<string> primingJobStatus = default;
-            Optional<string> primingJobDetails = default;
-            Optional<double> primingJobPercentComplete = default;
+            string primingJobId = default;
+            PrimingJobState? primingJobState = default;
+            string primingJobStatus = default;
+            string primingJobDetails = default;
+            double? primingJobPercentComplete = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrimingJob(primingJobName, primingManifestUrl, primingJobId.Value, Optional.ToNullable(primingJobState), primingJobStatus.Value, primingJobDetails.Value, Optional.ToNullable(primingJobPercentComplete), serializedAdditionalRawData);
+            return new PrimingJob(
+                primingJobName,
+                primingManifestUrl,
+                primingJobId,
+                primingJobState,
+                primingJobStatus,
+                primingJobDetails,
+                primingJobPercentComplete,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrimingJob>.Write(ModelReaderWriterOptions options)
@@ -165,7 +173,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrimingJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrimingJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +189,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializePrimingJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrimingJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrimingJob)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteObjectValue(Data);
+                writer.WriteObjectValue<MonitorBase>(Data);
             }
             writer.WriteEndObject();
         }

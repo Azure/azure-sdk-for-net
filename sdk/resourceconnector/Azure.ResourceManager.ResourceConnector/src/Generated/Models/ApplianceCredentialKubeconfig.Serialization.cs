@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceCredentialKubeconfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceCredentialKubeconfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceCredentialKubeconfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceCredentialKubeconfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceCredentialKubeconfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceCredentialKubeconfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<AccessProfileType> name = default;
-            Optional<string> value = default;
+            AccessProfileType? name = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceCredentialKubeconfig(Optional.ToNullable(name), value.Value, serializedAdditionalRawData);
+            return new ApplianceCredentialKubeconfig(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceCredentialKubeconfig>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceCredentialKubeconfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceCredentialKubeconfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                         return DeserializeApplianceCredentialKubeconfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceCredentialKubeconfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceCredentialKubeconfig)} does not support reading '{options.Format}' format.");
             }
         }
 

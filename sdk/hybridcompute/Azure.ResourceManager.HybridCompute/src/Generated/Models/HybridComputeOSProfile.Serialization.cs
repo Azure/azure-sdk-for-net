@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeOSProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeOSProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue(WindowsConfiguration);
+                writer.WriteObjectValue<HybridComputeWindowsConfiguration>(WindowsConfiguration, options);
             }
             if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
-                writer.WriteObjectValue(LinuxConfiguration);
+                writer.WriteObjectValue<HybridComputeLinuxConfiguration>(LinuxConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeOSProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeOSProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> computerName = default;
-            Optional<HybridComputeWindowsConfiguration> windowsConfiguration = default;
-            Optional<HybridComputeLinuxConfiguration> linuxConfiguration = default;
+            string computerName = default;
+            HybridComputeWindowsConfiguration windowsConfiguration = default;
+            HybridComputeLinuxConfiguration linuxConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = HybridComputeWindowsConfiguration.DeserializeHybridComputeWindowsConfiguration(property.Value);
+                    windowsConfiguration = HybridComputeWindowsConfiguration.DeserializeHybridComputeWindowsConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxConfiguration"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    linuxConfiguration = HybridComputeLinuxConfiguration.DeserializeHybridComputeLinuxConfiguration(property.Value);
+                    linuxConfiguration = HybridComputeLinuxConfiguration.DeserializeHybridComputeLinuxConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeOSProfile(computerName.Value, windowsConfiguration.Value, linuxConfiguration.Value, serializedAdditionalRawData);
+            return new HybridComputeOSProfile(computerName, windowsConfiguration, linuxConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeOSProfile>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeOSProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeOSProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputeOSProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeOSProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeOSProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualDiskUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             if (Optional.IsDefined(StorageQoSPolicy))
             {
                 writer.WritePropertyName("storageQoSPolicy"u8);
-                writer.WriteObjectValue(StorageQoSPolicy);
+                writer.WriteObjectValue<StorageQoSPolicyDetails>(StorageQoSPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualDiskUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> diskId = default;
-            Optional<int> diskSizeGB = default;
-            Optional<int> bus = default;
-            Optional<int> lun = default;
-            Optional<string> busType = default;
-            Optional<string> vhdType = default;
-            Optional<StorageQoSPolicyDetails> storageQoSPolicy = default;
+            string name = default;
+            string diskId = default;
+            int? diskSizeGB = default;
+            int? bus = default;
+            int? lun = default;
+            string busType = default;
+            string vhdType = default;
+            StorageQoSPolicyDetails storageQoSPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    storageQoSPolicy = StorageQoSPolicyDetails.DeserializeStorageQoSPolicyDetails(property.Value);
+                    storageQoSPolicy = StorageQoSPolicyDetails.DeserializeStorageQoSPolicyDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualDiskUpdate(name.Value, diskId.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(bus), Optional.ToNullable(lun), busType.Value, vhdType.Value, storageQoSPolicy.Value, serializedAdditionalRawData);
+            return new VirtualDiskUpdate(
+                name,
+                diskId,
+                diskSizeGB,
+                bus,
+                lun,
+                busType,
+                vhdType,
+                storageQoSPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualDiskUpdate>.Write(ModelReaderWriterOptions options)
@@ -190,7 +199,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +215,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeVirtualDiskUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

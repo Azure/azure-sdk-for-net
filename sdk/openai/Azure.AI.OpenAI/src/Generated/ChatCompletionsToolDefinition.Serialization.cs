@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatCompletionsToolDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatCompletionsToolDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatCompletionsToolDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatCompletionsToolDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,10 +70,10 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "function": return ChatCompletionsFunctionToolDefinition.DeserializeChatCompletionsFunctionToolDefinition(element);
+                    case "function": return ChatCompletionsFunctionToolDefinition.DeserializeChatCompletionsFunctionToolDefinition(element, options);
                 }
             }
-            return UnknownChatCompletionsToolDefinition.DeserializeUnknownChatCompletionsToolDefinition(element);
+            return UnknownChatCompletionsToolDefinition.DeserializeUnknownChatCompletionsToolDefinition(element, options);
         }
 
         BinaryData IPersistableModel<ChatCompletionsToolDefinition>.Write(ModelReaderWriterOptions options)
@@ -86,7 +85,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletionsToolDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatCompletionsToolDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +101,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeChatCompletionsToolDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletionsToolDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatCompletionsToolDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -120,7 +119,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ChatCompletionsToolDefinition>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

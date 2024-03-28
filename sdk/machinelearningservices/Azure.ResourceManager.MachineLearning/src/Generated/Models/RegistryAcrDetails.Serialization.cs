@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegistryAcrDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistryAcrDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegistryAcrDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SystemCreatedAcrAccount != null)
                 {
                     writer.WritePropertyName("systemCreatedAcrAccount"u8);
-                    writer.WriteObjectValue(SystemCreatedAcrAccount);
+                    writer.WriteObjectValue<SystemCreatedAcrAccount>(SystemCreatedAcrAccount, options);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (UserCreatedAcrAccount != null)
                 {
                     writer.WritePropertyName("userCreatedAcrAccount"u8);
-                    writer.WriteObjectValue(UserCreatedAcrAccount);
+                    writer.WriteObjectValue<UserCreatedAcrAccount>(UserCreatedAcrAccount, options);
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegistryAcrDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistryAcrDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegistryAcrDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<SystemCreatedAcrAccount> systemCreatedAcrAccount = default;
-            Optional<UserCreatedAcrAccount> userCreatedAcrAccount = default;
+            SystemCreatedAcrAccount systemCreatedAcrAccount = default;
+            UserCreatedAcrAccount userCreatedAcrAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         systemCreatedAcrAccount = null;
                         continue;
                     }
-                    systemCreatedAcrAccount = SystemCreatedAcrAccount.DeserializeSystemCreatedAcrAccount(property.Value);
+                    systemCreatedAcrAccount = SystemCreatedAcrAccount.DeserializeSystemCreatedAcrAccount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userCreatedAcrAccount"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         userCreatedAcrAccount = null;
                         continue;
                     }
-                    userCreatedAcrAccount = UserCreatedAcrAccount.DeserializeUserCreatedAcrAccount(property.Value);
+                    userCreatedAcrAccount = UserCreatedAcrAccount.DeserializeUserCreatedAcrAccount(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistryAcrDetails(systemCreatedAcrAccount.Value, userCreatedAcrAccount.Value, serializedAdditionalRawData);
+            return new RegistryAcrDetails(systemCreatedAcrAccount, userCreatedAcrAccount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegistryAcrDetails>.Write(ModelReaderWriterOptions options)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegistryAcrDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegistryAcrDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeRegistryAcrDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegistryAcrDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegistryAcrDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

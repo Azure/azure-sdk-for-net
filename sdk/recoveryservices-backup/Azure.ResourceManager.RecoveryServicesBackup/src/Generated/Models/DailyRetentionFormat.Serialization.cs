@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DailyRetentionFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DailyRetentionFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DailyRetentionFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DaysOfTheMonth)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BackupDay>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DailyRetentionFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DailyRetentionFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DailyRetentionFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<BackupDay>> daysOfTheMonth = default;
+            IList<BackupDay> daysOfTheMonth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<BackupDay> array = new List<BackupDay>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupDay.DeserializeBackupDay(item));
+                        array.Add(BackupDay.DeserializeBackupDay(item, options));
                     }
                     daysOfTheMonth = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DailyRetentionFormat(Optional.ToList(daysOfTheMonth), serializedAdditionalRawData);
+            return new DailyRetentionFormat(daysOfTheMonth ?? new ChangeTrackingList<BackupDay>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DailyRetentionFormat>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DailyRetentionFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DailyRetentionFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeDailyRetentionFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DailyRetentionFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DailyRetentionFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

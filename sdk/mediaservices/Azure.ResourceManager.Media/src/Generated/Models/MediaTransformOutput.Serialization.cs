@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaTransformOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStringValue(RelativePriority.Value.ToString());
             }
             writer.WritePropertyName("preset"u8);
-            writer.WriteObjectValue(Preset);
+            writer.WriteObjectValue<MediaTransformPreset>(Preset, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaTransformOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaTransformOnErrorType> onError = default;
-            Optional<MediaJobPriority> relativePriority = default;
+            MediaTransformOnErrorType? onError = default;
+            MediaJobPriority? relativePriority = default;
             MediaTransformPreset preset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("preset"u8))
                 {
-                    preset = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
+                    preset = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaTransformOutput(Optional.ToNullable(onError), Optional.ToNullable(relativePriority), preset, serializedAdditionalRawData);
+            return new MediaTransformOutput(onError, relativePriority, preset, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaTransformOutput>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaTransformOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

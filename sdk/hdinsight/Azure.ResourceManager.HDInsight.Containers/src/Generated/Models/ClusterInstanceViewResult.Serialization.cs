@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterInstanceViewResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterInstanceViewResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterInstanceViewResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
-            writer.WriteObjectValue(Status);
+            writer.WriteObjectValue<ClusterInstanceViewStatus>(Status, options);
             writer.WritePropertyName("serviceStatuses"u8);
             writer.WriteStartArray();
             foreach (var item in ServiceStatuses)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<HDInsightServiceStatus>(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterInstanceViewResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterInstanceViewResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterInstanceViewResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         if (property0.NameEquals("status"u8))
                         {
-                            status = ClusterInstanceViewStatus.DeserializeClusterInstanceViewStatus(property0.Value);
+                            status = ClusterInstanceViewStatus.DeserializeClusterInstanceViewStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serviceStatuses"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                             List<HDInsightServiceStatus> array = new List<HDInsightServiceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HDInsightServiceStatus.DeserializeHDInsightServiceStatus(item));
+                                array.Add(HDInsightServiceStatus.DeserializeHDInsightServiceStatus(item, options));
                             }
                             serviceStatuses = array;
                             continue;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterInstanceViewResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterInstanceViewResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeClusterInstanceViewResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterInstanceViewResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterInstanceViewResult)} does not support reading '{options.Format}' format.");
             }
         }
 

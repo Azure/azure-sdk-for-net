@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceScalingTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServiceScalingTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceScalingTrigger)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceScalingTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServiceScalingTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceScalingTrigger)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AveragePartitionLoadTrigger": return AveragePartitionLoadScalingTrigger.DeserializeAveragePartitionLoadScalingTrigger(element);
-                    case "AverageServiceLoadTrigger": return AverageServiceLoadScalingTrigger.DeserializeAverageServiceLoadScalingTrigger(element);
+                    case "AveragePartitionLoadTrigger": return AveragePartitionLoadScalingTrigger.DeserializeAveragePartitionLoadScalingTrigger(element, options);
+                    case "AverageServiceLoadTrigger": return AverageServiceLoadScalingTrigger.DeserializeAverageServiceLoadScalingTrigger(element, options);
                 }
             }
-            return UnknownScalingTrigger.DeserializeUnknownScalingTrigger(element);
+            return UnknownScalingTrigger.DeserializeUnknownScalingTrigger(element, options);
         }
 
         BinaryData IPersistableModel<ManagedServiceScalingTrigger>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceScalingTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceScalingTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedServiceScalingTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceScalingTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceScalingTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 

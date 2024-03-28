@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnyExistingOffersInTheCollectionsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnyExistingOffersInTheCollectionsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<bool> value = default;
+            bool? value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnyExistingOffersInTheCollectionsResult(Optional.ToNullable(value), serializedAdditionalRawData);
+            return new AnyExistingOffersInTheCollectionsResult(value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnyExistingOffersInTheCollectionsResult>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeAnyExistingOffersInTheCollectionsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -33,7 +31,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BackupResourceConfigData(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new BackupResourceConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PreValidateEnableBackupResult"/>. </summary>
@@ -49,7 +56,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.PreValidateEnableBackupResult"/> instance for mocking. </returns>
         public static PreValidateEnableBackupResult PreValidateEnableBackupResult(BackupValidationStatus? status = null, string errorCode = null, string errorMessage = null, string recommendation = null, string containerName = null, string protectedItemName = null)
         {
-            return new PreValidateEnableBackupResult(status, errorCode, errorMessage, recommendation, containerName, protectedItemName, serializedAdditionalRawData: null);
+            return new PreValidateEnableBackupResult(
+                status,
+                errorCode,
+                errorMessage,
+                recommendation,
+                containerName,
+                protectedItemName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupStatusResult"/>. </summary>
@@ -67,7 +81,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.BackupStatusResult"/> instance for mocking. </returns>
         public static BackupStatusResult BackupStatusResult(BackupProtectionStatus? protectionStatus = null, ResourceIdentifier vaultId = null, BackupFabricName? fabricName = null, string containerName = null, string protectedItemName = null, string errorCode = null, string errorMessage = null, string policyName = null, string registrationStatus = null, int? protectedItemsCount = null, AcquireStorageAccountLock? acquireStorageAccountLock = null)
         {
-            return new BackupStatusResult(protectionStatus, vaultId, fabricName, containerName, protectedItemName, errorCode, errorMessage, policyName, registrationStatus, protectedItemsCount, acquireStorageAccountLock, serializedAdditionalRawData: null);
+            return new BackupStatusResult(
+                protectionStatus,
+                vaultId,
+                fabricName,
+                containerName,
+                protectedItemName,
+                errorCode,
+                errorMessage,
+                policyName,
+                registrationStatus,
+                protectedItemsCount,
+                acquireStorageAccountLock,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmResourceFeatureSupportResult"/>. </summary>
@@ -96,7 +122,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BackupProtectionIntentData(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new BackupProtectionIntentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupManagementUsage"/>. </summary>
@@ -109,7 +144,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.BackupManagementUsage"/> instance for mocking. </returns>
         public static BackupManagementUsage BackupManagementUsage(BackupUsagesUnit? unit = null, string quotaPeriod = null, DateTimeOffset? nextResetOn = null, long? currentValue = null, long? limit = null, BackupNameInfo name = null)
         {
-            return new BackupManagementUsage(unit, quotaPeriod, nextResetOn, currentValue, limit, name, serializedAdditionalRawData: null);
+            return new BackupManagementUsage(
+                unit,
+                quotaPeriod,
+                nextResetOn,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupNameInfo"/>. </summary>
@@ -135,7 +177,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BackupResourceVaultConfigData(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new BackupResourceVaultConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupResourceEncryptionConfigExtendedData"/>. </summary>
@@ -152,7 +203,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BackupResourceEncryptionConfigExtendedData(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new BackupResourceEncryptionConfigExtendedData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupResourceEncryptionConfigExtendedCreateOrUpdateContent"/>. </summary>
@@ -169,7 +229,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/>. </summary>
@@ -186,7 +255,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BackupPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new BackupPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrepareDataMoveContent"/>. </summary>
@@ -203,7 +281,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             sourceContainerArmIds ??= new List<ResourceIdentifier>();
 
-            return new PrepareDataMoveContent(targetResourceId, targetRegion, dataMoveLevel, sourceContainerArmIds?.ToList(), ignoreMoved, serializedAdditionalRawData: null);
+            return new PrepareDataMoveContent(
+                targetResourceId,
+                targetRegion,
+                dataMoveLevel,
+                sourceContainerArmIds?.ToList(),
+                ignoreMoved,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TriggerDataMoveContent"/>. </summary>
@@ -218,7 +302,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             sourceContainerArmIds ??= new List<ResourceIdentifier>();
 
-            return new TriggerDataMoveContent(sourceResourceId, sourceRegion, dataMoveLevel, correlationId, sourceContainerArmIds?.ToList(), doesPauseGC, serializedAdditionalRawData: null);
+            return new TriggerDataMoveContent(
+                sourceResourceId,
+                sourceRegion,
+                dataMoveLevel,
+                correlationId,
+                sourceContainerArmIds?.ToList(),
+                doesPauseGC,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectedItemData"/>. </summary>
@@ -231,7 +322,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="properties">
         /// ProtectedItemResource properties
         /// Please note <see cref="Models.BackupGenericProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.FileshareProtectedItem"/>, <see cref="Models.IaasVmProtectedItem"/>, <see cref="Models.VmWorkloadProtectedItem"/>, <see cref="Models.VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="Models.VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="Models.DpmProtectedItem"/>, <see cref="Models.GenericProtectedItem"/>, <see cref="Models.MabFileFolderProtectedItem"/>, <see cref="Models.IaasClassicComputeVmProtectedItem"/>, <see cref="Models.IaasComputeVmProtectedItem"/> and <see cref="Models.SqlProtectedItem"/>.
+        /// The available derived classes include <see cref="Models.FileshareProtectedItem"/>, <see cref="Models.IaasVmProtectedItem"/>, <see cref="Models.VmWorkloadProtectedItem"/>, <see cref="Models.VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="Models.VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="Models.DpmProtectedItem"/>, <see cref="Models.GenericProtectedItem"/>, <see cref="Models.MabFileFolderProtectedItem"/>, <see cref="Models.IaasClassicComputeVmProtectedItem"/>, <see cref="Models.IaasComputeVmProtectedItem"/> and <see cref="Models.SqlProtectedItem"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectedItemData"/> instance for mocking. </returns>
@@ -239,7 +330,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BackupProtectedItemData(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new BackupProtectedItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupGenericProtectedItem"/>. </summary>
@@ -267,7 +367,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             resourceGuardOperationRequests ??= new List<string>();
 
-            return new UnknownProtectedItem(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null);
+            return new UnknownProtectedItem(
+                protectedItemType,
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupRecoveryPointData"/>. </summary>
@@ -288,7 +408,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BackupRecoveryPointData(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new BackupRecoveryPointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TriggerRestoreContent"/>. </summary>
@@ -309,7 +438,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new TriggerRestoreContent(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new TriggerRestoreContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/>. </summary>
@@ -330,7 +468,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BackupProtectionPolicyData(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new BackupProtectionPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupJobData"/>. </summary>
@@ -351,7 +498,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BackupJobData(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new BackupJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupEngineData"/>. </summary>
@@ -372,7 +528,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BackupEngineData(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new BackupEngineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProtectableContainerResource"/>. </summary>
@@ -393,7 +558,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ProtectableContainerResource(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new ProtectableContainerResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/>. </summary>
@@ -414,7 +588,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BackupProtectionContainerData(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new BackupProtectionContainerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadItemResource"/>. </summary>
@@ -435,7 +618,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new WorkloadItemResource(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new WorkloadItemResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TriggerBackupContent"/>. </summary>
@@ -456,7 +648,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new TriggerBackupContent(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new TriggerBackupContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProvisionIlrConnectionContent"/>. </summary>
@@ -477,7 +678,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ProvisionIlrConnectionContent(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new ProvisionIlrConnectionContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadProtectableItemResource"/>. </summary>
@@ -490,7 +700,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="properties">
         /// WorkloadProtectableItemResource properties
         /// Please note <see cref="WorkloadProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FileShareProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/> and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
+        /// The available derived classes include <see cref="FileShareProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/> and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.WorkloadProtectableItemResource"/> instance for mocking. </returns>
@@ -498,7 +708,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new WorkloadProtectableItemResource(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new WorkloadProtectableItemResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TokenInformation"/>. </summary>
@@ -525,7 +744,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ResourceGuardProxyData(id, name, resourceType, systemData, tags, location, properties, eTag, serializedAdditionalRawData: null);
+            return new ResourceGuardProxyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UnlockDeleteResult"/>. </summary>
@@ -578,7 +806,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             resourceGuardOperationRequests ??= new List<string>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
 
-            return new FileshareProtectedItem("AzureFileShareProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null, friendlyName, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, kpisHealths, extendedInfo);
+            return new FileshareProtectedItem(
+                "AzureFileShareProtectedItem",
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null,
+                friendlyName,
+                protectionStatus,
+                protectionState,
+                lastBackupStatus,
+                lastBackupOn,
+                kpisHealths,
+                extendedInfo);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthDetails"/>. </summary>
@@ -603,7 +858,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.FileshareProtectedItemExtendedInfo"/> instance for mocking. </returns>
         public static FileshareProtectedItemExtendedInfo FileshareProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn = null, int? recoveryPointCount = null, string policyState = null, string resourceState = null, DateTimeOffset? resourceStateSyncOn = null)
         {
-            return new FileshareProtectedItemExtendedInfo(oldestRecoverOn, recoveryPointCount, policyState, resourceState, resourceStateSyncOn, serializedAdditionalRawData: null);
+            return new FileshareProtectedItemExtendedInfo(
+                oldestRecoverOn,
+                recoveryPointCount,
+                policyState,
+                resourceState,
+                resourceStateSyncOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IaasClassicComputeVmProtectedItem"/>. </summary>
@@ -644,7 +905,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             healthDetails ??= new List<IaasVmHealthDetails>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
 
-            return new IaasClassicComputeVmProtectedItem("Microsoft.ClassicCompute/virtualMachines", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
+            return new IaasClassicComputeVmProtectedItem(
+                "Microsoft.ClassicCompute/virtualMachines",
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null,
+                friendlyName,
+                virtualMachineId,
+                protectionStatus,
+                protectionState,
+                healthStatus,
+                healthDetails?.ToList(),
+                kpisHealths,
+                lastBackupStatus,
+                lastBackupOn,
+                protectedItemDataId,
+                extendedInfo,
+                extendedProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IaasVmProtectedItem"/>. </summary>
@@ -685,7 +978,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             healthDetails ??= new List<IaasVmHealthDetails>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
 
-            return new IaasVmProtectedItem("AzureIaaSVMProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
+            return new IaasVmProtectedItem(
+                "AzureIaaSVMProtectedItem",
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null,
+                friendlyName,
+                virtualMachineId,
+                protectionStatus,
+                protectionState,
+                healthStatus,
+                healthDetails?.ToList(),
+                kpisHealths,
+                lastBackupStatus,
+                lastBackupOn,
+                protectedItemDataId,
+                extendedInfo,
+                extendedProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IaasVmHealthDetails"/>. </summary>
@@ -739,7 +1064,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             healthDetails ??= new List<IaasVmHealthDetails>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
 
-            return new IaasComputeVmProtectedItem("Microsoft.Compute/virtualMachines", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
+            return new IaasComputeVmProtectedItem(
+                "Microsoft.Compute/virtualMachines",
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null,
+                friendlyName,
+                virtualMachineId,
+                protectionStatus,
+                protectionState,
+                healthStatus,
+                healthDetails?.ToList(),
+                kpisHealths,
+                lastBackupStatus,
+                lastBackupOn,
+                protectedItemDataId,
+                extendedInfo,
+                extendedProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IaasVmErrorInfo"/>. </summary>
@@ -782,7 +1139,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             resourceGuardOperationRequests ??= new List<string>();
 
-            return new SqlProtectedItem("Microsoft.Sql/servers/databases", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null, protectedItemDataId, protectionState, extendedInfo);
+            return new SqlProtectedItem(
+                "Microsoft.Sql/servers/databases",
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null,
+                protectedItemDataId,
+                protectionState,
+                extendedInfo);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmWorkloadProtectedItem"/>. </summary>
@@ -825,7 +1205,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadProtectedItem("AzureVmWorkloadProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadProtectedItem(
+                "AzureVmWorkloadProtectedItem",
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null,
+                friendlyName,
+                serverName,
+                parentName,
+                parentType,
+                protectionStatus,
+                protectionState,
+                lastBackupStatus,
+                lastBackupOn,
+                lastBackupErrorDetail,
+                protectedItemDataSourceId,
+                protectedItemHealthStatus,
+                extendedInfo,
+                kpisHealths,
+                nodesList?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupErrorDetail"/>. </summary>
@@ -880,7 +1294,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadSapAseDatabaseProtectedItem("AzureVmWorkloadSAPAseDatabase", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadSapAseDatabaseProtectedItem(
+                "AzureVmWorkloadSAPAseDatabase",
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null,
+                friendlyName,
+                serverName,
+                parentName,
+                parentType,
+                protectionStatus,
+                protectionState,
+                lastBackupStatus,
+                lastBackupOn,
+                lastBackupErrorDetail,
+                protectedItemDataSourceId,
+                protectedItemHealthStatus,
+                extendedInfo,
+                kpisHealths,
+                nodesList?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmWorkloadSapHanaDatabaseProtectedItem"/>. </summary>
@@ -923,7 +1371,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadSapHanaDatabaseProtectedItem("AzureVmWorkloadSAPHanaDatabase", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadSapHanaDatabaseProtectedItem(
+                "AzureVmWorkloadSAPHanaDatabase",
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null,
+                friendlyName,
+                serverName,
+                parentName,
+                parentType,
+                protectionStatus,
+                protectionState,
+                lastBackupStatus,
+                lastBackupOn,
+                lastBackupErrorDetail,
+                protectedItemDataSourceId,
+                protectedItemHealthStatus,
+                extendedInfo,
+                kpisHealths,
+                nodesList?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmWorkloadSapHanaDBInstanceProtectedItem"/>. </summary>
@@ -966,7 +1448,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadSapHanaDBInstanceProtectedItem("AzureVmWorkloadSAPHanaDBInstance", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadSapHanaDBInstanceProtectedItem(
+                "AzureVmWorkloadSAPHanaDBInstance",
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null,
+                friendlyName,
+                serverName,
+                parentName,
+                parentType,
+                protectionStatus,
+                protectionState,
+                lastBackupStatus,
+                lastBackupOn,
+                lastBackupErrorDetail,
+                protectedItemDataSourceId,
+                protectedItemHealthStatus,
+                extendedInfo,
+                kpisHealths,
+                nodesList?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmWorkloadSqlDatabaseProtectedItem"/>. </summary>
@@ -1009,7 +1525,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadSqlDatabaseProtectedItem("AzureVmWorkloadSQLDatabase", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadSqlDatabaseProtectedItem(
+                "AzureVmWorkloadSQLDatabase",
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null,
+                friendlyName,
+                serverName,
+                parentName,
+                parentType,
+                protectionStatus,
+                protectionState,
+                lastBackupStatus,
+                lastBackupOn,
+                lastBackupErrorDetail,
+                protectedItemDataSourceId,
+                protectedItemHealthStatus,
+                extendedInfo,
+                kpisHealths,
+                nodesList?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DpmProtectedItem"/>. </summary>
@@ -1040,7 +1590,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             resourceGuardOperationRequests ??= new List<string>();
 
-            return new DpmProtectedItem("DPMProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null, friendlyName, backupEngineName, protectionState, extendedInfo);
+            return new DpmProtectedItem(
+                "DPMProtectedItem",
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null,
+                friendlyName,
+                backupEngineName,
+                protectionState,
+                extendedInfo);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GenericProtectedItem"/>. </summary>
@@ -1074,7 +1648,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             resourceGuardOperationRequests ??= new List<string>();
             sourceAssociations ??= new Dictionary<string, string>();
 
-            return new GenericProtectedItem("GenericProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null, friendlyName, policyState, protectionState, protectedItemId, sourceAssociations, fabricName);
+            return new GenericProtectedItem(
+                "GenericProtectedItem",
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null,
+                friendlyName,
+                policyState,
+                protectionState,
+                protectedItemId,
+                sourceAssociations,
+                fabricName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MabErrorInfo"/>. </summary>
@@ -1119,7 +1719,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             resourceGuardOperationRequests ??= new List<string>();
 
-            return new MabFileFolderProtectedItem("MabFileFolderProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData: null, friendlyName, computerName, lastBackupStatus, lastBackupOn, protectionState, deferredDeleteSyncTimeInUTC, extendedInfo);
+            return new MabFileFolderProtectedItem(
+                "MabFileFolderProtectedItem",
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoverOn,
+                backupSetName,
+                createMode,
+                deferredDeletedOn,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests?.ToList(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData: null,
+                friendlyName,
+                computerName,
+                lastBackupStatus,
+                lastBackupOn,
+                protectionState,
+                deferredDeleteSyncTimeInUTC,
+                extendedInfo);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InquiryValidation"/>. </summary>
@@ -1143,7 +1770,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.FetchTieringCostInfoForRehydrationContent"/> instance for mocking. </returns>
         public static FetchTieringCostInfoForRehydrationContent FetchTieringCostInfoForRehydrationContent(RecoveryPointTierType sourceTierType = default, RecoveryPointTierType targetTierType = default, string containerName = null, string protectedItemName = null, string recoveryPointId = null, RehydrationPriority rehydrationPriority = default)
         {
-            return new FetchTieringCostInfoForRehydrationContent(sourceTierType, targetTierType, "FetchTieringCostInfoForRehydrationRequest", serializedAdditionalRawData: null, containerName, protectedItemName, recoveryPointId, rehydrationPriority);
+            return new FetchTieringCostInfoForRehydrationContent(
+                sourceTierType,
+                targetTierType,
+                "FetchTieringCostInfoForRehydrationRequest",
+                serializedAdditionalRawData: null,
+                containerName,
+                protectedItemName,
+                recoveryPointId,
+                rehydrationPriority);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TieringCostRehydrationInfo"/>. </summary>
@@ -1163,7 +1798,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.TieringCostSavingInfo"/> instance for mocking. </returns>
         public static TieringCostSavingInfo TieringCostSavingInfo(long sourceTierSizeReductionInBytes = default, long targetTierSizeIncreaseInBytes = default, double retailSourceTierCostPerGBPerMonth = default, double retailTargetTierCostPerGBPerMonth = default)
         {
-            return new TieringCostSavingInfo("TieringCostSavingInfo", serializedAdditionalRawData: null, sourceTierSizeReductionInBytes, targetTierSizeIncreaseInBytes, retailSourceTierCostPerGBPerMonth, retailTargetTierCostPerGBPerMonth);
+            return new TieringCostSavingInfo(
+                "TieringCostSavingInfo",
+                serializedAdditionalRawData: null,
+                sourceTierSizeReductionInBytes,
+                targetTierSizeIncreaseInBytes,
+                retailSourceTierCostPerGBPerMonth,
+                retailTargetTierCostPerGBPerMonth);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FetchTieringCostSavingsInfoForPolicyContent"/>. </summary>
@@ -1184,7 +1825,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.FetchTieringCostSavingsInfoForProtectedItemContent"/> instance for mocking. </returns>
         public static FetchTieringCostSavingsInfoForProtectedItemContent FetchTieringCostSavingsInfoForProtectedItemContent(RecoveryPointTierType sourceTierType = default, RecoveryPointTierType targetTierType = default, string containerName = null, string protectedItemName = null)
         {
-            return new FetchTieringCostSavingsInfoForProtectedItemContent(sourceTierType, targetTierType, "FetchTieringCostSavingsInfoForProtectedItemRequest", serializedAdditionalRawData: null, containerName, protectedItemName);
+            return new FetchTieringCostSavingsInfoForProtectedItemContent(
+                sourceTierType,
+                targetTierType,
+                "FetchTieringCostSavingsInfoForProtectedItemRequest",
+                serializedAdditionalRawData: null,
+                containerName,
+                protectedItemName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FetchTieringCostSavingsInfoForVaultContent"/>. </summary>

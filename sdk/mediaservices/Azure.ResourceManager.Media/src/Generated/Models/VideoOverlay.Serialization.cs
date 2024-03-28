@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<VideoOverlay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoOverlay)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VideoOverlay)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
-                writer.WriteObjectValue(Position);
+                writer.WriteObjectValue<RectangularWindow>(Position, options);
             }
             if (Optional.IsDefined(Opacity))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(CropRectangle))
             {
                 writer.WritePropertyName("cropRectangle"u8);
-                writer.WriteObjectValue(CropRectangle);
+                writer.WriteObjectValue<RectangularWindow>(CropRectangle, options);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<VideoOverlay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoOverlay)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VideoOverlay)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,16 +108,16 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<RectangularWindow> position = default;
-            Optional<double> opacity = default;
-            Optional<RectangularWindow> cropRectangle = default;
+            RectangularWindow position = default;
+            double? opacity = default;
+            RectangularWindow cropRectangle = default;
             string odataType = default;
             string inputLabel = default;
-            Optional<TimeSpan> start = default;
-            Optional<TimeSpan> end = default;
-            Optional<TimeSpan> fadeInDuration = default;
-            Optional<TimeSpan> fadeOutDuration = default;
-            Optional<double> audioGainLevel = default;
+            TimeSpan? start = default;
+            TimeSpan? end = default;
+            TimeSpan? fadeInDuration = default;
+            TimeSpan? fadeOutDuration = default;
+            double? audioGainLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    position = RectangularWindow.DeserializeRectangularWindow(property.Value);
+                    position = RectangularWindow.DeserializeRectangularWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("opacity"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    cropRectangle = RectangularWindow.DeserializeRectangularWindow(property.Value);
+                    cropRectangle = RectangularWindow.DeserializeRectangularWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -210,7 +210,18 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VideoOverlay(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel), serializedAdditionalRawData, position.Value, Optional.ToNullable(opacity), cropRectangle.Value);
+            return new VideoOverlay(
+                odataType,
+                inputLabel,
+                start,
+                end,
+                fadeInDuration,
+                fadeOutDuration,
+                audioGainLevel,
+                serializedAdditionalRawData,
+                position,
+                opacity,
+                cropRectangle);
         }
 
         BinaryData IPersistableModel<VideoOverlay>.Write(ModelReaderWriterOptions options)
@@ -222,7 +233,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VideoOverlay)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VideoOverlay)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -238,7 +249,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeVideoOverlay(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VideoOverlay)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VideoOverlay)} does not support reading '{options.Format}' format.");
             }
         }
 

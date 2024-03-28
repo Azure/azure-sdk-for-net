@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabelingJobTextProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelingJobTextProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabelingJobTextProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabelingJobTextProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelingJobTextProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabelingJobTextProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<TextAnnotationType> annotationType = default;
+            TextAnnotationType? annotationType = default;
             MediaType mediaType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelingJobTextProperties(mediaType, serializedAdditionalRawData, Optional.ToNullable(annotationType));
+            return new LabelingJobTextProperties(mediaType, serializedAdditionalRawData, annotationType);
         }
 
         BinaryData IPersistableModel<LabelingJobTextProperties>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabelingJobTextProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabelingJobTextProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeLabelingJobTextProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabelingJobTextProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabelingJobTextProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupInstanceProtectionStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupInstanceProtectionStatusDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupInstanceProtectionStatusDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupInstanceProtectionStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupInstanceProtectionStatusDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupInstanceProtectionStatusDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,8 +74,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<ResponseError> errorDetails = default;
-            Optional<BackupInstanceProtectionStatus> status = default;
+            ResponseError errorDetails = default;
+            BackupInstanceProtectionStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupInstanceProtectionStatusDetails(errorDetails.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new BackupInstanceProtectionStatusDetails(errorDetails, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupInstanceProtectionStatusDetails>.Write(ModelReaderWriterOptions options)
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupInstanceProtectionStatusDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupInstanceProtectionStatusDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupInstanceProtectionStatusDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupInstanceProtectionStatusDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupInstanceProtectionStatusDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

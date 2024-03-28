@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageDisableProtectionProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageDisableProtectionProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageDisableProtectionProviderSpecificContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageDisableProtectionProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageDisableProtectionProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageDisableProtectionProviderSpecificContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> replicaVmDeletionStatus = default;
+            string replicaVmDeletionStatus = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageDisableProtectionProviderSpecificContent(instanceType, serializedAdditionalRawData, replicaVmDeletionStatus.Value);
+            return new InMageDisableProtectionProviderSpecificContent(instanceType, serializedAdditionalRawData, replicaVmDeletionStatus);
         }
 
         BinaryData IPersistableModel<InMageDisableProtectionProviderSpecificContent>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageDisableProtectionProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageDisableProtectionProviderSpecificContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageDisableProtectionProviderSpecificContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageDisableProtectionProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageDisableProtectionProviderSpecificContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureKeyVault": return UserManagedHttpsContent.DeserializeUserManagedHttpsContent(element);
-                    case "Cdn": return CdnManagedHttpsContent.DeserializeCdnManagedHttpsContent(element);
+                    case "AzureKeyVault": return UserManagedHttpsContent.DeserializeUserManagedHttpsContent(element, options);
+                    case "Cdn": return CdnManagedHttpsContent.DeserializeCdnManagedHttpsContent(element, options);
                 }
             }
-            return UnknownCustomDomainHttpsParameters.DeserializeUnknownCustomDomainHttpsParameters(element);
+            return UnknownCustomDomainHttpsParameters.DeserializeUnknownCustomDomainHttpsParameters(element, options);
         }
 
         BinaryData IPersistableModel<CustomDomainHttpsContent>.Write(ModelReaderWriterOptions options)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeCustomDomainHttpsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support reading '{options.Format}' format.");
             }
         }
 

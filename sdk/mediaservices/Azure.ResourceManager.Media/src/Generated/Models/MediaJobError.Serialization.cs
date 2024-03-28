@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaJobErrorDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaJobErrorCode> code = default;
-            Optional<string> message = default;
-            Optional<MediaJobErrorCategory> category = default;
-            Optional<MediaJobRetry> retry = default;
-            Optional<IReadOnlyList<MediaJobErrorDetail>> details = default;
+            MediaJobErrorCode? code = default;
+            string message = default;
+            MediaJobErrorCategory? category = default;
+            MediaJobRetry? retry = default;
+            IReadOnlyList<MediaJobErrorDetail> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaJobErrorDetail> array = new List<MediaJobErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaJobErrorDetail.DeserializeMediaJobErrorDetail(item));
+                        array.Add(MediaJobErrorDetail.DeserializeMediaJobErrorDetail(item, options));
                     }
                     details = array;
                     continue;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobError(Optional.ToNullable(code), message.Value, Optional.ToNullable(category), Optional.ToNullable(retry), Optional.ToList(details), serializedAdditionalRawData);
+            return new MediaJobError(
+                code,
+                message,
+                category,
+                retry,
+                details ?? new ChangeTrackingList<MediaJobErrorDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaJobError>.Write(ModelReaderWriterOptions options)
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +189,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaJobError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobError)} does not support reading '{options.Format}' format.");
             }
         }
 

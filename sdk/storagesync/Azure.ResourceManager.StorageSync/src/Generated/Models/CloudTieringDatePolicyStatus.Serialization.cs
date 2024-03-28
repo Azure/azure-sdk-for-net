@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudTieringDatePolicyStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudTieringDatePolicyStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudTieringDatePolicyStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudTieringDatePolicyStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudTieringDatePolicyStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudTieringDatePolicyStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<DateTimeOffset> tieredFilesMostRecentAccessTimestamp = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            DateTimeOffset? tieredFilesMostRecentAccessTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudTieringDatePolicyStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(tieredFilesMostRecentAccessTimestamp), serializedAdditionalRawData);
+            return new CloudTieringDatePolicyStatus(lastUpdatedTimestamp, tieredFilesMostRecentAccessTimestamp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudTieringDatePolicyStatus>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudTieringDatePolicyStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudTieringDatePolicyStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeCloudTieringDatePolicyStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudTieringDatePolicyStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudTieringDatePolicyStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

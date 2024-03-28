@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -23,7 +22,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<GeographicLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeographicLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GeographicLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +61,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<GeographicLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeographicLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GeographicLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,8 +76,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            Optional<string> city = default;
-            Optional<string> state = default;
+            string city = default;
+            string state = default;
             string countryOrRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +104,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GeographicLocation(city.Value, state.Value, countryOrRegion, serializedAdditionalRawData);
+            return new GeographicLocation(city, state, countryOrRegion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GeographicLocation>.Write(ModelReaderWriterOptions options)
@@ -117,7 +116,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GeographicLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GeographicLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                         return DeserializeGeographicLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GeographicLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GeographicLocation)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -151,7 +150,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<GeographicLocation>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

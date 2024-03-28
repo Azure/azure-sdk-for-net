@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageVolumeExclusionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageVolumeExclusionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageVolumeExclusionOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageVolumeExclusionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageVolumeExclusionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageVolumeExclusionOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> volumeLabel = default;
-            Optional<string> onlyExcludeIfSingleVolume = default;
+            string volumeLabel = default;
+            string onlyExcludeIfSingleVolume = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageVolumeExclusionOptions(volumeLabel.Value, onlyExcludeIfSingleVolume.Value, serializedAdditionalRawData);
+            return new InMageVolumeExclusionOptions(volumeLabel, onlyExcludeIfSingleVolume, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageVolumeExclusionOptions>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageVolumeExclusionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageVolumeExclusionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageVolumeExclusionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageVolumeExclusionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageVolumeExclusionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

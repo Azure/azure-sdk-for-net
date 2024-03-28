@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChangeDirectoryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChangeDirectoryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChangeDirectoryResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChangeDirectoryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChangeDirectoryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChangeDirectoryResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> name = default;
-            Optional<bool> isSucceeded = default;
-            Optional<string> error = default;
+            Guid? id = default;
+            string name = default;
+            bool? isSucceeded = default;
+            string error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeDirectoryResult(Optional.ToNullable(id), name.Value, Optional.ToNullable(isSucceeded), error.Value, serializedAdditionalRawData);
+            return new ChangeDirectoryResult(id, name, isSucceeded, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeDirectoryResult>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChangeDirectoryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChangeDirectoryResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeChangeDirectoryResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChangeDirectoryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChangeDirectoryResult)} does not support reading '{options.Format}' format.");
             }
         }
 

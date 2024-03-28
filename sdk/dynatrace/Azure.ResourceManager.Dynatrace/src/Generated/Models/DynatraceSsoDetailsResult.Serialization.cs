@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceSsoDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceSsoDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<DynatraceSsoStatus> isSsoEnabled = default;
-            Optional<Uri> metadataUrl = default;
-            Optional<Uri> singleSignOnUrl = default;
-            Optional<IReadOnlyList<string>> aadDomains = default;
-            Optional<IReadOnlyList<string>> adminUsers = default;
+            DynatraceSsoStatus? isSsoEnabled = default;
+            Uri metadataUrl = default;
+            Uri singleSignOnUrl = default;
+            IReadOnlyList<string> aadDomains = default;
+            IReadOnlyList<string> adminUsers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceSsoDetailsResult(Optional.ToNullable(isSsoEnabled), metadataUrl.Value, singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToList(adminUsers), serializedAdditionalRawData);
+            return new DynatraceSsoDetailsResult(
+                isSsoEnabled,
+                metadataUrl,
+                singleSignOnUrl,
+                aadDomains ?? new ChangeTrackingList<string>(),
+                adminUsers ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceSsoDetailsResult>.Write(ModelReaderWriterOptions options)
@@ -181,7 +187,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +203,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceSsoDetailsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<X12FramingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X12FramingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X12FramingSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<X12FramingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X12FramingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X12FramingSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,15 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12FramingSettings(dataElementSeparator, componentSeparator, replaceSeparatorsInPayload, replaceCharacter, segmentTerminator, characterSet, segmentTerminatorSuffix, serializedAdditionalRawData);
+            return new X12FramingSettings(
+                dataElementSeparator,
+                componentSeparator,
+                replaceSeparatorsInPayload,
+                replaceCharacter,
+                segmentTerminator,
+                characterSet,
+                segmentTerminatorSuffix,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12FramingSettings>.Write(ModelReaderWriterOptions options)
@@ -142,7 +150,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(X12FramingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X12FramingSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +166,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeX12FramingSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(X12FramingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X12FramingSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

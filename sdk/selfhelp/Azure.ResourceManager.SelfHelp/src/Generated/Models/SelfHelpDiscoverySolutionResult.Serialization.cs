@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHelpDiscoverySolutionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpDiscoverySolutionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpDiscoverySolutionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SelfHelpSolutionMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHelpDiscoverySolutionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpDiscoverySolutionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpDiscoverySolutionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SelfHelpSolutionMetadata>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SelfHelpSolutionMetadata> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpSolutionMetadata> array = new List<SelfHelpSolutionMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(item));
+                        array.Add(SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpDiscoverySolutionResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SelfHelpDiscoverySolutionResult(value ?? new ChangeTrackingList<SelfHelpSolutionMetadata>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpDiscoverySolutionResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpDiscoverySolutionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpDiscoverySolutionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeSelfHelpDiscoverySolutionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpDiscoverySolutionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpDiscoverySolutionResult)} does not support reading '{options.Format}' format.");
             }
         }
 

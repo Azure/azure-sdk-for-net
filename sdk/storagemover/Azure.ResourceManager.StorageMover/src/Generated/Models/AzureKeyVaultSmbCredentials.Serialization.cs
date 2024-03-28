@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<string> usernameUriString = default;
-            Optional<string> passwordUriString = default;
+            string usernameUriString = default;
+            string passwordUriString = default;
             CredentialType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureKeyVaultSmbCredentials(type, serializedAdditionalRawData, usernameUriString.Value, passwordUriString.Value);
+            return new AzureKeyVaultSmbCredentials(type, serializedAdditionalRawData, usernameUriString, passwordUriString);
         }
 
         BinaryData IPersistableModel<AzureKeyVaultSmbCredentials>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                         return DeserializeAzureKeyVaultSmbCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

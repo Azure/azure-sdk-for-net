@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreUsageListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreUsageListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeStoreUsage>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreUsageListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreUsageListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeStoreUsage>> value = default;
+            IReadOnlyList<DataLakeStoreUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     List<DataLakeStoreUsage> array = new List<DataLakeStoreUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeStoreUsage.DeserializeDataLakeStoreUsage(item));
+                        array.Add(DataLakeStoreUsage.DeserializeDataLakeStoreUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreUsageListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new DataLakeStoreUsageListResult(value ?? new ChangeTrackingList<DataLakeStoreUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreUsageListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreUsageListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreUsageListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                         return DeserializeDataLakeStoreUsageListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreUsageListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreUsageListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

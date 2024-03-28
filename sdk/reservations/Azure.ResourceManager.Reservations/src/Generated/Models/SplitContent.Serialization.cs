@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SplitContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SplitContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SplitContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SplitContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SplitContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SplitContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IList<int>> quantities = default;
-            Optional<ResourceIdentifier> reservationId = default;
+            IList<int> quantities = default;
+            ResourceIdentifier reservationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SplitContent(Optional.ToList(quantities), reservationId.Value, serializedAdditionalRawData);
+            return new SplitContent(quantities ?? new ChangeTrackingList<int>(), reservationId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SplitContent>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SplitContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SplitContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeSplitContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SplitContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SplitContent)} does not support reading '{options.Format}' format.");
             }
         }
 

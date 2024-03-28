@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoSkuDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoSkuDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KustoSkuLocationInfoItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoSkuDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoSkuDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<KustoSkuLocationInfoItem>> locationInfo = default;
-            Optional<IReadOnlyList<BinaryData>> restrictions = default;
+            string resourceType = default;
+            string name = default;
+            string tier = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<KustoSkuLocationInfoItem> locationInfo = default;
+            IReadOnlyList<BinaryData> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoSkuLocationInfoItem> array = new List<KustoSkuLocationInfoItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoSkuLocationInfoItem.DeserializeKustoSkuLocationInfoItem(item));
+                        array.Add(KustoSkuLocationInfoItem.DeserializeKustoSkuLocationInfoItem(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -201,7 +201,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoSkuDescription(resourceType.Value, name.Value, tier.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new KustoSkuDescription(
+                resourceType,
+                name,
+                tier,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<KustoSkuLocationInfoItem>(),
+                restrictions ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoSkuDescription>.Write(ModelReaderWriterOptions options)
@@ -213,7 +220,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoSkuDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoSkuDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +236,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeKustoSkuDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoSkuDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoSkuDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

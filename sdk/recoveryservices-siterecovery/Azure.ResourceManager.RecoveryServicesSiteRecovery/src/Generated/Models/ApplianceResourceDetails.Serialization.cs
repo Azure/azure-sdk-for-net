@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceResourceDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceResourceDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<long> capacity = default;
-            Optional<double> processUtilization = default;
-            Optional<double> totalUtilization = default;
-            Optional<string> status = default;
+            long? capacity = default;
+            double? processUtilization = default;
+            double? totalUtilization = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceResourceDetails(Optional.ToNullable(capacity), Optional.ToNullable(processUtilization), Optional.ToNullable(totalUtilization), status.Value, serializedAdditionalRawData);
+            return new ApplianceResourceDetails(capacity, processUtilization, totalUtilization, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceResourceDetails>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceResourceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeApplianceResourceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceResourceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

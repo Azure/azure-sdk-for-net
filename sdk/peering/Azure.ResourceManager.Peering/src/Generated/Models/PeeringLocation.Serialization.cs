@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(Direct))
             {
                 writer.WritePropertyName("direct"u8);
-                writer.WriteObjectValue(Direct);
+                writer.WriteObjectValue<DirectPeeringLocationProperties>(Direct, options);
             }
             if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
-                writer.WriteObjectValue(Exchange);
+                writer.WriteObjectValue<PeeringLocationPropertiesExchange>(Exchange, options);
             }
             if (Optional.IsDefined(PeeringLocationValue))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<PeeringKind> kind = default;
+            PeeringKind? kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DirectPeeringLocationProperties> direct = default;
-            Optional<PeeringLocationPropertiesExchange> exchange = default;
-            Optional<string> peeringLocation = default;
-            Optional<string> country = default;
-            Optional<AzureLocation> azureRegion = default;
+            SystemData systemData = default;
+            DirectPeeringLocationProperties direct = default;
+            PeeringLocationPropertiesExchange exchange = default;
+            string peeringLocation = default;
+            string country = default;
+            AzureLocation? azureRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Peering.Models
                             {
                                 continue;
                             }
-                            direct = DirectPeeringLocationProperties.DeserializeDirectPeeringLocationProperties(property0.Value);
+                            direct = DirectPeeringLocationProperties.DeserializeDirectPeeringLocationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exchange"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Peering.Models
                             {
                                 continue;
                             }
-                            exchange = PeeringLocationPropertiesExchange.DeserializePeeringLocationPropertiesExchange(property0.Value);
+                            exchange = PeeringLocationPropertiesExchange.DeserializePeeringLocationPropertiesExchange(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peeringLocation"u8))
@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringLocation(id, name, type, systemData.Value, Optional.ToNullable(kind), direct.Value, exchange.Value, peeringLocation.Value, country.Value, Optional.ToNullable(azureRegion), serializedAdditionalRawData);
+            return new PeeringLocation(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                direct,
+                exchange,
+                peeringLocation,
+                country,
+                azureRegion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringLocation>.Write(ModelReaderWriterOptions options)
@@ -232,7 +243,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +259,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

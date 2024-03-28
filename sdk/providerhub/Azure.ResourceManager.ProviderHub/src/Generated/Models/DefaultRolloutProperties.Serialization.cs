@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefaultRolloutProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefaultRolloutProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(Specification))
             {
                 writer.WritePropertyName("specification"u8);
-                writer.WriteObjectValue(Specification);
+                writer.WriteObjectValue<DefaultRolloutSpecification>(Specification, options);
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<DefaultRolloutStatus>(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefaultRolloutProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefaultRolloutProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ProviderHubProvisioningState> provisioningState = default;
-            Optional<DefaultRolloutSpecification> specification = default;
-            Optional<DefaultRolloutStatus> status = default;
+            ProviderHubProvisioningState? provisioningState = default;
+            DefaultRolloutSpecification specification = default;
+            DefaultRolloutStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    specification = DefaultRolloutSpecification.DeserializeDefaultRolloutSpecification(property.Value);
+                    specification = DefaultRolloutSpecification.DeserializeDefaultRolloutSpecification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    status = DefaultRolloutStatus.DeserializeDefaultRolloutStatus(property.Value);
+                    status = DefaultRolloutStatus.DeserializeDefaultRolloutStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultRolloutProperties(Optional.ToNullable(provisioningState), specification.Value, status.Value, serializedAdditionalRawData);
+            return new DefaultRolloutProperties(provisioningState, specification, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefaultRolloutProperties>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefaultRolloutProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefaultRolloutProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeDefaultRolloutProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefaultRolloutProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefaultRolloutProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceSkuList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceSkuList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceSkuList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableServiceSku>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceSkuList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceSkuList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceSkuList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableServiceSku>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AvailableServiceSku> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<AvailableServiceSku> array = new List<AvailableServiceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableServiceSku.DeserializeAvailableServiceSku(item));
+                        array.Add(AvailableServiceSku.DeserializeAvailableServiceSku(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceSkuList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ServiceSkuList(value ?? new ChangeTrackingList<AvailableServiceSku>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceSkuList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceSkuList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceSkuList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeServiceSkuList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceSkuList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceSkuList)} does not support reading '{options.Format}' format.");
             }
         }
 

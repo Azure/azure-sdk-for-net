@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VmNicContentDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails);
+                writer.WriteObjectValue<UpdateReplicationProtectedItemProviderContent>(ProviderSpecificDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> recoveryAzureVmName = default;
-            Optional<string> recoveryAzureVmSize = default;
-            Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
-            Optional<ResourceIdentifier> selectedTfoAzureNetworkId = default;
-            Optional<string> selectedSourceNicId = default;
-            Optional<string> enableRdpOnTargetOption = default;
-            Optional<IList<VmNicContentDetails>> vmNics = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
-            Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
-            Optional<UpdateReplicationProtectedItemProviderContent> providerSpecificDetails = default;
+            string recoveryAzureVmName = default;
+            string recoveryAzureVmSize = default;
+            ResourceIdentifier selectedRecoveryAzureNetworkId = default;
+            ResourceIdentifier selectedTfoAzureNetworkId = default;
+            string selectedSourceNicId = default;
+            string enableRdpOnTargetOption = default;
+            IList<VmNicContentDetails> vmNics = default;
+            SiteRecoveryLicenseType? licenseType = default;
+            ResourceIdentifier recoveryAvailabilitySetId = default;
+            UpdateReplicationProtectedItemProviderContent providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VmNicContentDetails> array = new List<VmNicContentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmNicContentDetails.DeserializeVmNicContentDetails(item));
+                        array.Add(VmNicContentDetails.DeserializeVmNicContentDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = UpdateReplicationProtectedItemProviderContent.DeserializeUpdateReplicationProtectedItemProviderContent(property.Value);
+                    providerSpecificDetails = UpdateReplicationProtectedItemProviderContent.DeserializeUpdateReplicationProtectedItemProviderContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -218,7 +218,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateReplicationProtectedItemProperties(recoveryAzureVmName.Value, recoveryAzureVmSize.Value, selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, selectedSourceNicId.Value, enableRdpOnTargetOption.Value, Optional.ToList(vmNics), Optional.ToNullable(licenseType), recoveryAvailabilitySetId.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new UpdateReplicationProtectedItemProperties(
+                recoveryAzureVmName,
+                recoveryAzureVmSize,
+                selectedRecoveryAzureNetworkId,
+                selectedTfoAzureNetworkId,
+                selectedSourceNicId,
+                enableRdpOnTargetOption,
+                vmNics ?? new ChangeTrackingList<VmNicContentDetails>(),
+                licenseType,
+                recoveryAvailabilitySetId,
+                providerSpecificDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateReplicationProtectedItemProperties>.Write(ModelReaderWriterOptions options)
@@ -230,7 +241,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -246,7 +257,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeUpdateReplicationProtectedItemProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

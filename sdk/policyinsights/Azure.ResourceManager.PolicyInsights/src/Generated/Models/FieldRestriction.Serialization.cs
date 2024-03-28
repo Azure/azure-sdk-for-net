@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<FieldRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FieldRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FieldRestriction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<PolicyReference>(Policy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<FieldRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FieldRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FieldRestriction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<FieldRestrictionResult> result = default;
-            Optional<string> defaultValue = default;
-            Optional<IReadOnlyList<string>> values = default;
-            Optional<PolicyReference> policy = default;
+            FieldRestrictionResult? result = default;
+            string defaultValue = default;
+            IReadOnlyList<string> values = default;
+            PolicyReference policy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policy = PolicyReference.DeserializePolicyReference(property.Value);
+                    policy = PolicyReference.DeserializePolicyReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FieldRestriction(Optional.ToNullable(result), defaultValue.Value, Optional.ToList(values), policy.Value, serializedAdditionalRawData);
+            return new FieldRestriction(result, defaultValue, values ?? new ChangeTrackingList<string>(), policy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FieldRestriction>.Write(ModelReaderWriterOptions options)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FieldRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FieldRestriction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeFieldRestriction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FieldRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FieldRestriction)} does not support reading '{options.Format}' format.");
             }
         }
 

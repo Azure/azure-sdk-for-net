@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaUsagesObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaUsagesObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaUsagesObject)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaUsagesObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaUsagesObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaUsagesObject)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Quota.Models
                 return null;
             }
             int value = default;
-            Optional<QuotaUsagesType> usagesType = default;
+            QuotaUsagesType? usagesType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaUsagesObject(value, Optional.ToNullable(usagesType), serializedAdditionalRawData);
+            return new QuotaUsagesObject(value, usagesType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaUsagesObject>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Quota.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaUsagesObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaUsagesObject)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Quota.Models
                         return DeserializeQuotaUsagesObject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaUsagesObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaUsagesObject)} does not support reading '{options.Format}' format.");
             }
         }
 

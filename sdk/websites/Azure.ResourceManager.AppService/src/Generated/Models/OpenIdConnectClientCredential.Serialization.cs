@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<OpenIdConnectClientCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenIdConnectClientCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenIdConnectClientCredential)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<OpenIdConnectClientCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenIdConnectClientCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenIdConnectClientCredential)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ClientCredentialMethod> method = default;
-            Optional<string> clientSecretSettingName = default;
+            ClientCredentialMethod? method = default;
+            string clientSecretSettingName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,58 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenIdConnectClientCredential(Optional.ToNullable(method), clientSecretSettingName.Value, serializedAdditionalRawData);
+            return new OpenIdConnectClientCredential(method, clientSecretSettingName, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Method), out propertyOverride);
+            if (Optional.IsDefined(Method) || hasPropertyOverride)
+            {
+                builder.Append("  method: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Method.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretSettingName), out propertyOverride);
+            if (Optional.IsDefined(ClientSecretSettingName) || hasPropertyOverride)
+            {
+                builder.Append("  clientSecretSettingName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ClientSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientSecretSettingName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<OpenIdConnectClientCredential>.Write(ModelReaderWriterOptions options)
@@ -111,8 +163,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(OpenIdConnectClientCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenIdConnectClientCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeOpenIdConnectClientCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenIdConnectClientCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenIdConnectClientCredential)} does not support reading '{options.Format}' format.");
             }
         }
 

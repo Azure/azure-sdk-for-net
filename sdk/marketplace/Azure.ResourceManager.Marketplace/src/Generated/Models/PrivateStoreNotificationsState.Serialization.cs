@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreNotificationsState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in StopSellNotifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StopSellNotifications>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in NewNotifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NewPlanNotification>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in ApprovalRequests)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RequestApprovalsDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreNotificationsState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StopSellNotifications>> stopSellNotifications = default;
-            Optional<IReadOnlyList<NewPlanNotification>> newNotifications = default;
-            Optional<IReadOnlyList<RequestApprovalsDetails>> approvalRequests = default;
+            IReadOnlyList<StopSellNotifications> stopSellNotifications = default;
+            IReadOnlyList<NewPlanNotification> newNotifications = default;
+            IReadOnlyList<RequestApprovalsDetails> approvalRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<StopSellNotifications> array = new List<StopSellNotifications>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.StopSellNotifications.DeserializeStopSellNotifications(item));
+                        array.Add(Models.StopSellNotifications.DeserializeStopSellNotifications(item, options));
                     }
                     stopSellNotifications = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<NewPlanNotification> array = new List<NewPlanNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewPlanNotification.DeserializeNewPlanNotification(item));
+                        array.Add(NewPlanNotification.DeserializeNewPlanNotification(item, options));
                     }
                     newNotifications = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<RequestApprovalsDetails> array = new List<RequestApprovalsDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RequestApprovalsDetails.DeserializeRequestApprovalsDetails(item));
+                        array.Add(RequestApprovalsDetails.DeserializeRequestApprovalsDetails(item, options));
                     }
                     approvalRequests = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStoreNotificationsState(Optional.ToList(stopSellNotifications), Optional.ToList(newNotifications), Optional.ToList(approvalRequests), serializedAdditionalRawData);
+            return new PrivateStoreNotificationsState(stopSellNotifications ?? new ChangeTrackingList<StopSellNotifications>(), newNotifications ?? new ChangeTrackingList<NewPlanNotification>(), approvalRequests ?? new ChangeTrackingList<RequestApprovalsDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStoreNotificationsState>.Write(ModelReaderWriterOptions options)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializePrivateStoreNotificationsState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support reading '{options.Format}' format.");
             }
         }
 

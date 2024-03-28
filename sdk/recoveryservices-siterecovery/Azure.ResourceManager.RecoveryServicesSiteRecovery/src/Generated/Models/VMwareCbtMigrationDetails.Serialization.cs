@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtMigrationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtMigrationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtMigrationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(TargetVmSecurityProfile))
             {
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
-                writer.WriteObjectValue(TargetVmSecurityProfile);
+                writer.WriteObjectValue<VMwareCbtSecurityProfileProperties>(TargetVmSecurityProfile, options);
             }
             if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareCbtProtectedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareCbtNicDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -293,12 +293,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(ApplianceMonitoringDetails))
             {
                 writer.WritePropertyName("applianceMonitoringDetails"u8);
-                writer.WriteObjectValue(ApplianceMonitoringDetails);
+                writer.WriteObjectValue<ApplianceMonitoringDetails>(ApplianceMonitoringDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GatewayOperationDetails))
             {
                 writer.WritePropertyName("gatewayOperationDetails"u8);
-                writer.WriteObjectValue(GatewayOperationDetails);
+                writer.WriteObjectValue<GatewayOperationDetails>(GatewayOperationDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OperationName))
             {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtMigrationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtMigrationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtMigrationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -345,54 +345,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vmwareMachineId = default;
-            Optional<string> osType = default;
-            Optional<string> osName = default;
-            Optional<string> firmwareType = default;
-            Optional<string> targetGeneration = default;
-            Optional<string> licenseType = default;
-            Optional<string> sqlServerLicenseType = default;
-            Optional<ResourceIdentifier> dataMoverRunAsAccountId = default;
-            Optional<ResourceIdentifier> snapshotRunAsAccountId = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<string> targetVmName = default;
-            Optional<string> targetVmSize = default;
-            Optional<string> targetLocation = default;
-            Optional<ResourceIdentifier> targetResourceGroupId = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<ResourceIdentifier> confidentialVmKeyVaultId = default;
-            Optional<VMwareCbtSecurityProfileProperties> targetVmSecurityProfile = default;
-            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
-            Optional<IReadOnlyDictionary<string, string>> targetVmTags = default;
-            Optional<IReadOnlyList<VMwareCbtProtectedDiskDetails>> protectedDisks = default;
-            Optional<ResourceIdentifier> targetNetworkId = default;
-            Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<IReadOnlyList<VMwareCbtNicDetails>> vmNics = default;
-            Optional<IReadOnlyDictionary<string, string>> targetNicTags = default;
-            Optional<ResourceIdentifier> migrationRecoveryPointId = default;
-            Optional<DateTimeOffset> lastRecoveryPointReceived = default;
-            Optional<ResourceIdentifier> lastRecoveryPointId = default;
-            Optional<int> initialSeedingProgressPercentage = default;
-            Optional<int> migrationProgressPercentage = default;
-            Optional<int> resyncProgressPercentage = default;
-            Optional<int> resumeProgressPercentage = default;
-            Optional<int> deltaSyncProgressPercentage = default;
-            Optional<string> isCheckSumResyncCycle = default;
-            Optional<long> initialSeedingRetryCount = default;
-            Optional<long> resyncRetryCount = default;
-            Optional<long> resumeRetryCount = default;
-            Optional<long> deltaSyncRetryCount = default;
-            Optional<string> resyncRequired = default;
-            Optional<SiteRecoveryResyncState> resyncState = default;
-            Optional<string> performAutoResync = default;
-            Optional<IReadOnlyDictionary<string, string>> seedDiskTags = default;
-            Optional<IReadOnlyDictionary<string, string>> targetDiskTags = default;
-            Optional<IReadOnlyList<string>> supportedOSVersions = default;
-            Optional<ApplianceMonitoringDetails> applianceMonitoringDetails = default;
-            Optional<GatewayOperationDetails> gatewayOperationDetails = default;
-            Optional<string> operationName = default;
+            ResourceIdentifier vmwareMachineId = default;
+            string osType = default;
+            string osName = default;
+            string firmwareType = default;
+            string targetGeneration = default;
+            string licenseType = default;
+            string sqlServerLicenseType = default;
+            ResourceIdentifier dataMoverRunAsAccountId = default;
+            ResourceIdentifier snapshotRunAsAccountId = default;
+            ResourceIdentifier storageAccountId = default;
+            string targetVmName = default;
+            string targetVmSize = default;
+            string targetLocation = default;
+            ResourceIdentifier targetResourceGroupId = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            ResourceIdentifier confidentialVmKeyVaultId = default;
+            VMwareCbtSecurityProfileProperties targetVmSecurityProfile = default;
+            ResourceIdentifier targetBootDiagnosticsStorageAccountId = default;
+            IReadOnlyDictionary<string, string> targetVmTags = default;
+            IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks = default;
+            ResourceIdentifier targetNetworkId = default;
+            ResourceIdentifier testNetworkId = default;
+            IReadOnlyList<VMwareCbtNicDetails> vmNics = default;
+            IReadOnlyDictionary<string, string> targetNicTags = default;
+            ResourceIdentifier migrationRecoveryPointId = default;
+            DateTimeOffset? lastRecoveryPointReceived = default;
+            ResourceIdentifier lastRecoveryPointId = default;
+            int? initialSeedingProgressPercentage = default;
+            int? migrationProgressPercentage = default;
+            int? resyncProgressPercentage = default;
+            int? resumeProgressPercentage = default;
+            int? deltaSyncProgressPercentage = default;
+            string isCheckSumResyncCycle = default;
+            long? initialSeedingRetryCount = default;
+            long? resyncRetryCount = default;
+            long? resumeRetryCount = default;
+            long? deltaSyncRetryCount = default;
+            string resyncRequired = default;
+            SiteRecoveryResyncState? resyncState = default;
+            string performAutoResync = default;
+            IReadOnlyDictionary<string, string> seedDiskTags = default;
+            IReadOnlyDictionary<string, string> targetDiskTags = default;
+            IReadOnlyList<string> supportedOSVersions = default;
+            ApplianceMonitoringDetails applianceMonitoringDetails = default;
+            GatewayOperationDetails gatewayOperationDetails = default;
+            string operationName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmSecurityProfile = VMwareCbtSecurityProfileProperties.DeserializeVMwareCbtSecurityProfileProperties(property.Value);
+                    targetVmSecurityProfile = VMwareCbtSecurityProfileProperties.DeserializeVMwareCbtSecurityProfileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetBootDiagnosticsStorageAccountId"u8))
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VMwareCbtProtectedDiskDetails> array = new List<VMwareCbtProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtProtectedDiskDetails.DeserializeVMwareCbtProtectedDiskDetails(item));
+                        array.Add(VMwareCbtProtectedDiskDetails.DeserializeVMwareCbtProtectedDiskDetails(item, options));
                     }
                     protectedDisks = array;
                     continue;
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VMwareCbtNicDetails> array = new List<VMwareCbtNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtNicDetails.DeserializeVMwareCbtNicDetails(item));
+                        array.Add(VMwareCbtNicDetails.DeserializeVMwareCbtNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    applianceMonitoringDetails = ApplianceMonitoringDetails.DeserializeApplianceMonitoringDetails(property.Value);
+                    applianceMonitoringDetails = ApplianceMonitoringDetails.DeserializeApplianceMonitoringDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("gatewayOperationDetails"u8))
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value);
+                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("operationName"u8))
@@ -820,7 +820,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtMigrationDetails(instanceType, serializedAdditionalRawData, vmwareMachineId.Value, osType.Value, osName.Value, firmwareType.Value, targetGeneration.Value, licenseType.Value, sqlServerLicenseType.Value, dataMoverRunAsAccountId.Value, snapshotRunAsAccountId.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetLocation.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, confidentialVmKeyVaultId.Value, targetVmSecurityProfile.Value, targetBootDiagnosticsStorageAccountId.Value, Optional.ToDictionary(targetVmTags), Optional.ToList(protectedDisks), targetNetworkId.Value, testNetworkId.Value, Optional.ToList(vmNics), Optional.ToDictionary(targetNicTags), migrationRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), lastRecoveryPointId.Value, Optional.ToNullable(initialSeedingProgressPercentage), Optional.ToNullable(migrationProgressPercentage), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resumeProgressPercentage), Optional.ToNullable(deltaSyncProgressPercentage), isCheckSumResyncCycle.Value, Optional.ToNullable(initialSeedingRetryCount), Optional.ToNullable(resyncRetryCount), Optional.ToNullable(resumeRetryCount), Optional.ToNullable(deltaSyncRetryCount), resyncRequired.Value, Optional.ToNullable(resyncState), performAutoResync.Value, Optional.ToDictionary(seedDiskTags), Optional.ToDictionary(targetDiskTags), Optional.ToList(supportedOSVersions), applianceMonitoringDetails.Value, gatewayOperationDetails.Value, operationName.Value);
+            return new VMwareCbtMigrationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                vmwareMachineId,
+                osType,
+                osName,
+                firmwareType,
+                targetGeneration,
+                licenseType,
+                sqlServerLicenseType,
+                dataMoverRunAsAccountId,
+                snapshotRunAsAccountId,
+                storageAccountId,
+                targetVmName,
+                targetVmSize,
+                targetLocation,
+                targetResourceGroupId,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                confidentialVmKeyVaultId,
+                targetVmSecurityProfile,
+                targetBootDiagnosticsStorageAccountId,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                protectedDisks ?? new ChangeTrackingList<VMwareCbtProtectedDiskDetails>(),
+                targetNetworkId,
+                testNetworkId,
+                vmNics ?? new ChangeTrackingList<VMwareCbtNicDetails>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
+                migrationRecoveryPointId,
+                lastRecoveryPointReceived,
+                lastRecoveryPointId,
+                initialSeedingProgressPercentage,
+                migrationProgressPercentage,
+                resyncProgressPercentage,
+                resumeProgressPercentage,
+                deltaSyncProgressPercentage,
+                isCheckSumResyncCycle,
+                initialSeedingRetryCount,
+                resyncRetryCount,
+                resumeRetryCount,
+                deltaSyncRetryCount,
+                resyncRequired,
+                resyncState,
+                performAutoResync,
+                seedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                supportedOSVersions ?? new ChangeTrackingList<string>(),
+                applianceMonitoringDetails,
+                gatewayOperationDetails,
+                operationName);
         }
 
         BinaryData IPersistableModel<VMwareCbtMigrationDetails>.Write(ModelReaderWriterOptions options)
@@ -832,7 +882,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtMigrationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtMigrationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -848,7 +898,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareCbtMigrationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtMigrationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtMigrationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

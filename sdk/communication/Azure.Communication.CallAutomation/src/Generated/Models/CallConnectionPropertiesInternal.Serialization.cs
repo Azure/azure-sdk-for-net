@@ -7,8 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -20,18 +18,19 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<IReadOnlyList<CommunicationIdentifierModel>> targets = default;
-            Optional<CallConnectionState> callConnectionState = default;
-            Optional<string> callbackUri = default;
-            Optional<string> mediaSubscriptionId = default;
-            Optional<string> dataSubscriptionId = default;
-            Optional<PhoneNumberIdentifierModel> sourceCallerIdNumber = default;
-            Optional<string> sourceDisplayName = default;
-            Optional<CommunicationIdentifierModel> source = default;
-            Optional<string> correlationId = default;
-            Optional<CommunicationUserIdentifierModel> answeredBy = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            IReadOnlyList<CommunicationIdentifierModel> targets = default;
+            CallConnectionState? callConnectionState = default;
+            string callbackUri = default;
+            string mediaSubscriptionId = default;
+            string dataSubscriptionId = default;
+            PhoneNumberIdentifierModel sourceCallerIdNumber = default;
+            string sourceDisplayName = default;
+            CommunicationIdentifierModel source = default;
+            string correlationId = default;
+            CommunicationUserIdentifierModel answeredBy = default;
+            PhoneNumberIdentifierModel answeredFor = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -119,8 +118,30 @@ namespace Azure.Communication.CallAutomation
                     answeredBy = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("answeredFor"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    answeredFor = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    continue;
+                }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, dataSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, source.Value, correlationId.Value, answeredBy.Value);
+            return new CallConnectionPropertiesInternal(
+                callConnectionId,
+                serverCallId,
+                targets ?? new ChangeTrackingList<CommunicationIdentifierModel>(),
+                callConnectionState,
+                callbackUri,
+                mediaSubscriptionId,
+                dataSubscriptionId,
+                sourceCallerIdNumber,
+                sourceDisplayName,
+                source,
+                correlationId,
+                answeredBy,
+                answeredFor);
         }
     }
 }

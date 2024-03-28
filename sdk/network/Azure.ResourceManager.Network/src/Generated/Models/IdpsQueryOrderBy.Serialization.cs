@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdpsQueryOrderBy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdpsQueryOrderBy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> field = default;
-            Optional<FirewallPolicyIdpsQuerySortOrder> order = default;
+            string field = default;
+            FirewallPolicyIdpsQuerySortOrder? order = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdpsQueryOrderBy(field.Value, Optional.ToNullable(order), serializedAdditionalRawData);
+            return new IdpsQueryOrderBy(field, order, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdpsQueryOrderBy>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeIdpsQueryOrderBy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -45,7 +43,20 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EventHubsClusterData(id, name, resourceType, systemData, tags, location, sku, createdOn, updatedOn, metricId, status, supportsScaling, serializedAdditionalRawData: null);
+            return new EventHubsClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                createdOn,
+                updatedOn,
+                metricId,
+                status,
+                supportsScaling,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubs.EventHubsNamespaceData"/>. </summary>
@@ -80,7 +91,33 @@ namespace Azure.ResourceManager.EventHubs.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<EventHubsPrivateEndpointConnectionData>();
 
-            return new EventHubsNamespaceData(id, name, resourceType, systemData, tags, location, sku, identity, minimumTlsVersion, provisioningState, status, createdOn, updatedOn, serviceBusEndpoint, clusterArmId, metricId, isAutoInflateEnabled, publicNetworkAccess, maximumThroughputUnits, kafkaEnabled, zoneRedundant, encryption, privateEndpointConnections?.ToList(), disableLocalAuth, alternateName, serializedAdditionalRawData: null);
+            return new EventHubsNamespaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                identity,
+                minimumTlsVersion,
+                provisioningState,
+                status,
+                createdOn,
+                updatedOn,
+                serviceBusEndpoint,
+                clusterArmId,
+                metricId,
+                isAutoInflateEnabled,
+                publicNetworkAccess,
+                maximumThroughputUnits,
+                kafkaEnabled,
+                zoneRedundant,
+                encryption,
+                privateEndpointConnections?.ToList(),
+                disableLocalAuth,
+                alternateName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubs.EventHubsPrivateEndpointConnectionData"/>. </summary>
@@ -95,7 +132,16 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <returns> A new <see cref="EventHubs.EventHubsPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static EventHubsPrivateEndpointConnectionData EventHubsPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, EventHubsPrivateLinkServiceConnectionState connectionState = null, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState = null, AzureLocation? location = null)
         {
-            return new EventHubsPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, location, serializedAdditionalRawData: null);
+            return new EventHubsPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EventHubsPrivateLinkResourceData"/>. </summary>
@@ -112,7 +158,15 @@ namespace Azure.ResourceManager.EventHubs.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new EventHubsPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new EventHubsPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EventHubsNetworkSecurityPerimeterConfiguration"/>. </summary>
@@ -133,7 +187,19 @@ namespace Azure.ResourceManager.EventHubs.Models
             tags ??= new Dictionary<string, string>();
             provisioningIssues ??= new List<EventHubsProvisioningIssue>();
 
-            return new EventHubsNetworkSecurityPerimeterConfiguration(id, name, resourceType, systemData, tags, location, provisioningState, provisioningIssues?.ToList(), networkSecurityPerimeter, resourceAssociation, profile, serializedAdditionalRawData: null);
+            return new EventHubsNetworkSecurityPerimeterConfiguration(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                provisioningIssues?.ToList(),
+                networkSecurityPerimeter,
+                resourceAssociation,
+                profile,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EventHubsProvisioningIssue"/>. </summary>
@@ -194,7 +260,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <returns> A new <see cref="Models.EventHubsNspAccessRule"/> instance for mocking. </returns>
         public static EventHubsNspAccessRule EventHubsNspAccessRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EventHubsNspAccessRuleProperties properties = null)
         {
-            return new EventHubsNspAccessRule(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new EventHubsNspAccessRule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EventHubsNspAccessRuleProperties"/>. </summary>
@@ -211,7 +283,13 @@ namespace Azure.ResourceManager.EventHubs.Models
             networkSecurityPerimeters ??= new List<EventHubsNetworkSecurityPerimeter>();
             fullyQualifiedDomainNames ??= new List<string>();
 
-            return new EventHubsNspAccessRuleProperties(direction, addressPrefixes?.ToList(), subscriptions?.ToList(), networkSecurityPerimeters?.ToList(), fullyQualifiedDomainNames?.ToList(), serializedAdditionalRawData: null);
+            return new EventHubsNspAccessRuleProperties(
+                direction,
+                addressPrefixes?.ToList(),
+                subscriptions?.ToList(),
+                networkSecurityPerimeters?.ToList(),
+                fullyQualifiedDomainNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubs.EventHubsNetworkRuleSetData"/>. </summary>
@@ -231,7 +309,18 @@ namespace Azure.ResourceManager.EventHubs.Models
             virtualNetworkRules ??= new List<EventHubsNetworkRuleSetVirtualNetworkRules>();
             ipRules ??= new List<EventHubsNetworkRuleSetIPRules>();
 
-            return new EventHubsNetworkRuleSetData(id, name, resourceType, systemData, trustedServiceAccessEnabled, defaultAction, virtualNetworkRules?.ToList(), ipRules?.ToList(), publicNetworkAccess, location, serializedAdditionalRawData: null);
+            return new EventHubsNetworkRuleSetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                trustedServiceAccessEnabled,
+                defaultAction,
+                virtualNetworkRules?.ToList(),
+                ipRules?.ToList(),
+                publicNetworkAccess,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubs.EventHubsAuthorizationRuleData"/>. </summary>
@@ -246,7 +335,14 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
             rights ??= new List<EventHubsAccessRight>();
 
-            return new EventHubsAuthorizationRuleData(id, name, resourceType, systemData, rights?.ToList(), location, serializedAdditionalRawData: null);
+            return new EventHubsAuthorizationRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                rights?.ToList(),
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EventHubsAccessKeys"/>. </summary>
@@ -260,7 +356,15 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <returns> A new <see cref="Models.EventHubsAccessKeys"/> instance for mocking. </returns>
         public static EventHubsAccessKeys EventHubsAccessKeys(string primaryConnectionString = null, string secondaryConnectionString = null, string aliasPrimaryConnectionString = null, string aliasSecondaryConnectionString = null, string primaryKey = null, string secondaryKey = null, string keyName = null)
         {
-            return new EventHubsAccessKeys(primaryConnectionString, secondaryConnectionString, aliasPrimaryConnectionString, aliasSecondaryConnectionString, primaryKey, secondaryKey, keyName, serializedAdditionalRawData: null);
+            return new EventHubsAccessKeys(
+                primaryConnectionString,
+                secondaryConnectionString,
+                aliasPrimaryConnectionString,
+                aliasSecondaryConnectionString,
+                primaryKey,
+                secondaryKey,
+                keyName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EventHubsRegenerateAccessKeyContent"/>. </summary>
@@ -294,7 +398,16 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <returns> A new <see cref="EventHubs.EventHubsConsumerGroupData"/> instance for mocking. </returns>
         public static EventHubsConsumerGroupData EventHubsConsumerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string userMetadata = null, AzureLocation? location = null)
         {
-            return new EventHubsConsumerGroupData(id, name, resourceType, systemData, createdOn, updatedOn, userMetadata, location, serializedAdditionalRawData: null);
+            return new EventHubsConsumerGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                createdOn,
+                updatedOn,
+                userMetadata,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubs.EventHubsDisasterRecoveryData"/>. </summary>
@@ -311,7 +424,18 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <returns> A new <see cref="EventHubs.EventHubsDisasterRecoveryData"/> instance for mocking. </returns>
         public static EventHubsDisasterRecoveryData EventHubsDisasterRecoveryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EventHubsDisasterRecoveryProvisioningState? provisioningState = null, string partnerNamespace = null, string alternateName = null, EventHubsDisasterRecoveryRole? role = null, long? pendingReplicationOperationsCount = null, AzureLocation? location = null)
         {
-            return new EventHubsDisasterRecoveryData(id, name, resourceType, systemData, provisioningState, partnerNamespace, alternateName, role, pendingReplicationOperationsCount, location, serializedAdditionalRawData: null);
+            return new EventHubsDisasterRecoveryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                partnerNamespace,
+                alternateName,
+                role,
+                pendingReplicationOperationsCount,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubs.EventHubData"/>. </summary>
@@ -332,7 +456,20 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
             partitionIds ??= new List<string>();
 
-            return new EventHubData(id, name, resourceType, systemData, partitionIds?.ToList(), createdOn, updatedOn, partitionCount, status, captureDescription, retentionDescription, location, serializedAdditionalRawData: null);
+            return new EventHubData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                partitionIds?.ToList(),
+                createdOn,
+                updatedOn,
+                partitionCount,
+                status,
+                captureDescription,
+                retentionDescription,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubs.EventHubsSchemaGroupData"/>. </summary>
@@ -352,7 +489,19 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
             groupProperties ??= new Dictionary<string, string>();
 
-            return new EventHubsSchemaGroupData(id, name, resourceType, systemData, updatedAtUtc, createdAtUtc, eTag, groupProperties, schemaCompatibility, schemaType, location, serializedAdditionalRawData: null);
+            return new EventHubsSchemaGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                updatedAtUtc,
+                createdAtUtc,
+                eTag,
+                groupProperties,
+                schemaCompatibility,
+                schemaType,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubs.EventHubsApplicationGroupData"/>. </summary>
@@ -373,7 +522,16 @@ namespace Azure.ResourceManager.EventHubs.Models
         {
             policies ??= new List<EventHubsApplicationGroupPolicy>();
 
-            return new EventHubsApplicationGroupData(id, name, resourceType, systemData, isEnabled, clientAppGroupIdentifier, policies?.ToList(), location, serializedAdditionalRawData: null);
+            return new EventHubsApplicationGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isEnabled,
+                clientAppGroupIdentifier,
+                policies?.ToList(),
+                location,
+                serializedAdditionalRawData: null);
         }
     }
 }

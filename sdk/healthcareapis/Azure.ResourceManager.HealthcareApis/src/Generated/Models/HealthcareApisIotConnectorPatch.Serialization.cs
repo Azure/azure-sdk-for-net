@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisIotConnectorPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisIotConnectorPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisIotConnectorPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisIotConnectorPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisIotConnectorPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisIotConnectorPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisIotConnectorPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, identity);
+            return new HealthcareApisIotConnectorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity);
         }
 
         BinaryData IPersistableModel<HealthcareApisIotConnectorPatch>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisIotConnectorPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisIotConnectorPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         return DeserializeHealthcareApisIotConnectorPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisIotConnectorPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisIotConnectorPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

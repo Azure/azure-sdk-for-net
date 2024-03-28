@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentSection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentSection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentSection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentSpan>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Elements))
@@ -67,7 +66,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentSection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentSection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentSection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +82,7 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyList<string>> elements = default;
+            IReadOnlyList<string> elements = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
@@ -118,7 +117,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentSection(spans, Optional.ToList(elements), serializedAdditionalRawData);
+            return new DocumentSection(spans, elements ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentSection>.Write(ModelReaderWriterOptions options)
@@ -130,7 +129,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentSection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentSection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +145,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentSection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentSection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentSection)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -164,7 +163,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentSection>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceSshKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceSshKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<string> certificate = default;
-            Optional<long> creationTimeStamp = default;
-            Optional<long> expirationTimeStamp = default;
-            Optional<string> privateKey = default;
-            Optional<string> publicKey = default;
+            string certificate = default;
+            long? creationTimeStamp = default;
+            long? expirationTimeStamp = default;
+            string privateKey = default;
+            string publicKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceSshKey(certificate.Value, Optional.ToNullable(creationTimeStamp), Optional.ToNullable(expirationTimeStamp), privateKey.Value, publicKey.Value, serializedAdditionalRawData);
+            return new ApplianceSshKey(
+                certificate,
+                creationTimeStamp,
+                expirationTimeStamp,
+                privateKey,
+                publicKey,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceSshKey>.Write(ModelReaderWriterOptions options)
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                         return DeserializeApplianceSshKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support reading '{options.Format}' format.");
             }
         }
 

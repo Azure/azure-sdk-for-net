@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<OutboundEnvironmentEndpointListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<OutboundEnvironmentEndpoint>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<OutboundEnvironmentEndpointListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 return null;
             }
             IReadOnlyList<OutboundEnvironmentEndpoint> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     List<OutboundEnvironmentEndpoint> array = new List<OutboundEnvironmentEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(item));
+                        array.Add(OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundEnvironmentEndpointListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new OutboundEnvironmentEndpointListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundEnvironmentEndpointListResult>.Write(ModelReaderWriterOptions options)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                         return DeserializeOutboundEnvironmentEndpointListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> volumeName = default;
-            Optional<string> mountPath = default;
-            Optional<string> subPath = default;
+            string volumeName = default;
+            string mountPath = default;
+            string subPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppVolumeMount(volumeName.Value, mountPath.Value, subPath.Value, serializedAdditionalRawData);
+            return new ContainerAppVolumeMount(volumeName, mountPath, subPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppVolumeMount>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppVolumeMount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> ipconfigurationId = default;
-            Optional<IReadOnlyList<string>> defaultBgpIPAddresses = default;
-            Optional<IList<string>> customBgpIPAddresses = default;
-            Optional<IReadOnlyList<string>> tunnelIPAddresses = default;
+            string ipconfigurationId = default;
+            IReadOnlyList<string> defaultBgpIPAddresses = default;
+            IList<string> customBgpIPAddresses = default;
+            IReadOnlyList<string> tunnelIPAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkIPConfigurationBgpPeeringAddress(ipconfigurationId.Value, Optional.ToList(defaultBgpIPAddresses), Optional.ToList(customBgpIPAddresses), Optional.ToList(tunnelIPAddresses), serializedAdditionalRawData);
+            return new NetworkIPConfigurationBgpPeeringAddress(ipconfigurationId, defaultBgpIPAddresses ?? new ChangeTrackingList<string>(), customBgpIPAddresses ?? new ChangeTrackingList<string>(), tunnelIPAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>.Write(ModelReaderWriterOptions options)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkIPConfigurationBgpPeeringAddress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support reading '{options.Format}' format.");
             }
         }
 

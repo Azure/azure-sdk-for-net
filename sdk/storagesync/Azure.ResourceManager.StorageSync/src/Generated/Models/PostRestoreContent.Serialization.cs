@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostRestoreContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreFileSpec)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RestoreFileSpec>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostRestoreContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<string> partition = default;
-            Optional<string> replicaGroup = default;
-            Optional<string> requestId = default;
-            Optional<Uri> azureFileShareUri = default;
-            Optional<string> status = default;
-            Optional<Uri> sourceAzureFileShareUri = default;
-            Optional<string> failedFileList = default;
-            Optional<IList<RestoreFileSpec>> restoreFileSpec = default;
+            string partition = default;
+            string replicaGroup = default;
+            string requestId = default;
+            Uri azureFileShareUri = default;
+            string status = default;
+            Uri sourceAzureFileShareUri = default;
+            string failedFileList = default;
+            IList<RestoreFileSpec> restoreFileSpec = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<RestoreFileSpec> array = new List<RestoreFileSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.RestoreFileSpec.DeserializeRestoreFileSpec(item));
+                        array.Add(Models.RestoreFileSpec.DeserializeRestoreFileSpec(item, options));
                     }
                     restoreFileSpec = array;
                     continue;
@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostRestoreContent(partition.Value, replicaGroup.Value, requestId.Value, azureFileShareUri.Value, status.Value, sourceAzureFileShareUri.Value, failedFileList.Value, Optional.ToList(restoreFileSpec), serializedAdditionalRawData);
+            return new PostRestoreContent(
+                partition,
+                replicaGroup,
+                requestId,
+                azureFileShareUri,
+                status,
+                sourceAzureFileShareUri,
+                failedFileList,
+                restoreFileSpec ?? new ChangeTrackingList<RestoreFileSpec>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostRestoreContent>.Write(ModelReaderWriterOptions options)
@@ -196,7 +205,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PostRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostRestoreContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -212,7 +221,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializePostRestoreContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostRestoreContent)} does not support reading '{options.Format}' format.");
             }
         }
 

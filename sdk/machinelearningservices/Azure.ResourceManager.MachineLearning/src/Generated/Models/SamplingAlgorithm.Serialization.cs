@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<SamplingAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SamplingAlgorithm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SamplingAlgorithm)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<SamplingAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SamplingAlgorithm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SamplingAlgorithm)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Bayesian": return BayesianSamplingAlgorithm.DeserializeBayesianSamplingAlgorithm(element);
-                    case "Grid": return GridSamplingAlgorithm.DeserializeGridSamplingAlgorithm(element);
-                    case "Random": return RandomSamplingAlgorithm.DeserializeRandomSamplingAlgorithm(element);
+                    case "Bayesian": return BayesianSamplingAlgorithm.DeserializeBayesianSamplingAlgorithm(element, options);
+                    case "Grid": return GridSamplingAlgorithm.DeserializeGridSamplingAlgorithm(element, options);
+                    case "Random": return RandomSamplingAlgorithm.DeserializeRandomSamplingAlgorithm(element, options);
                 }
             }
-            return UnknownSamplingAlgorithm.DeserializeUnknownSamplingAlgorithm(element);
+            return UnknownSamplingAlgorithm.DeserializeUnknownSamplingAlgorithm(element, options);
         }
 
         BinaryData IPersistableModel<SamplingAlgorithm>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SamplingAlgorithm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SamplingAlgorithm)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeSamplingAlgorithm(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SamplingAlgorithm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SamplingAlgorithm)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> eventTimestamp = default;
-            Optional<string> eventType = default;
-            Optional<string> eventSummary = default;
-            Optional<string> eventLevel = default;
-            Optional<string> eventDescription = default;
+            DateTimeOffset? eventTimestamp = default;
+            string eventType = default;
+            string eventSummary = default;
+            string eventLevel = default;
+            string eventDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServicePrefixEvent(Optional.ToNullable(eventTimestamp), eventType.Value, eventSummary.Value, eventLevel.Value, eventDescription.Value, serializedAdditionalRawData);
+            return new PeeringServicePrefixEvent(
+                eventTimestamp,
+                eventType,
+                eventSummary,
+                eventLevel,
+                eventDescription,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServicePrefixEvent>.Write(ModelReaderWriterOptions options)
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringServicePrefixEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support reading '{options.Format}' format.");
             }
         }
 

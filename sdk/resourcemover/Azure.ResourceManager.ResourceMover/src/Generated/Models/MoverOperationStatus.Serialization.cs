@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverOperationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverOperationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (Error != null)
                 {
                     writer.WritePropertyName("error"u8);
-                    writer.WriteObjectValue(Error);
+                    writer.WriteObjectValue<MoverOperationStatusError>(Error, options);
                 }
                 else
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverOperationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverOperationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<MoverOperationStatusError> error = default;
-            Optional<BinaryData> properties = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            MoverOperationStatusError error = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         error = null;
                         continue;
                     }
-                    error = MoverOperationStatusError.DeserializeMoverOperationStatusError(property.Value);
+                    error = MoverOperationStatusError.DeserializeMoverOperationStatusError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -186,7 +186,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverOperationStatus(id.Value, name.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), error.Value, properties.Value, serializedAdditionalRawData);
+            return new MoverOperationStatus(
+                id,
+                name,
+                status,
+                startTime,
+                endTime,
+                error,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverOperationStatus>.Write(ModelReaderWriterOptions options)
@@ -198,7 +206,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverOperationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverOperationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +222,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverOperationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverOperationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverOperationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

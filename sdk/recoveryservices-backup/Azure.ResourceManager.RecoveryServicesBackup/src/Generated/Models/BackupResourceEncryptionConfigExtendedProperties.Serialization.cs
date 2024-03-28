@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfigExtendedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfigExtendedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> userAssignedIdentity = default;
-            Optional<bool> useSystemAssignedIdentity = default;
-            Optional<BackupEncryptionAtRestType> encryptionAtRestType = default;
-            Optional<Uri> keyUri = default;
-            Optional<string> subscriptionId = default;
-            Optional<LastUpdateStatus> lastUpdateStatus = default;
-            Optional<InfrastructureEncryptionState> infrastructureEncryptionState = default;
+            ResourceIdentifier userAssignedIdentity = default;
+            bool? useSystemAssignedIdentity = default;
+            BackupEncryptionAtRestType? encryptionAtRestType = default;
+            Uri keyUri = default;
+            string subscriptionId = default;
+            LastUpdateStatus? lastUpdateStatus = default;
+            InfrastructureEncryptionState? infrastructureEncryptionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupResourceEncryptionConfigExtendedProperties(Optional.ToNullable(encryptionAtRestType), keyUri.Value, subscriptionId.Value, Optional.ToNullable(lastUpdateStatus), Optional.ToNullable(infrastructureEncryptionState), serializedAdditionalRawData, userAssignedIdentity.Value, Optional.ToNullable(useSystemAssignedIdentity));
+            return new BackupResourceEncryptionConfigExtendedProperties(
+                encryptionAtRestType,
+                keyUri,
+                subscriptionId,
+                lastUpdateStatus,
+                infrastructureEncryptionState,
+                serializedAdditionalRawData,
+                userAssignedIdentity,
+                useSystemAssignedIdentity);
         }
 
         BinaryData IPersistableModel<BackupResourceEncryptionConfigExtendedProperties>.Write(ModelReaderWriterOptions options)
@@ -187,7 +195,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupResourceEncryptionConfigExtendedProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

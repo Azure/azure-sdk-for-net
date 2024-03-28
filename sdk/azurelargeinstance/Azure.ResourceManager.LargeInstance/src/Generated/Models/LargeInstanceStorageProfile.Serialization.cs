@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceStorageProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in OSDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LargeInstanceDisk>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceStorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<string> nfsIPAddress = default;
-            Optional<IReadOnlyList<LargeInstanceDisk>> osDisks = default;
+            string nfsIPAddress = default;
+            IReadOnlyList<LargeInstanceDisk> osDisks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     List<LargeInstanceDisk> array = new List<LargeInstanceDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LargeInstanceDisk.DeserializeLargeInstanceDisk(item));
+                        array.Add(LargeInstanceDisk.DeserializeLargeInstanceDisk(item, options));
                     }
                     osDisks = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceStorageProfile(nfsIPAddress.Value, Optional.ToList(osDisks), serializedAdditionalRawData);
+            return new LargeInstanceStorageProfile(nfsIPAddress, osDisks ?? new ChangeTrackingList<LargeInstanceDisk>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceStorageProfile>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceStorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                         return DeserializeLargeInstanceStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceStorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

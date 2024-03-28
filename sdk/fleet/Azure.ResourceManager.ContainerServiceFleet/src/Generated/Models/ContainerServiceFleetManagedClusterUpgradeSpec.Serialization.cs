@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetManagedClusterUpgradeSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetManagedClusterUpgradeSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             ContainerServiceFleetManagedClusterUpgradeType type = default;
-            Optional<string> kubernetesVersion = default;
+            string kubernetesVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetManagedClusterUpgradeSpec(type, kubernetesVersion.Value, serializedAdditionalRawData);
+            return new ContainerServiceFleetManagedClusterUpgradeSpec(type, kubernetesVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetManagedClusterUpgradeSpec>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                         return DeserializeContainerServiceFleetManagedClusterUpgradeSpec(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support reading '{options.Format}' format.");
             }
         }
 

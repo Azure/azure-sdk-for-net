@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiDeploymentParameterMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiDeploymentParameterMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<bool> isRequired = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<LogicApiDeploymentParameterVisibility> visibility = default;
+            string type = default;
+            bool? isRequired = default;
+            string displayName = default;
+            string description = default;
+            LogicApiDeploymentParameterVisibility? visibility = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiDeploymentParameterMetadata(type.Value, Optional.ToNullable(isRequired), displayName.Value, description.Value, Optional.ToNullable(visibility), serializedAdditionalRawData);
+            return new LogicApiDeploymentParameterMetadata(
+                type,
+                isRequired,
+                displayName,
+                description,
+                visibility,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiDeploymentParameterMetadata>.Write(ModelReaderWriterOptions options)
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicApiDeploymentParameterMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

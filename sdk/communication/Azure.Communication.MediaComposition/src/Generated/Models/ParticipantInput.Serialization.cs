@@ -6,8 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication;
-using Azure.Communication.MediaComposition;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
@@ -18,7 +16,7 @@ namespace Azure.Communication.MediaComposition.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteObjectValue(ServiceId);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(ServiceId);
             writer.WritePropertyName("call"u8);
             writer.WriteStringValue(Call);
             writer.WritePropertyName("kind"u8);
@@ -40,7 +38,7 @@ namespace Azure.Communication.MediaComposition.Models
             CommunicationIdentifierModel id = default;
             string call = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -64,7 +62,7 @@ namespace Azure.Communication.MediaComposition.Models
                     continue;
                 }
             }
-            return new ParticipantInput(kind, placeholderImageUri.Value, id, call);
+            return new ParticipantInput(kind, placeholderImageUri, id, call);
         }
     }
 }

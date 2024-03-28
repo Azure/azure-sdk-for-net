@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesPatchVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesPatchVersions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesPatchVersions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Readiness)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KubernetesVersionReadiness>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesPatchVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesPatchVersions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesPatchVersions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KubernetesVersionReadiness>> readiness = default;
-            Optional<IReadOnlyList<string>> upgrades = default;
+            IReadOnlyList<KubernetesVersionReadiness> readiness = default;
+            IReadOnlyList<string> upgrades = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<KubernetesVersionReadiness> array = new List<KubernetesVersionReadiness>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVersionReadiness.DeserializeKubernetesVersionReadiness(item));
+                        array.Add(KubernetesVersionReadiness.DeserializeKubernetesVersionReadiness(item, options));
                     }
                     readiness = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesPatchVersions(Optional.ToList(readiness), Optional.ToList(upgrades), serializedAdditionalRawData);
+            return new KubernetesPatchVersions(readiness ?? new ChangeTrackingList<KubernetesVersionReadiness>(), upgrades ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesPatchVersions>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesPatchVersions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesPatchVersions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeKubernetesPatchVersions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesPatchVersions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesPatchVersions)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsagesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheUsagesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheUsagesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageCacheUsage>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsagesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheUsagesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheUsagesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<StorageCacheUsage>> value = default;
+            string nextLink = default;
+            IReadOnlyList<StorageCacheUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheUsage> array = new List<StorageCacheUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheUsage.DeserializeStorageCacheUsage(item));
+                        array.Add(StorageCacheUsage.DeserializeStorageCacheUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheUsagesResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new StorageCacheUsagesResult(nextLink, value ?? new ChangeTrackingList<StorageCacheUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheUsagesResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheUsagesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheUsagesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeStorageCacheUsagesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheUsagesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheUsagesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

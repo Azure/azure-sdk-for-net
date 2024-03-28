@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryNetworkMappingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryNetworkMappingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryNetworkMappingProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(FabricSpecificSettings))
             {
                 writer.WritePropertyName("fabricSpecificSettings"u8);
-                writer.WriteObjectValue(FabricSpecificSettings);
+                writer.WriteObjectValue<NetworkMappingFabricSpecificSettings>(FabricSpecificSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryNetworkMappingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryNetworkMappingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryNetworkMappingProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> state = default;
-            Optional<string> primaryNetworkFriendlyName = default;
-            Optional<ResourceIdentifier> primaryNetworkId = default;
-            Optional<string> primaryFabricFriendlyName = default;
-            Optional<string> recoveryNetworkFriendlyName = default;
-            Optional<ResourceIdentifier> recoveryNetworkId = default;
-            Optional<ResourceIdentifier> recoveryFabricArmId = default;
-            Optional<string> recoveryFabricFriendlyName = default;
-            Optional<NetworkMappingFabricSpecificSettings> fabricSpecificSettings = default;
+            string state = default;
+            string primaryNetworkFriendlyName = default;
+            ResourceIdentifier primaryNetworkId = default;
+            string primaryFabricFriendlyName = default;
+            string recoveryNetworkFriendlyName = default;
+            ResourceIdentifier recoveryNetworkId = default;
+            ResourceIdentifier recoveryFabricArmId = default;
+            string recoveryFabricFriendlyName = default;
+            NetworkMappingFabricSpecificSettings fabricSpecificSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    fabricSpecificSettings = NetworkMappingFabricSpecificSettings.DeserializeNetworkMappingFabricSpecificSettings(property.Value);
+                    fabricSpecificSettings = NetworkMappingFabricSpecificSettings.DeserializeNetworkMappingFabricSpecificSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryNetworkMappingProperties(state.Value, primaryNetworkFriendlyName.Value, primaryNetworkId.Value, primaryFabricFriendlyName.Value, recoveryNetworkFriendlyName.Value, recoveryNetworkId.Value, recoveryFabricArmId.Value, recoveryFabricFriendlyName.Value, fabricSpecificSettings.Value, serializedAdditionalRawData);
+            return new SiteRecoveryNetworkMappingProperties(
+                state,
+                primaryNetworkFriendlyName,
+                primaryNetworkId,
+                primaryFabricFriendlyName,
+                recoveryNetworkFriendlyName,
+                recoveryNetworkId,
+                recoveryFabricArmId,
+                recoveryFabricFriendlyName,
+                fabricSpecificSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryNetworkMappingProperties>.Write(ModelReaderWriterOptions options)
@@ -201,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryNetworkMappingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryNetworkMappingProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryNetworkMappingProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryNetworkMappingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryNetworkMappingProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

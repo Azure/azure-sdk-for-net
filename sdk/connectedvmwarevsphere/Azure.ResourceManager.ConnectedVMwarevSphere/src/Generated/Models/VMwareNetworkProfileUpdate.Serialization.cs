@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareNetworkProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareNetworkProfileUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareNetworkProfileUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareNetworkInterfaceUpdate>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareNetworkProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareNetworkProfileUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareNetworkProfileUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<IList<VMwareNetworkInterfaceUpdate>> networkInterfaces = default;
+            IList<VMwareNetworkInterfaceUpdate> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareNetworkInterfaceUpdate> array = new List<VMwareNetworkInterfaceUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareNetworkInterfaceUpdate.DeserializeVMwareNetworkInterfaceUpdate(item));
+                        array.Add(VMwareNetworkInterfaceUpdate.DeserializeVMwareNetworkInterfaceUpdate(item, options));
                     }
                     networkInterfaces = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareNetworkProfileUpdate(Optional.ToList(networkInterfaces), serializedAdditionalRawData);
+            return new VMwareNetworkProfileUpdate(networkInterfaces ?? new ChangeTrackingList<VMwareNetworkInterfaceUpdate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareNetworkProfileUpdate>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareNetworkProfileUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareNetworkProfileUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeVMwareNetworkProfileUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareNetworkProfileUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareNetworkProfileUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

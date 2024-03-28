@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisPersistenceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisPersistenceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<bool> aofEnabled = default;
-            Optional<bool> rdbEnabled = default;
-            Optional<PersistenceSettingAofFrequency> aofFrequency = default;
-            Optional<PersistenceSettingRdbFrequency> rdbFrequency = default;
+            bool? aofEnabled = default;
+            bool? rdbEnabled = default;
+            PersistenceSettingAofFrequency? aofFrequency = default;
+            PersistenceSettingRdbFrequency? rdbFrequency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisPersistenceSettings(Optional.ToNullable(aofEnabled), Optional.ToNullable(rdbEnabled), Optional.ToNullable(aofFrequency), Optional.ToNullable(rdbFrequency), serializedAdditionalRawData);
+            return new RedisPersistenceSettings(aofEnabled, rdbEnabled, aofFrequency, rdbFrequency, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisPersistenceSettings>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         return DeserializeRedisPersistenceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

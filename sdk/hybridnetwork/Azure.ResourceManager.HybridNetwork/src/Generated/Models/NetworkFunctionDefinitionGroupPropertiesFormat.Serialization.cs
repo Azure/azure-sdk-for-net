@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> description = default;
+            ProvisioningState? provisioningState = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFunctionDefinitionGroupPropertiesFormat(Optional.ToNullable(provisioningState), description.Value, serializedAdditionalRawData);
+            return new NetworkFunctionDefinitionGroupPropertiesFormat(provisioningState, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFunctionDefinitionGroupPropertiesFormat>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeNetworkFunctionDefinitionGroupPropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFunctionDefinitionGroupPropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

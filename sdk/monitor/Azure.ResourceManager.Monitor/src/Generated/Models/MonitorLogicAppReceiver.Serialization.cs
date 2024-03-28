@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorLogicAppReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorLogicAppReceiver)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorLogicAppReceiver)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorLogicAppReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorLogicAppReceiver)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorLogicAppReceiver)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             ResourceIdentifier resourceId = default;
             Uri callbackUrl = default;
-            Optional<bool> useCommonAlertSchema = default;
+            bool? useCommonAlertSchema = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorLogicAppReceiver(name, resourceId, callbackUrl, Optional.ToNullable(useCommonAlertSchema), serializedAdditionalRawData);
+            return new MonitorLogicAppReceiver(name, resourceId, callbackUrl, useCommonAlertSchema, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorLogicAppReceiver>.Write(ModelReaderWriterOptions options)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorLogicAppReceiver)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorLogicAppReceiver)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorLogicAppReceiver(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorLogicAppReceiver)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorLogicAppReceiver)} does not support reading '{options.Format}' format.");
             }
         }
 

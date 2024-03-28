@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleManagementEventClaimsDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleManagementEventClaimsDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleManagementEventClaimsDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleManagementEventClaimsDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleManagementEventClaimsDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleManagementEventClaimsDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> emailAddress = default;
+            string emailAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleManagementEventClaimsDataSource(emailAddress.Value, serializedAdditionalRawData);
+            return new RuleManagementEventClaimsDataSource(emailAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RuleManagementEventClaimsDataSource>.Write(ModelReaderWriterOptions options)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RuleManagementEventClaimsDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleManagementEventClaimsDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeRuleManagementEventClaimsDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuleManagementEventClaimsDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleManagementEventClaimsDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

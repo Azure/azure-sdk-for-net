@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastingSeasonality>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastingSeasonality)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastingSeasonality)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastingSeasonality>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastingSeasonality)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastingSeasonality)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Auto": return AutoSeasonality.DeserializeAutoSeasonality(element);
-                    case "Custom": return CustomSeasonality.DeserializeCustomSeasonality(element);
+                    case "Auto": return AutoSeasonality.DeserializeAutoSeasonality(element, options);
+                    case "Custom": return CustomSeasonality.DeserializeCustomSeasonality(element, options);
                 }
             }
-            return UnknownSeasonality.DeserializeUnknownSeasonality(element);
+            return UnknownSeasonality.DeserializeUnknownSeasonality(element, options);
         }
 
         BinaryData IPersistableModel<ForecastingSeasonality>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ForecastingSeasonality)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastingSeasonality)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeForecastingSeasonality(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ForecastingSeasonality)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastingSeasonality)} does not support reading '{options.Format}' format.");
             }
         }
 

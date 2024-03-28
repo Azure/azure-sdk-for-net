@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedClusterCredential>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedClusterCredential>> kubeconfigs = default;
+            IReadOnlyList<ManagedClusterCredential> kubeconfigs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ManagedClusterCredential> array = new List<ManagedClusterCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedClusterCredential.DeserializeManagedClusterCredential(item));
+                        array.Add(ManagedClusterCredential.DeserializeManagedClusterCredential(item, options));
                     }
                     kubeconfigs = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterCredentials(Optional.ToList(kubeconfigs), serializedAdditionalRawData);
+            return new ManagedClusterCredentials(kubeconfigs ?? new ChangeTrackingList<ManagedClusterCredential>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterCredentials>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

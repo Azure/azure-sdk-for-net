@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlBackupSetInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ListOfBackupFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SqlBackupFileInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlBackupSetInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<Guid> backupSetId = default;
-            Optional<string> firstLSN = default;
-            Optional<string> lastLSN = default;
-            Optional<string> backupType = default;
-            Optional<IReadOnlyList<SqlBackupFileInfo>> listOfBackupFiles = default;
-            Optional<DateTimeOffset> backupStartDate = default;
-            Optional<DateTimeOffset> backupFinishDate = default;
-            Optional<bool> isBackupRestored = default;
-            Optional<bool> hasBackupChecksums = default;
-            Optional<int> familyCount = default;
-            Optional<IReadOnlyList<string>> ignoreReasons = default;
+            Guid? backupSetId = default;
+            string firstLSN = default;
+            string lastLSN = default;
+            string backupType = default;
+            IReadOnlyList<SqlBackupFileInfo> listOfBackupFiles = default;
+            DateTimeOffset? backupStartDate = default;
+            DateTimeOffset? backupFinishDate = default;
+            bool? isBackupRestored = default;
+            bool? hasBackupChecksums = default;
+            int? familyCount = default;
+            IReadOnlyList<string> ignoreReasons = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SqlBackupFileInfo> array = new List<SqlBackupFileInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlBackupFileInfo.DeserializeSqlBackupFileInfo(item));
+                        array.Add(SqlBackupFileInfo.DeserializeSqlBackupFileInfo(item, options));
                     }
                     listOfBackupFiles = array;
                     continue;
@@ -247,7 +247,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlBackupSetInfo(Optional.ToNullable(backupSetId), firstLSN.Value, lastLSN.Value, backupType.Value, Optional.ToList(listOfBackupFiles), Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishDate), Optional.ToNullable(isBackupRestored), Optional.ToNullable(hasBackupChecksums), Optional.ToNullable(familyCount), Optional.ToList(ignoreReasons), serializedAdditionalRawData);
+            return new SqlBackupSetInfo(
+                backupSetId,
+                firstLSN,
+                lastLSN,
+                backupType,
+                listOfBackupFiles ?? new ChangeTrackingList<SqlBackupFileInfo>(),
+                backupStartDate,
+                backupFinishDate,
+                isBackupRestored,
+                hasBackupChecksums,
+                familyCount,
+                ignoreReasons ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlBackupSetInfo>.Write(ModelReaderWriterOptions options)
@@ -259,7 +271,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -275,7 +287,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeSqlBackupSetInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

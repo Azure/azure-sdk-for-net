@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationCalculateRefundContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationCalculateRefundContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationCalculateRefundContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ReservationCalculateRefundRequestProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationCalculateRefundContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationCalculateRefundContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationCalculateRefundContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<ReservationCalculateRefundRequestProperties> properties = default;
+            string id = default;
+            ReservationCalculateRefundRequestProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = ReservationCalculateRefundRequestProperties.DeserializeReservationCalculateRefundRequestProperties(property.Value);
+                    properties = ReservationCalculateRefundRequestProperties.DeserializeReservationCalculateRefundRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationCalculateRefundContent(id.Value, properties.Value, serializedAdditionalRawData);
+            return new ReservationCalculateRefundContent(id, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationCalculateRefundContent>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationCalculateRefundContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationCalculateRefundContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationCalculateRefundContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationCalculateRefundContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationCalculateRefundContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ErrorDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ErrorDeployment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ErrorDeployment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ErrorDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ErrorDeployment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ErrorDeployment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ErrorDeploymentType> type = default;
-            Optional<string> deploymentName = default;
+            ErrorDeploymentType? type = default;
+            string deploymentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ErrorDeployment(Optional.ToNullable(type), deploymentName.Value, serializedAdditionalRawData);
+            return new ErrorDeployment(type, deploymentName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ErrorDeployment>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ErrorDeployment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ErrorDeployment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeErrorDeployment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ErrorDeployment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ErrorDeployment)} does not support reading '{options.Format}' format.");
             }
         }
 

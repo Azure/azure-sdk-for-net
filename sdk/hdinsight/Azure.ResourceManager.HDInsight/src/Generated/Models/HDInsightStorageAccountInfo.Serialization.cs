@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightStorageAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightStorageAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,16 +128,16 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isDefault = default;
-            Optional<string> container = default;
-            Optional<string> fileSystem = default;
-            Optional<string> key = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<ResourceIdentifier> msiResourceId = default;
-            Optional<string> saskey = default;
-            Optional<string> fileshare = default;
-            Optional<bool> enableSecureChannel = default;
+            string name = default;
+            bool? isDefault = default;
+            string container = default;
+            string fileSystem = default;
+            string key = default;
+            ResourceIdentifier resourceId = default;
+            ResourceIdentifier msiResourceId = default;
+            string saskey = default;
+            string fileshare = default;
+            bool? enableSecureChannel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,18 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightStorageAccountInfo(name.Value, Optional.ToNullable(isDefault), container.Value, fileSystem.Value, key.Value, resourceId.Value, msiResourceId.Value, saskey.Value, fileshare.Value, Optional.ToNullable(enableSecureChannel), serializedAdditionalRawData);
+            return new HDInsightStorageAccountInfo(
+                name,
+                isDefault,
+                container,
+                fileSystem,
+                key,
+                resourceId,
+                msiResourceId,
+                saskey,
+                fileshare,
+                enableSecureChannel,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightStorageAccountInfo>.Write(ModelReaderWriterOptions options)
@@ -228,7 +239,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +255,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightStorageAccountInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

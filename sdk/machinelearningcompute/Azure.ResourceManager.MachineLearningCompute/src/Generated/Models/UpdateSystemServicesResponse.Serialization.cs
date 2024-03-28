@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateSystemServicesResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateSystemServicesResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<OperationStatus> updateStatus = default;
-            Optional<DateTimeOffset> updateStartedOn = default;
-            Optional<DateTimeOffset> updateCompletedOn = default;
+            OperationStatus? updateStatus = default;
+            DateTimeOffset? updateStartedOn = default;
+            DateTimeOffset? updateCompletedOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateSystemServicesResponse(Optional.ToNullable(updateStatus), Optional.ToNullable(updateStartedOn), Optional.ToNullable(updateCompletedOn), serializedAdditionalRawData);
+            return new UpdateSystemServicesResponse(updateStatus, updateStartedOn, updateCompletedOn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateSystemServicesResponse>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                         return DeserializeUpdateSystemServicesResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationInnerHealthErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationInnerHealthErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationInnerHealthErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationInnerHealthErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationInnerHealthErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationInnerHealthErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> healthCategory = default;
-            Optional<string> category = default;
-            Optional<string> severity = default;
-            Optional<string> source = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<bool> isCustomerResolvable = default;
-            Optional<string> summary = default;
-            Optional<string> message = default;
-            Optional<string> causes = default;
-            Optional<string> recommendation = default;
+            string code = default;
+            string healthCategory = default;
+            string category = default;
+            string severity = default;
+            string source = default;
+            DateTimeOffset? creationTime = default;
+            bool? isCustomerResolvable = default;
+            string summary = default;
+            string message = default;
+            string causes = default;
+            string recommendation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationInnerHealthErrorInfo(code.Value, healthCategory.Value, category.Value, severity.Value, source.Value, Optional.ToNullable(creationTime), Optional.ToNullable(isCustomerResolvable), summary.Value, message.Value, causes.Value, recommendation.Value, serializedAdditionalRawData);
+            return new DataReplicationInnerHealthErrorInfo(
+                code,
+                healthCategory,
+                category,
+                severity,
+                source,
+                creationTime,
+                isCustomerResolvable,
+                summary,
+                message,
+                causes,
+                recommendation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationInnerHealthErrorInfo>.Write(ModelReaderWriterOptions options)
@@ -215,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationInnerHealthErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationInnerHealthErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +243,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDataReplicationInnerHealthErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationInnerHealthErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationInnerHealthErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

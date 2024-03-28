@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<BuiltInStandardEncoderPreset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
-                writer.WriteObjectValue(Configurations);
+                writer.WriteObjectValue<EncoderPresetConfigurations>(Configurations, options);
             }
             writer.WritePropertyName("presetName"u8);
             writer.WriteStringValue(PresetName.ToString());
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<BuiltInStandardEncoderPreset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<EncoderPresetConfigurations> configurations = default;
+            EncoderPresetConfigurations configurations = default;
             EncoderNamedPreset presetName = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    configurations = EncoderPresetConfigurations.DeserializeEncoderPresetConfigurations(property.Value);
+                    configurations = EncoderPresetConfigurations.DeserializeEncoderPresetConfigurations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("presetName"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuiltInStandardEncoderPreset(odataType, serializedAdditionalRawData, configurations.Value, presetName);
+            return new BuiltInStandardEncoderPreset(odataType, serializedAdditionalRawData, configurations, presetName);
         }
 
         BinaryData IPersistableModel<BuiltInStandardEncoderPreset>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeBuiltInStandardEncoderPreset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support reading '{options.Format}' format.");
             }
         }
 

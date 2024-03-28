@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkFunctionTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkFunctionTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkFunctionTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkFunctionTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkFunctionTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkFunctionTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureCore": return AzureCoreNetworkFunctionTemplate.DeserializeAzureCoreNetworkFunctionTemplate(element);
-                    case "AzureOperatorNexus": return AzureOperatorNexusNetworkFunctionTemplate.DeserializeAzureOperatorNexusNetworkFunctionTemplate(element);
+                    case "AzureCore": return AzureCoreNetworkFunctionTemplate.DeserializeAzureCoreNetworkFunctionTemplate(element, options);
+                    case "AzureOperatorNexus": return AzureOperatorNexusNetworkFunctionTemplate.DeserializeAzureOperatorNexusNetworkFunctionTemplate(element, options);
                 }
             }
-            return UnknownVirtualNetworkFunctionTemplate.DeserializeUnknownVirtualNetworkFunctionTemplate(element);
+            return UnknownVirtualNetworkFunctionTemplate.DeserializeUnknownVirtualNetworkFunctionTemplate(element, options);
         }
 
         BinaryData IPersistableModel<VirtualNetworkFunctionTemplate>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkFunctionTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkFunctionTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeVirtualNetworkFunctionTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkFunctionTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkFunctionTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<TroubleshooterResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TroubleshooterResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TroubleshooterResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<TroubleshooterResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TroubleshooterResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TroubleshooterResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> questionId = default;
-            Optional<QuestionType> questionType = default;
-            Optional<string> response = default;
+            string questionId = default;
+            QuestionType? questionType = default;
+            string response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshooterResult(questionId.Value, Optional.ToNullable(questionType), response.Value, serializedAdditionalRawData);
+            return new TroubleshooterResult(questionId, questionType, response, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshooterResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TroubleshooterResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TroubleshooterResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeTroubleshooterResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TroubleshooterResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TroubleshooterResult)} does not support reading '{options.Format}' format.");
             }
         }
 

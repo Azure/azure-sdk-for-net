@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksNetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningAksNetworkingConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningAksNetworkingConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksNetworkingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningAksNetworkingConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningAksNetworkingConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<string> serviceCidr = default;
-            Optional<string> dnsServiceIP = default;
-            Optional<string> dockerBridgeCidr = default;
+            ResourceIdentifier subnetId = default;
+            string serviceCidr = default;
+            string dnsServiceIP = default;
+            string dockerBridgeCidr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningAksNetworkingConfiguration(subnetId.Value, serviceCidr.Value, dnsServiceIP.Value, dockerBridgeCidr.Value, serializedAdditionalRawData);
+            return new MachineLearningAksNetworkingConfiguration(subnetId, serviceCidr, dnsServiceIP, dockerBridgeCidr, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningAksNetworkingConfiguration>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningAksNetworkingConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningAksNetworkingConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningAksNetworkingConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningAksNetworkingConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningAksNetworkingConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

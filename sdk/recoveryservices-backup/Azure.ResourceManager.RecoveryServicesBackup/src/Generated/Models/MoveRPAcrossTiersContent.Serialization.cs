@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoveRPAcrossTiersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoveRPAcrossTiersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> objectType = default;
-            Optional<RecoveryPointTierType> sourceTierType = default;
-            Optional<RecoveryPointTierType> targetTierType = default;
+            string objectType = default;
+            RecoveryPointTierType? sourceTierType = default;
+            RecoveryPointTierType? targetTierType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoveRPAcrossTiersContent(objectType.Value, Optional.ToNullable(sourceTierType), Optional.ToNullable(targetTierType), serializedAdditionalRawData);
+            return new MoveRPAcrossTiersContent(objectType, sourceTierType, targetTierType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoveRPAcrossTiersContent>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeMoveRPAcrossTiersContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support reading '{options.Format}' format.");
             }
         }
 

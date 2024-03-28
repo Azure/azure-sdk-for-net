@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<SqlDataDirectoryType> type = default;
-            Optional<string> path = default;
-            Optional<string> logicalName = default;
+            SqlDataDirectoryType? type = default;
+            string path = default;
+            string logicalName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDataDirectory(Optional.ToNullable(type), path.Value, logicalName.Value, serializedAdditionalRawData);
+            return new SqlDataDirectory(type, path, logicalName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDataDirectory>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeSqlDataDirectory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataQualityMetricThresholdBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Threshold != null)
                 {
                     writer.WritePropertyName("threshold"u8);
-                    writer.WriteObjectValue(Threshold);
+                    writer.WriteObjectValue<MonitoringThreshold>(Threshold, options);
                 }
                 else
                 {
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataQualityMetricThresholdBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataQualityMetricThresholdBase(document.RootElement, options);
+            return DeserializeDataQualityMetricThresholdBase(document.RootElement, options);
         }
 
         internal static UnknownDataQualityMetricThresholdBase DeserializeUnknownDataQualityMetricThresholdBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MonitoringFeatureDataType dataType = "Unknown";
-            Optional<MonitoringThreshold> threshold = default;
+            MonitoringThreshold threshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         threshold = null;
                         continue;
                     }
-                    threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value);
+                    threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataQualityMetricThresholdBase(dataType, threshold.Value, serializedAdditionalRawData);
+            return new UnknownDataQualityMetricThresholdBase(dataType, threshold, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataQualityMetricThresholdBase>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataQualityMetricThresholdBase(document.RootElement, options);
+                        return DeserializeDataQualityMetricThresholdBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerDeploymentStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerDeploymentStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> commitTime = default;
-            Optional<string> region = default;
-            Optional<NetworkManagerDeploymentState> deploymentStatus = default;
-            Optional<IReadOnlyList<string>> configurationIds = default;
-            Optional<NetworkConfigurationDeploymentType> deploymentType = default;
-            Optional<string> errorMessage = default;
+            DateTimeOffset? commitTime = default;
+            string region = default;
+            NetworkManagerDeploymentState? deploymentStatus = default;
+            IReadOnlyList<string> configurationIds = default;
+            NetworkConfigurationDeploymentType? deploymentType = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerDeploymentStatus(Optional.ToNullable(commitTime), region.Value, Optional.ToNullable(deploymentStatus), Optional.ToList(configurationIds), Optional.ToNullable(deploymentType), errorMessage.Value, serializedAdditionalRawData);
+            return new NetworkManagerDeploymentStatus(
+                commitTime,
+                region,
+                deploymentStatus,
+                configurationIds ?? new ChangeTrackingList<string>(),
+                deploymentType,
+                errorMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerDeploymentStatus>.Write(ModelReaderWriterOptions options)
@@ -178,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +201,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkManagerDeploymentStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

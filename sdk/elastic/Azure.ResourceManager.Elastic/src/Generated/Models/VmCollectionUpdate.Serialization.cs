@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmCollectionUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmCollectionUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmCollectionUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmCollectionUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmCollectionUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmCollectionUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> vmResourceId = default;
-            Optional<OperationName> operationName = default;
+            string vmResourceId = default;
+            OperationName? operationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmCollectionUpdate(vmResourceId.Value, Optional.ToNullable(operationName), serializedAdditionalRawData);
+            return new VmCollectionUpdate(vmResourceId, operationName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmCollectionUpdate>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmCollectionUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmCollectionUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeVmCollectionUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmCollectionUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmCollectionUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

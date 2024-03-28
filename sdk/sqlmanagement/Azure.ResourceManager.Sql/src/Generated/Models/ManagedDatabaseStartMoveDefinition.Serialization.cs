@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseStartMoveDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDatabaseStartMoveDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDatabaseStartMoveDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseStartMoveDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDatabaseStartMoveDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDatabaseStartMoveDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             ResourceIdentifier destinationManagedDatabaseId = default;
-            Optional<ManagedDatabaseMoveOperationMode> operationMode = default;
+            ManagedDatabaseMoveOperationMode? operationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDatabaseStartMoveDefinition(destinationManagedDatabaseId, Optional.ToNullable(operationMode), serializedAdditionalRawData);
+            return new ManagedDatabaseStartMoveDefinition(destinationManagedDatabaseId, operationMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDatabaseStartMoveDefinition>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDatabaseStartMoveDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDatabaseStartMoveDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedDatabaseStartMoveDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDatabaseStartMoveDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDatabaseStartMoveDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

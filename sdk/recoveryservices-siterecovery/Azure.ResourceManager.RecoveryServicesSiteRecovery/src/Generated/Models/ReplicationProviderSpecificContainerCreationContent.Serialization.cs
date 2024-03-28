@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificContainerCreationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationProviderSpecificContainerCreationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationProviderSpecificContainerCreationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificContainerCreationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationProviderSpecificContainerCreationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationProviderSpecificContainerCreationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AContainerCreationContent.DeserializeA2AContainerCreationContent(element);
-                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationContainerCreationContent.DeserializeA2ACrossClusterMigrationContainerCreationContent(element);
-                    case "VMwareCbt": return VMwareCbtContainerCreationContent.DeserializeVMwareCbtContainerCreationContent(element);
+                    case "A2A": return A2AContainerCreationContent.DeserializeA2AContainerCreationContent(element, options);
+                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationContainerCreationContent.DeserializeA2ACrossClusterMigrationContainerCreationContent(element, options);
+                    case "VMwareCbt": return VMwareCbtContainerCreationContent.DeserializeVMwareCbtContainerCreationContent(element, options);
                 }
             }
-            return UnknownReplicationProviderSpecificContainerCreationContent.DeserializeUnknownReplicationProviderSpecificContainerCreationContent(element);
+            return UnknownReplicationProviderSpecificContainerCreationContent.DeserializeUnknownReplicationProviderSpecificContainerCreationContent(element, options);
         }
 
         BinaryData IPersistableModel<ReplicationProviderSpecificContainerCreationContent>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationProviderSpecificContainerCreationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationProviderSpecificContainerCreationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeReplicationProviderSpecificContainerCreationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationProviderSpecificContainerCreationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationProviderSpecificContainerCreationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

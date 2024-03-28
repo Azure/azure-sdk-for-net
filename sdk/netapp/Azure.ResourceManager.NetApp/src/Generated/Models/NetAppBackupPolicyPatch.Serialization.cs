@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in VolumeBackups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetAppVolumeBackupDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,20 +146,20 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> backupPolicyId = default;
-            Optional<string> provisioningState = default;
-            Optional<int> dailyBackupsToKeep = default;
-            Optional<int> weeklyBackupsToKeep = default;
-            Optional<int> monthlyBackupsToKeep = default;
-            Optional<int> volumesAssigned = default;
-            Optional<bool> enabled = default;
-            Optional<IReadOnlyList<NetAppVolumeBackupDetail>> volumeBackups = default;
+            SystemData systemData = default;
+            ResourceIdentifier backupPolicyId = default;
+            string provisioningState = default;
+            int? dailyBackupsToKeep = default;
+            int? weeklyBackupsToKeep = default;
+            int? monthlyBackupsToKeep = default;
+            int? volumesAssigned = default;
+            bool? enabled = default;
+            IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             List<NetAppVolumeBackupDetail> array = new List<NetAppVolumeBackupDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppVolumeBackupDetail.DeserializeNetAppVolumeBackupDetail(item));
+                                array.Add(NetAppVolumeBackupDetail.DeserializeNetAppVolumeBackupDetail(item, options));
                             }
                             volumeBackups = array;
                             continue;
@@ -298,7 +298,22 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppBackupPolicyPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, backupPolicyId.Value, provisioningState.Value, Optional.ToNullable(dailyBackupsToKeep), Optional.ToNullable(weeklyBackupsToKeep), Optional.ToNullable(monthlyBackupsToKeep), Optional.ToNullable(volumesAssigned), Optional.ToNullable(enabled), Optional.ToList(volumeBackups), serializedAdditionalRawData);
+            return new NetAppBackupPolicyPatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                backupPolicyId,
+                provisioningState,
+                dailyBackupsToKeep,
+                weeklyBackupsToKeep,
+                monthlyBackupsToKeep,
+                volumesAssigned,
+                enabled,
+                volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppBackupPolicyPatch>.Write(ModelReaderWriterOptions options)
@@ -310,7 +325,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -326,7 +341,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppBackupPolicyPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

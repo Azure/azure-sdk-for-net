@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssociationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssociationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssociationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssociationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssociationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssociationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AssociationType> associationType = default;
-            Optional<WritableSubResource> subnet = default;
+            IDictionary<string, string> tags = default;
+            AssociationType? associationType = default;
+            WritableSubResource subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociationPatch(Optional.ToDictionary(tags), Optional.ToNullable(associationType), subnet, serializedAdditionalRawData);
+            return new AssociationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), associationType, subnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssociationPatch>.Write(ModelReaderWriterOptions options)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssociationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssociationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                         return DeserializeAssociationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssociationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssociationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

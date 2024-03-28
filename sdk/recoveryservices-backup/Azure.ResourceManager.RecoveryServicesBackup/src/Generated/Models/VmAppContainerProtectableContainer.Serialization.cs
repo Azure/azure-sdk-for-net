@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmAppContainerProtectableContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmAppContainerProtectableContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmAppContainerProtectableContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmAppContainerProtectableContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmAppContainerProtectableContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmAppContainerProtectableContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
+            string friendlyName = default;
+            BackupManagementType? backupManagementType = default;
             ProtectableContainerType protectableContainerType = default;
-            Optional<string> healthStatus = default;
-            Optional<string> containerId = default;
+            string healthStatus = default;
+            string containerId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmAppContainerProtectableContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), protectableContainerType, healthStatus.Value, containerId.Value, serializedAdditionalRawData);
+            return new VmAppContainerProtectableContainer(
+                friendlyName,
+                backupManagementType,
+                protectableContainerType,
+                healthStatus,
+                containerId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmAppContainerProtectableContainer>.Write(ModelReaderWriterOptions options)
@@ -142,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmAppContainerProtectableContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmAppContainerProtectableContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeVmAppContainerProtectableContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmAppContainerProtectableContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmAppContainerProtectableContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

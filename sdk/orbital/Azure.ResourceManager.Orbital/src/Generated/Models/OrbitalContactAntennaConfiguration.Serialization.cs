@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Orbital.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalContactAntennaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrbitalContactAntennaConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrbitalContactAntennaConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Orbital.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalContactAntennaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrbitalContactAntennaConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrbitalContactAntennaConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Optional<IPAddress> destinationIP = default;
-            Optional<IReadOnlyList<IPAddress>> sourceIPs = default;
+            IPAddress destinationIP = default;
+            IReadOnlyList<IPAddress> sourceIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactAntennaConfiguration(destinationIP.Value, Optional.ToList(sourceIPs), serializedAdditionalRawData);
+            return new OrbitalContactAntennaConfiguration(destinationIP, sourceIPs ?? new ChangeTrackingList<IPAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactAntennaConfiguration>.Write(ModelReaderWriterOptions options)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrbitalContactAntennaConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrbitalContactAntennaConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Orbital.Models
                         return DeserializeOrbitalContactAntennaConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrbitalContactAntennaConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrbitalContactAntennaConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

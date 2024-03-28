@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentTable)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +34,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Cells)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentTableCell>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(BoundingRegions))
@@ -44,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in BoundingRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BoundingRegion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,13 +51,13 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentSpan>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
-                writer.WriteObjectValue(Caption);
+                writer.WriteObjectValue<DocumentCaption>(Caption, options);
             }
             if (Optional.IsCollectionDefined(Footnotes))
             {
@@ -66,7 +65,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Footnotes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentFootnote>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentTable)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,10 +110,10 @@ namespace Azure.AI.DocumentIntelligence
             int rowCount = default;
             int columnCount = default;
             IReadOnlyList<DocumentTableCell> cells = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<DocumentCaption> caption = default;
-            Optional<IReadOnlyList<DocumentFootnote>> footnotes = default;
+            DocumentCaption caption = default;
+            IReadOnlyList<DocumentFootnote> footnotes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +133,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentTableCell> array = new List<DocumentTableCell>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentTableCell.DeserializeDocumentTableCell(item));
+                        array.Add(DocumentTableCell.DeserializeDocumentTableCell(item, options));
                     }
                     cells = array;
                     continue;
@@ -148,7 +147,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<BoundingRegion> array = new List<BoundingRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BoundingRegion.DeserializeBoundingRegion(item));
+                        array.Add(BoundingRegion.DeserializeBoundingRegion(item, options));
                     }
                     boundingRegions = array;
                     continue;
@@ -158,7 +157,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
@@ -169,7 +168,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    caption = DocumentCaption.DeserializeDocumentCaption(property.Value);
+                    caption = DocumentCaption.DeserializeDocumentCaption(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("footnotes"u8))
@@ -181,7 +180,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentFootnote> array = new List<DocumentFootnote>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentFootnote.DeserializeDocumentFootnote(item));
+                        array.Add(DocumentFootnote.DeserializeDocumentFootnote(item, options));
                     }
                     footnotes = array;
                     continue;
@@ -192,7 +191,15 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentTable(rowCount, columnCount, cells, Optional.ToList(boundingRegions), spans, caption.Value, Optional.ToList(footnotes), serializedAdditionalRawData);
+            return new DocumentTable(
+                rowCount,
+                columnCount,
+                cells,
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans,
+                caption,
+                footnotes ?? new ChangeTrackingList<DocumentFootnote>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentTable>.Write(ModelReaderWriterOptions options)
@@ -204,7 +211,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentTable)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +227,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentTable(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentTable)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -238,7 +245,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentTable>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

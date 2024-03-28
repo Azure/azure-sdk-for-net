@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetworkAnalytics;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -52,7 +51,35 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             owners ??= new List<string>();
             availableMinorVersions ??= new List<string>();
 
-            return new DataProductData(id, name, resourceType, systemData, tags, location, identity, resourceGuid, provisioningState, publisher, product, majorVersion, owners?.ToList(), redundancy, purviewAccount, purviewCollection, privateLinksEnabled, publicNetworkAccess, customerManagedKeyEncryptionEnabled, customerEncryptionKey, networkacls, managedResourceGroupConfiguration, availableMinorVersions?.ToList(), currentMinorVersion, documentation, consumptionEndpoints, keyVaultUri, serializedAdditionalRawData: null);
+            return new DataProductData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                resourceGuid,
+                provisioningState,
+                publisher,
+                product,
+                majorVersion,
+                owners?.ToList(),
+                redundancy,
+                purviewAccount,
+                purviewCollection,
+                privateLinksEnabled,
+                publicNetworkAccess,
+                customerManagedKeyEncryptionEnabled,
+                customerEncryptionKey,
+                networkacls,
+                managedResourceGroupConfiguration,
+                availableMinorVersions?.ToList(),
+                currentMinorVersion,
+                documentation,
+                consumptionEndpoints,
+                keyVaultUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionEndpointsProperties"/>. </summary>
@@ -65,7 +92,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <returns> A new <see cref="Models.ConsumptionEndpointsProperties"/> instance for mocking. </returns>
         public static ConsumptionEndpointsProperties ConsumptionEndpointsProperties(Uri ingestionUri = null, ResourceIdentifier ingestionResourceId = null, Uri fileAccessUri = null, ResourceIdentifier fileAccessResourceId = null, Uri queryUri = null, ResourceIdentifier queryResourceId = null)
         {
-            return new ConsumptionEndpointsProperties(ingestionUri, ingestionResourceId, fileAccessUri, fileAccessResourceId, queryUri, queryResourceId, serializedAdditionalRawData: null);
+            return new ConsumptionEndpointsProperties(
+                ingestionUri,
+                ingestionResourceId,
+                fileAccessUri,
+                fileAccessResourceId,
+                queryUri,
+                queryResourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkAnalytics.DataProductsCatalogData"/>. </summary>
@@ -80,7 +114,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         {
             publishers ??= new List<PublisherInformation>();
 
-            return new DataProductsCatalogData(id, name, resourceType, systemData, provisioningState, publishers?.ToList(), serializedAdditionalRawData: null);
+            return new DataProductsCatalogData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                publishers?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProductDataType"/>. </summary>
@@ -98,7 +139,19 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <returns> A new <see cref="Models.DataProductDataType"/> instance for mocking. </returns>
         public static DataProductDataType DataProductDataType(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkAnalyticsProvisioningState? provisioningState = null, DataProductDataTypeState? state = null, string stateReason = null, int? storageOutputRetention = null, int? databaseCacheRetention = null, int? databaseRetention = null, Uri visualizationUri = null)
         {
-            return new DataProductDataType(id, name, resourceType, systemData, provisioningState, state, stateReason, storageOutputRetention, databaseCacheRetention, databaseRetention, visualizationUri, serializedAdditionalRawData: null);
+            return new DataProductDataType(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                state,
+                stateReason,
+                storageOutputRetention,
+                databaseCacheRetention,
+                databaseRetention,
+                visualizationUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AccountSasToken"/>. </summary>

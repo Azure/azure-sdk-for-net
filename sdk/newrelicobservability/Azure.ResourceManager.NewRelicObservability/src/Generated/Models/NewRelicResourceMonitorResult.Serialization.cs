@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicResourceMonitorResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicResourceMonitorResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicResourceMonitorResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicResourceMonitorResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicResourceMonitorResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicResourceMonitorResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<NewRelicObservabilitySendingMetricsStatus> sendingMetrics = default;
-            Optional<string> reasonForMetricsStatus = default;
-            Optional<NewRelicObservabilitySendingLogsStatus> sendingLogs = default;
-            Optional<string> reasonForLogsStatus = default;
+            ResourceIdentifier id = default;
+            NewRelicObservabilitySendingMetricsStatus? sendingMetrics = default;
+            string reasonForMetricsStatus = default;
+            NewRelicObservabilitySendingLogsStatus? sendingLogs = default;
+            string reasonForLogsStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicResourceMonitorResult(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value, serializedAdditionalRawData);
+            return new NewRelicResourceMonitorResult(
+                id,
+                sendingMetrics,
+                reasonForMetricsStatus,
+                sendingLogs,
+                reasonForLogsStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicResourceMonitorResult>.Write(ModelReaderWriterOptions options)
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicResourceMonitorResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicResourceMonitorResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                         return DeserializeNewRelicResourceMonitorResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicResourceMonitorResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicResourceMonitorResult)} does not support reading '{options.Format}' format.");
             }
         }
 

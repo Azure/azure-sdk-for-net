@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedServiceRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in Updates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceHealthEventUpdate>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedServiceRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> impactedRegion = default;
-            Optional<ResourceHealthEventStatusValue> status = default;
-            Optional<IReadOnlyList<string>> impactedSubscriptions = default;
-            Optional<IReadOnlyList<string>> impactedTenants = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
-            Optional<IReadOnlyList<ResourceHealthEventUpdate>> updates = default;
+            string impactedRegion = default;
+            ResourceHealthEventStatusValue? status = default;
+            IReadOnlyList<string> impactedSubscriptions = default;
+            IReadOnlyList<string> impactedTenants = default;
+            DateTimeOffset? lastUpdateTime = default;
+            IReadOnlyList<ResourceHealthEventUpdate> updates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthEventUpdate> array = new List<ResourceHealthEventUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthEventUpdate.DeserializeResourceHealthEventUpdate(item));
+                        array.Add(ResourceHealthEventUpdate.DeserializeResourceHealthEventUpdate(item, options));
                     }
                     updates = array;
                     continue;
@@ -190,7 +190,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventImpactedServiceRegion(impactedRegion.Value, Optional.ToNullable(status), Optional.ToList(impactedSubscriptions), Optional.ToList(impactedTenants), Optional.ToNullable(lastUpdateTime), Optional.ToList(updates), serializedAdditionalRawData);
+            return new ResourceHealthEventImpactedServiceRegion(
+                impactedRegion,
+                status,
+                impactedSubscriptions ?? new ChangeTrackingList<string>(),
+                impactedTenants ?? new ChangeTrackingList<string>(),
+                lastUpdateTime,
+                updates ?? new ChangeTrackingList<ResourceHealthEventUpdate>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventImpactedServiceRegion>.Write(ModelReaderWriterOptions options)
@@ -202,7 +209,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +225,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeResourceHealthEventImpactedServiceRegion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support reading '{options.Format}' format.");
             }
         }
 

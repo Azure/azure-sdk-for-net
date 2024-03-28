@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string applicationId = default;
-            Optional<string> password = default;
+            string password = default;
             string principalId = default;
             string tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServicePrincipalInformation(applicationId, password.Value, principalId, tenantId, serializedAdditionalRawData);
+            return new ServicePrincipalInformation(applicationId, password, principalId, tenantId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServicePrincipalInformation>.Write(ModelReaderWriterOptions options)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeServicePrincipalInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

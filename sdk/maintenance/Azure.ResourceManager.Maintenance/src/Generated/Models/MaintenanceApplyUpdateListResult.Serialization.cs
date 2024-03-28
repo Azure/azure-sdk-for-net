@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceApplyUpdateListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceApplyUpdateListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceApplyUpdateListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MaintenanceApplyUpdateData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceApplyUpdateListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceApplyUpdateListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceApplyUpdateListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MaintenanceApplyUpdateData>> value = default;
+            IReadOnlyList<MaintenanceApplyUpdateData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     List<MaintenanceApplyUpdateData> array = new List<MaintenanceApplyUpdateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(item));
+                        array.Add(MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceApplyUpdateListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MaintenanceApplyUpdateListResult(value ?? new ChangeTrackingList<MaintenanceApplyUpdateData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceApplyUpdateListResult>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceApplyUpdateListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceApplyUpdateListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                         return DeserializeMaintenanceApplyUpdateListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceApplyUpdateListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceApplyUpdateListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

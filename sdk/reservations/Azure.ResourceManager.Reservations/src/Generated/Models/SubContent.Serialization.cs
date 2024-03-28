@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<ReservationResourceName>(Name, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<int> limit = default;
-            Optional<ReservationResourceName> name = default;
-            Optional<string> resourceType = default;
-            Optional<string> unit = default;
-            Optional<QuotaRequestState> provisioningState = default;
-            Optional<string> message = default;
-            Optional<Guid> subRequestId = default;
+            int? limit = default;
+            ReservationResourceName name = default;
+            string resourceType = default;
+            string unit = default;
+            QuotaRequestState? provisioningState = default;
+            string message = default;
+            Guid? subRequestId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    name = ReservationResourceName.DeserializeReservationResourceName(property.Value);
+                    name = ReservationResourceName.DeserializeReservationResourceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubContent(Optional.ToNullable(limit), name.Value, resourceType.Value, unit.Value, Optional.ToNullable(provisioningState), message.Value, Optional.ToNullable(subRequestId), serializedAdditionalRawData);
+            return new SubContent(
+                limit,
+                name,
+                resourceType,
+                unit,
+                provisioningState,
+                message,
+                subRequestId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubContent>.Write(ModelReaderWriterOptions options)
@@ -179,7 +187,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +203,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeSubContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubContent)} does not support reading '{options.Format}' format.");
             }
         }
 

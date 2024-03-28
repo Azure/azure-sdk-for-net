@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkFunctionDefinitionVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkFunctionTemplate))
             {
                 writer.WritePropertyName("networkFunctionTemplate"u8);
-                writer.WriteObjectValue(NetworkFunctionTemplate);
+                writer.WriteObjectValue<VirtualNetworkFunctionTemplate>(NetworkFunctionTemplate, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkFunctionDefinitionVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<VirtualNetworkFunctionTemplate> networkFunctionTemplate = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<VersionState> versionState = default;
-            Optional<string> description = default;
-            Optional<string> deployParameters = default;
+            VirtualNetworkFunctionTemplate networkFunctionTemplate = default;
+            ProvisioningState? provisioningState = default;
+            VersionState? versionState = default;
+            string description = default;
+            string deployParameters = default;
             NetworkFunctionType networkFunctionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    networkFunctionTemplate = VirtualNetworkFunctionTemplate.DeserializeVirtualNetworkFunctionTemplate(property.Value);
+                    networkFunctionTemplate = VirtualNetworkFunctionTemplate.DeserializeVirtualNetworkFunctionTemplate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -149,7 +149,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkFunctionDefinitionVersion(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, deployParameters.Value, networkFunctionType, serializedAdditionalRawData, networkFunctionTemplate.Value);
+            return new VirtualNetworkFunctionDefinitionVersion(
+                provisioningState,
+                versionState,
+                description,
+                deployParameters,
+                networkFunctionType,
+                serializedAdditionalRawData,
+                networkFunctionTemplate);
         }
 
         BinaryData IPersistableModel<VirtualNetworkFunctionDefinitionVersion>.Write(ModelReaderWriterOptions options)
@@ -161,7 +168,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +184,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeVirtualNetworkFunctionDefinitionVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support reading '{options.Format}' format.");
             }
         }
 

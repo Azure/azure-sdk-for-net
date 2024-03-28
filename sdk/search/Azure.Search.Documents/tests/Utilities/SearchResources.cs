@@ -308,7 +308,8 @@ namespace Azure.Search.Documents.Tests
             }
             else
             {
-                hotels = hotelIds.Select(id => new SearchDocument { ["hotelId"] = id }).ToList();
+                Random random = new();
+                hotels = hotelIds.Select(id => new SearchDocument { ["hotelId"] = id, ["rating"] = random.Next(1, 6) }).ToList();
             }
 
             // Upload the empty hotels in batches of 1000 until we're complete

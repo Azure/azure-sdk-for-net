@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (options.Format != "W" && Optional.IsDefined(ServicePrincipalConfiguration))
             {
                 writer.WritePropertyName("servicePrincipalConfiguration"u8);
-                writer.WriteObjectValue(ServicePrincipalConfiguration);
+                writer.WriteObjectValue<ServicePrincipalProperties>(ServicePrincipalConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ImagePullSecretName))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> acsKubeConfig = default;
-            Optional<ServicePrincipalProperties> servicePrincipalConfiguration = default;
-            Optional<string> imagePullSecretName = default;
+            string acsKubeConfig = default;
+            ServicePrincipalProperties servicePrincipalConfiguration = default;
+            string imagePullSecretName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    servicePrincipalConfiguration = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value);
+                    servicePrincipalConfiguration = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("imagePullSecretName"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceCredentials(acsKubeConfig.Value, servicePrincipalConfiguration.Value, imagePullSecretName.Value, serializedAdditionalRawData);
+            return new ContainerServiceCredentials(acsKubeConfig, servicePrincipalConfiguration, imagePullSecretName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceCredentials>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                         return DeserializeContainerServiceCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

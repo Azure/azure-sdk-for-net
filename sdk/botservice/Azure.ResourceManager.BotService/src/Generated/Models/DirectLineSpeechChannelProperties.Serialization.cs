@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DirectLineSpeechChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
-            Optional<string> cognitiveServiceRegion = default;
-            Optional<string> cognitiveServiceSubscriptionKey = default;
-            Optional<bool> isEnabled = default;
-            Optional<string> customVoiceDeploymentId = default;
-            Optional<string> customSpeechModelId = default;
-            Optional<bool> isDefaultBotForCogSvcAccount = default;
+            ResourceIdentifier cognitiveServiceResourceId = default;
+            string cognitiveServiceRegion = default;
+            string cognitiveServiceSubscriptionKey = default;
+            bool? isEnabled = default;
+            string customVoiceDeploymentId = default;
+            string customSpeechModelId = default;
+            bool? isDefaultBotForCogSvcAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,15 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectLineSpeechChannelProperties(cognitiveServiceResourceId.Value, cognitiveServiceRegion.Value, cognitiveServiceSubscriptionKey.Value, Optional.ToNullable(isEnabled), customVoiceDeploymentId.Value, customSpeechModelId.Value, Optional.ToNullable(isDefaultBotForCogSvcAccount), serializedAdditionalRawData);
+            return new DirectLineSpeechChannelProperties(
+                cognitiveServiceResourceId,
+                cognitiveServiceRegion,
+                cognitiveServiceSubscriptionKey,
+                isEnabled,
+                customVoiceDeploymentId,
+                customSpeechModelId,
+                isDefaultBotForCogSvcAccount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DirectLineSpeechChannelProperties>.Write(ModelReaderWriterOptions options)
@@ -199,7 +207,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +223,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeDirectLineSpeechChannelProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectLineSpeechChannelProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<ResourceIdentifier> policyAssignmentId = default;
-            Optional<string> policyAssignmentDisplayName = default;
-            Optional<string> policyAssignmentScope = default;
-            Optional<ResourceIdentifier> policySetDefinitionId = default;
-            Optional<string> policyDefinitionReferenceId = default;
+            ResourceIdentifier policyDefinitionId = default;
+            ResourceIdentifier policyAssignmentId = default;
+            string policyAssignmentDisplayName = default;
+            string policyAssignmentScope = default;
+            ResourceIdentifier policySetDefinitionId = default;
+            string policyDefinitionReferenceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDetails(policyDefinitionId.Value, policyAssignmentId.Value, policyAssignmentDisplayName.Value, policyAssignmentScope.Value, policySetDefinitionId.Value, policyDefinitionReferenceId.Value, serializedAdditionalRawData);
+            return new PolicyDetails(
+                policyDefinitionId,
+                policyAssignmentId,
+                policyAssignmentDisplayName,
+                policyAssignmentScope,
+                policySetDefinitionId,
+                policyDefinitionReferenceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDetails>.Write(ModelReaderWriterOptions options)
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicyDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

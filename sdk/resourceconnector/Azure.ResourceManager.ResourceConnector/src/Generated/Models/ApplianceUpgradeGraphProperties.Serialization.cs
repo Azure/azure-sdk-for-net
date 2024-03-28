@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplianceSupportedVersion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<string> applianceVersion = default;
-            Optional<IReadOnlyList<ApplianceSupportedVersion>> supportedVersions = default;
+            string applianceVersion = default;
+            IReadOnlyList<ApplianceSupportedVersion> supportedVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ApplianceSupportedVersion> array = new List<ApplianceSupportedVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplianceSupportedVersion.DeserializeApplianceSupportedVersion(item));
+                        array.Add(ApplianceSupportedVersion.DeserializeApplianceSupportedVersion(item, options));
                     }
                     supportedVersions = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceUpgradeGraphProperties(applianceVersion.Value, Optional.ToList(supportedVersions), serializedAdditionalRawData);
+            return new ApplianceUpgradeGraphProperties(applianceVersion, supportedVersions ?? new ChangeTrackingList<ApplianceSupportedVersion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceUpgradeGraphProperties>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                         return DeserializeApplianceUpgradeGraphProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

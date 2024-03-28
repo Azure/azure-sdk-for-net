@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkMappingFabricSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkMappingFabricSpecificSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkMappingFabricSpecificSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkMappingFabricSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkMappingFabricSpecificSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkMappingFabricSpecificSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureToAzure": return A2ANetworkMappingSettings.DeserializeA2ANetworkMappingSettings(element);
-                    case "VmmToAzure": return VmmToAzureNetworkMappingSettings.DeserializeVmmToAzureNetworkMappingSettings(element);
-                    case "VmmToVmm": return VmmToVmmNetworkMappingSettings.DeserializeVmmToVmmNetworkMappingSettings(element);
+                    case "AzureToAzure": return A2ANetworkMappingSettings.DeserializeA2ANetworkMappingSettings(element, options);
+                    case "VmmToAzure": return VmmToAzureNetworkMappingSettings.DeserializeVmmToAzureNetworkMappingSettings(element, options);
+                    case "VmmToVmm": return VmmToVmmNetworkMappingSettings.DeserializeVmmToVmmNetworkMappingSettings(element, options);
                 }
             }
-            return UnknownNetworkMappingFabricSpecificSettings.DeserializeUnknownNetworkMappingFabricSpecificSettings(element);
+            return UnknownNetworkMappingFabricSpecificSettings.DeserializeUnknownNetworkMappingFabricSpecificSettings(element, options);
         }
 
         BinaryData IPersistableModel<NetworkMappingFabricSpecificSettings>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkMappingFabricSpecificSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkMappingFabricSpecificSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeNetworkMappingFabricSpecificSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkMappingFabricSpecificSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkMappingFabricSpecificSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

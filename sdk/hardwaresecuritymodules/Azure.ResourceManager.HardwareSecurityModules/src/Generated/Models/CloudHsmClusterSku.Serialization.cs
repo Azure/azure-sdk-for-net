@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmClusterSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmClusterSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmClusterSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmClusterSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
             CloudHsmClusterSkuFamily family = default;
             CloudHsmClusterSkuName name = default;
-            Optional<int> capacity = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudHsmClusterSku(family, name, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new CloudHsmClusterSku(family, name, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudHsmClusterSku>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmClusterSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                         return DeserializeCloudHsmClusterSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmClusterSku)} does not support reading '{options.Format}' format.");
             }
         }
 

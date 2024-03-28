@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppSubscriptionQuotaItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppSubscriptionQuotaItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppSubscriptionQuotaItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppSubscriptionQuotaItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppSubscriptionQuotaItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppSubscriptionQuotaItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> current = default;
-            Optional<int> @default = default;
+            SystemData systemData = default;
+            int? current = default;
+            int? @default = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppSubscriptionQuotaItem(id, name, type, systemData.Value, Optional.ToNullable(current), Optional.ToNullable(@default), serializedAdditionalRawData);
+            return new NetAppSubscriptionQuotaItem(
+                id,
+                name,
+                type,
+                systemData,
+                current,
+                @default,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppSubscriptionQuotaItem>.Write(ModelReaderWriterOptions options)
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppSubscriptionQuotaItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppSubscriptionQuotaItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +203,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppSubscriptionQuotaItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppSubscriptionQuotaItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppSubscriptionQuotaItem)} does not support reading '{options.Format}' format.");
             }
         }
 

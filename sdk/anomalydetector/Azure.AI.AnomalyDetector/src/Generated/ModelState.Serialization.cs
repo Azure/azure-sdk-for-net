@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,7 +22,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<ModelState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,7 +89,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<ModelState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,10 +104,10 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            Optional<IList<int>> epochIds = default;
-            Optional<IList<float>> trainLosses = default;
-            Optional<IList<float>> validationLosses = default;
-            Optional<IList<float>> latenciesInSeconds = default;
+            IList<int> epochIds = default;
+            IList<float> trainLosses = default;
+            IList<float> validationLosses = default;
+            IList<float> latenciesInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +174,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelState(Optional.ToList(epochIds), Optional.ToList(trainLosses), Optional.ToList(validationLosses), Optional.ToList(latenciesInSeconds), serializedAdditionalRawData);
+            return new ModelState(epochIds ?? new ChangeTrackingList<int>(), trainLosses ?? new ChangeTrackingList<float>(), validationLosses ?? new ChangeTrackingList<float>(), latenciesInSeconds ?? new ChangeTrackingList<float>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelState>.Write(ModelReaderWriterOptions options)
@@ -187,7 +186,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ModelState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +202,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeModelState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ModelState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelState)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -221,7 +220,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ModelState>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

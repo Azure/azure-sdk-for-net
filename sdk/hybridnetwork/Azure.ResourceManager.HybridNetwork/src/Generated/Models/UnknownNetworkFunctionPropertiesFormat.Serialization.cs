@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(NetworkFunctionDefinitionVersionResourceReference))
             {
                 writer.WritePropertyName("networkFunctionDefinitionVersionResourceReference"u8);
-                writer.WriteObjectValue(NetworkFunctionDefinitionVersionResourceReference);
+                writer.WriteObjectValue<DeploymentResourceIdReference>(NetworkFunctionDefinitionVersionResourceReference, options);
             }
             if (Optional.IsDefined(NfviType))
             {
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownNetworkFunctionPropertiesFormat(document.RootElement, options);
+            return DeserializeNetworkFunctionPropertiesFormat(document.RootElement, options);
         }
 
         internal static UnknownNetworkFunctionPropertiesFormat DeserializeUnknownNetworkFunctionPropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
@@ -126,18 +126,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> publisherName = default;
-            Optional<PublisherScope> publisherScope = default;
-            Optional<string> networkFunctionDefinitionGroupName = default;
-            Optional<string> networkFunctionDefinitionVersion = default;
-            Optional<string> networkFunctionDefinitionOfferingLocation = default;
-            Optional<DeploymentResourceIdReference> networkFunctionDefinitionVersionResourceReference = default;
-            Optional<NfviType> nfviType = default;
-            Optional<ResourceIdentifier> nfviId = default;
-            Optional<bool> allowSoftwareUpdate = default;
+            ProvisioningState? provisioningState = default;
+            string publisherName = default;
+            PublisherScope? publisherScope = default;
+            string networkFunctionDefinitionGroupName = default;
+            string networkFunctionDefinitionVersion = default;
+            string networkFunctionDefinitionOfferingLocation = default;
+            DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = default;
+            NfviType? nfviType = default;
+            ResourceIdentifier nfviId = default;
+            bool? allowSoftwareUpdate = default;
             NetworkFunctionConfigurationType configurationType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
-            Optional<IList<string>> roleOverrideValues = default;
+            IList<string> roleOverrideValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    networkFunctionDefinitionVersionResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value);
+                    networkFunctionDefinitionVersionResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nfviType"u8))
@@ -241,7 +241,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownNetworkFunctionPropertiesFormat(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), networkFunctionDefinitionGroupName.Value, networkFunctionDefinitionVersion.Value, networkFunctionDefinitionOfferingLocation.Value, networkFunctionDefinitionVersionResourceReference.Value, Optional.ToNullable(nfviType), nfviId.Value, Optional.ToNullable(allowSoftwareUpdate), configurationType, Optional.ToList(roleOverrideValues), serializedAdditionalRawData);
+            return new UnknownNetworkFunctionPropertiesFormat(
+                provisioningState,
+                publisherName,
+                publisherScope,
+                networkFunctionDefinitionGroupName,
+                networkFunctionDefinitionVersion,
+                networkFunctionDefinitionOfferingLocation,
+                networkFunctionDefinitionVersionResourceReference,
+                nfviType,
+                nfviId,
+                allowSoftwareUpdate,
+                configurationType,
+                roleOverrideValues ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFunctionPropertiesFormat>.Write(ModelReaderWriterOptions options)
@@ -253,7 +266,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -266,10 +279,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownNetworkFunctionPropertiesFormat(document.RootElement, options);
+                        return DeserializeNetworkFunctionPropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

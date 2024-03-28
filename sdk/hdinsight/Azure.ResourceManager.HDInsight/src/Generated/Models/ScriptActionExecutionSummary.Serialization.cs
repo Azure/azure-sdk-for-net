@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActionExecutionSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptActionExecutionSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptActionExecutionSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActionExecutionSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptActionExecutionSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptActionExecutionSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<int> instanceCount = default;
+            string status = default;
+            int? instanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActionExecutionSummary(status.Value, Optional.ToNullable(instanceCount), serializedAdditionalRawData);
+            return new ScriptActionExecutionSummary(status, instanceCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptActionExecutionSummary>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScriptActionExecutionSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptActionExecutionSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeScriptActionExecutionSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScriptActionExecutionSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptActionExecutionSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

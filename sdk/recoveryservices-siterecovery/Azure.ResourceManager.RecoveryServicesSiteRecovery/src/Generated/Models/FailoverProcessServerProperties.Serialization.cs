@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<FailoverProcessServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<FailoverProcessServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> containerName = default;
-            Optional<Guid> sourceProcessServerId = default;
-            Optional<Guid> targetProcessServerId = default;
-            Optional<IList<string>> vmsToMigrate = default;
-            Optional<string> updateType = default;
+            string containerName = default;
+            Guid? sourceProcessServerId = default;
+            Guid? targetProcessServerId = default;
+            IList<string> vmsToMigrate = default;
+            string updateType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverProcessServerProperties(containerName.Value, Optional.ToNullable(sourceProcessServerId), Optional.ToNullable(targetProcessServerId), Optional.ToList(vmsToMigrate), updateType.Value, serializedAdditionalRawData);
+            return new FailoverProcessServerProperties(
+                containerName,
+                sourceProcessServerId,
+                targetProcessServerId,
+                vmsToMigrate ?? new ChangeTrackingList<string>(),
+                updateType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverProcessServerProperties>.Write(ModelReaderWriterOptions options)
@@ -163,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeFailoverProcessServerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

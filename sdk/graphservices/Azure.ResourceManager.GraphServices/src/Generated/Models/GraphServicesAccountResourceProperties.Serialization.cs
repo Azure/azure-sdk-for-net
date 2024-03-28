@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.GraphServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<GraphServicesAccountResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphServicesAccountResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphServicesAccountResourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.GraphServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<GraphServicesAccountResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphServicesAccountResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphServicesAccountResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.GraphServices.Models
             {
                 return null;
             }
-            Optional<GraphServicesProvisioningState> provisioningState = default;
+            GraphServicesProvisioningState? provisioningState = default;
             string appId = default;
-            Optional<string> billingPlanId = default;
+            string billingPlanId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GraphServicesAccountResourceProperties(Optional.ToNullable(provisioningState), appId, billingPlanId.Value, serializedAdditionalRawData);
+            return new GraphServicesAccountResourceProperties(provisioningState, appId, billingPlanId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GraphServicesAccountResourceProperties>.Write(ModelReaderWriterOptions options)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GraphServicesAccountResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphServicesAccountResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                         return DeserializeGraphServicesAccountResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GraphServicesAccountResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphServicesAccountResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -34,8 +34,8 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
+            string modelVersion = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelVersion"u8))
@@ -53,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new PreBuiltTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value);
+            return new PreBuiltTaskParameters(loggingOptOut, modelVersion);
         }
     }
 }

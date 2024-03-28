@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SyncGroupSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SyncGroupSchemaTable>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SyncGroupSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +81,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IList<SyncGroupSchemaTable>> tables = default;
-            Optional<string> masterSyncMemberName = default;
+            IList<SyncGroupSchemaTable> tables = default;
+            string masterSyncMemberName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncGroupSchemaTable> array = new List<SyncGroupSchemaTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncGroupSchemaTable.DeserializeSyncGroupSchemaTable(item));
+                        array.Add(SyncGroupSchemaTable.DeserializeSyncGroupSchemaTable(item, options));
                     }
                     tables = array;
                     continue;
@@ -110,7 +112,66 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncGroupSchema(Optional.ToList(tables), masterSyncMemberName.Value, serializedAdditionalRawData);
+            return new SyncGroupSchema(tables ?? new ChangeTrackingList<SyncGroupSchemaTable>(), masterSyncMemberName, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tables), out propertyOverride);
+            if (Optional.IsCollectionDefined(Tables) || hasPropertyOverride)
+            {
+                if (Tables.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  tables: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Tables)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  tables: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MasterSyncMemberName), out propertyOverride);
+            if (Optional.IsDefined(MasterSyncMemberName) || hasPropertyOverride)
+            {
+                builder.Append("  masterSyncMemberName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (MasterSyncMemberName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MasterSyncMemberName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MasterSyncMemberName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SyncGroupSchema>.Write(ModelReaderWriterOptions options)
@@ -121,8 +182,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +201,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSyncGroupSchema(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support reading '{options.Format}' format.");
             }
         }
 

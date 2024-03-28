@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,7 +22,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<AnomalyValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnomalyValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnomalyValue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +38,7 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteStartArray();
                 foreach (var item in Interpretation)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AnomalyInterpretation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +65,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<AnomalyValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnomalyValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnomalyValue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +83,7 @@ namespace Azure.AI.AnomalyDetector
             bool isAnomaly = default;
             float severity = default;
             float score = default;
-            Optional<IReadOnlyList<AnomalyInterpretation>> interpretation = default;
+            IReadOnlyList<AnomalyInterpretation> interpretation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +112,7 @@ namespace Azure.AI.AnomalyDetector
                     List<AnomalyInterpretation> array = new List<AnomalyInterpretation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnomalyInterpretation.DeserializeAnomalyInterpretation(item));
+                        array.Add(AnomalyInterpretation.DeserializeAnomalyInterpretation(item, options));
                     }
                     interpretation = array;
                     continue;
@@ -124,7 +123,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnomalyValue(isAnomaly, severity, score, Optional.ToList(interpretation), serializedAdditionalRawData);
+            return new AnomalyValue(isAnomaly, severity, score, interpretation ?? new ChangeTrackingList<AnomalyInterpretation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnomalyValue>.Write(ModelReaderWriterOptions options)
@@ -136,7 +135,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnomalyValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnomalyValue)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +151,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeAnomalyValue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnomalyValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnomalyValue)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -170,7 +169,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AnomalyValue>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

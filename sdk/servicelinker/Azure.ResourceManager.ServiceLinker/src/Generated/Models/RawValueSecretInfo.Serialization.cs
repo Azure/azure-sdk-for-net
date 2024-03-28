@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<RawValueSecretInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RawValueSecretInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RawValueSecretInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<RawValueSecretInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RawValueSecretInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RawValueSecretInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> value = default;
+            string value = default;
             LinkerSecretType secretType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RawValueSecretInfo(secretType, serializedAdditionalRawData, value.Value);
+            return new RawValueSecretInfo(secretType, serializedAdditionalRawData, value);
         }
 
         BinaryData IPersistableModel<RawValueSecretInfo>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RawValueSecretInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RawValueSecretInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         return DeserializeRawValueSecretInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RawValueSecretInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RawValueSecretInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusImageDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ImageMappingRuleProfile))
             {
                 writer.WritePropertyName("imageMappingRuleProfile"u8);
-                writer.WriteObjectValue(ImageMappingRuleProfile);
+                writer.WriteObjectValue<ImageMappingRuleProfile>(ImageMappingRuleProfile, options);
             }
             if (Optional.IsDefined(ApplicationEnablement))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusImageDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ImageMappingRuleProfile> imageMappingRuleProfile = default;
-            Optional<ApplicationEnablement> applicationEnablement = default;
+            ImageMappingRuleProfile imageMappingRuleProfile = default;
+            ApplicationEnablement? applicationEnablement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    imageMappingRuleProfile = ImageMappingRuleProfile.DeserializeImageMappingRuleProfile(property.Value);
+                    imageMappingRuleProfile = ImageMappingRuleProfile.DeserializeImageMappingRuleProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationEnablement"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureOperatorNexusImageDeployMappingRuleProfile(Optional.ToNullable(applicationEnablement), serializedAdditionalRawData, imageMappingRuleProfile.Value);
+            return new AzureOperatorNexusImageDeployMappingRuleProfile(applicationEnablement, serializedAdditionalRawData, imageMappingRuleProfile);
         }
 
         BinaryData IPersistableModel<AzureOperatorNexusImageDeployMappingRuleProfile>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeAzureOperatorNexusImageDeployMappingRuleProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

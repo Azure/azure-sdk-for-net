@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDistributionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningDistributionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningDistributionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDistributionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningDistributionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningDistributionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Mpi": return MpiDistributionConfiguration.DeserializeMpiDistributionConfiguration(element);
-                    case "PyTorch": return PyTorchDistributionConfiguration.DeserializePyTorchDistributionConfiguration(element);
-                    case "Ray": return RayDistributionConfiguration.DeserializeRayDistributionConfiguration(element);
-                    case "TensorFlow": return TensorFlowDistributionConfiguration.DeserializeTensorFlowDistributionConfiguration(element);
+                    case "Mpi": return MpiDistributionConfiguration.DeserializeMpiDistributionConfiguration(element, options);
+                    case "PyTorch": return PyTorchDistributionConfiguration.DeserializePyTorchDistributionConfiguration(element, options);
+                    case "Ray": return RayDistributionConfiguration.DeserializeRayDistributionConfiguration(element, options);
+                    case "TensorFlow": return TensorFlowDistributionConfiguration.DeserializeTensorFlowDistributionConfiguration(element, options);
                 }
             }
-            return UnknownDistributionConfiguration.DeserializeUnknownDistributionConfiguration(element);
+            return UnknownDistributionConfiguration.DeserializeUnknownDistributionConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningDistributionConfiguration>.Write(ModelReaderWriterOptions options)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningDistributionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningDistributionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningDistributionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningDistributionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningDistributionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

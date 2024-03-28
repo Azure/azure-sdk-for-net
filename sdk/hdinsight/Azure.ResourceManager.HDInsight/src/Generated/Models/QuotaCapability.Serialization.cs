@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaCapability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in RegionalQuotas)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RegionalQuotaCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaCapability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<long> coresUsed = default;
-            Optional<long> maxCoresAllowed = default;
-            Optional<IReadOnlyList<RegionalQuotaCapability>> regionalQuotas = default;
+            long? coresUsed = default;
+            long? maxCoresAllowed = default;
+            IReadOnlyList<RegionalQuotaCapability> regionalQuotas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<RegionalQuotaCapability> array = new List<RegionalQuotaCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalQuotaCapability.DeserializeRegionalQuotaCapability(item));
+                        array.Add(RegionalQuotaCapability.DeserializeRegionalQuotaCapability(item, options));
                     }
                     regionalQuotas = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaCapability(Optional.ToNullable(coresUsed), Optional.ToNullable(maxCoresAllowed), Optional.ToList(regionalQuotas), serializedAdditionalRawData);
+            return new QuotaCapability(coresUsed, maxCoresAllowed, regionalQuotas ?? new ChangeTrackingList<RegionalQuotaCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaCapability>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaCapability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeQuotaCapability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaCapability)} does not support reading '{options.Format}' format.");
             }
         }
 

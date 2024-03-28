@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtectableContainerResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectableContainerResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectableContainerResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ProtectableContainer>(Properties, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtectableContainerResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectableContainerResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectableContainerResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,14 +108,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ProtectableContainer> properties = default;
-            Optional<ETag> eTag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ProtectableContainer properties = default;
+            ETag? eTag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    properties = ProtectableContainer.DeserializeProtectableContainer(property.Value);
+                    properties = ProtectableContainer.DeserializeProtectableContainer(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
@@ -188,7 +187,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtectableContainerResource(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ProtectableContainerResource(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtectableContainerResource>.Write(ModelReaderWriterOptions options)
@@ -200,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProtectableContainerResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectableContainerResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +224,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeProtectableContainerResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProtectableContainerResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectableContainerResource)} does not support reading '{options.Format}' format.");
             }
         }
 

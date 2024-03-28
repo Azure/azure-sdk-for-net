@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Media.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<MediaJobError>(Error, options);
             }
             if (Optional.IsDefined(PresetOverride))
             {
                 writer.WritePropertyName("presetOverride"u8);
-                writer.WriteObjectValue(PresetOverride);
+                writer.WriteObjectValue<MediaTransformPreset>(PresetOverride, options);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownJobOutput(document.RootElement, options);
+            return DeserializeMediaJobOutput(document.RootElement, options);
         }
 
         internal static UnknownJobOutput DeserializeUnknownJobOutput(JsonElement element, ModelReaderWriterOptions options = null)
@@ -116,13 +116,13 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             string odataType = "Unknown";
-            Optional<MediaJobError> error = default;
-            Optional<MediaTransformPreset> presetOverride = default;
-            Optional<MediaJobState> state = default;
-            Optional<int> progress = default;
-            Optional<string> label = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
+            MediaJobError error = default;
+            MediaTransformPreset presetOverride = default;
+            MediaJobState? state = default;
+            int? progress = default;
+            string label = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    error = MediaJobError.DeserializeMediaJobError(property.Value);
+                    error = MediaJobError.DeserializeMediaJobError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("presetOverride"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
+                    presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownJobOutput(odataType, error.Value, presetOverride.Value, Optional.ToNullable(state), Optional.ToNullable(progress), label.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData);
+            return new UnknownJobOutput(
+                odataType,
+                error,
+                presetOverride,
+                state,
+                progress,
+                label,
+                startTime,
+                endTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaJobOutput>.Write(ModelReaderWriterOptions options)
@@ -211,7 +220,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,10 +233,10 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownJobOutput(document.RootElement, options);
+                        return DeserializeMediaJobOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

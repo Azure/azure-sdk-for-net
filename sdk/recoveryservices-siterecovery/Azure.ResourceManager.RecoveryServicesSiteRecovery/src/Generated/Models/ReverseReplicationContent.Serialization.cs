@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReverseReplicationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReverseReplicationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReverseReplicationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ReverseReplicationProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReverseReplicationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReverseReplicationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReverseReplicationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ReverseReplicationProperties> properties = default;
+            ReverseReplicationProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = ReverseReplicationProperties.DeserializeReverseReplicationProperties(property.Value);
+                    properties = ReverseReplicationProperties.DeserializeReverseReplicationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReverseReplicationContent(properties.Value, serializedAdditionalRawData);
+            return new ReverseReplicationContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReverseReplicationContent>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReverseReplicationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReverseReplicationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeReverseReplicationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReverseReplicationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReverseReplicationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

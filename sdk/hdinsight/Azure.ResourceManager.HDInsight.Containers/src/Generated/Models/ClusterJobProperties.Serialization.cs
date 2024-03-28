@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterJobProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterJobProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterJobProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterJobProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FlinkJob": return FlinkJobProperties.DeserializeFlinkJobProperties(element);
+                    case "FlinkJob": return FlinkJobProperties.DeserializeFlinkJobProperties(element, options);
                 }
             }
-            return UnknownClusterJobProperties.DeserializeUnknownClusterJobProperties(element);
+            return UnknownClusterJobProperties.DeserializeUnknownClusterJobProperties(element, options);
         }
 
         BinaryData IPersistableModel<ClusterJobProperties>.Write(ModelReaderWriterOptions options)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterJobProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterJobProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeClusterJobProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterJobProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterJobProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

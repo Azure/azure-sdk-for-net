@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsResourceReferenceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsResourceReferenceResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsResourceReferenceResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsResourceReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DnsResourceReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsResourceReferenceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsResourceReferenceResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsResourceReferenceResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DnsResourceReference>> dnsResourceReferences = default;
+            IReadOnlyList<DnsResourceReference> dnsResourceReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Dns.Models
                             List<DnsResourceReference> array = new List<DnsResourceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DnsResourceReference.DeserializeDnsResourceReference(item));
+                                array.Add(DnsResourceReference.DeserializeDnsResourceReference(item, options));
                             }
                             dnsResourceReferences = array;
                             continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsResourceReferenceResult(Optional.ToList(dnsResourceReferences), serializedAdditionalRawData);
+            return new DnsResourceReferenceResult(dnsResourceReferences ?? new ChangeTrackingList<DnsResourceReference>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsResourceReferenceResult>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Dns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsResourceReferenceResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsResourceReferenceResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Dns.Models
                         return DeserializeDnsResourceReferenceResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsResourceReferenceResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsResourceReferenceResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDBMigrationStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDBMigrationStatusDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDBMigrationStatusDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ListOfCopyProgressDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CopyProgressDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDBMigrationStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDBMigrationStatusDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDBMigrationStatusDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> migrationState = default;
-            Optional<IReadOnlyList<string>> sqlDataCopyErrors = default;
-            Optional<IReadOnlyList<CopyProgressDetails>> listOfCopyProgressDetails = default;
+            string migrationState = default;
+            IReadOnlyList<string> sqlDataCopyErrors = default;
+            IReadOnlyList<CopyProgressDetails> listOfCopyProgressDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CopyProgressDetails> array = new List<CopyProgressDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CopyProgressDetails.DeserializeCopyProgressDetails(item));
+                        array.Add(CopyProgressDetails.DeserializeCopyProgressDetails(item, options));
                     }
                     listOfCopyProgressDetails = array;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDBMigrationStatusDetails(migrationState.Value, Optional.ToList(sqlDataCopyErrors), Optional.ToList(listOfCopyProgressDetails), serializedAdditionalRawData);
+            return new SqlDBMigrationStatusDetails(migrationState, sqlDataCopyErrors ?? new ChangeTrackingList<string>(), listOfCopyProgressDetails ?? new ChangeTrackingList<CopyProgressDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDBMigrationStatusDetails>.Write(ModelReaderWriterOptions options)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDBMigrationStatusDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDBMigrationStatusDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeSqlDBMigrationStatusDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDBMigrationStatusDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDBMigrationStatusDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

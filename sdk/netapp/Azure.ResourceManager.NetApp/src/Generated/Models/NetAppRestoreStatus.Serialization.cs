@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppRestoreStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppRestoreStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<bool> healthy = default;
-            Optional<NetAppRelationshipStatus> relationshipStatus = default;
-            Optional<NetAppMirrorState> mirrorState = default;
-            Optional<string> unhealthyReason = default;
-            Optional<string> errorMessage = default;
-            Optional<long> totalTransferBytes = default;
+            bool? healthy = default;
+            NetAppRelationshipStatus? relationshipStatus = default;
+            NetAppMirrorState? mirrorState = default;
+            string unhealthyReason = default;
+            string errorMessage = default;
+            long? totalTransferBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppRestoreStatus(Optional.ToNullable(healthy), Optional.ToNullable(relationshipStatus), Optional.ToNullable(mirrorState), unhealthyReason.Value, errorMessage.Value, Optional.ToNullable(totalTransferBytes), serializedAdditionalRawData);
+            return new NetAppRestoreStatus(
+                healthy,
+                relationshipStatus,
+                mirrorState,
+                unhealthyReason,
+                errorMessage,
+                totalTransferBytes,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppRestoreStatus>.Write(ModelReaderWriterOptions options)
@@ -168,7 +175,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +191,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppRestoreStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

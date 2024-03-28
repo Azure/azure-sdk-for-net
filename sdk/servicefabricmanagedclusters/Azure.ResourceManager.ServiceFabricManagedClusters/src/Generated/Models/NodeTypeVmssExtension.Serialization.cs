@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssExtension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,6 +90,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
+            if (Optional.IsCollectionDefined(SetupOrder))
+            {
+                writer.WritePropertyName("setupOrder"u8);
+                writer.WriteStartArray();
+                foreach (var item in SetupOrder)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +124,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssExtension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,13 +143,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string publisher = default;
             string type = default;
             string typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<IList<string>> provisionAfterExtensions = default;
-            Optional<string> provisioningState = default;
-            Optional<bool> enableAutomaticUpgrade = default;
+            bool? autoUpgradeMinorVersion = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
+            string forceUpdateTag = default;
+            IList<string> provisionAfterExtensions = default;
+            string provisioningState = default;
+            bool? enableAutomaticUpgrade = default;
+            IList<VmssExtensionSetupOrder> setupOrder = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,6 +244,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                             enableAutomaticUpgrade = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("setupOrder"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<VmssExtensionSetupOrder> array = new List<VmssExtensionSetupOrder>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new VmssExtensionSetupOrder(item.GetString()));
+                            }
+                            setupOrder = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -242,7 +267,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeTypeVmssExtension(name, publisher, type, typeHandlerVersion, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, forceUpdateTag.Value, Optional.ToList(provisionAfterExtensions), provisioningState.Value, Optional.ToNullable(enableAutomaticUpgrade), serializedAdditionalRawData);
+            return new NodeTypeVmssExtension(
+                name,
+                publisher,
+                type,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                settings,
+                protectedSettings,
+                forceUpdateTag,
+                provisionAfterExtensions ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                enableAutomaticUpgrade,
+                setupOrder ?? new ChangeTrackingList<VmssExtensionSetupOrder>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeTypeVmssExtension>.Write(ModelReaderWriterOptions options)
@@ -254,7 +292,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -270,7 +308,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeNodeTypeVmssExtension(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support reading '{options.Format}' format.");
             }
         }
 

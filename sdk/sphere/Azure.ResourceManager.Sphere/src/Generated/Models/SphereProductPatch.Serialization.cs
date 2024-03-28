@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<SphereProductPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereProductPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereProductPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<SphereProductPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereProductPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereProductPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereProductPatch(description.Value, serializedAdditionalRawData);
+            return new SphereProductPatch(description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereProductPatch>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SphereProductPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereProductPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sphere.Models
                         return DeserializeSphereProductPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SphereProductPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereProductPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

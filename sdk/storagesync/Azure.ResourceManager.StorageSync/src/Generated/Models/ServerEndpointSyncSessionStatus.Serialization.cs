@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointSyncSessionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in FilesNotSyncingErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServerEndpointFilesNotSyncingError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointSyncSessionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<int> lastSyncResult = default;
-            Optional<DateTimeOffset> lastSyncTimestamp = default;
-            Optional<DateTimeOffset> lastSyncSuccessTimestamp = default;
-            Optional<long> lastSyncPerItemErrorCount = default;
-            Optional<long> persistentFilesNotSyncingCount = default;
-            Optional<long> transientFilesNotSyncingCount = default;
-            Optional<IReadOnlyList<ServerEndpointFilesNotSyncingError>> filesNotSyncingErrors = default;
-            Optional<ServerEndpointSyncMode> lastSyncMode = default;
+            int? lastSyncResult = default;
+            DateTimeOffset? lastSyncTimestamp = default;
+            DateTimeOffset? lastSyncSuccessTimestamp = default;
+            long? lastSyncPerItemErrorCount = default;
+            long? persistentFilesNotSyncingCount = default;
+            long? transientFilesNotSyncingCount = default;
+            IReadOnlyList<ServerEndpointFilesNotSyncingError> filesNotSyncingErrors = default;
+            ServerEndpointSyncMode? lastSyncMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<ServerEndpointFilesNotSyncingError> array = new List<ServerEndpointFilesNotSyncingError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerEndpointFilesNotSyncingError.DeserializeServerEndpointFilesNotSyncingError(item));
+                        array.Add(ServerEndpointFilesNotSyncingError.DeserializeServerEndpointFilesNotSyncingError(item, options));
                     }
                     filesNotSyncingErrors = array;
                     continue;
@@ -204,7 +204,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointSyncSessionStatus(Optional.ToNullable(lastSyncResult), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastSyncSuccessTimestamp), Optional.ToNullable(lastSyncPerItemErrorCount), Optional.ToNullable(persistentFilesNotSyncingCount), Optional.ToNullable(transientFilesNotSyncingCount), Optional.ToList(filesNotSyncingErrors), Optional.ToNullable(lastSyncMode), serializedAdditionalRawData);
+            return new ServerEndpointSyncSessionStatus(
+                lastSyncResult,
+                lastSyncTimestamp,
+                lastSyncSuccessTimestamp,
+                lastSyncPerItemErrorCount,
+                persistentFilesNotSyncingCount,
+                transientFilesNotSyncingCount,
+                filesNotSyncingErrors ?? new ChangeTrackingList<ServerEndpointFilesNotSyncingError>(),
+                lastSyncMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointSyncSessionStatus>.Write(ModelReaderWriterOptions options)
@@ -216,7 +225,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +241,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeServerEndpointSyncSessionStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointSyncSessionStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

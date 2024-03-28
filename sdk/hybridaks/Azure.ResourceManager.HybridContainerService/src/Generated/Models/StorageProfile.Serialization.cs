@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(SmbCsiDriver))
             {
                 writer.WritePropertyName("smbCsiDriver"u8);
-                writer.WriteObjectValue(SmbCsiDriver);
+                writer.WriteObjectValue<StorageProfileSmbCSIDriver>(SmbCsiDriver, options);
             }
             if (Optional.IsDefined(NfsCsiDriver))
             {
                 writer.WritePropertyName("nfsCsiDriver"u8);
-                writer.WriteObjectValue(NfsCsiDriver);
+                writer.WriteObjectValue<StorageProfileNfsCSIDriver>(NfsCsiDriver, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<StorageProfileSmbCSIDriver> smbCsiDriver = default;
-            Optional<StorageProfileNfsCSIDriver> nfsCsiDriver = default;
+            StorageProfileSmbCSIDriver smbCsiDriver = default;
+            StorageProfileNfsCSIDriver nfsCsiDriver = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    smbCsiDriver = StorageProfileSmbCSIDriver.DeserializeStorageProfileSmbCSIDriver(property.Value);
+                    smbCsiDriver = StorageProfileSmbCSIDriver.DeserializeStorageProfileSmbCSIDriver(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nfsCsiDriver"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    nfsCsiDriver = StorageProfileNfsCSIDriver.DeserializeStorageProfileNfsCSIDriver(property.Value);
+                    nfsCsiDriver = StorageProfileNfsCSIDriver.DeserializeStorageProfileNfsCSIDriver(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageProfile(smbCsiDriver.Value, nfsCsiDriver.Value, serializedAdditionalRawData);
+            return new StorageProfile(smbCsiDriver, nfsCsiDriver, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageProfile>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

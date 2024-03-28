@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Quantum.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuantumWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuantumWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuantumWorkspacePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Quantum.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuantumWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuantumWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuantumWorkspacePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuantumWorkspacePatch(Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new QuantumWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuantumWorkspacePatch>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuantumWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuantumWorkspacePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Quantum.Models
                         return DeserializeQuantumWorkspacePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuantumWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuantumWorkspacePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

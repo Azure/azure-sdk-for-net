@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterVersionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterVersionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<string> codeVersion = default;
-            Optional<DateTimeOffset> supportExpiryUtc = default;
-            Optional<ClusterEnvironment> environment = default;
+            string codeVersion = default;
+            DateTimeOffset? supportExpiryUtc = default;
+            ClusterEnvironment? environment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterVersionDetails(codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment), serializedAdditionalRawData);
+            return new ClusterVersionDetails(codeVersion, supportExpiryUtc, environment, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterVersionDetails>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeClusterVersionDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterVersionDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

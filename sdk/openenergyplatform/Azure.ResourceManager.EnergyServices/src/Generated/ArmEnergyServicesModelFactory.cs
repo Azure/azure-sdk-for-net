@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.EnergyServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EnergyServices.Models
@@ -40,7 +39,15 @@ namespace Azure.ResourceManager.EnergyServices.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EnergyServiceData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new EnergyServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EnergyServiceProperties"/>. </summary>

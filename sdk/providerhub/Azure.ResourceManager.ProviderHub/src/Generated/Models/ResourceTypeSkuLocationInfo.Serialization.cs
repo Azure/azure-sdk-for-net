@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeSkuLocationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeSkuLocationInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ZoneDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceTypeSkuZoneDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeSkuLocationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeSkuLocationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             AzureLocation location = default;
-            Optional<IList<string>> zones = default;
-            Optional<IList<ResourceTypeSkuZoneDetail>> zoneDetails = default;
-            Optional<IList<string>> extendedLocations = default;
-            Optional<ProviderHubExtendedLocationType> type = default;
+            IList<string> zones = default;
+            IList<ResourceTypeSkuZoneDetail> zoneDetails = default;
+            IList<string> extendedLocations = default;
+            ProviderHubExtendedLocationType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeSkuZoneDetail> array = new List<ResourceTypeSkuZoneDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeSkuZoneDetail.DeserializeResourceTypeSkuZoneDetail(item));
+                        array.Add(ResourceTypeSkuZoneDetail.DeserializeResourceTypeSkuZoneDetail(item, options));
                     }
                     zoneDetails = array;
                     continue;
@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuLocationInfo(location, Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new ResourceTypeSkuLocationInfo(
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                zoneDetails ?? new ChangeTrackingList<ResourceTypeSkuZoneDetail>(),
+                extendedLocations ?? new ChangeTrackingList<string>(),
+                type,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuLocationInfo>.Write(ModelReaderWriterOptions options)
@@ -184,7 +190,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeSkuLocationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeSkuLocationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +206,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeResourceTypeSkuLocationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeSkuLocationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeSkuLocationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

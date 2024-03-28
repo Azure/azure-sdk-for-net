@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmailNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmailNotification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmailNotification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmailNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmailNotification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmailNotification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<bool> sendToSubscriptionAdministrator = default;
-            Optional<bool> sendToSubscriptionCoAdministrators = default;
-            Optional<IList<string>> customEmails = default;
+            bool? sendToSubscriptionAdministrator = default;
+            bool? sendToSubscriptionCoAdministrators = default;
+            IList<string> customEmails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmailNotification(Optional.ToNullable(sendToSubscriptionAdministrator), Optional.ToNullable(sendToSubscriptionCoAdministrators), Optional.ToList(customEmails), serializedAdditionalRawData);
+            return new EmailNotification(sendToSubscriptionAdministrator, sendToSubscriptionCoAdministrators, customEmails ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmailNotification>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EmailNotification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmailNotification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeEmailNotification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EmailNotification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmailNotification)} does not support reading '{options.Format}' format.");
             }
         }
 

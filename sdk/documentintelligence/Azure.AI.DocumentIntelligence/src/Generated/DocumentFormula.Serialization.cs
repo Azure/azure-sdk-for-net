@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentFormula>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentFormula)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentFormula)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("span"u8);
-            writer.WriteObjectValue(Span);
+            writer.WriteObjectValue<DocumentSpan>(Span, options);
             writer.WritePropertyName("confidence"u8);
             writer.WriteNumberValue(Confidence);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -68,7 +67,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentFormula>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentFormula)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentFormula)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +84,7 @@ namespace Azure.AI.DocumentIntelligence
             }
             DocumentFormulaKind kind = default;
             string value = default;
-            Optional<IReadOnlyList<float>> polygon = default;
+            IReadOnlyList<float> polygon = default;
             DocumentSpan span = default;
             float confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -118,7 +117,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (property.NameEquals("span"u8))
                 {
-                    span = DocumentSpan.DeserializeDocumentSpan(property.Value);
+                    span = DocumentSpan.DeserializeDocumentSpan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))
@@ -132,7 +131,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentFormula(kind, value, Optional.ToList(polygon), span, confidence, serializedAdditionalRawData);
+            return new DocumentFormula(
+                kind,
+                value,
+                polygon ?? new ChangeTrackingList<float>(),
+                span,
+                confidence,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentFormula>.Write(ModelReaderWriterOptions options)
@@ -144,7 +149,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentFormula)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentFormula)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +165,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentFormula(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentFormula)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentFormula)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -178,7 +183,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentFormula>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

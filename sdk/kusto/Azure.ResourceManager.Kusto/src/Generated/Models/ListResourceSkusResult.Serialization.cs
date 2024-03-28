@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<ListResourceSkusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListResourceSkusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ListResourceSkusResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KustoAvailableSkuDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<ListResourceSkusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListResourceSkusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ListResourceSkusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KustoAvailableSkuDetails>> value = default;
+            IReadOnlyList<KustoAvailableSkuDetails> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoAvailableSkuDetails> array = new List<KustoAvailableSkuDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails(item));
+                        array.Add(KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListResourceSkusResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ListResourceSkusResult(value ?? new ChangeTrackingList<KustoAvailableSkuDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListResourceSkusResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ListResourceSkusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListResourceSkusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeListResourceSkusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListResourceSkusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListResourceSkusResult)} does not support reading '{options.Format}' format.");
             }
         }
 

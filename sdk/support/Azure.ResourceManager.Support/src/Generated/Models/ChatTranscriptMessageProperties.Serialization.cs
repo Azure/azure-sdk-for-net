@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChatTranscriptMessageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChatTranscriptMessageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<TranscriptContentType> contentType = default;
-            Optional<SupportTicketCommunicationDirection> communicationDirection = default;
-            Optional<string> sender = default;
+            TranscriptContentType? contentType = default;
+            SupportTicketCommunicationDirection? communicationDirection = default;
+            string sender = default;
             string body = default;
-            Optional<DateTimeOffset> createdDate = default;
+            DateTimeOffset? createdDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatTranscriptMessageProperties(Optional.ToNullable(contentType), Optional.ToNullable(communicationDirection), sender.Value, body, Optional.ToNullable(createdDate), serializedAdditionalRawData);
+            return new ChatTranscriptMessageProperties(
+                contentType,
+                communicationDirection,
+                sender,
+                body,
+                createdDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatTranscriptMessageProperties>.Write(ModelReaderWriterOptions options)
@@ -150,7 +156,7 @@ namespace Azure.ResourceManager.Support.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +172,7 @@ namespace Azure.ResourceManager.Support.Models
                         return DeserializeChatTranscriptMessageProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

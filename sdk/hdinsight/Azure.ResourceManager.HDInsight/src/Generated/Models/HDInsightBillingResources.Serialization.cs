@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightBillingResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightBillingResources)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightBillingResources)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in BillingMeters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightBillingMeters>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in DiskBillingMeters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightDiskBillingMeters>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightBillingResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightBillingResources)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightBillingResources)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<AzureLocation> region = default;
-            Optional<IReadOnlyList<HDInsightBillingMeters>> billingMeters = default;
-            Optional<IReadOnlyList<HDInsightDiskBillingMeters>> diskBillingMeters = default;
+            AzureLocation? region = default;
+            IReadOnlyList<HDInsightBillingMeters> billingMeters = default;
+            IReadOnlyList<HDInsightDiskBillingMeters> diskBillingMeters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightBillingMeters> array = new List<HDInsightBillingMeters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightBillingMeters.DeserializeHDInsightBillingMeters(item));
+                        array.Add(HDInsightBillingMeters.DeserializeHDInsightBillingMeters(item, options));
                     }
                     billingMeters = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightDiskBillingMeters> array = new List<HDInsightDiskBillingMeters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightDiskBillingMeters.DeserializeHDInsightDiskBillingMeters(item));
+                        array.Add(HDInsightDiskBillingMeters.DeserializeHDInsightDiskBillingMeters(item, options));
                     }
                     diskBillingMeters = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightBillingResources(Optional.ToNullable(region), Optional.ToList(billingMeters), Optional.ToList(diskBillingMeters), serializedAdditionalRawData);
+            return new HDInsightBillingResources(region, billingMeters ?? new ChangeTrackingList<HDInsightBillingMeters>(), diskBillingMeters ?? new ChangeTrackingList<HDInsightDiskBillingMeters>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightBillingResources>.Write(ModelReaderWriterOptions options)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightBillingResources)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightBillingResources)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightBillingResources(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightBillingResources)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightBillingResources)} does not support reading '{options.Format}' format.");
             }
         }
 

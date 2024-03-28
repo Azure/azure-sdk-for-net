@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
@@ -23,7 +22,7 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<OncoPhenotypeModelConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +74,7 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<OncoPhenotypeModelConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,10 +89,10 @@ namespace Azure.Health.Insights.CancerProfiling
             {
                 return null;
             }
-            Optional<bool> verbose = default;
-            Optional<bool> includeEvidence = default;
-            Optional<IList<OncoPhenotypeInferenceType>> inferenceTypes = default;
-            Optional<bool> checkForCancerCase = default;
+            bool? verbose = default;
+            bool? includeEvidence = default;
+            IList<OncoPhenotypeInferenceType> inferenceTypes = default;
+            bool? checkForCancerCase = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +144,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OncoPhenotypeModelConfiguration(Optional.ToNullable(verbose), Optional.ToNullable(includeEvidence), Optional.ToList(inferenceTypes), Optional.ToNullable(checkForCancerCase), serializedAdditionalRawData);
+            return new OncoPhenotypeModelConfiguration(verbose, includeEvidence, inferenceTypes ?? new ChangeTrackingList<OncoPhenotypeInferenceType>(), checkForCancerCase, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OncoPhenotypeModelConfiguration>.Write(ModelReaderWriterOptions options)
@@ -157,7 +156,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +172,7 @@ namespace Azure.Health.Insights.CancerProfiling
                         return DeserializeOncoPhenotypeModelConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -191,7 +190,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<OncoPhenotypeModelConfiguration>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

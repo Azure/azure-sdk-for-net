@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServiceProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServiceProvider)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServiceProvider)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServiceProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServiceProvider)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServiceProvider)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Peering.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serviceProviderName = default;
-            Optional<IList<string>> peeringLocations = default;
+            SystemData systemData = default;
+            string serviceProviderName = default;
+            IList<string> peeringLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServiceProvider(id, name, type, systemData.Value, serviceProviderName.Value, Optional.ToList(peeringLocations), serializedAdditionalRawData);
+            return new PeeringServiceProvider(
+                id,
+                name,
+                type,
+                systemData,
+                serviceProviderName,
+                peeringLocations ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServiceProvider>.Write(ModelReaderWriterOptions options)
@@ -186,7 +193,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServiceProvider)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServiceProvider)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +209,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringServiceProvider(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServiceProvider)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServiceProvider)} does not support reading '{options.Format}' format.");
             }
         }
 

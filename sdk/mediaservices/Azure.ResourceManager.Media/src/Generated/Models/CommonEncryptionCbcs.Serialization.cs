@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommonEncryptionCbcs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonEncryptionCbcs)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonEncryptionCbcs)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
-                writer.WriteObjectValue(EnabledProtocols);
+                writer.WriteObjectValue<MediaEnabledProtocols>(EnabledProtocols, options);
             }
             if (Optional.IsCollectionDefined(ClearTracks))
             {
@@ -37,24 +37,24 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in ClearTracks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaTrackSelection>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
-                writer.WriteObjectValue(ContentKeys);
+                writer.WriteObjectValue<StreamingPolicyContentKeys>(ContentKeys, options);
             }
             if (Optional.IsDefined(Drm))
             {
                 writer.WritePropertyName("drm"u8);
-                writer.WriteObjectValue(Drm);
+                writer.WriteObjectValue<CbcsDrmConfiguration>(Drm, options);
             }
             if (Optional.IsDefined(ClearKeyEncryptionConfiguration))
             {
                 writer.WritePropertyName("clearKeyEncryptionConfiguration"u8);
-                writer.WriteObjectValue(ClearKeyEncryptionConfiguration);
+                writer.WriteObjectValue<ClearKeyEncryptionConfiguration>(ClearKeyEncryptionConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommonEncryptionCbcs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonEncryptionCbcs)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonEncryptionCbcs)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaEnabledProtocols> enabledProtocols = default;
-            Optional<IList<MediaTrackSelection>> clearTracks = default;
-            Optional<StreamingPolicyContentKeys> contentKeys = default;
-            Optional<CbcsDrmConfiguration> drm = default;
-            Optional<ClearKeyEncryptionConfiguration> clearKeyEncryptionConfiguration = default;
+            MediaEnabledProtocols enabledProtocols = default;
+            IList<MediaTrackSelection> clearTracks = default;
+            StreamingPolicyContentKeys contentKeys = default;
+            CbcsDrmConfiguration drm = default;
+            ClearKeyEncryptionConfiguration clearKeyEncryptionConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
+                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clearTracks"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item, options));
                     }
                     clearTracks = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value);
+                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("drm"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    drm = CbcsDrmConfiguration.DeserializeCbcsDrmConfiguration(property.Value);
+                    drm = CbcsDrmConfiguration.DeserializeCbcsDrmConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clearKeyEncryptionConfiguration"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    clearKeyEncryptionConfiguration = ClearKeyEncryptionConfiguration.DeserializeClearKeyEncryptionConfiguration(property.Value);
+                    clearKeyEncryptionConfiguration = ClearKeyEncryptionConfiguration.DeserializeClearKeyEncryptionConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonEncryptionCbcs(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, drm.Value, clearKeyEncryptionConfiguration.Value, serializedAdditionalRawData);
+            return new CommonEncryptionCbcs(
+                enabledProtocols,
+                clearTracks ?? new ChangeTrackingList<MediaTrackSelection>(),
+                contentKeys,
+                drm,
+                clearKeyEncryptionConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonEncryptionCbcs>.Write(ModelReaderWriterOptions options)
@@ -171,7 +177,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommonEncryptionCbcs)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonEncryptionCbcs)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +193,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeCommonEncryptionCbcs(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommonEncryptionCbcs)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonEncryptionCbcs)} does not support reading '{options.Format}' format.");
             }
         }
 

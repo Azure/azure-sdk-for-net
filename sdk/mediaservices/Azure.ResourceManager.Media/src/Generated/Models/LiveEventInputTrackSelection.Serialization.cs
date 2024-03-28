@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<LiveEventInputTrackSelection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveEventInputTrackSelection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveEventInputTrackSelection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<LiveEventInputTrackSelection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveEventInputTrackSelection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveEventInputTrackSelection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> property = default;
-            Optional<string> operation = default;
-            Optional<string> value = default;
+            string property = default;
+            string operation = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property0 in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveEventInputTrackSelection(property.Value, operation.Value, value.Value, serializedAdditionalRawData);
+            return new LiveEventInputTrackSelection(property, operation, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveEventInputTrackSelection>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LiveEventInputTrackSelection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveEventInputTrackSelection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeLiveEventInputTrackSelection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LiveEventInputTrackSelection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveEventInputTrackSelection)} does not support reading '{options.Format}' format.");
             }
         }
 

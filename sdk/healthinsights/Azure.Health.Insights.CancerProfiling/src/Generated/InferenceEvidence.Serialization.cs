@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
@@ -23,19 +22,19 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<InferenceEvidence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InferenceEvidence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InferenceEvidence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(PatientDataEvidence))
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
-                writer.WriteObjectValue(PatientDataEvidence);
+                writer.WriteObjectValue<ClinicalNoteEvidence>(PatientDataEvidence, options);
             }
             if (Optional.IsDefined(PatientInfoEvidence))
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
-                writer.WriteObjectValue(PatientInfoEvidence);
+                writer.WriteObjectValue<ClinicalCodedElement>(PatientInfoEvidence, options);
             }
             if (Optional.IsDefined(Importance))
             {
@@ -65,7 +64,7 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<InferenceEvidence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InferenceEvidence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InferenceEvidence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,9 +79,9 @@ namespace Azure.Health.Insights.CancerProfiling
             {
                 return null;
             }
-            Optional<ClinicalNoteEvidence> patientDataEvidence = default;
-            Optional<ClinicalCodedElement> patientInfoEvidence = default;
-            Optional<float> importance = default;
+            ClinicalNoteEvidence patientDataEvidence = default;
+            ClinicalCodedElement patientInfoEvidence = default;
+            float? importance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +92,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         continue;
                     }
-                    patientDataEvidence = ClinicalNoteEvidence.DeserializeClinicalNoteEvidence(property.Value);
+                    patientDataEvidence = ClinicalNoteEvidence.DeserializeClinicalNoteEvidence(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("patientInfoEvidence"u8))
@@ -102,7 +101,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         continue;
                     }
-                    patientInfoEvidence = ClinicalCodedElement.DeserializeClinicalCodedElement(property.Value);
+                    patientInfoEvidence = ClinicalCodedElement.DeserializeClinicalCodedElement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("importance"u8))
@@ -120,7 +119,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InferenceEvidence(patientDataEvidence.Value, patientInfoEvidence.Value, Optional.ToNullable(importance), serializedAdditionalRawData);
+            return new InferenceEvidence(patientDataEvidence, patientInfoEvidence, importance, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InferenceEvidence>.Write(ModelReaderWriterOptions options)
@@ -132,7 +131,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InferenceEvidence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InferenceEvidence)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +147,7 @@ namespace Azure.Health.Insights.CancerProfiling
                         return DeserializeInferenceEvidence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InferenceEvidence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InferenceEvidence)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -166,7 +165,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<InferenceEvidence>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

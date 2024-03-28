@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapabilitiesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsZones)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DnsZone>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapabilitiesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<IList<DnsZone>> dnsZones = default;
+            IList<DnsZone> dnsZones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<DnsZone> array = new List<DnsZone>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsZone.DeserializeDnsZone(item));
+                        array.Add(DnsZone.DeserializeDnsZone(item, options));
                     }
                     dnsZones = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapabilitiesProperties(Optional.ToList(dnsZones), serializedAdditionalRawData);
+            return new CapabilitiesProperties(dnsZones ?? new ChangeTrackingList<DnsZone>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapabilitiesProperties>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeCapabilitiesProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

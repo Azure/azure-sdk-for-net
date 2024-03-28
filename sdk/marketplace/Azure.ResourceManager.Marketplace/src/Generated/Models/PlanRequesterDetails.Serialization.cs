@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlanRequesterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Requesters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PlanRequesterInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlanRequesterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> planId = default;
-            Optional<string> planDisplayName = default;
-            Optional<IReadOnlyList<PlanRequesterInfo>> requesters = default;
+            string planId = default;
+            string planDisplayName = default;
+            IReadOnlyList<PlanRequesterInfo> requesters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PlanRequesterInfo> array = new List<PlanRequesterInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlanRequesterInfo.DeserializePlanRequesterInfo(item));
+                        array.Add(PlanRequesterInfo.DeserializePlanRequesterInfo(item, options));
                     }
                     requesters = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlanRequesterDetails(planId.Value, planDisplayName.Value, Optional.ToList(requesters), serializedAdditionalRawData);
+            return new PlanRequesterDetails(planId, planDisplayName, requesters ?? new ChangeTrackingList<PlanRequesterInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlanRequesterDetails>.Write(ModelReaderWriterOptions options)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializePlanRequesterDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

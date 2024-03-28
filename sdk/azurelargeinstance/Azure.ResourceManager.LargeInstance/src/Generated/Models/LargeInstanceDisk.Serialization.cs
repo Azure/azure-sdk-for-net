@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> diskSizeGB = default;
-            Optional<int> lun = default;
+            string name = default;
+            int? diskSizeGB = default;
+            int? lun = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceDisk(name.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(lun), serializedAdditionalRawData);
+            return new LargeInstanceDisk(name, diskSizeGB, lun, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceDisk>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                         return DeserializeLargeInstanceDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

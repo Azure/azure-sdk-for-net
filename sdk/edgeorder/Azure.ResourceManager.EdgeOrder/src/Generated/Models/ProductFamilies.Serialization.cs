@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductFamilies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductFamilies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductFamilies)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProductFamily>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductFamilies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductFamilies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductFamilies)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProductFamily>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ProductFamily> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ProductFamily> array = new List<ProductFamily>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProductFamily.DeserializeProductFamily(item));
+                        array.Add(ProductFamily.DeserializeProductFamily(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductFamilies(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProductFamilies(value ?? new ChangeTrackingList<ProductFamily>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductFamilies>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProductFamilies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductFamilies)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeProductFamilies(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProductFamilies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductFamilies)} does not support reading '{options.Format}' format.");
             }
         }
 

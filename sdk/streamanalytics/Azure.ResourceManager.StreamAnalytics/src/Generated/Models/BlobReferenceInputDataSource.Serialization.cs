@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobReferenceInputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobReferenceInputDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamAnalyticsStorageAccount>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobReferenceInputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobReferenceInputDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,17 +130,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
-            Optional<string> container = default;
-            Optional<string> pathPattern = default;
-            Optional<string> dateFormat = default;
-            Optional<string> timeFormat = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
-            Optional<string> blobName = default;
-            Optional<string> deltaPathPattern = default;
-            Optional<int> sourcePartitionCount = default;
-            Optional<TimeSpan> fullSnapshotRefreshRate = default;
-            Optional<TimeSpan> deltaSnapshotRefreshRate = default;
+            IList<StreamAnalyticsStorageAccount> storageAccounts = default;
+            string container = default;
+            string pathPattern = default;
+            string dateFormat = default;
+            string timeFormat = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
+            string blobName = default;
+            string deltaPathPattern = default;
+            int? sourcePartitionCount = default;
+            TimeSpan? fullSnapshotRefreshRate = default;
+            TimeSpan? deltaSnapshotRefreshRate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<StreamAnalyticsStorageAccount> array = new List<StreamAnalyticsStorageAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(item));
+                                array.Add(StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(item, options));
                             }
                             storageAccounts = array;
                             continue;
@@ -248,7 +248,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobReferenceInputDataSource(type, serializedAdditionalRawData, Optional.ToList(storageAccounts), container.Value, pathPattern.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode), blobName.Value, deltaPathPattern.Value, Optional.ToNullable(sourcePartitionCount), Optional.ToNullable(fullSnapshotRefreshRate), Optional.ToNullable(deltaSnapshotRefreshRate));
+            return new BlobReferenceInputDataSource(
+                type,
+                serializedAdditionalRawData,
+                storageAccounts ?? new ChangeTrackingList<StreamAnalyticsStorageAccount>(),
+                container,
+                pathPattern,
+                dateFormat,
+                timeFormat,
+                authenticationMode,
+                blobName,
+                deltaPathPattern,
+                sourcePartitionCount,
+                fullSnapshotRefreshRate,
+                deltaSnapshotRefreshRate);
         }
 
         BinaryData IPersistableModel<BlobReferenceInputDataSource>.Write(ModelReaderWriterOptions options)
@@ -260,7 +273,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BlobReferenceInputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobReferenceInputDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -276,7 +289,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeBlobReferenceInputDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlobReferenceInputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobReferenceInputDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

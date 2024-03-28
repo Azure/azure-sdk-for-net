@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment);
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores);
+            writer.WriteObjectValue<TargetConfidenceScoreLabel>(ConfidenceScores);
             writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);
@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Relations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<TargetRelation>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -86,7 +86,13 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentenceTarget(sentiment, confidenceScores, offset, length, text, relations);
+            return new SentenceTarget(
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                text,
+                relations);
         }
     }
 }

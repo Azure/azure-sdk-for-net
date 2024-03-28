@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
@@ -23,12 +22,12 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeImageOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeImageOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("image"u8);
-            writer.WriteObjectValue(Image);
+            writer.WriteObjectValue<ContentSafetyImageData>(Image, options);
             if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
@@ -67,7 +66,7 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeImageOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeImageOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,15 +82,15 @@ namespace Azure.AI.ContentSafety
                 return null;
             }
             ContentSafetyImageData image = default;
-            Optional<IList<ImageCategory>> categories = default;
-            Optional<AnalyzeImageOutputType> outputType = default;
+            IList<ImageCategory> categories = default;
+            AnalyzeImageOutputType? outputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("image"u8))
                 {
-                    image = ContentSafetyImageData.DeserializeContentSafetyImageData(property.Value);
+                    image = ContentSafetyImageData.DeserializeContentSafetyImageData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("categories"u8))
@@ -123,7 +122,7 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalyzeImageOptions(image, Optional.ToList(categories), Optional.ToNullable(outputType), serializedAdditionalRawData);
+            return new AnalyzeImageOptions(image, categories ?? new ChangeTrackingList<ImageCategory>(), outputType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzeImageOptions>.Write(ModelReaderWriterOptions options)
@@ -135,7 +134,7 @@ namespace Azure.AI.ContentSafety
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeImageOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeImageOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +150,7 @@ namespace Azure.AI.ContentSafety
                         return DeserializeAnalyzeImageOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeImageOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeImageOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -169,7 +168,7 @@ namespace Azure.AI.ContentSafety
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AnalyzeImageOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

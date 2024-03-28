@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(FilterGroup))
             {
                 writer.WritePropertyName("filterGroup"u8);
-                writer.WriteObjectValue(FilterGroup);
+                writer.WriteObjectValue<FilterGroup>(FilterGroup, options);
             }
             if (Optional.IsDefined(ReplacementKey))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AggregationType> aggregationType = default;
-            Optional<TimeSpan> timeSpanDuration = default;
-            Optional<string> title = default;
-            Optional<FilterGroup> filterGroup = default;
-            Optional<string> replacementKey = default;
+            string name = default;
+            AggregationType? aggregationType = default;
+            TimeSpan? timeSpanDuration = default;
+            string title = default;
+            FilterGroup filterGroup = default;
+            string replacementKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    filterGroup = FilterGroup.DeserializeFilterGroup(property.Value);
+                    filterGroup = FilterGroup.DeserializeFilterGroup(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("replacementKey"u8))
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricsBasedChart(name.Value, Optional.ToNullable(aggregationType), Optional.ToNullable(timeSpanDuration), title.Value, filterGroup.Value, replacementKey.Value, serializedAdditionalRawData);
+            return new MetricsBasedChart(
+                name,
+                aggregationType,
+                timeSpanDuration,
+                title,
+                filterGroup,
+                replacementKey,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricsBasedChart>.Write(ModelReaderWriterOptions options)
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeMetricsBasedChart(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support reading '{options.Format}' format.");
             }
         }
 

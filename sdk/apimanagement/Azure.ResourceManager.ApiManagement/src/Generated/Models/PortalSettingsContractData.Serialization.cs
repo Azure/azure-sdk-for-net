@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(IsSubscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue(IsSubscriptions);
+                writer.WriteObjectValue<SubscriptionDelegationSettingProperties>(IsSubscriptions, options);
             }
             if (Optional.IsDefined(IsUserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue(IsUserRegistration);
+                writer.WriteObjectValue<RegistrationDelegationSettingProperties>(IsUserRegistration, options);
             }
             if (Optional.IsDefined(IsRedirectEnabled))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService"u8);
-                writer.WriteObjectValue(TermsOfService);
+                writer.WriteObjectValue<TermsOfServiceProperties>(TermsOfService, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> uri = default;
-            Optional<string> validationKey = default;
-            Optional<SubscriptionDelegationSettingProperties> subscriptions = default;
-            Optional<RegistrationDelegationSettingProperties> userRegistration = default;
-            Optional<bool> enabled = default;
-            Optional<TermsOfServiceProperties> termsOfService = default;
+            SystemData systemData = default;
+            Uri uri = default;
+            string validationKey = default;
+            SubscriptionDelegationSettingProperties subscriptions = default;
+            RegistrationDelegationSettingProperties userRegistration = default;
+            bool? enabled = default;
+            TermsOfServiceProperties termsOfService = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            subscriptions = SubscriptionDelegationSettingProperties.DeserializeSubscriptionDelegationSettingProperties(property0.Value);
+                            subscriptions = SubscriptionDelegationSettingProperties.DeserializeSubscriptionDelegationSettingProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userRegistration"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            userRegistration = RegistrationDelegationSettingProperties.DeserializeRegistrationDelegationSettingProperties(property0.Value);
+                            userRegistration = RegistrationDelegationSettingProperties.DeserializeRegistrationDelegationSettingProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value);
+                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -224,7 +224,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PortalSettingsContractData(id, name, type, systemData.Value, uri.Value, validationKey.Value, subscriptions.Value, userRegistration.Value, Optional.ToNullable(enabled), termsOfService.Value, serializedAdditionalRawData);
+            return new PortalSettingsContractData(
+                id,
+                name,
+                type,
+                systemData,
+                uri,
+                validationKey,
+                subscriptions,
+                userRegistration,
+                enabled,
+                termsOfService,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PortalSettingsContractData>.Write(ModelReaderWriterOptions options)
@@ -236,7 +247,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +263,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializePortalSettingsContractData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support reading '{options.Format}' format.");
             }
         }
 

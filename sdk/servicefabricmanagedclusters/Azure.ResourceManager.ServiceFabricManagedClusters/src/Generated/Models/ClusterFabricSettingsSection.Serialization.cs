@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterFabricSettingsSection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterFabricSettingsSection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterFabricSettingsSection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartArray();
             foreach (var item in Parameters)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ClusterFabricSettingsParameterDescription>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterFabricSettingsSection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterFabricSettingsSection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterFabricSettingsSection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ClusterFabricSettingsParameterDescription> array = new List<ClusterFabricSettingsParameterDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterFabricSettingsParameterDescription.DeserializeClusterFabricSettingsParameterDescription(item));
+                        array.Add(ClusterFabricSettingsParameterDescription.DeserializeClusterFabricSettingsParameterDescription(item, options));
                     }
                     parameters = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterFabricSettingsSection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterFabricSettingsSection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeClusterFabricSettingsSection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterFabricSettingsSection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterFabricSettingsSection)} does not support reading '{options.Format}' format.");
             }
         }
 

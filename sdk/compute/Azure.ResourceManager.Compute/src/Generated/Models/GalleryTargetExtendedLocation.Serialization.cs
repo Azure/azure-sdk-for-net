@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryTargetExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WriteObjectValue<GalleryExtendedLocation>(ExtendedLocation, options);
             }
             if (Optional.IsDefined(ExtendedLocationReplicaCount))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<EncryptionImages>(Encryption, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryTargetExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<GalleryExtendedLocation> extendedLocation = default;
-            Optional<int> extendedLocationReplicaCount = default;
-            Optional<EdgeZoneStorageAccountType> storageAccountType = default;
-            Optional<EncryptionImages> encryption = default;
+            string name = default;
+            GalleryExtendedLocation extendedLocation = default;
+            int? extendedLocationReplicaCount = default;
+            EdgeZoneStorageAccountType? storageAccountType = default;
+            EncryptionImages encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    extendedLocation = GalleryExtendedLocation.DeserializeGalleryExtendedLocation(property.Value);
+                    extendedLocation = GalleryExtendedLocation.DeserializeGalleryExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocationReplicaCount"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value);
+                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryTargetExtendedLocation(name.Value, extendedLocation.Value, Optional.ToNullable(extendedLocationReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value, serializedAdditionalRawData);
+            return new GalleryTargetExtendedLocation(
+                name,
+                extendedLocation,
+                extendedLocationReplicaCount,
+                storageAccountType,
+                encryption,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryTargetExtendedLocation>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryTargetExtendedLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

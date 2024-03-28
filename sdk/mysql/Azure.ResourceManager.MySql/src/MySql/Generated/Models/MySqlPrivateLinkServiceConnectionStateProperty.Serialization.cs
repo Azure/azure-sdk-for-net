@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlPrivateLinkServiceConnectionStateProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlPrivateLinkServiceConnectionStateProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlPrivateLinkServiceConnectionStateProperty)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlPrivateLinkServiceConnectionStateProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlPrivateLinkServiceConnectionStateProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlPrivateLinkServiceConnectionStateProperty)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MySql.Models
             }
             string status = default;
             string description = default;
-            Optional<string> actionsRequired = default;
+            string actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired.Value, serializedAdditionalRawData);
+            return new MySqlPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlPrivateLinkServiceConnectionStateProperty>.Write(ModelReaderWriterOptions options)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlPrivateLinkServiceConnectionStateProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlPrivateLinkServiceConnectionStateProperty)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlPrivateLinkServiceConnectionStateProperty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlPrivateLinkServiceConnectionStateProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlPrivateLinkServiceConnectionStateProperty)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<JpgLayer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JpgLayer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JpgLayer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<JpgLayer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JpgLayer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JpgLayer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<int> quality = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> label = default;
+            int? quality = default;
+            string width = default;
+            string height = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JpgLayer(width.Value, height.Value, label.Value, serializedAdditionalRawData, Optional.ToNullable(quality));
+            return new JpgLayer(width, height, label, serializedAdditionalRawData, quality);
         }
 
         BinaryData IPersistableModel<JpgLayer>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JpgLayer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JpgLayer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeJpgLayer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JpgLayer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JpgLayer)} does not support reading '{options.Format}' format.");
             }
         }
 

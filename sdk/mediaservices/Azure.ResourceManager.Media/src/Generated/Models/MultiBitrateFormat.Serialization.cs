@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MultiBitrateFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaOutputFile>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MultiBitrateFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.Mp4Format": return Mp4Format.DeserializeMp4Format(element);
-                    case "#Microsoft.Media.TransportStreamFormat": return TransportStreamFormat.DeserializeTransportStreamFormat(element);
+                    case "#Microsoft.Media.Mp4Format": return Mp4Format.DeserializeMp4Format(element, options);
+                    case "#Microsoft.Media.TransportStreamFormat": return TransportStreamFormat.DeserializeTransportStreamFormat(element, options);
                 }
             }
-            Optional<IList<MediaOutputFile>> outputFiles = default;
+            IList<MediaOutputFile> outputFiles = default;
             string odataType = "#Microsoft.Media.MultiBitrateFormat";
             string filenamePattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaOutputFile> array = new List<MediaOutputFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaOutputFile.DeserializeMediaOutputFile(item));
+                        array.Add(MediaOutputFile.DeserializeMediaOutputFile(item, options));
                     }
                     outputFiles = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MultiBitrateFormat(odataType, filenamePattern, serializedAdditionalRawData, Optional.ToList(outputFiles));
+            return new MultiBitrateFormat(odataType, filenamePattern, serializedAdditionalRawData, outputFiles ?? new ChangeTrackingList<MediaOutputFile>());
         }
 
         BinaryData IPersistableModel<MultiBitrateFormat>.Write(ModelReaderWriterOptions options)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMultiBitrateFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

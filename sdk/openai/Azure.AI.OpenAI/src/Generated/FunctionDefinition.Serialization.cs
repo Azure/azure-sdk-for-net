@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<FunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +68,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<FunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,8 +84,8 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
-            Optional<BinaryData> parameters = default;
+            string description = default;
+            BinaryData parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +115,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionDefinition(name, description.Value, parameters.Value, serializedAdditionalRawData);
+            return new FunctionDefinition(name, description, parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionDefinition>.Write(ModelReaderWriterOptions options)
@@ -128,7 +127,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FunctionDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +143,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeFunctionDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FunctionDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -162,7 +161,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<FunctionDefinition>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IlrContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IlrContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IlrContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IlrContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IlrContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IlrContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFileShareProvisionILRRequest": return FileShareProvisionIlrContent.DeserializeFileShareProvisionIlrContent(element);
-                    case "IaasVMILRRegistrationRequest": return IaasVmIlrRegistrationContent.DeserializeIaasVmIlrRegistrationContent(element);
+                    case "AzureFileShareProvisionILRRequest": return FileShareProvisionIlrContent.DeserializeFileShareProvisionIlrContent(element, options);
+                    case "IaasVMILRRegistrationRequest": return IaasVmIlrRegistrationContent.DeserializeIaasVmIlrRegistrationContent(element, options);
                 }
             }
-            return UnknownIlrRequest.DeserializeUnknownIlrRequest(element);
+            return UnknownIlrRequest.DeserializeUnknownIlrRequest(element, options);
         }
 
         BinaryData IPersistableModel<IlrContent>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IlrContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IlrContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeIlrContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IlrContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IlrContent)} does not support reading '{options.Format}' format.");
             }
         }
 

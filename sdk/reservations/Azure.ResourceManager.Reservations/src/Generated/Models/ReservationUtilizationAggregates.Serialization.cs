@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<float> grain = default;
-            Optional<string> grainUnit = default;
-            Optional<float> value = default;
-            Optional<string> valueUnit = default;
+            float? grain = default;
+            string grainUnit = default;
+            float? value = default;
+            string valueUnit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationUtilizationAggregates(Optional.ToNullable(grain), grainUnit.Value, Optional.ToNullable(value), valueUnit.Value, serializedAdditionalRawData);
+            return new ReservationUtilizationAggregates(grain, grainUnit, value, valueUnit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationUtilizationAggregates>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationUtilizationAggregates(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support reading '{options.Format}' format.");
             }
         }
 

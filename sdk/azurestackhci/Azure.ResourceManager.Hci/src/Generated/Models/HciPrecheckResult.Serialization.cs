@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciPrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciPrecheckResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciPrecheckResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                writer.WriteObjectValue<HciPrecheckResultTags>(Tags, options);
             }
             if (Optional.IsDefined(Title))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciPrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciPrecheckResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciPrecheckResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,18 +124,18 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<HciPrecheckResultTags> tags = default;
-            Optional<string> title = default;
-            Optional<HciClusterStatus> status = default;
-            Optional<UpdateSeverity> severity = default;
-            Optional<string> description = default;
-            Optional<string> remediation = default;
-            Optional<string> targetResourceId = default;
-            Optional<string> targetResourceName = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> additionalData = default;
-            Optional<string> healthCheckSource = default;
+            string name = default;
+            HciPrecheckResultTags tags = default;
+            string title = default;
+            HciClusterStatus? status = default;
+            UpdateSeverity? severity = default;
+            string description = default;
+            string remediation = default;
+            string targetResourceId = default;
+            string targetResourceName = default;
+            DateTimeOffset? timestamp = default;
+            string additionalData = default;
+            string healthCheckSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(property.Value);
+                    tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("title"u8))
@@ -222,7 +222,20 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciPrecheckResult(name.Value, tags.Value, title.Value, Optional.ToNullable(status), Optional.ToNullable(severity), description.Value, remediation.Value, targetResourceId.Value, targetResourceName.Value, Optional.ToNullable(timestamp), additionalData.Value, healthCheckSource.Value, serializedAdditionalRawData);
+            return new HciPrecheckResult(
+                name,
+                tags,
+                title,
+                status,
+                severity,
+                description,
+                remediation,
+                targetResourceId,
+                targetResourceName,
+                timestamp,
+                additionalData,
+                healthCheckSource,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciPrecheckResult>.Write(ModelReaderWriterOptions options)
@@ -234,7 +247,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HciPrecheckResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciPrecheckResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -250,7 +263,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeHciPrecheckResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciPrecheckResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciPrecheckResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ModelPackageResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelPackageResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelPackageResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (BaseEnvironmentSource != null)
                 {
                     writer.WritePropertyName("baseEnvironmentSource"u8);
-                    writer.WriteObjectValue(BaseEnvironmentSource);
+                    writer.WriteObjectValue<BaseEnvironmentSource>(BaseEnvironmentSource, options);
                 }
                 else
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (InferencingServer != null)
                 {
                     writer.WritePropertyName("inferencingServer"u8);
-                    writer.WriteObjectValue(InferencingServer);
+                    writer.WriteObjectValue<InferencingServer>(InferencingServer, options);
                 }
                 else
                 {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in Inputs)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<ModelPackageInput>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ModelConfiguration != null)
                 {
                     writer.WritePropertyName("modelConfiguration"u8);
-                    writer.WriteObjectValue(ModelConfiguration);
+                    writer.WriteObjectValue<ModelConfiguration>(ModelConfiguration, options);
                 }
                 else
                 {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ModelPackageResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelPackageResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelPackageResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -194,16 +194,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<BaseEnvironmentSource> baseEnvironmentSource = default;
-            Optional<string> buildId = default;
-            Optional<PackageBuildState> buildState = default;
-            Optional<IReadOnlyDictionary<string, string>> environmentVariables = default;
-            Optional<InferencingServer> inferencingServer = default;
-            Optional<IReadOnlyList<ModelPackageInput>> inputs = default;
-            Optional<Uri> logUrl = default;
-            Optional<ModelConfiguration> modelConfiguration = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<string> targetEnvironmentId = default;
+            BaseEnvironmentSource baseEnvironmentSource = default;
+            string buildId = default;
+            PackageBuildState? buildState = default;
+            IReadOnlyDictionary<string, string> environmentVariables = default;
+            InferencingServer inferencingServer = default;
+            IReadOnlyList<ModelPackageInput> inputs = default;
+            Uri logUrl = default;
+            ModelConfiguration modelConfiguration = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            string targetEnvironmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         baseEnvironmentSource = null;
                         continue;
                     }
-                    baseEnvironmentSource = BaseEnvironmentSource.DeserializeBaseEnvironmentSource(property.Value);
+                    baseEnvironmentSource = BaseEnvironmentSource.DeserializeBaseEnvironmentSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("buildId"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         inferencingServer = null;
                         continue;
                     }
-                    inferencingServer = InferencingServer.DeserializeInferencingServer(property.Value);
+                    inferencingServer = InferencingServer.DeserializeInferencingServer(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inputs"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<ModelPackageInput> array = new List<ModelPackageInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelPackageInput.DeserializeModelPackageInput(item));
+                        array.Add(ModelPackageInput.DeserializeModelPackageInput(item, options));
                     }
                     inputs = array;
                     continue;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         modelConfiguration = null;
                         continue;
                     }
-                    modelConfiguration = ModelConfiguration.DeserializeModelConfiguration(property.Value);
+                    modelConfiguration = ModelConfiguration.DeserializeModelConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -328,7 +328,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPackageResult(baseEnvironmentSource.Value, buildId.Value, Optional.ToNullable(buildState), Optional.ToDictionary(environmentVariables), inferencingServer.Value, Optional.ToList(inputs), logUrl.Value, modelConfiguration.Value, Optional.ToDictionary(tags), targetEnvironmentId.Value, serializedAdditionalRawData);
+            return new ModelPackageResult(
+                baseEnvironmentSource,
+                buildId,
+                buildState,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                inferencingServer,
+                inputs ?? new ChangeTrackingList<ModelPackageInput>(),
+                logUrl,
+                modelConfiguration,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                targetEnvironmentId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelPackageResult>.Write(ModelReaderWriterOptions options)
@@ -340,7 +351,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ModelPackageResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelPackageResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -356,7 +367,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeModelPackageResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ModelPackageResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelPackageResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<long> availableApplianceStorageGB = default;
-            Optional<long> availableCoreCount = default;
-            Optional<long> availableHostStorageGB = default;
-            Optional<long> availableMemoryGB = default;
-            Optional<long> totalApplianceStorageGB = default;
-            Optional<long> totalCoreCount = default;
-            Optional<long> totalHostStorageGB = default;
-            Optional<long> totalMemoryGB = default;
+            long? availableApplianceStorageGB = default;
+            long? availableCoreCount = default;
+            long? availableHostStorageGB = default;
+            long? availableMemoryGB = default;
+            long? totalApplianceStorageGB = default;
+            long? totalCoreCount = default;
+            long? totalHostStorageGB = default;
+            long? totalMemoryGB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterCapacity(Optional.ToNullable(availableApplianceStorageGB), Optional.ToNullable(availableCoreCount), Optional.ToNullable(availableHostStorageGB), Optional.ToNullable(availableMemoryGB), Optional.ToNullable(totalApplianceStorageGB), Optional.ToNullable(totalCoreCount), Optional.ToNullable(totalHostStorageGB), Optional.ToNullable(totalMemoryGB), serializedAdditionalRawData);
+            return new ClusterCapacity(
+                availableApplianceStorageGB,
+                availableCoreCount,
+                availableHostStorageGB,
+                availableMemoryGB,
+                totalApplianceStorageGB,
+                totalCoreCount,
+                totalHostStorageGB,
+                totalMemoryGB,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterCapacity>.Write(ModelReaderWriterOptions options)
@@ -206,7 +215,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -222,7 +231,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeClusterCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

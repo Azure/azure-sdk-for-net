@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryAddDisksProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryAddDisksProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryAddDisksProviderSpecificContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryAddDisksProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryAddDisksProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryAddDisksProviderSpecificContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AAddDisksContent.DeserializeA2AAddDisksContent(element);
+                    case "A2A": return A2AAddDisksContent.DeserializeA2AAddDisksContent(element, options);
                 }
             }
-            return UnknownAddDisksProviderSpecificContent.DeserializeUnknownAddDisksProviderSpecificContent(element);
+            return UnknownAddDisksProviderSpecificContent.DeserializeUnknownAddDisksProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<SiteRecoveryAddDisksProviderSpecificContent>.Write(ModelReaderWriterOptions options)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryAddDisksProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryAddDisksProviderSpecificContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryAddDisksProviderSpecificContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryAddDisksProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryAddDisksProviderSpecificContent)} does not support reading '{options.Format}' format.");
             }
         }
 

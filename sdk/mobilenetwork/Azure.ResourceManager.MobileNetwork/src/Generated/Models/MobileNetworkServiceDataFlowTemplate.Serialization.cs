@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkServiceDataFlowTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkServiceDataFlowTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             MobileNetworkSdfDirectionS direction = default;
             IList<string> protocol = default;
             IList<string> remoteIPList = default;
-            Optional<IList<string>> ports = default;
+            IList<string> ports = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkServiceDataFlowTemplate(templateName, direction, protocol, remoteIPList, Optional.ToList(ports), serializedAdditionalRawData);
+            return new MobileNetworkServiceDataFlowTemplate(
+                templateName,
+                direction,
+                protocol,
+                remoteIPList,
+                ports ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkServiceDataFlowTemplate>.Write(ModelReaderWriterOptions options)
@@ -163,7 +169,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +185,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkServiceDataFlowTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

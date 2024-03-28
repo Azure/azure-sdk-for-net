@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<RulestackSecurityServices>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RulestackSecurityServices)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RulestackSecurityServices)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<RulestackSecurityServices>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RulestackSecurityServices)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RulestackSecurityServices)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<string> vulnerabilityProfile = default;
-            Optional<string> antiSpywareProfile = default;
-            Optional<string> antiVirusProfile = default;
-            Optional<string> urlFilteringProfile = default;
-            Optional<string> fileBlockingProfile = default;
-            Optional<string> dnsSubscription = default;
-            Optional<string> outboundUnTrustCertificate = default;
-            Optional<string> outboundTrustCertificate = default;
+            string vulnerabilityProfile = default;
+            string antiSpywareProfile = default;
+            string antiVirusProfile = default;
+            string urlFilteringProfile = default;
+            string fileBlockingProfile = default;
+            string dnsSubscription = default;
+            string outboundUnTrustCertificate = default;
+            string outboundTrustCertificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulestackSecurityServices(vulnerabilityProfile.Value, antiSpywareProfile.Value, antiVirusProfile.Value, urlFilteringProfile.Value, fileBlockingProfile.Value, dnsSubscription.Value, outboundUnTrustCertificate.Value, outboundTrustCertificate.Value, serializedAdditionalRawData);
+            return new RulestackSecurityServices(
+                vulnerabilityProfile,
+                antiSpywareProfile,
+                antiVirusProfile,
+                urlFilteringProfile,
+                fileBlockingProfile,
+                dnsSubscription,
+                outboundUnTrustCertificate,
+                outboundTrustCertificate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulestackSecurityServices>.Write(ModelReaderWriterOptions options)
@@ -174,7 +183,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RulestackSecurityServices)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RulestackSecurityServices)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -190,7 +199,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeRulestackSecurityServices(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RulestackSecurityServices)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RulestackSecurityServices)} does not support reading '{options.Format}' format.");
             }
         }
 

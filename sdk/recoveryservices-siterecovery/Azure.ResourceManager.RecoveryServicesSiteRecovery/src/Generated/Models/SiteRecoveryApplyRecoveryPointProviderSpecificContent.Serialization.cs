@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryApplyRecoveryPointProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryApplyRecoveryPointProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AApplyRecoveryPointContent.DeserializeA2AApplyRecoveryPointContent(element);
-                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationApplyRecoveryPointContent.DeserializeA2ACrossClusterMigrationApplyRecoveryPointContent(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureApplyRecoveryPointContent.DeserializeHyperVReplicaAzureApplyRecoveryPointContent(element);
-                    case "InMageAzureV2": return InMageAzureV2ApplyRecoveryPointContent.DeserializeInMageAzureV2ApplyRecoveryPointContent(element);
-                    case "InMageRcm": return InMageRcmApplyRecoveryPointContent.DeserializeInMageRcmApplyRecoveryPointContent(element);
+                    case "A2A": return A2AApplyRecoveryPointContent.DeserializeA2AApplyRecoveryPointContent(element, options);
+                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationApplyRecoveryPointContent.DeserializeA2ACrossClusterMigrationApplyRecoveryPointContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureApplyRecoveryPointContent.DeserializeHyperVReplicaAzureApplyRecoveryPointContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2ApplyRecoveryPointContent.DeserializeInMageAzureV2ApplyRecoveryPointContent(element, options);
+                    case "InMageRcm": return InMageRcmApplyRecoveryPointContent.DeserializeInMageRcmApplyRecoveryPointContent(element, options);
                 }
             }
-            return UnknownApplyRecoveryPointProviderSpecificContent.DeserializeUnknownApplyRecoveryPointProviderSpecificContent(element);
+            return UnknownApplyRecoveryPointProviderSpecificContent.DeserializeUnknownApplyRecoveryPointProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<SiteRecoveryApplyRecoveryPointProviderSpecificContent>.Write(ModelReaderWriterOptions options)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryApplyRecoveryPointProviderSpecificContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support reading '{options.Format}' format.");
             }
         }
 

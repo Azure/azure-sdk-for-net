@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The UnknownDatabase. </summary>
+    /// <summary> Unknown version of Database. </summary>
     internal partial class UnknownDatabase : SynapseDatabaseData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDatabase"/>. </summary>
@@ -21,9 +22,15 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the database. </param>
-        internal UnknownDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseKind kind) : base(id, name, resourceType, systemData, location, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDatabase"/> for deserialization. </summary>
+        internal UnknownDatabase()
+        {
         }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatRequestSystemMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatRequestSystemMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatRequestSystemMessage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +58,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatRequestSystemMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatRequestSystemMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatRequestSystemMessage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string content = default;
-            Optional<string> name = default;
+            string name = default;
             ChatRole role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -102,7 +101,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatRequestSystemMessage(role, serializedAdditionalRawData, content, name.Value);
+            return new ChatRequestSystemMessage(role, serializedAdditionalRawData, content, name);
         }
 
         BinaryData IPersistableModel<ChatRequestSystemMessage>.Write(ModelReaderWriterOptions options)
@@ -114,7 +113,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChatRequestSystemMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatRequestSystemMessage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -130,7 +129,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeChatRequestSystemMessage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatRequestSystemMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatRequestSystemMessage)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -148,7 +147,7 @@ namespace Azure.AI.OpenAI
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ChatRequestSystemMessage>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

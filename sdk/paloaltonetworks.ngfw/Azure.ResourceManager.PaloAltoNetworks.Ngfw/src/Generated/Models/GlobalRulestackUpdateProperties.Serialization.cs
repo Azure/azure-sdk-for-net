@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(SecurityServices))
             {
                 writer.WritePropertyName("securityServices"u8);
-                writer.WriteObjectValue(SecurityServices);
+                writer.WriteObjectValue<RulestackSecurityServices>(SecurityServices, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,14 +109,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<ETag> panETag = default;
-            Optional<AzureLocation> panLocation = default;
-            Optional<RulestackScopeType> scope = default;
-            Optional<IList<string>> associatedSubscriptions = default;
-            Optional<string> description = default;
-            Optional<RuleCreationDefaultMode> defaultMode = default;
-            Optional<string> minAppIdVersion = default;
-            Optional<RulestackSecurityServices> securityServices = default;
+            ETag? panETag = default;
+            AzureLocation? panLocation = default;
+            RulestackScopeType? scope = default;
+            IList<string> associatedSubscriptions = default;
+            string description = default;
+            RuleCreationDefaultMode? defaultMode = default;
+            string minAppIdVersion = default;
+            RulestackSecurityServices securityServices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    securityServices = RulestackSecurityServices.DeserializeRulestackSecurityServices(property.Value);
+                    securityServices = RulestackSecurityServices.DeserializeRulestackSecurityServices(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +196,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalRulestackUpdateProperties(Optional.ToNullable(panETag), Optional.ToNullable(panLocation), Optional.ToNullable(scope), Optional.ToList(associatedSubscriptions), description.Value, Optional.ToNullable(defaultMode), minAppIdVersion.Value, securityServices.Value, serializedAdditionalRawData);
+            return new GlobalRulestackUpdateProperties(
+                panETag,
+                panLocation,
+                scope,
+                associatedSubscriptions ?? new ChangeTrackingList<string>(),
+                description,
+                defaultMode,
+                minAppIdVersion,
+                securityServices,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalRulestackUpdateProperties>.Write(ModelReaderWriterOptions options)
@@ -209,7 +217,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +233,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeGlobalRulestackUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

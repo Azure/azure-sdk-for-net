@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertAnyOfOrLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActivityLogAlertAnyOfOrLeafCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActivityLogAlertAnyOfOrLeafCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in AnyOf)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AlertRuleLeafCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertAnyOfOrLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActivityLogAlertAnyOfOrLeafCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActivityLogAlertAnyOfOrLeafCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<AlertRuleLeafCondition>> anyOf = default;
-            Optional<string> field = default;
-            Optional<string> @equals = default;
-            Optional<IList<string>> containsAny = default;
+            IList<AlertRuleLeafCondition> anyOf = default;
+            string field = default;
+            string @equals = default;
+            IList<string> containsAny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<AlertRuleLeafCondition> array = new List<AlertRuleLeafCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeAlertRuleLeafCondition(item));
+                        array.Add(DeserializeAlertRuleLeafCondition(item, options));
                     }
                     anyOf = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActivityLogAlertAnyOfOrLeafCondition(field.Value, @equals.Value, Optional.ToList(containsAny), serializedAdditionalRawData, Optional.ToList(anyOf));
+            return new ActivityLogAlertAnyOfOrLeafCondition(field, @equals, containsAny ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, anyOf ?? new ChangeTrackingList<AlertRuleLeafCondition>());
         }
 
         BinaryData IPersistableModel<ActivityLogAlertAnyOfOrLeafCondition>.Write(ModelReaderWriterOptions options)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActivityLogAlertAnyOfOrLeafCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActivityLogAlertAnyOfOrLeafCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeActivityLogAlertAnyOfOrLeafCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActivityLogAlertAnyOfOrLeafCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActivityLogAlertAnyOfOrLeafCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

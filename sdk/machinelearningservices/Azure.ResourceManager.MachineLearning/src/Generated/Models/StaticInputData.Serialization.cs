@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticInputData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticInputData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticInputData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticInputData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticInputData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticInputData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> preprocessingComponentId = default;
+            string preprocessingComponentId = default;
             DateTimeOffset windowEnd = default;
             DateTimeOffset windowStart = default;
-            Optional<IDictionary<string, string>> columns = default;
-            Optional<string> dataContext = default;
+            IDictionary<string, string> columns = default;
+            string dataContext = default;
             MonitoringInputDataType inputDataType = default;
             JobInputType jobInputType = default;
             Uri uri = default;
@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticInputData(Optional.ToDictionary(columns), dataContext.Value, inputDataType, jobInputType, uri, serializedAdditionalRawData, preprocessingComponentId.Value, windowEnd, windowStart);
+            return new StaticInputData(
+                columns ?? new ChangeTrackingDictionary<string, string>(),
+                dataContext,
+                inputDataType,
+                jobInputType,
+                uri,
+                serializedAdditionalRawData,
+                preprocessingComponentId,
+                windowEnd,
+                windowStart);
         }
 
         BinaryData IPersistableModel<StaticInputData>.Write(ModelReaderWriterOptions options)
@@ -206,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StaticInputData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticInputData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -222,7 +231,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeStaticInputData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticInputData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticInputData)} does not support reading '{options.Format}' format.");
             }
         }
 

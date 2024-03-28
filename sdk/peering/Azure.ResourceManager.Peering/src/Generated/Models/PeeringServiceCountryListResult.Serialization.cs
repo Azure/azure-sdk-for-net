@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServiceCountryListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServiceCountryListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServiceCountryListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PeeringServiceCountry>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServiceCountryListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServiceCountryListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServiceCountryListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PeeringServiceCountry>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PeeringServiceCountry> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringServiceCountry> array = new List<PeeringServiceCountry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringServiceCountry.DeserializePeeringServiceCountry(item));
+                        array.Add(PeeringServiceCountry.DeserializePeeringServiceCountry(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServiceCountryListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PeeringServiceCountryListResult(value ?? new ChangeTrackingList<PeeringServiceCountry>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServiceCountryListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServiceCountryListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServiceCountryListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringServiceCountryListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServiceCountryListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServiceCountryListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

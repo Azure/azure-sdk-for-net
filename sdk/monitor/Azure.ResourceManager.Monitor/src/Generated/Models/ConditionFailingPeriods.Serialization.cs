@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConditionFailingPeriods>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConditionFailingPeriods>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<long> numberOfEvaluationPeriods = default;
-            Optional<long> minFailingPeriodsToAlert = default;
+            long? numberOfEvaluationPeriods = default;
+            long? minFailingPeriodsToAlert = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConditionFailingPeriods(Optional.ToNullable(numberOfEvaluationPeriods), Optional.ToNullable(minFailingPeriodsToAlert), serializedAdditionalRawData);
+            return new ConditionFailingPeriods(numberOfEvaluationPeriods, minFailingPeriodsToAlert, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConditionFailingPeriods>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeConditionFailingPeriods(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support reading '{options.Format}' format.");
             }
         }
 

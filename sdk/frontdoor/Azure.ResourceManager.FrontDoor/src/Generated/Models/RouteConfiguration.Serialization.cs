@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration": return ForwardingConfiguration.DeserializeForwardingConfiguration(element);
-                    case "#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration": return RedirectConfiguration.DeserializeRedirectConfiguration(element);
+                    case "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration": return ForwardingConfiguration.DeserializeForwardingConfiguration(element, options);
+                    case "#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration": return RedirectConfiguration.DeserializeRedirectConfiguration(element, options);
                 }
             }
-            return UnknownRouteConfiguration.DeserializeUnknownRouteConfiguration(element);
+            return UnknownRouteConfiguration.DeserializeUnknownRouteConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<RouteConfiguration>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouteConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeRouteConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouteConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

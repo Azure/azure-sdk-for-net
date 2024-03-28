@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChangeDirectoryDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChangeDirectoryDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChangeDirectoryDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ReservationOrder))
             {
                 writer.WritePropertyName("reservationOrder"u8);
-                writer.WriteObjectValue(ReservationOrder);
+                writer.WriteObjectValue<ChangeDirectoryResult>(ReservationOrder, options);
             }
             if (Optional.IsCollectionDefined(Reservations))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Reservations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChangeDirectoryResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChangeDirectoryDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChangeDirectoryDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChangeDirectoryDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ChangeDirectoryResult> reservationOrder = default;
-            Optional<IReadOnlyList<ChangeDirectoryResult>> reservations = default;
+            ChangeDirectoryResult reservationOrder = default;
+            IReadOnlyList<ChangeDirectoryResult> reservations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    reservationOrder = ChangeDirectoryResult.DeserializeChangeDirectoryResult(property.Value);
+                    reservationOrder = ChangeDirectoryResult.DeserializeChangeDirectoryResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reservations"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ChangeDirectoryResult> array = new List<ChangeDirectoryResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChangeDirectoryResult.DeserializeChangeDirectoryResult(item));
+                        array.Add(ChangeDirectoryResult.DeserializeChangeDirectoryResult(item, options));
                     }
                     reservations = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeDirectoryDetail(reservationOrder.Value, Optional.ToList(reservations), serializedAdditionalRawData);
+            return new ChangeDirectoryDetail(reservationOrder, reservations ?? new ChangeTrackingList<ChangeDirectoryResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeDirectoryDetail>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChangeDirectoryDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChangeDirectoryDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeChangeDirectoryDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChangeDirectoryDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChangeDirectoryDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

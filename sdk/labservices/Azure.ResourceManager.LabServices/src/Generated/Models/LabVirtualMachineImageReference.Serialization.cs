@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVirtualMachineImageReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabVirtualMachineImageReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVirtualMachineImageReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabVirtualMachineImageReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> offer = default;
-            Optional<string> publisher = default;
-            Optional<string> sku = default;
-            Optional<string> version = default;
-            Optional<string> exactVersion = default;
+            ResourceIdentifier id = default;
+            string offer = default;
+            string publisher = default;
+            string sku = default;
+            string version = default;
+            string exactVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineImageReference(id.Value, offer.Value, publisher.Value, sku.Value, version.Value, exactVersion.Value, serializedAdditionalRawData);
+            return new LabVirtualMachineImageReference(
+                id,
+                offer,
+                publisher,
+                sku,
+                version,
+                exactVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineImageReference>.Write(ModelReaderWriterOptions options)
@@ -156,7 +163,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabVirtualMachineImageReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabVirtualMachineImageReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabVirtualMachineImageReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabVirtualMachineImageReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabVirtualMachineImageReference)} does not support reading '{options.Format}' format.");
             }
         }
 

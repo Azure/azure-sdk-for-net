@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResolveHealthContentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResolveHealthContentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResolveHealthContentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResolveHealthError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResolveHealthContentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResolveHealthContentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResolveHealthContentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IList<ResolveHealthError>> healthErrors = default;
+            IList<ResolveHealthError> healthErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ResolveHealthError> array = new List<ResolveHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResolveHealthError.DeserializeResolveHealthError(item));
+                        array.Add(ResolveHealthError.DeserializeResolveHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResolveHealthContentProperties(Optional.ToList(healthErrors), serializedAdditionalRawData);
+            return new ResolveHealthContentProperties(healthErrors ?? new ChangeTrackingList<ResolveHealthError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResolveHealthContentProperties>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResolveHealthContentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResolveHealthContentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeResolveHealthContentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResolveHealthContentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResolveHealthContentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

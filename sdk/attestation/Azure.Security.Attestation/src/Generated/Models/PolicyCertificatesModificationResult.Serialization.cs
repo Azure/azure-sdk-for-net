@@ -37,8 +37,8 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Optional<string> xMsCertificateThumbprint = default;
-            Optional<PolicyCertificateResolution> xMsPolicycertificatesResult = default;
+            string xMsCertificateThumbprint = default;
+            PolicyCertificateResolution? xMsPolicycertificatesResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-certificate-thumbprint"u8))
@@ -56,14 +56,14 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new PolicyCertificatesModificationResult(xMsCertificateThumbprint.Value, Optional.ToNullable(xMsPolicycertificatesResult));
+            return new PolicyCertificatesModificationResult(xMsCertificateThumbprint, xMsPolicycertificatesResult);
         }
 
         internal partial class PolicyCertificatesModificationResultConverter : JsonConverter<PolicyCertificatesModificationResult>
         {
             public override void Write(Utf8JsonWriter writer, PolicyCertificatesModificationResult model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<PolicyCertificatesModificationResult>(model);
             }
             public override PolicyCertificatesModificationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

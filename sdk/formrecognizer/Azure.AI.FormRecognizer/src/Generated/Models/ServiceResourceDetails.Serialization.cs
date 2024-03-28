@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -19,7 +18,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             CustomDocumentModelsDetails customDocumentModels = default;
-            Optional<ResourceQuotaDetails> customNeuralDocumentModelBuilds = default;
+            ResourceQuotaDetails customNeuralDocumentModelBuilds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDocumentModels"u8))
@@ -37,7 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new ServiceResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds.Value);
+            return new ServiceResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds);
         }
     }
 }

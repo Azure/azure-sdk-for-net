@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenerationTokenStatisticsSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerationTokenStatisticsSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerationTokenStatisticsSignal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<GenerationTokenStatisticsMetricThreshold>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ProductionData))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ProductionData != null)
                 {
                     writer.WritePropertyName("productionData"u8);
-                    writer.WriteObjectValue(ProductionData);
+                    writer.WriteObjectValue<MonitoringInputDataBase>(ProductionData, options);
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenerationTokenStatisticsSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerationTokenStatisticsSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerationTokenStatisticsSignal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IList<GenerationTokenStatisticsMetricThreshold> metricThresholds = default;
-            Optional<MonitoringInputDataBase> productionData = default;
+            MonitoringInputDataBase productionData = default;
             double samplingRate = default;
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<GenerationTokenStatisticsMetricThreshold> array = new List<GenerationTokenStatisticsMetricThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GenerationTokenStatisticsMetricThreshold.DeserializeGenerationTokenStatisticsMetricThreshold(item));
+                        array.Add(GenerationTokenStatisticsMetricThreshold.DeserializeGenerationTokenStatisticsMetricThreshold(item, options));
                     }
                     metricThresholds = array;
                     continue;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         productionData = null;
                         continue;
                     }
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("samplingRate"u8))
@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenerationTokenStatisticsSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, metricThresholds, productionData.Value, samplingRate);
+            return new GenerationTokenStatisticsSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThresholds,
+                productionData,
+                samplingRate);
         }
 
         BinaryData IPersistableModel<GenerationTokenStatisticsSignal>.Write(ModelReaderWriterOptions options)
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GenerationTokenStatisticsSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerationTokenStatisticsSignal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeGenerationTokenStatisticsSignal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenerationTokenStatisticsSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerationTokenStatisticsSignal)} does not support reading '{options.Format}' format.");
             }
         }
 

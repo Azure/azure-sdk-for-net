@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHop>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityHop)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityHop)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectivityIssue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHop>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityHop)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityHop)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> id = default;
-            Optional<IPAddress> address = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<IReadOnlyList<string>> nextHopIds = default;
-            Optional<IReadOnlyList<ConnectivityIssue>> issues = default;
+            string type = default;
+            string id = default;
+            IPAddress address = default;
+            ResourceIdentifier resourceId = default;
+            IReadOnlyList<string> nextHopIds = default;
+            IReadOnlyList<ConnectivityIssue> issues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ConnectivityIssue> array = new List<ConnectivityIssue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssue.DeserializeConnectivityIssue(item));
+                        array.Add(ConnectivityIssue.DeserializeConnectivityIssue(item, options));
                     }
                     issues = array;
                     continue;
@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityHop(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(issues), serializedAdditionalRawData);
+            return new ConnectivityHop(
+                type,
+                id,
+                address,
+                resourceId,
+                nextHopIds ?? new ChangeTrackingList<string>(),
+                issues ?? new ChangeTrackingList<ConnectivityIssue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityHop>.Write(ModelReaderWriterOptions options)
@@ -189,7 +196,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityHop)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityHop)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeConnectivityHop(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityHop)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityHop)} does not support reading '{options.Format}' format.");
             }
         }
 

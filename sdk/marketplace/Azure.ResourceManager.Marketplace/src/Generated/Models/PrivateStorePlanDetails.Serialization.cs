@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlanDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlanDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> planId = default;
-            Optional<PrivateStorePlanStatus> status = default;
-            Optional<BinaryData> requestDate = default;
-            Optional<string> justification = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> subscriptionName = default;
+            string planId = default;
+            PrivateStorePlanStatus? status = default;
+            BinaryData requestDate = default;
+            string justification = default;
+            string subscriptionId = default;
+            string subscriptionName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStorePlanDetails(planId.Value, Optional.ToNullable(status), requestDate.Value, justification.Value, subscriptionId.Value, subscriptionName.Value, serializedAdditionalRawData);
+            return new PrivateStorePlanDetails(
+                planId,
+                status,
+                requestDate,
+                justification,
+                subscriptionId,
+                subscriptionName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStorePlanDetails>.Write(ModelReaderWriterOptions options)
@@ -167,7 +174,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +190,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializePrivateStorePlanDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

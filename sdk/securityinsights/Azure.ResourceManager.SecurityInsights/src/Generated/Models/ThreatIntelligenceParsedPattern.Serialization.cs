@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceParsedPattern>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceParsedPattern)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceParsedPattern)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PatternTypeValues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ThreatIntelligenceParsedPatternTypeValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceParsedPattern>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceParsedPattern)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceParsedPattern)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> patternTypeKey = default;
-            Optional<IList<ThreatIntelligenceParsedPatternTypeValue>> patternTypeValues = default;
+            string patternTypeKey = default;
+            IList<ThreatIntelligenceParsedPatternTypeValue> patternTypeValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<ThreatIntelligenceParsedPatternTypeValue> array = new List<ThreatIntelligenceParsedPatternTypeValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceParsedPatternTypeValue.DeserializeThreatIntelligenceParsedPatternTypeValue(item));
+                        array.Add(ThreatIntelligenceParsedPatternTypeValue.DeserializeThreatIntelligenceParsedPatternTypeValue(item, options));
                     }
                     patternTypeValues = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceParsedPattern(patternTypeKey.Value, Optional.ToList(patternTypeValues), serializedAdditionalRawData);
+            return new ThreatIntelligenceParsedPattern(patternTypeKey, patternTypeValues ?? new ChangeTrackingList<ThreatIntelligenceParsedPatternTypeValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceParsedPattern>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceParsedPattern)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceParsedPattern)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeThreatIntelligenceParsedPattern(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceParsedPattern)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceParsedPattern)} does not support reading '{options.Format}' format.");
             }
         }
 

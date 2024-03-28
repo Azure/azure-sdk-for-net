@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaOperationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaOperationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaOperationListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Quota.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QuotaOperationResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaOperationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaOperationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaOperationListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<QuotaOperationResult>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<QuotaOperationResult> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Quota.Models
                     List<QuotaOperationResult> array = new List<QuotaOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaOperationResult.DeserializeQuotaOperationResult(item));
+                        array.Add(QuotaOperationResult.DeserializeQuotaOperationResult(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaOperationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new QuotaOperationListResult(value ?? new ChangeTrackingList<QuotaOperationResult>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaOperationListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Quota.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaOperationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaOperationListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Quota.Models
                         return DeserializeQuotaOperationListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaOperationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaOperationListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

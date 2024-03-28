@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionAliasAdditionalProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionAliasAdditionalProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionAliasAdditionalProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionAliasAdditionalProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<string> managementGroupId = default;
-            Optional<Guid> subscriptionTenantId = default;
-            Optional<string> subscriptionOwnerId = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string managementGroupId = default;
+            Guid? subscriptionTenantId = default;
+            string subscriptionOwnerId = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasAdditionalProperties(managementGroupId.Value, Optional.ToNullable(subscriptionTenantId), subscriptionOwnerId.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new SubscriptionAliasAdditionalProperties(managementGroupId, subscriptionTenantId, subscriptionOwnerId, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasAdditionalProperties>.Write(ModelReaderWriterOptions options)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionAliasAdditionalProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionAliasAdditionalProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         return DeserializeSubscriptionAliasAdditionalProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionAliasAdditionalProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionAliasAdditionalProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

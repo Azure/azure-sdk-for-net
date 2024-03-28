@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NpbStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NpbStaticRouteConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NpbStaticRouteConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration);
+                writer.WriteObjectValue<BfdConfiguration>(BfdConfiguration, options);
             }
             if (Optional.IsCollectionDefined(IPv4Routes))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv4Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StaticRouteProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv6Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StaticRouteProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NpbStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NpbStaticRouteConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NpbStaticRouteConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<BfdConfiguration> bfdConfiguration = default;
-            Optional<IList<StaticRouteProperties>> ipv4Routes = default;
-            Optional<IList<StaticRouteProperties>> ipv6Routes = default;
+            BfdConfiguration bfdConfiguration = default;
+            IList<StaticRouteProperties> ipv4Routes = default;
+            IList<StaticRouteProperties> ipv6Routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value);
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipv4Routes"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<StaticRouteProperties> array = new List<StaticRouteProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item));
+                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
                     }
                     ipv4Routes = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<StaticRouteProperties> array = new List<StaticRouteProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item));
+                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
                     }
                     ipv6Routes = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NpbStaticRouteConfiguration(bfdConfiguration.Value, Optional.ToList(ipv4Routes), Optional.ToList(ipv6Routes), serializedAdditionalRawData);
+            return new NpbStaticRouteConfiguration(bfdConfiguration, ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>(), ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NpbStaticRouteConfiguration>.Write(ModelReaderWriterOptions options)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NpbStaticRouteConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NpbStaticRouteConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNpbStaticRouteConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NpbStaticRouteConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NpbStaticRouteConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

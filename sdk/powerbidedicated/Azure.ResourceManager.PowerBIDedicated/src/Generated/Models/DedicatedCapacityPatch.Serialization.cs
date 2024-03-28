@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedCapacityPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedCapacityPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedCapacityPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<CapacitySku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             if (Optional.IsDefined(Administration))
             {
                 writer.WritePropertyName("administration"u8);
-                writer.WriteObjectValue(Administration);
+                writer.WriteObjectValue<DedicatedCapacityAdministrators>(Administration, options);
             }
             if (Optional.IsDefined(Mode))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedCapacityPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedCapacityPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedCapacityPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<CapacitySku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<DedicatedCapacityAdministrators> administration = default;
-            Optional<Mode> mode = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> friendlyName = default;
+            CapacitySku sku = default;
+            IDictionary<string, string> tags = default;
+            DedicatedCapacityAdministrators administration = default;
+            Mode? mode = default;
+            Guid? tenantId = default;
+            string friendlyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     {
                         continue;
                     }
-                    sku = CapacitySku.DeserializeCapacitySku(property.Value);
+                    sku = CapacitySku.DeserializeCapacitySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                             {
                                 continue;
                             }
-                            administration = DedicatedCapacityAdministrators.DeserializeDedicatedCapacityAdministrators(property0.Value);
+                            administration = DedicatedCapacityAdministrators.DeserializeDedicatedCapacityAdministrators(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("mode"u8))
@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedCapacityPatch(sku.Value, Optional.ToDictionary(tags), administration.Value, Optional.ToNullable(mode), Optional.ToNullable(tenantId), friendlyName.Value, serializedAdditionalRawData);
+            return new DedicatedCapacityPatch(
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                administration,
+                mode,
+                tenantId,
+                friendlyName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedCapacityPatch>.Write(ModelReaderWriterOptions options)
@@ -198,7 +205,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedCapacityPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedCapacityPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +221,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                         return DeserializeDedicatedCapacityPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedCapacityPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedCapacityPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

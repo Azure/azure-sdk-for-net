@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManifestArtifactFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManifestArtifactFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManifestArtifactFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManifestArtifactFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManifestArtifactFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManifestArtifactFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> artifactName = default;
-            Optional<ArtifactType> artifactType = default;
-            Optional<string> artifactVersion = default;
+            string artifactName = default;
+            ArtifactType? artifactType = default;
+            string artifactVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManifestArtifactFormat(artifactName.Value, Optional.ToNullable(artifactType), artifactVersion.Value, serializedAdditionalRawData);
+            return new ManifestArtifactFormat(artifactName, artifactType, artifactVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManifestArtifactFormat>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManifestArtifactFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManifestArtifactFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeManifestArtifactFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManifestArtifactFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManifestArtifactFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

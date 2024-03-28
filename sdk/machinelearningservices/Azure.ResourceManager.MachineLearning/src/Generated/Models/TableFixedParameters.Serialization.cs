@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableFixedParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableFixedParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableFixedParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableFixedParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableFixedParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableFixedParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -290,26 +290,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> booster = default;
-            Optional<string> boostingType = default;
-            Optional<string> growPolicy = default;
-            Optional<double?> learningRate = default;
-            Optional<int?> maxBin = default;
-            Optional<int?> maxDepth = default;
-            Optional<int?> maxLeaves = default;
-            Optional<int?> minDataInLeaf = default;
-            Optional<double?> minSplitGain = default;
-            Optional<string> modelName = default;
-            Optional<int?> nEstimators = default;
-            Optional<int?> numLeaves = default;
-            Optional<string> preprocessorName = default;
-            Optional<double?> regAlpha = default;
-            Optional<double?> regLambda = default;
-            Optional<double?> subsample = default;
-            Optional<double?> subsampleFreq = default;
-            Optional<string> treeMethod = default;
-            Optional<bool> withMean = default;
-            Optional<bool> withStd = default;
+            string booster = default;
+            string boostingType = default;
+            string growPolicy = default;
+            double? learningRate = default;
+            int? maxBin = default;
+            int? maxDepth = default;
+            int? maxLeaves = default;
+            int? minDataInLeaf = default;
+            double? minSplitGain = default;
+            string modelName = default;
+            int? nEstimators = default;
+            int? numLeaves = default;
+            string preprocessorName = default;
+            double? regAlpha = default;
+            double? regLambda = default;
+            double? subsample = default;
+            double? subsampleFreq = default;
+            string treeMethod = default;
+            bool? withMean = default;
+            bool? withStd = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -518,7 +518,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableFixedParameters(booster.Value, boostingType.Value, growPolicy.Value, Optional.ToNullable(learningRate), Optional.ToNullable(maxBin), Optional.ToNullable(maxDepth), Optional.ToNullable(maxLeaves), Optional.ToNullable(minDataInLeaf), Optional.ToNullable(minSplitGain), modelName.Value, Optional.ToNullable(nEstimators), Optional.ToNullable(numLeaves), preprocessorName.Value, Optional.ToNullable(regAlpha), Optional.ToNullable(regLambda), Optional.ToNullable(subsample), Optional.ToNullable(subsampleFreq), treeMethod.Value, Optional.ToNullable(withMean), Optional.ToNullable(withStd), serializedAdditionalRawData);
+            return new TableFixedParameters(
+                booster,
+                boostingType,
+                growPolicy,
+                learningRate,
+                maxBin,
+                maxDepth,
+                maxLeaves,
+                minDataInLeaf,
+                minSplitGain,
+                modelName,
+                nEstimators,
+                numLeaves,
+                preprocessorName,
+                regAlpha,
+                regLambda,
+                subsample,
+                subsampleFreq,
+                treeMethod,
+                withMean,
+                withStd,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TableFixedParameters>.Write(ModelReaderWriterOptions options)
@@ -530,7 +551,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TableFixedParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableFixedParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -546,7 +567,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeTableFixedParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TableFixedParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableFixedParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

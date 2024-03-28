@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             string quotaId = default;
             ResourceProviderCapabilitiesEffect effect = default;
-            Optional<IList<string>> requiredFeatures = default;
+            IList<string> requiredFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderCapabilities(quotaId, effect, Optional.ToList(requiredFeatures), serializedAdditionalRawData);
+            return new ResourceProviderCapabilities(quotaId, effect, requiredFeatures ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderCapabilities>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeResourceProviderCapabilities(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support reading '{options.Format}' format.");
             }
         }
 

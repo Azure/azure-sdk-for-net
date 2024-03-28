@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxJobPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxJobPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                writer.WriteObjectValue<UpdateJobDetails>(Details, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxJobPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxJobPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<UpdateJobDetails> details = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            UpdateJobDetails details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             {
                                 continue;
                             }
-                            details = UpdateJobDetails.DeserializeUpdateJobDetails(property0.Value);
+                            details = UpdateJobDetails.DeserializeUpdateJobDetails(property0.Value, options);
                             continue;
                         }
                     }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxJobPatch(Optional.ToDictionary(tags), identity, details.Value, serializedAdditionalRawData);
+            return new DataBoxJobPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, details, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxJobPatch>.Write(ModelReaderWriterOptions options)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxJobPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxJobPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxJobPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxJobPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxJobPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

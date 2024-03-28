@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComponentStateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComponentStateDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComponentStateDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComponentStateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComponentStateDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComponentStateDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> complianceState = default;
+            DateTimeOffset? timestamp = default;
+            string complianceState = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ComponentStateDetails(id, name, type, systemData.Value, Optional.ToNullable(timestamp), complianceState.Value, additionalProperties);
+            return new ComponentStateDetails(
+                id,
+                name,
+                type,
+                systemData,
+                timestamp,
+                complianceState,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ComponentStateDetails>.Write(ModelReaderWriterOptions options)
@@ -155,7 +162,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComponentStateDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComponentStateDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +178,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeComponentStateDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComponentStateDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComponentStateDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

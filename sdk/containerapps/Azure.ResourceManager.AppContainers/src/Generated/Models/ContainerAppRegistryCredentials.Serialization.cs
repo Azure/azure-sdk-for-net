@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRegistryCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppRegistryCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppRegistryCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRegistryCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppRegistryCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppRegistryCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> server = default;
-            Optional<string> username = default;
-            Optional<string> passwordSecretRef = default;
-            Optional<string> identity = default;
+            string server = default;
+            string username = default;
+            string passwordSecretRef = default;
+            string identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppRegistryCredentials(server.Value, username.Value, passwordSecretRef.Value, identity.Value, serializedAdditionalRawData);
+            return new ContainerAppRegistryCredentials(server, username, passwordSecretRef, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppRegistryCredentials>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppRegistryCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppRegistryCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppRegistryCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppRegistryCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppRegistryCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

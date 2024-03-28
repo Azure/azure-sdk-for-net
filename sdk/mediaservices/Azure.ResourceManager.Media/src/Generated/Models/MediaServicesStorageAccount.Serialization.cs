@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaServicesStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaServicesStorageAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaServicesStorageAccount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ResourceIdentity>(Identity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaServicesStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaServicesStorageAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaServicesStorageAccount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             MediaServicesStorageAccountType type = default;
-            Optional<ResourceIdentity> identity = default;
-            Optional<string> status = default;
+            ResourceIdentity identity = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    identity = ResourceIdentity.DeserializeResourceIdentity(property.Value);
+                    identity = ResourceIdentity.DeserializeResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesStorageAccount(id.Value, type, identity.Value, status.Value, serializedAdditionalRawData);
+            return new MediaServicesStorageAccount(id, type, identity, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesStorageAccount>.Write(ModelReaderWriterOptions options)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaServicesStorageAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaServicesStorageAccount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaServicesStorageAccount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaServicesStorageAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaServicesStorageAccount)} does not support reading '{options.Format}' format.");
             }
         }
 

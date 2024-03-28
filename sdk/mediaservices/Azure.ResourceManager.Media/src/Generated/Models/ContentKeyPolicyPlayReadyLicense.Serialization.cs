@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyLicense>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(PlayRight))
             {
                 writer.WritePropertyName("playRight"u8);
-                writer.WriteObjectValue(PlayRight);
+                writer.WriteObjectValue<ContentKeyPolicyPlayReadyPlayRight>(PlayRight, options);
             }
             writer.WritePropertyName("licenseType"u8);
             writer.WriteStringValue(LicenseType.ToString());
             writer.WritePropertyName("contentKeyLocation"u8);
-            writer.WriteObjectValue(ContentKeyLocation);
+            writer.WriteObjectValue<ContentKeyPolicyPlayReadyContentKeyLocation>(ContentKeyLocation, options);
             writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyLicense>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             bool allowTestDevices = default;
-            Optional<PlayReadySecurityLevel> securityLevel = default;
-            Optional<DateTimeOffset> beginDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<TimeSpan> relativeBeginDate = default;
-            Optional<TimeSpan> relativeExpirationDate = default;
-            Optional<TimeSpan> gracePeriod = default;
-            Optional<ContentKeyPolicyPlayReadyPlayRight> playRight = default;
+            PlayReadySecurityLevel? securityLevel = default;
+            DateTimeOffset? beginDate = default;
+            DateTimeOffset? expirationDate = default;
+            TimeSpan? relativeBeginDate = default;
+            TimeSpan? relativeExpirationDate = default;
+            TimeSpan? gracePeriod = default;
+            ContentKeyPolicyPlayReadyPlayRight playRight = default;
             ContentKeyPolicyPlayReadyLicenseType licenseType = default;
             ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation = default;
             ContentKeyPolicyPlayReadyContentType contentType = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    playRight = ContentKeyPolicyPlayReadyPlayRight.DeserializeContentKeyPolicyPlayReadyPlayRight(property.Value);
+                    playRight = ContentKeyPolicyPlayReadyPlayRight.DeserializeContentKeyPolicyPlayReadyPlayRight(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("contentKeyLocation"u8))
                 {
-                    contentKeyLocation = ContentKeyPolicyPlayReadyContentKeyLocation.DeserializeContentKeyPolicyPlayReadyContentKeyLocation(property.Value);
+                    contentKeyLocation = ContentKeyPolicyPlayReadyContentKeyLocation.DeserializeContentKeyPolicyPlayReadyContentKeyLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("contentType"u8))
@@ -211,7 +211,19 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyPlayReadyLicense(allowTestDevices, Optional.ToNullable(securityLevel), Optional.ToNullable(beginDate), Optional.ToNullable(expirationDate), Optional.ToNullable(relativeBeginDate), Optional.ToNullable(relativeExpirationDate), Optional.ToNullable(gracePeriod), playRight.Value, licenseType, contentKeyLocation, contentType, serializedAdditionalRawData);
+            return new ContentKeyPolicyPlayReadyLicense(
+                allowTestDevices,
+                securityLevel,
+                beginDate,
+                expirationDate,
+                relativeBeginDate,
+                relativeExpirationDate,
+                gracePeriod,
+                playRight,
+                licenseType,
+                contentKeyLocation,
+                contentType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyPlayReadyLicense>.Write(ModelReaderWriterOptions options)
@@ -223,7 +235,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -239,7 +251,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeContentKeyPolicyPlayReadyLicense(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support reading '{options.Format}' format.");
             }
         }
 

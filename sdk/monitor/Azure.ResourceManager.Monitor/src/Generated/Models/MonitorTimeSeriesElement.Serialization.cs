@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorTimeSeriesElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Metadatavalues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorMetadataValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorMetricValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorTimeSeriesElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitorMetadataValue>> metadatavalues = default;
-            Optional<IReadOnlyList<MonitorMetricValue>> data = default;
+            IReadOnlyList<MonitorMetadataValue> metadatavalues = default;
+            IReadOnlyList<MonitorMetricValue> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetadataValue> array = new List<MonitorMetadataValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetadataValue.DeserializeMonitorMetadataValue(item));
+                        array.Add(MonitorMetadataValue.DeserializeMonitorMetadataValue(item, options));
                     }
                     metadatavalues = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricValue> array = new List<MonitorMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricValue.DeserializeMonitorMetricValue(item));
+                        array.Add(MonitorMetricValue.DeserializeMonitorMetricValue(item, options));
                     }
                     data = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorTimeSeriesElement(Optional.ToList(metadatavalues), Optional.ToList(data), serializedAdditionalRawData);
+            return new MonitorTimeSeriesElement(metadatavalues ?? new ChangeTrackingList<MonitorMetadataValue>(), data ?? new ChangeTrackingList<MonitorMetricValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorTimeSeriesElement>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorTimeSeriesElement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support reading '{options.Format}' format.");
             }
         }
 

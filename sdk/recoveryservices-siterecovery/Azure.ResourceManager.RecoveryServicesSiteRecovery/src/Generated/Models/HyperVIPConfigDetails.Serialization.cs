@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -150,21 +150,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isPrimary = default;
-            Optional<string> subnetName = default;
-            Optional<IPAddress> staticIPAddress = default;
-            Optional<string> ipAddressType = default;
-            Optional<bool> isSeletedForFailover = default;
-            Optional<string> recoverySubnetName = default;
-            Optional<IPAddress> recoveryStaticIPAddress = default;
-            Optional<string> recoveryIPAddressType = default;
-            Optional<ResourceIdentifier> recoveryPublicIPAddressId = default;
-            Optional<IReadOnlyList<string>> recoveryLBBackendAddressPoolIds = default;
-            Optional<string> tfoSubnetName = default;
-            Optional<IPAddress> tfoStaticIPAddress = default;
-            Optional<ResourceIdentifier> tfoPublicIPAddressId = default;
-            Optional<IReadOnlyList<string>> tfoLBBackendAddressPoolIds = default;
+            string name = default;
+            bool? isPrimary = default;
+            string subnetName = default;
+            IPAddress staticIPAddress = default;
+            string ipAddressType = default;
+            bool? isSeletedForFailover = default;
+            string recoverySubnetName = default;
+            IPAddress recoveryStaticIPAddress = default;
+            string recoveryIPAddressType = default;
+            ResourceIdentifier recoveryPublicIPAddressId = default;
+            IReadOnlyList<string> recoveryLBBackendAddressPoolIds = default;
+            string tfoSubnetName = default;
+            IPAddress tfoStaticIPAddress = default;
+            ResourceIdentifier tfoPublicIPAddressId = default;
+            IReadOnlyList<string> tfoLBBackendAddressPoolIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,7 +296,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVIPConfigDetails(name.Value, Optional.ToNullable(isPrimary), subnetName.Value, staticIPAddress.Value, ipAddressType.Value, Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryIPAddressType.Value, recoveryPublicIPAddressId.Value, Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Optional.ToList(tfoLBBackendAddressPoolIds), serializedAdditionalRawData);
+            return new HyperVIPConfigDetails(
+                name,
+                isPrimary,
+                subnetName,
+                staticIPAddress,
+                ipAddressType,
+                isSeletedForFailover,
+                recoverySubnetName,
+                recoveryStaticIPAddress,
+                recoveryIPAddressType,
+                recoveryPublicIPAddressId,
+                recoveryLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
+                tfoSubnetName,
+                tfoStaticIPAddress,
+                tfoPublicIPAddressId,
+                tfoLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVIPConfigDetails>.Write(ModelReaderWriterOptions options)
@@ -308,7 +324,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -324,7 +340,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeHyperVIPConfigDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

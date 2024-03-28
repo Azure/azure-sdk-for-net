@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Profiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VectorSearchProfile>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Algorithms)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VectorSearchAlgorithmConfiguration>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Vectorizers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VectorSearchVectorizer>(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Compressions))
+            {
+                writer.WritePropertyName("compressions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Compressions)
+                {
+                    writer.WriteObjectValue<VectorSearchCompressionConfiguration>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -55,9 +65,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<VectorSearchProfile>> profiles = default;
-            Optional<IList<VectorSearchAlgorithmConfiguration>> algorithms = default;
-            Optional<IList<VectorSearchVectorizer>> vectorizers = default;
+            IList<VectorSearchProfile> profiles = default;
+            IList<VectorSearchAlgorithmConfiguration> algorithms = default;
+            IList<VectorSearchVectorizer> vectorizers = default;
+            IList<VectorSearchCompressionConfiguration> compressions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profiles"u8))
@@ -102,8 +113,22 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorizers = array;
                     continue;
                 }
+                if (property.NameEquals("compressions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VectorSearchCompressionConfiguration> array = new List<VectorSearchCompressionConfiguration>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VectorSearchCompressionConfiguration.DeserializeVectorSearchCompressionConfiguration(item));
+                    }
+                    compressions = array;
+                    continue;
+                }
             }
-            return new VectorSearch(Optional.ToList(profiles), Optional.ToList(algorithms), Optional.ToList(vectorizers));
+            return new VectorSearch(profiles ?? new ChangeTrackingList<VectorSearchProfile>(), algorithms ?? new ChangeTrackingList<VectorSearchAlgorithmConfiguration>(), vectorizers ?? new ChangeTrackingList<VectorSearchVectorizer>(), compressions ?? new ChangeTrackingList<VectorSearchCompressionConfiguration>());
         }
     }
 }

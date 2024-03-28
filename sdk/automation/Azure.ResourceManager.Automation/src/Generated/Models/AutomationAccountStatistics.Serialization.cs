@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationAccountStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationAccountStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationAccountStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationAccountStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationAccountStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationAccountStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> counterProperty = default;
-            Optional<long> counterValue = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<string> id = default;
+            string counterProperty = default;
+            long? counterValue = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountStatistics(counterProperty.Value, Optional.ToNullable(counterValue), Optional.ToNullable(startTime), Optional.ToNullable(endTime), id.Value, serializedAdditionalRawData);
+            return new AutomationAccountStatistics(
+                counterProperty,
+                counterValue,
+                startTime,
+                endTime,
+                id,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountStatistics>.Write(ModelReaderWriterOptions options)
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationAccountStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationAccountStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationAccountStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationAccountStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationAccountStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

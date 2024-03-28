@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataImportSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataImportSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataImportSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataImportSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataImportSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataImportSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataImportSource(document.RootElement, options);
+            return DeserializeDataImportSource(document.RootElement, options);
         }
 
         internal static UnknownDataImportSource DeserializeUnknownDataImportSource(JsonElement element, ModelReaderWriterOptions options = null)
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> connection = default;
+            string connection = default;
             DataImportSourceType sourceType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataImportSource(connection.Value, sourceType, serializedAdditionalRawData);
+            return new UnknownDataImportSource(connection, sourceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataImportSource>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataImportSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataImportSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataImportSource(document.RootElement, options);
+                        return DeserializeDataImportSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataImportSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataImportSource)} does not support reading '{options.Format}' format.");
             }
         }
 

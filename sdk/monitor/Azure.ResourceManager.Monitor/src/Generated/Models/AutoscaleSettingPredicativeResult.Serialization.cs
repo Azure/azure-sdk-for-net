@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPredicativeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleSettingPredicativeResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleSettingPredicativeResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PredictiveValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPredicativeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleSettingPredicativeResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleSettingPredicativeResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> timespan = default;
-            Optional<TimeSpan> interval = default;
-            Optional<string> metricName = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<IReadOnlyList<PredictiveValue>> data = default;
+            string timespan = default;
+            TimeSpan? interval = default;
+            string metricName = default;
+            ResourceIdentifier targetResourceId = default;
+            IReadOnlyList<PredictiveValue> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<PredictiveValue> array = new List<PredictiveValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredictiveValue.DeserializePredictiveValue(item));
+                        array.Add(PredictiveValue.DeserializePredictiveValue(item, options));
                     }
                     data = array;
                     continue;
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettingPredicativeResult(timespan.Value, Optional.ToNullable(interval), metricName.Value, targetResourceId.Value, Optional.ToList(data), serializedAdditionalRawData);
+            return new AutoscaleSettingPredicativeResult(
+                timespan,
+                interval,
+                metricName,
+                targetResourceId,
+                data ?? new ChangeTrackingList<PredictiveValue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleSettingPredicativeResult>.Write(ModelReaderWriterOptions options)
@@ -163,7 +169,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleSettingPredicativeResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleSettingPredicativeResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +185,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeAutoscaleSettingPredicativeResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleSettingPredicativeResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleSettingPredicativeResult)} does not support reading '{options.Format}' format.");
             }
         }
 

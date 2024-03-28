@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -75,8 +74,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The SAS expiration period, DD.HH:MM:SS. </summary>
+        [WirePath("sasExpirationPeriod")]
         public string SasExpirationPeriod { get; set; }
         /// <summary> The SAS expiration action. Can only be Log. </summary>
+        [WirePath("expirationAction")]
         public ExpirationAction ExpirationAction { get; set; }
     }
 }

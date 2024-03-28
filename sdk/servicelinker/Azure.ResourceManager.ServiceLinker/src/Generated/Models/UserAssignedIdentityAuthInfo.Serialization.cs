@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentityAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedIdentityAuthInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserAssignedIdentityAuthInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentityAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedIdentityAuthInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserAssignedIdentityAuthInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> subscriptionId = default;
+            string clientId = default;
+            string subscriptionId = default;
             LinkerAuthType authType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserAssignedIdentityAuthInfo(authType, serializedAdditionalRawData, clientId.Value, subscriptionId.Value);
+            return new UserAssignedIdentityAuthInfo(authType, serializedAdditionalRawData, clientId, subscriptionId);
         }
 
         BinaryData IPersistableModel<UserAssignedIdentityAuthInfo>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentityAuthInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserAssignedIdentityAuthInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         return DeserializeUserAssignedIdentityAuthInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentityAuthInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserAssignedIdentityAuthInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

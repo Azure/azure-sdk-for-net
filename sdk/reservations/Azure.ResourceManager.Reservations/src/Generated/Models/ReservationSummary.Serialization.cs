@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<float> succeededCount = default;
-            Optional<float> failedCount = default;
-            Optional<float> expiringCount = default;
-            Optional<float> expiredCount = default;
-            Optional<float> pendingCount = default;
-            Optional<float> cancelledCount = default;
-            Optional<float> processingCount = default;
-            Optional<float> warningCount = default;
-            Optional<float> noBenefitCount = default;
+            float? succeededCount = default;
+            float? failedCount = default;
+            float? expiringCount = default;
+            float? expiredCount = default;
+            float? pendingCount = default;
+            float? cancelledCount = default;
+            float? processingCount = default;
+            float? warningCount = default;
+            float? noBenefitCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationSummary(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount), Optional.ToNullable(warningCount), Optional.ToNullable(noBenefitCount), serializedAdditionalRawData);
+            return new ReservationSummary(
+                succeededCount,
+                failedCount,
+                expiringCount,
+                expiredCount,
+                pendingCount,
+                cancelledCount,
+                processingCount,
+                warningCount,
+                noBenefitCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationSummary>.Write(ModelReaderWriterOptions options)
@@ -221,7 +231,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +247,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

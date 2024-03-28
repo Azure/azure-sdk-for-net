@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesOnlineDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ContainerResourceRequirements != null)
                 {
                     writer.WritePropertyName("containerResourceRequirements"u8);
-                    writer.WriteObjectValue(ContainerResourceRequirements);
+                    writer.WriteObjectValue<MachineLearningContainerResourceRequirements>(ContainerResourceRequirements, options);
                 }
                 else
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DataCollector != null)
                 {
                     writer.WritePropertyName("dataCollector"u8);
-                    writer.WriteObjectValue(DataCollector);
+                    writer.WriteObjectValue<DataCollector>(DataCollector, options);
                 }
                 else
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LivenessProbe != null)
                 {
                     writer.WritePropertyName("livenessProbe"u8);
-                    writer.WriteObjectValue(LivenessProbe);
+                    writer.WriteObjectValue<MachineLearningProbeSettings>(LivenessProbe, options);
                 }
                 else
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ReadinessProbe != null)
                 {
                     writer.WritePropertyName("readinessProbe"u8);
-                    writer.WriteObjectValue(ReadinessProbe);
+                    writer.WriteObjectValue<MachineLearningProbeSettings>(ReadinessProbe, options);
                 }
                 else
                 {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RequestSettings != null)
                 {
                     writer.WritePropertyName("requestSettings"u8);
-                    writer.WriteObjectValue(RequestSettings);
+                    writer.WriteObjectValue<MachineLearningOnlineRequestSettings>(RequestSettings, options);
                 }
                 else
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ScaleSettings != null)
                 {
                     writer.WritePropertyName("scaleSettings"u8);
-                    writer.WriteObjectValue(ScaleSettings);
+                    writer.WriteObjectValue<MachineLearningOnlineScaleSettings>(ScaleSettings, options);
                 }
                 else
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration);
+                    writer.WriteObjectValue<MachineLearningCodeConfiguration>(CodeConfiguration, options);
                 }
                 else
                 {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesOnlineDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -261,24 +261,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningContainerResourceRequirements> containerResourceRequirements = default;
-            Optional<bool> appInsightsEnabled = default;
-            Optional<DataCollector> dataCollector = default;
-            Optional<MachineLearningEgressPublicNetworkAccessType> egressPublicNetworkAccess = default;
+            MachineLearningContainerResourceRequirements containerResourceRequirements = default;
+            bool? appInsightsEnabled = default;
+            DataCollector dataCollector = default;
+            MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = default;
             MachineLearningEndpointComputeType endpointComputeType = default;
-            Optional<string> instanceType = default;
-            Optional<MachineLearningProbeSettings> livenessProbe = default;
-            Optional<string> model = default;
-            Optional<string> modelMountPath = default;
-            Optional<MachineLearningDeploymentProvisioningState> provisioningState = default;
-            Optional<MachineLearningProbeSettings> readinessProbe = default;
-            Optional<MachineLearningOnlineRequestSettings> requestSettings = default;
-            Optional<MachineLearningOnlineScaleSettings> scaleSettings = default;
-            Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
-            Optional<string> description = default;
-            Optional<string> environmentId = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<IDictionary<string, string>> properties = default;
+            string instanceType = default;
+            MachineLearningProbeSettings livenessProbe = default;
+            string model = default;
+            string modelMountPath = default;
+            MachineLearningDeploymentProvisioningState? provisioningState = default;
+            MachineLearningProbeSettings readinessProbe = default;
+            MachineLearningOnlineRequestSettings requestSettings = default;
+            MachineLearningOnlineScaleSettings scaleSettings = default;
+            MachineLearningCodeConfiguration codeConfiguration = default;
+            string description = default;
+            string environmentId = default;
+            IDictionary<string, string> environmentVariables = default;
+            IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         containerResourceRequirements = null;
                         continue;
                     }
-                    containerResourceRequirements = MachineLearningContainerResourceRequirements.DeserializeMachineLearningContainerResourceRequirements(property.Value);
+                    containerResourceRequirements = MachineLearningContainerResourceRequirements.DeserializeMachineLearningContainerResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("appInsightsEnabled"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dataCollector = null;
                         continue;
                     }
-                    dataCollector = DataCollector.DeserializeDataCollector(property.Value);
+                    dataCollector = DataCollector.DeserializeDataCollector(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("egressPublicNetworkAccess"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         livenessProbe = null;
                         continue;
                     }
-                    livenessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value);
+                    livenessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("model"u8))
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         readinessProbe = null;
                         continue;
                     }
-                    readinessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value);
+                    readinessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("requestSettings"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         requestSettings = null;
                         continue;
                     }
-                    requestSettings = MachineLearningOnlineRequestSettings.DeserializeMachineLearningOnlineRequestSettings(property.Value);
+                    requestSettings = MachineLearningOnlineRequestSettings.DeserializeMachineLearningOnlineRequestSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scaleSettings"u8))
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         scaleSettings = null;
                         continue;
                     }
-                    scaleSettings = MachineLearningOnlineScaleSettings.DeserializeMachineLearningOnlineScaleSettings(property.Value);
+                    scaleSettings = MachineLearningOnlineScaleSettings.DeserializeMachineLearningOnlineScaleSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("codeConfiguration"u8))
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeConfiguration = null;
                         continue;
                     }
-                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value);
+                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -471,7 +471,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningKubernetesOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), serializedAdditionalRawData, Optional.ToNullable(appInsightsEnabled), dataCollector.Value, Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value, containerResourceRequirements.Value);
+            return new MachineLearningKubernetesOnlineDeployment(
+                codeConfiguration,
+                description,
+                environmentId,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                appInsightsEnabled,
+                dataCollector,
+                egressPublicNetworkAccess,
+                endpointComputeType,
+                instanceType,
+                livenessProbe,
+                model,
+                modelMountPath,
+                provisioningState,
+                readinessProbe,
+                requestSettings,
+                scaleSettings,
+                containerResourceRequirements);
         }
 
         BinaryData IPersistableModel<MachineLearningKubernetesOnlineDeployment>.Write(ModelReaderWriterOptions options)
@@ -483,7 +502,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -499,7 +518,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningKubernetesOnlineDeployment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support reading '{options.Format}' format.");
             }
         }
 

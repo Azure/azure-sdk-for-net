@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<H265Layer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(H265Layer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(H265Layer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<H265Layer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(H265Layer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(H265Layer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,20 +131,20 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<H265VideoProfile> profile = default;
-            Optional<string> level = default;
-            Optional<TimeSpan> bufferWindow = default;
-            Optional<float> crf = default;
-            Optional<int> referenceFrames = default;
+            H265VideoProfile? profile = default;
+            string level = default;
+            TimeSpan? bufferWindow = default;
+            float? crf = default;
+            int? referenceFrames = default;
             int bitrate = default;
-            Optional<int> maxBitrate = default;
-            Optional<int> bFrames = default;
-            Optional<string> frameRate = default;
-            Optional<int> slices = default;
-            Optional<bool> adaptiveBFrame = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> label = default;
+            int? maxBitrate = default;
+            int? bFrames = default;
+            string frameRate = default;
+            int? slices = default;
+            bool? adaptiveBFrame = default;
+            string width = default;
+            string height = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,22 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new H265Layer(width.Value, height.Value, label.Value, serializedAdditionalRawData, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame), Optional.ToNullable(profile), level.Value, Optional.ToNullable(bufferWindow), Optional.ToNullable(crf), Optional.ToNullable(referenceFrames));
+            return new H265Layer(
+                width,
+                height,
+                label,
+                serializedAdditionalRawData,
+                bitrate,
+                maxBitrate,
+                bFrames,
+                frameRate,
+                slices,
+                adaptiveBFrame,
+                profile,
+                level,
+                bufferWindow,
+                crf,
+                referenceFrames);
         }
 
         BinaryData IPersistableModel<H265Layer>.Write(ModelReaderWriterOptions options)
@@ -269,7 +284,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(H265Layer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(H265Layer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -285,7 +300,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeH265Layer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(H265Layer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(H265Layer)} does not support reading '{options.Format}' format.");
             }
         }
 

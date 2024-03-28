@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentUpgrade>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentUpgrade)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentUpgrade>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentUpgrade)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> desiredVersion = default;
-            Optional<Guid> correlationId = default;
-            Optional<bool> enableAutomaticUpgrade = default;
-            Optional<string> lastAttemptDesiredVersion = default;
-            Optional<DateTimeOffset> lastAttemptTimestamp = default;
-            Optional<LastAttemptStatusEnum> lastAttemptStatus = default;
-            Optional<string> lastAttemptMessage = default;
+            string desiredVersion = default;
+            Guid? correlationId = default;
+            bool? enableAutomaticUpgrade = default;
+            string lastAttemptDesiredVersion = default;
+            DateTimeOffset? lastAttemptTimestamp = default;
+            LastAttemptStatusEnum? lastAttemptStatus = default;
+            string lastAttemptMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentUpgrade(desiredVersion.Value, Optional.ToNullable(correlationId), Optional.ToNullable(enableAutomaticUpgrade), lastAttemptDesiredVersion.Value, Optional.ToNullable(lastAttemptTimestamp), Optional.ToNullable(lastAttemptStatus), lastAttemptMessage.Value, serializedAdditionalRawData);
+            return new AgentUpgrade(
+                desiredVersion,
+                correlationId,
+                enableAutomaticUpgrade,
+                lastAttemptDesiredVersion,
+                lastAttemptTimestamp,
+                lastAttemptStatus,
+                lastAttemptMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentUpgrade>.Write(ModelReaderWriterOptions options)
@@ -179,7 +187,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentUpgrade)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +203,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeAgentUpgrade(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentUpgrade)} does not support reading '{options.Format}' format.");
             }
         }
 

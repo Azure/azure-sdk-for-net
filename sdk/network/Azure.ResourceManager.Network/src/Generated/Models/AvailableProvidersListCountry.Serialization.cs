@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableProvidersListCountry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in States)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableProvidersListState>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableProvidersListCountry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> countryName = default;
-            Optional<IReadOnlyList<string>> providers = default;
-            Optional<IReadOnlyList<AvailableProvidersListState>> states = default;
+            string countryName = default;
+            IReadOnlyList<string> providers = default;
+            IReadOnlyList<AvailableProvidersListState> states = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailableProvidersListState> array = new List<AvailableProvidersListState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableProvidersListState.DeserializeAvailableProvidersListState(item));
+                        array.Add(AvailableProvidersListState.DeserializeAvailableProvidersListState(item, options));
                     }
                     states = array;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableProvidersListCountry(countryName.Value, Optional.ToList(providers), Optional.ToList(states), serializedAdditionalRawData);
+            return new AvailableProvidersListCountry(countryName, providers ?? new ChangeTrackingList<string>(), states ?? new ChangeTrackingList<AvailableProvidersListState>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableProvidersListCountry>.Write(ModelReaderWriterOptions options)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAvailableProvidersListCountry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support reading '{options.Format}' format.");
             }
         }
 

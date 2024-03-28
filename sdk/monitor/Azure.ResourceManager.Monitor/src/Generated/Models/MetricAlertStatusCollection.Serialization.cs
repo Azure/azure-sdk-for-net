@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricAlertStatusCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricAlertStatusCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAlertStatusCollection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricAlertStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricAlertStatusCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricAlertStatusCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAlertStatusCollection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MetricAlertStatus>> value = default;
+            IReadOnlyList<MetricAlertStatus> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MetricAlertStatus> array = new List<MetricAlertStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAlertStatus.DeserializeMetricAlertStatus(item));
+                        array.Add(MetricAlertStatus.DeserializeMetricAlertStatus(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertStatusCollection(Optional.ToList(value), serializedAdditionalRawData);
+            return new MetricAlertStatusCollection(value ?? new ChangeTrackingList<MetricAlertStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertStatusCollection>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricAlertStatusCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAlertStatusCollection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMetricAlertStatusCollection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricAlertStatusCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAlertStatusCollection)} does not support reading '{options.Format}' format.");
             }
         }
 

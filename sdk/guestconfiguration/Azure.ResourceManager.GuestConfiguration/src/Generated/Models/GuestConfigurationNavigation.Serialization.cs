@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GuestConfigurationParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationProtectedParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GuestConfigurationParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 if (ConfigurationSetting != null)
                 {
                     writer.WritePropertyName("configurationSetting"u8);
-                    writer.WriteObjectValue(ConfigurationSetting);
+                    writer.WriteObjectValue<LcmConfigurationSetting>(ConfigurationSetting, options);
                 }
                 else
                 {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -164,17 +164,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<GuestConfigurationKind?> kind = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<Uri> contentUri = default;
-            Optional<string> contentHash = default;
-            Optional<GuestConfigurationAssignmentType?> assignmentType = default;
-            Optional<string> assignmentSource = default;
-            Optional<string> contentType = default;
-            Optional<IList<GuestConfigurationParameter>> configurationParameter = default;
-            Optional<IList<GuestConfigurationParameter>> configurationProtectedParameter = default;
-            Optional<LcmConfigurationSetting> configurationSetting = default;
+            GuestConfigurationKind? kind = default;
+            string name = default;
+            string version = default;
+            Uri contentUri = default;
+            string contentHash = default;
+            GuestConfigurationAssignmentType? assignmentType = default;
+            string assignmentSource = default;
+            string contentType = default;
+            IList<GuestConfigurationParameter> configurationParameter = default;
+            IList<GuestConfigurationParameter> configurationProtectedParameter = default;
+            LcmConfigurationSetting configurationSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item));
+                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item, options));
                     }
                     configurationParameter = array;
                     continue;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item));
+                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item, options));
                     }
                     configurationProtectedParameter = array;
                     continue;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         configurationSetting = null;
                         continue;
                     }
-                    configurationSetting = LcmConfigurationSetting.DeserializeLcmConfigurationSetting(property.Value);
+                    configurationSetting = LcmConfigurationSetting.DeserializeLcmConfigurationSetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -287,7 +287,19 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationNavigation(Optional.ToNullable(kind), name.Value, version.Value, contentUri.Value, contentHash.Value, Optional.ToNullable(assignmentType), assignmentSource.Value, contentType.Value, Optional.ToList(configurationParameter), Optional.ToList(configurationProtectedParameter), configurationSetting.Value, serializedAdditionalRawData);
+            return new GuestConfigurationNavigation(
+                kind,
+                name,
+                version,
+                contentUri,
+                contentHash,
+                assignmentType,
+                assignmentSource,
+                contentType,
+                configurationParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(),
+                configurationProtectedParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(),
+                configurationSetting,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationNavigation>.Write(ModelReaderWriterOptions options)
@@ -299,7 +311,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -315,7 +327,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeGuestConfigurationNavigation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support reading '{options.Format}' format.");
             }
         }
 

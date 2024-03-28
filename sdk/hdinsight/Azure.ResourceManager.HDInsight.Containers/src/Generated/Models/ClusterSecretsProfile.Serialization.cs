@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterSecretsProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterSecretsProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterSecretsProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterSecretReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterSecretsProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterSecretsProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterSecretsProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             ResourceIdentifier keyVaultResourceId = default;
-            Optional<IList<ClusterSecretReference>> secrets = default;
+            IList<ClusterSecretReference> secrets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterSecretReference> array = new List<ClusterSecretReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterSecretReference.DeserializeClusterSecretReference(item));
+                        array.Add(ClusterSecretReference.DeserializeClusterSecretReference(item, options));
                     }
                     secrets = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterSecretsProfile(keyVaultResourceId, Optional.ToList(secrets), serializedAdditionalRawData);
+            return new ClusterSecretsProfile(keyVaultResourceId, secrets ?? new ChangeTrackingList<ClusterSecretReference>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterSecretsProfile>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterSecretsProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterSecretsProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeClusterSecretsProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterSecretsProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterSecretsProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

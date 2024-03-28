@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtDiskContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtDiskContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtDiskContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtDiskContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtDiskContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtDiskContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string diskId = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
+            SiteRecoveryDiskAccountType? diskType = default;
             string isOSDisk = default;
             ResourceIdentifier logStorageAccountId = default;
             string logStorageAccountSasSecretName = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtDiskContent(diskId, Optional.ToNullable(diskType), isOSDisk, logStorageAccountId, logStorageAccountSasSecretName, diskEncryptionSetId.Value, serializedAdditionalRawData);
+            return new VMwareCbtDiskContent(
+                diskId,
+                diskType,
+                isOSDisk,
+                logStorageAccountId,
+                logStorageAccountSasSecretName,
+                diskEncryptionSetId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtDiskContent>.Write(ModelReaderWriterOptions options)
@@ -148,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtDiskContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtDiskContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareCbtDiskContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtDiskContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtDiskContent)} does not support reading '{options.Format}' format.");
             }
         }
 

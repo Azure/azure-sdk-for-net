@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<MultiContextAndPlansContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in PlansContext)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContextAndPlansDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<MultiContextAndPlansContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,9 +87,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> offerId = default;
-            Optional<ETag> eTag = default;
-            Optional<IList<ContextAndPlansDetails>> plansContext = default;
+            string offerId = default;
+            ETag? eTag = default;
+            IList<ContextAndPlansDetails> plansContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                             List<ContextAndPlansDetails> array = new List<ContextAndPlansDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContextAndPlansDetails.DeserializeContextAndPlansDetails(item));
+                                array.Add(ContextAndPlansDetails.DeserializeContextAndPlansDetails(item, options));
                             }
                             plansContext = array;
                             continue;
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MultiContextAndPlansContent(offerId.Value, Optional.ToNullable(eTag), Optional.ToList(plansContext), serializedAdditionalRawData);
+            return new MultiContextAndPlansContent(offerId, eTag, plansContext ?? new ChangeTrackingList<ContextAndPlansDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MultiContextAndPlansContent>.Write(ModelReaderWriterOptions options)
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeMultiContextAndPlansContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support reading '{options.Format}' format.");
             }
         }
 

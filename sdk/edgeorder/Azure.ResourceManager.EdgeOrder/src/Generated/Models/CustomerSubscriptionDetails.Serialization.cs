@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomerSubscriptionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in RegisteredFeatures)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CustomerSubscriptionRegisteredFeatures>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomerSubscriptionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IList<CustomerSubscriptionRegisteredFeatures>> registeredFeatures = default;
-            Optional<string> locationPlacementId = default;
+            IList<CustomerSubscriptionRegisteredFeatures> registeredFeatures = default;
+            string locationPlacementId = default;
             string quotaId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<CustomerSubscriptionRegisteredFeatures> array = new List<CustomerSubscriptionRegisteredFeatures>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomerSubscriptionRegisteredFeatures.DeserializeCustomerSubscriptionRegisteredFeatures(item));
+                        array.Add(CustomerSubscriptionRegisteredFeatures.DeserializeCustomerSubscriptionRegisteredFeatures(item, options));
                     }
                     registeredFeatures = array;
                     continue;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomerSubscriptionDetails(Optional.ToList(registeredFeatures), locationPlacementId.Value, quotaId, serializedAdditionalRawData);
+            return new CustomerSubscriptionDetails(registeredFeatures ?? new ChangeTrackingList<CustomerSubscriptionRegisteredFeatures>(), locationPlacementId, quotaId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomerSubscriptionDetails>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeCustomerSubscriptionDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

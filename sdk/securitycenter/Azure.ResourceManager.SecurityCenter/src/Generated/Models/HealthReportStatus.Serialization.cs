@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthReportStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthReportStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthReportStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthReportStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthReportStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthReportStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<HealthReportStatusName> code = default;
-            Optional<string> reason = default;
-            Optional<DateTimeOffset> lastScannedDate = default;
-            Optional<DateTimeOffset> statusChangeDate = default;
-            Optional<DateTimeOffset> firstEvaluationDate = default;
+            HealthReportStatusName? code = default;
+            string reason = default;
+            DateTimeOffset? lastScannedDate = default;
+            DateTimeOffset? statusChangeDate = default;
+            DateTimeOffset? firstEvaluationDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthReportStatus(Optional.ToNullable(code), reason.Value, Optional.ToNullable(lastScannedDate), Optional.ToNullable(statusChangeDate), Optional.ToNullable(firstEvaluationDate), serializedAdditionalRawData);
+            return new HealthReportStatus(
+                code,
+                reason,
+                lastScannedDate,
+                statusChangeDate,
+                firstEvaluationDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthReportStatus>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthReportStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthReportStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeHealthReportStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthReportStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthReportStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

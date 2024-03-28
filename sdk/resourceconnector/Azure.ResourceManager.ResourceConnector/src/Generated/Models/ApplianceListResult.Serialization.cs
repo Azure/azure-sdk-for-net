@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceConnectorApplianceData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ResourceConnectorApplianceData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<ResourceConnectorApplianceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ResourceConnectorApplianceData> array = new List<ResourceConnectorApplianceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(item));
+                        array.Add(ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new ApplianceListResult(nextLink, value ?? new ChangeTrackingList<ResourceConnectorApplianceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                         return DeserializeApplianceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

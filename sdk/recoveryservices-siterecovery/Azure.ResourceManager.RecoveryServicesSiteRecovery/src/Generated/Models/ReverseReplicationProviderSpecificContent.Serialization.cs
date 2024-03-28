@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReverseReplicationProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReverseReplicationProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReverseReplicationProviderSpecificContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReverseReplicationProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReverseReplicationProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReverseReplicationProviderSpecificContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AReprotectContent.DeserializeA2AReprotectContent(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureReprotectContent.DeserializeHyperVReplicaAzureReprotectContent(element);
-                    case "InMage": return InMageReprotectContent.DeserializeInMageReprotectContent(element);
-                    case "InMageAzureV2": return InMageAzureV2ReprotectContent.DeserializeInMageAzureV2ReprotectContent(element);
-                    case "InMageRcm": return InMageRcmReprotectContent.DeserializeInMageRcmReprotectContent(element);
-                    case "InMageRcmFailback": return InMageRcmFailbackReprotectContent.DeserializeInMageRcmFailbackReprotectContent(element);
+                    case "A2A": return A2AReprotectContent.DeserializeA2AReprotectContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureReprotectContent.DeserializeHyperVReplicaAzureReprotectContent(element, options);
+                    case "InMage": return InMageReprotectContent.DeserializeInMageReprotectContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2ReprotectContent.DeserializeInMageAzureV2ReprotectContent(element, options);
+                    case "InMageRcm": return InMageRcmReprotectContent.DeserializeInMageRcmReprotectContent(element, options);
+                    case "InMageRcmFailback": return InMageRcmFailbackReprotectContent.DeserializeInMageRcmFailbackReprotectContent(element, options);
                 }
             }
-            return UnknownReverseReplicationProviderSpecificContent.DeserializeUnknownReverseReplicationProviderSpecificContent(element);
+            return UnknownReverseReplicationProviderSpecificContent.DeserializeUnknownReverseReplicationProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<ReverseReplicationProviderSpecificContent>.Write(ModelReaderWriterOptions options)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReverseReplicationProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReverseReplicationProviderSpecificContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeReverseReplicationProviderSpecificContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReverseReplicationProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReverseReplicationProviderSpecificContent)} does not support reading '{options.Format}' format.");
             }
         }
 

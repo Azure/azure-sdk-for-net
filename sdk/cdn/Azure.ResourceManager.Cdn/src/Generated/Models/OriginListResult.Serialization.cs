@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<OriginListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OriginListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OriginListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CdnOriginData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<OriginListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OriginListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OriginListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CdnOriginData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CdnOriginData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CdnOriginData> array = new List<CdnOriginData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CdnOriginData.DeserializeCdnOriginData(item));
+                        array.Add(CdnOriginData.DeserializeCdnOriginData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OriginListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new OriginListResult(value ?? new ChangeTrackingList<CdnOriginData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OriginListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OriginListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OriginListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeOriginListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OriginListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OriginListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

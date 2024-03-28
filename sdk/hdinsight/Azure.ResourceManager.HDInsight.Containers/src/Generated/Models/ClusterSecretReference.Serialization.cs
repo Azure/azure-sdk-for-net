@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterSecretReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterSecretReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterSecretReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterSecretReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterSecretReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterSecretReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string referenceName = default;
             KeyVaultObjectType type = default;
-            Optional<string> version = default;
+            string version = default;
             string keyVaultObjectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterSecretReference(referenceName, type, version.Value, keyVaultObjectName, serializedAdditionalRawData);
+            return new ClusterSecretReference(referenceName, type, version, keyVaultObjectName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterSecretReference>.Write(ModelReaderWriterOptions options)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterSecretReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterSecretReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeClusterSecretReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterSecretReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterSecretReference)} does not support reading '{options.Format}' format.");
             }
         }
 

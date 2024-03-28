@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmIlrRegistrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmIlrRegistrationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmIlrRegistrationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmIlrRegistrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmIlrRegistrationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmIlrRegistrationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> recoveryPointId = default;
-            Optional<ResourceIdentifier> virtualMachineId = default;
-            Optional<string> initiatorName = default;
-            Optional<bool> renewExistingRegistration = default;
+            string recoveryPointId = default;
+            ResourceIdentifier virtualMachineId = default;
+            string initiatorName = default;
+            bool? renewExistingRegistration = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmIlrRegistrationContent(objectType, serializedAdditionalRawData, recoveryPointId.Value, virtualMachineId.Value, initiatorName.Value, Optional.ToNullable(renewExistingRegistration));
+            return new IaasVmIlrRegistrationContent(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryPointId,
+                virtualMachineId,
+                initiatorName,
+                renewExistingRegistration);
         }
 
         BinaryData IPersistableModel<IaasVmIlrRegistrationContent>.Write(ModelReaderWriterOptions options)
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmIlrRegistrationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmIlrRegistrationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeIaasVmIlrRegistrationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmIlrRegistrationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmIlrRegistrationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

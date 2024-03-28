@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemArchiveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemArchiveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemArchiveContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemArchiveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemArchiveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemArchiveContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> filesystemPath = default;
+            string filesystemPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemArchiveContent(filesystemPath.Value, serializedAdditionalRawData);
+            return new AmlFileSystemArchiveContent(filesystemPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemArchiveContent>.Write(ModelReaderWriterOptions options)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemArchiveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemArchiveContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeAmlFileSystemArchiveContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemArchiveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemArchiveContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationDiagnosticContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationDiagnosticContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> appInstance = default;
-            Optional<string> filePath = default;
-            Optional<string> duration = default;
+            string appInstance = default;
+            string filePath = default;
+            string duration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationDiagnosticContent(appInstance.Value, filePath.Value, duration.Value, serializedAdditionalRawData);
+            return new ApplicationDiagnosticContent(appInstance, filePath, duration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationDiagnosticContent>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeApplicationDiagnosticContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support reading '{options.Format}' format.");
             }
         }
 

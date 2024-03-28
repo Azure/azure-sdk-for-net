@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOutputPathAssetReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOutputPathAssetReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> path = default;
+            ResourceIdentifier jobId = default;
+            string path = default;
             ReferenceType referenceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningOutputPathAssetReference(referenceType, serializedAdditionalRawData, jobId.Value, path.Value);
+            return new MachineLearningOutputPathAssetReference(referenceType, serializedAdditionalRawData, jobId, path);
         }
 
         BinaryData IPersistableModel<MachineLearningOutputPathAssetReference>.Write(ModelReaderWriterOptions options)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningOutputPathAssetReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support reading '{options.Format}' format.");
             }
         }
 

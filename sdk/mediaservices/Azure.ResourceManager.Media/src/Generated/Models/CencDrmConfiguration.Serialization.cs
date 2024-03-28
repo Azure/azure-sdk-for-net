@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<CencDrmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(PlayReady))
             {
                 writer.WritePropertyName("playReady"u8);
-                writer.WriteObjectValue(PlayReady);
+                writer.WriteObjectValue<StreamingPolicyPlayReadyConfiguration>(PlayReady, options);
             }
             if (Optional.IsDefined(Widevine))
             {
                 writer.WritePropertyName("widevine"u8);
-                writer.WriteObjectValue(Widevine);
+                writer.WriteObjectValue<StreamingPolicyWidevineConfiguration>(Widevine, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<CencDrmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<StreamingPolicyPlayReadyConfiguration> playReady = default;
-            Optional<StreamingPolicyWidevineConfiguration> widevine = default;
+            StreamingPolicyPlayReadyConfiguration playReady = default;
+            StreamingPolicyWidevineConfiguration widevine = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    playReady = StreamingPolicyPlayReadyConfiguration.DeserializeStreamingPolicyPlayReadyConfiguration(property.Value);
+                    playReady = StreamingPolicyPlayReadyConfiguration.DeserializeStreamingPolicyPlayReadyConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("widevine"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    widevine = StreamingPolicyWidevineConfiguration.DeserializeStreamingPolicyWidevineConfiguration(property.Value);
+                    widevine = StreamingPolicyWidevineConfiguration.DeserializeStreamingPolicyWidevineConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CencDrmConfiguration(playReady.Value, widevine.Value, serializedAdditionalRawData);
+            return new CencDrmConfiguration(playReady, widevine, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CencDrmConfiguration>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeCencDrmConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppLdapSearchScopeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppLdapSearchScopeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> userDN = default;
-            Optional<string> groupDN = default;
-            Optional<string> groupMembershipFilter = default;
+            string userDN = default;
+            string groupDN = default;
+            string groupMembershipFilter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppLdapSearchScopeConfiguration(userDN.Value, groupDN.Value, groupMembershipFilter.Value, serializedAdditionalRawData);
+            return new NetAppLdapSearchScopeConfiguration(userDN, groupDN, groupMembershipFilter, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppLdapSearchScopeConfiguration>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppLdapSearchScopeConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

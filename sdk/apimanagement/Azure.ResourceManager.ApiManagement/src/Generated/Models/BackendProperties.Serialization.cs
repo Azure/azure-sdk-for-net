@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackendProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceFabricCluster))
             {
                 writer.WritePropertyName("serviceFabricCluster"u8);
-                writer.WriteObjectValue(ServiceFabricCluster);
+                writer.WriteObjectValue<BackendServiceFabricClusterProperties>(ServiceFabricCluster, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackendProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<BackendServiceFabricClusterProperties> serviceFabricCluster = default;
+            BackendServiceFabricClusterProperties serviceFabricCluster = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    serviceFabricCluster = BackendServiceFabricClusterProperties.DeserializeBackendServiceFabricClusterProperties(property.Value);
+                    serviceFabricCluster = BackendServiceFabricClusterProperties.DeserializeBackendServiceFabricClusterProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendProperties(serviceFabricCluster.Value, serializedAdditionalRawData);
+            return new BackendProperties(serviceFabricCluster, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendProperties>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackendProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeBackendProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackendProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

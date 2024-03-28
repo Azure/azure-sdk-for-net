@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobDefinitionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobDefinitionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<StorageMoverCopyMode> copyMode = default;
-            Optional<string> agentName = default;
+            string description = default;
+            StorageMoverCopyMode? copyMode = default;
+            string agentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobDefinitionPatch(description.Value, Optional.ToNullable(copyMode), agentName.Value, serializedAdditionalRawData);
+            return new JobDefinitionPatch(description, copyMode, agentName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobDefinitionPatch>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                         return DeserializeJobDefinitionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

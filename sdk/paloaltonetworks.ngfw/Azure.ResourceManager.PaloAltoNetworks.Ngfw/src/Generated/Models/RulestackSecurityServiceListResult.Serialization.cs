@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<RulestackSecurityServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RulestackSecurityServiceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RulestackSecurityServiceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value);
+            writer.WriteObjectValue<RulestackSecurityServiceTypeList>(Value, options);
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<RulestackSecurityServiceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RulestackSecurityServiceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RulestackSecurityServiceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             RulestackSecurityServiceTypeList value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    value = RulestackSecurityServiceTypeList.DeserializeRulestackSecurityServiceTypeList(property.Value);
+                    value = RulestackSecurityServiceTypeList.DeserializeRulestackSecurityServiceTypeList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nextLink"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulestackSecurityServiceListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new RulestackSecurityServiceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulestackSecurityServiceListResult>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RulestackSecurityServiceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RulestackSecurityServiceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeRulestackSecurityServiceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RulestackSecurityServiceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RulestackSecurityServiceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

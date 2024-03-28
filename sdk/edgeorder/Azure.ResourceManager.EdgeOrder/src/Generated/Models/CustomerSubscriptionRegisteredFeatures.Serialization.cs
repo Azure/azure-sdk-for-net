@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomerSubscriptionRegisteredFeatures>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomerSubscriptionRegisteredFeatures)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomerSubscriptionRegisteredFeatures)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomerSubscriptionRegisteredFeatures>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomerSubscriptionRegisteredFeatures)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomerSubscriptionRegisteredFeatures)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> state = default;
+            string name = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomerSubscriptionRegisteredFeatures(name.Value, state.Value, serializedAdditionalRawData);
+            return new CustomerSubscriptionRegisteredFeatures(name, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomerSubscriptionRegisteredFeatures>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomerSubscriptionRegisteredFeatures)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomerSubscriptionRegisteredFeatures)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeCustomerSubscriptionRegisteredFeatures(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomerSubscriptionRegisteredFeatures)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomerSubscriptionRegisteredFeatures)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerCustomDynamicList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerCustomDynamicList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SwaggerCustomDynamicProperties>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerCustomDynamicList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerCustomDynamicList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<string> builtInOperation = default;
-            Optional<string> itemsPath = default;
-            Optional<string> itemValuePath = default;
-            Optional<string> itemTitlePath = default;
-            Optional<IDictionary<string, SwaggerCustomDynamicProperties>> parameters = default;
+            string operationId = default;
+            string builtInOperation = default;
+            string itemsPath = default;
+            string itemValuePath = default;
+            string itemTitlePath = default;
+            IDictionary<string, SwaggerCustomDynamicProperties> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Logic.Models
                     Dictionary<string, SwaggerCustomDynamicProperties> dictionary = new Dictionary<string, SwaggerCustomDynamicProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, SwaggerCustomDynamicProperties.DeserializeSwaggerCustomDynamicProperties(property0.Value));
+                        dictionary.Add(property0.Name, SwaggerCustomDynamicProperties.DeserializeSwaggerCustomDynamicProperties(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicList(operationId.Value, builtInOperation.Value, itemsPath.Value, itemValuePath.Value, itemTitlePath.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicList(
+                operationId,
+                builtInOperation,
+                itemsPath,
+                itemValuePath,
+                itemTitlePath,
+                parameters ?? new ChangeTrackingDictionary<string, SwaggerCustomDynamicProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicList>.Write(ModelReaderWriterOptions options)
@@ -167,7 +174,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +190,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeSwaggerCustomDynamicList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicList)} does not support reading '{options.Format}' format.");
             }
         }
 

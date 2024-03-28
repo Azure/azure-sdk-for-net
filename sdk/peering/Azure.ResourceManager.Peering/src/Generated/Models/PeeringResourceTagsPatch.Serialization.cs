@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringResourceTagsPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringResourceTagsPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringResourceTagsPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringResourceTagsPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringResourceTagsPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringResourceTagsPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringResourceTagsPatch(Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new PeeringResourceTagsPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringResourceTagsPatch>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringResourceTagsPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringResourceTagsPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringResourceTagsPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringResourceTagsPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringResourceTagsPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

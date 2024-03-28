@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventDataCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventDataCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventDataCollection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<EventDataInfo>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventDataCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventDataCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventDataCollection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IReadOnlyList<EventDataInfo> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<EventDataInfo> array = new List<EventDataInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventDataInfo.DeserializeEventDataInfo(item));
+                        array.Add(EventDataInfo.DeserializeEventDataInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventDataCollection(value, nextLink.Value, serializedAdditionalRawData);
+            return new EventDataCollection(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventDataCollection>.Write(ModelReaderWriterOptions options)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventDataCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventDataCollection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeEventDataCollection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventDataCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventDataCollection)} does not support reading '{options.Format}' format.");
             }
         }
 

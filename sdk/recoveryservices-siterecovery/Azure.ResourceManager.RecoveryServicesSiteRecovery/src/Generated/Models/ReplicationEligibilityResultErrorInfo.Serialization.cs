@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationEligibilityResultErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationEligibilityResultErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationEligibilityResultErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationEligibilityResultErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationEligibilityResultErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationEligibilityResultErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> possibleCauses = default;
-            Optional<string> recommendedAction = default;
-            Optional<string> status = default;
+            string code = default;
+            string message = default;
+            string possibleCauses = default;
+            string recommendedAction = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationEligibilityResultErrorInfo(code.Value, message.Value, possibleCauses.Value, recommendedAction.Value, status.Value, serializedAdditionalRawData);
+            return new ReplicationEligibilityResultErrorInfo(
+                code,
+                message,
+                possibleCauses,
+                recommendedAction,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationEligibilityResultErrorInfo>.Write(ModelReaderWriterOptions options)
@@ -141,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationEligibilityResultErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationEligibilityResultErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeReplicationEligibilityResultErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationEligibilityResultErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationEligibilityResultErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

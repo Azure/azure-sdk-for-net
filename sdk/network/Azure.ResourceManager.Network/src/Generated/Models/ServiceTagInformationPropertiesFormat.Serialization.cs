@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTagInformationPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTagInformationPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTagInformationPropertiesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTagInformationPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTagInformationPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTagInformationPropertiesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> changeNumber = default;
-            Optional<string> region = default;
-            Optional<string> systemService = default;
-            Optional<IReadOnlyList<string>> addressPrefixes = default;
-            Optional<string> state = default;
+            string changeNumber = default;
+            string region = default;
+            string systemService = default;
+            IReadOnlyList<string> addressPrefixes = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagInformationPropertiesFormat(changeNumber.Value, region.Value, systemService.Value, Optional.ToList(addressPrefixes), state.Value, serializedAdditionalRawData);
+            return new ServiceTagInformationPropertiesFormat(
+                changeNumber,
+                region,
+                systemService,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagInformationPropertiesFormat>.Write(ModelReaderWriterOptions options)
@@ -155,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTagInformationPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTagInformationPropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeServiceTagInformationPropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTagInformationPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTagInformationPropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

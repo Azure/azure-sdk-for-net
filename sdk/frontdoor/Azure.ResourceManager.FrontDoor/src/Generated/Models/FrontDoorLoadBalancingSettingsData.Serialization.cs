@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorLoadBalancingSettingsData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorLoadBalancingSettingsData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorLoadBalancingSettingsData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorLoadBalancingSettingsData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorLoadBalancingSettingsData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorLoadBalancingSettingsData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> sampleSize = default;
-            Optional<int> successfulSamplesRequired = default;
-            Optional<int> additionalLatencyMilliseconds = default;
-            Optional<FrontDoorResourceState> resourceState = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? sampleSize = default;
+            int? successfulSamplesRequired = default;
+            int? additionalLatencyMilliseconds = default;
+            FrontDoorResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorLoadBalancingSettingsData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(sampleSize), Optional.ToNullable(successfulSamplesRequired), Optional.ToNullable(additionalLatencyMilliseconds), Optional.ToNullable(resourceState));
+            return new FrontDoorLoadBalancingSettingsData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                sampleSize,
+                successfulSamplesRequired,
+                additionalLatencyMilliseconds,
+                resourceState);
         }
 
         BinaryData IPersistableModel<FrontDoorLoadBalancingSettingsData>.Write(ModelReaderWriterOptions options)
@@ -202,7 +210,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorLoadBalancingSettingsData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorLoadBalancingSettingsData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +226,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeFrontDoorLoadBalancingSettingsData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorLoadBalancingSettingsData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorLoadBalancingSettingsData)} does not support reading '{options.Format}' format.");
             }
         }
 

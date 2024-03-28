@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPAddressPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAddressPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAddressPool)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPAddressPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAddressPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAddressPool)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IList<string> addresses = default;
-            Optional<BfdEnabled> autoAssign = default;
+            BfdEnabled? autoAssign = default;
             string name = default;
-            Optional<BfdEnabled> onlyUseHostIPs = default;
+            BfdEnabled? onlyUseHostIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPAddressPool(addresses, Optional.ToNullable(autoAssign), name, Optional.ToNullable(onlyUseHostIPs), serializedAdditionalRawData);
+            return new IPAddressPool(addresses, autoAssign, name, onlyUseHostIPs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPAddressPool>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPAddressPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAddressPool)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeIPAddressPool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPAddressPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAddressPool)} does not support reading '{options.Format}' format.");
             }
         }
 

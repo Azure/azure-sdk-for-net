@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterCertificateDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterCertificateDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             BinaryData thumbprint = default;
-            Optional<string> thumbprintSecondary = default;
-            Optional<ClusterCertificateStoreName> x509StoreName = default;
+            string thumbprintSecondary = default;
+            ClusterCertificateStoreName? x509StoreName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterCertificateDescription(thumbprint, thumbprintSecondary.Value, Optional.ToNullable(x509StoreName), serializedAdditionalRawData);
+            return new ClusterCertificateDescription(thumbprint, thumbprintSecondary, x509StoreName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterCertificateDescription>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeClusterCertificateDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

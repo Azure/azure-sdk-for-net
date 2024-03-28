@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkuCapabilityV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuCapabilityV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuCapabilityV2)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkuCapabilityV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuCapabilityV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuCapabilityV2)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> vCores = default;
-            Optional<long> supportedIops = default;
-            Optional<long> supportedMemoryPerVCoreMB = default;
-            Optional<IReadOnlyList<string>> supportedZones = default;
-            Optional<IReadOnlyList<string>> supportedHAMode = default;
+            string name = default;
+            long? vCores = default;
+            long? supportedIops = default;
+            long? supportedMemoryPerVCoreMB = default;
+            IReadOnlyList<string> supportedZones = default;
+            IReadOnlyList<string> supportedHAMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuCapabilityV2(name.Value, Optional.ToNullable(vCores), Optional.ToNullable(supportedIops), Optional.ToNullable(supportedMemoryPerVCoreMB), Optional.ToList(supportedZones), Optional.ToList(supportedHAMode), serializedAdditionalRawData);
+            return new SkuCapabilityV2(
+                name,
+                vCores,
+                supportedIops,
+                supportedMemoryPerVCoreMB,
+                supportedZones ?? new ChangeTrackingList<string>(),
+                supportedHAMode ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuCapabilityV2>.Write(ModelReaderWriterOptions options)
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuCapabilityV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuCapabilityV2)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +215,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         return DeserializeSkuCapabilityV2(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuCapabilityV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuCapabilityV2)} does not support reading '{options.Format}' format.");
             }
         }
 

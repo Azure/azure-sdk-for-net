@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<StoragePoolSkuListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StoragePoolSkuListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StoragePoolSkuListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StoragePoolSkuInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<StoragePoolSkuListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StoragePoolSkuListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StoragePoolSkuListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StoragePoolSkuInfo>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<StoragePoolSkuInfo> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolSkuInfo> array = new List<StoragePoolSkuInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuInfo.DeserializeStoragePoolSkuInfo(item));
+                        array.Add(StoragePoolSkuInfo.DeserializeStoragePoolSkuInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolSkuListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StoragePoolSkuListResult(value ?? new ChangeTrackingList<StoragePoolSkuInfo>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolSkuListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StoragePoolSkuListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StoragePoolSkuListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                         return DeserializeStoragePoolSkuListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StoragePoolSkuListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StoragePoolSkuListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsFirewallLogsDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsFirewallLogsDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsFirewallLogsDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsFirewallLogsDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsFirewallLogsDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsFirewallLogsDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IList<string> streams = default;
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsFirewallLogsDataSource(streams, name.Value, serializedAdditionalRawData);
+            return new WindowsFirewallLogsDataSource(streams, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsFirewallLogsDataSource>.Write(ModelReaderWriterOptions options)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsFirewallLogsDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsFirewallLogsDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeWindowsFirewallLogsDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsFirewallLogsDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsFirewallLogsDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

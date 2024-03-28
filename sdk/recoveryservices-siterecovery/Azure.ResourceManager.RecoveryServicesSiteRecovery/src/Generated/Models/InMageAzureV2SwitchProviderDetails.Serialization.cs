@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> targetVaultId = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<ResourceIdentifier> targetFabricId = default;
-            Optional<string> targetApplianceId = default;
+            ResourceIdentifier targetVaultId = default;
+            ResourceIdentifier targetResourceId = default;
+            ResourceIdentifier targetFabricId = default;
+            string targetApplianceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2SwitchProviderDetails(targetVaultId.Value, targetResourceId.Value, targetFabricId.Value, targetApplianceId.Value, serializedAdditionalRawData);
+            return new InMageAzureV2SwitchProviderDetails(targetVaultId, targetResourceId, targetFabricId, targetApplianceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageAzureV2SwitchProviderDetails>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageAzureV2SwitchProviderDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

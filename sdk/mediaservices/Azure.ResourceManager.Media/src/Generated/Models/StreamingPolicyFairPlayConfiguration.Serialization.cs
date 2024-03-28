@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyFairPlayConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyFairPlayConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyFairPlayConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyFairPlayConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyFairPlayConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyFairPlayConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> customLicenseAcquisitionUriTemplate = default;
+            string customLicenseAcquisitionUriTemplate = default;
             bool allowPersistentLicense = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPolicyFairPlayConfiguration(customLicenseAcquisitionUriTemplate.Value, allowPersistentLicense, serializedAdditionalRawData);
+            return new StreamingPolicyFairPlayConfiguration(customLicenseAcquisitionUriTemplate, allowPersistentLicense, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPolicyFairPlayConfiguration>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyFairPlayConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyFairPlayConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingPolicyFairPlayConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyFairPlayConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyFairPlayConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

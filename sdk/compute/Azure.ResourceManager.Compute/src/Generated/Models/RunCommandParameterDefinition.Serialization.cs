@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunCommandParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunCommandParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             string type = default;
-            Optional<string> defaultValue = default;
-            Optional<bool> required = default;
+            string defaultValue = default;
+            bool? required = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunCommandParameterDefinition(name, type, defaultValue.Value, Optional.ToNullable(required), serializedAdditionalRawData);
+            return new RunCommandParameterDefinition(name, type, defaultValue, required, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunCommandParameterDefinition>.Write(ModelReaderWriterOptions options)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRunCommandParameterDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

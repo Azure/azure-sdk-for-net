@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHelpFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHelpFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> values = default;
-            Optional<string> @operator = default;
+            string name = default;
+            string values = default;
+            string @operator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpFilter(name.Value, values.Value, @operator.Value, serializedAdditionalRawData);
+            return new SelfHelpFilter(name, values, @operator, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpFilter>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeSelfHelpFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

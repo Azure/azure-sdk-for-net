@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUpgradeStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheUpgradeStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheUpgradeStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUpgradeStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheUpgradeStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheUpgradeStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> currentFirmwareVersion = default;
-            Optional<StorageCacheFirmwareStatusType> firmwareUpdateStatus = default;
-            Optional<DateTimeOffset> firmwareUpdateDeadline = default;
-            Optional<DateTimeOffset> lastFirmwareUpdate = default;
-            Optional<string> pendingFirmwareVersion = default;
+            string currentFirmwareVersion = default;
+            StorageCacheFirmwareStatusType? firmwareUpdateStatus = default;
+            DateTimeOffset? firmwareUpdateDeadline = default;
+            DateTimeOffset? lastFirmwareUpdate = default;
+            string pendingFirmwareVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheUpgradeStatus(currentFirmwareVersion.Value, Optional.ToNullable(firmwareUpdateStatus), Optional.ToNullable(firmwareUpdateDeadline), Optional.ToNullable(lastFirmwareUpdate), pendingFirmwareVersion.Value, serializedAdditionalRawData);
+            return new StorageCacheUpgradeStatus(
+                currentFirmwareVersion,
+                firmwareUpdateStatus,
+                firmwareUpdateDeadline,
+                lastFirmwareUpdate,
+                pendingFirmwareVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheUpgradeStatus>.Write(ModelReaderWriterOptions options)
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheUpgradeStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheUpgradeStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeStorageCacheUpgradeStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheUpgradeStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheUpgradeStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

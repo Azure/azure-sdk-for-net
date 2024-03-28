@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2ACrossClusterMigrationEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ACrossClusterMigrationEnableProtectionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ACrossClusterMigrationEnableProtectionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2ACrossClusterMigrationEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ACrossClusterMigrationEnableProtectionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ACrossClusterMigrationEnableProtectionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<ResourceIdentifier> recoveryContainerId = default;
+            ResourceIdentifier fabricObjectId = default;
+            ResourceIdentifier recoveryContainerId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ACrossClusterMigrationEnableProtectionContent(instanceType, serializedAdditionalRawData, fabricObjectId.Value, recoveryContainerId.Value);
+            return new A2ACrossClusterMigrationEnableProtectionContent(instanceType, serializedAdditionalRawData, fabricObjectId, recoveryContainerId);
         }
 
         BinaryData IPersistableModel<A2ACrossClusterMigrationEnableProtectionContent>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2ACrossClusterMigrationEnableProtectionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ACrossClusterMigrationEnableProtectionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2ACrossClusterMigrationEnableProtectionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2ACrossClusterMigrationEnableProtectionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ACrossClusterMigrationEnableProtectionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewPlanNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewPlanNotification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewPlanNotification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Plans)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PlanNotificationDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewPlanNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewPlanNotification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewPlanNotification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> offerId = default;
-            Optional<string> displayName = default;
-            Optional<bool> isFuturePlansEnabled = default;
-            Optional<long> messageCode = default;
-            Optional<Uri> icon = default;
-            Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
+            string offerId = default;
+            string displayName = default;
+            bool? isFuturePlansEnabled = default;
+            long? messageCode = default;
+            Uri icon = default;
+            IReadOnlyList<PlanNotificationDetails> plans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PlanNotificationDetails> array = new List<PlanNotificationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlanNotificationDetails.DeserializePlanNotificationDetails(item));
+                        array.Add(PlanNotificationDetails.DeserializePlanNotificationDetails(item, options));
                     }
                     plans = array;
                     continue;
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewPlanNotification(offerId.Value, displayName.Value, Optional.ToNullable(isFuturePlansEnabled), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans), serializedAdditionalRawData);
+            return new NewPlanNotification(
+                offerId,
+                displayName,
+                isFuturePlansEnabled,
+                messageCode,
+                icon,
+                plans ?? new ChangeTrackingList<PlanNotificationDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewPlanNotification>.Write(ModelReaderWriterOptions options)
@@ -178,7 +185,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NewPlanNotification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewPlanNotification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +201,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeNewPlanNotification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewPlanNotification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewPlanNotification)} does not support reading '{options.Format}' format.");
             }
         }
 

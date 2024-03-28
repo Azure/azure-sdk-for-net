@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleCounter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(AppSeen))
             {
                 writer.WritePropertyName("appSeen"u8);
-                writer.WriteObjectValue(AppSeen);
+                writer.WriteObjectValue<AppSeenInfoList>(AppSeen, options);
             }
             if (Optional.IsDefined(ResponseOn))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleCounter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             string priority = default;
-            Optional<string> ruleStackName = default;
-            Optional<string> ruleListName = default;
-            Optional<string> firewallName = default;
+            string ruleStackName = default;
+            string ruleListName = default;
+            string firewallName = default;
             string ruleName = default;
-            Optional<int> hitCount = default;
-            Optional<AppSeenInfoList> appSeen = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<DateTimeOffset> requestTimestamp = default;
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            int? hitCount = default;
+            AppSeenInfoList appSeen = default;
+            DateTimeOffset? timestamp = default;
+            DateTimeOffset? requestTimestamp = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    appSeen = AppSeenInfoList.DeserializeAppSeenInfoList(property.Value);
+                    appSeen = AppSeenInfoList.DeserializeAppSeenInfoList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timestamp"u8))
@@ -198,7 +198,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallRuleCounter(priority, ruleStackName.Value, ruleListName.Value, firewallName.Value, ruleName, Optional.ToNullable(hitCount), appSeen.Value, Optional.ToNullable(timestamp), Optional.ToNullable(requestTimestamp), Optional.ToNullable(lastUpdatedTimestamp), serializedAdditionalRawData);
+            return new FirewallRuleCounter(
+                priority,
+                ruleStackName,
+                ruleListName,
+                firewallName,
+                ruleName,
+                hitCount,
+                appSeen,
+                timestamp,
+                requestTimestamp,
+                lastUpdatedTimestamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallRuleCounter>.Write(ModelReaderWriterOptions options)
@@ -210,7 +221,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +237,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeFirewallRuleCounter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support reading '{options.Format}' format.");
             }
         }
 

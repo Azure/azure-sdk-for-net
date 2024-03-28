@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PackageInputPathBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageInputPathBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PackageInputPathBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PackageInputPathBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageInputPathBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PackageInputPathBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "PathId": return PackageInputPathId.DeserializePackageInputPathId(element);
-                    case "PathVersion": return PackageInputPathVersion.DeserializePackageInputPathVersion(element);
-                    case "Url": return PackageInputPathUri.DeserializePackageInputPathUri(element);
+                    case "PathId": return PackageInputPathId.DeserializePackageInputPathId(element, options);
+                    case "PathVersion": return PackageInputPathVersion.DeserializePackageInputPathVersion(element, options);
+                    case "Url": return PackageInputPathUri.DeserializePackageInputPathUri(element, options);
                 }
             }
-            return UnknownPackageInputPathBase.DeserializeUnknownPackageInputPathBase(element);
+            return UnknownPackageInputPathBase.DeserializeUnknownPackageInputPathBase(element, options);
         }
 
         BinaryData IPersistableModel<PackageInputPathBase>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PackageInputPathBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PackageInputPathBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializePackageInputPathBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PackageInputPathBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PackageInputPathBase)} does not support reading '{options.Format}' format.");
             }
         }
 

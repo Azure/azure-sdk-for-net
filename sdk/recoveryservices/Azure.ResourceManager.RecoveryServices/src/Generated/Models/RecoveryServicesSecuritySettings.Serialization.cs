@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesSecuritySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesSecuritySettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ImmutabilitySettings))
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
-                writer.WriteObjectValue(ImmutabilitySettings);
+                writer.WriteObjectValue<ImmutabilitySettings>(ImmutabilitySettings, options);
             }
             if (Optional.IsDefined(SoftDeleteSettings))
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
-                writer.WriteObjectValue(SoftDeleteSettings);
+                writer.WriteObjectValue<RecoveryServicesSoftDeleteSettings>(SoftDeleteSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MultiUserAuthorization))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesSecuritySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesSecuritySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<ImmutabilitySettings> immutabilitySettings = default;
-            Optional<RecoveryServicesSoftDeleteSettings> softDeleteSettings = default;
-            Optional<MultiUserAuthorization> multiUserAuthorization = default;
+            ImmutabilitySettings immutabilitySettings = default;
+            RecoveryServicesSoftDeleteSettings softDeleteSettings = default;
+            MultiUserAuthorization? multiUserAuthorization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value);
+                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("softDeleteSettings"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    softDeleteSettings = RecoveryServicesSoftDeleteSettings.DeserializeRecoveryServicesSoftDeleteSettings(property.Value);
+                    softDeleteSettings = RecoveryServicesSoftDeleteSettings.DeserializeRecoveryServicesSoftDeleteSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("multiUserAuthorization"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesSecuritySettings(immutabilitySettings.Value, softDeleteSettings.Value, Optional.ToNullable(multiUserAuthorization), serializedAdditionalRawData);
+            return new RecoveryServicesSecuritySettings(immutabilitySettings, softDeleteSettings, multiUserAuthorization, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesSecuritySettings>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesSecuritySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesSecuritySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeRecoveryServicesSecuritySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesSecuritySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesSecuritySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

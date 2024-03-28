@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationUsageListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationUsageListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomationUsage>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationUsageListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationUsageListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationUsage>> value = default;
+            IReadOnlyList<AutomationUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationUsage> array = new List<AutomationUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationUsage.DeserializeAutomationUsage(item));
+                        array.Add(AutomationUsage.DeserializeAutomationUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationUsageListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AutomationUsageListResult(value ?? new ChangeTrackingList<AutomationUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationUsageListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationUsageListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationUsageListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationUsageListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationUsageListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationUsageListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

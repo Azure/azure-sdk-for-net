@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationCatalog>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationCatalog)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationCatalog)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in SkuProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SkuProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Msrp))
             {
                 writer.WritePropertyName("msrp"u8);
-                writer.WriteObjectValue(Msrp);
+                writer.WriteObjectValue<ReservationCatalogMsrp>(Msrp, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Restrictions))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SkuRestriction>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SkuCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationCatalog>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationCatalog)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationCatalog)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,17 +160,17 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyDictionary<string, IList<ReservationBillingPlan>>> billingPlans = default;
-            Optional<IReadOnlyList<ReservationTerm>> terms = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<SkuProperty>> skuProperties = default;
-            Optional<ReservationCatalogMsrp> msrp = default;
-            Optional<IReadOnlyList<SkuRestriction>> restrictions = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<IReadOnlyList<SkuCapability>> capabilities = default;
+            string resourceType = default;
+            string name = default;
+            IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans = default;
+            IReadOnlyList<ReservationTerm> terms = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<SkuProperty> skuProperties = default;
+            ReservationCatalogMsrp msrp = default;
+            IReadOnlyList<SkuRestriction> restrictions = default;
+            string tier = default;
+            string size = default;
+            IReadOnlyList<SkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SkuProperty> array = new List<SkuProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuProperty.DeserializeSkuProperty(item));
+                        array.Add(SkuProperty.DeserializeSkuProperty(item, options));
                     }
                     skuProperties = array;
                     continue;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    msrp = ReservationCatalogMsrp.DeserializeReservationCatalogMsrp(property.Value);
+                    msrp = ReservationCatalogMsrp.DeserializeReservationCatalogMsrp(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restrictions"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SkuRestriction> array = new List<SkuRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuRestriction.DeserializeSkuRestriction(item));
+                        array.Add(SkuRestriction.DeserializeSkuRestriction(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SkuCapability> array = new List<SkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuCapability.DeserializeSkuCapability(item));
+                        array.Add(SkuCapability.DeserializeSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -306,7 +306,19 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationCatalog(resourceType.Value, name.Value, Optional.ToDictionary(billingPlans), Optional.ToList(terms), Optional.ToList(locations), Optional.ToList(skuProperties), msrp.Value, Optional.ToList(restrictions), tier.Value, size.Value, Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new ReservationCatalog(
+                resourceType,
+                name,
+                billingPlans ?? new ChangeTrackingDictionary<string, IList<ReservationBillingPlan>>(),
+                terms ?? new ChangeTrackingList<ReservationTerm>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                skuProperties ?? new ChangeTrackingList<SkuProperty>(),
+                msrp,
+                restrictions ?? new ChangeTrackingList<SkuRestriction>(),
+                tier,
+                size,
+                capabilities ?? new ChangeTrackingList<SkuCapability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationCatalog>.Write(ModelReaderWriterOptions options)
@@ -318,7 +330,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationCatalog)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationCatalog)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -334,7 +346,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationCatalog(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationCatalog)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationCatalog)} does not support reading '{options.Format}' format.");
             }
         }
 

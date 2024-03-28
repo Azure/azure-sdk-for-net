@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobilityServiceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobilityServiceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<string> rebootStatus = default;
-            Optional<string> osType = default;
+            string version = default;
+            string rebootStatus = default;
+            string osType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobilityServiceUpdate(version.Value, rebootStatus.Value, osType.Value, serializedAdditionalRawData);
+            return new MobilityServiceUpdate(version, rebootStatus, osType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobilityServiceUpdate>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeMobilityServiceUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretUriSecretInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultSecretUriSecretInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultSecretUriSecretInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretUriSecretInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultSecretUriSecretInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultSecretUriSecretInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> value = default;
+            string value = default;
             LinkerSecretType secretType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultSecretUriSecretInfo(secretType, serializedAdditionalRawData, value.Value);
+            return new KeyVaultSecretUriSecretInfo(secretType, serializedAdditionalRawData, value);
         }
 
         BinaryData IPersistableModel<KeyVaultSecretUriSecretInfo>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultSecretUriSecretInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultSecretUriSecretInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         return DeserializeKeyVaultSecretUriSecretInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultSecretUriSecretInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultSecretUriSecretInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

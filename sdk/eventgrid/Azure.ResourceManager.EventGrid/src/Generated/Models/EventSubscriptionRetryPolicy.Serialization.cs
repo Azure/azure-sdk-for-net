@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<int> maxDeliveryAttempts = default;
-            Optional<int> eventTimeToLiveInMinutes = default;
+            int? maxDeliveryAttempts = default;
+            int? eventTimeToLiveInMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventSubscriptionRetryPolicy(Optional.ToNullable(maxDeliveryAttempts), Optional.ToNullable(eventTimeToLiveInMinutes), serializedAdditionalRawData);
+            return new EventSubscriptionRetryPolicy(maxDeliveryAttempts, eventTimeToLiveInMinutes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventSubscriptionRetryPolicy>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeEventSubscriptionRetryPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

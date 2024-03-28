@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubSkuDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubSkuDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<IotHubSkuInfo>(Sku, options);
             writer.WritePropertyName("capacity"u8);
-            writer.WriteObjectValue(Capacity);
+            writer.WriteObjectValue<IotHubCapacity>(Capacity, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubSkuDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubSkuDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
+            ResourceType? resourceType = default;
             IotHubSkuInfo sku = default;
             IotHubCapacity capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = IotHubSkuInfo.DeserializeIotHubSkuInfo(property.Value);
+                    sku = IotHubSkuInfo.DeserializeIotHubSkuInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
                 {
-                    capacity = IotHubCapacity.DeserializeIotHubCapacity(property.Value);
+                    capacity = IotHubCapacity.DeserializeIotHubCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubSkuDescription(Optional.ToNullable(resourceType), sku, capacity, serializedAdditionalRawData);
+            return new IotHubSkuDescription(resourceType, sku, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubSkuDescription>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubSkuDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubSkuDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubSkuDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubSkuDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubSkuDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

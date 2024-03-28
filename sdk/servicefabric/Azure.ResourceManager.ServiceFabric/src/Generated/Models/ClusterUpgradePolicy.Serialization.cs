@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WritePropertyName("upgradeDomainTimeout"u8);
             writer.WriteStringValue(UpgradeDomainTimeout, "c");
             writer.WritePropertyName("healthPolicy"u8);
-            writer.WriteObjectValue(HealthPolicy);
+            writer.WriteObjectValue<ClusterHealthPolicy>(HealthPolicy, options);
             if (Optional.IsDefined(DeltaHealthPolicy))
             {
                 writer.WritePropertyName("deltaHealthPolicy"u8);
-                writer.WriteObjectValue(DeltaHealthPolicy);
+                writer.WriteObjectValue<ClusterUpgradeDeltaHealthPolicy>(DeltaHealthPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<bool> forceRestart = default;
+            bool? forceRestart = default;
             TimeSpan upgradeReplicaSetCheckTimeout = default;
             TimeSpan healthCheckWaitDuration = default;
             TimeSpan healthCheckStableDuration = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             TimeSpan upgradeTimeout = default;
             TimeSpan upgradeDomainTimeout = default;
             ClusterHealthPolicy healthPolicy = default;
-            Optional<ClusterUpgradeDeltaHealthPolicy> deltaHealthPolicy = default;
+            ClusterUpgradeDeltaHealthPolicy deltaHealthPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (property.NameEquals("healthPolicy"u8))
                 {
-                    healthPolicy = ClusterHealthPolicy.DeserializeClusterHealthPolicy(property.Value);
+                    healthPolicy = ClusterHealthPolicy.DeserializeClusterHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deltaHealthPolicy"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    deltaHealthPolicy = ClusterUpgradeDeltaHealthPolicy.DeserializeClusterUpgradeDeltaHealthPolicy(property.Value);
+                    deltaHealthPolicy = ClusterUpgradeDeltaHealthPolicy.DeserializeClusterUpgradeDeltaHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,7 +160,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterUpgradePolicy(Optional.ToNullable(forceRestart), upgradeReplicaSetCheckTimeout, healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, healthPolicy, deltaHealthPolicy.Value, serializedAdditionalRawData);
+            return new ClusterUpgradePolicy(
+                forceRestart,
+                upgradeReplicaSetCheckTimeout,
+                healthCheckWaitDuration,
+                healthCheckStableDuration,
+                healthCheckRetryTimeout,
+                upgradeTimeout,
+                upgradeDomainTimeout,
+                healthPolicy,
+                deltaHealthPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterUpgradePolicy>.Write(ModelReaderWriterOptions options)
@@ -172,7 +182,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +198,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeClusterUpgradePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

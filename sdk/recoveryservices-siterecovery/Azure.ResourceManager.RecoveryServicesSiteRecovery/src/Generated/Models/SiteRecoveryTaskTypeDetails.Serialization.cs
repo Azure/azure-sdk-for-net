@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryTaskTypeDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryTaskTypeDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AutomationRunbookTaskDetails": return AutomationRunbookTaskDetails.DeserializeAutomationRunbookTaskDetails(element);
-                    case "ConsistencyCheckTaskDetails": return ConsistencyCheckTaskDetails.DeserializeConsistencyCheckTaskDetails(element);
-                    case "FabricReplicationGroupTaskDetails": return FabricReplicationGroupTaskDetails.DeserializeFabricReplicationGroupTaskDetails(element);
-                    case "JobTaskDetails": return SiteRecoveryJobTaskDetails.DeserializeSiteRecoveryJobTaskDetails(element);
-                    case "ManualActionTaskDetails": return ManualActionTaskDetails.DeserializeManualActionTaskDetails(element);
-                    case "ScriptActionTaskDetails": return ScriptActionTaskDetails.DeserializeScriptActionTaskDetails(element);
-                    case "VirtualMachineTaskDetails": return SiteRecoveryVmTaskDetails.DeserializeSiteRecoveryVmTaskDetails(element);
-                    case "VmNicUpdatesTaskDetails": return VmNicUpdatesTaskDetails.DeserializeVmNicUpdatesTaskDetails(element);
+                    case "AutomationRunbookTaskDetails": return AutomationRunbookTaskDetails.DeserializeAutomationRunbookTaskDetails(element, options);
+                    case "ConsistencyCheckTaskDetails": return ConsistencyCheckTaskDetails.DeserializeConsistencyCheckTaskDetails(element, options);
+                    case "FabricReplicationGroupTaskDetails": return FabricReplicationGroupTaskDetails.DeserializeFabricReplicationGroupTaskDetails(element, options);
+                    case "JobTaskDetails": return SiteRecoveryJobTaskDetails.DeserializeSiteRecoveryJobTaskDetails(element, options);
+                    case "ManualActionTaskDetails": return ManualActionTaskDetails.DeserializeManualActionTaskDetails(element, options);
+                    case "ScriptActionTaskDetails": return ScriptActionTaskDetails.DeserializeScriptActionTaskDetails(element, options);
+                    case "VirtualMachineTaskDetails": return SiteRecoveryVmTaskDetails.DeserializeSiteRecoveryVmTaskDetails(element, options);
+                    case "VmNicUpdatesTaskDetails": return VmNicUpdatesTaskDetails.DeserializeVmNicUpdatesTaskDetails(element, options);
                 }
             }
-            return UnknownTaskTypeDetails.DeserializeUnknownTaskTypeDetails(element);
+            return UnknownTaskTypeDetails.DeserializeUnknownTaskTypeDetails(element, options);
         }
 
         BinaryData IPersistableModel<SiteRecoveryTaskTypeDetails>.Write(ModelReaderWriterOptions options)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryTaskTypeDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

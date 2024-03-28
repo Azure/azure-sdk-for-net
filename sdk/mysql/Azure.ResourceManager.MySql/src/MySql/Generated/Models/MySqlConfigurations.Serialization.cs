@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlConfigurations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlConfigurations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlConfigurations)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MySqlConfigurationData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlConfigurations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlConfigurations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlConfigurations)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IList<MySqlConfigurationData>> value = default;
+            IList<MySqlConfigurationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlConfigurationData> array = new List<MySqlConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlConfigurationData.DeserializeMySqlConfigurationData(item));
+                        array.Add(MySqlConfigurationData.DeserializeMySqlConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlConfigurations(Optional.ToList(value), serializedAdditionalRawData);
+            return new MySqlConfigurations(value ?? new ChangeTrackingList<MySqlConfigurationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlConfigurations>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlConfigurations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlConfigurations)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlConfigurations(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlConfigurations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlConfigurations)} does not support reading '{options.Format}' format.");
             }
         }
 

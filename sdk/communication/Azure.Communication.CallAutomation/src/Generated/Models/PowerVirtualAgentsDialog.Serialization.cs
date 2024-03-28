@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
                     writer.WriteNullValue();
                     continue;
                 }
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             string botAppId = default;
-            Optional<string> language = default;
+            string language = default;
             DialogInputType kind = default;
             IDictionary<string, object> context = default;
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new PowerVirtualAgentsDialog(kind, context, botAppId, language.Value);
+            return new PowerVirtualAgentsDialog(kind, context, botAppId, language);
         }
     }
 }

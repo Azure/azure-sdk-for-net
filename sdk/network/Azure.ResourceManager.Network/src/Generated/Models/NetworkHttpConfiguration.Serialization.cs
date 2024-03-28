@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkHttpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkHttpConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkHttpConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkWatcherHttpHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkHttpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkHttpConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkHttpConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NetworkWatcherHttpMethod> method = default;
-            Optional<IList<NetworkWatcherHttpHeader>> headers = default;
-            Optional<IList<int>> validStatusCodes = default;
+            NetworkWatcherHttpMethod? method = default;
+            IList<NetworkWatcherHttpHeader> headers = default;
+            IList<int> validStatusCodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkWatcherHttpHeader> array = new List<NetworkWatcherHttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item));
+                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item, options));
                     }
                     headers = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkHttpConfiguration(Optional.ToNullable(method), Optional.ToList(headers), Optional.ToList(validStatusCodes), serializedAdditionalRawData);
+            return new NetworkHttpConfiguration(method, headers ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(), validStatusCodes ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkHttpConfiguration>.Write(ModelReaderWriterOptions options)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkHttpConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkHttpConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkHttpConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkHttpConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkHttpConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

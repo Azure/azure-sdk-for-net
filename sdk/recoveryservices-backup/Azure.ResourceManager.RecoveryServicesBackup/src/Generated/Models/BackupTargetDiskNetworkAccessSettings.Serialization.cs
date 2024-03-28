@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupTargetDiskNetworkAccessSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupTargetDiskNetworkAccessSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupTargetDiskNetworkAccessSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupTargetDiskNetworkAccessSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupTargetDiskNetworkAccessSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupTargetDiskNetworkAccessSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupTargetDiskNetworkAccessOption> targetDiskNetworkAccessOption = default;
-            Optional<ResourceIdentifier> targetDiskAccessId = default;
+            BackupTargetDiskNetworkAccessOption? targetDiskNetworkAccessOption = default;
+            ResourceIdentifier targetDiskAccessId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupTargetDiskNetworkAccessSettings(Optional.ToNullable(targetDiskNetworkAccessOption), targetDiskAccessId.Value, serializedAdditionalRawData);
+            return new BackupTargetDiskNetworkAccessSettings(targetDiskNetworkAccessOption, targetDiskAccessId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupTargetDiskNetworkAccessSettings>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupTargetDiskNetworkAccessSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupTargetDiskNetworkAccessSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupTargetDiskNetworkAccessSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupTargetDiskNetworkAccessSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupTargetDiskNetworkAccessSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

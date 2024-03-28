@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubSkuInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubSkuInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubSkuInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubSkuInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubSkuInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubSkuInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             IotHubSku name = default;
-            Optional<IotHubSkuTier> tier = default;
-            Optional<long> capacity = default;
+            IotHubSkuTier? tier = default;
+            long? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubSkuInfo(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new IotHubSkuInfo(name, tier, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubSkuInfo>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubSkuInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubSkuInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubSkuInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubSkuInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubSkuInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareVmInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareVmInstancePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareVmInstancePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue<VmInstanceHardwareProfile>(HardwareProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<StorageProfileUpdate>(StorageProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<VMwareNetworkProfileUpdate>(NetworkProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareVmInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareVmInstancePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareVmInstancePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<VmInstanceHardwareProfile> hardwareProfile = default;
-            Optional<StorageProfileUpdate> storageProfile = default;
-            Optional<VMwareNetworkProfileUpdate> networkProfile = default;
+            VmInstanceHardwareProfile hardwareProfile = default;
+            StorageProfileUpdate storageProfile = default;
+            VMwareNetworkProfileUpdate networkProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                             {
                                 continue;
                             }
-                            hardwareProfile = VmInstanceHardwareProfile.DeserializeVmInstanceHardwareProfile(property0.Value);
+                            hardwareProfile = VmInstanceHardwareProfile.DeserializeVmInstanceHardwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                             {
                                 continue;
                             }
-                            storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property0.Value);
+                            storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                             {
                                 continue;
                             }
-                            networkProfile = VMwareNetworkProfileUpdate.DeserializeVMwareNetworkProfileUpdate(property0.Value);
+                            networkProfile = VMwareNetworkProfileUpdate.DeserializeVMwareNetworkProfileUpdate(property0.Value, options);
                             continue;
                         }
                     }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVmInstancePatch(hardwareProfile.Value, storageProfile.Value, networkProfile.Value, serializedAdditionalRawData);
+            return new VMwareVmInstancePatch(hardwareProfile, storageProfile, networkProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareVmInstancePatch>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareVmInstancePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareVmInstancePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeVMwareVmInstancePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareVmInstancePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareVmInstancePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

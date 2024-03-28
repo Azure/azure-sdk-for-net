@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticAcls)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiskPoolIscsiTargetPortalGroupAcl>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Luns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedDiskIscsiLun>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> managedBy = default;
-            Optional<IList<string>> managedByExtended = default;
+            string managedBy = default;
+            IList<string> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<DiskPoolIscsiTargetPortalGroupAcl>> staticAcls = default;
-            Optional<IList<ManagedDiskIscsiLun>> luns = default;
+            SystemData systemData = default;
+            IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls = default;
+            IList<ManagedDiskIscsiLun> luns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                             List<DiskPoolIscsiTargetPortalGroupAcl> array = new List<DiskPoolIscsiTargetPortalGroupAcl>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiskPoolIscsiTargetPortalGroupAcl.DeserializeDiskPoolIscsiTargetPortalGroupAcl(item));
+                                array.Add(DiskPoolIscsiTargetPortalGroupAcl.DeserializeDiskPoolIscsiTargetPortalGroupAcl(item, options));
                             }
                             staticAcls = array;
                             continue;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                             List<ManagedDiskIscsiLun> array = new List<ManagedDiskIscsiLun>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDiskIscsiLun.DeserializeManagedDiskIscsiLun(item));
+                                array.Add(ManagedDiskIscsiLun.DeserializeManagedDiskIscsiLun(item, options));
                             }
                             luns = array;
                             continue;
@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolIscsiTargetPatch(id, name, type, systemData.Value, managedBy.Value, Optional.ToList(managedByExtended), Optional.ToList(staticAcls), Optional.ToList(luns), serializedAdditionalRawData);
+            return new DiskPoolIscsiTargetPatch(
+                id,
+                name,
+                type,
+                systemData,
+                managedBy,
+                managedByExtended ?? new ChangeTrackingList<string>(),
+                staticAcls ?? new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>(),
+                luns ?? new ChangeTrackingList<ManagedDiskIscsiLun>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolIscsiTargetPatch>.Write(ModelReaderWriterOptions options)
@@ -236,7 +245,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +261,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                         return DeserializeDiskPoolIscsiTargetPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

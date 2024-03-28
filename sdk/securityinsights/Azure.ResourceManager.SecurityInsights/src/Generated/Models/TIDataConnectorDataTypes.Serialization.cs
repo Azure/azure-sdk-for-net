@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<TIDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TIDataConnectorDataTypes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TIDataConnectorDataTypes)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Indicators))
             {
                 writer.WritePropertyName("indicators"u8);
-                writer.WriteObjectValue(Indicators);
+                writer.WriteObjectValue<TIDataConnectorDataTypesIndicators>(Indicators, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<TIDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TIDataConnectorDataTypes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TIDataConnectorDataTypes)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<TIDataConnectorDataTypesIndicators> indicators = default;
+            TIDataConnectorDataTypesIndicators indicators = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    indicators = TIDataConnectorDataTypesIndicators.DeserializeTIDataConnectorDataTypesIndicators(property.Value);
+                    indicators = TIDataConnectorDataTypesIndicators.DeserializeTIDataConnectorDataTypesIndicators(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TIDataConnectorDataTypes(indicators.Value, serializedAdditionalRawData);
+            return new TIDataConnectorDataTypes(indicators, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TIDataConnectorDataTypes>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TIDataConnectorDataTypes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TIDataConnectorDataTypes)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeTIDataConnectorDataTypes(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TIDataConnectorDataTypes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TIDataConnectorDataTypes)} does not support reading '{options.Format}' format.");
             }
         }
 

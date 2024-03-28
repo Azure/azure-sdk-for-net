@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,16 +105,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureIaaSVMJob": return IaasVmBackupJob.DeserializeIaasVmBackupJob(element);
-                    case "AzureIaaSVMJobV2": return IaasVmBackupJobV2.DeserializeIaasVmBackupJobV2(element);
-                    case "AzureStorageJob": return StorageBackupJob.DeserializeStorageBackupJob(element);
-                    case "AzureWorkloadJob": return WorkloadBackupJob.DeserializeWorkloadBackupJob(element);
-                    case "DpmJob": return DpmBackupJob.DeserializeDpmBackupJob(element);
-                    case "MabJob": return MabBackupJob.DeserializeMabBackupJob(element);
-                    case "VaultJob": return VaultBackupJob.DeserializeVaultBackupJob(element);
+                    case "AzureIaaSVMJob": return IaasVmBackupJob.DeserializeIaasVmBackupJob(element, options);
+                    case "AzureIaaSVMJobV2": return IaasVmBackupJobV2.DeserializeIaasVmBackupJobV2(element, options);
+                    case "AzureStorageJob": return StorageBackupJob.DeserializeStorageBackupJob(element, options);
+                    case "AzureWorkloadJob": return WorkloadBackupJob.DeserializeWorkloadBackupJob(element, options);
+                    case "DpmJob": return DpmBackupJob.DeserializeDpmBackupJob(element, options);
+                    case "MabJob": return MabBackupJob.DeserializeMabBackupJob(element, options);
+                    case "VaultJob": return VaultBackupJob.DeserializeVaultBackupJob(element, options);
                 }
             }
-            return UnknownJob.DeserializeUnknownJob(element);
+            return UnknownJob.DeserializeUnknownJob(element, options);
         }
 
         BinaryData IPersistableModel<BackupGenericJob>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupGenericJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericJob)} does not support reading '{options.Format}' format.");
             }
         }
 

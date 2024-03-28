@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(DependsOnProfile))
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
-                writer.WriteObjectValue(DependsOnProfile);
+                writer.WriteObjectValue<DependsOnProfile>(DependsOnProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ArmTemplate": return AzureOperatorNexusNetworkFunctionArmTemplateApplication.DeserializeAzureOperatorNexusNetworkFunctionArmTemplateApplication(element);
-                    case "ImageFile": return AzureOperatorNexusNetworkFunctionImageApplication.DeserializeAzureOperatorNexusNetworkFunctionImageApplication(element);
+                    case "ArmTemplate": return AzureOperatorNexusNetworkFunctionArmTemplateApplication.DeserializeAzureOperatorNexusNetworkFunctionArmTemplateApplication(element, options);
+                    case "ImageFile": return AzureOperatorNexusNetworkFunctionImageApplication.DeserializeAzureOperatorNexusNetworkFunctionImageApplication(element, options);
                 }
             }
-            return UnknownAzureOperatorNexusNetworkFunctionApplication.DeserializeUnknownAzureOperatorNexusNetworkFunctionApplication(element);
+            return UnknownAzureOperatorNexusNetworkFunctionApplication.DeserializeUnknownAzureOperatorNexusNetworkFunctionApplication(element, options);
         }
 
         BinaryData IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>.Write(ModelReaderWriterOptions options)
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeAzureOperatorNexusNetworkFunctionApplication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support reading '{options.Format}' format.");
             }
         }
 

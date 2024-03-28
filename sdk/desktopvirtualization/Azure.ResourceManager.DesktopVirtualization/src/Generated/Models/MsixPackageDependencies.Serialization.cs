@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<MsixPackageDependencies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<MsixPackageDependencies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<string> dependencyName = default;
-            Optional<string> publisher = default;
-            Optional<string> minVersion = default;
+            string dependencyName = default;
+            string publisher = default;
+            string minVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MsixPackageDependencies(dependencyName.Value, publisher.Value, minVersion.Value, serializedAdditionalRawData);
+            return new MsixPackageDependencies(dependencyName, publisher, minVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MsixPackageDependencies>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeMsixPackageDependencies(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support reading '{options.Format}' format.");
             }
         }
 

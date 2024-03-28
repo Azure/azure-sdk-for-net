@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(BodyLink))
             {
                 writer.WritePropertyName("bodyLink"u8);
-                writer.WriteObjectValue(BodyLink);
+                writer.WriteObjectValue<LogicContentLink>(BodyLink, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<BinaryData> headers = default;
-            Optional<int> statusCode = default;
-            Optional<LogicContentLink> bodyLink = default;
+            BinaryData headers = default;
+            int? statusCode = default;
+            LogicContentLink bodyLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    bodyLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    bodyLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowResponse(headers.Value, Optional.ToNullable(statusCode), bodyLink.Value, serializedAdditionalRawData);
+            return new LogicWorkflowResponse(headers, statusCode, bodyLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowResponse>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicWorkflowResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

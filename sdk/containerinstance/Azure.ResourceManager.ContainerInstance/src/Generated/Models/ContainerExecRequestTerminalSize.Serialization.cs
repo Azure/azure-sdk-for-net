@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerExecRequestTerminalSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerExecRequestTerminalSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<int> rows = default;
-            Optional<int> cols = default;
+            int? rows = default;
+            int? cols = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerExecRequestTerminalSize(Optional.ToNullable(rows), Optional.ToNullable(cols), serializedAdditionalRawData);
+            return new ContainerExecRequestTerminalSize(rows, cols, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerExecRequestTerminalSize>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerExecRequestTerminalSize(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support reading '{options.Format}' format.");
             }
         }
 

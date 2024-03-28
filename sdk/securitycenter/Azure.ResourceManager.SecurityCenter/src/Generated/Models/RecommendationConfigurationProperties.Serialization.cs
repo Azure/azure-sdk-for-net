@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendationConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendationConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendationConfigurationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendationConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendationConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendationConfigurationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IotSecurityRecommendationType recommendationType = default;
-            Optional<string> name = default;
+            string name = default;
             RecommendationConfigStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendationConfigurationProperties(recommendationType, name.Value, status, serializedAdditionalRawData);
+            return new RecommendationConfigurationProperties(recommendationType, name, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendationConfigurationProperties>.Write(ModelReaderWriterOptions options)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendationConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendationConfigurationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeRecommendationConfigurationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendationConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendationConfigurationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

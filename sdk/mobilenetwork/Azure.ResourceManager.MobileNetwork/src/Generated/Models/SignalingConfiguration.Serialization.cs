@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalingConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalingConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(NasReroute))
             {
                 writer.WritePropertyName("nasReroute"u8);
-                writer.WriteObjectValue(NasReroute);
+                writer.WriteObjectValue<NASRerouteConfiguration>(NasReroute, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalingConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalingConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<NASRerouteConfiguration> nasReroute = default;
+            NASRerouteConfiguration nasReroute = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    nasReroute = NASRerouteConfiguration.DeserializeNASRerouteConfiguration(property.Value);
+                    nasReroute = NASRerouteConfiguration.DeserializeNASRerouteConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalingConfiguration(nasReroute.Value, serializedAdditionalRawData);
+            return new SignalingConfiguration(nasReroute, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalingConfiguration>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SignalingConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalingConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeSignalingConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignalingConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalingConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

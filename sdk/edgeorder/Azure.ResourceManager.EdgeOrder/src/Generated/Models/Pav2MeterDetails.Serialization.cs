@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<Pav2MeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<Pav2MeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<Guid> meterGuid = default;
+            Guid? meterGuid = default;
             BillingType billingType = default;
-            Optional<double> multiplier = default;
-            Optional<EdgeOrderProductChargingType> chargingType = default;
+            double? multiplier = default;
+            EdgeOrderProductChargingType? chargingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Pav2MeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType), serializedAdditionalRawData, Optional.ToNullable(meterGuid));
+            return new Pav2MeterDetails(billingType, multiplier, chargingType, serializedAdditionalRawData, meterGuid);
         }
 
         BinaryData IPersistableModel<Pav2MeterDetails>.Write(ModelReaderWriterOptions options)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializePav2MeterDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

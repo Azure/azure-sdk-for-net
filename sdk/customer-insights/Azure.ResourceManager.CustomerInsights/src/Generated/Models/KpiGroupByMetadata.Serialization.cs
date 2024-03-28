@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<KpiGroupByMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<KpiGroupByMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> displayName = default;
-            Optional<string> fieldName = default;
-            Optional<string> fieldType = default;
+            IReadOnlyDictionary<string, string> displayName = default;
+            string fieldName = default;
+            string fieldType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiGroupByMetadata(Optional.ToDictionary(displayName), fieldName.Value, fieldType.Value, serializedAdditionalRawData);
+            return new KpiGroupByMetadata(displayName ?? new ChangeTrackingDictionary<string, string>(), fieldName, fieldType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiGroupByMetadata>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeKpiGroupByMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

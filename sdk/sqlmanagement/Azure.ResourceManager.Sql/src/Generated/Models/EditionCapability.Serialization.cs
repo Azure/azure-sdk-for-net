@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<EditionCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EditionCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EditionCapability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedServiceLevelObjectives)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceObjectiveCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(ReadScale))
             {
                 writer.WritePropertyName("readScale"u8);
-                writer.WriteObjectValue(ReadScale);
+                writer.WriteObjectValue<ReadScaleCapability>(ReadScale, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageCapabilities))
             {
@@ -57,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageCapabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<EditionCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EditionCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EditionCapability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,13 +111,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ServiceObjectiveCapability>> supportedServiceLevelObjectives = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<ReadScaleCapability> readScale = default;
-            Optional<IReadOnlyList<StorageCapability>> supportedStorageCapabilities = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default;
+            bool? zoneRedundant = default;
+            ReadScaleCapability readScale = default;
+            IReadOnlyList<StorageCapability> supportedStorageCapabilities = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +136,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ServiceObjectiveCapability> array = new List<ServiceObjectiveCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceObjectiveCapability.DeserializeServiceObjectiveCapability(item));
+                        array.Add(ServiceObjectiveCapability.DeserializeServiceObjectiveCapability(item, options));
                     }
                     supportedServiceLevelObjectives = array;
                     continue;
@@ -154,7 +156,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    readScale = ReadScaleCapability.DeserializeReadScaleCapability(property.Value);
+                    readScale = ReadScaleCapability.DeserializeReadScaleCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedStorageCapabilities"u8))
@@ -166,7 +168,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<StorageCapability> array = new List<StorageCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCapability.DeserializeStorageCapability(item));
+                        array.Add(StorageCapability.DeserializeStorageCapability(item, options));
                     }
                     supportedStorageCapabilities = array;
                     continue;
@@ -191,7 +193,161 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EditionCapability(name.Value, Optional.ToList(supportedServiceLevelObjectives), Optional.ToNullable(zoneRedundant), readScale.Value, Optional.ToList(supportedStorageCapabilities), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new EditionCapability(
+                name,
+                supportedServiceLevelObjectives ?? new ChangeTrackingList<ServiceObjectiveCapability>(),
+                zoneRedundant,
+                readScale,
+                supportedStorageCapabilities ?? new ChangeTrackingList<StorageCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedServiceLevelObjectives), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedServiceLevelObjectives) || hasPropertyOverride)
+            {
+                if (SupportedServiceLevelObjectives.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedServiceLevelObjectives: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedServiceLevelObjectives)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedServiceLevelObjectives: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundant), out propertyOverride);
+            if (Optional.IsDefined(IsZoneRedundant) || hasPropertyOverride)
+            {
+                builder.Append("  zoneRedundant: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReadScale), out propertyOverride);
+            if (Optional.IsDefined(ReadScale) || hasPropertyOverride)
+            {
+                builder.Append("  readScale: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, ReadScale, options, 2, false, "  readScale: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedStorageCapabilities), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedStorageCapabilities) || hasPropertyOverride)
+            {
+                if (SupportedStorageCapabilities.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedStorageCapabilities: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedStorageCapabilities)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedStorageCapabilities: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<EditionCapability>.Write(ModelReaderWriterOptions options)
@@ -202,8 +358,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(EditionCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EditionCapability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +377,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeEditionCapability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EditionCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EditionCapability)} does not support reading '{options.Format}' format.");
             }
         }
 

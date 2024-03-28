@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionLogicApp>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionLogicApp>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> logicAppResourceId = default;
-            Optional<Uri> uri = default;
+            ResourceIdentifier logicAppResourceId = default;
+            Uri uri = default;
             ActionType actionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationActionLogicApp(actionType, serializedAdditionalRawData, logicAppResourceId.Value, uri.Value);
+            return new SecurityAutomationActionLogicApp(actionType, serializedAdditionalRawData, logicAppResourceId, uri);
         }
 
         BinaryData IPersistableModel<SecurityAutomationActionLogicApp>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAutomationActionLogicApp(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support reading '{options.Format}' format.");
             }
         }
 

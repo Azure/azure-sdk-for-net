@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxContactDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxContactDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxContactDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in NotificationPreference)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NotificationPreference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxContactDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxContactDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxContactDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             string contactName = default;
             string phone = default;
-            Optional<string> phoneExtension = default;
-            Optional<string> mobile = default;
+            string phoneExtension = default;
+            string mobile = default;
             IList<string> emailList = default;
-            Optional<IList<NotificationPreference>> notificationPreference = default;
+            IList<NotificationPreference> notificationPreference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<NotificationPreference> array = new List<NotificationPreference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.NotificationPreference.DeserializeNotificationPreference(item));
+                        array.Add(Models.NotificationPreference.DeserializeNotificationPreference(item, options));
                     }
                     notificationPreference = array;
                     continue;
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxContactDetails(contactName, phone, phoneExtension.Value, mobile.Value, emailList, Optional.ToList(notificationPreference), serializedAdditionalRawData);
+            return new DataBoxContactDetails(
+                contactName,
+                phone,
+                phoneExtension,
+                mobile,
+                emailList,
+                notificationPreference ?? new ChangeTrackingList<NotificationPreference>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxContactDetails>.Write(ModelReaderWriterOptions options)
@@ -167,7 +174,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxContactDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxContactDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +190,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxContactDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxContactDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxContactDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

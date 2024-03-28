@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceOperation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceOperation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceOperation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display);
+                writer.WriteObjectValue<ResourceOperationDisplay>(Display, options);
             }
             if (Optional.IsDefined(Origin))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceOperation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceOperation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceOperation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceOperationDisplay> display = default;
-            Optional<string> origin = default;
+            string name = default;
+            ResourceOperationDisplay display = default;
+            string origin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    display = ResourceOperationDisplay.DeserializeResourceOperationDisplay(property.Value);
+                    display = ResourceOperationDisplay.DeserializeResourceOperationDisplay(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceOperation(name.Value, display.Value, origin.Value, serializedAdditionalRawData);
+            return new ResourceOperation(name, display, origin, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceOperation>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceOperation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceOperation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                         return DeserializeResourceOperation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceOperation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceOperation)} does not support reading '{options.Format}' format.");
             }
         }
 

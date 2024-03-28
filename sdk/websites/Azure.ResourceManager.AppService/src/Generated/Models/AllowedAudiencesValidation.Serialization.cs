@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AllowedAudiencesValidation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AllowedAudiencesValidation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AllowedAudiencesValidation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AllowedAudiencesValidation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AllowedAudiencesValidation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AllowedAudiencesValidation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> allowedAudiences = default;
+            IList<string> allowedAudiences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +101,57 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AllowedAudiencesValidation(Optional.ToList(allowedAudiences), serializedAdditionalRawData);
+            return new AllowedAudiencesValidation(allowedAudiences ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedAudiences), out propertyOverride);
+            if (Optional.IsCollectionDefined(AllowedAudiences) || hasPropertyOverride)
+            {
+                if (AllowedAudiences.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  allowedAudiences: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedAudiences)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<AllowedAudiencesValidation>.Write(ModelReaderWriterOptions options)
@@ -110,8 +162,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AllowedAudiencesValidation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AllowedAudiencesValidation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +181,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAllowedAudiencesValidation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AllowedAudiencesValidation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AllowedAudiencesValidation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecondaryConsentEnabled>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecondaryConsentEnabled)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecondaryConsentEnabled)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecondaryConsentEnabled>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecondaryConsentEnabled)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecondaryConsentEnabled)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> type = default;
+            string description = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecondaryConsentEnabled(description.Value, type.Value, serializedAdditionalRawData);
+            return new SecondaryConsentEnabled(description, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecondaryConsentEnabled>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Support.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecondaryConsentEnabled)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecondaryConsentEnabled)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Support.Models
                         return DeserializeSecondaryConsentEnabled(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecondaryConsentEnabled)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecondaryConsentEnabled)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<AcknowledgeOfferNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcknowledgeOfferNotificationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AcknowledgeOfferNotificationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<AcknowledgeOfferNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcknowledgeOfferNotificationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AcknowledgeOfferNotificationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<bool> acknowledge = default;
-            Optional<bool> dismiss = default;
-            Optional<bool> removeOffer = default;
-            Optional<IList<string>> addPlans = default;
-            Optional<IList<string>> removePlans = default;
+            bool? acknowledge = default;
+            bool? dismiss = default;
+            bool? removeOffer = default;
+            IList<string> addPlans = default;
+            IList<string> removePlans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +184,13 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcknowledgeOfferNotificationContent(Optional.ToNullable(acknowledge), Optional.ToNullable(dismiss), Optional.ToNullable(removeOffer), Optional.ToList(addPlans), Optional.ToList(removePlans), serializedAdditionalRawData);
+            return new AcknowledgeOfferNotificationContent(
+                acknowledge,
+                dismiss,
+                removeOffer,
+                addPlans ?? new ChangeTrackingList<string>(),
+                removePlans ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcknowledgeOfferNotificationContent>.Write(ModelReaderWriterOptions options)
@@ -196,7 +202,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AcknowledgeOfferNotificationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcknowledgeOfferNotificationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -212,7 +218,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeAcknowledgeOfferNotificationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcknowledgeOfferNotificationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcknowledgeOfferNotificationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

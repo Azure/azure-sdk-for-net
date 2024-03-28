@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageTableDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageTableDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> tableName = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<string> name = default;
+            string tableName = default;
+            ResourceIdentifier storageAccountResourceId = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleStorageTableDestination(tableName.Value, storageAccountResourceId.Value, name.Value, serializedAdditionalRawData);
+            return new DataCollectionRuleStorageTableDestination(tableName, storageAccountResourceId, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleStorageTableDestination>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDataCollectionRuleStorageTableDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

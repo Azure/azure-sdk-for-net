@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<string> domainFqdn = default;
-            Optional<string> ouPath = default;
-            Optional<string> clusterBootstrapAccount = default;
-            Optional<string> clusterOperatorAccount = default;
-            Optional<string> sqlServiceAccount = default;
-            Optional<string> fileShareWitnessPath = default;
-            Optional<Uri> storageAccountUrl = default;
-            Optional<string> storageAccountPrimaryKey = default;
-            Optional<SqlVmClusterSubnetType> clusterSubnetType = default;
+            string domainFqdn = default;
+            string ouPath = default;
+            string clusterBootstrapAccount = default;
+            string clusterOperatorAccount = default;
+            string sqlServiceAccount = default;
+            string fileShareWitnessPath = default;
+            Uri storageAccountUrl = default;
+            string storageAccountPrimaryKey = default;
+            SqlVmClusterSubnetType? clusterSubnetType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsServerFailoverClusterDomainProfile(domainFqdn.Value, ouPath.Value, clusterBootstrapAccount.Value, clusterOperatorAccount.Value, sqlServiceAccount.Value, fileShareWitnessPath.Value, storageAccountUrl.Value, storageAccountPrimaryKey.Value, Optional.ToNullable(clusterSubnetType), serializedAdditionalRawData);
+            return new WindowsServerFailoverClusterDomainProfile(
+                domainFqdn,
+                ouPath,
+                clusterBootstrapAccount,
+                clusterOperatorAccount,
+                sqlServiceAccount,
+                fileShareWitnessPath,
+                storageAccountUrl,
+                storageAccountPrimaryKey,
+                clusterSubnetType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsServerFailoverClusterDomainProfile>.Write(ModelReaderWriterOptions options)
@@ -193,7 +203,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +219,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeWindowsServerFailoverClusterDomainProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RetentionDuration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RetentionDuration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RetentionDuration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RetentionDuration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RetentionDuration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RetentionDuration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<RetentionDurationType> durationType = default;
+            int? count = default;
+            RetentionDurationType? durationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RetentionDuration(Optional.ToNullable(count), Optional.ToNullable(durationType), serializedAdditionalRawData);
+            return new RetentionDuration(count, durationType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RetentionDuration>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RetentionDuration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RetentionDuration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeRetentionDuration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RetentionDuration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RetentionDuration)} does not support reading '{options.Format}' format.");
             }
         }
 

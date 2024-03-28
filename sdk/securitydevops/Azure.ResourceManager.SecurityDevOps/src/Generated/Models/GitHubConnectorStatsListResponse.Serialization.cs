@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitHubConnectorStatsListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubConnectorStatsListResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubConnectorStatsListResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GitHubConnectorStats>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitHubConnectorStatsListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubConnectorStatsListResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubConnectorStatsListResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GitHubConnectorStats>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<GitHubConnectorStats> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<GitHubConnectorStats> array = new List<GitHubConnectorStats>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GitHubConnectorStats.DeserializeGitHubConnectorStats(item));
+                        array.Add(GitHubConnectorStats.DeserializeGitHubConnectorStats(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubConnectorStatsListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GitHubConnectorStatsListResponse(value ?? new ChangeTrackingList<GitHubConnectorStats>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubConnectorStatsListResponse>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GitHubConnectorStatsListResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubConnectorStatsListResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                         return DeserializeGitHubConnectorStatsListResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitHubConnectorStatsListResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubConnectorStatsListResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

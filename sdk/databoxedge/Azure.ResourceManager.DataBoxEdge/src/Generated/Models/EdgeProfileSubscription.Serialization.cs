@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeProfileSubscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeProfileSubscription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeProfileSubscription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in RegisteredFeatures)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SubscriptionRegisteredFeatures>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeProfileSubscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeProfileSubscription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeProfileSubscription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<Guid> registrationId = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<DataBoxEdgeSubscriptionState> state = default;
-            Optional<string> registrationDate = default;
-            Optional<string> subscriptionId = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> locationPlacementId = default;
-            Optional<string> quotaId = default;
-            Optional<string> serializedDetails = default;
-            Optional<IReadOnlyList<SubscriptionRegisteredFeatures>> registeredFeatures = default;
+            Guid? registrationId = default;
+            ResourceIdentifier id = default;
+            DataBoxEdgeSubscriptionState? state = default;
+            string registrationDate = default;
+            string subscriptionId = default;
+            Guid? tenantId = default;
+            string locationPlacementId = default;
+            string quotaId = default;
+            string serializedDetails = default;
+            IReadOnlyList<SubscriptionRegisteredFeatures> registeredFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             List<SubscriptionRegisteredFeatures> array = new List<SubscriptionRegisteredFeatures>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubscriptionRegisteredFeatures.DeserializeSubscriptionRegisteredFeatures(item));
+                                array.Add(SubscriptionRegisteredFeatures.DeserializeSubscriptionRegisteredFeatures(item, options));
                             }
                             registeredFeatures = array;
                             continue;
@@ -229,7 +229,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeProfileSubscription(Optional.ToNullable(registrationId), id.Value, Optional.ToNullable(state), registrationDate.Value, subscriptionId.Value, Optional.ToNullable(tenantId), locationPlacementId.Value, quotaId.Value, serializedDetails.Value, Optional.ToList(registeredFeatures), serializedAdditionalRawData);
+            return new EdgeProfileSubscription(
+                registrationId,
+                id,
+                state,
+                registrationDate,
+                subscriptionId,
+                tenantId,
+                locationPlacementId,
+                quotaId,
+                serializedDetails,
+                registeredFeatures ?? new ChangeTrackingList<SubscriptionRegisteredFeatures>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeProfileSubscription>.Write(ModelReaderWriterOptions options)
@@ -241,7 +252,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeProfileSubscription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeProfileSubscription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -257,7 +268,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeProfileSubscription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeProfileSubscription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeProfileSubscription)} does not support reading '{options.Format}' format.");
             }
         }
 

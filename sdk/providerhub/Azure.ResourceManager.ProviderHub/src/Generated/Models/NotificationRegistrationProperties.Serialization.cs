@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in NotificationEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NotificationEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<NotificationMode> notificationMode = default;
-            Optional<MessageScope> messageScope = default;
-            Optional<IList<string>> includedEvents = default;
-            Optional<IList<NotificationEndpoint>> notificationEndpoints = default;
-            Optional<ProviderHubProvisioningState> provisioningState = default;
+            NotificationMode? notificationMode = default;
+            MessageScope? messageScope = default;
+            IList<string> includedEvents = default;
+            IList<NotificationEndpoint> notificationEndpoints = default;
+            ProviderHubProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<NotificationEndpoint> array = new List<NotificationEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationEndpoint.DeserializeNotificationEndpoint(item));
+                        array.Add(NotificationEndpoint.DeserializeNotificationEndpoint(item, options));
                     }
                     notificationEndpoints = array;
                     continue;
@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationRegistrationProperties(Optional.ToNullable(notificationMode), Optional.ToNullable(messageScope), Optional.ToList(includedEvents), Optional.ToList(notificationEndpoints), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NotificationRegistrationProperties(
+                notificationMode,
+                messageScope,
+                includedEvents ?? new ChangeTrackingList<string>(),
+                notificationEndpoints ?? new ChangeTrackingList<NotificationEndpoint>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationRegistrationProperties>.Write(ModelReaderWriterOptions options)
@@ -181,7 +187,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +203,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeNotificationRegistrationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

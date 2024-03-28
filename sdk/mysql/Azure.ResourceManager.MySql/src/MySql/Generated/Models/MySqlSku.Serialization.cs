@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.MySql.Models
                 return null;
             }
             string name = default;
-            Optional<MySqlSkuTier> tier = default;
-            Optional<int> capacity = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
+            MySqlSkuTier? tier = default;
+            int? capacity = default;
+            string size = default;
+            string family = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), size.Value, family.Value, serializedAdditionalRawData);
+            return new MySqlSku(
+                name,
+                tier,
+                capacity,
+                size,
+                family,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlSku>.Write(ModelReaderWriterOptions options)
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlSku)} does not support reading '{options.Format}' format.");
             }
         }
 

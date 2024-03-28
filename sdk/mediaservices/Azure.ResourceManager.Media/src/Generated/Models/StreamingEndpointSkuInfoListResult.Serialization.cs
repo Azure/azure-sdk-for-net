@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointSkuInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingEndpointSkuInfoListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingEndpointSkuInfoListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingEndpointSkuInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointSkuInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingEndpointSkuInfoListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingEndpointSkuInfoListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingEndpointSkuInfo>> value = default;
+            IReadOnlyList<StreamingEndpointSkuInfo> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingEndpointSkuInfo> array = new List<StreamingEndpointSkuInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo(item));
+                        array.Add(StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingEndpointSkuInfoListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new StreamingEndpointSkuInfoListResult(value ?? new ChangeTrackingList<StreamingEndpointSkuInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingEndpointSkuInfoListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingEndpointSkuInfoListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingEndpointSkuInfoListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingEndpointSkuInfoListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingEndpointSkuInfoListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingEndpointSkuInfoListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

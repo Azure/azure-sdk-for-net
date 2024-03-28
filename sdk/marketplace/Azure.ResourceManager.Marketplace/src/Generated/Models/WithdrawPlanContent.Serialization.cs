@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<WithdrawPlanContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<WithdrawPlanContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> planId = default;
-            Optional<string> publisherId = default;
+            string planId = default;
+            string publisherId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WithdrawPlanContent(planId.Value, publisherId.Value, serializedAdditionalRawData);
+            return new WithdrawPlanContent(planId, publisherId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WithdrawPlanContent>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeWithdrawPlanContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support reading '{options.Format}' format.");
             }
         }
 

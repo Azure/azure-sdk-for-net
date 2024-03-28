@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -22,9 +21,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> ename = default;
-            Optional<string> evalue = default;
-            Optional<IReadOnlyList<string>> traceback = default;
+            string ename = default;
+            string evalue = default;
+            IReadOnlyList<string> traceback = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ename"u8))
@@ -52,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookError(ename.Value, evalue.Value, Optional.ToList(traceback));
+            return new RunNotebookError(ename, evalue, traceback ?? new ChangeTrackingList<string>());
         }
 
         internal partial class RunNotebookErrorConverter : JsonConverter<RunNotebookError>

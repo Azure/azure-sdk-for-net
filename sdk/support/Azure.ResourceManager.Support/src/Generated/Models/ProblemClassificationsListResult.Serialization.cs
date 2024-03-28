@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProblemClassificationsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProblemClassificationsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProblemClassificationData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProblemClassificationsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProblemClassificationsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProblemClassificationData>> value = default;
+            IReadOnlyList<ProblemClassificationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<ProblemClassificationData> array = new List<ProblemClassificationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProblemClassificationData.DeserializeProblemClassificationData(item));
+                        array.Add(ProblemClassificationData.DeserializeProblemClassificationData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProblemClassificationsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ProblemClassificationsListResult(value ?? new ChangeTrackingList<ProblemClassificationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProblemClassificationsListResult>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Support.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProblemClassificationsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProblemClassificationsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.Support.Models
                         return DeserializeProblemClassificationsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProblemClassificationsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProblemClassificationsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

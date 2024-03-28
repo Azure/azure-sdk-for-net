@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorSmsReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorSmsReceiver)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorSmsReceiver)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorSmsReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorSmsReceiver)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorSmsReceiver)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             string countryCode = default;
             string phoneNumber = default;
-            Optional<MonitorReceiverStatus> status = default;
+            MonitorReceiverStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorSmsReceiver(name, countryCode, phoneNumber, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new MonitorSmsReceiver(name, countryCode, phoneNumber, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorSmsReceiver>.Write(ModelReaderWriterOptions options)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorSmsReceiver)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorSmsReceiver)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorSmsReceiver(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorSmsReceiver)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorSmsReceiver)} does not support reading '{options.Format}' format.");
             }
         }
 

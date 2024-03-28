@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailMessageEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailMessageEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -273,34 +273,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<IReadOnlyList<string>> fileEntityIds = default;
-            Optional<string> recipient = default;
-            Optional<IReadOnlyList<Uri>> urls = default;
-            Optional<IReadOnlyList<string>> threats = default;
-            Optional<string> p1Sender = default;
-            Optional<string> p1SenderDisplayName = default;
-            Optional<string> p1SenderDomain = default;
-            Optional<IPAddress> senderIP = default;
-            Optional<string> p2Sender = default;
-            Optional<string> p2SenderDisplayName = default;
-            Optional<string> p2SenderDomain = default;
-            Optional<DateTimeOffset> receiveDate = default;
-            Optional<Guid> networkMessageId = default;
-            Optional<string> internetMessageId = default;
-            Optional<string> subject = default;
-            Optional<string> language = default;
-            Optional<IReadOnlyList<string>> threatDetectionMethods = default;
-            Optional<int> bodyFingerprintBin1 = default;
-            Optional<int> bodyFingerprintBin2 = default;
-            Optional<int> bodyFingerprintBin3 = default;
-            Optional<int> bodyFingerprintBin4 = default;
-            Optional<int> bodyFingerprintBin5 = default;
-            Optional<AntispamMailDirection> antispamDirection = default;
-            Optional<SecurityInsightsMailMessageDeliveryAction> deliveryAction = default;
-            Optional<SecurityInsightsMailMessageDeliveryLocation> deliveryLocation = default;
+            SystemData systemData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
+            string friendlyName = default;
+            IReadOnlyList<string> fileEntityIds = default;
+            string recipient = default;
+            IReadOnlyList<Uri> urls = default;
+            IReadOnlyList<string> threats = default;
+            string p1Sender = default;
+            string p1SenderDisplayName = default;
+            string p1SenderDomain = default;
+            IPAddress senderIP = default;
+            string p2Sender = default;
+            string p2SenderDisplayName = default;
+            string p2SenderDomain = default;
+            DateTimeOffset? receiveDate = default;
+            Guid? networkMessageId = default;
+            string internetMessageId = default;
+            string subject = default;
+            string language = default;
+            IReadOnlyList<string> threatDetectionMethods = default;
+            int? bodyFingerprintBin1 = default;
+            int? bodyFingerprintBin2 = default;
+            int? bodyFingerprintBin3 = default;
+            int? bodyFingerprintBin4 = default;
+            int? bodyFingerprintBin5 = default;
+            AntispamMailDirection? antispamDirection = default;
+            SecurityInsightsMailMessageDeliveryAction? deliveryAction = default;
+            SecurityInsightsMailMessageDeliveryLocation? deliveryLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -590,7 +590,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsMailMessageEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(fileEntityIds), recipient.Value, Optional.ToList(urls), Optional.ToList(threats), p1Sender.Value, p1SenderDisplayName.Value, p1SenderDomain.Value, senderIP.Value, p2Sender.Value, p2SenderDisplayName.Value, p2SenderDomain.Value, Optional.ToNullable(receiveDate), Optional.ToNullable(networkMessageId), internetMessageId.Value, subject.Value, language.Value, Optional.ToList(threatDetectionMethods), Optional.ToNullable(bodyFingerprintBin1), Optional.ToNullable(bodyFingerprintBin2), Optional.ToNullable(bodyFingerprintBin3), Optional.ToNullable(bodyFingerprintBin4), Optional.ToNullable(bodyFingerprintBin5), Optional.ToNullable(antispamDirection), Optional.ToNullable(deliveryAction), Optional.ToNullable(deliveryLocation));
+            return new SecurityInsightsMailMessageEntity(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName,
+                fileEntityIds ?? new ChangeTrackingList<string>(),
+                recipient,
+                urls ?? new ChangeTrackingList<Uri>(),
+                threats ?? new ChangeTrackingList<string>(),
+                p1Sender,
+                p1SenderDisplayName,
+                p1SenderDomain,
+                senderIP,
+                p2Sender,
+                p2SenderDisplayName,
+                p2SenderDomain,
+                receiveDate,
+                networkMessageId,
+                internetMessageId,
+                subject,
+                language,
+                threatDetectionMethods ?? new ChangeTrackingList<string>(),
+                bodyFingerprintBin1,
+                bodyFingerprintBin2,
+                bodyFingerprintBin3,
+                bodyFingerprintBin4,
+                bodyFingerprintBin5,
+                antispamDirection,
+                deliveryAction,
+                deliveryLocation);
         }
 
         BinaryData IPersistableModel<SecurityInsightsMailMessageEntity>.Write(ModelReaderWriterOptions options)
@@ -602,7 +635,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -618,7 +651,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsMailMessageEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsMailMessageEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

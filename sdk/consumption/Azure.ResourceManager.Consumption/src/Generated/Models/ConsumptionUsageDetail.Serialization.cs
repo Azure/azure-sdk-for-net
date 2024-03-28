@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "legacy": return ConsumptionLegacyUsageDetail.DeserializeConsumptionLegacyUsageDetail(element);
-                    case "modern": return ConsumptionModernUsageDetail.DeserializeConsumptionModernUsageDetail(element);
+                    case "legacy": return ConsumptionLegacyUsageDetail.DeserializeConsumptionLegacyUsageDetail(element, options);
+                    case "modern": return ConsumptionModernUsageDetail.DeserializeConsumptionModernUsageDetail(element, options);
                 }
             }
-            return UnknownUsageDetail.DeserializeUnknownUsageDetail(element);
+            return UnknownUsageDetail.DeserializeUnknownUsageDetail(element, options);
         }
 
         BinaryData IPersistableModel<ConsumptionUsageDetail>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionUsageDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

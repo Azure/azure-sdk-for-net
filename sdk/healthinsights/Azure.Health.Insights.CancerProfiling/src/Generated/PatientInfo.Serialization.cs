@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
@@ -23,7 +22,7 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<PatientInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatientInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatientInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +42,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 writer.WriteStartArray();
                 foreach (var item in ClinicalInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClinicalCodedElement>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +69,7 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<PatientInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatientInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatientInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,9 +84,9 @@ namespace Azure.Health.Insights.CancerProfiling
             {
                 return null;
             }
-            Optional<PatientInfoSex> sex = default;
-            Optional<DateTimeOffset> birthDate = default;
-            Optional<IList<ClinicalCodedElement>> clinicalInfo = default;
+            PatientInfoSex? sex = default;
+            DateTimeOffset? birthDate = default;
+            IList<ClinicalCodedElement> clinicalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +118,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     List<ClinicalCodedElement> array = new List<ClinicalCodedElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalCodedElement.DeserializeClinicalCodedElement(item));
+                        array.Add(ClinicalCodedElement.DeserializeClinicalCodedElement(item, options));
                     }
                     clinicalInfo = array;
                     continue;
@@ -130,7 +129,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatientInfo(Optional.ToNullable(sex), Optional.ToNullable(birthDate), Optional.ToList(clinicalInfo), serializedAdditionalRawData);
+            return new PatientInfo(sex, birthDate, clinicalInfo ?? new ChangeTrackingList<ClinicalCodedElement>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientInfo>.Write(ModelReaderWriterOptions options)
@@ -142,7 +141,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PatientInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatientInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +157,7 @@ namespace Azure.Health.Insights.CancerProfiling
                         return DeserializePatientInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PatientInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatientInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -176,7 +175,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<PatientInfo>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

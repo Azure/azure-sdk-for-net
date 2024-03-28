@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<FabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricSpecificDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricSpecificDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<FabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricSpecificDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricSpecificDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Azure": return SiteRecoveryFabricProviderSpecificDetails.DeserializeSiteRecoveryFabricProviderSpecificDetails(element);
-                    case "HyperVSite": return HyperVSiteDetails.DeserializeHyperVSiteDetails(element);
-                    case "InMageRcm": return InMageRcmFabricSpecificDetails.DeserializeInMageRcmFabricSpecificDetails(element);
-                    case "VMM": return VmmFabricDetails.DeserializeVmmFabricDetails(element);
-                    case "VMware": return VMwareDetails.DeserializeVMwareDetails(element);
-                    case "VMwareV2": return VMwareV2FabricSpecificDetails.DeserializeVMwareV2FabricSpecificDetails(element);
+                    case "Azure": return SiteRecoveryFabricProviderSpecificDetails.DeserializeSiteRecoveryFabricProviderSpecificDetails(element, options);
+                    case "HyperVSite": return HyperVSiteDetails.DeserializeHyperVSiteDetails(element, options);
+                    case "InMageRcm": return InMageRcmFabricSpecificDetails.DeserializeInMageRcmFabricSpecificDetails(element, options);
+                    case "VMM": return VmmFabricDetails.DeserializeVmmFabricDetails(element, options);
+                    case "VMware": return VMwareDetails.DeserializeVMwareDetails(element, options);
+                    case "VMwareV2": return VMwareV2FabricSpecificDetails.DeserializeVMwareV2FabricSpecificDetails(element, options);
                 }
             }
-            return UnknownFabricSpecificDetails.DeserializeUnknownFabricSpecificDetails(element);
+            return UnknownFabricSpecificDetails.DeserializeUnknownFabricSpecificDetails(element, options);
         }
 
         BinaryData IPersistableModel<FabricSpecificDetails>.Write(ModelReaderWriterOptions options)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FabricSpecificDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricSpecificDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeFabricSpecificDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FabricSpecificDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricSpecificDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

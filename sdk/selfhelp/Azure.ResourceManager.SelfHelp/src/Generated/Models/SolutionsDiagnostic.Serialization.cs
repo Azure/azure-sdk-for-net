@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SelfHelpDiagnosticInsight>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> solutionId = default;
-            Optional<SelfHelpDiagnosticStatus> status = default;
-            Optional<string> statusDetails = default;
-            Optional<string> replacementKey = default;
-            Optional<IList<string>> requiredParameters = default;
-            Optional<IList<SelfHelpDiagnosticInsight>> insights = default;
+            string solutionId = default;
+            SelfHelpDiagnosticStatus? status = default;
+            string statusDetails = default;
+            string replacementKey = default;
+            IList<string> requiredParameters = default;
+            IList<SelfHelpDiagnosticInsight> insights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpDiagnosticInsight> array = new List<SelfHelpDiagnosticInsight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item));
+                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item, options));
                     }
                     insights = array;
                     continue;
@@ -172,7 +172,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionsDiagnostic(solutionId.Value, Optional.ToNullable(status), statusDetails.Value, replacementKey.Value, Optional.ToList(requiredParameters), Optional.ToList(insights), serializedAdditionalRawData);
+            return new SolutionsDiagnostic(
+                solutionId,
+                status,
+                statusDetails,
+                replacementKey,
+                requiredParameters ?? new ChangeTrackingList<string>(),
+                insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionsDiagnostic>.Write(ModelReaderWriterOptions options)
@@ -184,7 +191,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +207,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeSolutionsDiagnostic(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support reading '{options.Format}' format.");
             }
         }
 

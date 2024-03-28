@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<SimNameAndProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimNameAndProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SimNameAndProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticIPConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SimStaticIPProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<SimNameAndProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimNameAndProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SimNameAndProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,18 +139,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             string name = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Optional<MobileNetworkSimState> simState = default;
-            Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
+            MobileNetworkProvisioningState? provisioningState = default;
+            MobileNetworkSimState? simState = default;
+            IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = default;
             string internationalMobileSubscriberIdentity = default;
-            Optional<string> integratedCircuitCardIdentifier = default;
-            Optional<string> deviceType = default;
-            Optional<WritableSubResource> simPolicy = default;
-            Optional<IList<SimStaticIPProperties>> staticIPConfiguration = default;
-            Optional<string> vendorName = default;
-            Optional<string> vendorKeyFingerprint = default;
-            Optional<string> authenticationKey = default;
-            Optional<string> operatorKeyCode = default;
+            string integratedCircuitCardIdentifier = default;
+            string deviceType = default;
+            WritableSubResource simPolicy = default;
+            IList<SimStaticIPProperties> staticIPConfiguration = default;
+            string vendorName = default;
+            string vendorKeyFingerprint = default;
+            string authenticationKey = default;
+            string operatorKeyCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                             List<SimStaticIPProperties> array = new List<SimStaticIPProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SimStaticIPProperties.DeserializeSimStaticIPProperties(item));
+                                array.Add(SimStaticIPProperties.DeserializeSimStaticIPProperties(item, options));
                             }
                             staticIPConfiguration = array;
                             continue;
@@ -268,7 +268,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimNameAndProperties(name, Optional.ToNullable(provisioningState), Optional.ToNullable(simState), Optional.ToDictionary(siteProvisioningState), internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier.Value, deviceType.Value, simPolicy, Optional.ToList(staticIPConfiguration), vendorName.Value, vendorKeyFingerprint.Value, authenticationKey.Value, operatorKeyCode.Value, serializedAdditionalRawData);
+            return new SimNameAndProperties(
+                name,
+                provisioningState,
+                simState,
+                siteProvisioningState ?? new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>(),
+                internationalMobileSubscriberIdentity,
+                integratedCircuitCardIdentifier,
+                deviceType,
+                simPolicy,
+                staticIPConfiguration ?? new ChangeTrackingList<SimStaticIPProperties>(),
+                vendorName,
+                vendorKeyFingerprint,
+                authenticationKey,
+                operatorKeyCode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SimNameAndProperties>.Write(ModelReaderWriterOptions options)
@@ -280,7 +294,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SimNameAndProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimNameAndProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -296,7 +310,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeSimNameAndProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SimNameAndProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimNameAndProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

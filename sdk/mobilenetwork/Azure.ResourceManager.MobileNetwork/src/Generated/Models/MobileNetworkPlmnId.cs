@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Public land mobile network (PLMN) ID. </summary>
+    /// <summary> Public land mobile network (PLMN) ID. This is made up of the mobile country code and mobile network code, as defined in https://www.itu.int/rec/T-REC-E.212. The values 001-01 and 001-001 can be used for testing and the values 999-99 and 999-999 can be used on internal private networks. </summary>
     public partial class MobileNetworkPlmnId
     {
         /// <summary>
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkPlmnId"/>. </summary>
         /// <param name="mcc"> Mobile country code (MCC). </param>

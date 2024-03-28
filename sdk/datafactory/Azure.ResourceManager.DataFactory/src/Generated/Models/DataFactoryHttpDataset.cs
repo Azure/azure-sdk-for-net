@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -58,6 +57,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Format = format;
             Compression = compression;
             DatasetType = datasetType ?? "HttpFile";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryHttpDataset"/> for deserialization. </summary>
+        internal DataFactoryHttpDataset()
+        {
         }
 
         /// <summary> The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string). </summary>

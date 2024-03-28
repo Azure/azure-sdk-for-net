@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureStorageAccountCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in ContainerCredentials)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureStorageAccountContainerCredential>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureStorageAccountCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<IReadOnlyList<AzureStorageAccountContainerCredential>> containerCredentials = default;
-            Optional<DateTimeOffset> expiry = default;
+            ResourceIdentifier storageAccountId = default;
+            IReadOnlyList<AzureStorageAccountContainerCredential> containerCredentials = default;
+            DateTimeOffset? expiry = default;
             CredentialType credentialType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<AzureStorageAccountContainerCredential> array = new List<AzureStorageAccountContainerCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureStorageAccountContainerCredential.DeserializeAzureStorageAccountContainerCredential(item));
+                        array.Add(AzureStorageAccountContainerCredential.DeserializeAzureStorageAccountContainerCredential(item, options));
                     }
                     containerCredentials = array;
                     continue;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureStorageAccountCredential(credentialType, serializedAdditionalRawData, storageAccountId.Value, Optional.ToList(containerCredentials), Optional.ToNullable(expiry));
+            return new AzureStorageAccountCredential(credentialType, serializedAdditionalRawData, storageAccountId, containerCredentials ?? new ChangeTrackingList<AzureStorageAccountContainerCredential>(), expiry);
         }
 
         BinaryData IPersistableModel<AzureStorageAccountCredential>.Write(ModelReaderWriterOptions options)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeAzureStorageAccountCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support reading '{options.Format}' format.");
             }
         }
 

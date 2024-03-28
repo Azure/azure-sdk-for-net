@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicense>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLicense)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLicense)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(LicenseDetails))
             {
                 writer.WritePropertyName("licenseDetails"u8);
-                writer.WriteObjectValue(LicenseDetails);
+                writer.WriteObjectValue<HybridComputeLicenseDetails>(LicenseDetails, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicense>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLicense)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLicense)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,16 +121,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridComputeProvisioningState> provisioningState = default;
-            Optional<Guid> tenantId = default;
-            Optional<HybridComputeLicenseType> licenseType = default;
-            Optional<HybridComputeLicenseDetails> licenseDetails = default;
+            SystemData systemData = default;
+            HybridComputeProvisioningState? provisioningState = default;
+            Guid? tenantId = default;
+            HybridComputeLicenseType? licenseType = default;
+            HybridComputeLicenseDetails licenseDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            licenseDetails = HybridComputeLicenseDetails.DeserializeHybridComputeLicenseDetails(property0.Value);
+                            licenseDetails = HybridComputeLicenseDetails.DeserializeHybridComputeLicenseDetails(property0.Value, options);
                             continue;
                         }
                     }
@@ -232,7 +232,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeLicense(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(tenantId), Optional.ToNullable(licenseType), licenseDetails.Value, serializedAdditionalRawData);
+            return new HybridComputeLicense(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                tenantId,
+                licenseType,
+                licenseDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeLicense>.Write(ModelReaderWriterOptions options)
@@ -244,7 +255,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLicense)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLicense)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -260,7 +271,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputeLicense(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLicense)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLicense)} does not support reading '{options.Format}' format.");
             }
         }
 

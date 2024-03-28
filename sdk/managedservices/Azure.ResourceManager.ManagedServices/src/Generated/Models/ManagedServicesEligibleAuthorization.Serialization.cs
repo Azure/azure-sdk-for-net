@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesEligibleAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             if (Optional.IsDefined(JustInTimeAccessPolicy))
             {
                 writer.WritePropertyName("justInTimeAccessPolicy"u8);
-                writer.WriteObjectValue(JustInTimeAccessPolicy);
+                writer.WriteObjectValue<ManagedServicesJustInTimeAccessPolicy>(JustInTimeAccessPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesEligibleAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             Guid principalId = default;
-            Optional<string> principalIdDisplayName = default;
+            string principalIdDisplayName = default;
             string roleDefinitionId = default;
-            Optional<ManagedServicesJustInTimeAccessPolicy> justInTimeAccessPolicy = default;
+            ManagedServicesJustInTimeAccessPolicy justInTimeAccessPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     {
                         continue;
                     }
-                    justInTimeAccessPolicy = ManagedServicesJustInTimeAccessPolicy.DeserializeManagedServicesJustInTimeAccessPolicy(property.Value);
+                    justInTimeAccessPolicy = ManagedServicesJustInTimeAccessPolicy.DeserializeManagedServicesJustInTimeAccessPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesEligibleAuthorization(principalId, principalIdDisplayName.Value, roleDefinitionId, justInTimeAccessPolicy.Value, serializedAdditionalRawData);
+            return new ManagedServicesEligibleAuthorization(principalId, principalIdDisplayName, roleDefinitionId, justInTimeAccessPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesEligibleAuthorization>.Write(ModelReaderWriterOptions options)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                         return DeserializeManagedServicesEligibleAuthorization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support reading '{options.Format}' format.");
             }
         }
 

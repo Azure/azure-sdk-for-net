@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaCodecBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaCodecBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaCodecBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaCodecBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaCodecBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaCodecBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCodec(document.RootElement, options);
+            return DeserializeMediaCodecBase(document.RootElement, options);
         }
 
         internal static UnknownCodec DeserializeUnknownCodec(JsonElement element, ModelReaderWriterOptions options = null)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             string odataType = "Unknown";
-            Optional<string> label = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownCodec(odataType, label.Value, serializedAdditionalRawData);
+            return new UnknownCodec(odataType, label, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaCodecBase>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaCodecBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaCodecBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCodec(document.RootElement, options);
+                        return DeserializeMediaCodecBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaCodecBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaCodecBase)} does not support reading '{options.Format}' format.");
             }
         }
 

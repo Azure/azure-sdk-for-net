@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<PagedLabServicesSkus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PagedLabServicesSkus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PagedLabServicesSkus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableLabServicesSku>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<PagedLabServicesSkus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PagedLabServicesSkus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PagedLabServicesSkus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableLabServicesSku>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AvailableLabServicesSku> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<AvailableLabServicesSku> array = new List<AvailableLabServicesSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSku.DeserializeAvailableLabServicesSku(item));
+                        array.Add(AvailableLabServicesSku.DeserializeAvailableLabServicesSku(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PagedLabServicesSkus(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PagedLabServicesSkus(value ?? new ChangeTrackingList<AvailableLabServicesSku>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PagedLabServicesSkus>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PagedLabServicesSkus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PagedLabServicesSkus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializePagedLabServicesSkus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PagedLabServicesSkus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PagedLabServicesSkus)} does not support reading '{options.Format}' format.");
             }
         }
 

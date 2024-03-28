@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBCollectionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBCollectionSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
-                writer.WriteObjectValue(ShardKey);
+                writer.WriteObjectValue<MongoDBShardKeySetting>(ShardKey, options);
             }
             if (Optional.IsDefined(TargetRUs))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBCollectionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBCollectionSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<bool> canDelete = default;
-            Optional<MongoDBShardKeySetting> shardKey = default;
-            Optional<int> targetRUs = default;
+            bool? canDelete = default;
+            MongoDBShardKeySetting shardKey = default;
+            int? targetRUs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    shardKey = MongoDBShardKeySetting.DeserializeMongoDBShardKeySetting(property.Value);
+                    shardKey = MongoDBShardKeySetting.DeserializeMongoDBShardKeySetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetRUs"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBCollectionSettings(Optional.ToNullable(canDelete), shardKey.Value, Optional.ToNullable(targetRUs), serializedAdditionalRawData);
+            return new MongoDBCollectionSettings(canDelete, shardKey, targetRUs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBCollectionSettings>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBCollectionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBCollectionSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMongoDBCollectionSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBCollectionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBCollectionSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

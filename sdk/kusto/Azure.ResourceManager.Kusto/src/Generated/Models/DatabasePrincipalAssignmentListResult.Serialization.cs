@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabasePrincipalAssignmentListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabasePrincipalAssignmentListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabasePrincipalAssignmentListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KustoDatabasePrincipalAssignmentData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabasePrincipalAssignmentListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabasePrincipalAssignmentListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabasePrincipalAssignmentListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KustoDatabasePrincipalAssignmentData>> value = default;
+            IReadOnlyList<KustoDatabasePrincipalAssignmentData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoDatabasePrincipalAssignmentData> array = new List<KustoDatabasePrincipalAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(item));
+                        array.Add(KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabasePrincipalAssignmentListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new DatabasePrincipalAssignmentListResult(value ?? new ChangeTrackingList<KustoDatabasePrincipalAssignmentData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabasePrincipalAssignmentListResult>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabasePrincipalAssignmentListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabasePrincipalAssignmentListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeDatabasePrincipalAssignmentListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabasePrincipalAssignmentListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabasePrincipalAssignmentListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

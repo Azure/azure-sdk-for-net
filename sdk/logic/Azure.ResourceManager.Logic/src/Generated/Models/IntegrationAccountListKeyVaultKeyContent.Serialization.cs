@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountListKeyVaultKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountListKeyVaultKeyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountListKeyVaultKeyContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("keyVault"u8);
-            writer.WriteObjectValue(KeyVault);
+            writer.WriteObjectValue<IntegrationAccountKeyVaultNameReference>(KeyVault, options);
             if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountListKeyVaultKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountListKeyVaultKeyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountListKeyVaultKeyContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             IntegrationAccountKeyVaultNameReference keyVault = default;
-            Optional<string> skipToken = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVault"u8))
                 {
-                    keyVault = IntegrationAccountKeyVaultNameReference.DeserializeIntegrationAccountKeyVaultNameReference(property.Value);
+                    keyVault = IntegrationAccountKeyVaultNameReference.DeserializeIntegrationAccountKeyVaultNameReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("skipToken"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountListKeyVaultKeyContent(keyVault, skipToken.Value, serializedAdditionalRawData);
+            return new IntegrationAccountListKeyVaultKeyContent(keyVault, skipToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountListKeyVaultKeyContent>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountListKeyVaultKeyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountListKeyVaultKeyContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationAccountListKeyVaultKeyContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountListKeyVaultKeyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountListKeyVaultKeyContent)} does not support reading '{options.Format}' format.");
             }
         }
 

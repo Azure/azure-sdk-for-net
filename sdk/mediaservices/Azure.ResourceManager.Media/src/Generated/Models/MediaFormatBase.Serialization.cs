@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaFormatBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaFormatBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaFormatBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaFormatBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaFormatBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaFormatBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.ImageFormat": return OutputImageFileFormat.DeserializeOutputImageFileFormat(element);
-                    case "#Microsoft.Media.JpgFormat": return JpgFormat.DeserializeJpgFormat(element);
-                    case "#Microsoft.Media.Mp4Format": return Mp4Format.DeserializeMp4Format(element);
-                    case "#Microsoft.Media.MultiBitrateFormat": return MultiBitrateFormat.DeserializeMultiBitrateFormat(element);
-                    case "#Microsoft.Media.PngFormat": return PngFormat.DeserializePngFormat(element);
-                    case "#Microsoft.Media.TransportStreamFormat": return TransportStreamFormat.DeserializeTransportStreamFormat(element);
+                    case "#Microsoft.Media.ImageFormat": return OutputImageFileFormat.DeserializeOutputImageFileFormat(element, options);
+                    case "#Microsoft.Media.JpgFormat": return JpgFormat.DeserializeJpgFormat(element, options);
+                    case "#Microsoft.Media.Mp4Format": return Mp4Format.DeserializeMp4Format(element, options);
+                    case "#Microsoft.Media.MultiBitrateFormat": return MultiBitrateFormat.DeserializeMultiBitrateFormat(element, options);
+                    case "#Microsoft.Media.PngFormat": return PngFormat.DeserializePngFormat(element, options);
+                    case "#Microsoft.Media.TransportStreamFormat": return TransportStreamFormat.DeserializeTransportStreamFormat(element, options);
                 }
             }
-            return UnknownFormat.DeserializeUnknownFormat(element);
+            return UnknownFormat.DeserializeUnknownFormat(element, options);
         }
 
         BinaryData IPersistableModel<MediaFormatBase>.Write(ModelReaderWriterOptions options)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaFormatBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaFormatBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaFormatBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaFormatBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaFormatBase)} does not support reading '{options.Format}' format.");
             }
         }
 

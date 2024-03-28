@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightClusterRole>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IList<HDInsightClusterRole>> roles = default;
+            IList<HDInsightClusterRole> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightClusterRole> array = new List<HDInsightClusterRole>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterRole.DeserializeHDInsightClusterRole(item));
+                        array.Add(HDInsightClusterRole.DeserializeHDInsightClusterRole(item, options));
                     }
                     roles = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeProfile(Optional.ToList(roles), serializedAdditionalRawData);
+            return new ComputeProfile(roles ?? new ChangeTrackingList<HDInsightClusterRole>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeProfile>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeComputeProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

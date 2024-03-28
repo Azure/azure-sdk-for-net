@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseInviteFollowerResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseInviteFollowerResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseInviteFollowerResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseInviteFollowerResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseInviteFollowerResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseInviteFollowerResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> generatedInvitation = default;
+            string generatedInvitation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseInviteFollowerResult(generatedInvitation.Value, serializedAdditionalRawData);
+            return new DatabaseInviteFollowerResult(generatedInvitation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseInviteFollowerResult>.Write(ModelReaderWriterOptions options)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseInviteFollowerResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseInviteFollowerResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeDatabaseInviteFollowerResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseInviteFollowerResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseInviteFollowerResult)} does not support reading '{options.Format}' format.");
             }
         }
 

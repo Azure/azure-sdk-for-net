@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -21,24 +20,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             DocumentFieldType type = default;
-            Optional<string> valueString = default;
-            Optional<DateTimeOffset> valueDate = default;
-            Optional<TimeSpan> valueTime = default;
-            Optional<string> valuePhoneNumber = default;
-            Optional<double> valueNumber = default;
-            Optional<long> valueInteger = default;
-            Optional<V3SelectionMarkState> valueSelectionMark = default;
-            Optional<DocumentSignatureType> valueSignature = default;
-            Optional<string> valueCountryRegion = default;
-            Optional<IReadOnlyList<DocumentField>> valueArray = default;
-            Optional<IReadOnlyDictionary<string, DocumentField>> valueObject = default;
-            Optional<CurrencyValue> valueCurrency = default;
-            Optional<AddressValue> valueAddress = default;
-            Optional<bool> valueBoolean = default;
-            Optional<string> content = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
-            Optional<IReadOnlyList<DocumentSpan>> spans = default;
-            Optional<float> confidence = default;
+            string valueString = default;
+            DateTimeOffset? valueDate = default;
+            TimeSpan? valueTime = default;
+            string valuePhoneNumber = default;
+            double? valueNumber = default;
+            long? valueInteger = default;
+            V3SelectionMarkState? valueSelectionMark = default;
+            DocumentSignatureType? valueSignature = default;
+            string valueCountryRegion = default;
+            IReadOnlyList<DocumentField> valueArray = default;
+            IReadOnlyDictionary<string, DocumentField> valueObject = default;
+            CurrencyValue? valueCurrency = default;
+            AddressValue valueAddress = default;
+            bool? valueBoolean = default;
+            string content = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
+            IReadOnlyList<DocumentSpan> spans = default;
+            float? confidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -213,7 +212,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueCurrency), valueAddress.Value, Optional.ToNullable(valueBoolean), content.Value, Optional.ToList(boundingRegions), Optional.ToList(spans), Optional.ToNullable(confidence));
+            return new DocumentField(
+                type,
+                valueString,
+                valueDate,
+                valueTime,
+                valuePhoneNumber,
+                valueNumber,
+                valueInteger,
+                valueSelectionMark,
+                valueSignature,
+                valueCountryRegion,
+                valueArray ?? new ChangeTrackingList<DocumentField>(),
+                valueObject ?? new ChangeTrackingDictionary<string, DocumentField>(),
+                valueCurrency,
+                valueAddress,
+                valueBoolean,
+                content,
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans ?? new ChangeTrackingList<DocumentSpan>(),
+                confidence);
         }
     }
 }

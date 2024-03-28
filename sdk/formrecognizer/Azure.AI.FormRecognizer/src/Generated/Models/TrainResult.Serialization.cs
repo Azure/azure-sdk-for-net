@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -21,10 +20,10 @@ namespace Azure.AI.FormRecognizer.Models
                 return null;
             }
             IReadOnlyList<TrainingDocumentInfo> trainingDocuments = default;
-            Optional<IReadOnlyList<CustomFormModelField>> fields = default;
-            Optional<float> averageModelAccuracy = default;
-            Optional<string> modelId = default;
-            Optional<IReadOnlyList<FormRecognizerError>> errors = default;
+            IReadOnlyList<CustomFormModelField> fields = default;
+            float? averageModelAccuracy = default;
+            string modelId = default;
+            IReadOnlyList<FormRecognizerError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trainingDocuments"u8))
@@ -80,7 +79,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new TrainResult(trainingDocuments, Optional.ToList(fields), Optional.ToNullable(averageModelAccuracy), modelId.Value, Optional.ToList(errors));
+            return new TrainResult(trainingDocuments, fields ?? new ChangeTrackingList<CustomFormModelField>(), averageModelAccuracy, modelId, errors ?? new ChangeTrackingList<FormRecognizerError>());
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkSecurityPerimeterProfileAccessRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> accessRulesVersion = default;
-            Optional<IList<NetworkSecurityPerimeterProfileAccessRule>> accessRules = default;
-            Optional<string> diagnosticSettingsVersion = default;
-            Optional<IList<string>> enabledLogCategories = default;
+            string name = default;
+            string accessRulesVersion = default;
+            IList<NetworkSecurityPerimeterProfileAccessRule> accessRules = default;
+            string diagnosticSettingsVersion = default;
+            IList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<NetworkSecurityPerimeterProfileAccessRule> array = new List<NetworkSecurityPerimeterProfileAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterProfileAccessRule.DeserializeNetworkSecurityPerimeterProfileAccessRule(item));
+                        array.Add(NetworkSecurityPerimeterProfileAccessRule.DeserializeNetworkSecurityPerimeterProfileAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityPerimeterConfigurationProfile(name.Value, accessRulesVersion.Value, Optional.ToList(accessRules), diagnosticSettingsVersion.Value, Optional.ToList(enabledLogCategories), serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterConfigurationProfile(
+                name,
+                accessRulesVersion,
+                accessRules ?? new ChangeTrackingList<NetworkSecurityPerimeterProfileAccessRule>(),
+                diagnosticSettingsVersion,
+                enabledLogCategories ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationProfile>.Write(ModelReaderWriterOptions options)
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +191,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeNetworkSecurityPerimeterConfigurationProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

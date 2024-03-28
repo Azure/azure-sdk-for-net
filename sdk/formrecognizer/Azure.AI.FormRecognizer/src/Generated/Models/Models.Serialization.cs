@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -20,9 +19,9 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 return null;
             }
-            Optional<ModelsSummary> summary = default;
-            Optional<IReadOnlyList<CustomFormModelInfo>> modelList = default;
-            Optional<string> nextLink = default;
+            ModelsSummary summary = default;
+            IReadOnlyList<CustomFormModelInfo> modelList = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -54,7 +53,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new Models(summary.Value, Optional.ToList(modelList), nextLink.Value);
+            return new Models(summary, modelList ?? new ChangeTrackingList<CustomFormModelInfo>(), nextLink);
         }
     }
 }

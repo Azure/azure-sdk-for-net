@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInsightsCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInsightsCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> appId = default;
-            Optional<string> instrumentationKey = default;
+            string appId = default;
+            string instrumentationKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppInsightsCredentials(appId.Value, instrumentationKey.Value, serializedAdditionalRawData);
+            return new AppInsightsCredentials(appId, instrumentationKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppInsightsCredentials>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                         return DeserializeAppInsightsCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

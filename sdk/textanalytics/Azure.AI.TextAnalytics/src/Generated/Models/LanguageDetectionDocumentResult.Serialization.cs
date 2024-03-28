@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -18,20 +17,20 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("detectedLanguage"u8);
-            writer.WriteObjectValue(DetectedLanguage);
+            writer.WriteObjectValue<DetectedLanguageInternal>(DetectedLanguage);
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("warnings"u8);
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentWarning>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                writer.WriteObjectValue<TextDocumentStatistics?>(Statistics);
             }
             writer.WriteEndObject();
         }
@@ -45,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Models
             DetectedLanguageInternal detectedLanguage = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            TextDocumentStatistics? statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("detectedLanguage"u8))
@@ -78,7 +77,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new LanguageDetectionDocumentResult(id, warnings, Optional.ToNullable(statistics), detectedLanguage);
+            return new LanguageDetectionDocumentResult(id, warnings, statistics, detectedLanguage);
         }
     }
 }

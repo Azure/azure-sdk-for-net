@@ -2,14 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal static class AzMonListExtensions
     {
+        /// <summary>
+        /// Recognized database systems.
+        /// <see href="https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/database/database-spans.md#connection-level-attributes"/>.
+        /// </summary>
+        // TODO: This single item HashSet is used to map "mssql" to "SQL". This could be replaced with a helper method.
+        internal static readonly HashSet<string?> s_dbSystems = new HashSet<string?>() { "mssql" };
+
         ///<summary>
         /// Gets http request url from activity tag objects.
         ///</summary>
@@ -382,7 +389,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 case OperationType.Db:
                     {
                         var dbSystem = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString();
-                        return RemoteDependencyData.s_sqlDbs.Contains(dbSystem) ? "SQL" : dbSystem?.Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
+                        return AzMonListExtensions.s_dbSystems.Contains(dbSystem) ? "SQL" : dbSystem?.Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
                     }
                 case OperationType.Rpc:
                     {

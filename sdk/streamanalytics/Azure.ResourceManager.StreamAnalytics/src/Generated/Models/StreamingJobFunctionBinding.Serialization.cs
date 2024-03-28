@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobFunctionBinding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobFunctionBinding)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobFunctionBinding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobFunctionBinding)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.MachineLearning/WebService": return EMachineLearningStudioFunctionBinding.DeserializeEMachineLearningStudioFunctionBinding(element);
-                    case "Microsoft.MachineLearningServices": return MachineLearningServiceFunctionBinding.DeserializeMachineLearningServiceFunctionBinding(element);
-                    case "Microsoft.StreamAnalytics/CLRUdf": return CSharpFunctionBinding.DeserializeCSharpFunctionBinding(element);
-                    case "Microsoft.StreamAnalytics/JavascriptUdf": return JavaScriptFunctionBinding.DeserializeJavaScriptFunctionBinding(element);
+                    case "Microsoft.MachineLearning/WebService": return EMachineLearningStudioFunctionBinding.DeserializeEMachineLearningStudioFunctionBinding(element, options);
+                    case "Microsoft.MachineLearningServices": return MachineLearningServiceFunctionBinding.DeserializeMachineLearningServiceFunctionBinding(element, options);
+                    case "Microsoft.StreamAnalytics/CLRUdf": return CSharpFunctionBinding.DeserializeCSharpFunctionBinding(element, options);
+                    case "Microsoft.StreamAnalytics/JavascriptUdf": return JavaScriptFunctionBinding.DeserializeJavaScriptFunctionBinding(element, options);
                 }
             }
-            return UnknownFunctionBinding.DeserializeUnknownFunctionBinding(element);
+            return UnknownFunctionBinding.DeserializeUnknownFunctionBinding(element, options);
         }
 
         BinaryData IPersistableModel<StreamingJobFunctionBinding>.Write(ModelReaderWriterOptions options)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobFunctionBinding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobFunctionBinding)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamingJobFunctionBinding(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobFunctionBinding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobFunctionBinding)} does not support reading '{options.Format}' format.");
             }
         }
 

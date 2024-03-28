@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupSchedulePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupSchedulePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupSchedulePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupSchedulePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupSchedulePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupSchedulePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "LogSchedulePolicy": return LogSchedulePolicy.DeserializeLogSchedulePolicy(element);
-                    case "LongTermSchedulePolicy": return LongTermSchedulePolicy.DeserializeLongTermSchedulePolicy(element);
-                    case "SimpleSchedulePolicy": return SimpleSchedulePolicy.DeserializeSimpleSchedulePolicy(element);
-                    case "SimpleSchedulePolicyV2": return SimpleSchedulePolicyV2.DeserializeSimpleSchedulePolicyV2(element);
+                    case "LogSchedulePolicy": return LogSchedulePolicy.DeserializeLogSchedulePolicy(element, options);
+                    case "LongTermSchedulePolicy": return LongTermSchedulePolicy.DeserializeLongTermSchedulePolicy(element, options);
+                    case "SimpleSchedulePolicy": return SimpleSchedulePolicy.DeserializeSimpleSchedulePolicy(element, options);
+                    case "SimpleSchedulePolicyV2": return SimpleSchedulePolicyV2.DeserializeSimpleSchedulePolicyV2(element, options);
                 }
             }
-            return UnknownSchedulePolicy.DeserializeUnknownSchedulePolicy(element);
+            return UnknownSchedulePolicy.DeserializeUnknownSchedulePolicy(element, options);
         }
 
         BinaryData IPersistableModel<BackupSchedulePolicy>.Write(ModelReaderWriterOptions options)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupSchedulePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupSchedulePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupSchedulePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupSchedulePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupSchedulePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

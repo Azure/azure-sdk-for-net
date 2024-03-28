@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudTieringCachePerformance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudTieringCachePerformance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<long> cacheHitBytes = default;
-            Optional<long> cacheMissBytes = default;
-            Optional<int> cacheHitBytesPercent = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            long? cacheHitBytes = default;
+            long? cacheMissBytes = default;
+            int? cacheHitBytesPercent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudTieringCachePerformance(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(cacheHitBytes), Optional.ToNullable(cacheMissBytes), Optional.ToNullable(cacheHitBytesPercent), serializedAdditionalRawData);
+            return new CloudTieringCachePerformance(lastUpdatedTimestamp, cacheHitBytes, cacheMissBytes, cacheHitBytesPercent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudTieringCachePerformance>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeCloudTieringCachePerformance(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support reading '{options.Format}' format.");
             }
         }
 

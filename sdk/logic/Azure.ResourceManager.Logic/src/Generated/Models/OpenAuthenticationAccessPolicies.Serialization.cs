@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<OpenAuthenticationAccessPolicies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAuthenticationAccessPolicies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenAuthenticationAccessPolicies)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in AccessPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<OpenAuthenticationAccessPolicy>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<OpenAuthenticationAccessPolicies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAuthenticationAccessPolicies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenAuthenticationAccessPolicies)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, OpenAuthenticationAccessPolicy>> policies = default;
+            IDictionary<string, OpenAuthenticationAccessPolicy> policies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic.Models
                     Dictionary<string, OpenAuthenticationAccessPolicy> dictionary = new Dictionary<string, OpenAuthenticationAccessPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, OpenAuthenticationAccessPolicy.DeserializeOpenAuthenticationAccessPolicy(property0.Value));
+                        dictionary.Add(property0.Name, OpenAuthenticationAccessPolicy.DeserializeOpenAuthenticationAccessPolicy(property0.Value, options));
                     }
                     policies = dictionary;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenAuthenticationAccessPolicies(Optional.ToDictionary(policies), serializedAdditionalRawData);
+            return new OpenAuthenticationAccessPolicies(policies ?? new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenAuthenticationAccessPolicies>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OpenAuthenticationAccessPolicies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenAuthenticationAccessPolicies)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeOpenAuthenticationAccessPolicies(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenAuthenticationAccessPolicies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenAuthenticationAccessPolicies)} does not support reading '{options.Format}' format.");
             }
         }
 

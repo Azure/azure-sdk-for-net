@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrackedResourceModificationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrackedResourceModificationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrackedResourceModificationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(PolicyDetails))
             {
                 writer.WritePropertyName("policyDetails"u8);
-                writer.WriteObjectValue(PolicyDetails);
+                writer.WriteObjectValue<PolicyDetails>(PolicyDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeploymentId))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrackedResourceModificationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrackedResourceModificationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrackedResourceModificationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<PolicyDetails> policyDetails = default;
-            Optional<ResourceIdentifier> deploymentId = default;
-            Optional<DateTimeOffset> deploymentTime = default;
+            PolicyDetails policyDetails = default;
+            ResourceIdentifier deploymentId = default;
+            DateTimeOffset? deploymentTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value);
+                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deploymentId"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrackedResourceModificationDetails(policyDetails.Value, deploymentId.Value, Optional.ToNullable(deploymentTime), serializedAdditionalRawData);
+            return new TrackedResourceModificationDetails(policyDetails, deploymentId, deploymentTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrackedResourceModificationDetails>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrackedResourceModificationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrackedResourceModificationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeTrackedResourceModificationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrackedResourceModificationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrackedResourceModificationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

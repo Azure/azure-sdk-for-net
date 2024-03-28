@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureWebCategoryListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureWebCategoryListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureWebCategoryListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureWebCategoryData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureWebCategoryListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureWebCategoryListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureWebCategoryListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AzureWebCategoryData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AzureWebCategoryData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureWebCategoryData> array = new List<AzureWebCategoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureWebCategoryData.DeserializeAzureWebCategoryData(item));
+                        array.Add(AzureWebCategoryData.DeserializeAzureWebCategoryData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureWebCategoryListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AzureWebCategoryListResult(value ?? new ChangeTrackingList<AzureWebCategoryData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureWebCategoryListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureWebCategoryListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureWebCategoryListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAzureWebCategoryListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureWebCategoryListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureWebCategoryListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

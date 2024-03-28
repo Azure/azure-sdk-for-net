@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<FabricSpecificCreationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricSpecificCreationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricSpecificCreationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<FabricSpecificCreationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricSpecificCreationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricSpecificCreationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Azure": return SiteRecoveryFabricProviderCreationContent.DeserializeSiteRecoveryFabricProviderCreationContent(element);
-                    case "InMageRcm": return InMageRcmFabricCreationContent.DeserializeInMageRcmFabricCreationContent(element);
-                    case "VMwareV2": return VMwareV2FabricCreationContent.DeserializeVMwareV2FabricCreationContent(element);
+                    case "Azure": return SiteRecoveryFabricProviderCreationContent.DeserializeSiteRecoveryFabricProviderCreationContent(element, options);
+                    case "InMageRcm": return InMageRcmFabricCreationContent.DeserializeInMageRcmFabricCreationContent(element, options);
+                    case "VMwareV2": return VMwareV2FabricCreationContent.DeserializeVMwareV2FabricCreationContent(element, options);
                 }
             }
-            return UnknownFabricSpecificCreationContent.DeserializeUnknownFabricSpecificCreationContent(element);
+            return UnknownFabricSpecificCreationContent.DeserializeUnknownFabricSpecificCreationContent(element, options);
         }
 
         BinaryData IPersistableModel<FabricSpecificCreationContent>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FabricSpecificCreationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricSpecificCreationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeFabricSpecificCreationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FabricSpecificCreationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricSpecificCreationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

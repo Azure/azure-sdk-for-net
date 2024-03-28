@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubImportDevicesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubImportDevicesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubImportDevicesContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ManagedIdentity>(Identity, options);
             }
             if (Optional.IsDefined(IncludeConfigurations))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubImportDevicesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubImportDevicesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubImportDevicesContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             Uri inputBlobContainerUri = default;
             Uri outputBlobContainerUri = default;
-            Optional<string> inputBlobName = default;
-            Optional<string> outputBlobName = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
-            Optional<bool> includeConfigurations = default;
-            Optional<string> configurationsBlobName = default;
+            string inputBlobName = default;
+            string outputBlobName = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
+            bool? includeConfigurations = default;
+            string configurationsBlobName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("includeConfigurations"u8))
@@ -168,7 +168,16 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubImportDevicesContent(inputBlobContainerUri, outputBlobContainerUri, inputBlobName.Value, outputBlobName.Value, Optional.ToNullable(authenticationType), identity.Value, Optional.ToNullable(includeConfigurations), configurationsBlobName.Value, serializedAdditionalRawData);
+            return new IotHubImportDevicesContent(
+                inputBlobContainerUri,
+                outputBlobContainerUri,
+                inputBlobName,
+                outputBlobName,
+                authenticationType,
+                identity,
+                includeConfigurations,
+                configurationsBlobName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubImportDevicesContent>.Write(ModelReaderWriterOptions options)
@@ -180,7 +189,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubImportDevicesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubImportDevicesContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +205,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubImportDevicesContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubImportDevicesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubImportDevicesContent)} does not support reading '{options.Format}' format.");
             }
         }
 

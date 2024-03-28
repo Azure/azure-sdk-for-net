@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxValidationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartArray();
             foreach (var item in IndividualRequestDetails)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataBoxValidationInputContent>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxValidationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownValidationRequest(document.RootElement, options);
+            return DeserializeDataBoxValidationContent(document.RootElement, options);
         }
 
         internal static UnknownValidationRequest DeserializeUnknownValidationRequest(JsonElement element, ModelReaderWriterOptions options = null)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxValidationInputContent> array = new List<DataBoxValidationInputContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxValidationInputContent.DeserializeDataBoxValidationInputContent(item));
+                        array.Add(DataBoxValidationInputContent.DeserializeDataBoxValidationInputContent(item, options));
                     }
                     individualRequestDetails = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxValidationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownValidationRequest(document.RootElement, options);
+                        return DeserializeDataBoxValidationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxValidationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

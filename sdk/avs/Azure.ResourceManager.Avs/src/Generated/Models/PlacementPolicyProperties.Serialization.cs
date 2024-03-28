@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "VmHost": return VmHostPlacementPolicyProperties.DeserializeVmHostPlacementPolicyProperties(element);
-                    case "VmVm": return VmPlacementPolicyProperties.DeserializeVmPlacementPolicyProperties(element);
+                    case "VmHost": return VmHostPlacementPolicyProperties.DeserializeVmHostPlacementPolicyProperties(element, options);
+                    case "VmVm": return VmPlacementPolicyProperties.DeserializeVmPlacementPolicyProperties(element, options);
                 }
             }
-            return UnknownPlacementPolicyProperties.DeserializeUnknownPlacementPolicyProperties(element);
+            return UnknownPlacementPolicyProperties.DeserializeUnknownPlacementPolicyProperties(element, options);
         }
 
         BinaryData IPersistableModel<PlacementPolicyProperties>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializePlacementPolicyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

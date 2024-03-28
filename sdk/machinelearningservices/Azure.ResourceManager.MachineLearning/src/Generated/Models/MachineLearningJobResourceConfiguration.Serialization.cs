@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobResourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningJobResourceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningJobResourceConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobResourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningJobResourceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningJobResourceConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,13 +157,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> dockerArgs = default;
-            Optional<string> shmSize = default;
-            Optional<int> instanceCount = default;
-            Optional<string> instanceType = default;
-            Optional<IList<string>> locations = default;
-            Optional<int?> maxInstanceCount = default;
-            Optional<IDictionary<string, BinaryData>> properties = default;
+            string dockerArgs = default;
+            string shmSize = default;
+            int? instanceCount = default;
+            string instanceType = default;
+            IList<string> locations = default;
+            int? maxInstanceCount = default;
+            IDictionary<string, BinaryData> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -255,7 +255,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningJobResourceConfiguration(Optional.ToNullable(instanceCount), instanceType.Value, Optional.ToList(locations), Optional.ToNullable(maxInstanceCount), Optional.ToDictionary(properties), serializedAdditionalRawData, dockerArgs.Value, shmSize.Value);
+            return new MachineLearningJobResourceConfiguration(
+                instanceCount,
+                instanceType,
+                locations ?? new ChangeTrackingList<string>(),
+                maxInstanceCount,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData,
+                dockerArgs,
+                shmSize);
         }
 
         BinaryData IPersistableModel<MachineLearningJobResourceConfiguration>.Write(ModelReaderWriterOptions options)
@@ -267,7 +275,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningJobResourceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningJobResourceConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -283,7 +291,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningJobResourceConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningJobResourceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningJobResourceConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

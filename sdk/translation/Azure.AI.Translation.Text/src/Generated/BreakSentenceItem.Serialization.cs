@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -23,14 +22,14 @@ namespace Azure.AI.Translation.Text
             var format = options.Format == "W" ? ((IPersistableModel<BreakSentenceItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BreakSentenceItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BreakSentenceItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage);
+                writer.WriteObjectValue<DetectedLanguage>(DetectedLanguage, options);
             }
             writer.WritePropertyName("sentLen"u8);
             writer.WriteStartArray();
@@ -62,7 +61,7 @@ namespace Azure.AI.Translation.Text
             var format = options.Format == "W" ? ((IPersistableModel<BreakSentenceItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BreakSentenceItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BreakSentenceItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +76,7 @@ namespace Azure.AI.Translation.Text
             {
                 return null;
             }
-            Optional<DetectedLanguage> detectedLanguage = default;
+            DetectedLanguage detectedLanguage = default;
             IReadOnlyList<int> sentLen = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -89,7 +88,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
+                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sentLen"u8))
@@ -108,7 +107,7 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BreakSentenceItem(detectedLanguage.Value, sentLen, serializedAdditionalRawData);
+            return new BreakSentenceItem(detectedLanguage, sentLen, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BreakSentenceItem>.Write(ModelReaderWriterOptions options)
@@ -120,7 +119,7 @@ namespace Azure.AI.Translation.Text
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BreakSentenceItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BreakSentenceItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +135,7 @@ namespace Azure.AI.Translation.Text
                         return DeserializeBreakSentenceItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BreakSentenceItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BreakSentenceItem)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -154,7 +153,7 @@ namespace Azure.AI.Translation.Text
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<BreakSentenceItem>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

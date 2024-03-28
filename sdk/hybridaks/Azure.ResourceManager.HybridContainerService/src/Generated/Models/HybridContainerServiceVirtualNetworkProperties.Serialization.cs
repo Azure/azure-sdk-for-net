@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(InfraVnetProfile))
             {
                 writer.WritePropertyName("infraVnetProfile"u8);
-                writer.WriteObjectValue(InfraVnetProfile);
+                writer.WriteObjectValue<InfraVnetProfile>(InfraVnetProfile, options);
             }
             if (Optional.IsCollectionDefined(VipPool))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in VipPool)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KubernetesVirtualIPItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in VmipPool)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualMachineIPItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<HybridContainerServiceNetworkStatus>(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,15 +124,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<InfraVnetProfile> infraVnetProfile = default;
-            Optional<IList<KubernetesVirtualIPItem>> vipPool = default;
-            Optional<IList<VirtualMachineIPItem>> vmipPool = default;
-            Optional<IList<string>> dnsServers = default;
-            Optional<string> gateway = default;
-            Optional<string> ipAddressPrefix = default;
-            Optional<int> vlanId = default;
-            Optional<HybridContainerServiceProvisioningState> provisioningState = default;
-            Optional<HybridContainerServiceNetworkStatus> status = default;
+            InfraVnetProfile infraVnetProfile = default;
+            IList<KubernetesVirtualIPItem> vipPool = default;
+            IList<VirtualMachineIPItem> vmipPool = default;
+            IList<string> dnsServers = default;
+            string gateway = default;
+            string ipAddressPrefix = default;
+            int? vlanId = default;
+            HybridContainerServiceProvisioningState? provisioningState = default;
+            HybridContainerServiceNetworkStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    infraVnetProfile = InfraVnetProfile.DeserializeInfraVnetProfile(property.Value);
+                    infraVnetProfile = InfraVnetProfile.DeserializeInfraVnetProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vipPool"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<KubernetesVirtualIPItem> array = new List<KubernetesVirtualIPItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVirtualIPItem.DeserializeKubernetesVirtualIPItem(item));
+                        array.Add(KubernetesVirtualIPItem.DeserializeKubernetesVirtualIPItem(item, options));
                     }
                     vipPool = array;
                     continue;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<VirtualMachineIPItem> array = new List<VirtualMachineIPItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineIPItem.DeserializeVirtualMachineIPItem(item));
+                        array.Add(VirtualMachineIPItem.DeserializeVirtualMachineIPItem(item, options));
                     }
                     vmipPool = array;
                     continue;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    status = HybridContainerServiceNetworkStatus.DeserializeHybridContainerServiceNetworkStatus(property.Value);
+                    status = HybridContainerServiceNetworkStatus.DeserializeHybridContainerServiceNetworkStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -231,7 +231,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceVirtualNetworkProperties(infraVnetProfile.Value, Optional.ToList(vipPool), Optional.ToList(vmipPool), Optional.ToList(dnsServers), gateway.Value, ipAddressPrefix.Value, Optional.ToNullable(vlanId), Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceVirtualNetworkProperties(
+                infraVnetProfile,
+                vipPool ?? new ChangeTrackingList<KubernetesVirtualIPItem>(),
+                vmipPool ?? new ChangeTrackingList<VirtualMachineIPItem>(),
+                dnsServers ?? new ChangeTrackingList<string>(),
+                gateway,
+                ipAddressPrefix,
+                vlanId,
+                provisioningState,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceVirtualNetworkProperties>.Write(ModelReaderWriterOptions options)
@@ -243,7 +253,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +269,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeHybridContainerServiceVirtualNetworkProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

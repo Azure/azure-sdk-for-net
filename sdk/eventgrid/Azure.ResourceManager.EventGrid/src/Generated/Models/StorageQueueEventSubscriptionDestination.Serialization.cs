@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageQueueEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageQueueEventSubscriptionDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageQueueEventSubscriptionDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageQueueEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageQueueEventSubscriptionDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageQueueEventSubscriptionDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> queueName = default;
-            Optional<long> queueMessageTimeToLiveInSeconds = default;
+            ResourceIdentifier resourceId = default;
+            string queueName = default;
+            long? queueMessageTimeToLiveInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageQueueEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value, queueName.Value, Optional.ToNullable(queueMessageTimeToLiveInSeconds));
+            return new StorageQueueEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId, queueName, queueMessageTimeToLiveInSeconds);
         }
 
         BinaryData IPersistableModel<StorageQueueEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageQueueEventSubscriptionDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageQueueEventSubscriptionDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeStorageQueueEventSubscriptionDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageQueueEventSubscriptionDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageQueueEventSubscriptionDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

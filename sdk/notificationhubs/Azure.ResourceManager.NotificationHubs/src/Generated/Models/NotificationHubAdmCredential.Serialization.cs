@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubAdmCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubAdmCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubAdmCredential)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubAdmCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubAdmCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubAdmCredential)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
-            Optional<Uri> authTokenUrl = default;
+            string clientId = default;
+            string clientSecret = default;
+            Uri authTokenUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubAdmCredential(clientId.Value, clientSecret.Value, authTokenUrl.Value, serializedAdditionalRawData);
+            return new NotificationHubAdmCredential(clientId, clientSecret, authTokenUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubAdmCredential>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubAdmCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubAdmCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         return DeserializeNotificationHubAdmCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubAdmCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubAdmCredential)} does not support reading '{options.Format}' format.");
             }
         }
 

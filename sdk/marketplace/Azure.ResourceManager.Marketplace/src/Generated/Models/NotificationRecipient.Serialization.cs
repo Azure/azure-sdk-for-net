@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationRecipient>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationRecipient)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationRecipient)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationRecipient>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationRecipient)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationRecipient)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<string> emailAddress = default;
-            Optional<string> displayName = default;
+            Guid? principalId = default;
+            string emailAddress = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationRecipient(Optional.ToNullable(principalId), emailAddress.Value, displayName.Value, serializedAdditionalRawData);
+            return new NotificationRecipient(principalId, emailAddress, displayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationRecipient>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationRecipient)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationRecipient)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeNotificationRecipient(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationRecipient)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationRecipient)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -34,12 +34,12 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(ContactInformation))
             {
                 writer.WritePropertyName("contactInformation"u8);
-                writer.WriteObjectValue(ContactInformation);
+                writer.WriteObjectValue<ContactInformation>(ContactInformation);
             }
             if (Optional.IsDefined(CustomerCareInformation))
             {
                 writer.WritePropertyName("customerCareInformation"u8);
-                writer.WriteObjectValue(CustomerCareInformation);
+                writer.WriteObjectValue<CustomerCareInformation>(CustomerCareInformation);
             }
             writer.WriteEndObject();
         }
@@ -50,11 +50,11 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> url = default;
-            Optional<string> address = default;
-            Optional<ContactInformation> contactInformation = default;
-            Optional<CustomerCareInformation> customerCareInformation = default;
+            string name = default;
+            Uri url = default;
+            string address = default;
+            ContactInformation contactInformation = default;
+            CustomerCareInformation customerCareInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -95,7 +95,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new CompanyInformation(name.Value, url.Value, address.Value, contactInformation.Value, customerCareInformation.Value);
+            return new CompanyInformation(name, url, address, contactInformation, customerCareInformation);
         }
     }
 }

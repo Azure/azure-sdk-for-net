@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<AsrTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AsrTask)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AsrTask)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
-                writer.WriteObjectValue(CustomDetails);
+                writer.WriteObjectValue<SiteRecoveryTaskTypeDetails>(CustomDetails, options);
             }
             if (Optional.IsDefined(GroupTaskCustomDetails))
             {
                 writer.WritePropertyName("groupTaskCustomDetails"u8);
-                writer.WriteObjectValue(GroupTaskCustomDetails);
+                writer.WriteObjectValue<SiteRecoveryGroupTaskDetails>(GroupTaskCustomDetails, options);
             }
             if (Optional.IsCollectionDefined(Errors))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryJobErrorDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<AsrTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AsrTask)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AsrTask)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,18 +134,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> taskId = default;
-            Optional<string> name = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<string>> allowedActions = default;
-            Optional<string> friendlyName = default;
-            Optional<string> state = default;
-            Optional<string> stateDescription = default;
-            Optional<string> taskType = default;
-            Optional<SiteRecoveryTaskTypeDetails> customDetails = default;
-            Optional<SiteRecoveryGroupTaskDetails> groupTaskCustomDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryJobErrorDetails>> errors = default;
+            string taskId = default;
+            string name = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IReadOnlyList<string> allowedActions = default;
+            string friendlyName = default;
+            string state = default;
+            string stateDescription = default;
+            string taskType = default;
+            SiteRecoveryTaskTypeDetails customDetails = default;
+            SiteRecoveryGroupTaskDetails groupTaskCustomDetails = default;
+            IReadOnlyList<SiteRecoveryJobErrorDetails> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = SiteRecoveryTaskTypeDetails.DeserializeSiteRecoveryTaskTypeDetails(property.Value);
+                    customDetails = SiteRecoveryTaskTypeDetails.DeserializeSiteRecoveryTaskTypeDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("groupTaskCustomDetails"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    groupTaskCustomDetails = SiteRecoveryGroupTaskDetails.DeserializeSiteRecoveryGroupTaskDetails(property.Value);
+                    groupTaskCustomDetails = SiteRecoveryGroupTaskDetails.DeserializeSiteRecoveryGroupTaskDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryJobErrorDetails> array = new List<SiteRecoveryJobErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryJobErrorDetails.DeserializeSiteRecoveryJobErrorDetails(item));
+                        array.Add(SiteRecoveryJobErrorDetails.DeserializeSiteRecoveryJobErrorDetails(item, options));
                     }
                     errors = array;
                     continue;
@@ -250,7 +250,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AsrTask(taskId.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), friendlyName.Value, state.Value, stateDescription.Value, taskType.Value, customDetails.Value, groupTaskCustomDetails.Value, Optional.ToList(errors), serializedAdditionalRawData);
+            return new AsrTask(
+                taskId,
+                name,
+                startTime,
+                endTime,
+                allowedActions ?? new ChangeTrackingList<string>(),
+                friendlyName,
+                state,
+                stateDescription,
+                taskType,
+                customDetails,
+                groupTaskCustomDetails,
+                errors ?? new ChangeTrackingList<SiteRecoveryJobErrorDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AsrTask>.Write(ModelReaderWriterOptions options)
@@ -262,7 +275,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AsrTask)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AsrTask)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -278,7 +291,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeAsrTask(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AsrTask)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AsrTask)} does not support reading '{options.Format}' format.");
             }
         }
 

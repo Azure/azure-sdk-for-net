@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderSpecificRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderSpecificRecoveryPointDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderSpecificRecoveryPointDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderSpecificRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderSpecificRecoveryPointDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderSpecificRecoveryPointDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2ARecoveryPointDetails.DeserializeA2ARecoveryPointDetails(element);
-                    case "InMageAzureV2": return InMageAzureV2RecoveryPointDetails.DeserializeInMageAzureV2RecoveryPointDetails(element);
-                    case "InMageRcm": return InMageRcmRecoveryPointDetails.DeserializeInMageRcmRecoveryPointDetails(element);
+                    case "A2A": return A2ARecoveryPointDetails.DeserializeA2ARecoveryPointDetails(element, options);
+                    case "InMageAzureV2": return InMageAzureV2RecoveryPointDetails.DeserializeInMageAzureV2RecoveryPointDetails(element, options);
+                    case "InMageRcm": return InMageRcmRecoveryPointDetails.DeserializeInMageRcmRecoveryPointDetails(element, options);
                 }
             }
-            return UnknownProviderSpecificRecoveryPointDetails.DeserializeUnknownProviderSpecificRecoveryPointDetails(element);
+            return UnknownProviderSpecificRecoveryPointDetails.DeserializeUnknownProviderSpecificRecoveryPointDetails(element, options);
         }
 
         BinaryData IPersistableModel<ProviderSpecificRecoveryPointDetails>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderSpecificRecoveryPointDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderSpecificRecoveryPointDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeProviderSpecificRecoveryPointDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderSpecificRecoveryPointDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderSpecificRecoveryPointDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

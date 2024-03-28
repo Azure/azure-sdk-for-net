@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowOutputParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowOutputParameterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowOutputParameterInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowOutputParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowOutputParameterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowOutputParameterInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<BinaryData> error = default;
-            Optional<LogicWorkflowParameterType> type = default;
-            Optional<BinaryData> value = default;
-            Optional<BinaryData> metadata = default;
-            Optional<string> description = default;
+            BinaryData error = default;
+            LogicWorkflowParameterType? type = default;
+            BinaryData value = default;
+            BinaryData metadata = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowOutputParameterInfo(Optional.ToNullable(type), value.Value, metadata.Value, description.Value, serializedAdditionalRawData, error.Value);
+            return new LogicWorkflowOutputParameterInfo(
+                type,
+                value,
+                metadata,
+                description,
+                serializedAdditionalRawData,
+                error);
         }
 
         BinaryData IPersistableModel<LogicWorkflowOutputParameterInfo>.Write(ModelReaderWriterOptions options)
@@ -178,7 +184,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowOutputParameterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowOutputParameterInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +200,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicWorkflowOutputParameterInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowOutputParameterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowOutputParameterInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

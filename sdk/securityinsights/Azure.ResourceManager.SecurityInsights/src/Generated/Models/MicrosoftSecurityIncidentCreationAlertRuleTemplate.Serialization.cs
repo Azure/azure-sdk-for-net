@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<MicrosoftSecurityIncidentCreationAlertRuleTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRuleTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRuleTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredDataConnectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AlertRuleTemplateDataSource>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<MicrosoftSecurityIncidentCreationAlertRuleTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRuleTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRuleTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,18 +169,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> alertRulesCreatedByTemplateCount = default;
-            Optional<DateTimeOffset> createdDateUTC = default;
-            Optional<DateTimeOffset> lastUpdatedDateUTC = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
-            Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
-            Optional<IList<string>> displayNamesFilter = default;
-            Optional<IList<string>> displayNamesExcludeFilter = default;
-            Optional<MicrosoftSecurityProductName> productFilter = default;
-            Optional<IList<SecurityInsightsAlertSeverity>> severitiesFilter = default;
+            SystemData systemData = default;
+            int? alertRulesCreatedByTemplateCount = default;
+            DateTimeOffset? createdDateUTC = default;
+            DateTimeOffset? lastUpdatedDateUTC = default;
+            string description = default;
+            string displayName = default;
+            IList<AlertRuleTemplateDataSource> requiredDataConnectors = default;
+            SecurityInsightsAlertRuleTemplateStatus? status = default;
+            IList<string> displayNamesFilter = default;
+            IList<string> displayNamesExcludeFilter = default;
+            MicrosoftSecurityProductName? productFilter = default;
+            IList<SecurityInsightsAlertSeverity> severitiesFilter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<AlertRuleTemplateDataSource> array = new List<AlertRuleTemplateDataSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AlertRuleTemplateDataSource.DeserializeAlertRuleTemplateDataSource(item));
+                                array.Add(AlertRuleTemplateDataSource.DeserializeAlertRuleTemplateDataSource(item, options));
                             }
                             requiredDataConnectors = array;
                             continue;
@@ -343,7 +343,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), Optional.ToList(displayNamesFilter), Optional.ToList(displayNamesExcludeFilter), Optional.ToNullable(productFilter), Optional.ToList(severitiesFilter));
+            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                alertRulesCreatedByTemplateCount,
+                createdDateUTC,
+                lastUpdatedDateUTC,
+                description,
+                displayName,
+                requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>(),
+                status,
+                displayNamesFilter ?? new ChangeTrackingList<string>(),
+                displayNamesExcludeFilter ?? new ChangeTrackingList<string>(),
+                productFilter,
+                severitiesFilter ?? new ChangeTrackingList<SecurityInsightsAlertSeverity>());
         }
 
         BinaryData IPersistableModel<MicrosoftSecurityIncidentCreationAlertRuleTemplate>.Write(ModelReaderWriterOptions options)
@@ -355,7 +372,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRuleTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRuleTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -371,7 +388,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeMicrosoftSecurityIncidentCreationAlertRuleTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRuleTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRuleTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

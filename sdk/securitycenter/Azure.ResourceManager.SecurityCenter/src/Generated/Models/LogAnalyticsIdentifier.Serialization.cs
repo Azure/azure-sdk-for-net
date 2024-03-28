@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<Guid> workspaceId = default;
-            Optional<string> workspaceSubscriptionId = default;
-            Optional<string> workspaceResourceGroup = default;
-            Optional<Guid> agentId = default;
+            Guid? workspaceId = default;
+            string workspaceSubscriptionId = default;
+            string workspaceResourceGroup = default;
+            Guid? agentId = default;
             ResourceIdentifierType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsIdentifier(type, serializedAdditionalRawData, Optional.ToNullable(workspaceId), workspaceSubscriptionId.Value, workspaceResourceGroup.Value, Optional.ToNullable(agentId));
+            return new LogAnalyticsIdentifier(
+                type,
+                serializedAdditionalRawData,
+                workspaceId,
+                workspaceSubscriptionId,
+                workspaceResourceGroup,
+                agentId);
         }
 
         BinaryData IPersistableModel<LogAnalyticsIdentifier>.Write(ModelReaderWriterOptions options)
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeLogAnalyticsIdentifier(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support reading '{options.Format}' format.");
             }
         }
 

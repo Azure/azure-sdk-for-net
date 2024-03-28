@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisServers>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisServers)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisServers)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteStartArray();
             foreach (var item in AnalysisResources)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AnalysisServerData>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisServers>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisServers)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisServers)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     List<AnalysisServerData> array = new List<AnalysisServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalysisServerData.DeserializeAnalysisServerData(item));
+                        array.Add(AnalysisServerData.DeserializeAnalysisServerData(item, options));
                     }
                     value = array;
                     continue;
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisServers)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisServers)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.Analysis.Models
                         return DeserializeAnalysisServers(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisServers)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisServers)} does not support reading '{options.Format}' format.");
             }
         }
 

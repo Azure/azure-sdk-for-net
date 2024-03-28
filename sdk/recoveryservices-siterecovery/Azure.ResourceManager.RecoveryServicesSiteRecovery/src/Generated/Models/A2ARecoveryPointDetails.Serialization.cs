@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2ARecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ARecoveryPointDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ARecoveryPointDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2ARecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ARecoveryPointDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ARecoveryPointDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<RecoveryPointSyncType> recoveryPointSyncType = default;
-            Optional<IReadOnlyList<string>> disks = default;
+            RecoveryPointSyncType? recoveryPointSyncType = default;
+            IReadOnlyList<string> disks = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ARecoveryPointDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointSyncType), Optional.ToList(disks));
+            return new A2ARecoveryPointDetails(instanceType, serializedAdditionalRawData, recoveryPointSyncType, disks ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<A2ARecoveryPointDetails>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2ARecoveryPointDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ARecoveryPointDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2ARecoveryPointDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2ARecoveryPointDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ARecoveryPointDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

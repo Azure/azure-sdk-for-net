@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCertificateDatastoreCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue(Secrets);
+            writer.WriteObjectValue<MachineLearningCertificateDatastoreSecrets>(Secrets, options);
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("thumbprint"u8);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCertificateDatastoreCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Uri> authorityUrl = default;
+            Uri authorityUrl = default;
             Guid clientId = default;
-            Optional<Uri> resourceUrl = default;
+            Uri resourceUrl = default;
             MachineLearningCertificateDatastoreSecrets secrets = default;
             Guid tenantId = default;
             string thumbprint = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("secrets"u8))
                 {
-                    secrets = MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(property.Value);
+                    secrets = MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tenantId"u8))
@@ -160,7 +160,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningCertificateDatastoreCredentials(credentialsType, serializedAdditionalRawData, authorityUrl.Value, clientId, resourceUrl.Value, secrets, tenantId, thumbprint);
+            return new MachineLearningCertificateDatastoreCredentials(
+                credentialsType,
+                serializedAdditionalRawData,
+                authorityUrl,
+                clientId,
+                resourceUrl,
+                secrets,
+                tenantId,
+                thumbprint);
         }
 
         BinaryData IPersistableModel<MachineLearningCertificateDatastoreCredentials>.Write(ModelReaderWriterOptions options)
@@ -172,7 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +196,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningCertificateDatastoreCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

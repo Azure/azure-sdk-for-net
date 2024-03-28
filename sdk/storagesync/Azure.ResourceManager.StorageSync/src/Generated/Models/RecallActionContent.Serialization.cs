@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecallActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecallActionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecallActionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecallActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecallActionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecallActionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<string> pattern = default;
-            Optional<string> recallPath = default;
+            string pattern = default;
+            string recallPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecallActionContent(pattern.Value, recallPath.Value, serializedAdditionalRawData);
+            return new RecallActionContent(pattern, recallPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecallActionContent>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecallActionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecallActionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeRecallActionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecallActionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecallActionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

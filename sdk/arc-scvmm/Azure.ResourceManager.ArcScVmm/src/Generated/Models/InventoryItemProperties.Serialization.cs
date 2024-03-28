@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<InventoryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<InventoryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Cloud": return CloudInventoryItem.DeserializeCloudInventoryItem(element);
-                    case "VirtualMachine": return VirtualMachineInventoryItem.DeserializeVirtualMachineInventoryItem(element);
-                    case "VirtualMachineTemplate": return VirtualMachineTemplateInventoryItem.DeserializeVirtualMachineTemplateInventoryItem(element);
-                    case "VirtualNetwork": return VirtualNetworkInventoryItem.DeserializeVirtualNetworkInventoryItem(element);
+                    case "Cloud": return CloudInventoryItem.DeserializeCloudInventoryItem(element, options);
+                    case "VirtualMachine": return VirtualMachineInventoryItem.DeserializeVirtualMachineInventoryItem(element, options);
+                    case "VirtualMachineTemplate": return VirtualMachineTemplateInventoryItem.DeserializeVirtualMachineTemplateInventoryItem(element, options);
+                    case "VirtualNetwork": return VirtualNetworkInventoryItem.DeserializeVirtualNetworkInventoryItem(element, options);
                 }
             }
-            return UnknownInventoryItemProperties.DeserializeUnknownInventoryItemProperties(element);
+            return UnknownInventoryItemProperties.DeserializeUnknownInventoryItemProperties(element, options);
         }
 
         BinaryData IPersistableModel<InventoryItemProperties>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeInventoryItemProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

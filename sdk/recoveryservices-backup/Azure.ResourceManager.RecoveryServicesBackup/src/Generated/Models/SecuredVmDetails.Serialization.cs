@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecuredVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecuredVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecuredVmDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecuredVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecuredVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecuredVmDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> securedVmOSDiskEncryptionSetId = default;
+            ResourceIdentifier securedVmOSDiskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecuredVmDetails(securedVmOSDiskEncryptionSetId.Value, serializedAdditionalRawData);
+            return new SecuredVmDetails(securedVmOSDiskEncryptionSetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuredVmDetails>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecuredVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecuredVmDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeSecuredVmDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecuredVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecuredVmDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

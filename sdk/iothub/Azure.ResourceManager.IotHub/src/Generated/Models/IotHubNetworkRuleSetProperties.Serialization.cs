@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubNetworkRuleSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubNetworkRuleSetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubNetworkRuleSetProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartArray();
             foreach (var item in IPRules)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<IotHubNetworkRuleSetIPRule>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubNetworkRuleSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubNetworkRuleSetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubNetworkRuleSetProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IotHubNetworkRuleSetDefaultAction> defaultAction = default;
+            IotHubNetworkRuleSetDefaultAction? defaultAction = default;
             bool applyToBuiltInEventHubEndpoint = default;
             IList<IotHubNetworkRuleSetIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubNetworkRuleSetIPRule> array = new List<IotHubNetworkRuleSetIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubNetworkRuleSetIPRule.DeserializeIotHubNetworkRuleSetIPRule(item));
+                        array.Add(IotHubNetworkRuleSetIPRule.DeserializeIotHubNetworkRuleSetIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubNetworkRuleSetProperties(Optional.ToNullable(defaultAction), applyToBuiltInEventHubEndpoint, ipRules, serializedAdditionalRawData);
+            return new IotHubNetworkRuleSetProperties(defaultAction, applyToBuiltInEventHubEndpoint, ipRules, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubNetworkRuleSetProperties>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubNetworkRuleSetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubNetworkRuleSetProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubNetworkRuleSetProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubNetworkRuleSetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubNetworkRuleSetProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

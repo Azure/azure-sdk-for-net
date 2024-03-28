@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkerResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkerResourcePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerResourcePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             if (Optional.IsDefined(TargetService))
             {
                 writer.WritePropertyName("targetService"u8);
-                writer.WriteObjectValue(TargetService);
+                writer.WriteObjectValue<TargetServiceBaseInfo>(TargetService, options);
             }
             if (Optional.IsDefined(AuthInfo))
             {
                 writer.WritePropertyName("authInfo"u8);
-                writer.WriteObjectValue(AuthInfo);
+                writer.WriteObjectValue<AuthBaseInfo>(AuthInfo, options);
             }
             if (Optional.IsDefined(ClientType))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 if (VnetSolution != null)
                 {
                     writer.WritePropertyName("vNetSolution"u8);
-                    writer.WriteObjectValue(VnetSolution);
+                    writer.WriteObjectValue<VnetSolution>(VnetSolution, options);
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 if (SecretStore != null)
                 {
                     writer.WritePropertyName("secretStore"u8);
-                    writer.WriteObjectValue(SecretStore);
+                    writer.WriteObjectValue<LinkerSecretStore>(SecretStore, options);
                 }
                 else
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkerResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkerResourcePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerResourcePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<TargetServiceBaseInfo> targetService = default;
-            Optional<AuthBaseInfo> authInfo = default;
-            Optional<LinkerClientType> clientType = default;
-            Optional<string> provisioningState = default;
-            Optional<VnetSolution> vnetSolution = default;
-            Optional<LinkerSecretStore> secretStore = default;
-            Optional<string> scope = default;
+            TargetServiceBaseInfo targetService = default;
+            AuthBaseInfo authInfo = default;
+            LinkerClientType? clientType = default;
+            string provisioningState = default;
+            VnetSolution vnetSolution = default;
+            LinkerSecretStore secretStore = default;
+            string scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             {
                                 continue;
                             }
-                            targetService = TargetServiceBaseInfo.DeserializeTargetServiceBaseInfo(property0.Value);
+                            targetService = TargetServiceBaseInfo.DeserializeTargetServiceBaseInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("authInfo"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             {
                                 continue;
                             }
-                            authInfo = AuthBaseInfo.DeserializeAuthBaseInfo(property0.Value);
+                            authInfo = AuthBaseInfo.DeserializeAuthBaseInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clientType"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 vnetSolution = null;
                                 continue;
                             }
-                            vnetSolution = VnetSolution.DeserializeVnetSolution(property0.Value);
+                            vnetSolution = VnetSolution.DeserializeVnetSolution(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("secretStore"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 secretStore = null;
                                 continue;
                             }
-                            secretStore = LinkerSecretStore.DeserializeLinkerSecretStore(property0.Value);
+                            secretStore = LinkerSecretStore.DeserializeLinkerSecretStore(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scope"u8))
@@ -214,7 +214,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkerResourcePatch(targetService.Value, authInfo.Value, Optional.ToNullable(clientType), provisioningState.Value, vnetSolution.Value, secretStore.Value, scope.Value, serializedAdditionalRawData);
+            return new LinkerResourcePatch(
+                targetService,
+                authInfo,
+                clientType,
+                provisioningState,
+                vnetSolution,
+                secretStore,
+                scope,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkerResourcePatch>.Write(ModelReaderWriterOptions options)
@@ -226,7 +234,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinkerResourcePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerResourcePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +250,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         return DeserializeLinkerResourcePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkerResourcePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerResourcePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

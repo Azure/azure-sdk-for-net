@@ -28,22 +28,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
+                writer.WriteObjectValue<VideoResolution>(Resolution);
             }
             if (Optional.IsDefined(RateControl))
             {
                 writer.WritePropertyName("rateControl"u8);
-                writer.WriteObjectValue(RateControl);
+                writer.WriteObjectValue<RateControl>(RateControl);
             }
             if (Optional.IsDefined(H264))
             {
                 writer.WritePropertyName("h264"u8);
-                writer.WriteObjectValue(H264);
+                writer.WriteObjectValue<H264Configuration>(H264);
             }
             if (Optional.IsDefined(Mpeg4))
             {
                 writer.WritePropertyName("mpeg4"u8);
-                writer.WriteObjectValue(Mpeg4);
+                writer.WriteObjectValue<Mpeg4Configuration>(Mpeg4);
             }
             writer.WriteEndObject();
         }
@@ -54,12 +54,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<VideoEncoding> encoding = default;
-            Optional<float> quality = default;
-            Optional<VideoResolution> resolution = default;
-            Optional<RateControl> rateControl = default;
-            Optional<H264Configuration> h264 = default;
-            Optional<Mpeg4Configuration> mpeg4 = default;
+            VideoEncoding? encoding = default;
+            float? quality = default;
+            VideoResolution resolution = default;
+            RateControl rateControl = default;
+            H264Configuration h264 = default;
+            Mpeg4Configuration mpeg4 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encoding"u8))
@@ -117,7 +117,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoEncoderConfiguration(Optional.ToNullable(encoding), Optional.ToNullable(quality), resolution.Value, rateControl.Value, h264.Value, mpeg4.Value);
+            return new VideoEncoderConfiguration(
+                encoding,
+                quality,
+                resolution,
+                rateControl,
+                h264,
+                mpeg4);
         }
     }
 }

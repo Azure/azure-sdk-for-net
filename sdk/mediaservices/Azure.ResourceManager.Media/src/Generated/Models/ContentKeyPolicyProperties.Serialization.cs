@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartArray();
             foreach (var item in Options)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ContentKeyPolicyOption>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<Guid> policyId = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<string> description = default;
+            Guid? policyId = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
+            string description = default;
             IReadOnlyList<ContentKeyPolicyOption> options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<ContentKeyPolicyOption> array = new List<ContentKeyPolicyOption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyOption.DeserializeContentKeyPolicyOption(item));
+                        array.Add(ContentKeyPolicyOption.DeserializeContentKeyPolicyOption(item, options));
                     }
                     options0 = array;
                     continue;
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyProperties(Optional.ToNullable(policyId), Optional.ToNullable(created), Optional.ToNullable(lastModified), description.Value, options0, serializedAdditionalRawData);
+            return new ContentKeyPolicyProperties(
+                policyId,
+                created,
+                lastModified,
+                description,
+                options0,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyProperties>.Write(ModelReaderWriterOptions options)
@@ -160,7 +166,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +182,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeContentKeyPolicyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

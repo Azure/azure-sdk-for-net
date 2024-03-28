@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<RectangularWindow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RectangularWindow)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RectangularWindow)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<RectangularWindow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RectangularWindow)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RectangularWindow)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> left = default;
-            Optional<string> top = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
+            string left = default;
+            string top = default;
+            string width = default;
+            string height = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RectangularWindow(left.Value, top.Value, width.Value, height.Value, serializedAdditionalRawData);
+            return new RectangularWindow(left, top, width, height, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RectangularWindow>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RectangularWindow)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RectangularWindow)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeRectangularWindow(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RectangularWindow)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RectangularWindow)} does not support reading '{options.Format}' format.");
             }
         }
 

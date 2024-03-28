@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<InfraVnetProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InfraVnetProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InfraVnetProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Hci))
             {
                 writer.WritePropertyName("hci"u8);
-                writer.WriteObjectValue(Hci);
+                writer.WriteObjectValue<HciInfraVnetProfile>(Hci, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<InfraVnetProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InfraVnetProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InfraVnetProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<HciInfraVnetProfile> hci = default;
+            HciInfraVnetProfile hci = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    hci = HciInfraVnetProfile.DeserializeHciInfraVnetProfile(property.Value);
+                    hci = HciInfraVnetProfile.DeserializeHciInfraVnetProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InfraVnetProfile(hci.Value, serializedAdditionalRawData);
+            return new InfraVnetProfile(hci, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InfraVnetProfile>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InfraVnetProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InfraVnetProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeInfraVnetProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InfraVnetProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InfraVnetProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

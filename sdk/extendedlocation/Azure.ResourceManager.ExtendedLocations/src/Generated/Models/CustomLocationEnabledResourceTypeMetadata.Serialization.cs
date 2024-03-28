@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationEnabledResourceTypeMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationEnabledResourceTypeMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationEnabledResourceTypeMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationEnabledResourceTypeMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationEnabledResourceTypeMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationEnabledResourceTypeMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 return null;
             }
-            Optional<string> apiVersion = default;
-            Optional<string> resourceProviderNamespace = default;
-            Optional<string> resourceType = default;
+            string apiVersion = default;
+            string resourceProviderNamespace = default;
+            string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationEnabledResourceTypeMetadata(apiVersion.Value, resourceProviderNamespace.Value, resourceType.Value, serializedAdditionalRawData);
+            return new CustomLocationEnabledResourceTypeMetadata(apiVersion, resourceProviderNamespace, resourceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationEnabledResourceTypeMetadata>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationEnabledResourceTypeMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationEnabledResourceTypeMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                         return DeserializeCustomLocationEnabledResourceTypeMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationEnabledResourceTypeMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationEnabledResourceTypeMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

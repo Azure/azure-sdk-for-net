@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<IfNotExistsEvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<IfNotExistsEvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<int> totalResources = default;
+            ResourceIdentifier resourceId = default;
+            int? totalResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IfNotExistsEvaluationDetails(resourceId.Value, Optional.ToNullable(totalResources), serializedAdditionalRawData);
+            return new IfNotExistsEvaluationDetails(resourceId, totalResources, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IfNotExistsEvaluationDetails>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeIfNotExistsEvaluationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IfNotExistsEvaluationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<FacetRequestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<FacetRequestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 return null;
             }
-            Optional<string> sortBy = default;
-            Optional<FacetSortOrder> sortOrder = default;
-            Optional<string> filter = default;
-            Optional<int> top = default;
+            string sortBy = default;
+            FacetSortOrder? sortOrder = default;
+            string filter = default;
+            int? top = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FacetRequestOptions(sortBy.Value, Optional.ToNullable(sortOrder), filter.Value, Optional.ToNullable(top), serializedAdditionalRawData);
+            return new FacetRequestOptions(sortBy, sortOrder, filter, top, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FacetRequestOptions>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                         return DeserializeFacetRequestOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

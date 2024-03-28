@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<SparkMetastoreSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SparkMetastoreSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SparkMetastoreSpec)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,26 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(DBServerHost);
             writer.WritePropertyName("dbName"u8);
             writer.WriteStringValue(DBName);
-            writer.WritePropertyName("dbUserName"u8);
-            writer.WriteStringValue(DBUserName);
-            writer.WritePropertyName("dbPasswordSecretName"u8);
-            writer.WriteStringValue(DBPasswordSecretName);
-            writer.WritePropertyName("keyVaultId"u8);
-            writer.WriteStringValue(KeyVaultId);
+            if (Optional.IsDefined(DBConnectionAuthenticationMode))
+            {
+                writer.WritePropertyName("dbConnectionAuthenticationMode"u8);
+                writer.WriteStringValue(DBConnectionAuthenticationMode.Value.ToString());
+            }
+            if (Optional.IsDefined(DBUserName))
+            {
+                writer.WritePropertyName("dbUserName"u8);
+                writer.WriteStringValue(DBUserName);
+            }
+            if (Optional.IsDefined(DBPasswordSecretName))
+            {
+                writer.WritePropertyName("dbPasswordSecretName"u8);
+                writer.WriteStringValue(DBPasswordSecretName);
+            }
+            if (Optional.IsDefined(KeyVaultId))
+            {
+                writer.WritePropertyName("keyVaultId"u8);
+                writer.WriteStringValue(KeyVaultId);
+            }
             if (Optional.IsDefined(ThriftUriString))
             {
                 writer.WritePropertyName("thriftUrl"u8);
@@ -64,7 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<SparkMetastoreSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SparkMetastoreSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SparkMetastoreSpec)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,10 +95,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string dbServerHost = default;
             string dbName = default;
+            DBConnectionAuthenticationMode? dbConnectionAuthenticationMode = default;
             string dbUserName = default;
             string dbPasswordSecretName = default;
             string keyVaultId = default;
-            Optional<string> thriftUrl = default;
+            string thriftUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,6 +112,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 if (property.NameEquals("dbName"u8))
                 {
                     dbName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dbConnectionAuthenticationMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dbConnectionAuthenticationMode = new DBConnectionAuthenticationMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dbUserName"u8))
@@ -125,7 +149,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SparkMetastoreSpec(dbServerHost, dbName, dbUserName, dbPasswordSecretName, keyVaultId, thriftUrl.Value, serializedAdditionalRawData);
+            return new SparkMetastoreSpec(
+                dbServerHost,
+                dbName,
+                dbConnectionAuthenticationMode,
+                dbUserName,
+                dbPasswordSecretName,
+                keyVaultId,
+                thriftUrl,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SparkMetastoreSpec>.Write(ModelReaderWriterOptions options)
@@ -137,7 +169,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SparkMetastoreSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SparkMetastoreSpec)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +185,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeSparkMetastoreSpec(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SparkMetastoreSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SparkMetastoreSpec)} does not support reading '{options.Format}' format.");
             }
         }
 

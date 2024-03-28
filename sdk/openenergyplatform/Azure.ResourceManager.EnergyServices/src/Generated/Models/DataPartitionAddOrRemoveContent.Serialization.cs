@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataPartitionAddOrRemoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPartitionAddOrRemoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPartitionAddOrRemoveContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<DataPartitionName>(Name, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataPartitionAddOrRemoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPartitionAddOrRemoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPartitionAddOrRemoveContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             {
                 return null;
             }
-            Optional<DataPartitionName> name = default;
+            DataPartitionName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     {
                         continue;
                     }
-                    name = Models.DataPartitionName.DeserializeDataPartitionName(property.Value);
+                    name = Models.DataPartitionName.DeserializeDataPartitionName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataPartitionAddOrRemoveContent(name.Value, serializedAdditionalRawData);
+            return new DataPartitionAddOrRemoveContent(name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataPartitionAddOrRemoveContent>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataPartitionAddOrRemoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPartitionAddOrRemoveContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                         return DeserializeDataPartitionAddOrRemoveContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataPartitionAddOrRemoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPartitionAddOrRemoveContent)} does not support reading '{options.Format}' format.");
             }
         }
 

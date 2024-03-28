@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkableEnvironmentContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkableEnvironmentContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> userPrincipal = default;
-            Optional<AzureLocation> region = default;
+            Guid? tenantId = default;
+            string userPrincipal = default;
+            AzureLocation? region = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkableEnvironmentContent(Optional.ToNullable(tenantId), userPrincipal.Value, Optional.ToNullable(region), serializedAdditionalRawData);
+            return new LinkableEnvironmentContent(tenantId, userPrincipal, region, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkableEnvironmentContent>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeLinkableEnvironmentContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support reading '{options.Format}' format.");
             }
         }
 

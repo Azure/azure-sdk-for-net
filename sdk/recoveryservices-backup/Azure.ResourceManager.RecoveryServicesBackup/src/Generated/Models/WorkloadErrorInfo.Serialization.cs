@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> errorCode = default;
-            Optional<string> errorString = default;
-            Optional<string> errorTitle = default;
-            Optional<IList<string>> recommendations = default;
-            Optional<string> additionalDetails = default;
+            int? errorCode = default;
+            string errorString = default;
+            string errorTitle = default;
+            IList<string> recommendations = default;
+            string additionalDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadErrorInfo(Optional.ToNullable(errorCode), errorString.Value, errorTitle.Value, Optional.ToList(recommendations), additionalDetails.Value, serializedAdditionalRawData);
+            return new WorkloadErrorInfo(
+                errorCode,
+                errorString,
+                errorTitle,
+                recommendations ?? new ChangeTrackingList<string>(),
+                additionalDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadErrorInfo>.Write(ModelReaderWriterOptions options)
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeWorkloadErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

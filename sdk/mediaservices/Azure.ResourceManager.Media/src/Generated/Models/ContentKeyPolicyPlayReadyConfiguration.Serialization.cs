@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartArray();
             foreach (var item in Licenses)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ContentKeyPolicyPlayReadyLicense>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ResponseCustomData))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             IList<ContentKeyPolicyPlayReadyLicense> licenses = default;
-            Optional<BinaryData> responseCustomData = default;
+            BinaryData responseCustomData = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<ContentKeyPolicyPlayReadyLicense> array = new List<ContentKeyPolicyPlayReadyLicense>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyPlayReadyLicense.DeserializeContentKeyPolicyPlayReadyLicense(item));
+                        array.Add(ContentKeyPolicyPlayReadyLicense.DeserializeContentKeyPolicyPlayReadyLicense(item, options));
                     }
                     licenses = array;
                     continue;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyPlayReadyConfiguration(odataType, serializedAdditionalRawData, licenses, responseCustomData.Value);
+            return new ContentKeyPolicyPlayReadyConfiguration(odataType, serializedAdditionalRawData, licenses, responseCustomData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyPlayReadyConfiguration>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeContentKeyPolicyPlayReadyConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

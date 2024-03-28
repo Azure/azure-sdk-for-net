@@ -18,13 +18,13 @@ namespace Azure.AI.MetricsAdvisor
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(ValueInternal);
+            writer.WriteObjectValue<PeriodFeedbackValue>(ValueInternal);
             writer.WritePropertyName("feedbackType"u8);
             writer.WriteStringValue(FeedbackKind.ToString());
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter"u8);
-            writer.WriteObjectValue(DimensionFilter);
+            writer.WriteObjectValue<FeedbackFilter>(DimensionFilter);
             writer.WriteEndObject();
         }
 
@@ -36,9 +36,9 @@ namespace Azure.AI.MetricsAdvisor
             }
             PeriodFeedbackValue value = default;
             MetricFeedbackKind feedbackType = default;
-            Optional<string> feedbackId = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<string> userPrincipal = default;
+            string feedbackId = default;
+            DateTimeOffset? createdTime = default;
+            string userPrincipal = default;
             string metricId = default;
             FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
@@ -83,7 +83,14 @@ namespace Azure.AI.MetricsAdvisor
                     continue;
                 }
             }
-            return new MetricPeriodFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, value);
+            return new MetricPeriodFeedback(
+                feedbackType,
+                feedbackId,
+                createdTime,
+                userPrincipal,
+                metricId,
+                dimensionFilter,
+                value);
         }
     }
 }

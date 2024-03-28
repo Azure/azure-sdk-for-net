@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceCredentialListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceCredentialListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceCredentialListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<HybridContainerServiceCredentialListError>(Error, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ListCredentialResponseProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceCredentialListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceCredentialListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceCredentialListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<HybridContainerServiceResourceProvisioningState> status = default;
-            Optional<HybridContainerServiceCredentialListError> error = default;
-            Optional<ListCredentialResponseProperties> properties = default;
+            string id = default;
+            string name = default;
+            ResourceIdentifier resourceId = default;
+            HybridContainerServiceResourceProvisioningState? status = default;
+            HybridContainerServiceCredentialListError error = default;
+            ListCredentialResponseProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    error = HybridContainerServiceCredentialListError.DeserializeHybridContainerServiceCredentialListError(property.Value);
+                    error = HybridContainerServiceCredentialListError.DeserializeHybridContainerServiceCredentialListError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    properties = ListCredentialResponseProperties.DeserializeListCredentialResponseProperties(property.Value);
+                    properties = ListCredentialResponseProperties.DeserializeListCredentialResponseProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceCredentialListResult(id.Value, name.Value, resourceId.Value, Optional.ToNullable(status), error.Value, properties.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceCredentialListResult(
+                id,
+                name,
+                resourceId,
+                status,
+                error,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceCredentialListResult>.Write(ModelReaderWriterOptions options)
@@ -168,7 +175,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceCredentialListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceCredentialListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +191,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeHybridContainerServiceCredentialListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceCredentialListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceCredentialListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

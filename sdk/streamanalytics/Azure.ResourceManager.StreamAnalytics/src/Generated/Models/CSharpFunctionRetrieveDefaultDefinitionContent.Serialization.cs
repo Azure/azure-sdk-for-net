@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<CSharpFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<CSharpFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string bindingType = default;
-            Optional<string> script = default;
-            Optional<StreamingJobFunctionUdfType> udfType = default;
+            string script = default;
+            StreamingJobFunctionUdfType? udfType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CSharpFunctionRetrieveDefaultDefinitionContent(bindingType, serializedAdditionalRawData, script.Value, Optional.ToNullable(udfType));
+            return new CSharpFunctionRetrieveDefaultDefinitionContent(bindingType, serializedAdditionalRawData, script, udfType);
         }
 
         BinaryData IPersistableModel<CSharpFunctionRetrieveDefaultDefinitionContent>.Write(ModelReaderWriterOptions options)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeCSharpFunctionRetrieveDefaultDefinitionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

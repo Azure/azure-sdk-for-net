@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtectionContainerMappingProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectionContainerMappingProviderSpecificDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionContainerMappingProviderSpecificDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtectionContainerMappingProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectionContainerMappingProviderSpecificDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionContainerMappingProviderSpecificDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownProtectionContainerMappingProviderSpecificDetails(document.RootElement, options);
+            return DeserializeProtectionContainerMappingProviderSpecificDetails(document.RootElement, options);
         }
 
         internal static UnknownProtectionContainerMappingProviderSpecificDetails DeserializeUnknownProtectionContainerMappingProviderSpecificDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProtectionContainerMappingProviderSpecificDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionContainerMappingProviderSpecificDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownProtectionContainerMappingProviderSpecificDetails(document.RootElement, options);
+                        return DeserializeProtectionContainerMappingProviderSpecificDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProtectionContainerMappingProviderSpecificDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionContainerMappingProviderSpecificDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

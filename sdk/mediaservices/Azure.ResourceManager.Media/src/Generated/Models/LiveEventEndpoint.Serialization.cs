@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<LiveEventEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveEventEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveEventEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<LiveEventEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveEventEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveEventEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> protocol = default;
-            Optional<Uri> uri = default;
+            string protocol = default;
+            Uri uri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveEventEndpoint(protocol.Value, uri.Value, serializedAdditionalRawData);
+            return new LiveEventEndpoint(protocol, uri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveEventEndpoint>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LiveEventEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveEventEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeLiveEventEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LiveEventEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveEventEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

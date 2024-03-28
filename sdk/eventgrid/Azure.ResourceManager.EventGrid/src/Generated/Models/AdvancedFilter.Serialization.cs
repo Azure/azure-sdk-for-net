@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdvancedFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvancedFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdvancedFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvancedFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,28 +75,28 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "BoolEquals": return BoolEqualsAdvancedFilter.DeserializeBoolEqualsAdvancedFilter(element);
-                    case "IsNotNull": return IsNotNullAdvancedFilter.DeserializeIsNotNullAdvancedFilter(element);
-                    case "IsNullOrUndefined": return IsNullOrUndefinedAdvancedFilter.DeserializeIsNullOrUndefinedAdvancedFilter(element);
-                    case "NumberGreaterThan": return NumberGreaterThanAdvancedFilter.DeserializeNumberGreaterThanAdvancedFilter(element);
-                    case "NumberGreaterThanOrEquals": return NumberGreaterThanOrEqualsAdvancedFilter.DeserializeNumberGreaterThanOrEqualsAdvancedFilter(element);
-                    case "NumberIn": return NumberInAdvancedFilter.DeserializeNumberInAdvancedFilter(element);
-                    case "NumberInRange": return NumberInRangeAdvancedFilter.DeserializeNumberInRangeAdvancedFilter(element);
-                    case "NumberLessThan": return NumberLessThanAdvancedFilter.DeserializeNumberLessThanAdvancedFilter(element);
-                    case "NumberLessThanOrEquals": return NumberLessThanOrEqualsAdvancedFilter.DeserializeNumberLessThanOrEqualsAdvancedFilter(element);
-                    case "NumberNotIn": return NumberNotInAdvancedFilter.DeserializeNumberNotInAdvancedFilter(element);
-                    case "NumberNotInRange": return NumberNotInRangeAdvancedFilter.DeserializeNumberNotInRangeAdvancedFilter(element);
-                    case "StringBeginsWith": return StringBeginsWithAdvancedFilter.DeserializeStringBeginsWithAdvancedFilter(element);
-                    case "StringContains": return StringContainsAdvancedFilter.DeserializeStringContainsAdvancedFilter(element);
-                    case "StringEndsWith": return StringEndsWithAdvancedFilter.DeserializeStringEndsWithAdvancedFilter(element);
-                    case "StringIn": return StringInAdvancedFilter.DeserializeStringInAdvancedFilter(element);
-                    case "StringNotBeginsWith": return StringNotBeginsWithAdvancedFilter.DeserializeStringNotBeginsWithAdvancedFilter(element);
-                    case "StringNotContains": return StringNotContainsAdvancedFilter.DeserializeStringNotContainsAdvancedFilter(element);
-                    case "StringNotEndsWith": return StringNotEndsWithAdvancedFilter.DeserializeStringNotEndsWithAdvancedFilter(element);
-                    case "StringNotIn": return StringNotInAdvancedFilter.DeserializeStringNotInAdvancedFilter(element);
+                    case "BoolEquals": return BoolEqualsAdvancedFilter.DeserializeBoolEqualsAdvancedFilter(element, options);
+                    case "IsNotNull": return IsNotNullAdvancedFilter.DeserializeIsNotNullAdvancedFilter(element, options);
+                    case "IsNullOrUndefined": return IsNullOrUndefinedAdvancedFilter.DeserializeIsNullOrUndefinedAdvancedFilter(element, options);
+                    case "NumberGreaterThan": return NumberGreaterThanAdvancedFilter.DeserializeNumberGreaterThanAdvancedFilter(element, options);
+                    case "NumberGreaterThanOrEquals": return NumberGreaterThanOrEqualsAdvancedFilter.DeserializeNumberGreaterThanOrEqualsAdvancedFilter(element, options);
+                    case "NumberIn": return NumberInAdvancedFilter.DeserializeNumberInAdvancedFilter(element, options);
+                    case "NumberInRange": return NumberInRangeAdvancedFilter.DeserializeNumberInRangeAdvancedFilter(element, options);
+                    case "NumberLessThan": return NumberLessThanAdvancedFilter.DeserializeNumberLessThanAdvancedFilter(element, options);
+                    case "NumberLessThanOrEquals": return NumberLessThanOrEqualsAdvancedFilter.DeserializeNumberLessThanOrEqualsAdvancedFilter(element, options);
+                    case "NumberNotIn": return NumberNotInAdvancedFilter.DeserializeNumberNotInAdvancedFilter(element, options);
+                    case "NumberNotInRange": return NumberNotInRangeAdvancedFilter.DeserializeNumberNotInRangeAdvancedFilter(element, options);
+                    case "StringBeginsWith": return StringBeginsWithAdvancedFilter.DeserializeStringBeginsWithAdvancedFilter(element, options);
+                    case "StringContains": return StringContainsAdvancedFilter.DeserializeStringContainsAdvancedFilter(element, options);
+                    case "StringEndsWith": return StringEndsWithAdvancedFilter.DeserializeStringEndsWithAdvancedFilter(element, options);
+                    case "StringIn": return StringInAdvancedFilter.DeserializeStringInAdvancedFilter(element, options);
+                    case "StringNotBeginsWith": return StringNotBeginsWithAdvancedFilter.DeserializeStringNotBeginsWithAdvancedFilter(element, options);
+                    case "StringNotContains": return StringNotContainsAdvancedFilter.DeserializeStringNotContainsAdvancedFilter(element, options);
+                    case "StringNotEndsWith": return StringNotEndsWithAdvancedFilter.DeserializeStringNotEndsWithAdvancedFilter(element, options);
+                    case "StringNotIn": return StringNotInAdvancedFilter.DeserializeStringNotInAdvancedFilter(element, options);
                 }
             }
-            return UnknownAdvancedFilter.DeserializeUnknownAdvancedFilter(element);
+            return UnknownAdvancedFilter.DeserializeUnknownAdvancedFilter(element, options);
         }
 
         BinaryData IPersistableModel<AdvancedFilter>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdvancedFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvancedFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeAdvancedFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdvancedFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvancedFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

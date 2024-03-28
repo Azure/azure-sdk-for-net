@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementNetworkConfigurationPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(InfrastructureVpnConfiguration))
             {
                 writer.WritePropertyName("infrastructureVpnConfiguration"u8);
-                writer.WriteObjectValue(InfrastructureVpnConfiguration);
+                writer.WriteObjectValue<VpnConfigurationPatchableProperties>(InfrastructureVpnConfiguration, options);
             }
             if (Optional.IsDefined(WorkloadVpnConfiguration))
             {
                 writer.WritePropertyName("workloadVpnConfiguration"u8);
-                writer.WriteObjectValue(WorkloadVpnConfiguration);
+                writer.WriteObjectValue<VpnConfigurationPatchableProperties>(WorkloadVpnConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementNetworkConfigurationPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<VpnConfigurationPatchableProperties> infrastructureVpnConfiguration = default;
-            Optional<VpnConfigurationPatchableProperties> workloadVpnConfiguration = default;
+            VpnConfigurationPatchableProperties infrastructureVpnConfiguration = default;
+            VpnConfigurationPatchableProperties workloadVpnConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    infrastructureVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value);
+                    infrastructureVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workloadVpnConfiguration"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    workloadVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value);
+                    workloadVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementNetworkConfigurationPatchableProperties(infrastructureVpnConfiguration.Value, workloadVpnConfiguration.Value, serializedAdditionalRawData);
+            return new ManagementNetworkConfigurationPatchableProperties(infrastructureVpnConfiguration, workloadVpnConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementNetworkConfigurationPatchableProperties>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeManagementNetworkConfigurationPatchableProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

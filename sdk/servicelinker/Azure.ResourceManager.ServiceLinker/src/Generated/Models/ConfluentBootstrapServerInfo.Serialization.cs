@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentBootstrapServerInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfluentBootstrapServerInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentBootstrapServerInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentBootstrapServerInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfluentBootstrapServerInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentBootstrapServerInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> endpoint = default;
+            string endpoint = default;
             TargetServiceType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentBootstrapServerInfo(type, serializedAdditionalRawData, endpoint.Value);
+            return new ConfluentBootstrapServerInfo(type, serializedAdditionalRawData, endpoint);
         }
 
         BinaryData IPersistableModel<ConfluentBootstrapServerInfo>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfluentBootstrapServerInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentBootstrapServerInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         return DeserializeConfluentBootstrapServerInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfluentBootstrapServerInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentBootstrapServerInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

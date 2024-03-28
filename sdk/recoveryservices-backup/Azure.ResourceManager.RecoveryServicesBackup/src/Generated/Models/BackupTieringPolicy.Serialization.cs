@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupTieringPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupTieringPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<TieringMode> tieringMode = default;
-            Optional<int> duration = default;
-            Optional<RetentionDurationType> durationType = default;
+            TieringMode? tieringMode = default;
+            int? duration = default;
+            RetentionDurationType? durationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupTieringPolicy(Optional.ToNullable(tieringMode), Optional.ToNullable(duration), Optional.ToNullable(durationType), serializedAdditionalRawData);
+            return new BackupTieringPolicy(tieringMode, duration, durationType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupTieringPolicy>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupTieringPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

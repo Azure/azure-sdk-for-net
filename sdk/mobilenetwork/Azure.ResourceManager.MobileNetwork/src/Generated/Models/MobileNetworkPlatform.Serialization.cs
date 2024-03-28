@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkPlatform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkPlatform>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<MobileNetworkPlatformType> platformType = default;
-            Optional<MobileNetworkVersionState> versionState = default;
-            Optional<string> minimumPlatformSoftwareVersion = default;
-            Optional<string> maximumPlatformSoftwareVersion = default;
-            Optional<MobileNetworkRecommendedVersion> recommendedVersion = default;
-            Optional<MobileNetworkObsoleteVersion> obsoleteVersion = default;
+            MobileNetworkPlatformType? platformType = default;
+            MobileNetworkVersionState? versionState = default;
+            string minimumPlatformSoftwareVersion = default;
+            string maximumPlatformSoftwareVersion = default;
+            MobileNetworkRecommendedVersion? recommendedVersion = default;
+            MobileNetworkObsoleteVersion? obsoleteVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkPlatform(Optional.ToNullable(platformType), Optional.ToNullable(versionState), minimumPlatformSoftwareVersion.Value, maximumPlatformSoftwareVersion.Value, Optional.ToNullable(recommendedVersion), Optional.ToNullable(obsoleteVersion), serializedAdditionalRawData);
+            return new MobileNetworkPlatform(
+                platformType,
+                versionState,
+                minimumPlatformSoftwareVersion,
+                maximumPlatformSoftwareVersion,
+                recommendedVersion,
+                obsoleteVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkPlatform>.Write(ModelReaderWriterOptions options)
@@ -168,7 +175,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +191,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkPlatform(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support reading '{options.Format}' format.");
             }
         }
 

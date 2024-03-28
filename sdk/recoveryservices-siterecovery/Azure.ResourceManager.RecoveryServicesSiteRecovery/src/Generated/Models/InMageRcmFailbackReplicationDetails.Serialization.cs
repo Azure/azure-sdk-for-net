@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmFailbackProtectedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MobilityAgentDetails))
             {
                 writer.WritePropertyName("mobilityAgentDetails"u8);
-                writer.WriteObjectValue(MobilityAgentDetails);
+                writer.WriteObjectValue<InMageRcmFailbackMobilityAgentDetails>(MobilityAgentDetails, options);
             }
             if (Optional.IsCollectionDefined(VmNics))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmFailbackNicDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiscoveredVmDetails))
             {
                 writer.WritePropertyName("discoveredVmDetails"u8);
-                writer.WriteObjectValue(DiscoveredVmDetails);
+                writer.WriteObjectValue<InMageRcmFailbackDiscoveredProtectedVmDetails>(DiscoveredVmDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastUsedPolicyId))
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -221,35 +221,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> internalIdentifier = default;
-            Optional<ResourceIdentifier> azureVirtualMachineId = default;
-            Optional<string> multiVmGroupName = default;
-            Optional<string> reprotectAgentId = default;
-            Optional<string> reprotectAgentName = default;
-            Optional<string> osType = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<string> targetvCenterId = default;
-            Optional<string> targetDataStoreName = default;
-            Optional<string> targetVmName = default;
-            Optional<int> initialReplicationProgressPercentage = default;
-            Optional<long> initialReplicationProcessedBytes = default;
-            Optional<long> initialReplicationTransferredBytes = default;
-            Optional<VmReplicationProgressHealth> initialReplicationProgressHealth = default;
-            Optional<int> resyncProgressPercentage = default;
-            Optional<long> resyncProcessedBytes = default;
-            Optional<long> resyncTransferredBytes = default;
-            Optional<VmReplicationProgressHealth> resyncProgressHealth = default;
-            Optional<string> resyncRequired = default;
-            Optional<SiteRecoveryResyncState> resyncState = default;
-            Optional<IReadOnlyList<InMageRcmFailbackProtectedDiskDetails>> protectedDisks = default;
-            Optional<InMageRcmFailbackMobilityAgentDetails> mobilityAgentDetails = default;
-            Optional<IReadOnlyList<InMageRcmFailbackNicDetails>> vmNics = default;
-            Optional<DateTimeOffset> lastPlannedFailoverStartTime = default;
-            Optional<PlannedFailoverStatus> lastPlannedFailoverStatus = default;
-            Optional<InMageRcmFailbackDiscoveredProtectedVmDetails> discoveredVmDetails = default;
-            Optional<ResourceIdentifier> lastUsedPolicyId = default;
-            Optional<string> lastUsedPolicyFriendlyName = default;
-            Optional<bool> isAgentRegistrationSuccessfulAfterFailover = default;
+            string internalIdentifier = default;
+            ResourceIdentifier azureVirtualMachineId = default;
+            string multiVmGroupName = default;
+            string reprotectAgentId = default;
+            string reprotectAgentName = default;
+            string osType = default;
+            ResourceIdentifier logStorageAccountId = default;
+            string targetvCenterId = default;
+            string targetDataStoreName = default;
+            string targetVmName = default;
+            int? initialReplicationProgressPercentage = default;
+            long? initialReplicationProcessedBytes = default;
+            long? initialReplicationTransferredBytes = default;
+            VmReplicationProgressHealth? initialReplicationProgressHealth = default;
+            int? resyncProgressPercentage = default;
+            long? resyncProcessedBytes = default;
+            long? resyncTransferredBytes = default;
+            VmReplicationProgressHealth? resyncProgressHealth = default;
+            string resyncRequired = default;
+            SiteRecoveryResyncState? resyncState = default;
+            IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks = default;
+            InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails = default;
+            IReadOnlyList<InMageRcmFailbackNicDetails> vmNics = default;
+            DateTimeOffset? lastPlannedFailoverStartTime = default;
+            PlannedFailoverStatus? lastPlannedFailoverStatus = default;
+            InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails = default;
+            ResourceIdentifier lastUsedPolicyId = default;
+            string lastUsedPolicyFriendlyName = default;
+            bool? isAgentRegistrationSuccessfulAfterFailover = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmFailbackProtectedDiskDetails> array = new List<InMageRcmFailbackProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmFailbackProtectedDiskDetails.DeserializeInMageRcmFailbackProtectedDiskDetails(item));
+                        array.Add(InMageRcmFailbackProtectedDiskDetails.DeserializeInMageRcmFailbackProtectedDiskDetails(item, options));
                     }
                     protectedDisks = array;
                     continue;
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    mobilityAgentDetails = InMageRcmFailbackMobilityAgentDetails.DeserializeInMageRcmFailbackMobilityAgentDetails(property.Value);
+                    mobilityAgentDetails = InMageRcmFailbackMobilityAgentDetails.DeserializeInMageRcmFailbackMobilityAgentDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vmNics"u8))
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmFailbackNicDetails> array = new List<InMageRcmFailbackNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmFailbackNicDetails.DeserializeInMageRcmFailbackNicDetails(item));
+                        array.Add(InMageRcmFailbackNicDetails.DeserializeInMageRcmFailbackNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    discoveredVmDetails = InMageRcmFailbackDiscoveredProtectedVmDetails.DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(property.Value);
+                    discoveredVmDetails = InMageRcmFailbackDiscoveredProtectedVmDetails.DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastUsedPolicyId"u8))
@@ -497,7 +497,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackReplicationDetails(instanceType, serializedAdditionalRawData, internalIdentifier.Value, azureVirtualMachineId.Value, multiVmGroupName.Value, reprotectAgentId.Value, reprotectAgentName.Value, osType.Value, logStorageAccountId.Value, targetvCenterId.Value, targetDataStoreName.Value, targetVmName.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToList(protectedDisks), mobilityAgentDetails.Value, Optional.ToList(vmNics), Optional.ToNullable(lastPlannedFailoverStartTime), Optional.ToNullable(lastPlannedFailoverStatus), discoveredVmDetails.Value, lastUsedPolicyId.Value, lastUsedPolicyFriendlyName.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover));
+            return new InMageRcmFailbackReplicationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                internalIdentifier,
+                azureVirtualMachineId,
+                multiVmGroupName,
+                reprotectAgentId,
+                reprotectAgentName,
+                osType,
+                logStorageAccountId,
+                targetvCenterId,
+                targetDataStoreName,
+                targetVmName,
+                initialReplicationProgressPercentage,
+                initialReplicationProcessedBytes,
+                initialReplicationTransferredBytes,
+                initialReplicationProgressHealth,
+                resyncProgressPercentage,
+                resyncProcessedBytes,
+                resyncTransferredBytes,
+                resyncProgressHealth,
+                resyncRequired,
+                resyncState,
+                protectedDisks ?? new ChangeTrackingList<InMageRcmFailbackProtectedDiskDetails>(),
+                mobilityAgentDetails,
+                vmNics ?? new ChangeTrackingList<InMageRcmFailbackNicDetails>(),
+                lastPlannedFailoverStartTime,
+                lastPlannedFailoverStatus,
+                discoveredVmDetails,
+                lastUsedPolicyId,
+                lastUsedPolicyFriendlyName,
+                isAgentRegistrationSuccessfulAfterFailover);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackReplicationDetails>.Write(ModelReaderWriterOptions options)
@@ -509,7 +540,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -525,7 +556,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmFailbackReplicationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<FabricModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<FabricModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzStackHCI": return AzStackHciFabricModelCustomProperties.DeserializeAzStackHciFabricModelCustomProperties(element);
-                    case "FabricModelCustomProperties": return GeneralFabricModelCustomProperties.DeserializeGeneralFabricModelCustomProperties(element);
-                    case "HyperVMigrate": return HyperVMigrateFabricModelCustomProperties.DeserializeHyperVMigrateFabricModelCustomProperties(element);
-                    case "VMwareMigrate": return VMwareMigrateFabricModelCustomProperties.DeserializeVMwareMigrateFabricModelCustomProperties(element);
+                    case "AzStackHCI": return AzStackHciFabricModelCustomProperties.DeserializeAzStackHciFabricModelCustomProperties(element, options);
+                    case "FabricModelCustomProperties": return GeneralFabricModelCustomProperties.DeserializeGeneralFabricModelCustomProperties(element, options);
+                    case "HyperVMigrate": return HyperVMigrateFabricModelCustomProperties.DeserializeHyperVMigrateFabricModelCustomProperties(element, options);
+                    case "VMwareMigrate": return VMwareMigrateFabricModelCustomProperties.DeserializeVMwareMigrateFabricModelCustomProperties(element, options);
                 }
             }
-            return UnknownFabricModelCustomProperties.DeserializeUnknownFabricModelCustomProperties(element);
+            return UnknownFabricModelCustomProperties.DeserializeUnknownFabricModelCustomProperties(element, options);
         }
 
         BinaryData IPersistableModel<FabricModelCustomProperties>.Write(ModelReaderWriterOptions options)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FabricModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeFabricModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FabricModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

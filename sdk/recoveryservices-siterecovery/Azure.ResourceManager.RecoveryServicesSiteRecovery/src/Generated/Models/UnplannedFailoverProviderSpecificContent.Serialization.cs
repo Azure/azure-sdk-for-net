@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<UnplannedFailoverProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnplannedFailoverProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnplannedFailoverProviderSpecificContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<UnplannedFailoverProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnplannedFailoverProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnplannedFailoverProviderSpecificContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AUnplannedFailoverContent.DeserializeA2AUnplannedFailoverContent(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureUnplannedFailoverContent.DeserializeHyperVReplicaAzureUnplannedFailoverContent(element);
-                    case "InMage": return InMageUnplannedFailoverContent.DeserializeInMageUnplannedFailoverContent(element);
-                    case "InMageAzureV2": return InMageAzureV2UnplannedFailoverContent.DeserializeInMageAzureV2UnplannedFailoverContent(element);
-                    case "InMageRcm": return InMageRcmUnplannedFailoverContent.DeserializeInMageRcmUnplannedFailoverContent(element);
+                    case "A2A": return A2AUnplannedFailoverContent.DeserializeA2AUnplannedFailoverContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureUnplannedFailoverContent.DeserializeHyperVReplicaAzureUnplannedFailoverContent(element, options);
+                    case "InMage": return InMageUnplannedFailoverContent.DeserializeInMageUnplannedFailoverContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2UnplannedFailoverContent.DeserializeInMageAzureV2UnplannedFailoverContent(element, options);
+                    case "InMageRcm": return InMageRcmUnplannedFailoverContent.DeserializeInMageRcmUnplannedFailoverContent(element, options);
                 }
             }
-            return UnknownUnplannedFailoverProviderSpecificContent.DeserializeUnknownUnplannedFailoverProviderSpecificContent(element);
+            return UnknownUnplannedFailoverProviderSpecificContent.DeserializeUnknownUnplannedFailoverProviderSpecificContent(element, options);
         }
 
         BinaryData IPersistableModel<UnplannedFailoverProviderSpecificContent>.Write(ModelReaderWriterOptions options)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UnplannedFailoverProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnplannedFailoverProviderSpecificContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeUnplannedFailoverProviderSpecificContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UnplannedFailoverProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnplannedFailoverProviderSpecificContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyArrayChangedValuesCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyArrayChangedValuesCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRulePropertyArrayChangedConditionSupportedArrayType> arrayType = default;
-            Optional<AutomationRulePropertyArrayChangedConditionSupportedChangeType> changeType = default;
+            AutomationRulePropertyArrayChangedConditionSupportedArrayType? arrayType = default;
+            AutomationRulePropertyArrayChangedConditionSupportedChangeType? changeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRulePropertyArrayChangedValuesCondition(Optional.ToNullable(arrayType), Optional.ToNullable(changeType), serializedAdditionalRawData);
+            return new AutomationRulePropertyArrayChangedValuesCondition(arrayType, changeType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRulePropertyArrayChangedValuesCondition>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeAutomationRulePropertyArrayChangedValuesCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

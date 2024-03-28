@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(ResourceName);
+                writer.WriteObjectValue<ReservationResourceName>(ResourceName, options);
             }
             if (Optional.IsDefined(ResourceTypeName))
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<int> limit = default;
-            Optional<int> currentValue = default;
-            Optional<string> unit = default;
-            Optional<ReservationResourceName> name = default;
-            Optional<ResourceTypeName> resourceType = default;
-            Optional<string> quotaPeriod = default;
-            Optional<BinaryData> properties = default;
+            int? limit = default;
+            int? currentValue = default;
+            string unit = default;
+            ReservationResourceName name = default;
+            ResourceTypeName? resourceType = default;
+            string quotaPeriod = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    name = ReservationResourceName.DeserializeReservationResourceName(property.Value);
+                    name = ReservationResourceName.DeserializeReservationResourceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaProperties(Optional.ToNullable(limit), Optional.ToNullable(currentValue), unit.Value, name.Value, Optional.ToNullable(resourceType), quotaPeriod.Value, properties.Value, serializedAdditionalRawData);
+            return new QuotaProperties(
+                limit,
+                currentValue,
+                unit,
+                name,
+                resourceType,
+                quotaPeriod,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaProperties>.Write(ModelReaderWriterOptions options)
@@ -190,7 +198,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +214,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeQuotaProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

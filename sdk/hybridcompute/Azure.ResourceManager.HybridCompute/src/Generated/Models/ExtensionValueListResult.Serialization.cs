@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtensionValueListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionValueListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtensionValueListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HybridComputeExtensionValueData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtensionValueListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionValueListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtensionValueListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridComputeExtensionValueData>> value = default;
+            IReadOnlyList<HybridComputeExtensionValueData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeExtensionValueData> array = new List<HybridComputeExtensionValueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeExtensionValueData.DeserializeHybridComputeExtensionValueData(item));
+                        array.Add(HybridComputeExtensionValueData.DeserializeHybridComputeExtensionValueData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionValueListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ExtensionValueListResult(value ?? new ChangeTrackingList<HybridComputeExtensionValueData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionValueListResult>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionValueListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtensionValueListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeExtensionValueListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionValueListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtensionValueListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

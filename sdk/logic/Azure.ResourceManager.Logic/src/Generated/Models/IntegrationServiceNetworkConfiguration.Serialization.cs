@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceNetworkConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(AccessEndpoint))
             {
                 writer.WritePropertyName("accessEndpoint"u8);
-                writer.WriteObjectValue(AccessEndpoint);
+                writer.WriteObjectValue<IntegrationServiceEnvironmentAccessEndpoint>(AccessEndpoint, options);
             }
             if (Optional.IsCollectionDefined(Subnets))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LogicResourceReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceNetworkConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> virtualNetworkAddressSpace = default;
-            Optional<IntegrationServiceEnvironmentAccessEndpoint> accessEndpoint = default;
-            Optional<IList<LogicResourceReference>> subnets = default;
+            string virtualNetworkAddressSpace = default;
+            IntegrationServiceEnvironmentAccessEndpoint accessEndpoint = default;
+            IList<LogicResourceReference> subnets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    accessEndpoint = IntegrationServiceEnvironmentAccessEndpoint.DeserializeIntegrationServiceEnvironmentAccessEndpoint(property.Value);
+                    accessEndpoint = IntegrationServiceEnvironmentAccessEndpoint.DeserializeIntegrationServiceEnvironmentAccessEndpoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subnets"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicResourceReference> array = new List<LogicResourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicResourceReference.DeserializeLogicResourceReference(item));
+                        array.Add(LogicResourceReference.DeserializeLogicResourceReference(item, options));
                     }
                     subnets = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace.Value, accessEndpoint.Value, Optional.ToList(subnets), serializedAdditionalRawData);
+            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace, accessEndpoint, subnets ?? new ChangeTrackingList<LogicResourceReference>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceNetworkConfiguration>.Write(ModelReaderWriterOptions options)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceNetworkConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationServiceNetworkConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceNetworkConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

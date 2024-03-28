@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrinoUserTelemetry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrinoUserTelemetry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrinoUserTelemetry)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage);
+                writer.WriteObjectValue<TrinoTelemetryConfig>(Storage, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrinoUserTelemetry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrinoUserTelemetry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrinoUserTelemetry)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<TrinoTelemetryConfig> storage = default;
+            TrinoTelemetryConfig storage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    storage = TrinoTelemetryConfig.DeserializeTrinoTelemetryConfig(property.Value);
+                    storage = TrinoTelemetryConfig.DeserializeTrinoTelemetryConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrinoUserTelemetry(storage.Value, serializedAdditionalRawData);
+            return new TrinoUserTelemetry(storage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoUserTelemetry>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrinoUserTelemetry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrinoUserTelemetry)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeTrinoUserTelemetry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrinoUserTelemetry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrinoUserTelemetry)} does not support reading '{options.Format}' format.");
             }
         }
 

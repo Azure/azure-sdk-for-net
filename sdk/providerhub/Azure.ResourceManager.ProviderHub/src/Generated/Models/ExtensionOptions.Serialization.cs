@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtensionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtensionOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtensionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtensionOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<ExtensionOptionType>> request = default;
-            Optional<IList<ExtensionOptionType>> response = default;
+            IList<ExtensionOptionType> request = default;
+            IList<ExtensionOptionType> response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionOptions(Optional.ToList(request), Optional.ToList(response), serializedAdditionalRawData);
+            return new ExtensionOptions(request ?? new ChangeTrackingList<ExtensionOptionType>(), response ?? new ChangeTrackingList<ExtensionOptionType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionOptions>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtensionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeExtensionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtensionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

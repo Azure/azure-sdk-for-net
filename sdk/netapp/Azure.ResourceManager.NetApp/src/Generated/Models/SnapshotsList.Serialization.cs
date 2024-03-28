@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotsList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetAppVolumeSnapshotData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotsList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppVolumeSnapshotData>> value = default;
+            IReadOnlyList<NetAppVolumeSnapshotData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumeSnapshotData> array = new List<NetAppVolumeSnapshotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(item));
+                        array.Add(NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotsList(Optional.ToList(value), serializedAdditionalRawData);
+            return new SnapshotsList(value ?? new ChangeTrackingList<NetAppVolumeSnapshotData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotsList>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotsList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeSnapshotsList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotsList)} does not support reading '{options.Format}' format.");
             }
         }
 

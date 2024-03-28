@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AsyncOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AsyncOperationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AsyncOperationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AsyncOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AsyncOperationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AsyncOperationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,15 +113,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
+            string id = default;
+            string name = default;
             string status = default;
-            Optional<string> resourceId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<double> percentComplete = default;
-            Optional<BinaryData> properties = default;
-            Optional<ResponseError> error = default;
+            string resourceId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            double? percentComplete = default;
+            BinaryData properties = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +197,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AsyncOperationStatus(id.Value, name.Value, status, resourceId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), properties.Value, error.Value, serializedAdditionalRawData);
+            return new AsyncOperationStatus(
+                id,
+                name,
+                status,
+                resourceId,
+                startTime,
+                endTime,
+                percentComplete,
+                properties,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AsyncOperationStatus>.Write(ModelReaderWriterOptions options)
@@ -210,7 +219,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AsyncOperationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AsyncOperationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +235,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeAsyncOperationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AsyncOperationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AsyncOperationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

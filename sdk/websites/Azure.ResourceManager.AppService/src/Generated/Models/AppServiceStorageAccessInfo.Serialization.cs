@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceStorageAccessInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceStorageAccessInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AppServiceStorageType> type = default;
-            Optional<string> accountName = default;
-            Optional<string> shareName = default;
-            Optional<string> accessKey = default;
-            Optional<string> mountPath = default;
-            Optional<AppServiceStorageAccountState> state = default;
+            AppServiceStorageType? type = default;
+            string accountName = default;
+            string shareName = default;
+            string accessKey = default;
+            string mountPath = default;
+            AppServiceStorageAccountState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +149,145 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceStorageAccessInfo(Optional.ToNullable(type), accountName.Value, shareName.Value, accessKey.Value, mountPath.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new AppServiceStorageAccessInfo(
+                type,
+                accountName,
+                shareName,
+                accessKey,
+                mountPath,
+                state,
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageType), out propertyOverride);
+            if (Optional.IsDefined(StorageType) || hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{StorageType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountName), out propertyOverride);
+            if (Optional.IsDefined(AccountName) || hasPropertyOverride)
+            {
+                builder.Append("  accountName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (AccountName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AccountName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AccountName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShareName), out propertyOverride);
+            if (Optional.IsDefined(ShareName) || hasPropertyOverride)
+            {
+                builder.Append("  shareName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ShareName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ShareName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ShareName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessKey), out propertyOverride);
+            if (Optional.IsDefined(AccessKey) || hasPropertyOverride)
+            {
+                builder.Append("  accessKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (AccessKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AccessKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AccessKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MountPath), out propertyOverride);
+            if (Optional.IsDefined(MountPath) || hasPropertyOverride)
+            {
+                builder.Append("  mountPath: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (MountPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MountPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MountPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (Optional.IsDefined(State) || hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{State.Value.ToSerialString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<AppServiceStorageAccessInfo>.Write(ModelReaderWriterOptions options)
@@ -159,8 +298,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +317,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceStorageAccessInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

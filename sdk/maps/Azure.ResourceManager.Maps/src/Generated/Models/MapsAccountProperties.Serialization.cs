@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Maps.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapsAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapsLinkedResource>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors);
+                writer.WriteObjectValue<CorsRules>(Cors, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Maps.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapsAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Optional<Guid> uniqueId = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<string> provisioningState = default;
-            Optional<IList<MapsLinkedResource>> linkedResources = default;
-            Optional<CorsRules> cors = default;
+            Guid? uniqueId = default;
+            bool? disableLocalAuth = default;
+            string provisioningState = default;
+            IList<MapsLinkedResource> linkedResources = default;
+            CorsRules cors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Maps.Models
                     List<MapsLinkedResource> array = new List<MapsLinkedResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item));
+                        array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item, options));
                     }
                     linkedResources = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    cors = CorsRules.DeserializeCorsRules(property.Value);
+                    cors = CorsRules.DeserializeCorsRules(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsAccountProperties(Optional.ToNullable(uniqueId), Optional.ToNullable(disableLocalAuth), provisioningState.Value, Optional.ToList(linkedResources), cors.Value, serializedAdditionalRawData);
+            return new MapsAccountProperties(
+                uniqueId,
+                disableLocalAuth,
+                provisioningState,
+                linkedResources ?? new ChangeTrackingList<MapsLinkedResource>(),
+                cors,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsAccountProperties>.Write(ModelReaderWriterOptions options)
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.Maps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +189,7 @@ namespace Azure.ResourceManager.Maps.Models
                         return DeserializeMapsAccountProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

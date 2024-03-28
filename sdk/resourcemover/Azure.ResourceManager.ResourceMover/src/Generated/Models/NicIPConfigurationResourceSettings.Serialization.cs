@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<NicIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,10 +31,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (Optional.IsDefined(PrivateIPAddressStringValue))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress.ToString());
+                writer.WriteStringValue(PrivateIPAddressStringValue);
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet);
+                writer.WriteObjectValue<SubnetReferenceInfo>(Subnet, options);
             }
             if (Optional.IsDefined(IsPrimary))
             {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerBackendAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoadBalancerBackendAddressPoolReferenceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,14 +67,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerNatRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoadBalancerNatRuleReferenceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PublicIP))
             {
                 writer.WritePropertyName("publicIp"u8);
-                writer.WriteObjectValue(PublicIP);
+                writer.WriteObjectValue<PublicIPReferenceInfo>(PublicIP, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<NicIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,14 +114,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<string> privateIPAllocationMethod = default;
-            Optional<SubnetReferenceInfo> subnet = default;
-            Optional<bool> primary = default;
-            Optional<IList<LoadBalancerBackendAddressPoolReferenceInfo>> loadBalancerBackendAddressPools = default;
-            Optional<IList<LoadBalancerNatRuleReferenceInfo>> loadBalancerNatRules = default;
-            Optional<PublicIPReferenceInfo> publicIP = default;
+            string name = default;
+            string privateIPAddress = default;
+            string privateIPAllocationMethod = default;
+            SubnetReferenceInfo subnet = default;
+            bool? primary = default;
+            IList<LoadBalancerBackendAddressPoolReferenceInfo> loadBalancerBackendAddressPools = default;
+            IList<LoadBalancerNatRuleReferenceInfo> loadBalancerNatRules = default;
+            PublicIPReferenceInfo publicIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +133,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 if (property.NameEquals("privateIpAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
+                    privateIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAllocationMethod"u8))
@@ -152,7 +147,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value);
+                    subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("primary"u8))
@@ -173,7 +168,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<LoadBalancerBackendAddressPoolReferenceInfo> array = new List<LoadBalancerBackendAddressPoolReferenceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerBackendAddressPoolReferenceInfo.DeserializeLoadBalancerBackendAddressPoolReferenceInfo(item));
+                        array.Add(LoadBalancerBackendAddressPoolReferenceInfo.DeserializeLoadBalancerBackendAddressPoolReferenceInfo(item, options));
                     }
                     loadBalancerBackendAddressPools = array;
                     continue;
@@ -187,7 +182,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<LoadBalancerNatRuleReferenceInfo> array = new List<LoadBalancerNatRuleReferenceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerNatRuleReferenceInfo.DeserializeLoadBalancerNatRuleReferenceInfo(item));
+                        array.Add(LoadBalancerNatRuleReferenceInfo.DeserializeLoadBalancerNatRuleReferenceInfo(item, options));
                     }
                     loadBalancerNatRules = array;
                     continue;
@@ -198,7 +193,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    publicIP = PublicIPReferenceInfo.DeserializePublicIPReferenceInfo(property.Value);
+                    publicIP = PublicIPReferenceInfo.DeserializePublicIPReferenceInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -207,7 +202,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NicIPConfigurationResourceSettings(name.Value, privateIPAddress.Value, privateIPAllocationMethod.Value, subnet.Value, Optional.ToNullable(primary), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerNatRules), publicIP.Value, serializedAdditionalRawData);
+            return new NicIPConfigurationResourceSettings(
+                name,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                subnet,
+                primary,
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<LoadBalancerBackendAddressPoolReferenceInfo>(),
+                loadBalancerNatRules ?? new ChangeTrackingList<LoadBalancerNatRuleReferenceInfo>(),
+                publicIP,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NicIPConfigurationResourceSettings>.Write(ModelReaderWriterOptions options)
@@ -219,7 +223,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +239,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeNicIPConfigurationResourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

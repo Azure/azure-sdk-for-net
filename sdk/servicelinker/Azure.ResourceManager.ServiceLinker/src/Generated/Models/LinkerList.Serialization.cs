@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkerList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkerList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LinkerResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkerList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkerList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,8 +86,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<LinkerResourceData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<LinkerResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     List<LinkerResourceData> array = new List<LinkerResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkerResourceData.DeserializeLinkerResourceData(item));
+                        array.Add(LinkerResourceData.DeserializeLinkerResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkerList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new LinkerList(nextLink, value ?? new ChangeTrackingList<LinkerResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkerList>.Write(ModelReaderWriterOptions options)
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinkerList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         return DeserializeLinkerList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkerList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerList)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountAgreementContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountAgreementContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountAgreementContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AS2))
             {
                 writer.WritePropertyName("aS2"u8);
-                writer.WriteObjectValue(AS2);
+                writer.WriteObjectValue<AS2AgreementContent>(AS2, options);
             }
             if (Optional.IsDefined(X12))
             {
                 writer.WritePropertyName("x12"u8);
-                writer.WriteObjectValue(X12);
+                writer.WriteObjectValue<X12AgreementContent>(X12, options);
             }
             if (Optional.IsDefined(Edifact))
             {
                 writer.WritePropertyName("edifact"u8);
-                writer.WriteObjectValue(Edifact);
+                writer.WriteObjectValue<EdifactAgreementContent>(Edifact, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountAgreementContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountAgreementContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountAgreementContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<AS2AgreementContent> aS2 = default;
-            Optional<X12AgreementContent> x12 = default;
-            Optional<EdifactAgreementContent> edifact = default;
+            AS2AgreementContent aS2 = default;
+            X12AgreementContent x12 = default;
+            EdifactAgreementContent edifact = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    aS2 = AS2AgreementContent.DeserializeAS2AgreementContent(property.Value);
+                    aS2 = AS2AgreementContent.DeserializeAS2AgreementContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("x12"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    x12 = X12AgreementContent.DeserializeX12AgreementContent(property.Value);
+                    x12 = X12AgreementContent.DeserializeX12AgreementContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("edifact"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    edifact = EdifactAgreementContent.DeserializeEdifactAgreementContent(property.Value);
+                    edifact = EdifactAgreementContent.DeserializeEdifactAgreementContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountAgreementContent(aS2.Value, x12.Value, edifact.Value, serializedAdditionalRawData);
+            return new IntegrationAccountAgreementContent(aS2, x12, edifact, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountAgreementContent>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountAgreementContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountAgreementContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationAccountAgreementContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountAgreementContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountAgreementContent)} does not support reading '{options.Format}' format.");
             }
         }
 

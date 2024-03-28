@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -48,11 +47,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         /// <summary> Initializes a new instance of <see cref="ClusterConnectivityProfile"/>. </summary>
         /// <param name="web"> Web connectivity endpoint details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="web"/> is null. </exception>
         internal ClusterConnectivityProfile(WebConnectivityEndpoint web)
         {
-            Argument.AssertNotNull(web, nameof(web));
-
             Web = web;
             Ssh = new ChangeTrackingList<SshConnectivityEndpoint>();
         }
@@ -74,13 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Web connectivity endpoint details. </summary>
-        internal WebConnectivityEndpoint Web { get; }
-        /// <summary> Web connectivity endpoint. </summary>
-        public string WebFqdn
-        {
-            get => Web?.Fqdn;
-        }
-
+        public WebConnectivityEndpoint Web { get; }
         /// <summary> List of SSH connectivity endpoints. </summary>
         public IReadOnlyList<SshConnectivityEndpoint> Ssh { get; }
     }

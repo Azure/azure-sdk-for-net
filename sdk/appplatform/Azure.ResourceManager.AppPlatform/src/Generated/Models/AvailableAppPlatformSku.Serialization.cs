@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableAppPlatformSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableAppPlatformSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableAppPlatformSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<AppPlatformSkuCapacity>(Capacity, options);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformSkuLocationInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformSkuRestrictions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableAppPlatformSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableAppPlatformSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableAppPlatformSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<AppPlatformSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<AppPlatformSkuLocationInfo>> locationInfo = default;
-            Optional<IReadOnlyList<AppPlatformSkuRestrictions>> restrictions = default;
+            ResourceType? resourceType = default;
+            string name = default;
+            string tier = default;
+            AppPlatformSkuCapacity capacity = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<AppPlatformSkuLocationInfo> locationInfo = default;
+            IReadOnlyList<AppPlatformSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    capacity = AppPlatformSkuCapacity.DeserializeAppPlatformSkuCapacity(property.Value);
+                    capacity = AppPlatformSkuCapacity.DeserializeAppPlatformSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformSkuLocationInfo> array = new List<AppPlatformSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformSkuLocationInfo.DeserializeAppPlatformSkuLocationInfo(item));
+                        array.Add(AppPlatformSkuLocationInfo.DeserializeAppPlatformSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformSkuRestrictions> array = new List<AppPlatformSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformSkuRestrictions.DeserializeAppPlatformSkuRestrictions(item));
+                        array.Add(AppPlatformSkuRestrictions.DeserializeAppPlatformSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableAppPlatformSku(Optional.ToNullable(resourceType), name.Value, tier.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new AvailableAppPlatformSku(
+                resourceType,
+                name,
+                tier,
+                capacity,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<AppPlatformSkuLocationInfo>(),
+                restrictions ?? new ChangeTrackingList<AppPlatformSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableAppPlatformSku>.Write(ModelReaderWriterOptions options)
@@ -213,7 +221,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableAppPlatformSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableAppPlatformSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +237,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAvailableAppPlatformSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableAppPlatformSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableAppPlatformSku)} does not support reading '{options.Format}' format.");
             }
         }
 

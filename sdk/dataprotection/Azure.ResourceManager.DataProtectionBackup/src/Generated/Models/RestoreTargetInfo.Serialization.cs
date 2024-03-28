@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreTargetInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreTargetInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreTargetInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("datasourceInfo"u8);
-            writer.WriteObjectValue(DataSourceInfo);
+            writer.WriteObjectValue<DataSourceInfo>(DataSourceInfo, options);
             if (Optional.IsDefined(DataSourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
-                writer.WriteObjectValue(DataSourceSetInfo);
+                writer.WriteObjectValue<DataSourceSetInfo>(DataSourceSetInfo, options);
             }
             if (Optional.IsDefined(DataSourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue(DataSourceAuthCredentials);
+                writer.WriteObjectValue<DataProtectionBackupAuthCredentials>(DataSourceAuthCredentials, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreTargetInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreTargetInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreTargetInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,18 +86,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             DataSourceInfo datasourceInfo = default;
-            Optional<DataSourceSetInfo> datasourceSetInfo = default;
-            Optional<DataProtectionBackupAuthCredentials> datasourceAuthCredentials = default;
+            DataSourceSetInfo datasourceSetInfo = default;
+            DataProtectionBackupAuthCredentials datasourceAuthCredentials = default;
             string objectType = default;
             RecoverySetting recoveryOption = default;
-            Optional<AzureLocation> restoreLocation = default;
+            AzureLocation? restoreLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datasourceInfo"u8))
                 {
-                    datasourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value);
+                    datasourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datasourceSetInfo"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    datasourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value);
+                    datasourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datasourceAuthCredentials"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value);
+                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))
@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestoreTargetInfo(objectType, recoveryOption, Optional.ToNullable(restoreLocation), serializedAdditionalRawData, datasourceInfo, datasourceSetInfo.Value, datasourceAuthCredentials.Value);
+            return new RestoreTargetInfo(
+                objectType,
+                recoveryOption,
+                restoreLocation,
+                serializedAdditionalRawData,
+                datasourceInfo,
+                datasourceSetInfo,
+                datasourceAuthCredentials);
         }
 
         BinaryData IPersistableModel<RestoreTargetInfo>.Write(ModelReaderWriterOptions options)
@@ -155,7 +162,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestoreTargetInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreTargetInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +178,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeRestoreTargetInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestoreTargetInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreTargetInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

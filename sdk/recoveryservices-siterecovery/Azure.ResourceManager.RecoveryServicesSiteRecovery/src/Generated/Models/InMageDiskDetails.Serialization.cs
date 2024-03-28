@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageDiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VolumeList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryDiskVolumeDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageDiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<string> diskSizeInMB = default;
-            Optional<string> diskType = default;
-            Optional<string> diskConfiguration = default;
-            Optional<IReadOnlyList<SiteRecoveryDiskVolumeDetails>> volumeList = default;
+            string diskId = default;
+            string diskName = default;
+            string diskSizeInMB = default;
+            string diskType = default;
+            string diskConfiguration = default;
+            IReadOnlyList<SiteRecoveryDiskVolumeDetails> volumeList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryDiskVolumeDetails> array = new List<SiteRecoveryDiskVolumeDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDiskVolumeDetails.DeserializeSiteRecoveryDiskVolumeDetails(item));
+                        array.Add(SiteRecoveryDiskVolumeDetails.DeserializeSiteRecoveryDiskVolumeDetails(item, options));
                     }
                     volumeList = array;
                     continue;
@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageDiskDetails(diskId.Value, diskName.Value, diskSizeInMB.Value, diskType.Value, diskConfiguration.Value, Optional.ToList(volumeList), serializedAdditionalRawData);
+            return new InMageDiskDetails(
+                diskId,
+                diskName,
+                diskSizeInMB,
+                diskType,
+                diskConfiguration,
+                volumeList ?? new ChangeTrackingList<SiteRecoveryDiskVolumeDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageDiskDetails>.Write(ModelReaderWriterOptions options)
@@ -166,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

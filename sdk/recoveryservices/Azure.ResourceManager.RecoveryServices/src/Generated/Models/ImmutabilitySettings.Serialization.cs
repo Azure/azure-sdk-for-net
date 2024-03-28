@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImmutabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImmutabilitySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImmutabilitySettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImmutabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImmutabilitySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImmutabilitySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<ImmutabilityState> state = default;
+            ImmutabilityState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImmutabilitySettings(Optional.ToNullable(state), serializedAdditionalRawData);
+            return new ImmutabilitySettings(state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImmutabilitySettings>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImmutabilitySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImmutabilitySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeImmutabilitySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImmutabilitySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImmutabilitySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

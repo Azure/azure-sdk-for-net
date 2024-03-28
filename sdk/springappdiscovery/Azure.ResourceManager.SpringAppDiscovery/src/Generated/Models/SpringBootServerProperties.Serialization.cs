@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootServerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootSiteError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootServerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<int> port = default;
+            int? port = default;
             string server = default;
-            Optional<IList<IPAddress>> fqdnAndIPAddressList = default;
-            Optional<ResourceIdentifier> machineArmId = default;
-            Optional<int> totalApps = default;
-            Optional<int> springBootApps = default;
-            Optional<IList<SpringBootSiteError>> errors = default;
-            Optional<SpringAppDiscoveryProvisioningState> provisioningState = default;
+            IList<IPAddress> fqdnAndIPAddressList = default;
+            ResourceIdentifier machineArmId = default;
+            int? totalApps = default;
+            int? springBootApps = default;
+            IList<SpringBootSiteError> errors = default;
+            SpringAppDiscoveryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootSiteError> array = new List<SpringBootSiteError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item));
+                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item, options));
                     }
                     errors = array;
                     continue;
@@ -220,7 +220,16 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootServerProperties(Optional.ToNullable(port), server, Optional.ToList(fqdnAndIPAddressList), machineArmId.Value, Optional.ToNullable(totalApps), Optional.ToNullable(springBootApps), Optional.ToList(errors), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SpringBootServerProperties(
+                port,
+                server,
+                fqdnAndIPAddressList ?? new ChangeTrackingList<IPAddress>(),
+                machineArmId,
+                totalApps,
+                springBootApps,
+                errors ?? new ChangeTrackingList<SpringBootSiteError>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootServerProperties>.Write(ModelReaderWriterOptions options)
@@ -232,7 +241,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootServerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +257,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         return DeserializeSpringBootServerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootServerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

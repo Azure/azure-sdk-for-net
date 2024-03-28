@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformBuildProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformBuildProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests);
+                writer.WriteObjectValue<AppPlatformBuildResourceRequirements>(ResourceRequests, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformBuildProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformBuildProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> relativePath = default;
-            Optional<string> builder = default;
-            Optional<string> agentPool = default;
-            Optional<AppPlatformBuildProvisioningState> provisioningState = default;
-            Optional<IDictionary<string, string>> env = default;
-            Optional<SubResource> triggeredBuildResult = default;
-            Optional<AppPlatformBuildResourceRequirements> resourceRequests = default;
+            string relativePath = default;
+            string builder = default;
+            string agentPool = default;
+            AppPlatformBuildProvisioningState? provisioningState = default;
+            IDictionary<string, string> env = default;
+            SubResource triggeredBuildResult = default;
+            AppPlatformBuildResourceRequirements resourceRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformBuildResourceRequirements.DeserializeAppPlatformBuildResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformBuildResourceRequirements.DeserializeAppPlatformBuildResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildProperties(relativePath.Value, builder.Value, agentPool.Value, Optional.ToNullable(provisioningState), Optional.ToDictionary(env), triggeredBuildResult, resourceRequests.Value, serializedAdditionalRawData);
+            return new AppPlatformBuildProperties(
+                relativePath,
+                builder,
+                agentPool,
+                provisioningState,
+                env ?? new ChangeTrackingDictionary<string, string>(),
+                triggeredBuildResult,
+                resourceRequests,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildProperties>.Write(ModelReaderWriterOptions options)
@@ -191,7 +199,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformBuildProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformBuildProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +215,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformBuildProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformBuildProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformBuildProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

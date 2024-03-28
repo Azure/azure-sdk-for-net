@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageDiskExclusionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VolumeOptions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageVolumeExclusionOptions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DiskSignatureOptions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageDiskSignatureExclusionOptions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageDiskExclusionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IList<InMageVolumeExclusionOptions>> volumeOptions = default;
-            Optional<IList<InMageDiskSignatureExclusionOptions>> diskSignatureOptions = default;
+            IList<InMageVolumeExclusionOptions> volumeOptions = default;
+            IList<InMageDiskSignatureExclusionOptions> diskSignatureOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageVolumeExclusionOptions> array = new List<InMageVolumeExclusionOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageVolumeExclusionOptions.DeserializeInMageVolumeExclusionOptions(item));
+                        array.Add(InMageVolumeExclusionOptions.DeserializeInMageVolumeExclusionOptions(item, options));
                     }
                     volumeOptions = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageDiskSignatureExclusionOptions> array = new List<InMageDiskSignatureExclusionOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageDiskSignatureExclusionOptions.DeserializeInMageDiskSignatureExclusionOptions(item));
+                        array.Add(InMageDiskSignatureExclusionOptions.DeserializeInMageDiskSignatureExclusionOptions(item, options));
                     }
                     diskSignatureOptions = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageDiskExclusionContent(Optional.ToList(volumeOptions), Optional.ToList(diskSignatureOptions), serializedAdditionalRawData);
+            return new InMageDiskExclusionContent(volumeOptions ?? new ChangeTrackingList<InMageVolumeExclusionOptions>(), diskSignatureOptions ?? new ChangeTrackingList<InMageDiskSignatureExclusionOptions>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageDiskExclusionContent>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageDiskExclusionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

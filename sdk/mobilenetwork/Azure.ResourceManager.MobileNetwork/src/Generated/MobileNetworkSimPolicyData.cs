@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MobileNetwork
             Argument.AssertNotNull(sliceConfigurations, nameof(sliceConfigurations));
 
             SiteProvisioningState = new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>();
-            UeAmbr = ueAmbr;
+            UEAmbr = ueAmbr;
             DefaultSlice = defaultSlice;
             SliceConfigurations = sliceConfigurations.ToList();
         }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             ProvisioningState = provisioningState;
             SiteProvisioningState = siteProvisioningState;
-            UeAmbr = ueAmbr;
+            UEAmbr = ueAmbr;
             DefaultSlice = defaultSlice;
             RfspIndex = rfspIndex;
             RegistrationTimer = registrationTimer;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> A dictionary of sites to the provisioning state of this SIM policy on that site. </summary>
         public IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> SiteProvisioningState { get; }
         /// <summary> Aggregate maximum bit rate across all non-GBR QoS flows of all PDU sessions of a given UE. See 3GPP TS23.501 section 5.7.2.6 for a full description of the UE-AMBR. </summary>
-        public Ambr UeAmbr { get; set; }
+        public Ambr UEAmbr { get; set; }
         /// <summary> The default slice to use if the UE does not explicitly specify it. This slice must exist in the `sliceConfigurations` map. The slice must be in the same location as the SIM policy. </summary>
         internal WritableSubResource DefaultSlice { get; set; }
         /// <summary> Gets or sets Id. </summary>

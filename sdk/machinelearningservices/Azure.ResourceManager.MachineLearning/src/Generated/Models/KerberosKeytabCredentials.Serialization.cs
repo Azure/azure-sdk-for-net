@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<KerberosKeytabCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KerberosKeytabCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KerberosKeytabCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue(Secrets);
+            writer.WriteObjectValue<KerberosKeytabSecrets>(Secrets, options);
             writer.WritePropertyName("kerberosKdcAddress"u8);
             writer.WriteStringValue(KerberosKdcAddress);
             writer.WritePropertyName("kerberosPrincipal"u8);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<KerberosKeytabCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KerberosKeytabCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KerberosKeytabCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("secrets"u8))
                 {
-                    secrets = KerberosKeytabSecrets.DeserializeKerberosKeytabSecrets(property.Value);
+                    secrets = KerberosKeytabSecrets.DeserializeKerberosKeytabSecrets(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kerberosKdcAddress"u8))
@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KerberosKeytabCredentials(credentialsType, serializedAdditionalRawData, secrets, kerberosKdcAddress, kerberosPrincipal, kerberosRealm);
+            return new KerberosKeytabCredentials(
+                credentialsType,
+                serializedAdditionalRawData,
+                secrets,
+                kerberosKdcAddress,
+                kerberosPrincipal,
+                kerberosRealm);
         }
 
         BinaryData IPersistableModel<KerberosKeytabCredentials>.Write(ModelReaderWriterOptions options)
@@ -126,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KerberosKeytabCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KerberosKeytabCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeKerberosKeytabCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KerberosKeytabCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KerberosKeytabCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

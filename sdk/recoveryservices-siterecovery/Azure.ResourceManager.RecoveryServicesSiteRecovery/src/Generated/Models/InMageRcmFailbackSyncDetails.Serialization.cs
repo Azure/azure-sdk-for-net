@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackSyncDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackSyncDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryDiskReplicationProgressHealth> progressHealth = default;
-            Optional<long> transferredBytes = default;
-            Optional<long> last15MinutesTransferredBytes = default;
-            Optional<DateTimeOffset> lastDataTransferTimeUtc = default;
-            Optional<long> processedBytes = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> lastRefreshTime = default;
-            Optional<int> progressPercentage = default;
+            SiteRecoveryDiskReplicationProgressHealth? progressHealth = default;
+            long? transferredBytes = default;
+            long? last15MinutesTransferredBytes = default;
+            DateTimeOffset? lastDataTransferTimeUtc = default;
+            long? processedBytes = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? lastRefreshTime = default;
+            int? progressPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackSyncDetails(Optional.ToNullable(progressHealth), Optional.ToNullable(transferredBytes), Optional.ToNullable(last15MinutesTransferredBytes), Optional.ToNullable(lastDataTransferTimeUtc), Optional.ToNullable(processedBytes), Optional.ToNullable(startTime), Optional.ToNullable(lastRefreshTime), Optional.ToNullable(progressPercentage), serializedAdditionalRawData);
+            return new InMageRcmFailbackSyncDetails(
+                progressHealth,
+                transferredBytes,
+                last15MinutesTransferredBytes,
+                lastDataTransferTimeUtc,
+                processedBytes,
+                startTime,
+                lastRefreshTime,
+                progressPercentage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackSyncDetails>.Write(ModelReaderWriterOptions options)
@@ -206,7 +215,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -222,7 +231,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmFailbackSyncDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

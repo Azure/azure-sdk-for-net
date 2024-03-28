@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsPropertyChangedConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsPropertyChangedConditionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsPropertyChangedConditionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ConditionProperties))
             {
                 writer.WritePropertyName("conditionProperties"u8);
-                writer.WriteObjectValue(ConditionProperties);
+                writer.WriteObjectValue<AutomationRulePropertyValuesChangedCondition>(ConditionProperties, options);
             }
             writer.WritePropertyName("conditionType"u8);
             writer.WriteStringValue(ConditionType.ToString());
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsPropertyChangedConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsPropertyChangedConditionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsPropertyChangedConditionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRulePropertyValuesChangedCondition> conditionProperties = default;
+            AutomationRulePropertyValuesChangedCondition conditionProperties = default;
             ConditionType conditionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    conditionProperties = AutomationRulePropertyValuesChangedCondition.DeserializeAutomationRulePropertyValuesChangedCondition(property.Value);
+                    conditionProperties = AutomationRulePropertyValuesChangedCondition.DeserializeAutomationRulePropertyValuesChangedCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("conditionType"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsPropertyChangedConditionProperties(conditionType, serializedAdditionalRawData, conditionProperties.Value);
+            return new SecurityInsightsPropertyChangedConditionProperties(conditionType, serializedAdditionalRawData, conditionProperties);
         }
 
         BinaryData IPersistableModel<SecurityInsightsPropertyChangedConditionProperties>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsPropertyChangedConditionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsPropertyChangedConditionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsPropertyChangedConditionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsPropertyChangedConditionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsPropertyChangedConditionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in BlobIndexMatch)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagementPolicyTagFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +78,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,9 +93,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IList<string>> prefixMatch = default;
+            IList<string> prefixMatch = default;
             IList<string> blobTypes = default;
-            Optional<IList<ManagementPolicyTagFilter>> blobIndexMatch = default;
+            IList<ManagementPolicyTagFilter> blobIndexMatch = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +133,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<ManagementPolicyTagFilter> array = new List<ManagementPolicyTagFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementPolicyTagFilter.DeserializeManagementPolicyTagFilter(item));
+                        array.Add(ManagementPolicyTagFilter.DeserializeManagementPolicyTagFilter(item, options));
                     }
                     blobIndexMatch = array;
                     continue;
@@ -142,7 +144,114 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementPolicyFilter(Optional.ToList(prefixMatch), blobTypes, Optional.ToList(blobIndexMatch), serializedAdditionalRawData);
+            return new ManagementPolicyFilter(prefixMatch ?? new ChangeTrackingList<string>(), blobTypes, blobIndexMatch ?? new ChangeTrackingList<ManagementPolicyTagFilter>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrefixMatch), out propertyOverride);
+            if (Optional.IsCollectionDefined(PrefixMatch) || hasPropertyOverride)
+            {
+                if (PrefixMatch.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  prefixMatch: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in PrefixMatch)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobTypes), out propertyOverride);
+            if (Optional.IsCollectionDefined(BlobTypes) || hasPropertyOverride)
+            {
+                if (BlobTypes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  blobTypes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in BlobTypes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobIndexMatch), out propertyOverride);
+            if (Optional.IsCollectionDefined(BlobIndexMatch) || hasPropertyOverride)
+            {
+                if (BlobIndexMatch.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  blobIndexMatch: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in BlobIndexMatch)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  blobIndexMatch: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ManagementPolicyFilter>.Write(ModelReaderWriterOptions options)
@@ -153,8 +262,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +281,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeManagementPolicyFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

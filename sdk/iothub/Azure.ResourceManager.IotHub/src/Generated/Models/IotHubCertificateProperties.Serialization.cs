@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubCertificateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubCertificateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> expiry = default;
-            Optional<string> thumbprint = default;
-            Optional<bool> isVerified = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<BinaryData> certificate = default;
+            string subject = default;
+            DateTimeOffset? expiry = default;
+            string thumbprint = default;
+            bool? isVerified = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
+            BinaryData certificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubCertificateProperties(subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), Optional.ToNullable(created), Optional.ToNullable(updated), certificate.Value, serializedAdditionalRawData);
+            return new IotHubCertificateProperties(
+                subject,
+                expiry,
+                thumbprint,
+                isVerified,
+                created,
+                updated,
+                certificate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubCertificateProperties>.Write(ModelReaderWriterOptions options)
@@ -190,7 +198,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubCertificateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +214,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubCertificateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubCertificateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

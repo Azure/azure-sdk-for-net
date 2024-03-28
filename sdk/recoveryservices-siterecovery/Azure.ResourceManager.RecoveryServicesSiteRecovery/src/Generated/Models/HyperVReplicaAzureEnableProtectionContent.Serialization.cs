@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaAzureEnableProtectionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureEnableProtectionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DisksToIncludeForManagedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HyperVReplicaAzureDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaAzureEnableProtectionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureEnableProtectionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,34 +240,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> hvHostVmId = default;
-            Optional<string> vmName = default;
-            Optional<string> osType = default;
-            Optional<string> vhdId = default;
-            Optional<ResourceIdentifier> targetStorageAccountId = default;
-            Optional<ResourceIdentifier> targetAzureNetworkId = default;
-            Optional<ResourceIdentifier> targetAzureSubnetId = default;
-            Optional<string> enableRdpOnTargetOption = default;
-            Optional<string> targetAzureVmName = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<IList<string>> disksToInclude = default;
-            Optional<ResourceIdentifier> targetAzureV1ResourceGroupId = default;
-            Optional<ResourceIdentifier> targetAzureV2ResourceGroupId = default;
-            Optional<string> useManagedDisks = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
-            Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
-            Optional<string> targetVmSize = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<string> useManagedDisksForReplication = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
-            Optional<IList<HyperVReplicaAzureDiskDetails>> disksToIncludeForManagedDisks = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<IDictionary<string, string>> targetVmTags = default;
-            Optional<IDictionary<string, string>> seedManagedDiskTags = default;
-            Optional<IDictionary<string, string>> targetManagedDiskTags = default;
-            Optional<IDictionary<string, string>> targetNicTags = default;
+            string hvHostVmId = default;
+            string vmName = default;
+            string osType = default;
+            string vhdId = default;
+            ResourceIdentifier targetStorageAccountId = default;
+            ResourceIdentifier targetAzureNetworkId = default;
+            ResourceIdentifier targetAzureSubnetId = default;
+            string enableRdpOnTargetOption = default;
+            string targetAzureVmName = default;
+            ResourceIdentifier logStorageAccountId = default;
+            IList<string> disksToInclude = default;
+            ResourceIdentifier targetAzureV1ResourceGroupId = default;
+            ResourceIdentifier targetAzureV2ResourceGroupId = default;
+            string useManagedDisks = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            SiteRecoveryLicenseType? licenseType = default;
+            SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
+            string targetVmSize = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            string useManagedDisksForReplication = default;
+            SiteRecoveryDiskAccountType? diskType = default;
+            IList<HyperVReplicaAzureDiskDetails> disksToIncludeForManagedDisks = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            IDictionary<string, string> targetVmTags = default;
+            IDictionary<string, string> seedManagedDiskTags = default;
+            IDictionary<string, string> targetManagedDiskTags = default;
+            IDictionary<string, string> targetNicTags = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HyperVReplicaAzureDiskDetails> array = new List<HyperVReplicaAzureDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVReplicaAzureDiskDetails.DeserializeHyperVReplicaAzureDiskDetails(item));
+                        array.Add(HyperVReplicaAzureDiskDetails.DeserializeHyperVReplicaAzureDiskDetails(item, options));
                     }
                     disksToIncludeForManagedDisks = array;
                     continue;
@@ -526,7 +526,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureEnableProtectionContent(instanceType, serializedAdditionalRawData, hvHostVmId.Value, vmName.Value, osType.Value, vhdId.Value, targetStorageAccountId.Value, targetAzureNetworkId.Value, targetAzureSubnetId.Value, enableRdpOnTargetOption.Value, targetAzureVmName.Value, logStorageAccountId.Value, Optional.ToList(disksToInclude), targetAzureV1ResourceGroupId.Value, targetAzureV2ResourceGroupId.Value, useManagedDisks.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), targetVmSize.Value, targetProximityPlacementGroupId.Value, useManagedDisksForReplication.Value, Optional.ToNullable(diskType), Optional.ToList(disksToIncludeForManagedDisks), diskEncryptionSetId.Value, Optional.ToDictionary(targetVmTags), Optional.ToDictionary(seedManagedDiskTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags));
+            return new HyperVReplicaAzureEnableProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                hvHostVmId,
+                vmName,
+                osType,
+                vhdId,
+                targetStorageAccountId,
+                targetAzureNetworkId,
+                targetAzureSubnetId,
+                enableRdpOnTargetOption,
+                targetAzureVmName,
+                logStorageAccountId,
+                disksToInclude ?? new ChangeTrackingList<string>(),
+                targetAzureV1ResourceGroupId,
+                targetAzureV2ResourceGroupId,
+                useManagedDisks,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                licenseType,
+                sqlServerLicenseType,
+                targetVmSize,
+                targetProximityPlacementGroupId,
+                useManagedDisksForReplication,
+                diskType,
+                disksToIncludeForManagedDisks ?? new ChangeTrackingList<HyperVReplicaAzureDiskDetails>(),
+                diskEncryptionSetId,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureEnableProtectionContent>.Write(ModelReaderWriterOptions options)
@@ -538,7 +568,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureEnableProtectionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureEnableProtectionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -554,7 +584,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeHyperVReplicaAzureEnableProtectionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureEnableProtectionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureEnableProtectionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

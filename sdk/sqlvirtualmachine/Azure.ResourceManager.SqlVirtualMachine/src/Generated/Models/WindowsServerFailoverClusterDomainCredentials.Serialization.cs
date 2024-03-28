@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<string> clusterBootstrapAccountPassword = default;
-            Optional<string> clusterOperatorAccountPassword = default;
-            Optional<string> sqlServiceAccountPassword = default;
+            string clusterBootstrapAccountPassword = default;
+            string clusterOperatorAccountPassword = default;
+            string sqlServiceAccountPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsServerFailoverClusterDomainCredentials(clusterBootstrapAccountPassword.Value, clusterOperatorAccountPassword.Value, sqlServiceAccountPassword.Value, serializedAdditionalRawData);
+            return new WindowsServerFailoverClusterDomainCredentials(clusterBootstrapAccountPassword, clusterOperatorAccountPassword, sqlServiceAccountPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsServerFailoverClusterDomainCredentials>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeWindowsServerFailoverClusterDomainCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

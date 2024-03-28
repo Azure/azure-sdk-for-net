@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxShipmentPickUpResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxShipmentPickUpResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxShipmentPickUpResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxShipmentPickUpResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxShipmentPickUpResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxShipmentPickUpResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> confirmationNumber = default;
-            Optional<DateTimeOffset> readyByTime = default;
+            string confirmationNumber = default;
+            DateTimeOffset? readyByTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxShipmentPickUpResult(confirmationNumber.Value, Optional.ToNullable(readyByTime), serializedAdditionalRawData);
+            return new DataBoxShipmentPickUpResult(confirmationNumber, readyByTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxShipmentPickUpResult>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxShipmentPickUpResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxShipmentPickUpResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxShipmentPickUpResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxShipmentPickUpResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxShipmentPickUpResult)} does not support reading '{options.Format}' format.");
             }
         }
 

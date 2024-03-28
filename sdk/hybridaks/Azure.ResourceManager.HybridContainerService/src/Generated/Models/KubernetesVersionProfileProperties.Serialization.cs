@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesVersionProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesVersionProfileProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KubernetesVersionProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesVersionProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesVersionProfileProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<KubernetesVersionProperties>> values = default;
+            HybridContainerServiceResourceProvisioningState? provisioningState = default;
+            IReadOnlyList<KubernetesVersionProperties> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<KubernetesVersionProperties> array = new List<KubernetesVersionProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVersionProperties.DeserializeKubernetesVersionProperties(item));
+                        array.Add(KubernetesVersionProperties.DeserializeKubernetesVersionProperties(item, options));
                     }
                     values = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVersionProfileProperties(Optional.ToNullable(provisioningState), Optional.ToList(values), serializedAdditionalRawData);
+            return new KubernetesVersionProfileProperties(provisioningState, values ?? new ChangeTrackingList<KubernetesVersionProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVersionProfileProperties>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesVersionProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesVersionProfileProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeKubernetesVersionProfileProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesVersionProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesVersionProfileProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

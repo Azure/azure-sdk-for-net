@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoverySupportedOSProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoverySupportedOSProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoverySupportedOSProperty)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedOS)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoverySupportedOSDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoverySupportedOSProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoverySupportedOSProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoverySupportedOSProperty)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> instanceType = default;
-            Optional<IReadOnlyList<SiteRecoverySupportedOSDetails>> supportedOS = default;
+            string instanceType = default;
+            IReadOnlyList<SiteRecoverySupportedOSDetails> supportedOS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoverySupportedOSDetails> array = new List<SiteRecoverySupportedOSDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoverySupportedOSDetails.DeserializeSiteRecoverySupportedOSDetails(item));
+                        array.Add(SiteRecoverySupportedOSDetails.DeserializeSiteRecoverySupportedOSDetails(item, options));
                     }
                     supportedOS = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoverySupportedOSProperty(instanceType.Value, Optional.ToList(supportedOS), serializedAdditionalRawData);
+            return new SiteRecoverySupportedOSProperty(instanceType, supportedOS ?? new ChangeTrackingList<SiteRecoverySupportedOSDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoverySupportedOSProperty>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoverySupportedOSProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoverySupportedOSProperty)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoverySupportedOSProperty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoverySupportedOSProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoverySupportedOSProperty)} does not support reading '{options.Format}' format.");
             }
         }
 

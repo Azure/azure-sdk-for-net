@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationDraProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WritePropertyName("machineName"u8);
             writer.WriteStringValue(MachineName);
             writer.WritePropertyName("authenticationIdentity"u8);
-            writer.WriteObjectValue(AuthenticationIdentity);
+            writer.WriteObjectValue<DataReplicationIdentity>(AuthenticationIdentity, options);
             writer.WritePropertyName("resourceAccessIdentity"u8);
-            writer.WriteObjectValue(ResourceAccessIdentity);
+            writer.WriteObjectValue<DataReplicationIdentity>(ResourceAccessIdentity, options);
             if (options.Format != "W" && Optional.IsDefined(IsResponsive))
             {
                 writer.WritePropertyName("isResponsive"u8);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataReplicationHealthErrorInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties);
+            writer.WriteObjectValue<DraModelCustomProperties>(CustomProperties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationDraProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,16 +109,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> correlationId = default;
+            string correlationId = default;
             string machineId = default;
             string machineName = default;
             DataReplicationIdentity authenticationIdentity = default;
             DataReplicationIdentity resourceAccessIdentity = default;
-            Optional<bool> isResponsive = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> versionNumber = default;
-            Optional<DataReplicationProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<DataReplicationHealthErrorInfo>> healthErrors = default;
+            bool? isResponsive = default;
+            DateTimeOffset? lastHeartbeat = default;
+            string versionNumber = default;
+            DataReplicationProvisioningState? provisioningState = default;
+            IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             DraModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("authenticationIdentity"u8))
                 {
-                    authenticationIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value);
+                    authenticationIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceAccessIdentity"u8))
                 {
-                    resourceAccessIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value);
+                    resourceAccessIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isResponsive"u8))
@@ -190,14 +190,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationHealthErrorInfo> array = new List<DataReplicationHealthErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item));
+                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = DraModelCustomProperties.DeserializeDraModelCustomProperties(property.Value);
+                    customProperties = DraModelCustomProperties.DeserializeDraModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -206,7 +206,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationDraProperties(correlationId.Value, machineId, machineName, authenticationIdentity, resourceAccessIdentity, Optional.ToNullable(isResponsive), Optional.ToNullable(lastHeartbeat), versionNumber.Value, Optional.ToNullable(provisioningState), Optional.ToList(healthErrors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationDraProperties(
+                correlationId,
+                machineId,
+                machineName,
+                authenticationIdentity,
+                resourceAccessIdentity,
+                isResponsive,
+                lastHeartbeat,
+                versionNumber,
+                provisioningState,
+                healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationDraProperties>.Write(ModelReaderWriterOptions options)
@@ -218,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -234,7 +246,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDataReplicationDraProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

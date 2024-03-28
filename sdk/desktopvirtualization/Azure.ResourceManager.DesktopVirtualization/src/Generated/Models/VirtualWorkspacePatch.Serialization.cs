@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualWorkspacePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualWorkspacePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> description = default;
-            Optional<string> friendlyName = default;
-            Optional<IList<string>> applicationGroupReferences = default;
-            Optional<DesktopVirtualizationPublicNetworkAccess> publicNetworkAccess = default;
+            IDictionary<string, string> tags = default;
+            string description = default;
+            string friendlyName = default;
+            IList<string> applicationGroupReferences = default;
+            DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualWorkspacePatch(Optional.ToDictionary(tags), description.Value, friendlyName.Value, Optional.ToList(applicationGroupReferences), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new VirtualWorkspacePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                friendlyName,
+                applicationGroupReferences ?? new ChangeTrackingList<string>(),
+                publicNetworkAccess,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualWorkspacePatch>.Write(ModelReaderWriterOptions options)
@@ -189,7 +195,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualWorkspacePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +211,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeVirtualWorkspacePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualWorkspacePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

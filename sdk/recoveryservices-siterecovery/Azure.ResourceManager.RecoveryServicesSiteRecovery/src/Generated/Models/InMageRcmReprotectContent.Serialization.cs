@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmReprotectContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmReprotectContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmReprotectContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmReprotectContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string reprotectAgentId = default;
             string datastoreName = default;
             ResourceIdentifier logStorageAccountId = default;
-            Optional<ResourceIdentifier> policyId = default;
+            ResourceIdentifier policyId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmReprotectContent(instanceType, serializedAdditionalRawData, reprotectAgentId, datastoreName, logStorageAccountId, policyId.Value);
+            return new InMageRcmReprotectContent(
+                instanceType,
+                serializedAdditionalRawData,
+                reprotectAgentId,
+                datastoreName,
+                logStorageAccountId,
+                policyId);
         }
 
         BinaryData IPersistableModel<InMageRcmReprotectContent>.Write(ModelReaderWriterOptions options)
@@ -133,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmReprotectContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmReprotectContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmReprotectContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmReprotectContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmReprotectContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationKeyListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationKeyListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationKeyListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Keys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomationKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationKeyListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationKeyListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationKeyListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationKey>> keys = default;
+            IReadOnlyList<AutomationKey> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationKey> array = new List<AutomationKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationKey.DeserializeAutomationKey(item));
+                        array.Add(AutomationKey.DeserializeAutomationKey(item, options));
                     }
                     keys = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationKeyListResult(Optional.ToList(keys), serializedAdditionalRawData);
+            return new AutomationKeyListResult(keys ?? new ChangeTrackingList<AutomationKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationKeyListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationKeyListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationKeyListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationKeyListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationKeyListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationKeyListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

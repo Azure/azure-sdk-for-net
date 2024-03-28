@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtensionDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtensionDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtensionDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtensionDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<ExtensionDataSourceStream>> streams = default;
+            IList<ExtensionDataSourceStream> streams = default;
             string extensionName = default;
-            Optional<BinaryData> extensionSettings = default;
-            Optional<IList<string>> inputDataSources = default;
-            Optional<string> name = default;
+            BinaryData extensionSettings = default;
+            IList<string> inputDataSources = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionDataSource(Optional.ToList(streams), extensionName, extensionSettings.Value, Optional.ToList(inputDataSources), name.Value, serializedAdditionalRawData);
+            return new ExtensionDataSource(
+                streams ?? new ChangeTrackingList<ExtensionDataSourceStream>(),
+                extensionName,
+                extensionSettings,
+                inputDataSources ?? new ChangeTrackingList<string>(),
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionDataSource>.Write(ModelReaderWriterOptions options)
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtensionDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +199,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeExtensionDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtensionDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

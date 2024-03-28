@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceMovePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceMovePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<bool> validationRequired = default;
-            Optional<bool> crossResourceGroupMoveEnabled = default;
-            Optional<bool> crossSubscriptionMoveEnabled = default;
+            bool? validationRequired = default;
+            bool? crossResourceGroupMoveEnabled = default;
+            bool? crossSubscriptionMoveEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMovePolicy(Optional.ToNullable(validationRequired), Optional.ToNullable(crossResourceGroupMoveEnabled), Optional.ToNullable(crossSubscriptionMoveEnabled), serializedAdditionalRawData);
+            return new ResourceMovePolicy(validationRequired, crossResourceGroupMoveEnabled, crossSubscriptionMoveEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMovePolicy>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeResourceMovePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

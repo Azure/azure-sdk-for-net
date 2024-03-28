@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningJobInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningJobInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningJobInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningJobInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,16 +82,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "custom_model": return MachineLearningCustomModelJobInput.DeserializeMachineLearningCustomModelJobInput(element);
-                    case "literal": return MachineLearningLiteralJobInput.DeserializeMachineLearningLiteralJobInput(element);
-                    case "mlflow_model": return MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(element);
-                    case "mltable": return MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(element);
-                    case "triton_model": return MachineLearningTritonModelJobInput.DeserializeMachineLearningTritonModelJobInput(element);
-                    case "uri_file": return MachineLearningUriFileJobInput.DeserializeMachineLearningUriFileJobInput(element);
-                    case "uri_folder": return MachineLearningUriFolderJobInput.DeserializeMachineLearningUriFolderJobInput(element);
+                    case "custom_model": return MachineLearningCustomModelJobInput.DeserializeMachineLearningCustomModelJobInput(element, options);
+                    case "literal": return MachineLearningLiteralJobInput.DeserializeMachineLearningLiteralJobInput(element, options);
+                    case "mlflow_model": return MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(element, options);
+                    case "mltable": return MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(element, options);
+                    case "triton_model": return MachineLearningTritonModelJobInput.DeserializeMachineLearningTritonModelJobInput(element, options);
+                    case "uri_file": return MachineLearningUriFileJobInput.DeserializeMachineLearningUriFileJobInput(element, options);
+                    case "uri_folder": return MachineLearningUriFolderJobInput.DeserializeMachineLearningUriFolderJobInput(element, options);
                 }
             }
-            return UnknownJobInput.DeserializeUnknownJobInput(element);
+            return UnknownJobInput.DeserializeUnknownJobInput(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningJobInput>.Write(ModelReaderWriterOptions options)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningJobInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningJobInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningJobInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningJobInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningJobInput)} does not support reading '{options.Format}' format.");
             }
         }
 

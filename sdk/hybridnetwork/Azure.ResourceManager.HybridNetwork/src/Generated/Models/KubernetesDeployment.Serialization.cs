@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesDeployment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesDeployment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesDeployment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesDeployment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<int> desired = default;
-            Optional<int> ready = default;
-            Optional<int> upToDate = default;
-            Optional<int> available = default;
-            Optional<DateTimeOffset> creationTime = default;
+            string name = default;
+            string @namespace = default;
+            int? desired = default;
+            int? ready = default;
+            int? upToDate = default;
+            int? available = default;
+            DateTimeOffset? creationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesDeployment(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(upToDate), Optional.ToNullable(available), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new KubernetesDeployment(
+                name,
+                @namespace,
+                desired,
+                ready,
+                upToDate,
+                available,
+                creationTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesDeployment>.Write(ModelReaderWriterOptions options)
@@ -183,7 +191,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesDeployment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesDeployment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +207,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeKubernetesDeployment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesDeployment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesDeployment)} does not support reading '{options.Format}' format.");
             }
         }
 

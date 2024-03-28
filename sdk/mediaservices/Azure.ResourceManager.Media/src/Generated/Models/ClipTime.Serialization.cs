@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClipTime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClipTime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClipTime)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClipTime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClipTime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClipTime)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.AbsoluteClipTime": return AbsoluteClipTime.DeserializeAbsoluteClipTime(element);
-                    case "#Microsoft.Media.UtcClipTime": return UtcClipTime.DeserializeUtcClipTime(element);
+                    case "#Microsoft.Media.AbsoluteClipTime": return AbsoluteClipTime.DeserializeAbsoluteClipTime(element, options);
+                    case "#Microsoft.Media.UtcClipTime": return UtcClipTime.DeserializeUtcClipTime(element, options);
                 }
             }
-            return UnknownClipTime.DeserializeUnknownClipTime(element);
+            return UnknownClipTime.DeserializeUnknownClipTime(element, options);
         }
 
         BinaryData IPersistableModel<ClipTime>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClipTime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClipTime)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeClipTime(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClipTime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClipTime)} does not support reading '{options.Format}' format.");
             }
         }
 

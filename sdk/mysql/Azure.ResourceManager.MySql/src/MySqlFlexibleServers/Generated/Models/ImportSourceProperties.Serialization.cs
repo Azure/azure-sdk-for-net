@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImportSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImportSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<ImportSourceStorageType> storageType = default;
-            Optional<Uri> storageUrl = default;
-            Optional<string> sasToken = default;
-            Optional<string> dataDirPath = default;
+            ImportSourceStorageType? storageType = default;
+            Uri storageUrl = default;
+            string sasToken = default;
+            string dataDirPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImportSourceProperties(Optional.ToNullable(storageType), storageUrl.Value, sasToken.Value, dataDirPath.Value, serializedAdditionalRawData);
+            return new ImportSourceProperties(storageType, storageUrl, sasToken, dataDirPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImportSourceProperties>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         return DeserializeImportSourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

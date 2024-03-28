@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobInputs)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobInputs)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaJobInputBasicProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobInputs)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobInputs)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<MediaJobInputBasicProperties>> inputs = default;
+            IList<MediaJobInputBasicProperties> inputs = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaJobInputBasicProperties> array = new List<MediaJobInputBasicProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeMediaJobInputBasicProperties(item));
+                        array.Add(DeserializeMediaJobInputBasicProperties(item, options));
                     }
                     inputs = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobInputs(odataType, serializedAdditionalRawData, Optional.ToList(inputs));
+            return new MediaJobInputs(odataType, serializedAdditionalRawData, inputs ?? new ChangeTrackingList<MediaJobInputBasicProperties>());
         }
 
         BinaryData IPersistableModel<MediaJobInputs>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobInputs)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobInputs)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaJobInputs(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobInputs)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobInputs)} does not support reading '{options.Format}' format.");
             }
         }
 

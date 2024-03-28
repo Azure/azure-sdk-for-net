@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaAssetStreamingLocator>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaAssetStreamingLocator)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaAssetStreamingLocator)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaAssetStreamingLocator>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaAssetStreamingLocator)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaAssetStreamingLocator)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> assetName = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<Guid> streamingLocatorId = default;
-            Optional<string> streamingPolicyName = default;
-            Optional<string> defaultContentKeyPolicyName = default;
+            string name = default;
+            string assetName = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            Guid? streamingLocatorId = default;
+            string streamingPolicyName = default;
+            string defaultContentKeyPolicyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAssetStreamingLocator(name.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value, serializedAdditionalRawData);
+            return new MediaAssetStreamingLocator(
+                name,
+                assetName,
+                created,
+                startTime,
+                endTime,
+                streamingLocatorId,
+                streamingPolicyName,
+                defaultContentKeyPolicyName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaAssetStreamingLocator>.Write(ModelReaderWriterOptions options)
@@ -190,7 +199,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaAssetStreamingLocator)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaAssetStreamingLocator)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +215,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaAssetStreamingLocator(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaAssetStreamingLocator)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaAssetStreamingLocator)} does not support reading '{options.Format}' format.");
             }
         }
 

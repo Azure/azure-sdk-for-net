@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterServerCertificateCommonNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterServerCertificateCommonNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterServerCertificateCommonNames)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in CommonNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterServerCertificateCommonName>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterServerCertificateCommonNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterServerCertificateCommonNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterServerCertificateCommonNames)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<IList<ClusterServerCertificateCommonName>> commonNames = default;
-            Optional<ClusterCertificateStoreName> x509StoreName = default;
+            IList<ClusterServerCertificateCommonName> commonNames = default;
+            ClusterCertificateStoreName? x509StoreName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ClusterServerCertificateCommonName> array = new List<ClusterServerCertificateCommonName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterServerCertificateCommonName.DeserializeClusterServerCertificateCommonName(item));
+                        array.Add(ClusterServerCertificateCommonName.DeserializeClusterServerCertificateCommonName(item, options));
                     }
                     commonNames = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterServerCertificateCommonNames(Optional.ToList(commonNames), Optional.ToNullable(x509StoreName), serializedAdditionalRawData);
+            return new ClusterServerCertificateCommonNames(commonNames ?? new ChangeTrackingList<ClusterServerCertificateCommonName>(), x509StoreName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterServerCertificateCommonNames>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterServerCertificateCommonNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterServerCertificateCommonNames)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeClusterServerCertificateCommonNames(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterServerCertificateCommonNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterServerCertificateCommonNames)} does not support reading '{options.Format}' format.");
             }
         }
 

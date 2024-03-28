@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewaySslCertificate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewaySslCertificate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewaySslCertificate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewaySslCertificate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,15 +126,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<BinaryData> data = default;
-            Optional<string> password = default;
-            Optional<BinaryData> publicCertData = default;
-            Optional<string> keyVaultSecretId = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            BinaryData data = default;
+            string password = default;
+            BinaryData publicCertData = default;
+            string keyVaultSecretId = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,7 +226,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewaySslCertificate(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), data.Value, password.Value, publicCertData.Value, keyVaultSecretId.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewaySslCertificate(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                data,
+                password,
+                publicCertData,
+                keyVaultSecretId,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewaySslCertificate>.Write(ModelReaderWriterOptions options)
@@ -239,7 +248,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewaySslCertificate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewaySslCertificate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -255,7 +264,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewaySslCertificate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewaySslCertificate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewaySslCertificate)} does not support reading '{options.Format}' format.");
             }
         }
 

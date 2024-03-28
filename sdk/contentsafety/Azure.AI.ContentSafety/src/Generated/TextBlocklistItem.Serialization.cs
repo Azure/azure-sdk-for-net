@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
@@ -23,7 +22,7 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<TextBlocklistItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TextBlocklistItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TextBlocklistItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +61,7 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<TextBlocklistItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TextBlocklistItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TextBlocklistItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +77,7 @@ namespace Azure.AI.ContentSafety
                 return null;
             }
             string blocklistItemId = default;
-            Optional<string> description = default;
+            string description = default;
             string text = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +104,7 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TextBlocklistItem(blocklistItemId, description.Value, text, serializedAdditionalRawData);
+            return new TextBlocklistItem(blocklistItemId, description, text, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TextBlocklistItem>.Write(ModelReaderWriterOptions options)
@@ -117,7 +116,7 @@ namespace Azure.AI.ContentSafety
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TextBlocklistItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextBlocklistItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.AI.ContentSafety
                         return DeserializeTextBlocklistItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TextBlocklistItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextBlocklistItem)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -151,7 +150,7 @@ namespace Azure.AI.ContentSafety
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TextBlocklistItem>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

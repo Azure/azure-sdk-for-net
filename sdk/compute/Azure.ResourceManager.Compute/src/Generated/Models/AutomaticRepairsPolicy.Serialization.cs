@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticRepairsPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticRepairsPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> gracePeriod = default;
-            Optional<RepairAction> repairAction = default;
+            bool? enabled = default;
+            string gracePeriod = default;
+            RepairAction? repairAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomaticRepairsPolicy(Optional.ToNullable(enabled), gracePeriod.Value, Optional.ToNullable(repairAction), serializedAdditionalRawData);
+            return new AutomaticRepairsPolicy(enabled, gracePeriod, repairAction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomaticRepairsPolicy>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeAutomaticRepairsPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

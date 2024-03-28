@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataPartitionsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 writer.WriteStartArray();
                 foreach (var item in DataPartitionInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataPartition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataPartitionsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataPartition>> dataPartitionInfo = default;
+            IReadOnlyList<DataPartition> dataPartitionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     List<DataPartition> array = new List<DataPartition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataPartition.DeserializeDataPartition(item));
+                        array.Add(DataPartition.DeserializeDataPartition(item, options));
                     }
                     dataPartitionInfo = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataPartitionsListResult(Optional.ToList(dataPartitionInfo), serializedAdditionalRawData);
+            return new DataPartitionsListResult(dataPartitionInfo ?? new ChangeTrackingList<DataPartition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataPartitionsListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                         return DeserializeDataPartitionsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

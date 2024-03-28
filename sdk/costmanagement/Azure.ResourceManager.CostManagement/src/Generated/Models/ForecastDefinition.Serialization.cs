@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod);
+                writer.WriteObjectValue<ForecastTimePeriod>(TimePeriod, options);
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue(Dataset);
+            writer.WriteObjectValue<ForecastDataset>(Dataset, options);
             if (Optional.IsDefined(IncludeActualCost))
             {
                 writer.WritePropertyName("includeActualCost"u8);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             ForecastType type = default;
             ForecastTimeframe timeframe = default;
-            Optional<ForecastTimePeriod> timePeriod = default;
+            ForecastTimePeriod timePeriod = default;
             ForecastDataset dataset = default;
-            Optional<bool> includeActualCost = default;
-            Optional<bool> includeFreshPartialCost = default;
+            bool? includeActualCost = default;
+            bool? includeFreshPartialCost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    timePeriod = ForecastTimePeriod.DeserializeForecastTimePeriod(property.Value);
+                    timePeriod = ForecastTimePeriod.DeserializeForecastTimePeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataset"u8))
                 {
-                    dataset = ForecastDataset.DeserializeForecastDataset(property.Value);
+                    dataset = ForecastDataset.DeserializeForecastDataset(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("includeActualCost"u8))
@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastDefinition(type, timeframe, timePeriod.Value, dataset, Optional.ToNullable(includeActualCost), Optional.ToNullable(includeFreshPartialCost), serializedAdditionalRawData);
+            return new ForecastDefinition(
+                type,
+                timeframe,
+                timePeriod,
+                dataset,
+                includeActualCost,
+                includeFreshPartialCost,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastDefinition>.Write(ModelReaderWriterOptions options)
@@ -155,7 +162,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ForecastDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +178,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeForecastDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ForecastDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

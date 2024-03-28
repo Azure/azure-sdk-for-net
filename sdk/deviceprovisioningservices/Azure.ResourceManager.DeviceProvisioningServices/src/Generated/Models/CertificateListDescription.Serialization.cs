@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CertificateListDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateListDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateListDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeviceProvisioningServicesCertificateData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CertificateListDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateListDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateListDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeviceProvisioningServicesCertificateData>> value = default;
+            IReadOnlyList<DeviceProvisioningServicesCertificateData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     List<DeviceProvisioningServicesCertificateData> array = new List<DeviceProvisioningServicesCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(item));
+                        array.Add(DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateListDescription(Optional.ToList(value), serializedAdditionalRawData);
+            return new CertificateListDescription(value ?? new ChangeTrackingList<DeviceProvisioningServicesCertificateData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateListDescription>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CertificateListDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateListDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         return DeserializeCertificateListDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertificateListDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateListDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

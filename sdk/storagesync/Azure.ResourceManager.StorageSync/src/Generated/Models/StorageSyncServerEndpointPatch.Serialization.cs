@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSyncServerEndpointPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSyncServerEndpointPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSyncServerEndpointPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSyncServerEndpointPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<StorageSyncFeatureStatus> cloudTiering = default;
-            Optional<int> volumeFreeSpacePercent = default;
-            Optional<int> tierFilesOlderThanDays = default;
-            Optional<StorageSyncFeatureStatus> offlineDataTransfer = default;
-            Optional<string> offlineDataTransferShareName = default;
-            Optional<LocalCacheMode> localCacheMode = default;
+            StorageSyncFeatureStatus? cloudTiering = default;
+            int? volumeFreeSpacePercent = default;
+            int? tierFilesOlderThanDays = default;
+            StorageSyncFeatureStatus? offlineDataTransfer = default;
+            string offlineDataTransferShareName = default;
+            LocalCacheMode? localCacheMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServerEndpointPatch(Optional.ToNullable(cloudTiering), Optional.ToNullable(volumeFreeSpacePercent), Optional.ToNullable(tierFilesOlderThanDays), Optional.ToNullable(offlineDataTransfer), offlineDataTransferShareName.Value, Optional.ToNullable(localCacheMode), serializedAdditionalRawData);
+            return new StorageSyncServerEndpointPatch(
+                cloudTiering,
+                volumeFreeSpacePercent,
+                tierFilesOlderThanDays,
+                offlineDataTransfer,
+                offlineDataTransferShareName,
+                localCacheMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServerEndpointPatch>.Write(ModelReaderWriterOptions options)
@@ -187,7 +194,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageSyncServerEndpointPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSyncServerEndpointPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +210,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeStorageSyncServerEndpointPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageSyncServerEndpointPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSyncServerEndpointPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

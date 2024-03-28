@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetComputeSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryComputeSizeErrorDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetComputeSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> friendlyName = default;
-            Optional<int> cpuCoresCount = default;
-            Optional<int> vCpusAvailable = default;
-            Optional<double> memoryInGB = default;
-            Optional<int> maxDataDiskCount = default;
-            Optional<int> maxNicsCount = default;
-            Optional<IReadOnlyList<SiteRecoveryComputeSizeErrorDetails>> errors = default;
-            Optional<string> highIopsSupported = default;
-            Optional<IReadOnlyList<string>> hyperVGenerations = default;
+            string name = default;
+            string friendlyName = default;
+            int? cpuCoresCount = default;
+            int? vCpusAvailable = default;
+            double? memoryInGB = default;
+            int? maxDataDiskCount = default;
+            int? maxNicsCount = default;
+            IReadOnlyList<SiteRecoveryComputeSizeErrorDetails> errors = default;
+            string highIopsSupported = default;
+            IReadOnlyList<string> hyperVGenerations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryComputeSizeErrorDetails> array = new List<SiteRecoveryComputeSizeErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryComputeSizeErrorDetails.DeserializeSiteRecoveryComputeSizeErrorDetails(item));
+                        array.Add(SiteRecoveryComputeSizeErrorDetails.DeserializeSiteRecoveryComputeSizeErrorDetails(item, options));
                     }
                     errors = array;
                     continue;
@@ -232,7 +232,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetComputeSizeProperties(name.Value, friendlyName.Value, Optional.ToNullable(cpuCoresCount), Optional.ToNullable(vCpusAvailable), Optional.ToNullable(memoryInGB), Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(maxNicsCount), Optional.ToList(errors), highIopsSupported.Value, Optional.ToList(hyperVGenerations), serializedAdditionalRawData);
+            return new TargetComputeSizeProperties(
+                name,
+                friendlyName,
+                cpuCoresCount,
+                vCpusAvailable,
+                memoryInGB,
+                maxDataDiskCount,
+                maxNicsCount,
+                errors ?? new ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails>(),
+                highIopsSupported,
+                hyperVGenerations ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetComputeSizeProperties>.Write(ModelReaderWriterOptions options)
@@ -244,7 +255,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -260,7 +271,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeTargetComputeSizeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteErrorPosition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteErrorPosition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<int> line = default;
-            Optional<int> column = default;
+            int? line = default;
+            int? column = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteErrorPosition(Optional.ToNullable(line), Optional.ToNullable(column), serializedAdditionalRawData);
+            return new RouteErrorPosition(line, column, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteErrorPosition>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeRouteErrorPosition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -23,12 +22,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsTestQuery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsTestQuery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsTestQuery)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("streamingJob"u8);
-            writer.WriteObjectValue(StreamingJob);
+            writer.WriteObjectValue<StreamingJobData>(StreamingJob, options);
             writer.WritePropertyName("diagnostics"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(WriteUri))
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsTestQuery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsTestQuery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsTestQuery)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,15 +80,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             StreamingJobData streamingJob = default;
-            Optional<Uri> writeUri = default;
-            Optional<string> path = default;
+            Uri writeUri = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streamingJob"u8))
                 {
-                    streamingJob = StreamingJobData.DeserializeStreamingJobData(property.Value);
+                    streamingJob = StreamingJobData.DeserializeStreamingJobData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"u8))
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsTestQuery(streamingJob, writeUri.Value, path.Value, serializedAdditionalRawData);
+            return new StreamAnalyticsTestQuery(streamingJob, writeUri, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsTestQuery>.Write(ModelReaderWriterOptions options)
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsTestQuery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsTestQuery)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamAnalyticsTestQuery(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsTestQuery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsTestQuery)} does not support reading '{options.Format}' format.");
             }
         }
 

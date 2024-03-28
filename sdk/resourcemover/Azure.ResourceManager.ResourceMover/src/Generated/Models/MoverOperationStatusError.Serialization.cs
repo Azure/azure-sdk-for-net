@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverOperationStatusError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MoverOperationStatusError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteStartArray();
                     foreach (var item in AdditionalInfo)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<MoverOperationErrorAdditionalInfo>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverOperationStatusError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<MoverOperationStatusError>> details = default;
-            Optional<IReadOnlyList<MoverOperationErrorAdditionalInfo>> additionalInfo = default;
+            string code = default;
+            string message = default;
+            IReadOnlyList<MoverOperationStatusError> details = default;
+            IReadOnlyList<MoverOperationErrorAdditionalInfo> additionalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverOperationStatusError> array = new List<MoverOperationStatusError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeMoverOperationStatusError(item));
+                        array.Add(DeserializeMoverOperationStatusError(item, options));
                     }
                     details = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverOperationErrorAdditionalInfo> array = new List<MoverOperationErrorAdditionalInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverOperationErrorAdditionalInfo.DeserializeMoverOperationErrorAdditionalInfo(item));
+                        array.Add(MoverOperationErrorAdditionalInfo.DeserializeMoverOperationErrorAdditionalInfo(item, options));
                     }
                     additionalInfo = array;
                     continue;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverOperationStatusError(code.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo), serializedAdditionalRawData);
+            return new MoverOperationStatusError(code, message, details ?? new ChangeTrackingList<MoverOperationStatusError>(), additionalInfo ?? new ChangeTrackingList<MoverOperationErrorAdditionalInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverOperationStatusError>.Write(ModelReaderWriterOptions options)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverOperationStatusError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverOperationStatusError)} does not support reading '{options.Format}' format.");
             }
         }
 

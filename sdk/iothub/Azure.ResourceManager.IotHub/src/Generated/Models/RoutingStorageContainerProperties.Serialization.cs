@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingStorageContainerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingStorageContainerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ManagedIdentity>(Identity, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingStorageContainerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingStorageContainerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,19 +123,19 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> connectionString = default;
-            Optional<string> endpointUri = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
+            Guid? id = default;
+            string connectionString = default;
+            string endpointUri = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
             string name = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
             string containerName = default;
-            Optional<string> fileNameFormat = default;
-            Optional<int> batchFrequencyInSeconds = default;
-            Optional<int> maxChunkSizeInBytes = default;
-            Optional<RoutingStorageContainerPropertiesEncoding> encoding = default;
+            string fileNameFormat = default;
+            int? batchFrequencyInSeconds = default;
+            int? maxChunkSizeInBytes = default;
+            RoutingStorageContainerPropertiesEncoding? encoding = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -235,7 +235,21 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingStorageContainerProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value, containerName, fileNameFormat.Value, Optional.ToNullable(batchFrequencyInSeconds), Optional.ToNullable(maxChunkSizeInBytes), Optional.ToNullable(encoding), serializedAdditionalRawData);
+            return new RoutingStorageContainerProperties(
+                id,
+                connectionString,
+                endpointUri,
+                authenticationType,
+                identity,
+                name,
+                subscriptionId,
+                resourceGroup,
+                containerName,
+                fileNameFormat,
+                batchFrequencyInSeconds,
+                maxChunkSizeInBytes,
+                encoding,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingStorageContainerProperties>.Write(ModelReaderWriterOptions options)
@@ -247,7 +261,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingStorageContainerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingStorageContainerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +277,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeRoutingStorageContainerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingStorageContainerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingStorageContainerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

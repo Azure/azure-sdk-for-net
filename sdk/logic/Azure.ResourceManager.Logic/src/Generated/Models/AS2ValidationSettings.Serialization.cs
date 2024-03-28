@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<AS2ValidationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<AS2ValidationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Logic.Models
             bool checkCertificateRevocationListOnSend = default;
             bool checkCertificateRevocationListOnReceive = default;
             AS2EncryptionAlgorithm encryptionAlgorithm = default;
-            Optional<AS2SigningAlgorithm> signingAlgorithm = default;
+            AS2SigningAlgorithm? signingAlgorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AS2ValidationSettings(overrideMessageProperties, encryptMessage, signMessage, compressMessage, checkDuplicateMessage, interchangeDuplicatesValidityDays, checkCertificateRevocationListOnSend, checkCertificateRevocationListOnReceive, encryptionAlgorithm, Optional.ToNullable(signingAlgorithm), serializedAdditionalRawData);
+            return new AS2ValidationSettings(
+                overrideMessageProperties,
+                encryptMessage,
+                signMessage,
+                compressMessage,
+                checkDuplicateMessage,
+                interchangeDuplicatesValidityDays,
+                checkCertificateRevocationListOnSend,
+                checkCertificateRevocationListOnReceive,
+                encryptionAlgorithm,
+                signingAlgorithm,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AS2ValidationSettings>.Write(ModelReaderWriterOptions options)
@@ -173,7 +184,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +200,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeAS2ValidationSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

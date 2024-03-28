@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareSubscriptionSynchronization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareSubscriptionSynchronization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<int> durationMs = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> status = default;
+            int? durationMs = default;
+            DateTimeOffset? endTime = default;
+            string message = default;
+            DateTimeOffset? startTime = default;
+            string status = default;
             Guid synchronizationId = default;
-            Optional<SynchronizationMode> synchronizationMode = default;
+            SynchronizationMode? synchronizationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,15 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareSubscriptionSynchronization(Optional.ToNullable(durationMs), Optional.ToNullable(endTime), message.Value, Optional.ToNullable(startTime), status.Value, synchronizationId, Optional.ToNullable(synchronizationMode), serializedAdditionalRawData);
+            return new ShareSubscriptionSynchronization(
+                durationMs,
+                endTime,
+                message,
+                startTime,
+                status,
+                synchronizationId,
+                synchronizationMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareSubscriptionSynchronization>.Write(ModelReaderWriterOptions options)
@@ -176,7 +184,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +200,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeShareSubscriptionSynchronization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
-                writer.WriteObjectValue(WindowsParameters);
+                writer.WriteObjectValue<HybridComputeWindowsParameters>(WindowsParameters, options);
             }
             if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
-                writer.WriteObjectValue(LinuxParameters);
+                writer.WriteObjectValue<HybridComputeLinuxParameters>(LinuxParameters, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             TimeSpan maximumDuration = default;
             VmGuestPatchRebootSetting rebootSetting = default;
-            Optional<HybridComputeWindowsParameters> windowsParameters = default;
-            Optional<HybridComputeLinuxParameters> linuxParameters = default;
+            HybridComputeWindowsParameters windowsParameters = default;
+            HybridComputeLinuxParameters linuxParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    windowsParameters = HybridComputeWindowsParameters.DeserializeHybridComputeWindowsParameters(property.Value);
+                    windowsParameters = HybridComputeWindowsParameters.DeserializeHybridComputeWindowsParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxParameters"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    linuxParameters = HybridComputeLinuxParameters.DeserializeHybridComputeLinuxParameters(property.Value);
+                    linuxParameters = HybridComputeLinuxParameters.DeserializeHybridComputeLinuxParameters(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters.Value, linuxParameters.Value, serializedAdditionalRawData);
+            return new MachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters, linuxParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineInstallPatchesContent>.Write(ModelReaderWriterOptions options)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeMachineInstallPatchesContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support reading '{options.Format}' format.");
             }
         }
 

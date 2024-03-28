@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationUsageListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationUsageListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReplicationUsage>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationUsageListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationUsageListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReplicationUsage>> value = default;
+            IReadOnlyList<ReplicationUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<ReplicationUsage> array = new List<ReplicationUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationUsage.DeserializeReplicationUsage(item));
+                        array.Add(ReplicationUsage.DeserializeReplicationUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationUsageListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ReplicationUsageListResult(value ?? new ChangeTrackingList<ReplicationUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationUsageListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationUsageListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationUsageListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeReplicationUsageListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationUsageListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationUsageListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

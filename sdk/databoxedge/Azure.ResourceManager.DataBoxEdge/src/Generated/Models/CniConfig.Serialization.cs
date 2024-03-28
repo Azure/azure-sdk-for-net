@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<CniConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CniConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CniConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<CniConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CniConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CniConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> version = default;
-            Optional<string> podSubnet = default;
-            Optional<string> serviceSubnet = default;
+            string type = default;
+            string version = default;
+            string podSubnet = default;
+            string serviceSubnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CniConfig(type.Value, version.Value, podSubnet.Value, serviceSubnet.Value, serializedAdditionalRawData);
+            return new CniConfig(type, version, podSubnet, serviceSubnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CniConfig>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CniConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CniConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeCniConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CniConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CniConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

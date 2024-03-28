@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrinoWorker>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrinoWorker)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrinoWorker)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrinoWorker>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrinoWorker)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrinoWorker)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<bool> enable = default;
-            Optional<int> port = default;
-            Optional<bool> suspend = default;
+            bool? enable = default;
+            int? port = default;
+            bool? suspend = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrinoWorker(Optional.ToNullable(enable), Optional.ToNullable(port), Optional.ToNullable(suspend), serializedAdditionalRawData);
+            return new TrinoWorker(enable, port, suspend, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoWorker>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrinoWorker)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrinoWorker)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeTrinoWorker(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrinoWorker)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrinoWorker)} does not support reading '{options.Format}' format.");
             }
         }
 

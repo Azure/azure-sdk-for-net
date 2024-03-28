@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupDailySchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupDailySchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupDailySchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupDailySchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupDailySchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupDailySchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
+            IList<DateTimeOffset> scheduleRunTimes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupDailySchedule(Optional.ToList(scheduleRunTimes), serializedAdditionalRawData);
+            return new BackupDailySchedule(scheduleRunTimes ?? new ChangeTrackingList<DateTimeOffset>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupDailySchedule>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupDailySchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupDailySchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupDailySchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupDailySchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupDailySchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

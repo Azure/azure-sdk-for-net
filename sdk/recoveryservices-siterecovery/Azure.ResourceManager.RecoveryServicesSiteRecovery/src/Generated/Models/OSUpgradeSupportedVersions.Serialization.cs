@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSUpgradeSupportedVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSUpgradeSupportedVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> supportedSourceOSVersion = default;
-            Optional<IReadOnlyList<string>> supportedTargetOSVersions = default;
+            string supportedSourceOSVersion = default;
+            IReadOnlyList<string> supportedTargetOSVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSUpgradeSupportedVersions(supportedSourceOSVersion.Value, Optional.ToList(supportedTargetOSVersions), serializedAdditionalRawData);
+            return new OSUpgradeSupportedVersions(supportedSourceOSVersion, supportedTargetOSVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSUpgradeSupportedVersions>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeOSUpgradeSupportedVersions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support reading '{options.Format}' format.");
             }
         }
 

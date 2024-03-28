@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilteringOperations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilteringOperations)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Deinterlace))
             {
                 writer.WritePropertyName("deinterlace"u8);
-                writer.WriteObjectValue(Deinterlace);
+                writer.WriteObjectValue<DeinterlaceSettings>(Deinterlace, options);
             }
             if (Optional.IsDefined(Rotation))
             {
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Crop))
             {
                 writer.WritePropertyName("crop"u8);
-                writer.WriteObjectValue(Crop);
+                writer.WriteObjectValue<RectangularWindow>(Crop, options);
             }
             if (Optional.IsDefined(FadeIn))
             {
                 writer.WritePropertyName("fadeIn"u8);
-                writer.WriteObjectValue(FadeIn);
+                writer.WriteObjectValue<FadeOptions>(FadeIn, options);
             }
             if (Optional.IsDefined(FadeOut))
             {
                 writer.WritePropertyName("fadeOut"u8);
-                writer.WriteObjectValue(FadeOut);
+                writer.WriteObjectValue<FadeOptions>(FadeOut, options);
             }
             if (Optional.IsCollectionDefined(Overlays))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Overlays)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaOverlayBase>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilteringOperations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilteringOperations)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<DeinterlaceSettings> deinterlace = default;
-            Optional<RotationSetting> rotation = default;
-            Optional<RectangularWindow> crop = default;
-            Optional<FadeOptions> fadeIn = default;
-            Optional<FadeOptions> fadeOut = default;
-            Optional<IList<MediaOverlayBase>> overlays = default;
+            DeinterlaceSettings deinterlace = default;
+            RotationSetting? rotation = default;
+            RectangularWindow crop = default;
+            FadeOptions fadeIn = default;
+            FadeOptions fadeOut = default;
+            IList<MediaOverlayBase> overlays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    deinterlace = DeinterlaceSettings.DeserializeDeinterlaceSettings(property.Value);
+                    deinterlace = DeinterlaceSettings.DeserializeDeinterlaceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rotation"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    crop = RectangularWindow.DeserializeRectangularWindow(property.Value);
+                    crop = RectangularWindow.DeserializeRectangularWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fadeIn"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    fadeIn = FadeOptions.DeserializeFadeOptions(property.Value);
+                    fadeIn = FadeOptions.DeserializeFadeOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fadeOut"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    fadeOut = FadeOptions.DeserializeFadeOptions(property.Value);
+                    fadeOut = FadeOptions.DeserializeFadeOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("overlays"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaOverlayBase> array = new List<MediaOverlayBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaOverlayBase.DeserializeMediaOverlayBase(item));
+                        array.Add(MediaOverlayBase.DeserializeMediaOverlayBase(item, options));
                     }
                     overlays = array;
                     continue;
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FilteringOperations(deinterlace.Value, Optional.ToNullable(rotation), crop.Value, fadeIn.Value, fadeOut.Value, Optional.ToList(overlays), serializedAdditionalRawData);
+            return new FilteringOperations(
+                deinterlace,
+                rotation,
+                crop,
+                fadeIn,
+                fadeOut,
+                overlays ?? new ChangeTrackingList<MediaOverlayBase>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FilteringOperations>.Write(ModelReaderWriterOptions options)
@@ -186,7 +193,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilteringOperations)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +209,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeFilteringOperations(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilteringOperations)} does not support reading '{options.Format}' format.");
             }
         }
 

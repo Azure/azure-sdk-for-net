@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<FeatureStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeRuntime))
             {
                 writer.WritePropertyName("computeRuntime"u8);
-                writer.WriteObjectValue(ComputeRuntime);
+                writer.WriteObjectValue<ComputeRuntimeDto>(ComputeRuntime, options);
             }
             if (Optional.IsDefined(OfflineStoreConnectionName))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<FeatureStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ComputeRuntimeDto> computeRuntime = default;
-            Optional<string> offlineStoreConnectionName = default;
-            Optional<string> onlineStoreConnectionName = default;
+            ComputeRuntimeDto computeRuntime = default;
+            string offlineStoreConnectionName = default;
+            string onlineStoreConnectionName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    computeRuntime = ComputeRuntimeDto.DeserializeComputeRuntimeDto(property.Value);
+                    computeRuntime = ComputeRuntimeDto.DeserializeComputeRuntimeDto(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offlineStoreConnectionName"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureStoreSettings(computeRuntime.Value, offlineStoreConnectionName.Value, onlineStoreConnectionName.Value, serializedAdditionalRawData);
+            return new FeatureStoreSettings(computeRuntime, offlineStoreConnectionName, onlineStoreConnectionName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureStoreSettings>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeFeatureStoreSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerlessUpstreamSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerlessUpstreamSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerlessUpstreamSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in Templates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SignalRUpstreamTemplate>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +61,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerlessUpstreamSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerlessUpstreamSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerlessUpstreamSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<IList<SignalRUpstreamTemplate>> templates = default;
+            IList<SignalRUpstreamTemplate> templates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRUpstreamTemplate> array = new List<SignalRUpstreamTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRUpstreamTemplate.DeserializeSignalRUpstreamTemplate(item));
+                        array.Add(SignalRUpstreamTemplate.DeserializeSignalRUpstreamTemplate(item, options));
                     }
                     templates = array;
                     continue;
@@ -99,7 +101,44 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerlessUpstreamSettings(Optional.ToList(templates), serializedAdditionalRawData);
+            return new ServerlessUpstreamSettings(templates ?? new ChangeTrackingList<SignalRUpstreamTemplate>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Templates), out propertyOverride);
+            if (Optional.IsCollectionDefined(Templates) || hasPropertyOverride)
+            {
+                if (Templates.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  templates: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Templates)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  templates: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ServerlessUpstreamSettings>.Write(ModelReaderWriterOptions options)
@@ -110,8 +149,10 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerlessUpstreamSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerlessUpstreamSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +168,7 @@ namespace Azure.ResourceManager.SignalR.Models
                         return DeserializeServerlessUpstreamSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerlessUpstreamSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerlessUpstreamSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

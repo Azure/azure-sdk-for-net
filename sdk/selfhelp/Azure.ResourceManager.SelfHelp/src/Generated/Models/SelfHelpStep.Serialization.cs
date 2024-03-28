@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHelpStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpStep)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,14 +72,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StepInput>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AutomatedCheckResults))
             {
                 writer.WritePropertyName("automatedCheckResults"u8);
-                writer.WriteObjectValue(AutomatedCheckResults);
+                writer.WriteObjectValue<AutomatedCheckResult>(AutomatedCheckResults, options);
             }
             if (Optional.IsCollectionDefined(Insights))
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SelfHelpDiagnosticInsight>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHelpStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpStep)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,18 +134,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> guidance = default;
-            Optional<ExecutionStatus> executionStatus = default;
-            Optional<string> executionStatusDescription = default;
-            Optional<SelfHelpType> type = default;
-            Optional<bool> isLastStep = default;
-            Optional<IReadOnlyList<StepInput>> inputs = default;
-            Optional<AutomatedCheckResult> automatedCheckResults = default;
-            Optional<IReadOnlyList<SelfHelpDiagnosticInsight>> insights = default;
-            Optional<ResponseError> error = default;
+            string id = default;
+            string title = default;
+            string description = default;
+            string guidance = default;
+            ExecutionStatus? executionStatus = default;
+            string executionStatusDescription = default;
+            SelfHelpType? type = default;
+            bool? isLastStep = default;
+            IReadOnlyList<StepInput> inputs = default;
+            AutomatedCheckResult automatedCheckResults = default;
+            IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +211,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<StepInput> array = new List<StepInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StepInput.DeserializeStepInput(item));
+                        array.Add(StepInput.DeserializeStepInput(item, options));
                     }
                     inputs = array;
                     continue;
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    automatedCheckResults = AutomatedCheckResult.DeserializeAutomatedCheckResult(property.Value);
+                    automatedCheckResults = AutomatedCheckResult.DeserializeAutomatedCheckResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("insights"u8))
@@ -235,7 +234,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpDiagnosticInsight> array = new List<SelfHelpDiagnosticInsight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item));
+                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item, options));
                     }
                     insights = array;
                     continue;
@@ -255,7 +254,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpStep(id.Value, title.Value, description.Value, guidance.Value, Optional.ToNullable(executionStatus), executionStatusDescription.Value, Optional.ToNullable(type), Optional.ToNullable(isLastStep), Optional.ToList(inputs), automatedCheckResults.Value, Optional.ToList(insights), error.Value, serializedAdditionalRawData);
+            return new SelfHelpStep(
+                id,
+                title,
+                description,
+                guidance,
+                executionStatus,
+                executionStatusDescription,
+                type,
+                isLastStep,
+                inputs ?? new ChangeTrackingList<StepInput>(),
+                automatedCheckResults,
+                insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpStep>.Write(ModelReaderWriterOptions options)
@@ -267,7 +279,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpStep)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -283,7 +295,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeSelfHelpStep(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpStep)} does not support reading '{options.Format}' format.");
             }
         }
 

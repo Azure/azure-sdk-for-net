@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRUpstreamAuthSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRUpstreamAuthSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("managedIdentity"u8);
-                writer.WriteObjectValue(ManagedIdentity);
+                writer.WriteObjectValue<ManagedIdentitySettings>(ManagedIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +61,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRUpstreamAuthSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRUpstreamAuthSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +76,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<SignalRUpstreamAuthType> type = default;
-            Optional<ManagedIdentitySettings> managedIdentity = default;
+            SignalRUpstreamAuthType? type = default;
+            ManagedIdentitySettings managedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +97,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    managedIdentity = ManagedIdentitySettings.DeserializeManagedIdentitySettings(property.Value);
+                    managedIdentity = ManagedIdentitySettings.DeserializeManagedIdentitySettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +106,72 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRUpstreamAuthSettings(Optional.ToNullable(type), managedIdentity.Value, serializedAdditionalRawData);
+            return new SignalRUpstreamAuthSettings(type, managedIdentity, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthType), out propertyOverride);
+            if (Optional.IsDefined(AuthType) || hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AuthType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedIdentity), out propertyOverride);
+            if (Optional.IsDefined(ManagedIdentity) || hasPropertyOverride)
+            {
+                builder.Append("  managedIdentity: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, ManagedIdentity, options, 2, false, "  managedIdentity: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "ManagedIdentityResource":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("Resource", item.Value);
+                        bicepOptions.PropertyOverrides.Add(ManagedIdentity, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
         }
 
         BinaryData IPersistableModel<SignalRUpstreamAuthSettings>.Write(ModelReaderWriterOptions options)
@@ -115,8 +182,10 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SignalRUpstreamAuthSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRUpstreamAuthSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +201,7 @@ namespace Azure.ResourceManager.SignalR.Models
                         return DeserializeSignalRUpstreamAuthSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignalRUpstreamAuthSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRUpstreamAuthSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverBulkRemoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverBulkRemoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<bool> validateOnly = default;
-            Optional<IList<ResourceIdentifier>> moveResources = default;
-            Optional<MoverResourceInputType> moveResourceInputType = default;
+            bool? validateOnly = default;
+            IList<ResourceIdentifier> moveResources = default;
+            MoverResourceInputType? moveResourceInputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverBulkRemoveContent(Optional.ToNullable(validateOnly), Optional.ToList(moveResources), Optional.ToNullable(moveResourceInputType), serializedAdditionalRawData);
+            return new MoverBulkRemoveContent(validateOnly, moveResources ?? new ChangeTrackingList<ResourceIdentifier>(), moveResourceInputType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverBulkRemoveContent>.Write(ModelReaderWriterOptions options)
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverBulkRemoveContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support reading '{options.Format}' format.");
             }
         }
 

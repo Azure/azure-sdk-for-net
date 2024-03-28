@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<LiveEventPreview>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveEventPreview)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveEventPreview)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LiveEventEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Media.Models
                 if (AccessControl != null)
                 {
                     writer.WritePropertyName("accessControl"u8);
-                    writer.WriteObjectValue(AccessControl);
+                    writer.WriteObjectValue<LiveEventPreviewAccessControl>(AccessControl, options);
                 }
                 else
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<LiveEventPreview>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveEventPreview)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveEventPreview)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<LiveEventEndpoint>> endpoints = default;
-            Optional<LiveEventPreviewAccessControl> accessControl = default;
-            Optional<string> previewLocator = default;
-            Optional<string> streamingPolicyName = default;
-            Optional<string> alternativeMediaId = default;
+            IList<LiveEventEndpoint> endpoints = default;
+            LiveEventPreviewAccessControl accessControl = default;
+            string previewLocator = default;
+            string streamingPolicyName = default;
+            string alternativeMediaId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<LiveEventEndpoint> array = new List<LiveEventEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LiveEventEndpoint.DeserializeLiveEventEndpoint(item));
+                        array.Add(LiveEventEndpoint.DeserializeLiveEventEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Media.Models
                         accessControl = null;
                         continue;
                     }
-                    accessControl = LiveEventPreviewAccessControl.DeserializeLiveEventPreviewAccessControl(property.Value);
+                    accessControl = LiveEventPreviewAccessControl.DeserializeLiveEventPreviewAccessControl(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("previewLocator"u8))
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveEventPreview(Optional.ToList(endpoints), accessControl.Value, previewLocator.Value, streamingPolicyName.Value, alternativeMediaId.Value, serializedAdditionalRawData);
+            return new LiveEventPreview(
+                endpoints ?? new ChangeTrackingList<LiveEventEndpoint>(),
+                accessControl,
+                previewLocator,
+                streamingPolicyName,
+                alternativeMediaId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveEventPreview>.Write(ModelReaderWriterOptions options)
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LiveEventPreview)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveEventPreview)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +189,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeLiveEventPreview(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LiveEventPreview)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveEventPreview)} does not support reading '{options.Format}' format.");
             }
         }
 

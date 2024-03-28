@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AEventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AEventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AEventDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AEventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AEventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AEventDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> protectedItemName = default;
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<string> fabricName = default;
-            Optional<AzureLocation> fabricLocation = default;
-            Optional<string> remoteFabricName = default;
-            Optional<AzureLocation> remoteFabricLocation = default;
+            string protectedItemName = default;
+            ResourceIdentifier fabricObjectId = default;
+            string fabricName = default;
+            AzureLocation? fabricLocation = default;
+            string remoteFabricName = default;
+            AzureLocation? remoteFabricLocation = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AEventDetails(instanceType, serializedAdditionalRawData, protectedItemName.Value, fabricObjectId.Value, fabricName.Value, Optional.ToNullable(fabricLocation), remoteFabricName.Value, Optional.ToNullable(remoteFabricLocation));
+            return new A2AEventDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                protectedItemName,
+                fabricObjectId,
+                fabricName,
+                fabricLocation,
+                remoteFabricName,
+                remoteFabricLocation);
         }
 
         BinaryData IPersistableModel<A2AEventDetails>.Write(ModelReaderWriterOptions options)
@@ -172,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2AEventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AEventDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2AEventDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2AEventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AEventDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

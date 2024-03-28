@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultUpgradeDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultUpgradeDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultUpgradeDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultUpgradeDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultUpgradeDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultUpgradeDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<VaultUpgradeState> status = default;
-            Optional<string> message = default;
-            Optional<VaultUpgradeTriggerType> triggerType = default;
-            Optional<ResourceIdentifier> upgradedResourceId = default;
-            Optional<ResourceIdentifier> previousResourceId = default;
+            string operationId = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? lastUpdatedTimeUtc = default;
+            DateTimeOffset? endTimeUtc = default;
+            VaultUpgradeState? status = default;
+            string message = default;
+            VaultUpgradeTriggerType? triggerType = default;
+            ResourceIdentifier upgradedResourceId = default;
+            ResourceIdentifier previousResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultUpgradeDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(status), message.Value, Optional.ToNullable(triggerType), upgradedResourceId.Value, previousResourceId.Value, serializedAdditionalRawData);
+            return new VaultUpgradeDetails(
+                operationId,
+                startTimeUtc,
+                lastUpdatedTimeUtc,
+                endTimeUtc,
+                status,
+                message,
+                triggerType,
+                upgradedResourceId,
+                previousResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultUpgradeDetails>.Write(ModelReaderWriterOptions options)
@@ -213,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VaultUpgradeDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultUpgradeDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeVaultUpgradeDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VaultUpgradeDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultUpgradeDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

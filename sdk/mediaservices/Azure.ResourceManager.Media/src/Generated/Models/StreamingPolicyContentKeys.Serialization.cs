@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultKey))
             {
                 writer.WritePropertyName("defaultKey"u8);
-                writer.WriteObjectValue(DefaultKey);
+                writer.WriteObjectValue<EncryptionSchemeDefaultKey>(DefaultKey, options);
             }
             if (Optional.IsCollectionDefined(KeyToTrackMappings))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyToTrackMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingPolicyContentKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<EncryptionSchemeDefaultKey> defaultKey = default;
-            Optional<IList<StreamingPolicyContentKey>> keyToTrackMappings = default;
+            EncryptionSchemeDefaultKey defaultKey = default;
+            IList<StreamingPolicyContentKey> keyToTrackMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    defaultKey = EncryptionSchemeDefaultKey.DeserializeEncryptionSchemeDefaultKey(property.Value);
+                    defaultKey = EncryptionSchemeDefaultKey.DeserializeEncryptionSchemeDefaultKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyToTrackMappings"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingPolicyContentKey> array = new List<StreamingPolicyContentKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingPolicyContentKey.DeserializeStreamingPolicyContentKey(item));
+                        array.Add(StreamingPolicyContentKey.DeserializeStreamingPolicyContentKey(item, options));
                     }
                     keyToTrackMappings = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPolicyContentKeys(defaultKey.Value, Optional.ToList(keyToTrackMappings), serializedAdditionalRawData);
+            return new StreamingPolicyContentKeys(defaultKey, keyToTrackMappings ?? new ChangeTrackingList<StreamingPolicyContentKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPolicyContentKeys>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingPolicyContentKeys(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support reading '{options.Format}' format.");
             }
         }
 

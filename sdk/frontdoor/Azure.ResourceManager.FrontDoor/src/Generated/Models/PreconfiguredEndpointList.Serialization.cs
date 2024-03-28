@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpointList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreconfiguredEndpointList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreconfiguredEndpointList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PreconfiguredEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpointList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreconfiguredEndpointList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreconfiguredEndpointList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PreconfiguredEndpoint>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PreconfiguredEndpoint> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<PreconfiguredEndpoint> array = new List<PreconfiguredEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PreconfiguredEndpoint.DeserializePreconfiguredEndpoint(item));
+                        array.Add(PreconfiguredEndpoint.DeserializePreconfiguredEndpoint(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreconfiguredEndpointList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PreconfiguredEndpointList(value ?? new ChangeTrackingList<PreconfiguredEndpoint>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreconfiguredEndpointList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PreconfiguredEndpointList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreconfiguredEndpointList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializePreconfiguredEndpointList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PreconfiguredEndpointList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreconfiguredEndpointList)} does not support reading '{options.Format}' format.");
             }
         }
 

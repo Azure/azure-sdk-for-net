@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdpsQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IdpsQueryFilterItems>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(OrderBy))
             {
                 writer.WritePropertyName("orderBy"u8);
-                writer.WriteObjectValue(OrderBy);
+                writer.WriteObjectValue<IdpsQueryOrderBy>(OrderBy, options);
             }
             if (Optional.IsDefined(ResultsPerPage))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdpsQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<IdpsQueryFilterItems>> filters = default;
-            Optional<string> search = default;
-            Optional<IdpsQueryOrderBy> orderBy = default;
-            Optional<int> resultsPerPage = default;
-            Optional<int> skip = default;
+            IList<IdpsQueryFilterItems> filters = default;
+            string search = default;
+            IdpsQueryOrderBy orderBy = default;
+            int? resultsPerPage = default;
+            int? skip = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<IdpsQueryFilterItems> array = new List<IdpsQueryFilterItems>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IdpsQueryFilterItems.DeserializeIdpsQueryFilterItems(item));
+                        array.Add(IdpsQueryFilterItems.DeserializeIdpsQueryFilterItems(item, options));
                     }
                     filters = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    orderBy = IdpsQueryOrderBy.DeserializeIdpsQueryOrderBy(property.Value);
+                    orderBy = IdpsQueryOrderBy.DeserializeIdpsQueryOrderBy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resultsPerPage"u8))
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdpsQueryContent(Optional.ToList(filters), search.Value, orderBy.Value, Optional.ToNullable(resultsPerPage), Optional.ToNullable(skip), serializedAdditionalRawData);
+            return new IdpsQueryContent(
+                filters ?? new ChangeTrackingList<IdpsQueryFilterItems>(),
+                search,
+                orderBy,
+                resultsPerPage,
+                skip,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdpsQueryContent>.Write(ModelReaderWriterOptions options)
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +189,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeIdpsQueryContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support reading '{options.Format}' format.");
             }
         }
 

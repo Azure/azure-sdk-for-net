@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHuntingBookmark>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                writer.WriteObjectValue<SecurityInsightsUserInfo>(CreatedBy, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy);
+                writer.WriteObjectValue<SecurityInsightsUserInfo>(UpdatedBy, options);
             }
             if (Optional.IsDefined(IncidentInfo))
             {
                 writer.WritePropertyName("incidentInfo"u8);
-                writer.WriteObjectValue(IncidentInfo);
+                writer.WriteObjectValue<SecurityInsightsBookmarkIncidentInfo>(IncidentInfo, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHuntingBookmark>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -182,20 +182,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<SecurityInsightsUserInfo> createdBy = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> eventTime = default;
-            Optional<IList<string>> labels = default;
-            Optional<string> notes = default;
-            Optional<string> query = default;
-            Optional<string> queryResult = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<SecurityInsightsUserInfo> updatedBy = default;
-            Optional<SecurityInsightsBookmarkIncidentInfo> incidentInfo = default;
+            SystemData systemData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
+            string friendlyName = default;
+            DateTimeOffset? created = default;
+            SecurityInsightsUserInfo createdBy = default;
+            string displayName = default;
+            DateTimeOffset? eventTime = default;
+            IList<string> labels = default;
+            string notes = default;
+            string query = default;
+            string queryResult = default;
+            DateTimeOffset? updated = default;
+            SecurityInsightsUserInfo updatedBy = default;
+            SecurityInsightsBookmarkIncidentInfo incidentInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            createdBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value);
+                            createdBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            updatedBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value);
+                            updatedBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("incidentInfo"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            incidentInfo = SecurityInsightsBookmarkIncidentInfo.DeserializeSecurityInsightsBookmarkIncidentInfo(property0.Value);
+                            incidentInfo = SecurityInsightsBookmarkIncidentInfo.DeserializeSecurityInsightsBookmarkIncidentInfo(property0.Value, options);
                             continue;
                         }
                     }
@@ -361,7 +361,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsHuntingBookmark(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToNullable(created), createdBy.Value, displayName.Value, Optional.ToNullable(eventTime), Optional.ToList(labels), notes.Value, query.Value, queryResult.Value, Optional.ToNullable(updated), updatedBy.Value, incidentInfo.Value);
+            return new SecurityInsightsHuntingBookmark(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName,
+                created,
+                createdBy,
+                displayName,
+                eventTime,
+                labels ?? new ChangeTrackingList<string>(),
+                notes,
+                query,
+                queryResult,
+                updated,
+                updatedBy,
+                incidentInfo);
         }
 
         BinaryData IPersistableModel<SecurityInsightsHuntingBookmark>.Write(ModelReaderWriterOptions options)
@@ -373,7 +392,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -389,7 +408,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsHuntingBookmark(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsHuntingBookmark)} does not support reading '{options.Format}' format.");
             }
         }
 

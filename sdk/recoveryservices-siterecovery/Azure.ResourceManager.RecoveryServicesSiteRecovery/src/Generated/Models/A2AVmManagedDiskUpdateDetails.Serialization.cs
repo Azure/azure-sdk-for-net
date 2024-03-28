@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AVmManagedDiskUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
-                writer.WriteObjectValue(DiskEncryptionInfo);
+                writer.WriteObjectValue<SiteRecoveryDiskEncryptionInfo>(DiskEncryptionInfo, options);
             }
             if (Optional.IsDefined(FailoverDiskName))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AVmManagedDiskUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> recoveryTargetDiskAccountType = default;
-            Optional<string> recoveryReplicaDiskAccountType = default;
-            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
-            Optional<string> failoverDiskName = default;
-            Optional<string> tfoDiskName = default;
+            string diskId = default;
+            string recoveryTargetDiskAccountType = default;
+            string recoveryReplicaDiskAccountType = default;
+            SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
+            string failoverDiskName = default;
+            string tfoDiskName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value);
+                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("failoverDiskName"u8))
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AVmManagedDiskUpdateDetails(diskId.Value, recoveryTargetDiskAccountType.Value, recoveryReplicaDiskAccountType.Value, diskEncryptionInfo.Value, failoverDiskName.Value, tfoDiskName.Value, serializedAdditionalRawData);
+            return new A2AVmManagedDiskUpdateDetails(
+                diskId,
+                recoveryTargetDiskAccountType,
+                recoveryReplicaDiskAccountType,
+                diskEncryptionInfo,
+                failoverDiskName,
+                tfoDiskName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<A2AVmManagedDiskUpdateDetails>.Write(ModelReaderWriterOptions options)
@@ -156,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2AVmManagedDiskUpdateDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

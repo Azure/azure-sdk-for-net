@@ -9,6 +9,7 @@ using Azure.Core;
 namespace Azure.DigitalTwins.Core
 {
     [CodeGenModel("ImportJob")]
+    [CodeGenSerialization(nameof(Error), SerializationValueHook = nameof(SerializeErrorValue))]
     public partial class ImportJob
     {
         // This class declaration:
@@ -26,11 +27,16 @@ namespace Azure.DigitalTwins.Core
 
         /// <summary> Details of the error(s) that occurred executing the import job. </summary>
         [CodeGenMember("Error")]
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeErrorValue))]
         public ResponseError Error { get; }
 
         /// <summary> Status of the job. </summary>
         [CodeGenMember("Status")]
         public ImportJobStatus? Status { get; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void SerializeErrorValue(Utf8JsonWriter writer)
+        {
+            writer.WriteObjectValue(Error);
+        }
     }
 }

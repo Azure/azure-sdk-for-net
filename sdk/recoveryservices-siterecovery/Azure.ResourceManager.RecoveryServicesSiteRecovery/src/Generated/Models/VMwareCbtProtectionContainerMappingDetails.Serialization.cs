@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<string> storageAccountSasSecretName = default;
-            Optional<string> serviceBusConnectionStringSecretName = default;
-            Optional<string> targetLocation = default;
-            Optional<IReadOnlyDictionary<string, int>> roleSizeToNicCountMap = default;
-            Optional<IReadOnlyList<string>> excludedSkus = default;
+            ResourceIdentifier keyVaultId = default;
+            Uri keyVaultUri = default;
+            ResourceIdentifier storageAccountId = default;
+            string storageAccountSasSecretName = default;
+            string serviceBusConnectionStringSecretName = default;
+            string targetLocation = default;
+            IReadOnlyDictionary<string, int> roleSizeToNicCountMap = default;
+            IReadOnlyList<string> excludedSkus = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtProtectionContainerMappingDetails(instanceType, serializedAdditionalRawData, keyVaultId.Value, keyVaultUri.Value, storageAccountId.Value, storageAccountSasSecretName.Value, serviceBusConnectionStringSecretName.Value, targetLocation.Value, Optional.ToDictionary(roleSizeToNicCountMap), Optional.ToList(excludedSkus));
+            return new VMwareCbtProtectionContainerMappingDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                keyVaultId,
+                keyVaultUri,
+                storageAccountId,
+                storageAccountSasSecretName,
+                serviceBusConnectionStringSecretName,
+                targetLocation,
+                roleSizeToNicCountMap ?? new ChangeTrackingDictionary<string, int>(),
+                excludedSkus ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<VMwareCbtProtectionContainerMappingDetails>.Write(ModelReaderWriterOptions options)
@@ -223,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -239,7 +249,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareCbtProtectionContainerMappingDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

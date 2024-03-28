@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabServicesSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(RecurrencePattern))
             {
                 writer.WritePropertyName("recurrencePattern"u8);
-                writer.WriteObjectValue(RecurrencePattern);
+                writer.WriteObjectValue<LabServicesRecurrencePattern>(RecurrencePattern, options);
             }
             if (Optional.IsDefined(TimeZoneId))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabServicesSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startAt = default;
-            Optional<DateTimeOffset> stopAt = default;
-            Optional<LabServicesRecurrencePattern> recurrencePattern = default;
-            Optional<string> timeZoneId = default;
-            Optional<BinaryData> notes = default;
+            DateTimeOffset? startAt = default;
+            DateTimeOffset? stopAt = default;
+            LabServicesRecurrencePattern recurrencePattern = default;
+            string timeZoneId = default;
+            BinaryData notes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            recurrencePattern = LabServicesRecurrencePattern.DeserializeLabServicesRecurrencePattern(property0.Value);
+                            recurrencePattern = LabServicesRecurrencePattern.DeserializeLabServicesRecurrencePattern(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeZoneId"u8))
@@ -167,7 +167,13 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesSchedulePatch(Optional.ToNullable(startAt), Optional.ToNullable(stopAt), recurrencePattern.Value, timeZoneId.Value, notes.Value, serializedAdditionalRawData);
+            return new LabServicesSchedulePatch(
+                startAt,
+                stopAt,
+                recurrencePattern,
+                timeZoneId,
+                notes,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesSchedulePatch>.Write(ModelReaderWriterOptions options)
@@ -179,7 +185,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +201,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabServicesSchedulePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

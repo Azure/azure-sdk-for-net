@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> environmentId = default;
-            Optional<string> ingestionKey = default;
-            Optional<Uri> logsIngestionEndpoint = default;
-            Optional<Uri> landingUri = default;
+            string environmentId = default;
+            string ingestionKey = default;
+            Uri logsIngestionEndpoint = default;
+            Uri landingUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceEnvironmentInfo(environmentId.Value, ingestionKey.Value, logsIngestionEndpoint.Value, landingUri.Value, serializedAdditionalRawData);
+            return new DynatraceEnvironmentInfo(environmentId, ingestionKey, logsIngestionEndpoint, landingUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceEnvironmentInfo>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceEnvironmentInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

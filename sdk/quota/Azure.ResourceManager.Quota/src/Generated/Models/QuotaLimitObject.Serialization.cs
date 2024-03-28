@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaLimitObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaLimitObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaLimitObject)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaLimitObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaLimitObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaLimitObject)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Quota.Models
                 return null;
             }
             int value = default;
-            Optional<QuotaLimitType> limitType = default;
+            QuotaLimitType? limitType = default;
             LimitType limitObjectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaLimitObject(limitObjectType, serializedAdditionalRawData, value, Optional.ToNullable(limitType));
+            return new QuotaLimitObject(limitObjectType, serializedAdditionalRawData, value, limitType);
         }
 
         BinaryData IPersistableModel<QuotaLimitObject>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Quota.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaLimitObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaLimitObject)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Quota.Models
                         return DeserializeQuotaLimitObject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaLimitObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaLimitObject)} does not support reading '{options.Format}' format.");
             }
         }
 

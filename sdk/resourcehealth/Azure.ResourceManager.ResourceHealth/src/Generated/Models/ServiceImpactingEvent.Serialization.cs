@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceImpactingEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ServiceImpactingEventStatus>(Status, options);
             }
             if (Optional.IsDefined(IncidentProperties))
             {
                 writer.WritePropertyName("incidentProperties"u8);
-                writer.WriteObjectValue(IncidentProperties);
+                writer.WriteObjectValue<ServiceImpactingEventIncidentProperties>(IncidentProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceImpactingEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> eventStartTime = default;
-            Optional<DateTimeOffset> eventStatusLastModifiedTime = default;
-            Optional<string> correlationId = default;
-            Optional<ServiceImpactingEventStatus> status = default;
-            Optional<ServiceImpactingEventIncidentProperties> incidentProperties = default;
+            DateTimeOffset? eventStartTime = default;
+            DateTimeOffset? eventStatusLastModifiedTime = default;
+            string correlationId = default;
+            ServiceImpactingEventStatus status = default;
+            ServiceImpactingEventIncidentProperties incidentProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    status = ServiceImpactingEventStatus.DeserializeServiceImpactingEventStatus(property.Value);
+                    status = ServiceImpactingEventStatus.DeserializeServiceImpactingEventStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("incidentProperties"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    incidentProperties = ServiceImpactingEventIncidentProperties.DeserializeServiceImpactingEventIncidentProperties(property.Value);
+                    incidentProperties = ServiceImpactingEventIncidentProperties.DeserializeServiceImpactingEventIncidentProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceImpactingEvent(Optional.ToNullable(eventStartTime), Optional.ToNullable(eventStatusLastModifiedTime), correlationId.Value, status.Value, incidentProperties.Value, serializedAdditionalRawData);
+            return new ServiceImpactingEvent(
+                eventStartTime,
+                eventStatusLastModifiedTime,
+                correlationId,
+                status,
+                incidentProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceImpactingEvent>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeServiceImpactingEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentScriptPropertiesBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentScriptPropertiesBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentScriptPropertiesBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings);
+                writer.WriteObjectValue<ContainerConfiguration>(ContainerSettings, options);
             }
             if (Optional.IsDefined(StorageAccountSettings))
             {
                 writer.WritePropertyName("storageAccountSettings"u8);
-                writer.WriteObjectValue(StorageAccountSettings);
+                writer.WriteObjectValue<ScriptStorageConfiguration>(StorageAccountSettings, options);
             }
             if (Optional.IsDefined(CleanupPreference))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ScriptStatus>(Status, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentScriptPropertiesBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentScriptPropertiesBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentScriptPropertiesBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ContainerConfiguration> containerSettings = default;
-            Optional<ScriptStorageConfiguration> storageAccountSettings = default;
-            Optional<ScriptCleanupOptions> cleanupPreference = default;
-            Optional<ScriptProvisioningState> provisioningState = default;
-            Optional<ScriptStatus> status = default;
-            Optional<BinaryData> outputs = default;
+            ContainerConfiguration containerSettings = default;
+            ScriptStorageConfiguration storageAccountSettings = default;
+            ScriptCleanupOptions? cleanupPreference = default;
+            ScriptProvisioningState? provisioningState = default;
+            ScriptStatus status = default;
+            BinaryData outputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property.Value);
+                    containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageAccountSettings"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property.Value);
+                    storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cleanupPreference"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    status = ScriptStatus.DeserializeScriptStatus(property.Value);
+                    status = ScriptStatus.DeserializeScriptStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("outputs"u8))
@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentScriptPropertiesBase(containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, serializedAdditionalRawData);
+            return new ArmDeploymentScriptPropertiesBase(
+                containerSettings,
+                storageAccountSettings,
+                cleanupPreference,
+                provisioningState,
+                status,
+                outputs,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentScriptPropertiesBase>.Write(ModelReaderWriterOptions options)
@@ -183,7 +190,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentScriptPropertiesBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentScriptPropertiesBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +206,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmDeploymentScriptPropertiesBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentScriptPropertiesBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentScriptPropertiesBase)} does not support reading '{options.Format}' format.");
             }
         }
 

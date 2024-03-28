@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabelClass>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelClass)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabelClass)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Subclasses)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<LabelClass>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabelClass>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelClass)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabelClass)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<IDictionary<string, LabelClass>> subclasses = default;
+            string displayName = default;
+            IDictionary<string, LabelClass> subclasses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, LabelClass> dictionary = new Dictionary<string, LabelClass>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeLabelClass(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeLabelClass(property0.Value, options));
                     }
                     subclasses = dictionary;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelClass(displayName.Value, Optional.ToDictionary(subclasses), serializedAdditionalRawData);
+            return new LabelClass(displayName, subclasses ?? new ChangeTrackingDictionary<string, LabelClass>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabelClass>.Write(ModelReaderWriterOptions options)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabelClass)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabelClass)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeLabelClass(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabelClass)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabelClass)} does not support reading '{options.Format}' format.");
             }
         }
 

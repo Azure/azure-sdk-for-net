@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceForConsumptionDto>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobReferenceForConsumptionDto)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobReferenceForConsumptionDto)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Credential != null)
                 {
                     writer.WritePropertyName("credential"u8);
-                    writer.WriteObjectValue(Credential);
+                    writer.WriteObjectValue<PendingUploadCredentialDto>(Credential, options);
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceForConsumptionDto>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobReferenceForConsumptionDto)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobReferenceForConsumptionDto)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Uri> blobUri = default;
-            Optional<PendingUploadCredentialDto> credential = default;
-            Optional<ResourceIdentifier> storageAccountArmId = default;
+            Uri blobUri = default;
+            PendingUploadCredentialDto credential = default;
+            ResourceIdentifier storageAccountArmId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         credential = null;
                         continue;
                     }
-                    credential = PendingUploadCredentialDto.DeserializePendingUploadCredentialDto(property.Value);
+                    credential = PendingUploadCredentialDto.DeserializePendingUploadCredentialDto(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageAccountArmId"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobReferenceForConsumptionDto(blobUri.Value, credential.Value, storageAccountArmId.Value, serializedAdditionalRawData);
+            return new BlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobReferenceForConsumptionDto>.Write(ModelReaderWriterOptions options)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BlobReferenceForConsumptionDto)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobReferenceForConsumptionDto)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeBlobReferenceForConsumptionDto(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlobReferenceForConsumptionDto)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobReferenceForConsumptionDto)} does not support reading '{options.Format}' format.");
             }
         }
 

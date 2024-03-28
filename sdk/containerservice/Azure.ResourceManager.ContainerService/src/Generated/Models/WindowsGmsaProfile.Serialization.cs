@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsGmsaProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsGmsaProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> dnsServer = default;
-            Optional<string> rootDomainName = default;
+            bool? enabled = default;
+            string dnsServer = default;
+            string rootDomainName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsGmsaProfile(Optional.ToNullable(enabled), dnsServer.Value, rootDomainName.Value, serializedAdditionalRawData);
+            return new WindowsGmsaProfile(enabled, dnsServer, rootDomainName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsGmsaProfile>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeWindowsGmsaProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

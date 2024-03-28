@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(SourceAgentIdentityDetails))
             {
                 writer.WritePropertyName("sourceAgentIdentityDetails"u8);
-                writer.WriteObjectValue(SourceAgentIdentityDetails);
+                writer.WriteObjectValue<IdentityProviderDetails>(SourceAgentIdentityDetails, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProcessServers))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProcessServers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryProcessServerDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in RcmProxies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RcmProxyDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in PushInstallers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PushInstallerDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ReplicationAgents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReplicationAgentDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ReprotectAgents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReprotectAgentDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in MarsAgents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MarsAgentDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Dras)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryDraDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryAgentDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -186,22 +186,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vmwareSiteId = default;
-            Optional<ResourceIdentifier> physicalSiteId = default;
-            Optional<string> serviceEndpoint = default;
-            Optional<ResourceIdentifier> serviceResourceId = default;
-            Optional<string> serviceContainerId = default;
-            Optional<Uri> dataPlaneUri = default;
-            Optional<Uri> controlPlaneUri = default;
-            Optional<IdentityProviderDetails> sourceAgentIdentityDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryProcessServerDetails>> processServers = default;
-            Optional<IReadOnlyList<RcmProxyDetails>> rcmProxies = default;
-            Optional<IReadOnlyList<PushInstallerDetails>> pushInstallers = default;
-            Optional<IReadOnlyList<ReplicationAgentDetails>> replicationAgents = default;
-            Optional<IReadOnlyList<ReprotectAgentDetails>> reprotectAgents = default;
-            Optional<IReadOnlyList<MarsAgentDetails>> marsAgents = default;
-            Optional<IReadOnlyList<SiteRecoveryDraDetails>> dras = default;
-            Optional<IReadOnlyList<SiteRecoveryAgentDetails>> agentDetails = default;
+            ResourceIdentifier vmwareSiteId = default;
+            ResourceIdentifier physicalSiteId = default;
+            string serviceEndpoint = default;
+            ResourceIdentifier serviceResourceId = default;
+            string serviceContainerId = default;
+            Uri dataPlaneUri = default;
+            Uri controlPlaneUri = default;
+            IdentityProviderDetails sourceAgentIdentityDetails = default;
+            IReadOnlyList<SiteRecoveryProcessServerDetails> processServers = default;
+            IReadOnlyList<RcmProxyDetails> rcmProxies = default;
+            IReadOnlyList<PushInstallerDetails> pushInstallers = default;
+            IReadOnlyList<ReplicationAgentDetails> replicationAgents = default;
+            IReadOnlyList<ReprotectAgentDetails> reprotectAgents = default;
+            IReadOnlyList<MarsAgentDetails> marsAgents = default;
+            IReadOnlyList<SiteRecoveryDraDetails> dras = default;
+            IReadOnlyList<SiteRecoveryAgentDetails> agentDetails = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    sourceAgentIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value);
+                    sourceAgentIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("processServers"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryProcessServerDetails> array = new List<SiteRecoveryProcessServerDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryProcessServerDetails.DeserializeSiteRecoveryProcessServerDetails(item));
+                        array.Add(SiteRecoveryProcessServerDetails.DeserializeSiteRecoveryProcessServerDetails(item, options));
                     }
                     processServers = array;
                     continue;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RcmProxyDetails> array = new List<RcmProxyDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RcmProxyDetails.DeserializeRcmProxyDetails(item));
+                        array.Add(RcmProxyDetails.DeserializeRcmProxyDetails(item, options));
                     }
                     rcmProxies = array;
                     continue;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<PushInstallerDetails> array = new List<PushInstallerDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PushInstallerDetails.DeserializePushInstallerDetails(item));
+                        array.Add(PushInstallerDetails.DeserializePushInstallerDetails(item, options));
                     }
                     pushInstallers = array;
                     continue;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReplicationAgentDetails> array = new List<ReplicationAgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationAgentDetails.DeserializeReplicationAgentDetails(item));
+                        array.Add(ReplicationAgentDetails.DeserializeReplicationAgentDetails(item, options));
                     }
                     replicationAgents = array;
                     continue;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReprotectAgentDetails> array = new List<ReprotectAgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReprotectAgentDetails.DeserializeReprotectAgentDetails(item));
+                        array.Add(ReprotectAgentDetails.DeserializeReprotectAgentDetails(item, options));
                     }
                     reprotectAgents = array;
                     continue;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<MarsAgentDetails> array = new List<MarsAgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MarsAgentDetails.DeserializeMarsAgentDetails(item));
+                        array.Add(MarsAgentDetails.DeserializeMarsAgentDetails(item, options));
                     }
                     marsAgents = array;
                     continue;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryDraDetails> array = new List<SiteRecoveryDraDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDraDetails.DeserializeSiteRecoveryDraDetails(item));
+                        array.Add(SiteRecoveryDraDetails.DeserializeSiteRecoveryDraDetails(item, options));
                     }
                     dras = array;
                     continue;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryAgentDetails> array = new List<SiteRecoveryAgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryAgentDetails.DeserializeSiteRecoveryAgentDetails(item));
+                        array.Add(SiteRecoveryAgentDetails.DeserializeSiteRecoveryAgentDetails(item, options));
                     }
                     agentDetails = array;
                     continue;
@@ -394,7 +394,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFabricSpecificDetails(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, dataPlaneUri.Value, controlPlaneUri.Value, sourceAgentIdentityDetails.Value, Optional.ToList(processServers), Optional.ToList(rcmProxies), Optional.ToList(pushInstallers), Optional.ToList(replicationAgents), Optional.ToList(reprotectAgents), Optional.ToList(marsAgents), Optional.ToList(dras), Optional.ToList(agentDetails));
+            return new InMageRcmFabricSpecificDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                vmwareSiteId,
+                physicalSiteId,
+                serviceEndpoint,
+                serviceResourceId,
+                serviceContainerId,
+                dataPlaneUri,
+                controlPlaneUri,
+                sourceAgentIdentityDetails,
+                processServers ?? new ChangeTrackingList<SiteRecoveryProcessServerDetails>(),
+                rcmProxies ?? new ChangeTrackingList<RcmProxyDetails>(),
+                pushInstallers ?? new ChangeTrackingList<PushInstallerDetails>(),
+                replicationAgents ?? new ChangeTrackingList<ReplicationAgentDetails>(),
+                reprotectAgents ?? new ChangeTrackingList<ReprotectAgentDetails>(),
+                marsAgents ?? new ChangeTrackingList<MarsAgentDetails>(),
+                dras ?? new ChangeTrackingList<SiteRecoveryDraDetails>(),
+                agentDetails ?? new ChangeTrackingList<SiteRecoveryAgentDetails>());
         }
 
         BinaryData IPersistableModel<InMageRcmFabricSpecificDetails>.Write(ModelReaderWriterOptions options)
@@ -406,7 +424,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -422,7 +440,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmFabricSpecificDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

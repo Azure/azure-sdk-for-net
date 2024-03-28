@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<CsmPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CsmPublishingProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CsmPublishingProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<CsmPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CsmPublishingProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CsmPublishingProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<PublishingProfileFormat> format = default;
-            Optional<bool> includeDisasterRecoveryEndpoints = default;
+            PublishingProfileFormat? format = default;
+            bool? includeDisasterRecoveryEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CsmPublishingProfile(Optional.ToNullable(format), Optional.ToNullable(includeDisasterRecoveryEndpoints), serializedAdditionalRawData);
+            return new CsmPublishingProfile(format, includeDisasterRecoveryEndpoints, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CsmPublishingProfile>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CsmPublishingProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsmPublishingProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeCsmPublishingProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CsmPublishingProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsmPublishingProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

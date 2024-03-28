@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentPage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentPage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +52,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentSpan>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Words))
@@ -62,7 +61,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Words)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentWord>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +71,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in SelectionMarks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentSelectionMark>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +81,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Lines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentLine>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +91,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Barcodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentBarcode>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +101,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Formulas)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentFormula>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +128,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentPage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentPage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,16 +144,16 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             int pageNumber = default;
-            Optional<float> angle = default;
-            Optional<float> width = default;
-            Optional<float> height = default;
-            Optional<LengthUnit> unit = default;
+            float? angle = default;
+            float? width = default;
+            float? height = default;
+            LengthUnit? unit = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyList<DocumentWord>> words = default;
-            Optional<IReadOnlyList<DocumentSelectionMark>> selectionMarks = default;
-            Optional<IReadOnlyList<DocumentLine>> lines = default;
-            Optional<IReadOnlyList<DocumentBarcode>> barcodes = default;
-            Optional<IReadOnlyList<DocumentFormula>> formulas = default;
+            IReadOnlyList<DocumentWord> words = default;
+            IReadOnlyList<DocumentSelectionMark> selectionMarks = default;
+            IReadOnlyList<DocumentLine> lines = default;
+            IReadOnlyList<DocumentBarcode> barcodes = default;
+            IReadOnlyList<DocumentFormula> formulas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +204,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
@@ -219,7 +218,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentWord> array = new List<DocumentWord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentWord.DeserializeDocumentWord(item));
+                        array.Add(DocumentWord.DeserializeDocumentWord(item, options));
                     }
                     words = array;
                     continue;
@@ -233,7 +232,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSelectionMark> array = new List<DocumentSelectionMark>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSelectionMark.DeserializeDocumentSelectionMark(item));
+                        array.Add(DocumentSelectionMark.DeserializeDocumentSelectionMark(item, options));
                     }
                     selectionMarks = array;
                     continue;
@@ -247,7 +246,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentLine> array = new List<DocumentLine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentLine.DeserializeDocumentLine(item));
+                        array.Add(DocumentLine.DeserializeDocumentLine(item, options));
                     }
                     lines = array;
                     continue;
@@ -261,7 +260,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentBarcode> array = new List<DocumentBarcode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentBarcode.DeserializeDocumentBarcode(item));
+                        array.Add(DocumentBarcode.DeserializeDocumentBarcode(item, options));
                     }
                     barcodes = array;
                     continue;
@@ -275,7 +274,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentFormula> array = new List<DocumentFormula>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentFormula.DeserializeDocumentFormula(item));
+                        array.Add(DocumentFormula.DeserializeDocumentFormula(item, options));
                     }
                     formulas = array;
                     continue;
@@ -286,7 +285,19 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentPage(pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(lines), Optional.ToList(barcodes), Optional.ToList(formulas), serializedAdditionalRawData);
+            return new DocumentPage(
+                pageNumber,
+                angle,
+                width,
+                height,
+                unit,
+                spans,
+                words ?? new ChangeTrackingList<DocumentWord>(),
+                selectionMarks ?? new ChangeTrackingList<DocumentSelectionMark>(),
+                lines ?? new ChangeTrackingList<DocumentLine>(),
+                barcodes ?? new ChangeTrackingList<DocumentBarcode>(),
+                formulas ?? new ChangeTrackingList<DocumentFormula>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentPage>.Write(ModelReaderWriterOptions options)
@@ -298,7 +309,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentPage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentPage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -314,7 +325,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentPage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentPage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentPage)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -332,7 +343,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentPage>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

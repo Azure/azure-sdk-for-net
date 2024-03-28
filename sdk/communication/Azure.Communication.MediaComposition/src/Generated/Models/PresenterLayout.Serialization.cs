@@ -35,7 +35,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
+                writer.WriteObjectValue<LayoutResolution>(Resolution);
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
@@ -58,12 +58,12 @@ namespace Azure.Communication.MediaComposition
             }
             string presenterId = default;
             string supportId = default;
-            Optional<SupportPosition> supportPosition = default;
-            Optional<double> supportAspectRatio = default;
+            SupportPosition? supportPosition = default;
+            double? supportAspectRatio = default;
             LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            LayoutResolution resolution = default;
+            string placeholderImageUri = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("presenterId"u8))
@@ -123,7 +123,15 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new PresenterLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), presenterId, supportId, Optional.ToNullable(supportPosition), Optional.ToNullable(supportAspectRatio));
+            return new PresenterLayout(
+                kind,
+                resolution,
+                placeholderImageUri,
+                scalingMode,
+                presenterId,
+                supportId,
+                supportPosition,
+                supportAspectRatio);
         }
     }
 }

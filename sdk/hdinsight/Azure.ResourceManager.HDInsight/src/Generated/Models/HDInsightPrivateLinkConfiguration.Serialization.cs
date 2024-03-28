@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightPrivateLinkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightPrivateLinkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightPrivateLinkConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartArray();
             foreach (var item in IPConfigurations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<HDInsightIPConfiguration>(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightPrivateLinkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightPrivateLinkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightPrivateLinkConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
-            Optional<ResourceType> type = default;
+            ResourceType? type = default;
             string groupId = default;
-            Optional<HDInsightPrivateLinkConfigurationProvisioningState> provisioningState = default;
+            HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = default;
             IList<HDInsightIPConfiguration> ipConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                             List<HDInsightIPConfiguration> array = new List<HDInsightIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HDInsightIPConfiguration.DeserializeHDInsightIPConfiguration(item));
+                                array.Add(HDInsightIPConfiguration.DeserializeHDInsightIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightPrivateLinkConfiguration(id.Value, name, Optional.ToNullable(type), groupId, Optional.ToNullable(provisioningState), ipConfigurations, serializedAdditionalRawData);
+            return new HDInsightPrivateLinkConfiguration(
+                id,
+                name,
+                type,
+                groupId,
+                provisioningState,
+                ipConfigurations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightPrivateLinkConfiguration>.Write(ModelReaderWriterOptions options)
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightPrivateLinkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightPrivateLinkConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightPrivateLinkConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightPrivateLinkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightPrivateLinkConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

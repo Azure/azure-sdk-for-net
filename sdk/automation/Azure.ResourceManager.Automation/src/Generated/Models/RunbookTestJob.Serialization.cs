@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunbookTestJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunbookTestJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunbookTestJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunbookTestJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunbookTestJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunbookTestJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,17 +146,17 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> status = default;
-            Optional<string> statusDetails = default;
-            Optional<string> runOn = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<string> exception = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<DateTimeOffset?> lastStatusModifiedTime = default;
-            Optional<IReadOnlyDictionary<string, string>> parameters = default;
-            Optional<int> logActivityTrace = default;
+            DateTimeOffset? creationTime = default;
+            string status = default;
+            string statusDetails = default;
+            string runOn = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string exception = default;
+            DateTimeOffset? lastModifiedTime = default;
+            DateTimeOffset? lastStatusModifiedTime = default;
+            IReadOnlyDictionary<string, string> parameters = default;
+            int? logActivityTrace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +258,19 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunbookTestJob(Optional.ToNullable(creationTime), status.Value, statusDetails.Value, runOn.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), Optional.ToDictionary(parameters), Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
+            return new RunbookTestJob(
+                creationTime,
+                status,
+                statusDetails,
+                runOn,
+                startTime,
+                endTime,
+                exception,
+                lastModifiedTime,
+                lastStatusModifiedTime,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                logActivityTrace,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunbookTestJob>.Write(ModelReaderWriterOptions options)
@@ -270,7 +282,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunbookTestJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunbookTestJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -286,7 +298,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeRunbookTestJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunbookTestJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunbookTestJob)} does not support reading '{options.Format}' format.");
             }
         }
 

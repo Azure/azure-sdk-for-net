@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryAddRecoveryServicesProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryAddRecoveryServicesProviderProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryAddRecoveryServicesProviderProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStringValue(BiosId);
             }
             writer.WritePropertyName("authenticationIdentityInput"u8);
-            writer.WriteObjectValue(AuthenticationIdentityContent);
+            writer.WriteObjectValue<IdentityProviderContent>(AuthenticationIdentityContent, options);
             writer.WritePropertyName("resourceAccessIdentityInput"u8);
-            writer.WriteObjectValue(ResourceAccessIdentityContent);
+            writer.WriteObjectValue<IdentityProviderContent>(ResourceAccessIdentityContent, options);
             if (Optional.IsDefined(DataPlaneAuthenticationIdentityContent))
             {
                 writer.WritePropertyName("dataPlaneAuthenticationIdentityInput"u8);
-                writer.WriteObjectValue(DataPlaneAuthenticationIdentityContent);
+                writer.WriteObjectValue<IdentityProviderContent>(DataPlaneAuthenticationIdentityContent, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryAddRecoveryServicesProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryAddRecoveryServicesProviderProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryAddRecoveryServicesProviderProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string machineName = default;
-            Optional<string> machineId = default;
-            Optional<string> biosId = default;
+            string machineId = default;
+            string biosId = default;
             IdentityProviderContent authenticationIdentityContent = default;
             IdentityProviderContent resourceAccessIdentityContent = default;
-            Optional<IdentityProviderContent> dataPlaneAuthenticationIdentityContent = default;
+            IdentityProviderContent dataPlaneAuthenticationIdentityContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("authenticationIdentityInput"u8))
                 {
-                    authenticationIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value);
+                    authenticationIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceAccessIdentityInput"u8))
                 {
-                    resourceAccessIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value);
+                    resourceAccessIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataPlaneAuthenticationIdentityInput"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    dataPlaneAuthenticationIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value);
+                    dataPlaneAuthenticationIdentityContent = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryAddRecoveryServicesProviderProperties(machineName, machineId.Value, biosId.Value, authenticationIdentityContent, resourceAccessIdentityContent, dataPlaneAuthenticationIdentityContent.Value, serializedAdditionalRawData);
+            return new SiteRecoveryAddRecoveryServicesProviderProperties(
+                machineName,
+                machineId,
+                biosId,
+                authenticationIdentityContent,
+                resourceAccessIdentityContent,
+                dataPlaneAuthenticationIdentityContent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryAddRecoveryServicesProviderProperties>.Write(ModelReaderWriterOptions options)
@@ -147,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryAddRecoveryServicesProviderProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryAddRecoveryServicesProviderProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryAddRecoveryServicesProviderProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryAddRecoveryServicesProviderProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryAddRecoveryServicesProviderProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

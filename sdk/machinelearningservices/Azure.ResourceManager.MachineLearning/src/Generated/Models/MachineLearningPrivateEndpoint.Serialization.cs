@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPrivateEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningPrivateEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningPrivateEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPrivateEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningPrivateEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningPrivateEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceIdentifier> subnetArmId = default;
+            ResourceIdentifier id = default;
+            ResourceIdentifier subnetArmId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningPrivateEndpoint(id.Value, subnetArmId.Value, serializedAdditionalRawData);
+            return new MachineLearningPrivateEndpoint(id, subnetArmId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningPrivateEndpoint>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningPrivateEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningPrivateEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningPrivateEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningPrivateEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningPrivateEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

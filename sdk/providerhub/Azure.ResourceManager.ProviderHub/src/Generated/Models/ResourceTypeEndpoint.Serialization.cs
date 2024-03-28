@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue(FeaturesRule);
+                writer.WriteObjectValue<FeaturesRule>(FeaturesRule, options);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceTypeExtension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<IList<string>> apiVersions = default;
-            Optional<IList<AzureLocation>> locations = default;
-            Optional<IList<string>> requiredFeatures = default;
-            Optional<FeaturesRule> featuresRule = default;
-            Optional<IList<ResourceTypeExtension>> extensions = default;
-            Optional<TimeSpan> timeout = default;
+            bool? enabled = default;
+            IList<string> apiVersions = default;
+            IList<AzureLocation> locations = default;
+            IList<string> requiredFeatures = default;
+            FeaturesRule featuresRule = default;
+            IList<ResourceTypeExtension> extensions = default;
+            TimeSpan? timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value);
+                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeExtension> array = new List<ResourceTypeExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeExtension.DeserializeResourceTypeExtension(item));
+                        array.Add(ResourceTypeExtension.DeserializeResourceTypeExtension(item, options));
                     }
                     extensions = array;
                     continue;
@@ -219,7 +219,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeEndpoint(Optional.ToNullable(enabled), Optional.ToList(apiVersions), Optional.ToList(locations), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToList(extensions), Optional.ToNullable(timeout), serializedAdditionalRawData);
+            return new ResourceTypeEndpoint(
+                enabled,
+                apiVersions ?? new ChangeTrackingList<string>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                featuresRule,
+                extensions ?? new ChangeTrackingList<ResourceTypeExtension>(),
+                timeout,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeEndpoint>.Write(ModelReaderWriterOptions options)
@@ -231,7 +239,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -247,7 +255,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeResourceTypeEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

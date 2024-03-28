@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchPipelineComponentDeploymentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchPipelineComponentDeploymentConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchPipelineComponentDeploymentConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ComponentId != null)
                 {
                     writer.WritePropertyName("componentId"u8);
-                    writer.WriteObjectValue(ComponentId);
+                    writer.WriteObjectValue<MachineLearningIdAssetReference>(ComponentId, options);
                 }
                 else
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchPipelineComponentDeploymentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchPipelineComponentDeploymentConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchPipelineComponentDeploymentConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningIdAssetReference> componentId = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> settings = default;
-            Optional<IDictionary<string, string>> tags = default;
+            MachineLearningIdAssetReference componentId = default;
+            string description = default;
+            IDictionary<string, string> settings = default;
+            IDictionary<string, string> tags = default;
             BatchDeploymentConfigurationType deploymentConfigurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         componentId = null;
                         continue;
                     }
-                    componentId = MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(property.Value);
+                    componentId = MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -196,7 +196,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchPipelineComponentDeploymentConfiguration(deploymentConfigurationType, serializedAdditionalRawData, componentId.Value, description.Value, Optional.ToDictionary(settings), Optional.ToDictionary(tags));
+            return new BatchPipelineComponentDeploymentConfiguration(
+                deploymentConfigurationType,
+                serializedAdditionalRawData,
+                componentId,
+                description,
+                settings ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<BatchPipelineComponentDeploymentConfiguration>.Write(ModelReaderWriterOptions options)
@@ -208,7 +214,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchPipelineComponentDeploymentConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchPipelineComponentDeploymentConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +230,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeBatchPipelineComponentDeploymentConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchPipelineComponentDeploymentConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchPipelineComponentDeploymentConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

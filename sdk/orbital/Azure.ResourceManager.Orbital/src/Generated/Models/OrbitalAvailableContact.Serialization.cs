@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Orbital.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalAvailableContact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Orbital.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalAvailableContact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,17 +123,17 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> spacecraft = default;
-            Optional<string> groundStationName = default;
-            Optional<float> maximumElevationDegrees = default;
-            Optional<DateTimeOffset> txStartTime = default;
-            Optional<DateTimeOffset> txEndTime = default;
-            Optional<DateTimeOffset> rxStartTime = default;
-            Optional<DateTimeOffset> rxEndTime = default;
-            Optional<float> startAzimuthDegrees = default;
-            Optional<float> endAzimuthDegrees = default;
-            Optional<float> startElevationDegrees = default;
-            Optional<float> endElevationDegrees = default;
+            WritableSubResource spacecraft = default;
+            string groundStationName = default;
+            float? maximumElevationDegrees = default;
+            DateTimeOffset? txStartTime = default;
+            DateTimeOffset? txEndTime = default;
+            DateTimeOffset? rxStartTime = default;
+            DateTimeOffset? rxEndTime = default;
+            float? startAzimuthDegrees = default;
+            float? endAzimuthDegrees = default;
+            float? startElevationDegrees = default;
+            float? endElevationDegrees = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalAvailableContact(spacecraft, groundStationName.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees), serializedAdditionalRawData);
+            return new OrbitalAvailableContact(
+                spacecraft,
+                groundStationName,
+                maximumElevationDegrees,
+                txStartTime,
+                txEndTime,
+                rxStartTime,
+                rxEndTime,
+                startAzimuthDegrees,
+                endAzimuthDegrees,
+                startElevationDegrees,
+                endElevationDegrees,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalAvailableContact>.Write(ModelReaderWriterOptions options)
@@ -263,7 +275,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -279,7 +291,7 @@ namespace Azure.ResourceManager.Orbital.Models
                         return DeserializeOrbitalAvailableContact(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrbitalAvailableContact)} does not support reading '{options.Format}' format.");
             }
         }
 

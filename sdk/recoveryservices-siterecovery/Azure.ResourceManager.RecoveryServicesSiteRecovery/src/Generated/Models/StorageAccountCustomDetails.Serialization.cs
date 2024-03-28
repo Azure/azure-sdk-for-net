@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountCustomDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountCustomDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountCustomDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountCustomDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountCustomDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountCustomDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Existing": return ExistingStorageAccount.DeserializeExistingStorageAccount(element);
+                    case "Existing": return ExistingStorageAccount.DeserializeExistingStorageAccount(element, options);
                 }
             }
-            return UnknownStorageAccountCustomDetails.DeserializeUnknownStorageAccountCustomDetails(element);
+            return UnknownStorageAccountCustomDetails.DeserializeUnknownStorageAccountCustomDetails(element, options);
         }
 
         BinaryData IPersistableModel<StorageAccountCustomDetails>.Write(ModelReaderWriterOptions options)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountCustomDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountCustomDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeStorageAccountCustomDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountCustomDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountCustomDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

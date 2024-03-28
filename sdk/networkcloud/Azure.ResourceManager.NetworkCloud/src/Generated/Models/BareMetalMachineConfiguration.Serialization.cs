@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BareMetalMachineConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BareMetalMachineConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(BmcConnectionString);
             }
             writer.WritePropertyName("bmcCredentials"u8);
-            writer.WriteObjectValue(BmcCredentials);
+            writer.WriteObjectValue<AdministrativeCredentials>(BmcCredentials, options);
             writer.WritePropertyName("bmcMacAddress"u8);
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BareMetalMachineConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BareMetalMachineConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> bmcConnectionString = default;
+            string bmcConnectionString = default;
             AdministrativeCredentials bmcCredentials = default;
             string bmcMacAddress = default;
             string bootMacAddress = default;
-            Optional<string> machineDetails = default;
-            Optional<string> machineName = default;
+            string machineDetails = default;
+            string machineName = default;
             long rackSlot = default;
             string serialNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("bmcCredentials"u8))
                 {
-                    bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value);
+                    bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("bmcMacAddress"u8))
@@ -147,7 +147,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BareMetalMachineConfiguration(bmcConnectionString.Value, bmcCredentials, bmcMacAddress, bootMacAddress, machineDetails.Value, machineName.Value, rackSlot, serialNumber, serializedAdditionalRawData);
+            return new BareMetalMachineConfiguration(
+                bmcConnectionString,
+                bmcCredentials,
+                bmcMacAddress,
+                bootMacAddress,
+                machineDetails,
+                machineName,
+                rackSlot,
+                serialNumber,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BareMetalMachineConfiguration>.Write(ModelReaderWriterOptions options)
@@ -159,7 +168,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BareMetalMachineConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BareMetalMachineConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +184,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeBareMetalMachineConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BareMetalMachineConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BareMetalMachineConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

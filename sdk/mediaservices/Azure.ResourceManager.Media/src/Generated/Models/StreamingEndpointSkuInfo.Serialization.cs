@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointSkuInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingEndpointSkuInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingEndpointSkuInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<StreamingEndpointCapacity>(Capacity, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<StreamingEndpointSku>(Sku, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointSkuInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingEndpointSkuInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingEndpointSkuInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<StreamingEndpointCapacity> capacity = default;
-            Optional<StreamingEndpointSku> sku = default;
+            ResourceType? resourceType = default;
+            StreamingEndpointCapacity capacity = default;
+            StreamingEndpointSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    capacity = StreamingEndpointCapacity.DeserializeStreamingEndpointCapacity(property.Value);
+                    capacity = StreamingEndpointCapacity.DeserializeStreamingEndpointCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    sku = StreamingEndpointSku.DeserializeStreamingEndpointSku(property.Value);
+                    sku = StreamingEndpointSku.DeserializeStreamingEndpointSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingEndpointSkuInfo(Optional.ToNullable(resourceType), capacity.Value, sku.Value, serializedAdditionalRawData);
+            return new StreamingEndpointSkuInfo(resourceType, capacity, sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingEndpointSkuInfo>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingEndpointSkuInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingEndpointSkuInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingEndpointSkuInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingEndpointSkuInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingEndpointSkuInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

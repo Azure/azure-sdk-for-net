@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -23,7 +22,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<TrialMatcherResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrialMatcherResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrialMatcherResults)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartArray();
             foreach (var item in Patients)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<TrialMatcherPatientResult>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("modelVersion"u8);
@@ -64,7 +63,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<TrialMatcherResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrialMatcherResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrialMatcherResults)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,7 +80,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
             IReadOnlyList<TrialMatcherPatientResult> patients = default;
             string modelVersion = default;
-            Optional<DateTimeOffset> knowledgeGraphLastUpdateDate = default;
+            DateTimeOffset? knowledgeGraphLastUpdateDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +90,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<TrialMatcherPatientResult> array = new List<TrialMatcherPatientResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrialMatcherPatientResult.DeserializeTrialMatcherPatientResult(item));
+                        array.Add(TrialMatcherPatientResult.DeserializeTrialMatcherPatientResult(item, options));
                     }
                     patients = array;
                     continue;
@@ -116,7 +115,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrialMatcherResults(patients, modelVersion, Optional.ToNullable(knowledgeGraphLastUpdateDate), serializedAdditionalRawData);
+            return new TrialMatcherResults(patients, modelVersion, knowledgeGraphLastUpdateDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherResults>.Write(ModelReaderWriterOptions options)
@@ -128,7 +127,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrialMatcherResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrialMatcherResults)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +143,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                         return DeserializeTrialMatcherResults(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrialMatcherResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrialMatcherResults)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -162,7 +161,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TrialMatcherResults>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

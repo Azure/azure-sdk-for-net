@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTapDestinationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkTapDestinationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkTapDestinationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(IsolationDomainProperties))
             {
                 writer.WritePropertyName("isolationDomainProperties"u8);
-                writer.WriteObjectValue(IsolationDomainProperties);
+                writer.WriteObjectValue<IsolationDomainProperties>(IsolationDomainProperties, options);
             }
             if (Optional.IsDefined(DestinationTapRuleId))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTapDestinationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkTapDestinationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkTapDestinationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<NetworkTapDestinationType> destinationType = default;
-            Optional<ResourceIdentifier> destinationId = default;
-            Optional<IsolationDomainProperties> isolationDomainProperties = default;
-            Optional<ResourceIdentifier> destinationTapRuleId = default;
+            string name = default;
+            NetworkTapDestinationType? destinationType = default;
+            ResourceIdentifier destinationId = default;
+            IsolationDomainProperties isolationDomainProperties = default;
+            ResourceIdentifier destinationTapRuleId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    isolationDomainProperties = IsolationDomainProperties.DeserializeIsolationDomainProperties(property.Value);
+                    isolationDomainProperties = IsolationDomainProperties.DeserializeIsolationDomainProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destinationTapRuleId"u8))
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapDestinationProperties(name.Value, Optional.ToNullable(destinationType), destinationId.Value, isolationDomainProperties.Value, destinationTapRuleId.Value, serializedAdditionalRawData);
+            return new NetworkTapDestinationProperties(
+                name,
+                destinationType,
+                destinationId,
+                isolationDomainProperties,
+                destinationTapRuleId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkTapDestinationProperties>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkTapDestinationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkTapDestinationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkTapDestinationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkTapDestinationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkTapDestinationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

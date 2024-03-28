@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<MabBackupJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MabBackupJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MabBackupJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MabErrorInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue<MabBackupJobExtendedInfo>(ExtendedInfo, options);
             }
             if (Optional.IsDefined(EntityFriendlyName))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<MabBackupJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MabBackupJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MabBackupJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,20 +146,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<TimeSpan> duration = default;
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
-            Optional<string> mabServerName = default;
-            Optional<MabServerType> mabServerType = default;
-            Optional<BackupWorkloadType> workloadType = default;
-            Optional<IList<MabErrorInfo>> errorDetails = default;
-            Optional<MabBackupJobExtendedInfo> extendedInfo = default;
-            Optional<string> entityFriendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> operation = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> activityId = default;
+            TimeSpan? duration = default;
+            IList<JobSupportedAction> actionsInfo = default;
+            string mabServerName = default;
+            MabServerType? mabServerType = default;
+            BackupWorkloadType? workloadType = default;
+            IList<MabErrorInfo> errorDetails = default;
+            MabBackupJobExtendedInfo extendedInfo = default;
+            string entityFriendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string operation = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string activityId = default;
             string jobType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<MabErrorInfo> array = new List<MabErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MabErrorInfo.DeserializeMabErrorInfo(item));
+                        array.Add(MabErrorInfo.DeserializeMabErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = MabBackupJobExtendedInfo.DeserializeMabBackupJobExtendedInfo(property.Value);
+                    extendedInfo = MabBackupJobExtendedInfo.DeserializeMabBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityFriendlyName"u8))
@@ -292,7 +292,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData, Optional.ToNullable(duration), Optional.ToList(actionsInfo), mabServerName.Value, Optional.ToNullable(mabServerType), Optional.ToNullable(workloadType), Optional.ToList(errorDetails), extendedInfo.Value);
+            return new MabBackupJob(
+                entityFriendlyName,
+                backupManagementType,
+                operation,
+                status,
+                startTime,
+                endTime,
+                activityId,
+                jobType,
+                serializedAdditionalRawData,
+                duration,
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                mabServerName,
+                mabServerType,
+                workloadType,
+                errorDetails ?? new ChangeTrackingList<MabErrorInfo>(),
+                extendedInfo);
         }
 
         BinaryData IPersistableModel<MabBackupJob>.Write(ModelReaderWriterOptions options)
@@ -304,7 +320,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MabBackupJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MabBackupJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -320,7 +336,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeMabBackupJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MabBackupJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MabBackupJob)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityMLAnalyticsSettingsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SecurityMLAnalyticsSettingData>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityMLAnalyticsSettingsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<SecurityMLAnalyticsSettingData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityMLAnalyticsSettingData> array = new List<SecurityMLAnalyticsSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityMLAnalyticsSettingData.DeserializeSecurityMLAnalyticsSettingData(item));
+                        array.Add(SecurityMLAnalyticsSettingData.DeserializeSecurityMLAnalyticsSettingData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityMLAnalyticsSettingsList(nextLink.Value, value, serializedAdditionalRawData);
+            return new SecurityMLAnalyticsSettingsList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityMLAnalyticsSettingsList>.Write(ModelReaderWriterOptions options)
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityMLAnalyticsSettingsList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsList)} does not support reading '{options.Format}' format.");
             }
         }
 

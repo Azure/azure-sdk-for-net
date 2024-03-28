@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownConnectionInfo(document.RootElement, options);
+            return DeserializeConnectionInfo(document.RootElement, options);
         }
 
         internal static UnknownConnectionInfo DeserializeUnknownConnectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData);
+            return new UnknownConnectionInfo(type, userName, password, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionInfo>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownConnectionInfo(document.RootElement, options);
+                        return DeserializeConnectionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

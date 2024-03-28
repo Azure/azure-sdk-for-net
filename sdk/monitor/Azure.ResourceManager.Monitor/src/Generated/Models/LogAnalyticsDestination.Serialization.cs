@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> workspaceResourceId = default;
-            Optional<string> workspaceId = default;
-            Optional<string> name = default;
+            ResourceIdentifier workspaceResourceId = default;
+            string workspaceId = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsDestination(workspaceResourceId.Value, workspaceId.Value, name.Value, serializedAdditionalRawData);
+            return new LogAnalyticsDestination(workspaceResourceId, workspaceId, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalyticsDestination>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeLogAnalyticsDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

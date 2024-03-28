@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorPrivateLinkScopeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMonitorPrivateLinkScopeListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureMonitorPrivateLinkScopeListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MonitorPrivateLinkScopeData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorPrivateLinkScopeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMonitorPrivateLinkScopeListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureMonitorPrivateLinkScopeListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IReadOnlyList<MonitorPrivateLinkScopeData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorPrivateLinkScopeData> array = new List<MonitorPrivateLinkScopeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(item));
+                        array.Add(MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureMonitorPrivateLinkScopeListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new AzureMonitorPrivateLinkScopeListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureMonitorPrivateLinkScopeListResult>.Write(ModelReaderWriterOptions options)
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureMonitorPrivateLinkScopeListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureMonitorPrivateLinkScopeListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeAzureMonitorPrivateLinkScopeListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureMonitorPrivateLinkScopeListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureMonitorPrivateLinkScopeListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

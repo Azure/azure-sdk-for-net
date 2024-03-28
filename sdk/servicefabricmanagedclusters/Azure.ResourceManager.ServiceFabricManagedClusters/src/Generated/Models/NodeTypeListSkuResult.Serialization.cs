@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<NodeTypeListSkuResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodeTypeListSkuResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NodeTypeListSkuResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NodeTypeAvailableSku>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<NodeTypeListSkuResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodeTypeListSkuResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NodeTypeListSkuResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NodeTypeAvailableSku>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<NodeTypeAvailableSku> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<NodeTypeAvailableSku> array = new List<NodeTypeAvailableSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(item));
+                        array.Add(NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeTypeListSkuResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NodeTypeListSkuResult(value ?? new ChangeTrackingList<NodeTypeAvailableSku>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeTypeListSkuResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NodeTypeListSkuResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NodeTypeListSkuResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeNodeTypeListSkuResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NodeTypeListSkuResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NodeTypeListSkuResult)} does not support reading '{options.Format}' format.");
             }
         }
 

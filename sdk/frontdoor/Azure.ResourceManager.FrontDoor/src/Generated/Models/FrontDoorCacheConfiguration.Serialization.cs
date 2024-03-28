@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorCacheConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorCacheConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorCacheConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorCacheConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<FrontDoorQuery> queryParameterStripDirective = default;
-            Optional<string> queryParameters = default;
-            Optional<DynamicCompressionEnabled> dynamicCompression = default;
-            Optional<TimeSpan> cacheDuration = default;
+            FrontDoorQuery? queryParameterStripDirective = default;
+            string queryParameters = default;
+            DynamicCompressionEnabled? dynamicCompression = default;
+            TimeSpan? cacheDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorCacheConfiguration(Optional.ToNullable(queryParameterStripDirective), queryParameters.Value, Optional.ToNullable(dynamicCompression), Optional.ToNullable(cacheDuration), serializedAdditionalRawData);
+            return new FrontDoorCacheConfiguration(queryParameterStripDirective, queryParameters, dynamicCompression, cacheDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorCacheConfiguration>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorCacheConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorCacheConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeFrontDoorCacheConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorCacheConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorCacheConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -31,12 +31,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DistributionOptions))
             {
                 writer.WritePropertyName("distributionOptions"u8);
-                writer.WriteObjectValue(DistributionOptions);
+                writer.WriteObjectValue<LinkTableRequestTargetDistributionOptions>(DistributionOptions);
             }
             if (Optional.IsDefined(StructureOptions))
             {
                 writer.WritePropertyName("structureOptions"u8);
-                writer.WriteObjectValue(StructureOptions);
+                writer.WriteObjectValue<LinkTableRequestTargetStructureOptions>(StructureOptions);
             }
             writer.WriteEndObject();
         }
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> tableName = default;
-            Optional<string> schemaName = default;
-            Optional<LinkTableRequestTargetDistributionOptions> distributionOptions = default;
-            Optional<LinkTableRequestTargetStructureOptions> structureOptions = default;
+            string tableName = default;
+            string schemaName = default;
+            LinkTableRequestTargetDistributionOptions distributionOptions = default;
+            LinkTableRequestTargetStructureOptions structureOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -82,14 +82,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkTableRequestTarget(tableName.Value, schemaName.Value, distributionOptions.Value, structureOptions.Value);
+            return new LinkTableRequestTarget(tableName, schemaName, distributionOptions, structureOptions);
         }
 
         internal partial class LinkTableRequestTargetConverter : JsonConverter<LinkTableRequestTarget>
         {
             public override void Write(Utf8JsonWriter writer, LinkTableRequestTarget model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkTableRequestTarget>(model);
             }
             public override LinkTableRequestTarget Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

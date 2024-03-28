@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -23,26 +22,26 @@ namespace Azure.AI.Translation.Text
             var format = options.Format == "W" ? ((IPersistableModel<TranslatedTextItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage);
+                writer.WriteObjectValue<DetectedLanguage>(DetectedLanguage, options);
             }
             writer.WritePropertyName("translations"u8);
             writer.WriteStartArray();
             foreach (var item in Translations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<Translation>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(SourceText))
             {
                 writer.WritePropertyName("sourceText"u8);
-                writer.WriteObjectValue(SourceText);
+                writer.WriteObjectValue<SourceText>(SourceText, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -67,7 +66,7 @@ namespace Azure.AI.Translation.Text
             var format = options.Format == "W" ? ((IPersistableModel<TranslatedTextItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,9 +81,9 @@ namespace Azure.AI.Translation.Text
             {
                 return null;
             }
-            Optional<DetectedLanguage> detectedLanguage = default;
+            DetectedLanguage detectedLanguage = default;
             IReadOnlyList<Translation> translations = default;
-            Optional<SourceText> sourceText = default;
+            SourceText sourceText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value);
+                    detectedLanguage = DetectedLanguage.DeserializeDetectedLanguage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("translations"u8))
@@ -103,7 +102,7 @@ namespace Azure.AI.Translation.Text
                     List<Translation> array = new List<Translation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Translation.DeserializeTranslation(item));
+                        array.Add(Translation.DeserializeTranslation(item, options));
                     }
                     translations = array;
                     continue;
@@ -114,7 +113,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    sourceText = SourceText.DeserializeSourceText(property.Value);
+                    sourceText = SourceText.DeserializeSourceText(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -123,7 +122,7 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TranslatedTextItem(detectedLanguage.Value, translations, sourceText.Value, serializedAdditionalRawData);
+            return new TranslatedTextItem(detectedLanguage, translations, sourceText, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TranslatedTextItem>.Write(ModelReaderWriterOptions options)
@@ -135,7 +134,7 @@ namespace Azure.AI.Translation.Text
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +150,7 @@ namespace Azure.AI.Translation.Text
                         return DeserializeTranslatedTextItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -169,7 +168,7 @@ namespace Azure.AI.Translation.Text
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TranslatedTextItem>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

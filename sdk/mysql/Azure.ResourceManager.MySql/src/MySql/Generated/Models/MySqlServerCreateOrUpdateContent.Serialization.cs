@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlServerCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlServerCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlServerCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.MySql.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<MySqlSku>(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<MySqlServerPropertiesForCreate>(Properties, options);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlServerCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlServerCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlServerCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MySqlSku> sku = default;
+            ManagedServiceIdentity identity = default;
+            MySqlSku sku = default;
             MySqlServerPropertiesForCreate properties = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    sku = MySqlSku.DeserializeMySqlSku(property.Value);
+                    sku = MySqlSku.DeserializeMySqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = MySqlServerPropertiesForCreate.DeserializeMySqlServerPropertiesForCreate(property.Value);
+                    properties = MySqlServerPropertiesForCreate.DeserializeMySqlServerPropertiesForCreate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerCreateOrUpdateContent(identity, sku.Value, properties, location, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new MySqlServerCreateOrUpdateContent(
+                identity,
+                sku,
+                properties,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlServerCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlServerCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +181,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlServerCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlServerCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlServerCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEarlyTerminationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningEarlyTerminationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningEarlyTerminationPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEarlyTerminationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningEarlyTerminationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningEarlyTerminationPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Bandit": return BanditPolicy.DeserializeBanditPolicy(element);
-                    case "MedianStopping": return MedianStoppingPolicy.DeserializeMedianStoppingPolicy(element);
-                    case "TruncationSelection": return TruncationSelectionPolicy.DeserializeTruncationSelectionPolicy(element);
+                    case "Bandit": return BanditPolicy.DeserializeBanditPolicy(element, options);
+                    case "MedianStopping": return MedianStoppingPolicy.DeserializeMedianStoppingPolicy(element, options);
+                    case "TruncationSelection": return TruncationSelectionPolicy.DeserializeTruncationSelectionPolicy(element, options);
                 }
             }
-            return UnknownEarlyTerminationPolicy.DeserializeUnknownEarlyTerminationPolicy(element);
+            return UnknownEarlyTerminationPolicy.DeserializeUnknownEarlyTerminationPolicy(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningEarlyTerminationPolicy>.Write(ModelReaderWriterOptions options)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningEarlyTerminationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningEarlyTerminationPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningEarlyTerminationPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningEarlyTerminationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningEarlyTerminationPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

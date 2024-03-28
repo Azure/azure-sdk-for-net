@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<OpenDeploymentResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenDeploymentResourceReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenDeploymentResourceReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<OpenDeploymentResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenDeploymentResourceReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenDeploymentResourceReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             IdType idType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenDeploymentResourceReference(idType, serializedAdditionalRawData, id.Value);
+            return new OpenDeploymentResourceReference(idType, serializedAdditionalRawData, id);
         }
 
         BinaryData IPersistableModel<OpenDeploymentResourceReference>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OpenDeploymentResourceReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenDeploymentResourceReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeOpenDeploymentResourceReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenDeploymentResourceReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenDeploymentResourceReference)} does not support reading '{options.Format}' format.");
             }
         }
 

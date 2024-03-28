@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportRoutePolicyInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportRoutePolicyInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportRoutePolicyInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportRoutePolicyInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportRoutePolicyInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportRoutePolicyInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> exportIPv4RoutePolicyId = default;
-            Optional<ResourceIdentifier> exportIPv6RoutePolicyId = default;
+            ResourceIdentifier exportIPv4RoutePolicyId = default;
+            ResourceIdentifier exportIPv6RoutePolicyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportRoutePolicyInformation(exportIPv4RoutePolicyId.Value, exportIPv6RoutePolicyId.Value, serializedAdditionalRawData);
+            return new ExportRoutePolicyInformation(exportIPv4RoutePolicyId, exportIPv6RoutePolicyId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportRoutePolicyInformation>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportRoutePolicyInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportRoutePolicyInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeExportRoutePolicyInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportRoutePolicyInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportRoutePolicyInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

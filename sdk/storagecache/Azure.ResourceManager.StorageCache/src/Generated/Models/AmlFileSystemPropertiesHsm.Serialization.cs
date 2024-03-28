@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemPropertiesHsm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                writer.WriteObjectValue<AmlFileSystemHsmSettings>(Settings, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ArchiveStatus))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in ArchiveStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AmlFileSystemArchive>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemPropertiesHsm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<AmlFileSystemHsmSettings> settings = default;
-            Optional<IReadOnlyList<AmlFileSystemArchive>> archiveStatus = default;
+            AmlFileSystemHsmSettings settings = default;
+            IReadOnlyList<AmlFileSystemArchive> archiveStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    settings = AmlFileSystemHsmSettings.DeserializeAmlFileSystemHsmSettings(property.Value);
+                    settings = AmlFileSystemHsmSettings.DeserializeAmlFileSystemHsmSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("archiveStatus"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<AmlFileSystemArchive> array = new List<AmlFileSystemArchive>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmlFileSystemArchive.DeserializeAmlFileSystemArchive(item));
+                        array.Add(AmlFileSystemArchive.DeserializeAmlFileSystemArchive(item, options));
                     }
                     archiveStatus = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemPropertiesHsm(settings.Value, Optional.ToList(archiveStatus), serializedAdditionalRawData);
+            return new AmlFileSystemPropertiesHsm(settings, archiveStatus ?? new ChangeTrackingList<AmlFileSystemArchive>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemPropertiesHsm>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeAmlFileSystemPropertiesHsm(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support reading '{options.Format}' format.");
             }
         }
 

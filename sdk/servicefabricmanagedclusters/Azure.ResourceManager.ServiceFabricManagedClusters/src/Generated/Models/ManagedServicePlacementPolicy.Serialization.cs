@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicePlacementPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicePlacementPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicePlacementPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicePlacementPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicePlacementPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicePlacementPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "InvalidDomain": return ServicePlacementInvalidDomainPolicy.DeserializeServicePlacementInvalidDomainPolicy(element);
-                    case "NonPartiallyPlaceService": return ServicePlacementNonPartiallyPlaceServicePolicy.DeserializeServicePlacementNonPartiallyPlaceServicePolicy(element);
-                    case "PreferredPrimaryDomain": return ServicePlacementPreferPrimaryDomainPolicy.DeserializeServicePlacementPreferPrimaryDomainPolicy(element);
-                    case "RequiredDomain": return ServicePlacementRequiredDomainPolicy.DeserializeServicePlacementRequiredDomainPolicy(element);
-                    case "RequiredDomainDistribution": return ServicePlacementRequireDomainDistributionPolicy.DeserializeServicePlacementRequireDomainDistributionPolicy(element);
+                    case "InvalidDomain": return ServicePlacementInvalidDomainPolicy.DeserializeServicePlacementInvalidDomainPolicy(element, options);
+                    case "NonPartiallyPlaceService": return ServicePlacementNonPartiallyPlaceServicePolicy.DeserializeServicePlacementNonPartiallyPlaceServicePolicy(element, options);
+                    case "PreferredPrimaryDomain": return ServicePlacementPreferPrimaryDomainPolicy.DeserializeServicePlacementPreferPrimaryDomainPolicy(element, options);
+                    case "RequiredDomain": return ServicePlacementRequiredDomainPolicy.DeserializeServicePlacementRequiredDomainPolicy(element, options);
+                    case "RequiredDomainDistribution": return ServicePlacementRequireDomainDistributionPolicy.DeserializeServicePlacementRequireDomainDistributionPolicy(element, options);
                 }
             }
-            return UnknownServicePlacementPolicy.DeserializeUnknownServicePlacementPolicy(element);
+            return UnknownServicePlacementPolicy.DeserializeUnknownServicePlacementPolicy(element, options);
         }
 
         BinaryData IPersistableModel<ManagedServicePlacementPolicy>.Write(ModelReaderWriterOptions options)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicePlacementPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicePlacementPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedServicePlacementPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicePlacementPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicePlacementPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartnerUpdateTopicInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerUpdateTopicInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerUpdateTopicInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
-                writer.WriteObjectValue(EventTypeInfo);
+                writer.WriteObjectValue<PartnerTopicEventTypeInfo>(EventTypeInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartnerUpdateTopicInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerUpdateTopicInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerUpdateTopicInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
+            PartnerTopicEventTypeInfo eventTypeInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property.Value);
+                    eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerUpdateTopicInfo(eventTypeInfo.Value, serializedAdditionalRawData);
+            return new PartnerUpdateTopicInfo(eventTypeInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerUpdateTopicInfo>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PartnerUpdateTopicInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerUpdateTopicInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializePartnerUpdateTopicInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartnerUpdateTopicInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerUpdateTopicInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

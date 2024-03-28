@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageReprotectContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageReprotectContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskExclusionContent))
             {
                 writer.WritePropertyName("diskExclusionInput"u8);
-                writer.WriteObjectValue(DiskExclusionContent);
+                writer.WriteObjectValue<InMageDiskExclusionContent>(DiskExclusionContent, options);
             }
             writer.WritePropertyName("profileId"u8);
             writer.WriteStringValue(ProfileId);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageReprotectContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageReprotectContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string masterTargetId = default;
             Guid processServerId = default;
             string retentionDrive = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> datastoreName = default;
-            Optional<InMageDiskExclusionContent> diskExclusionContent = default;
+            string runAsAccountId = default;
+            string datastoreName = default;
+            InMageDiskExclusionContent diskExclusionContent = default;
             string profileId = default;
-            Optional<IList<string>> disksToInclude = default;
+            IList<string> disksToInclude = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskExclusionContent = InMageDiskExclusionContent.DeserializeInMageDiskExclusionContent(property.Value);
+                    diskExclusionContent = InMageDiskExclusionContent.DeserializeInMageDiskExclusionContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("profileId"u8))
@@ -176,7 +176,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageReprotectContent(instanceType, serializedAdditionalRawData, masterTargetId, processServerId, retentionDrive, runAsAccountId.Value, datastoreName.Value, diskExclusionContent.Value, profileId, Optional.ToList(disksToInclude));
+            return new InMageReprotectContent(
+                instanceType,
+                serializedAdditionalRawData,
+                masterTargetId,
+                processServerId,
+                retentionDrive,
+                runAsAccountId,
+                datastoreName,
+                diskExclusionContent,
+                profileId,
+                disksToInclude ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<InMageReprotectContent>.Write(ModelReaderWriterOptions options)
@@ -188,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageReprotectContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageReprotectContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +214,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageReprotectContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageReprotectContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageReprotectContent)} does not support reading '{options.Format}' format.");
             }
         }
 

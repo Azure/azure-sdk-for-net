@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestSchemeMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestSchemeMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestSchemeMatchCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestSchemeMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestSchemeMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestSchemeMatchCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             RequestSchemeMatchConditionType typeName = default;
             RequestSchemeOperator @operator = default;
-            Optional<bool> negateCondition = default;
-            Optional<IList<PreTransformCategory>> transforms = default;
-            Optional<IList<RequestSchemeMatchConditionMatchValue>> matchValues = default;
+            bool? negateCondition = default;
+            IList<PreTransformCategory> transforms = default;
+            IList<RequestSchemeMatchConditionMatchValue> matchValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestSchemeMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(transforms), Optional.ToList(matchValues), serializedAdditionalRawData);
+            return new RequestSchemeMatchCondition(
+                typeName,
+                @operator,
+                negateCondition,
+                transforms ?? new ChangeTrackingList<PreTransformCategory>(),
+                matchValues ?? new ChangeTrackingList<RequestSchemeMatchConditionMatchValue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestSchemeMatchCondition>.Write(ModelReaderWriterOptions options)
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RequestSchemeMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestSchemeMatchCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +189,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeRequestSchemeMatchCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequestSchemeMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestSchemeMatchCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

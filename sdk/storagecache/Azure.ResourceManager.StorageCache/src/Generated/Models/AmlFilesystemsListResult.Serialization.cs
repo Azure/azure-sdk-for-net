@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFilesystemsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFilesystemsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFilesystemsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AmlFileSystemData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFilesystemsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFilesystemsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFilesystemsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<AmlFileSystemData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<AmlFileSystemData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<AmlFileSystemData> array = new List<AmlFileSystemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmlFileSystemData.DeserializeAmlFileSystemData(item));
+                        array.Add(AmlFileSystemData.DeserializeAmlFileSystemData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFilesystemsListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new AmlFilesystemsListResult(nextLink, value ?? new ChangeTrackingList<AmlFileSystemData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFilesystemsListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFilesystemsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFilesystemsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeAmlFilesystemsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFilesystemsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFilesystemsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

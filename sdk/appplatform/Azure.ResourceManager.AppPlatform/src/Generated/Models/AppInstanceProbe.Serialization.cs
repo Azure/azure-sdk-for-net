@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInstanceProbe>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInstanceProbe)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInstanceProbe)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ProbeAction))
             {
                 writer.WritePropertyName("probeAction"u8);
-                writer.WriteObjectValue(ProbeAction);
+                writer.WriteObjectValue<AppInstanceProbeAction>(ProbeAction, options);
             }
             writer.WritePropertyName("disableProbe"u8);
             writer.WriteBooleanValue(IsProbeDisabled);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInstanceProbe>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInstanceProbe)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInstanceProbe)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppInstanceProbeAction> probeAction = default;
+            AppInstanceProbeAction probeAction = default;
             bool disableProbe = default;
-            Optional<int> initialDelaySeconds = default;
-            Optional<int> periodSeconds = default;
-            Optional<int> timeoutSeconds = default;
-            Optional<int> failureThreshold = default;
-            Optional<int> successThreshold = default;
+            int? initialDelaySeconds = default;
+            int? periodSeconds = default;
+            int? timeoutSeconds = default;
+            int? failureThreshold = default;
+            int? successThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    probeAction = AppInstanceProbeAction.DeserializeAppInstanceProbeAction(property.Value);
+                    probeAction = AppInstanceProbeAction.DeserializeAppInstanceProbeAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("disableProbe"u8))
@@ -172,7 +172,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppInstanceProbe(probeAction.Value, disableProbe, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(timeoutSeconds), Optional.ToNullable(failureThreshold), Optional.ToNullable(successThreshold), serializedAdditionalRawData);
+            return new AppInstanceProbe(
+                probeAction,
+                disableProbe,
+                initialDelaySeconds,
+                periodSeconds,
+                timeoutSeconds,
+                failureThreshold,
+                successThreshold,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppInstanceProbe>.Write(ModelReaderWriterOptions options)
@@ -184,7 +192,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppInstanceProbe)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInstanceProbe)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +208,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppInstanceProbe(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppInstanceProbe)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInstanceProbe)} does not support reading '{options.Format}' format.");
             }
         }
 

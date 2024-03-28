@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyMetadataCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyMetadataCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyMetadataCollection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SlimPolicyMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyMetadataCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyMetadataCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyMetadataCollection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SlimPolicyMetadata>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SlimPolicyMetadata> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<SlimPolicyMetadata> array = new List<SlimPolicyMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SlimPolicyMetadata.DeserializeSlimPolicyMetadata(item));
+                        array.Add(SlimPolicyMetadata.DeserializeSlimPolicyMetadata(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyMetadataCollection(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PolicyMetadataCollection(value ?? new ChangeTrackingList<SlimPolicyMetadata>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyMetadataCollection>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyMetadataCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyMetadataCollection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicyMetadataCollection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyMetadataCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyMetadataCollection)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
-                writer.WriteObjectValue(DailySchedule);
+                writer.WriteObjectValue<DailyRetentionSchedule>(DailySchedule, options);
             }
             if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
-                writer.WriteObjectValue(WeeklySchedule);
+                writer.WriteObjectValue<WeeklyRetentionSchedule>(WeeklySchedule, options);
             }
             if (Optional.IsDefined(MonthlySchedule))
             {
                 writer.WritePropertyName("monthlySchedule"u8);
-                writer.WriteObjectValue(MonthlySchedule);
+                writer.WriteObjectValue<MonthlyRetentionSchedule>(MonthlySchedule, options);
             }
             if (Optional.IsDefined(YearlySchedule))
             {
                 writer.WritePropertyName("yearlySchedule"u8);
-                writer.WriteObjectValue(YearlySchedule);
+                writer.WriteObjectValue<YearlyRetentionSchedule>(YearlySchedule, options);
             }
             writer.WritePropertyName("retentionPolicyType"u8);
             writer.WriteStringValue(RetentionPolicyType);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DailyRetentionSchedule> dailySchedule = default;
-            Optional<WeeklyRetentionSchedule> weeklySchedule = default;
-            Optional<MonthlyRetentionSchedule> monthlySchedule = default;
-            Optional<YearlyRetentionSchedule> yearlySchedule = default;
+            DailyRetentionSchedule dailySchedule = default;
+            WeeklyRetentionSchedule weeklySchedule = default;
+            MonthlyRetentionSchedule monthlySchedule = default;
+            YearlyRetentionSchedule yearlySchedule = default;
             string retentionPolicyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    dailySchedule = DailyRetentionSchedule.DeserializeDailyRetentionSchedule(property.Value);
+                    dailySchedule = DailyRetentionSchedule.DeserializeDailyRetentionSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("weeklySchedule"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    weeklySchedule = WeeklyRetentionSchedule.DeserializeWeeklyRetentionSchedule(property.Value);
+                    weeklySchedule = WeeklyRetentionSchedule.DeserializeWeeklyRetentionSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("monthlySchedule"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    monthlySchedule = MonthlyRetentionSchedule.DeserializeMonthlyRetentionSchedule(property.Value);
+                    monthlySchedule = MonthlyRetentionSchedule.DeserializeMonthlyRetentionSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("yearlySchedule"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    yearlySchedule = YearlyRetentionSchedule.DeserializeYearlyRetentionSchedule(property.Value);
+                    yearlySchedule = YearlyRetentionSchedule.DeserializeYearlyRetentionSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicyType"u8))
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionPolicy(retentionPolicyType, serializedAdditionalRawData, dailySchedule.Value, weeklySchedule.Value, monthlySchedule.Value, yearlySchedule.Value);
+            return new LongTermRetentionPolicy(
+                retentionPolicyType,
+                serializedAdditionalRawData,
+                dailySchedule,
+                weeklySchedule,
+                monthlySchedule,
+                yearlySchedule);
         }
 
         BinaryData IPersistableModel<LongTermRetentionPolicy>.Write(ModelReaderWriterOptions options)
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeLongTermRetentionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LongTermRetentionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

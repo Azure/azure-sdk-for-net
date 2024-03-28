@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTagDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTagDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<NetworkingRuleAction> action = default;
-            Optional<IReadOnlyList<string>> addressPrefixes = default;
-            Optional<string> portRanges = default;
-            Optional<string> protocol = default;
-            Optional<string> serviceTag = default;
+            NetworkingRuleAction? action = default;
+            IReadOnlyList<string> addressPrefixes = default;
+            string portRanges = default;
+            string protocol = default;
+            string serviceTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagDestination(Optional.ToNullable(action), Optional.ToList(addressPrefixes), portRanges.Value, protocol.Value, serviceTag.Value, serializedAdditionalRawData);
+            return new ServiceTagDestination(
+                action,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                portRanges,
+                protocol,
+                serviceTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagDestination>.Write(ModelReaderWriterOptions options)
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +181,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeServiceTagDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTagDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

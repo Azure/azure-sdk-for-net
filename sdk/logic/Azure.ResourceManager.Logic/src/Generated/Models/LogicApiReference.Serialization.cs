@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue(IntegrationServiceEnvironment);
+                writer.WriteObjectValue<LogicResourceReference>(IntegrationServiceEnvironment, options);
             }
             if (Optional.IsDefined(Id))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,16 +121,16 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> iconUri = default;
-            Optional<BinaryData> swagger = default;
-            Optional<string> brandColor = default;
-            Optional<LogicApiTier> category = default;
-            Optional<LogicResourceReference> integrationServiceEnvironment = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            string displayName = default;
+            string description = default;
+            Uri iconUri = default;
+            BinaryData swagger = default;
+            string brandColor = default;
+            LogicApiTier? category = default;
+            LogicResourceReference integrationServiceEnvironment = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    integrationServiceEnvironment = DeserializeLogicResourceReference(property.Value);
+                    integrationServiceEnvironment = DeserializeLogicResourceReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -215,7 +215,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiReference(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, displayName.Value, description.Value, iconUri.Value, swagger.Value, brandColor.Value, Optional.ToNullable(category), integrationServiceEnvironment.Value);
+            return new LogicApiReference(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                displayName,
+                description,
+                iconUri,
+                swagger,
+                brandColor,
+                category,
+                integrationServiceEnvironment);
         }
 
         BinaryData IPersistableModel<LogicApiReference>.Write(ModelReaderWriterOptions options)
@@ -227,7 +238,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +254,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicApiReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiReference)} does not support reading '{options.Format}' format.");
             }
         }
 

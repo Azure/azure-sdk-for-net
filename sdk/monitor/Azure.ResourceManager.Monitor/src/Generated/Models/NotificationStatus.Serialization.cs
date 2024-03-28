@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
-                writer.WriteObjectValue(Context);
+                writer.WriteObjectValue<NotificationContext>(Context, options);
             }
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in ActionDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NotificationActionDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<NotificationContext> context = default;
+            NotificationContext context = default;
             string state = default;
-            Optional<DateTimeOffset> completedTime = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<IReadOnlyList<NotificationActionDetail>> actionDetails = default;
+            DateTimeOffset? completedTime = default;
+            DateTimeOffset? createdTime = default;
+            IReadOnlyList<NotificationActionDetail> actionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    context = NotificationContext.DeserializeNotificationContext(property.Value);
+                    context = NotificationContext.DeserializeNotificationContext(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<NotificationActionDetail> array = new List<NotificationActionDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationActionDetail.DeserializeNotificationActionDetail(item));
+                        array.Add(NotificationActionDetail.DeserializeNotificationActionDetail(item, options));
                     }
                     actionDetails = array;
                     continue;
@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationStatus(context.Value, state, Optional.ToNullable(completedTime), Optional.ToNullable(createdTime), Optional.ToList(actionDetails), serializedAdditionalRawData);
+            return new NotificationStatus(
+                context,
+                state,
+                completedTime,
+                createdTime,
+                actionDetails ?? new ChangeTrackingList<NotificationActionDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationStatus>.Write(ModelReaderWriterOptions options)
@@ -164,7 +170,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +186,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeNotificationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
+            string code = default;
+            string message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -33,7 +32,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new ErrorData(code.Value, message.Value);
+            return new ErrorData(code, message);
         }
     }
 }

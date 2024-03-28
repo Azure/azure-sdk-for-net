@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MonitorMetric>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<int> cost = default;
+            int? cost = default;
             string timespan = default;
-            Optional<TimeSpan> interval = default;
-            Optional<string> @namespace = default;
-            Optional<string> resourceregion = default;
+            TimeSpan? interval = default;
+            string @namespace = default;
+            string resourceregion = default;
             IReadOnlyList<MonitorMetric> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetric> array = new List<MonitorMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetric.DeserializeMonitorMetric(item));
+                        array.Add(MonitorMetric.DeserializeMonitorMetric(item, options));
                     }
                     value = array;
                     continue;
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorResponse(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value, serializedAdditionalRawData);
+            return new MonitorResponse(
+                cost,
+                timespan,
+                interval,
+                @namespace,
+                resourceregion,
+                value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorResponse>.Write(ModelReaderWriterOptions options)
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

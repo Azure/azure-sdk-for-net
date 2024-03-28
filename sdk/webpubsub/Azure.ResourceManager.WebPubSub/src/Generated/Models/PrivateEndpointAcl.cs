@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -27,10 +26,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointAcl"/>. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the private endpoint connection. </param>
-        internal PrivateEndpointAcl(IList<WebPubSubRequestType> allow, IList<WebPubSubRequestType> deny, string name) : base(allow, deny)
+        internal PrivateEndpointAcl(IList<WebPubSubRequestType> allow, IList<WebPubSubRequestType> deny, IDictionary<string, BinaryData> serializedAdditionalRawData, string name) : base(allow, deny, serializedAdditionalRawData)
         {
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointAcl"/> for deserialization. </summary>
+        internal PrivateEndpointAcl()
+        {
         }
 
         /// <summary> Name of the private endpoint connection. </summary>

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsResolverListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsResolverListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsResolverListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DnsResolverData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsResolverListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsResolverListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsResolverListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DnsResolverData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DnsResolverData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     List<DnsResolverData> array = new List<DnsResolverData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsResolverData.DeserializeDnsResolverData(item));
+                        array.Add(DnsResolverData.DeserializeDnsResolverData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsResolverListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DnsResolverListResult(value ?? new ChangeTrackingList<DnsResolverData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsResolverListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsResolverListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsResolverListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         return DeserializeDnsResolverListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsResolverListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsResolverListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

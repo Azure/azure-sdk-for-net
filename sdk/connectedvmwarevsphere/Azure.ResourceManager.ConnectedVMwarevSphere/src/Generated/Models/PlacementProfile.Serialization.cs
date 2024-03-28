@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> resourcePoolId = default;
-            Optional<string> clusterId = default;
-            Optional<string> hostId = default;
-            Optional<string> datastoreId = default;
+            string resourcePoolId = default;
+            string clusterId = default;
+            string hostId = default;
+            string datastoreId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlacementProfile(resourcePoolId.Value, clusterId.Value, hostId.Value, datastoreId.Value, serializedAdditionalRawData);
+            return new PlacementProfile(resourcePoolId, clusterId, hostId, datastoreId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlacementProfile>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializePlacementProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

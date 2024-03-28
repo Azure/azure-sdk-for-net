@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubTestRouteResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubTestRouteResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubTestRouteResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                writer.WriteObjectValue<IotHubTestRouteResultDetails>(Details, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubTestRouteResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubTestRouteResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubTestRouteResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IotHubTestResultStatus> result = default;
-            Optional<IotHubTestRouteResultDetails> details = default;
+            IotHubTestResultStatus? result = default;
+            IotHubTestRouteResultDetails details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    details = IotHubTestRouteResultDetails.DeserializeIotHubTestRouteResultDetails(property.Value);
+                    details = IotHubTestRouteResultDetails.DeserializeIotHubTestRouteResultDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubTestRouteResult(Optional.ToNullable(result), details.Value, serializedAdditionalRawData);
+            return new IotHubTestRouteResult(result, details, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubTestRouteResult>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubTestRouteResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubTestRouteResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubTestRouteResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubTestRouteResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubTestRouteResult)} does not support reading '{options.Format}' format.");
             }
         }
 

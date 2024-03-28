@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<TerminalServerPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TerminalServerPatchableProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TerminalServerPatchableProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<TerminalServerPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TerminalServerPatchableProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TerminalServerPatchableProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> serialNumber = default;
+            string username = default;
+            string password = default;
+            string serialNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TerminalServerPatchableProperties(username.Value, password.Value, serialNumber.Value, serializedAdditionalRawData);
+            return new TerminalServerPatchableProperties(username, password, serialNumber, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TerminalServerPatchableProperties>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TerminalServerPatchableProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TerminalServerPatchableProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeTerminalServerPatchableProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TerminalServerPatchableProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TerminalServerPatchableProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

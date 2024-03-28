@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,7 +22,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<UnivariateChangePointDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartArray();
             foreach (var item in Series)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<TimeSeriesPoint>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("granularity"u8);
@@ -79,7 +78,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<UnivariateChangePointDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,10 +95,10 @@ namespace Azure.AI.AnomalyDetector
             }
             IList<TimeSeriesPoint> series = default;
             TimeGranularity granularity = default;
-            Optional<int> customInterval = default;
-            Optional<int> period = default;
-            Optional<int> stableTrendWindow = default;
-            Optional<float> threshold = default;
+            int? customInterval = default;
+            int? period = default;
+            int? stableTrendWindow = default;
+            float? threshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +108,7 @@ namespace Azure.AI.AnomalyDetector
                     List<TimeSeriesPoint> array = new List<TimeSeriesPoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesPoint.DeserializeTimeSeriesPoint(item));
+                        array.Add(TimeSeriesPoint.DeserializeTimeSeriesPoint(item, options));
                     }
                     series = array;
                     continue;
@@ -161,7 +160,14 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnivariateChangePointDetectionOptions(series, granularity, Optional.ToNullable(customInterval), Optional.ToNullable(period), Optional.ToNullable(stableTrendWindow), Optional.ToNullable(threshold), serializedAdditionalRawData);
+            return new UnivariateChangePointDetectionOptions(
+                series,
+                granularity,
+                customInterval,
+                period,
+                stableTrendWindow,
+                threshold,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnivariateChangePointDetectionOptions>.Write(ModelReaderWriterOptions options)
@@ -173,7 +179,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +195,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeUnivariateChangePointDetectionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -207,7 +213,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<UnivariateChangePointDetectionOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

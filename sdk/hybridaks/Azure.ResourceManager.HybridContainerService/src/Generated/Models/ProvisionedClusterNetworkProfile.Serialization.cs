@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(LoadBalancerProfile))
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
-                writer.WriteObjectValue(LoadBalancerProfile);
+                writer.WriteObjectValue<ProvisionedClusterLoadBalancerProfile>(LoadBalancerProfile, options);
             }
             if (Optional.IsDefined(NetworkPolicy))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<ProvisionedClusterLoadBalancerProfile> loadBalancerProfile = default;
-            Optional<ProvisionedClusterNetworkPolicy> networkPolicy = default;
-            Optional<string> podCidr = default;
+            ProvisionedClusterLoadBalancerProfile loadBalancerProfile = default;
+            ProvisionedClusterNetworkPolicy? networkPolicy = default;
+            string podCidr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    loadBalancerProfile = ProvisionedClusterLoadBalancerProfile.DeserializeProvisionedClusterLoadBalancerProfile(property.Value);
+                    loadBalancerProfile = ProvisionedClusterLoadBalancerProfile.DeserializeProvisionedClusterLoadBalancerProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkPolicy"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterNetworkProfile(loadBalancerProfile.Value, Optional.ToNullable(networkPolicy), podCidr.Value, serializedAdditionalRawData);
+            return new ProvisionedClusterNetworkProfile(loadBalancerProfile, networkPolicy, podCidr, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterNetworkProfile>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeProvisionedClusterNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

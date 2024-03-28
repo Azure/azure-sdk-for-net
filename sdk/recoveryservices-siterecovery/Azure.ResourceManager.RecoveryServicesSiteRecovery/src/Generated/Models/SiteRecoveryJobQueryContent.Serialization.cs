@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
-            Optional<ResourceIdentifier> fabricId = default;
-            Optional<string> affectedObjectTypes = default;
-            Optional<string> jobStatus = default;
-            Optional<ExportJobOutputSerializationType> jobOutputType = default;
-            Optional<string> jobName = default;
-            Optional<double> timezoneOffset = default;
+            string startTime = default;
+            string endTime = default;
+            ResourceIdentifier fabricId = default;
+            string affectedObjectTypes = default;
+            string jobStatus = default;
+            ExportJobOutputSerializationType? jobOutputType = default;
+            string jobName = default;
+            double? timezoneOffset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobQueryContent(startTime.Value, endTime.Value, fabricId.Value, affectedObjectTypes.Value, jobStatus.Value, Optional.ToNullable(jobOutputType), jobName.Value, Optional.ToNullable(timezoneOffset), serializedAdditionalRawData);
+            return new SiteRecoveryJobQueryContent(
+                startTime,
+                endTime,
+                fabricId,
+                affectedObjectTypes,
+                jobStatus,
+                jobOutputType,
+                jobName,
+                timezoneOffset,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobQueryContent>.Write(ModelReaderWriterOptions options)
@@ -186,7 +195,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryJobQueryContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support reading '{options.Format}' format.");
             }
         }
 

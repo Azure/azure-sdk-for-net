@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobFunctionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,19 +41,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingJobFunctionInput>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue(Output);
+                writer.WriteObjectValue<StreamingJobFunctionOutput>(Output, options);
             }
             if (Optional.IsDefined(Binding))
             {
                 writer.WritePropertyName("binding"u8);
-                writer.WriteObjectValue(Binding);
+                writer.WriteObjectValue<StreamingJobFunctionBinding>(Binding, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -80,11 +79,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobFunctionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFunctionProperties(document.RootElement, options);
+            return DeserializeStreamingJobFunctionProperties(document.RootElement, options);
         }
 
         internal static UnknownFunctionProperties DeserializeUnknownFunctionProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -96,10 +95,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<ETag> etag = default;
-            Optional<IList<StreamingJobFunctionInput>> inputs = default;
-            Optional<StreamingJobFunctionOutput> output = default;
-            Optional<StreamingJobFunctionBinding> binding = default;
+            ETag? etag = default;
+            IList<StreamingJobFunctionInput> inputs = default;
+            StreamingJobFunctionOutput output = default;
+            StreamingJobFunctionBinding binding = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<StreamingJobFunctionInput> array = new List<StreamingJobFunctionInput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item));
+                                array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item, options));
                             }
                             inputs = array;
                             continue;
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property0.Value);
+                            output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("binding"u8))
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            binding = StreamingJobFunctionBinding.DeserializeStreamingJobFunctionBinding(property0.Value);
+                            binding = StreamingJobFunctionBinding.DeserializeStreamingJobFunctionBinding(property0.Value, options);
                             continue;
                         }
                     }
@@ -168,7 +167,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownFunctionProperties(type, Optional.ToNullable(etag), Optional.ToList(inputs), output.Value, binding.Value, serializedAdditionalRawData);
+            return new UnknownFunctionProperties(
+                type,
+                etag,
+                inputs ?? new ChangeTrackingList<StreamingJobFunctionInput>(),
+                output,
+                binding,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobFunctionProperties>.Write(ModelReaderWriterOptions options)
@@ -180,7 +185,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,10 +198,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFunctionProperties(document.RootElement, options);
+                        return DeserializeStreamingJobFunctionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

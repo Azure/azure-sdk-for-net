@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MpiDistributionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MpiDistributionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MpiDistributionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MpiDistributionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MpiDistributionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MpiDistributionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int?> processCountPerInstance = default;
+            int? processCountPerInstance = default;
             DistributionType distributionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MpiDistributionConfiguration(distributionType, serializedAdditionalRawData, Optional.ToNullable(processCountPerInstance));
+            return new MpiDistributionConfiguration(distributionType, serializedAdditionalRawData, processCountPerInstance);
         }
 
         BinaryData IPersistableModel<MpiDistributionConfiguration>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MpiDistributionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MpiDistributionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMpiDistributionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MpiDistributionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MpiDistributionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertRuleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.Azure.Management.Insights.Models.RuleEmailAction": return RuleEmailAction.DeserializeRuleEmailAction(element);
-                    case "Microsoft.Azure.Management.Insights.Models.RuleWebhookAction": return RuleWebhookAction.DeserializeRuleWebhookAction(element);
+                    case "Microsoft.Azure.Management.Insights.Models.RuleEmailAction": return RuleEmailAction.DeserializeRuleEmailAction(element, options);
+                    case "Microsoft.Azure.Management.Insights.Models.RuleWebhookAction": return RuleWebhookAction.DeserializeRuleWebhookAction(element, options);
                 }
             }
-            return UnknownRuleAction.DeserializeUnknownRuleAction(element);
+            return UnknownRuleAction.DeserializeUnknownRuleAction(element, options);
         }
 
         BinaryData IPersistableModel<AlertRuleAction>.Write(ModelReaderWriterOptions options)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeAlertRuleAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleAction)} does not support reading '{options.Format}' format.");
             }
         }
 

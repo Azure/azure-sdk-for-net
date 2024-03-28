@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoLanguageExtension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoLanguageExtension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<KustoLanguageExtensionName> languageExtensionName = default;
-            Optional<KustoLanguageExtensionImageName> languageExtensionImageName = default;
-            Optional<string> languageExtensionCustomImageName = default;
+            KustoLanguageExtensionName? languageExtensionName = default;
+            KustoLanguageExtensionImageName? languageExtensionImageName = default;
+            string languageExtensionCustomImageName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoLanguageExtension(Optional.ToNullable(languageExtensionName), Optional.ToNullable(languageExtensionImageName), languageExtensionCustomImageName.Value, serializedAdditionalRawData);
+            return new KustoLanguageExtension(languageExtensionName, languageExtensionImageName, languageExtensionCustomImageName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoLanguageExtension>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeKustoLanguageExtension(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,14 +22,14 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ModelState))
             {
                 writer.WritePropertyName("modelState"u8);
-                writer.WriteObjectValue(ModelState);
+                writer.WriteObjectValue<ModelState>(ModelState, options);
             }
             if (Optional.IsCollectionDefined(VariableStates))
             {
@@ -38,7 +37,7 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteStartArray();
                 foreach (var item in VariableStates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VariableState>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            Optional<ModelState> modelState = default;
-            Optional<IList<VariableState>> variableStates = default;
+            ModelState modelState = default;
+            IList<VariableState> variableStates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +91,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    modelState = ModelState.DeserializeModelState(property.Value);
+                    modelState = ModelState.DeserializeModelState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("variableStates"u8))
@@ -104,7 +103,7 @@ namespace Azure.AI.AnomalyDetector
                     List<VariableState> array = new List<VariableState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VariableState.DeserializeVariableState(item));
+                        array.Add(VariableState.DeserializeVariableState(item, options));
                     }
                     variableStates = array;
                     continue;
@@ -115,7 +114,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticsInfo(modelState.Value, Optional.ToList(variableStates), serializedAdditionalRawData);
+            return new DiagnosticsInfo(modelState, variableStates ?? new ChangeTrackingList<VariableState>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticsInfo>.Write(ModelReaderWriterOptions options)
@@ -127,7 +126,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +142,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeDiagnosticsInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -161,7 +160,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DiagnosticsInfo>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

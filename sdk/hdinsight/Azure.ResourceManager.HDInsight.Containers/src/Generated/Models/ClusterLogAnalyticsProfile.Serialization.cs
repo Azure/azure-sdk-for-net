@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterLogAnalyticsProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterLogAnalyticsProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterLogAnalyticsProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(ApplicationLogs))
             {
                 writer.WritePropertyName("applicationLogs"u8);
-                writer.WriteObjectValue(ApplicationLogs);
+                writer.WriteObjectValue<ClusterLogAnalyticsApplicationLogs>(ApplicationLogs, options);
             }
             if (Optional.IsDefined(IsMetricsEnabled))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterLogAnalyticsProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterLogAnalyticsProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterLogAnalyticsProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             bool enabled = default;
-            Optional<ClusterLogAnalyticsApplicationLogs> applicationLogs = default;
-            Optional<bool> metricsEnabled = default;
+            ClusterLogAnalyticsApplicationLogs applicationLogs = default;
+            bool? metricsEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    applicationLogs = ClusterLogAnalyticsApplicationLogs.DeserializeClusterLogAnalyticsApplicationLogs(property.Value);
+                    applicationLogs = ClusterLogAnalyticsApplicationLogs.DeserializeClusterLogAnalyticsApplicationLogs(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricsEnabled"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterLogAnalyticsProfile(enabled, applicationLogs.Value, Optional.ToNullable(metricsEnabled), serializedAdditionalRawData);
+            return new ClusterLogAnalyticsProfile(enabled, applicationLogs, metricsEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterLogAnalyticsProfile>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterLogAnalyticsProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterLogAnalyticsProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeClusterLogAnalyticsProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterLogAnalyticsProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterLogAnalyticsProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

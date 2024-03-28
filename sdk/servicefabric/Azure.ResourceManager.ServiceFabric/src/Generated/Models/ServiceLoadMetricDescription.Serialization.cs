@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceLoadMetricDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceLoadMetricDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceLoadMetricDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceLoadMetricDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceLoadMetricDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceLoadMetricDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             string name = default;
-            Optional<ServiceLoadMetricWeight> weight = default;
-            Optional<int> primaryDefaultLoad = default;
-            Optional<int> secondaryDefaultLoad = default;
-            Optional<int> defaultLoad = default;
+            ServiceLoadMetricWeight? weight = default;
+            int? primaryDefaultLoad = default;
+            int? secondaryDefaultLoad = default;
+            int? defaultLoad = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceLoadMetricDescription(name, Optional.ToNullable(weight), Optional.ToNullable(primaryDefaultLoad), Optional.ToNullable(secondaryDefaultLoad), Optional.ToNullable(defaultLoad), serializedAdditionalRawData);
+            return new ServiceLoadMetricDescription(
+                name,
+                weight,
+                primaryDefaultLoad,
+                secondaryDefaultLoad,
+                defaultLoad,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceLoadMetricDescription>.Write(ModelReaderWriterOptions options)
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceLoadMetricDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceLoadMetricDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +176,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeServiceLoadMetricDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceLoadMetricDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceLoadMetricDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeRelocationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeRelocationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeRelocationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeRelocationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeRelocationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeRelocationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<bool> relocationRequested = default;
-            Optional<bool> readyToBeFinalized = default;
+            bool? relocationRequested = default;
+            bool? readyToBeFinalized = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeRelocationProperties(Optional.ToNullable(relocationRequested), Optional.ToNullable(readyToBeFinalized), serializedAdditionalRawData);
+            return new NetAppVolumeRelocationProperties(relocationRequested, readyToBeFinalized, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeRelocationProperties>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeRelocationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeRelocationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumeRelocationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeRelocationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeRelocationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

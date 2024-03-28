@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<FacebookChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Pages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FacebookPage>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<FacebookChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> verifyToken = default;
-            Optional<IList<FacebookPage>> pages = default;
+            string verifyToken = default;
+            IList<FacebookPage> pages = default;
             string appId = default;
-            Optional<string> appSecret = default;
-            Optional<Uri> callbackUrl = default;
+            string appSecret = default;
+            Uri callbackUrl = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<FacebookPage> array = new List<FacebookPage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FacebookPage.DeserializeFacebookPage(item));
+                        array.Add(FacebookPage.DeserializeFacebookPage(item, options));
                     }
                     pages = array;
                     continue;
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FacebookChannelProperties(verifyToken.Value, Optional.ToList(pages), appId, appSecret.Value, callbackUrl.Value, isEnabled, serializedAdditionalRawData);
+            return new FacebookChannelProperties(
+                verifyToken,
+                pages ?? new ChangeTrackingList<FacebookPage>(),
+                appId,
+                appSecret,
+                callbackUrl,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FacebookChannelProperties>.Write(ModelReaderWriterOptions options)
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeFacebookChannelProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

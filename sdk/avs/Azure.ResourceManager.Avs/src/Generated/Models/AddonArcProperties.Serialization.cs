@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AddonArcProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddonArcProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AddonArcProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AddonArcProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddonArcProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AddonArcProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> vCenter = default;
+            string vCenter = default;
             AddonType addonType = default;
-            Optional<AddonProvisioningState> provisioningState = default;
+            AddonProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddonArcProperties(addonType, Optional.ToNullable(provisioningState), serializedAdditionalRawData, vCenter.Value);
+            return new AddonArcProperties(addonType, provisioningState, serializedAdditionalRawData, vCenter);
         }
 
         BinaryData IPersistableModel<AddonArcProperties>.Write(ModelReaderWriterOptions options)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AddonArcProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddonArcProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeAddonArcProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AddonArcProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddonArcProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

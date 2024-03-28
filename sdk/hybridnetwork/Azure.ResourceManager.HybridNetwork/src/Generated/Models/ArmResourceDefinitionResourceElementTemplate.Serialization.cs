@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmResourceDefinitionResourceElementTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmResourceDefinitionResourceElementTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmResourceDefinitionResourceElementTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ArtifactProfile))
             {
                 writer.WritePropertyName("artifactProfile"u8);
-                writer.WriteObjectValue(ArtifactProfile);
+                writer.WriteObjectValue<NSDArtifactProfile>(ArtifactProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmResourceDefinitionResourceElementTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmResourceDefinitionResourceElementTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmResourceDefinitionResourceElementTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<TemplateType> templateType = default;
-            Optional<string> parameterValues = default;
-            Optional<NSDArtifactProfile> artifactProfile = default;
+            TemplateType? templateType = default;
+            string parameterValues = default;
+            NSDArtifactProfile artifactProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactProfile = NSDArtifactProfile.DeserializeNSDArtifactProfile(property.Value);
+                    artifactProfile = NSDArtifactProfile.DeserializeNSDArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmResourceDefinitionResourceElementTemplate(Optional.ToNullable(templateType), parameterValues.Value, artifactProfile.Value, serializedAdditionalRawData);
+            return new ArmResourceDefinitionResourceElementTemplate(templateType, parameterValues, artifactProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmResourceDefinitionResourceElementTemplate>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmResourceDefinitionResourceElementTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmResourceDefinitionResourceElementTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeArmResourceDefinitionResourceElementTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmResourceDefinitionResourceElementTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmResourceDefinitionResourceElementTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

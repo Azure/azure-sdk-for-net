@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkAttachment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkAttachment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkAttachment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkAttachment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string attachedNetworkId = default;
-            Optional<DefaultGateway> defaultGateway = default;
+            DefaultGateway? defaultGateway = default;
             VirtualMachineIPAllocationMethod ipAllocationMethod = default;
-            Optional<string> ipv4Address = default;
-            Optional<string> ipv6Address = default;
-            Optional<string> macAddress = default;
-            Optional<string> networkAttachmentName = default;
+            string ipv4Address = default;
+            string ipv6Address = default;
+            string macAddress = default;
+            string networkAttachmentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkAttachment(attachedNetworkId, Optional.ToNullable(defaultGateway), ipAllocationMethod, ipv4Address.Value, ipv6Address.Value, macAddress.Value, networkAttachmentName.Value, serializedAdditionalRawData);
+            return new NetworkAttachment(
+                attachedNetworkId,
+                defaultGateway,
+                ipAllocationMethod,
+                ipv4Address,
+                ipv6Address,
+                macAddress,
+                networkAttachmentName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkAttachment>.Write(ModelReaderWriterOptions options)
@@ -161,7 +169,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkAttachment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkAttachment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +185,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeNetworkAttachment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkAttachment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkAttachment)} does not support reading '{options.Format}' format.");
             }
         }
 

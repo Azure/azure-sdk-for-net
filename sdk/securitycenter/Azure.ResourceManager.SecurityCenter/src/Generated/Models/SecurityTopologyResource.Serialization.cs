@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in TopologyResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TopologySingleResource>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> calculatedDateTime = default;
-            Optional<IReadOnlyList<TopologySingleResource>> topologyResources = default;
+            SystemData systemData = default;
+            DateTimeOffset? calculatedDateTime = default;
+            IReadOnlyList<TopologySingleResource> topologyResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             List<TopologySingleResource> array = new List<TopologySingleResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TopologySingleResource.DeserializeTopologySingleResource(item));
+                                array.Add(TopologySingleResource.DeserializeTopologySingleResource(item, options));
                             }
                             topologyResources = array;
                             continue;
@@ -193,7 +193,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityTopologyResource(id, name, type, systemData.Value, Optional.ToNullable(calculatedDateTime), Optional.ToList(topologyResources), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new SecurityTopologyResource(
+                id,
+                name,
+                type,
+                systemData,
+                calculatedDateTime,
+                topologyResources ?? new ChangeTrackingList<TopologySingleResource>(),
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityTopologyResource>.Write(ModelReaderWriterOptions options)
@@ -205,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityTopologyResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support reading '{options.Format}' format.");
             }
         }
 

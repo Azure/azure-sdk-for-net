@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridIdentityMetadataList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridIdentityMetadataList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridIdentityMetadataList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<HybridIdentityMetadataData>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridIdentityMetadataList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridIdentityMetadataList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridIdentityMetadataList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<HybridIdentityMetadataData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridIdentityMetadataData> array = new List<HybridIdentityMetadataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(item));
+                        array.Add(HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridIdentityMetadataList(nextLink.Value, value, serializedAdditionalRawData);
+            return new HybridIdentityMetadataList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridIdentityMetadataList>.Write(ModelReaderWriterOptions options)
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridIdentityMetadataList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridIdentityMetadataList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeHybridIdentityMetadataList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridIdentityMetadataList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridIdentityMetadataList)} does not support reading '{options.Format}' format.");
             }
         }
 

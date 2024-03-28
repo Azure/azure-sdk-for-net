@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<PatchPropertiesRenewProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(PurchaseProperties))
             {
                 writer.WritePropertyName("purchaseProperties"u8);
-                writer.WriteObjectValue(PurchaseProperties);
+                writer.WriteObjectValue<ReservationPurchaseContent>(PurchaseProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<PatchPropertiesRenewProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationPurchaseContent> purchaseProperties = default;
+            ReservationPurchaseContent purchaseProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value);
+                    purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatchPropertiesRenewProperties(purchaseProperties.Value, serializedAdditionalRawData);
+            return new PatchPropertiesRenewProperties(purchaseProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatchPropertiesRenewProperties>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializePatchPropertiesRenewProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

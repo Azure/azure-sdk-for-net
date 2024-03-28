@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubEndpointHealthInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubEndpointHealthInfoListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubEndpointHealthInfoListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotHubEndpointHealthInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubEndpointHealthInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubEndpointHealthInfoListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubEndpointHealthInfoListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotHubEndpointHealthInfo>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<IotHubEndpointHealthInfo> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubEndpointHealthInfo> array = new List<IotHubEndpointHealthInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo(item));
+                        array.Add(IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubEndpointHealthInfoListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IotHubEndpointHealthInfoListResult(value ?? new ChangeTrackingList<IotHubEndpointHealthInfo>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubEndpointHealthInfoListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubEndpointHealthInfoListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubEndpointHealthInfoListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubEndpointHealthInfoListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubEndpointHealthInfoListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubEndpointHealthInfoListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

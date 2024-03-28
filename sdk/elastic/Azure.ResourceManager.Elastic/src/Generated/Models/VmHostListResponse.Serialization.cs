@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmHostListResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmHostListResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VmResources>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmHostListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmHostListResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmHostListResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VmResources>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<VmResources> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     List<VmResources> array = new List<VmResources>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmResources.DeserializeVmResources(item));
+                        array.Add(VmResources.DeserializeVmResources(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmHostListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VmHostListResponse(value ?? new ChangeTrackingList<VmResources>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmHostListResponse>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmHostListResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmHostListResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeVmHostListResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmHostListResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmHostListResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsGroupingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsGroupingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             bool reopenClosedIncident = default;
             TimeSpan lookbackDuration = default;
             SecurityInsightsGroupingMatchingMethod matchingMethod = default;
-            Optional<IList<SecurityInsightsAlertRuleEntityMappingType>> groupByEntities = default;
-            Optional<IList<SecurityInsightsAlertDetail>> groupByAlertDetails = default;
-            Optional<IList<string>> groupByCustomDetails = default;
+            IList<SecurityInsightsAlertRuleEntityMappingType> groupByEntities = default;
+            IList<SecurityInsightsAlertDetail> groupByAlertDetails = default;
+            IList<string> groupByCustomDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsGroupingConfiguration(enabled, reopenClosedIncident, lookbackDuration, matchingMethod, Optional.ToList(groupByEntities), Optional.ToList(groupByAlertDetails), Optional.ToList(groupByCustomDetails), serializedAdditionalRawData);
+            return new SecurityInsightsGroupingConfiguration(
+                enabled,
+                reopenClosedIncident,
+                lookbackDuration,
+                matchingMethod,
+                groupByEntities ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMappingType>(),
+                groupByAlertDetails ?? new ChangeTrackingList<SecurityInsightsAlertDetail>(),
+                groupByCustomDetails ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsGroupingConfiguration>.Write(ModelReaderWriterOptions options)
@@ -193,7 +201,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +217,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsGroupingConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

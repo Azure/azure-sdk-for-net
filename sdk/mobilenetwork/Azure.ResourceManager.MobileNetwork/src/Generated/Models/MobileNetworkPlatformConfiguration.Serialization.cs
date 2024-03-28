@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkPlatformConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkPlatformConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             MobileNetworkPlatformType type = default;
-            Optional<WritableSubResource> azureStackEdgeDevice = default;
-            Optional<IReadOnlyList<WritableSubResource>> azureStackEdgeDevices = default;
-            Optional<WritableSubResource> azureStackHciCluster = default;
-            Optional<WritableSubResource> connectedCluster = default;
-            Optional<WritableSubResource> customLocation = default;
+            WritableSubResource azureStackEdgeDevice = default;
+            IReadOnlyList<WritableSubResource> azureStackEdgeDevices = default;
+            WritableSubResource azureStackHciCluster = default;
+            WritableSubResource connectedCluster = default;
+            WritableSubResource customLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkPlatformConfiguration(type, azureStackEdgeDevice, Optional.ToList(azureStackEdgeDevices), azureStackHciCluster, connectedCluster, customLocation, serializedAdditionalRawData);
+            return new MobileNetworkPlatformConfiguration(
+                type,
+                azureStackEdgeDevice,
+                azureStackEdgeDevices ?? new ChangeTrackingList<WritableSubResource>(),
+                azureStackHciCluster,
+                connectedCluster,
+                customLocation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkPlatformConfiguration>.Write(ModelReaderWriterOptions options)
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +203,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkPlatformConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

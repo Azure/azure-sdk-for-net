@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,11 +20,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> serviceName = default;
-            Optional<string> serviceComputeType = default;
-            Optional<string> modelIds = default;
-            Optional<object> serviceTags = default;
-            Optional<object> serviceProperties = default;
+            string serviceName = default;
+            string serviceComputeType = default;
+            string modelIds = default;
+            object serviceTags = default;
+            object serviceProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceName"u8))
@@ -62,7 +61,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MachineLearningServicesModelDeployedEventData(serviceName.Value, serviceComputeType.Value, modelIds.Value, serviceTags.Value, serviceProperties.Value);
+            return new MachineLearningServicesModelDeployedEventData(serviceName, serviceComputeType, modelIds, serviceTags, serviceProperties);
         }
 
         internal partial class MachineLearningServicesModelDeployedEventDataConverter : JsonConverter<MachineLearningServicesModelDeployedEventData>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactSchemaReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactSchemaReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.Logic.Models
             string messageId = default;
             string messageVersion = default;
             string messageRelease = default;
-            Optional<string> senderApplicationId = default;
-            Optional<string> senderApplicationQualifier = default;
-            Optional<string> associationAssignedCode = default;
+            string senderApplicationId = default;
+            string senderApplicationQualifier = default;
+            string associationAssignedCode = default;
             string schemaName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -139,7 +139,15 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactSchemaReference(messageId, messageVersion, messageRelease, senderApplicationId.Value, senderApplicationQualifier.Value, associationAssignedCode.Value, schemaName, serializedAdditionalRawData);
+            return new EdifactSchemaReference(
+                messageId,
+                messageVersion,
+                messageRelease,
+                senderApplicationId,
+                senderApplicationQualifier,
+                associationAssignedCode,
+                schemaName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactSchemaReference>.Write(ModelReaderWriterOptions options)
@@ -151,7 +159,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +175,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeEdifactSchemaReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support reading '{options.Format}' format.");
             }
         }
 

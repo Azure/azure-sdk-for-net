@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanSummaryCount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanSummaryCount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<float> succeededCount = default;
-            Optional<float> failedCount = default;
-            Optional<float> expiringCount = default;
-            Optional<float> expiredCount = default;
-            Optional<float> pendingCount = default;
-            Optional<float> cancelledCount = default;
-            Optional<float> processingCount = default;
-            Optional<float> noBenefitCount = default;
-            Optional<float> warningCount = default;
+            float? succeededCount = default;
+            float? failedCount = default;
+            float? expiringCount = default;
+            float? expiredCount = default;
+            float? pendingCount = default;
+            float? cancelledCount = default;
+            float? processingCount = default;
+            float? noBenefitCount = default;
+            float? warningCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanSummaryCount(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount), Optional.ToNullable(noBenefitCount), Optional.ToNullable(warningCount), serializedAdditionalRawData);
+            return new SavingsPlanSummaryCount(
+                succeededCount,
+                failedCount,
+                expiringCount,
+                expiredCount,
+                pendingCount,
+                cancelledCount,
+                processingCount,
+                noBenefitCount,
+                warningCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanSummaryCount>.Write(ModelReaderWriterOptions options)
@@ -221,7 +231,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +247,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeSavingsPlanSummaryCount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support reading '{options.Format}' format.");
             }
         }
 

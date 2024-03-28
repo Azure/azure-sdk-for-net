@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteCriterion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteCriterion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteCriterion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteCriterion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteCriterion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteCriterion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> routePrefix = default;
-            Optional<IList<string>> community = default;
-            Optional<IList<string>> asPath = default;
-            Optional<RouteMapMatchCondition> matchCondition = default;
+            IList<string> routePrefix = default;
+            IList<string> community = default;
+            IList<string> asPath = default;
+            RouteMapMatchCondition? matchCondition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteCriterion(Optional.ToList(routePrefix), Optional.ToList(community), Optional.ToList(asPath), Optional.ToNullable(matchCondition), serializedAdditionalRawData);
+            return new RouteCriterion(routePrefix ?? new ChangeTrackingList<string>(), community ?? new ChangeTrackingList<string>(), asPath ?? new ChangeTrackingList<string>(), matchCondition, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteCriterion>.Write(ModelReaderWriterOptions options)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouteCriterion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteCriterion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeRouteCriterion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouteCriterion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteCriterion)} does not support reading '{options.Format}' format.");
             }
         }
 

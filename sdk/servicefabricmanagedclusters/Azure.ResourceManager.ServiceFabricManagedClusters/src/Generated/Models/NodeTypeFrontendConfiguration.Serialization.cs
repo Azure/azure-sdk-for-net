@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<NodeTypeFrontendConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<NodeTypeFrontendConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<NodeTypeFrontendConfigurationIPAddressType> ipAddressType = default;
-            Optional<ResourceIdentifier> loadBalancerBackendAddressPoolId = default;
-            Optional<ResourceIdentifier> loadBalancerInboundNatPoolId = default;
-            Optional<ResourceIdentifier> applicationGatewayBackendAddressPoolId = default;
+            NodeTypeFrontendConfigurationIPAddressType? ipAddressType = default;
+            ResourceIdentifier loadBalancerBackendAddressPoolId = default;
+            ResourceIdentifier loadBalancerInboundNatPoolId = default;
+            ResourceIdentifier applicationGatewayBackendAddressPoolId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeTypeFrontendConfiguration(Optional.ToNullable(ipAddressType), loadBalancerBackendAddressPoolId.Value, loadBalancerInboundNatPoolId.Value, applicationGatewayBackendAddressPoolId.Value, serializedAdditionalRawData);
+            return new NodeTypeFrontendConfiguration(ipAddressType, loadBalancerBackendAddressPoolId, loadBalancerInboundNatPoolId, applicationGatewayBackendAddressPoolId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeTypeFrontendConfiguration>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeNodeTypeFrontendConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

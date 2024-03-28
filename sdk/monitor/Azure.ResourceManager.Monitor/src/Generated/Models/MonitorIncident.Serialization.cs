@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorIncident>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorIncident)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorIncident)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorIncident>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorIncident)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorIncident)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> ruleName = default;
-            Optional<bool> isActive = default;
-            Optional<DateTimeOffset> activatedTime = default;
-            Optional<DateTimeOffset> resolvedTime = default;
+            string name = default;
+            string ruleName = default;
+            bool? isActive = default;
+            DateTimeOffset? activatedTime = default;
+            DateTimeOffset? resolvedTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorIncident(name.Value, ruleName.Value, Optional.ToNullable(isActive), Optional.ToNullable(activatedTime), Optional.ToNullable(resolvedTime), serializedAdditionalRawData);
+            return new MonitorIncident(
+                name,
+                ruleName,
+                isActive,
+                activatedTime,
+                resolvedTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorIncident>.Write(ModelReaderWriterOptions options)
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorIncident)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorIncident)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorIncident(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorIncident)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorIncident)} does not support reading '{options.Format}' format.");
             }
         }
 

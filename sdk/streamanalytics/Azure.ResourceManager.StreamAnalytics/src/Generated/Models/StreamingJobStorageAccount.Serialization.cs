@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobStorageAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobStorageAccount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobStorageAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobStorageAccount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> accountKey = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string accountName = default;
+            string accountKey = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobStorageAccount(accountName.Value, accountKey.Value, Optional.ToNullable(authenticationMode), serializedAdditionalRawData);
+            return new StreamingJobStorageAccount(accountName, accountKey, authenticationMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobStorageAccount>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobStorageAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobStorageAccount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamingJobStorageAccount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobStorageAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobStorageAccount)} does not support reading '{options.Format}' format.");
             }
         }
 

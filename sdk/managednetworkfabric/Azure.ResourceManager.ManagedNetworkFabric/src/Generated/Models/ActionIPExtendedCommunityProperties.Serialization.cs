@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActionIPExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionIPExtendedCommunityProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionIPExtendedCommunityProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                writer.WriteObjectValue<IPExtendedCommunityIdList>(Delete, options);
             }
             if (Optional.IsDefined(Set))
             {
                 writer.WritePropertyName("set"u8);
-                writer.WriteObjectValue(Set);
+                writer.WriteObjectValue<IPExtendedCommunityIdList>(Set, options);
             }
             if (Optional.IsDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
-                writer.WriteObjectValue(Add);
+                writer.WriteObjectValue<IPExtendedCommunityIdList>(Add, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActionIPExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionIPExtendedCommunityProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionIPExtendedCommunityProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IPExtendedCommunityIdList> delete = default;
-            Optional<IPExtendedCommunityIdList> @set = default;
-            Optional<IPExtendedCommunityIdList> @add = default;
+            IPExtendedCommunityIdList delete = default;
+            IPExtendedCommunityIdList @set = default;
+            IPExtendedCommunityIdList @add = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    delete = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value);
+                    delete = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("set"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @set = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value);
+                    @set = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("add"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @add = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value);
+                    @add = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionIPExtendedCommunityProperties(@add.Value, serializedAdditionalRawData, delete.Value, @set.Value);
+            return new ActionIPExtendedCommunityProperties(@add, serializedAdditionalRawData, delete, @set);
         }
 
         BinaryData IPersistableModel<ActionIPExtendedCommunityProperties>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActionIPExtendedCommunityProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionIPExtendedCommunityProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeActionIPExtendedCommunityProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionIPExtendedCommunityProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionIPExtendedCommunityProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

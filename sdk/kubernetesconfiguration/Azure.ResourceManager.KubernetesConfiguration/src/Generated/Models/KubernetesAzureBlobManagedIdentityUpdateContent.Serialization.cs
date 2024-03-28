@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesAzureBlobManagedIdentityUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesAzureBlobManagedIdentityUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesAzureBlobManagedIdentityUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesAzureBlobManagedIdentityUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesAzureBlobManagedIdentityUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesAzureBlobManagedIdentityUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
+            string clientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesAzureBlobManagedIdentityUpdateContent(clientId.Value, serializedAdditionalRawData);
+            return new KubernetesAzureBlobManagedIdentityUpdateContent(clientId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesAzureBlobManagedIdentityUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesAzureBlobManagedIdentityUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesAzureBlobManagedIdentityUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesAzureBlobManagedIdentityUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesAzureBlobManagedIdentityUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesAzureBlobManagedIdentityUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

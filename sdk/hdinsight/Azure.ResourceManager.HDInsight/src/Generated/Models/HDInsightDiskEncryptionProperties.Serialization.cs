@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightDiskEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightDiskEncryptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightDiskEncryptionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightDiskEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightDiskEncryptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightDiskEncryptionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<Uri> vaultUri = default;
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<JsonWebKeyEncryptionAlgorithm?> encryptionAlgorithm = default;
-            Optional<ResourceIdentifier> msiResourceId = default;
-            Optional<bool> encryptionAtHost = default;
+            Uri vaultUri = default;
+            string keyName = default;
+            string keyVersion = default;
+            JsonWebKeyEncryptionAlgorithm? encryptionAlgorithm = default;
+            ResourceIdentifier msiResourceId = default;
+            bool? encryptionAtHost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +172,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightDiskEncryptionProperties(vaultUri.Value, keyName.Value, keyVersion.Value, Optional.ToNullable(encryptionAlgorithm), msiResourceId.Value, Optional.ToNullable(encryptionAtHost), serializedAdditionalRawData);
+            return new HDInsightDiskEncryptionProperties(
+                vaultUri,
+                keyName,
+                keyVersion,
+                encryptionAlgorithm,
+                msiResourceId,
+                encryptionAtHost,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightDiskEncryptionProperties>.Write(ModelReaderWriterOptions options)
@@ -184,7 +191,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightDiskEncryptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightDiskEncryptionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +207,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightDiskEncryptionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightDiskEncryptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightDiskEncryptionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerCapabilitiesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerCapabilitiesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerCapabilitiesListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerCapabilities>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerCapabilitiesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerCapabilitiesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerCapabilitiesListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerCapabilities>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ContainerCapabilities> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerCapabilities> array = new List<ContainerCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerCapabilities.DeserializeContainerCapabilities(item));
+                        array.Add(ContainerCapabilities.DeserializeContainerCapabilities(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerCapabilitiesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ContainerCapabilitiesListResult(value ?? new ChangeTrackingList<ContainerCapabilities>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerCapabilitiesListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerCapabilitiesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerCapabilitiesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerCapabilitiesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerCapabilitiesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerCapabilitiesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

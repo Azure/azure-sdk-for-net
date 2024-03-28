@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynchronizationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynchronizationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,21 +139,21 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<Guid> dataSetId = default;
-            Optional<ShareDataSetType> dataSetType = default;
-            Optional<int> durationMs = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<long> filesRead = default;
-            Optional<long> filesWritten = default;
-            Optional<string> message = default;
-            Optional<string> name = default;
-            Optional<long> rowsCopied = default;
-            Optional<long> rowsRead = default;
-            Optional<long> sizeRead = default;
-            Optional<long> sizeWritten = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> status = default;
-            Optional<long> vCore = default;
+            Guid? dataSetId = default;
+            ShareDataSetType? dataSetType = default;
+            int? durationMs = default;
+            DateTimeOffset? endTime = default;
+            long? filesRead = default;
+            long? filesWritten = default;
+            string message = default;
+            string name = default;
+            long? rowsCopied = default;
+            long? rowsRead = default;
+            long? sizeRead = default;
+            long? sizeWritten = default;
+            DateTimeOffset? startTime = default;
+            string status = default;
+            long? vCore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -287,7 +287,23 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynchronizationDetails(Optional.ToNullable(dataSetId), Optional.ToNullable(dataSetType), Optional.ToNullable(durationMs), Optional.ToNullable(endTime), Optional.ToNullable(filesRead), Optional.ToNullable(filesWritten), message.Value, name.Value, Optional.ToNullable(rowsCopied), Optional.ToNullable(rowsRead), Optional.ToNullable(sizeRead), Optional.ToNullable(sizeWritten), Optional.ToNullable(startTime), status.Value, Optional.ToNullable(vCore), serializedAdditionalRawData);
+            return new SynchronizationDetails(
+                dataSetId,
+                dataSetType,
+                durationMs,
+                endTime,
+                filesRead,
+                filesWritten,
+                message,
+                name,
+                rowsCopied,
+                rowsRead,
+                sizeRead,
+                sizeWritten,
+                startTime,
+                status,
+                vCore,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynchronizationDetails>.Write(ModelReaderWriterOptions options)
@@ -299,7 +315,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -315,7 +331,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeSynchronizationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyAndSecretDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyAndSecretDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyAndSecretDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(KekDetails))
             {
                 writer.WritePropertyName("kekDetails"u8);
-                writer.WriteObjectValue(KekDetails);
+                writer.WriteObjectValue<KekDetails>(KekDetails, options);
             }
             if (Optional.IsDefined(BekDetails))
             {
                 writer.WritePropertyName("bekDetails"u8);
-                writer.WriteObjectValue(BekDetails);
+                writer.WriteObjectValue<BekDetails>(BekDetails, options);
             }
             if (Optional.IsDefined(EncryptionMechanism))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyAndSecretDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyAndSecretDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyAndSecretDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<KekDetails> kekDetails = default;
-            Optional<BekDetails> bekDetails = default;
-            Optional<string> encryptionMechanism = default;
+            KekDetails kekDetails = default;
+            BekDetails bekDetails = default;
+            string encryptionMechanism = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    kekDetails = KekDetails.DeserializeKekDetails(property.Value);
+                    kekDetails = KekDetails.DeserializeKekDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("bekDetails"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    bekDetails = BekDetails.DeserializeBekDetails(property.Value);
+                    bekDetails = BekDetails.DeserializeBekDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptionMechanism"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyAndSecretDetails(kekDetails.Value, bekDetails.Value, encryptionMechanism.Value, serializedAdditionalRawData);
+            return new KeyAndSecretDetails(kekDetails, bekDetails, encryptionMechanism, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyAndSecretDetails>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyAndSecretDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyAndSecretDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeKeyAndSecretDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyAndSecretDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyAndSecretDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

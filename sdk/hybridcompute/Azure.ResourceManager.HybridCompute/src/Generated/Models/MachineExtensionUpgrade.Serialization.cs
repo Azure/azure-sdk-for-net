@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionUpgrade>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineExtensionUpgrade)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineExtensionUpgrade)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 foreach (var item in ExtensionTargets)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ExtensionTargetProperties>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionUpgrade>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineExtensionUpgrade)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineExtensionUpgrade)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, ExtensionTargetProperties>> extensionTargets = default;
+            IDictionary<string, ExtensionTargetProperties> extensionTargets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     Dictionary<string, ExtensionTargetProperties> dictionary = new Dictionary<string, ExtensionTargetProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ExtensionTargetProperties.DeserializeExtensionTargetProperties(property0.Value));
+                        dictionary.Add(property0.Name, ExtensionTargetProperties.DeserializeExtensionTargetProperties(property0.Value, options));
                     }
                     extensionTargets = dictionary;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineExtensionUpgrade(Optional.ToDictionary(extensionTargets), serializedAdditionalRawData);
+            return new MachineExtensionUpgrade(extensionTargets ?? new ChangeTrackingDictionary<string, ExtensionTargetProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineExtensionUpgrade>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineExtensionUpgrade)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineExtensionUpgrade)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeMachineExtensionUpgrade(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineExtensionUpgrade)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineExtensionUpgrade)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<VideoGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VideoGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Videos)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VideoGroupVideo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<VideoGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VideoGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<IList<VideoGroupVideo>> videos = default;
-            Optional<string> replacementKey = default;
+            IList<VideoGroupVideo> videos = default;
+            string replacementKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<VideoGroupVideo> array = new List<VideoGroupVideo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VideoGroupVideo.DeserializeVideoGroupVideo(item));
+                        array.Add(VideoGroupVideo.DeserializeVideoGroupVideo(item, options));
                     }
                     videos = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VideoGroup(Optional.ToList(videos), replacementKey.Value, serializedAdditionalRawData);
+            return new VideoGroup(videos ?? new ChangeTrackingList<VideoGroupVideo>(), replacementKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VideoGroup>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VideoGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VideoGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeVideoGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VideoGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VideoGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

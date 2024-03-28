@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSkuPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSkuPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> capacity = default;
-            Optional<string> family = default;
-            Optional<string> name = default;
-            Optional<string> size = default;
-            Optional<MachineLearningSkuTier> tier = default;
+            int? capacity = default;
+            string family = default;
+            string name = default;
+            string size = default;
+            MachineLearningSkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSkuPatch(Optional.ToNullable(capacity), family.Value, name.Value, size.Value, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new MachineLearningSkuPatch(
+                capacity,
+                family,
+                name,
+                size,
+                tier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningSkuPatch>.Write(ModelReaderWriterOptions options)
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningSkuPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningSkuPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

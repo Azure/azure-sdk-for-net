@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorScaleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorScaleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorScaleAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorScaleAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorScaleAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorScaleAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             MonitorScaleDirection direction = default;
             MonitorScaleType type = default;
-            Optional<string> value = default;
+            string value = default;
             TimeSpan cooldown = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorScaleAction(direction, type, value.Value, cooldown, serializedAdditionalRawData);
+            return new MonitorScaleAction(direction, type, value, cooldown, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorScaleAction>.Write(ModelReaderWriterOptions options)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorScaleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorScaleAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorScaleAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorScaleAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorScaleAction)} does not support reading '{options.Format}' format.");
             }
         }
 

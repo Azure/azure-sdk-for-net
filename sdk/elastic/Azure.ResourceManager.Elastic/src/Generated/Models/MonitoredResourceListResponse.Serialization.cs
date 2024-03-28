@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoredResourceListResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoredResourceListResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitoredResourceContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoredResourceListResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoredResourceListResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitoredResourceContent>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MonitoredResourceContent> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     List<MonitoredResourceContent> array = new List<MonitoredResourceContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoredResourceContent.DeserializeMonitoredResourceContent(item));
+                        array.Add(MonitoredResourceContent.DeserializeMonitoredResourceContent(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoredResourceListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MonitoredResourceListResponse(value ?? new ChangeTrackingList<MonitoredResourceContent>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoredResourceListResponse>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoredResourceListResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoredResourceListResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeMonitoredResourceListResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoredResourceListResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoredResourceListResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

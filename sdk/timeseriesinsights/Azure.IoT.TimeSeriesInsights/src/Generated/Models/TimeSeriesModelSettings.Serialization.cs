@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -19,9 +18,9 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<TimeSeriesIdProperty>> timeSeriesIdProperties = default;
-            Optional<string> defaultTypeId = default;
+            string name = default;
+            IReadOnlyList<TimeSeriesIdProperty> timeSeriesIdProperties = default;
+            string defaultTypeId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -49,7 +48,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesModelSettings(name.Value, Optional.ToList(timeSeriesIdProperties), defaultTypeId.Value);
+            return new TimeSeriesModelSettings(name, timeSeriesIdProperties ?? new ChangeTrackingList<TimeSeriesIdProperty>(), defaultTypeId);
         }
     }
 }

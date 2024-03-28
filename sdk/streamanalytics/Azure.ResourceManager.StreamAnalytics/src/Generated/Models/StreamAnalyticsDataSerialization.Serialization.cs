@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsDataSerialization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsDataSerialization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Avro": return AvroFormatSerialization.DeserializeAvroFormatSerialization(element);
-                    case "Csv": return CsvFormatSerialization.DeserializeCsvFormatSerialization(element);
-                    case "CustomClr": return CustomClrFormatSerialization.DeserializeCustomClrFormatSerialization(element);
-                    case "Json": return JsonFormatSerialization.DeserializeJsonFormatSerialization(element);
-                    case "Parquet": return ParquetFormatSerialization.DeserializeParquetFormatSerialization(element);
+                    case "Avro": return AvroFormatSerialization.DeserializeAvroFormatSerialization(element, options);
+                    case "Csv": return CsvFormatSerialization.DeserializeCsvFormatSerialization(element, options);
+                    case "CustomClr": return CustomClrFormatSerialization.DeserializeCustomClrFormatSerialization(element, options);
+                    case "Json": return JsonFormatSerialization.DeserializeJsonFormatSerialization(element, options);
+                    case "Parquet": return ParquetFormatSerialization.DeserializeParquetFormatSerialization(element, options);
                 }
             }
-            return UnknownSerialization.DeserializeUnknownSerialization(element);
+            return UnknownSerialization.DeserializeUnknownSerialization(element, options);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsDataSerialization>.Write(ModelReaderWriterOptions options)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamAnalyticsDataSerialization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support reading '{options.Format}' format.");
             }
         }
 

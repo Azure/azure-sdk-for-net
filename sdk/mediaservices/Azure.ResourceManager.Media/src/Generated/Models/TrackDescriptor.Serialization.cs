@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrackDescriptor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrackDescriptor)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrackDescriptor)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrackDescriptor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrackDescriptor)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrackDescriptor)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.AudioTrackDescriptor": return AudioTrackDescriptor.DeserializeAudioTrackDescriptor(element);
-                    case "#Microsoft.Media.SelectAudioTrackByAttribute": return SelectAudioTrackByAttribute.DeserializeSelectAudioTrackByAttribute(element);
-                    case "#Microsoft.Media.SelectAudioTrackById": return SelectAudioTrackById.DeserializeSelectAudioTrackById(element);
-                    case "#Microsoft.Media.SelectVideoTrackByAttribute": return SelectVideoTrackByAttribute.DeserializeSelectVideoTrackByAttribute(element);
-                    case "#Microsoft.Media.SelectVideoTrackById": return SelectVideoTrackById.DeserializeSelectVideoTrackById(element);
-                    case "#Microsoft.Media.VideoTrackDescriptor": return VideoTrackDescriptor.DeserializeVideoTrackDescriptor(element);
+                    case "#Microsoft.Media.AudioTrackDescriptor": return AudioTrackDescriptor.DeserializeAudioTrackDescriptor(element, options);
+                    case "#Microsoft.Media.SelectAudioTrackByAttribute": return SelectAudioTrackByAttribute.DeserializeSelectAudioTrackByAttribute(element, options);
+                    case "#Microsoft.Media.SelectAudioTrackById": return SelectAudioTrackById.DeserializeSelectAudioTrackById(element, options);
+                    case "#Microsoft.Media.SelectVideoTrackByAttribute": return SelectVideoTrackByAttribute.DeserializeSelectVideoTrackByAttribute(element, options);
+                    case "#Microsoft.Media.SelectVideoTrackById": return SelectVideoTrackById.DeserializeSelectVideoTrackById(element, options);
+                    case "#Microsoft.Media.VideoTrackDescriptor": return VideoTrackDescriptor.DeserializeVideoTrackDescriptor(element, options);
                 }
             }
-            return UnknownTrackDescriptor.DeserializeUnknownTrackDescriptor(element);
+            return UnknownTrackDescriptor.DeserializeUnknownTrackDescriptor(element, options);
         }
 
         BinaryData IPersistableModel<TrackDescriptor>.Write(ModelReaderWriterOptions options)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrackDescriptor)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrackDescriptor)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeTrackDescriptor(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrackDescriptor)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrackDescriptor)} does not support reading '{options.Format}' format.");
             }
         }
 

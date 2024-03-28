@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkuEnumerationForExistingResourceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SkuDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkuEnumerationForExistingResourceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SkuDetails>> value = default;
+            IReadOnlyList<SkuDetails> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     List<SkuDetails> array = new List<SkuDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuDetails.DeserializeSkuDetails(item));
+                        array.Add(SkuDetails.DeserializeSkuDetails(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuEnumerationForExistingResourceResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new SkuEnumerationForExistingResourceResult(value ?? new ChangeTrackingList<SkuDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuEnumerationForExistingResourceResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                         return DeserializeSkuEnumerationForExistingResourceResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support reading '{options.Format}' format.");
             }
         }
 

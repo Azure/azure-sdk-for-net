@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductFamiliesMetadataListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductFamiliesMetadataListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductFamiliesMetadataListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProductFamiliesMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductFamiliesMetadataListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductFamiliesMetadataListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductFamiliesMetadataListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProductFamiliesMetadata>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ProductFamiliesMetadata> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ProductFamiliesMetadata> array = new List<ProductFamiliesMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(item));
+                        array.Add(ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductFamiliesMetadataListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProductFamiliesMetadataListResult(value ?? new ChangeTrackingList<ProductFamiliesMetadata>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductFamiliesMetadataListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProductFamiliesMetadataListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductFamiliesMetadataListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeProductFamiliesMetadataListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProductFamiliesMetadataListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductFamiliesMetadataListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

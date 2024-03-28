@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             IList<string> to = default;
-            Optional<string> language = default;
-            Optional<string> message = default;
-            Optional<string> regionalFormat = default;
+            string language = default;
+            string message = default;
+            string regionalFormat = default;
             string subject = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationProperties(to, language.Value, message.Value, regionalFormat.Value, subject, serializedAdditionalRawData);
+            return new NotificationProperties(
+                to,
+                language,
+                message,
+                regionalFormat,
+                subject,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationProperties>.Write(ModelReaderWriterOptions options)
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeNotificationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

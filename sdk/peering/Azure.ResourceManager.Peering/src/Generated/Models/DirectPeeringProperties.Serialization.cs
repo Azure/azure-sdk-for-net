@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<DirectPeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in Connections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PeeringDirectConnection>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<DirectPeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IList<PeeringDirectConnection>> connections = default;
-            Optional<bool> useForPeeringService = default;
-            Optional<WritableSubResource> peerAsn = default;
-            Optional<DirectPeeringType> directPeeringType = default;
+            IList<PeeringDirectConnection> connections = default;
+            bool? useForPeeringService = default;
+            WritableSubResource peerAsn = default;
+            DirectPeeringType? directPeeringType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringDirectConnection> array = new List<PeeringDirectConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringDirectConnection.DeserializePeeringDirectConnection(item));
+                        array.Add(PeeringDirectConnection.DeserializePeeringDirectConnection(item, options));
                     }
                     connections = array;
                     continue;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectPeeringProperties(Optional.ToList(connections), Optional.ToNullable(useForPeeringService), peerAsn, Optional.ToNullable(directPeeringType), serializedAdditionalRawData);
+            return new DirectPeeringProperties(connections ?? new ChangeTrackingList<PeeringDirectConnection>(), useForPeeringService, peerAsn, directPeeringType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DirectPeeringProperties>.Write(ModelReaderWriterOptions options)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializeDirectPeeringProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

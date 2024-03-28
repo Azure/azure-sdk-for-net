@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AudioTranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,7 +81,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AudioTranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,12 +97,12 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             BinaryData file = default;
-            Optional<string> filename = default;
-            Optional<AudioTranscriptionFormat> responseFormat = default;
-            Optional<string> language = default;
-            Optional<string> prompt = default;
-            Optional<float> temperature = default;
-            Optional<string> model = default;
+            string filename = default;
+            AudioTranscriptionFormat? responseFormat = default;
+            string language = default;
+            string prompt = default;
+            float? temperature = default;
+            string model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +156,15 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTranscriptionOptions(file, filename.Value, Optional.ToNullable(responseFormat), language.Value, prompt.Value, Optional.ToNullable(temperature), model.Value, serializedAdditionalRawData);
+            return new AudioTranscriptionOptions(
+                file,
+                filename,
+                responseFormat,
+                language,
+                prompt,
+                temperature,
+                model,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AudioTranscriptionOptions>.Write(ModelReaderWriterOptions options)
@@ -169,7 +176,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +192,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeAudioTranscriptionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingsResourceCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticSettingsResourceCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticSettingsResourceCollection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiagnosticSettingData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingsResourceCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticSettingsResourceCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticSettingsResourceCollection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DiagnosticSettingData>> value = default;
+            IReadOnlyList<DiagnosticSettingData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DiagnosticSettingData> array = new List<DiagnosticSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticSettingData.DeserializeDiagnosticSettingData(item));
+                        array.Add(DiagnosticSettingData.DeserializeDiagnosticSettingData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticSettingsResourceCollection(Optional.ToList(value), serializedAdditionalRawData);
+            return new DiagnosticSettingsResourceCollection(value ?? new ChangeTrackingList<DiagnosticSettingData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticSettingsResourceCollection>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticSettingsResourceCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticSettingsResourceCollection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDiagnosticSettingsResourceCollection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticSettingsResourceCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticSettingsResourceCollection)} does not support reading '{options.Format}' format.");
             }
         }
 

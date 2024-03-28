@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableDataBoxEdgeSkuList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSkuList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSkuList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableDataBoxEdgeSku>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableDataBoxEdgeSkuList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSkuList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSkuList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableDataBoxEdgeSku>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AvailableDataBoxEdgeSku> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<AvailableDataBoxEdgeSku> array = new List<AvailableDataBoxEdgeSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku(item));
+                        array.Add(AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableDataBoxEdgeSkuList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AvailableDataBoxEdgeSkuList(value ?? new ChangeTrackingList<AvailableDataBoxEdgeSku>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableDataBoxEdgeSkuList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSkuList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSkuList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeAvailableDataBoxEdgeSkuList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSkuList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSkuList)} does not support reading '{options.Format}' format.");
             }
         }
 

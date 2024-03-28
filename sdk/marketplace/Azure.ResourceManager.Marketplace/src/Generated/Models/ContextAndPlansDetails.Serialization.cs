@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContextAndPlansDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContextAndPlansDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContextAndPlansDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContextAndPlansDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContextAndPlansDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContextAndPlansDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> context = default;
-            Optional<IList<string>> planIds = default;
+            string context = default;
+            IList<string> planIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContextAndPlansDetails(context.Value, Optional.ToList(planIds), serializedAdditionalRawData);
+            return new ContextAndPlansDetails(context, planIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContextAndPlansDetails>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContextAndPlansDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContextAndPlansDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeContextAndPlansDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContextAndPlansDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContextAndPlansDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

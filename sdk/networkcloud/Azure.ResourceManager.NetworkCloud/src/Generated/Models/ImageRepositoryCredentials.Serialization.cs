@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageRepositoryCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageRepositoryCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageRepositoryCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageRepositoryCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageRepositoryCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageRepositoryCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> password = default;
+            string password = default;
             string registryUrl = default;
             string username = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageRepositoryCredentials(password.Value, registryUrl, username, serializedAdditionalRawData);
+            return new ImageRepositoryCredentials(password, registryUrl, username, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageRepositoryCredentials>.Write(ModelReaderWriterOptions options)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageRepositoryCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageRepositoryCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeImageRepositoryCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageRepositoryCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageRepositoryCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

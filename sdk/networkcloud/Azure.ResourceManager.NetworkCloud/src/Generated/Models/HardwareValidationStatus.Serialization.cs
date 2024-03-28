@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<HardwareValidationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwareValidationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareValidationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<HardwareValidationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwareValidationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareValidationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastValidationTime = default;
-            Optional<BareMetalMachineHardwareValidationResult> result = default;
+            DateTimeOffset? lastValidationTime = default;
+            BareMetalMachineHardwareValidationResult? result = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HardwareValidationStatus(Optional.ToNullable(lastValidationTime), Optional.ToNullable(result), serializedAdditionalRawData);
+            return new HardwareValidationStatus(lastValidationTime, result, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareValidationStatus>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HardwareValidationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareValidationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeHardwareValidationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HardwareValidationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareValidationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

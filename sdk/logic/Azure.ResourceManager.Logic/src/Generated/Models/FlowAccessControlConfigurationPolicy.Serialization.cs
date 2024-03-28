@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlowAccessControlConfigurationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedCallerIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FlowAccessControlIPAddressRange>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OpenAuthenticationPolicies))
             {
                 writer.WritePropertyName("openAuthenticationPolicies"u8);
-                writer.WriteObjectValue(OpenAuthenticationPolicies);
+                writer.WriteObjectValue<OpenAuthenticationAccessPolicies>(OpenAuthenticationPolicies, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlowAccessControlConfigurationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IList<FlowAccessControlIPAddressRange>> allowedCallerIPAddresses = default;
-            Optional<OpenAuthenticationAccessPolicies> openAuthenticationPolicies = default;
+            IList<FlowAccessControlIPAddressRange> allowedCallerIPAddresses = default;
+            OpenAuthenticationAccessPolicies openAuthenticationPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<FlowAccessControlIPAddressRange> array = new List<FlowAccessControlIPAddressRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlowAccessControlIPAddressRange.DeserializeFlowAccessControlIPAddressRange(item));
+                        array.Add(FlowAccessControlIPAddressRange.DeserializeFlowAccessControlIPAddressRange(item, options));
                     }
                     allowedCallerIPAddresses = array;
                     continue;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    openAuthenticationPolicies = OpenAuthenticationAccessPolicies.DeserializeOpenAuthenticationAccessPolicies(property.Value);
+                    openAuthenticationPolicies = OpenAuthenticationAccessPolicies.DeserializeOpenAuthenticationAccessPolicies(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowAccessControlConfigurationPolicy(Optional.ToList(allowedCallerIPAddresses), openAuthenticationPolicies.Value, serializedAdditionalRawData);
+            return new FlowAccessControlConfigurationPolicy(allowedCallerIPAddresses ?? new ChangeTrackingList<FlowAccessControlIPAddressRange>(), openAuthenticationPolicies, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlowAccessControlConfigurationPolicy>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeFlowAccessControlConfigurationPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

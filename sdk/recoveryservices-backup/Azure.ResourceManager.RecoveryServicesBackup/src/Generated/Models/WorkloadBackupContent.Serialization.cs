@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupType> backupType = default;
-            Optional<bool> enableCompression = default;
-            Optional<DateTimeOffset> recoveryPointExpiryTimeInUTC = default;
+            BackupType? backupType = default;
+            bool? enableCompression = default;
+            DateTimeOffset? recoveryPointExpiryTimeInUTC = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadBackupContent(objectType, serializedAdditionalRawData, Optional.ToNullable(backupType), Optional.ToNullable(enableCompression), Optional.ToNullable(recoveryPointExpiryTimeInUTC));
+            return new WorkloadBackupContent(objectType, serializedAdditionalRawData, backupType, enableCompression, recoveryPointExpiryTimeInUTC);
         }
 
         BinaryData IPersistableModel<WorkloadBackupContent>.Write(ModelReaderWriterOptions options)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeWorkloadBackupContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support reading '{options.Format}' format.");
             }
         }
 

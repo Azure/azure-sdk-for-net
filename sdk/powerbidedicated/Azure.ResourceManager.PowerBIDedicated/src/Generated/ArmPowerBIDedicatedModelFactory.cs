@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
@@ -36,7 +35,21 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             tags ??= new Dictionary<string, string>();
             administrationMembers ??= new List<string>();
 
-            return new DedicatedCapacityData(id, name, resourceType, location, tags, systemData, serializedAdditionalRawData: null, sku, administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null, mode, tenantId, friendlyName, state, provisioningState);
+            return new DedicatedCapacityData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                systemData,
+                serializedAdditionalRawData: null,
+                sku,
+                administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null,
+                mode,
+                tenantId,
+                friendlyName,
+                state,
+                provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PowerBIDedicatedResourceData"/>. </summary>
@@ -51,7 +64,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PowerBIDedicatedResourceData(id, name, resourceType, location, tags, systemData, serializedAdditionalRawData: null);
+            return new PowerBIDedicatedResourceData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                systemData,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DedicatedCapacityPatch"/>. </summary>
@@ -67,7 +87,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             tags ??= new Dictionary<string, string>();
             administrationMembers ??= new List<string>();
 
-            return new DedicatedCapacityPatch(sku, tags, administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null, mode, tenantId, friendlyName, serializedAdditionalRawData: null);
+            return new DedicatedCapacityPatch(
+                sku,
+                tags,
+                administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null,
+                mode,
+                tenantId,
+                friendlyName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SkuDetails"/>. </summary>
@@ -105,7 +132,18 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AutoScaleVCoreData(id, name, resourceType, location, tags, systemData, serializedAdditionalRawData: null, sku, capacityLimit, capacityObjectId, provisioningState);
+            return new AutoScaleVCoreData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                systemData,
+                serializedAdditionalRawData: null,
+                sku,
+                capacityLimit,
+                capacityObjectId,
+                provisioningState);
         }
     }
 }

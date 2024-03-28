@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactProcessingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactProcessingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactProcessingSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactProcessingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactProcessingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactProcessingSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactProcessingSettings(maskSecurityInfo, preserveInterchange, suspendInterchangeOnError, createEmptyXmlTagsForTrailingSeparators, useDotAsDecimalSeparator, serializedAdditionalRawData);
+            return new EdifactProcessingSettings(
+                maskSecurityInfo,
+                preserveInterchange,
+                suspendInterchangeOnError,
+                createEmptyXmlTagsForTrailingSeparators,
+                useDotAsDecimalSeparator,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactProcessingSettings>.Write(ModelReaderWriterOptions options)
@@ -126,7 +132,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdifactProcessingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactProcessingSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +148,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeEdifactProcessingSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdifactProcessingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactProcessingSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

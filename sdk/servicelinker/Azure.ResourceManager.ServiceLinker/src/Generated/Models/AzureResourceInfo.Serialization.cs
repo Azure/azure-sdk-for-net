@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 if (ResourceProperties != null)
                 {
                     writer.WritePropertyName("resourceProperties"u8);
-                    writer.WriteObjectValue(ResourceProperties);
+                    writer.WriteObjectValue<AzureResourceBaseProperties>(ResourceProperties, options);
                 }
                 else
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<AzureResourceBaseProperties> resourceProperties = default;
+            ResourceIdentifier id = default;
+            AzureResourceBaseProperties resourceProperties = default;
             TargetServiceType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         resourceProperties = null;
                         continue;
                     }
-                    resourceProperties = AzureResourceBaseProperties.DeserializeAzureResourceBaseProperties(property.Value);
+                    resourceProperties = AzureResourceBaseProperties.DeserializeAzureResourceBaseProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureResourceInfo(type, serializedAdditionalRawData, id.Value, resourceProperties.Value);
+            return new AzureResourceInfo(type, serializedAdditionalRawData, id, resourceProperties);
         }
 
         BinaryData IPersistableModel<AzureResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         return DeserializeAzureResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

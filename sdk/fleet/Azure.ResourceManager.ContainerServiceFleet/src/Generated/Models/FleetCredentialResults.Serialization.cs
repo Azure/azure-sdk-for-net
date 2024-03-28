@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             var format = options.Format == "W" ? ((IPersistableModel<FleetCredentialResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FleetCredentialResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FleetCredentialResults)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FleetCredentialResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             var format = options.Format == "W" ? ((IPersistableModel<FleetCredentialResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FleetCredentialResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FleetCredentialResults)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FleetCredentialResult>> kubeconfigs = default;
+            IReadOnlyList<FleetCredentialResult> kubeconfigs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<FleetCredentialResult> array = new List<FleetCredentialResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FleetCredentialResult.DeserializeFleetCredentialResult(item));
+                        array.Add(FleetCredentialResult.DeserializeFleetCredentialResult(item, options));
                     }
                     kubeconfigs = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FleetCredentialResults(Optional.ToList(kubeconfigs), serializedAdditionalRawData);
+            return new FleetCredentialResults(kubeconfigs ?? new ChangeTrackingList<FleetCredentialResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FleetCredentialResults>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FleetCredentialResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FleetCredentialResults)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                         return DeserializeFleetCredentialResults(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FleetCredentialResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FleetCredentialResults)} does not support reading '{options.Format}' format.");
             }
         }
 

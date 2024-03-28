@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoDatabasePrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoDatabasePrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Kusto.Models
             KustoDatabasePrincipalRole role = default;
             string name = default;
             KustoDatabasePrincipalType type = default;
-            Optional<string> fqn = default;
-            Optional<string> email = default;
-            Optional<string> appId = default;
-            Optional<string> tenantName = default;
+            string fqn = default;
+            string email = default;
+            string appId = default;
+            string tenantName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,15 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoDatabasePrincipal(role, name, type, fqn.Value, email.Value, appId.Value, tenantName.Value, serializedAdditionalRawData);
+            return new KustoDatabasePrincipal(
+                role,
+                name,
+                type,
+                fqn,
+                email,
+                appId,
+                tenantName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoDatabasePrincipal>.Write(ModelReaderWriterOptions options)
@@ -154,7 +162,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +178,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeKustoDatabasePrincipal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoDatabasePrincipal)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DiskDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,16 +127,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> agentGeneratedId = default;
-            Optional<string> agentInstalled = default;
-            Optional<string> osType = default;
-            Optional<string> agentVersion = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> poweredOn = default;
-            Optional<string> vCenterInfrastructureId = default;
-            Optional<string> discoveryType = default;
-            Optional<IReadOnlyList<InMageDiskDetails>> diskDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
+            string agentGeneratedId = default;
+            string agentInstalled = default;
+            string osType = default;
+            string agentVersion = default;
+            IPAddress ipAddress = default;
+            string poweredOn = default;
+            string vCenterInfrastructureId = default;
+            string discoveryType = default;
+            IReadOnlyList<InMageDiskDetails> diskDetails = default;
+            IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageDiskDetails> array = new List<InMageDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageDiskDetails.DeserializeInMageDiskDetails(item));
+                        array.Add(InMageDiskDetails.DeserializeInMageDiskDetails(item, options));
                     }
                     diskDetails = array;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -225,7 +225,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVmDetails(instanceType, serializedAdditionalRawData, agentGeneratedId.Value, agentInstalled.Value, osType.Value, agentVersion.Value, ipAddress.Value, poweredOn.Value, vCenterInfrastructureId.Value, discoveryType.Value, Optional.ToList(diskDetails), Optional.ToList(validationErrors));
+            return new VMwareVmDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                agentGeneratedId,
+                agentInstalled,
+                osType,
+                agentVersion,
+                ipAddress,
+                poweredOn,
+                vCenterInfrastructureId,
+                discoveryType,
+                diskDetails ?? new ChangeTrackingList<InMageDiskDetails>(),
+                validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>());
         }
 
         BinaryData IPersistableModel<VMwareVmDetails>.Write(ModelReaderWriterOptions options)
@@ -237,7 +249,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -253,7 +265,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareVmDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

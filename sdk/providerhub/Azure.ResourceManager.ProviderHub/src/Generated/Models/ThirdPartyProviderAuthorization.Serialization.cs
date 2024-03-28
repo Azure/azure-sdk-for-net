@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThirdPartyProviderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThirdPartyProviderAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThirdPartyProviderAuthorization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LightHouseAuthorization>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThirdPartyProviderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThirdPartyProviderAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThirdPartyProviderAuthorization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<LightHouseAuthorization>> authorizations = default;
-            Optional<string> managedByTenantId = default;
+            IList<LightHouseAuthorization> authorizations = default;
+            string managedByTenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<LightHouseAuthorization> array = new List<LightHouseAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LightHouseAuthorization.DeserializeLightHouseAuthorization(item));
+                        array.Add(LightHouseAuthorization.DeserializeLightHouseAuthorization(item, options));
                     }
                     authorizations = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThirdPartyProviderAuthorization(Optional.ToList(authorizations), managedByTenantId.Value, serializedAdditionalRawData);
+            return new ThirdPartyProviderAuthorization(authorizations ?? new ChangeTrackingList<LightHouseAuthorization>(), managedByTenantId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThirdPartyProviderAuthorization>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThirdPartyProviderAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThirdPartyProviderAuthorization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeThirdPartyProviderAuthorization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThirdPartyProviderAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThirdPartyProviderAuthorization)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LocationThresholdRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocationThresholdRuleCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocationThresholdRuleCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
-                writer.WriteObjectValue(DataSource);
+                writer.WriteObjectValue<RuleDataSource>(DataSource, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LocationThresholdRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocationThresholdRuleCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocationThresholdRuleCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<TimeSpan> windowSize = default;
+            TimeSpan? windowSize = default;
             int failedLocationCount = default;
             string odataType = default;
-            Optional<RuleDataSource> dataSource = default;
+            RuleDataSource dataSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);
+                    dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocationThresholdRuleCondition(odataType, dataSource.Value, serializedAdditionalRawData, Optional.ToNullable(windowSize), failedLocationCount);
+            return new LocationThresholdRuleCondition(odataType, dataSource, serializedAdditionalRawData, windowSize, failedLocationCount);
         }
 
         BinaryData IPersistableModel<LocationThresholdRuleCondition>.Write(ModelReaderWriterOptions options)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LocationThresholdRuleCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocationThresholdRuleCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeLocationThresholdRuleCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LocationThresholdRuleCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocationThresholdRuleCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

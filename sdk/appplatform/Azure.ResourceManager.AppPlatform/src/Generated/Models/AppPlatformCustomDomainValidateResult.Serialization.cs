@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomDomainValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformCustomDomainValidateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformCustomDomainValidateResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomDomainValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformCustomDomainValidateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformCustomDomainValidateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<bool> isValid = default;
-            Optional<string> message = default;
+            bool? isValid = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformCustomDomainValidateResult(Optional.ToNullable(isValid), message.Value, serializedAdditionalRawData);
+            return new AppPlatformCustomDomainValidateResult(isValid, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformCustomDomainValidateResult>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformCustomDomainValidateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformCustomDomainValidateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformCustomDomainValidateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformCustomDomainValidateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformCustomDomainValidateResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHelpVideo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpVideo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpVideo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHelpVideo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpVideo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpVideo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> replacementKey = default;
-            Optional<string> src = default;
-            Optional<string> title = default;
+            string replacementKey = default;
+            string src = default;
+            string title = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpVideo(src.Value, title.Value, serializedAdditionalRawData, replacementKey.Value);
+            return new SelfHelpVideo(src, title, serializedAdditionalRawData, replacementKey);
         }
 
         BinaryData IPersistableModel<SelfHelpVideo>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpVideo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpVideo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeSelfHelpVideo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpVideo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpVideo)} does not support reading '{options.Format}' format.");
             }
         }
 

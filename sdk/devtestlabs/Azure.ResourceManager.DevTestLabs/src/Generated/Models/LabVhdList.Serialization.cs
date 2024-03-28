@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabVhdList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVhdList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabVhdList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabVhdList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVhdList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabVhdList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SubResource>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SubResource> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVhdList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LabVhdList(value ?? new ChangeTrackingList<SubResource>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVhdList>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabVhdList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabVhdList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeLabVhdList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabVhdList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabVhdList)} does not support reading '{options.Format}' format.");
             }
         }
 

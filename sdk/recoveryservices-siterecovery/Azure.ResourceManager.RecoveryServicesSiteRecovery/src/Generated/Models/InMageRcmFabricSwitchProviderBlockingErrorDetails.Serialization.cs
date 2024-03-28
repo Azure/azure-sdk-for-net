@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFabricSwitchProviderBlockingErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFabricSwitchProviderBlockingErrorDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFabricSwitchProviderBlockingErrorDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFabricSwitchProviderBlockingErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFabricSwitchProviderBlockingErrorDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFabricSwitchProviderBlockingErrorDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> possibleCauses = default;
-            Optional<string> recommendedAction = default;
-            Optional<IReadOnlyDictionary<string, string>> errorMessageParameters = default;
-            Optional<IReadOnlyDictionary<string, string>> errorTags = default;
+            string errorCode = default;
+            string errorMessage = default;
+            string possibleCauses = default;
+            string recommendedAction = default;
+            IReadOnlyDictionary<string, string> errorMessageParameters = default;
+            IReadOnlyDictionary<string, string> errorTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +170,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFabricSwitchProviderBlockingErrorDetails(errorCode.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToDictionary(errorMessageParameters), Optional.ToDictionary(errorTags), serializedAdditionalRawData);
+            return new InMageRcmFabricSwitchProviderBlockingErrorDetails(
+                errorCode,
+                errorMessage,
+                possibleCauses,
+                recommendedAction,
+                errorMessageParameters ?? new ChangeTrackingDictionary<string, string>(),
+                errorTags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmFabricSwitchProviderBlockingErrorDetails>.Write(ModelReaderWriterOptions options)
@@ -182,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFabricSwitchProviderBlockingErrorDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFabricSwitchProviderBlockingErrorDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -198,7 +205,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmFabricSwitchProviderBlockingErrorDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFabricSwitchProviderBlockingErrorDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFabricSwitchProviderBlockingErrorDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

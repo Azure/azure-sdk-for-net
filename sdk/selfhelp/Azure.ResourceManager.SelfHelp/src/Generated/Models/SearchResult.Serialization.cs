@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> solutionId = default;
-            Optional<string> content = default;
-            Optional<string> title = default;
-            Optional<SelfHelpConfidence> confidence = default;
-            Optional<string> source = default;
-            Optional<ResultType> resultType = default;
-            Optional<int> rank = default;
-            Optional<string> link = default;
+            string solutionId = default;
+            string content = default;
+            string title = default;
+            SelfHelpConfidence? confidence = default;
+            string source = default;
+            ResultType? resultType = default;
+            int? rank = default;
+            string link = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchResult(solutionId.Value, content.Value, title.Value, Optional.ToNullable(confidence), source.Value, Optional.ToNullable(resultType), Optional.ToNullable(rank), link.Value, serializedAdditionalRawData);
+            return new SearchResult(
+                solutionId,
+                content,
+                title,
+                confidence,
+                source,
+                resultType,
+                rank,
+                link,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchResult>.Write(ModelReaderWriterOptions options)
@@ -186,7 +195,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SearchResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +211,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeSearchResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchResult)} does not support reading '{options.Format}' format.");
             }
         }
 

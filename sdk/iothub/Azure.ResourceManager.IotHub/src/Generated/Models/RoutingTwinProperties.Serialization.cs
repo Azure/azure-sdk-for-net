@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingTwinProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingTwinProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<BinaryData> desired = default;
-            Optional<BinaryData> reported = default;
+            BinaryData desired = default;
+            BinaryData reported = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingTwinProperties(desired.Value, reported.Value, serializedAdditionalRawData);
+            return new RoutingTwinProperties(desired, reported, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingTwinProperties>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeRoutingTwinProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

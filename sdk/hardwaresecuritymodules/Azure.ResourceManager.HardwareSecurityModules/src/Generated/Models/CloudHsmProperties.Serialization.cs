@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<string> fqdn = default;
-            Optional<string> state = default;
-            Optional<string> stateMessage = default;
+            string fqdn = default;
+            string state = default;
+            string stateMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudHsmProperties(fqdn.Value, state.Value, stateMessage.Value, serializedAdditionalRawData);
+            return new CloudHsmProperties(fqdn, state, stateMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudHsmProperties>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                         return DeserializeCloudHsmProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeContentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in ReservationsToPurchase)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReservationPurchaseContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in SavingsPlansToPurchase)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SavingsPlanPurchase>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in ReservationsToExchange)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReservationToReturn>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeContentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IList<ReservationPurchaseContent>> reservationsToPurchase = default;
-            Optional<IList<SavingsPlanPurchase>> savingsPlansToPurchase = default;
-            Optional<IList<ReservationToReturn>> reservationsToExchange = default;
+            IList<ReservationPurchaseContent> reservationsToPurchase = default;
+            IList<SavingsPlanPurchase> savingsPlansToPurchase = default;
+            IList<ReservationToReturn> reservationsToExchange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationPurchaseContent> array = new List<ReservationPurchaseContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationPurchaseContent.DeserializeReservationPurchaseContent(item));
+                        array.Add(ReservationPurchaseContent.DeserializeReservationPurchaseContent(item, options));
                     }
                     reservationsToPurchase = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SavingsPlanPurchase> array = new List<SavingsPlanPurchase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanPurchase.DeserializeSavingsPlanPurchase(item));
+                        array.Add(SavingsPlanPurchase.DeserializeSavingsPlanPurchase(item, options));
                     }
                     savingsPlansToPurchase = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationToReturn> array = new List<ReservationToReturn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationToReturn.DeserializeReservationToReturn(item));
+                        array.Add(ReservationToReturn.DeserializeReservationToReturn(item, options));
                     }
                     reservationsToExchange = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculateExchangeContentProperties(Optional.ToList(reservationsToPurchase), Optional.ToList(savingsPlansToPurchase), Optional.ToList(reservationsToExchange), serializedAdditionalRawData);
+            return new CalculateExchangeContentProperties(reservationsToPurchase ?? new ChangeTrackingList<ReservationPurchaseContent>(), savingsPlansToPurchase ?? new ChangeTrackingList<SavingsPlanPurchase>(), reservationsToExchange ?? new ChangeTrackingList<ReservationToReturn>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculateExchangeContentProperties>.Write(ModelReaderWriterOptions options)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeCalculateExchangeContentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,13 +103,13 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<string> blobContainer = default;
-            Optional<string> archiveNameFormat = default;
-            Optional<Guid> dataLakeSubscriptionId = default;
-            Optional<string> dataLakeAccountName = default;
-            Optional<string> dataLakeFolderPath = default;
+            string name = default;
+            ResourceIdentifier storageAccountResourceId = default;
+            string blobContainer = default;
+            string archiveNameFormat = default;
+            Guid? dataLakeSubscriptionId = default;
+            string dataLakeAccountName = default;
+            string dataLakeFolderPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +175,171 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubDestination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value, Optional.ToNullable(dataLakeSubscriptionId), dataLakeAccountName.Value, dataLakeFolderPath.Value, serializedAdditionalRawData);
+            return new EventHubDestination(
+                name,
+                storageAccountResourceId,
+                blobContainer,
+                archiveNameFormat,
+                dataLakeSubscriptionId,
+                dataLakeAccountName,
+                dataLakeFolderPath,
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountResourceId), out propertyOverride);
+            if (Optional.IsDefined(StorageAccountResourceId) || hasPropertyOverride)
+            {
+                builder.Append("    storageAccountResourceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{StorageAccountResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobContainer), out propertyOverride);
+            if (Optional.IsDefined(BlobContainer) || hasPropertyOverride)
+            {
+                builder.Append("    blobContainer: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (BlobContainer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BlobContainer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BlobContainer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArchiveNameFormat), out propertyOverride);
+            if (Optional.IsDefined(ArchiveNameFormat) || hasPropertyOverride)
+            {
+                builder.Append("    archiveNameFormat: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ArchiveNameFormat.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ArchiveNameFormat}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ArchiveNameFormat}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataLakeSubscriptionId), out propertyOverride);
+            if (Optional.IsDefined(DataLakeSubscriptionId) || hasPropertyOverride)
+            {
+                builder.Append("    dataLakeSubscriptionId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DataLakeSubscriptionId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataLakeAccountName), out propertyOverride);
+            if (Optional.IsDefined(DataLakeAccountName) || hasPropertyOverride)
+            {
+                builder.Append("    dataLakeAccountName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DataLakeAccountName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DataLakeAccountName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DataLakeAccountName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataLakeFolderPath), out propertyOverride);
+            if (Optional.IsDefined(DataLakeFolderPath) || hasPropertyOverride)
+            {
+                builder.Append("    dataLakeFolderPath: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DataLakeFolderPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DataLakeFolderPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DataLakeFolderPath}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<EventHubDestination>.Write(ModelReaderWriterOptions options)
@@ -185,8 +350,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +369,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeEventHubDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

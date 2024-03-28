@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
@@ -19,14 +18,14 @@ namespace Azure.AI.Language.QuestionAnswering
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> questions = default;
-            Optional<string> answer = default;
-            Optional<double> confidenceScore = default;
-            Optional<int> id = default;
-            Optional<string> source = default;
-            Optional<IReadOnlyDictionary<string, string>> metadata = default;
-            Optional<KnowledgeBaseAnswerDialog> dialog = default;
-            Optional<AnswerSpan> answerSpan = default;
+            IReadOnlyList<string> questions = default;
+            string answer = default;
+            double? confidenceScore = default;
+            int? id = default;
+            string source = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            KnowledgeBaseAnswerDialog dialog = default;
+            AnswerSpan answerSpan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("questions"u8))
@@ -104,7 +103,15 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new KnowledgeBaseAnswer(Optional.ToList(questions), answer.Value, Optional.ToNullable(confidenceScore), Optional.ToNullable(id), source.Value, Optional.ToDictionary(metadata), dialog.Value, answerSpan.Value);
+            return new KnowledgeBaseAnswer(
+                questions ?? new ChangeTrackingList<string>(),
+                answer,
+                confidenceScore,
+                id,
+                source,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                dialog,
+                answerSpan);
         }
     }
 }

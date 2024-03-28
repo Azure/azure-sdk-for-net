@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SqlServerPrivateEndpointConnection>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinimalTlsVersion))
+            if (Optional.IsDefined(MinTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
-                writer.WriteStringValue(MinimalTlsVersion);
+                writer.WriteStringValue(MinTlsVersion.Value.ToString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Administrators))
             {
                 writer.WritePropertyName("administrators"u8);
-                writer.WriteObjectValue(Administrators);
+                writer.WriteObjectValue<ServerExternalAdministrator>(Administrators, options);
             }
             if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -170,24 +170,24 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> administratorLogin = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<string> version = default;
-            Optional<string> state = default;
-            Optional<string> fullyQualifiedDomainName = default;
-            Optional<IReadOnlyList<SqlServerPrivateEndpointConnection>> privateEndpointConnections = default;
-            Optional<string> minimalTlsVersion = default;
-            Optional<ServerNetworkAccessFlag> publicNetworkAccess = default;
-            Optional<ServerWorkspaceFeature> workspaceFeature = default;
-            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
-            Optional<Guid> federatedClientId = default;
-            Optional<Uri> keyId = default;
-            Optional<ServerExternalAdministrator> administrators = default;
-            Optional<ServerNetworkAccessFlag> restrictOutboundNetworkAccess = default;
-            Optional<ServerNetworkAccessFlag> isIPv6Enabled = default;
-            Optional<ExternalGovernanceStatus> externalGovernanceStatus = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            string version = default;
+            string state = default;
+            string fullyQualifiedDomainName = default;
+            IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections = default;
+            SqlMinimalTlsVersion? minimalTlsVersion = default;
+            ServerNetworkAccessFlag? publicNetworkAccess = default;
+            ServerWorkspaceFeature? workspaceFeature = default;
+            ResourceIdentifier primaryUserAssignedIdentityId = default;
+            Guid? federatedClientId = default;
+            Uri keyId = default;
+            ServerExternalAdministrator administrators = default;
+            ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default;
+            ServerNetworkAccessFlag? isIPv6Enabled = default;
+            ExternalGovernanceStatus? externalGovernanceStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -259,14 +259,18 @@ namespace Azure.ResourceManager.Sql.Models
                             List<SqlServerPrivateEndpointConnection> array = new List<SqlServerPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SqlServerPrivateEndpointConnection.DeserializeSqlServerPrivateEndpointConnection(item));
+                                array.Add(SqlServerPrivateEndpointConnection.DeserializeSqlServerPrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
                         }
                         if (property0.NameEquals("minimalTlsVersion"u8))
                         {
-                            minimalTlsVersion = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            minimalTlsVersion = new SqlMinimalTlsVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -320,7 +324,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            administrators = ServerExternalAdministrator.DeserializeServerExternalAdministrator(property0.Value);
+                            administrators = ServerExternalAdministrator.DeserializeServerExternalAdministrator(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("restrictOutboundNetworkAccess"u8))
@@ -359,7 +363,26 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerPatch(identity, Optional.ToDictionary(tags), administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(isIPv6Enabled), Optional.ToNullable(externalGovernanceStatus), serializedAdditionalRawData);
+            return new SqlServerPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                administratorLogin,
+                administratorLoginPassword,
+                version,
+                state,
+                fullyQualifiedDomainName,
+                privateEndpointConnections ?? new ChangeTrackingList<SqlServerPrivateEndpointConnection>(),
+                minimalTlsVersion,
+                publicNetworkAccess,
+                workspaceFeature,
+                primaryUserAssignedIdentityId,
+                federatedClientId,
+                keyId,
+                administrators,
+                restrictOutboundNetworkAccess,
+                isIPv6Enabled,
+                externalGovernanceStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerPatch>.Write(ModelReaderWriterOptions options)
@@ -371,7 +394,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -387,7 +410,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSqlServerPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

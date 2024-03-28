@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmProtectedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(MobilityAgentDetails))
             {
                 writer.WritePropertyName("mobilityAgentDetails"u8);
-                writer.WriteObjectValue(MobilityAgentDetails);
+                writer.WriteObjectValue<InMageRcmMobilityAgentDetails>(MobilityAgentDetails, options);
             }
             if (Optional.IsCollectionDefined(LastAgentUpgradeErrorDetails))
             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in LastAgentUpgradeErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmLastAgentUpgradeErrorDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentUpgradeBlockingErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmAgentUpgradeBlockingErrorDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -298,14 +298,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageRcmNicDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DiscoveredVmDetails))
             {
                 writer.WritePropertyName("discoveredVmDetails"u8);
-                writer.WriteObjectValue(DiscoveredVmDetails);
+                writer.WriteObjectValue<InMageRcmDiscoveredProtectedVmDetails>(DiscoveredVmDetails, options);
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -347,58 +347,58 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> internalIdentifier = default;
-            Optional<string> fabricDiscoveryMachineId = default;
-            Optional<string> multiVmGroupName = default;
-            Optional<string> discoveryType = default;
-            Optional<Guid> processServerId = default;
-            Optional<int> processorCoreCount = default;
-            Optional<double> allocatedMemoryInMB = default;
-            Optional<string> processServerName = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> osType = default;
-            Optional<string> firmwareType = default;
-            Optional<IPAddress> primaryNicIPAddress = default;
-            Optional<string> targetGeneration = default;
-            Optional<string> licenseType = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<string> targetVmName = default;
-            Optional<string> targetVmSize = default;
-            Optional<ResourceIdentifier> targetResourceGroupId = default;
-            Optional<string> targetLocation = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
-            Optional<ResourceIdentifier> targetNetworkId = default;
-            Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<ResourceIdentifier> failoverRecoveryPointId = default;
-            Optional<DateTimeOffset> lastRecoveryPointReceived = default;
-            Optional<long> lastRpoInSeconds = default;
-            Optional<DateTimeOffset> lastRpoCalculatedTime = default;
-            Optional<ResourceIdentifier> lastRecoveryPointId = default;
-            Optional<int> initialReplicationProgressPercentage = default;
-            Optional<long> initialReplicationProcessedBytes = default;
-            Optional<long> initialReplicationTransferredBytes = default;
-            Optional<VmReplicationProgressHealth> initialReplicationProgressHealth = default;
-            Optional<int> resyncProgressPercentage = default;
-            Optional<long> resyncProcessedBytes = default;
-            Optional<long> resyncTransferredBytes = default;
-            Optional<VmReplicationProgressHealth> resyncProgressHealth = default;
-            Optional<string> resyncRequired = default;
-            Optional<SiteRecoveryResyncState> resyncState = default;
-            Optional<MobilityAgentUpgradeState> agentUpgradeState = default;
-            Optional<string> lastAgentUpgradeType = default;
-            Optional<string> agentUpgradeJobId = default;
-            Optional<string> agentUpgradeAttemptToVersion = default;
-            Optional<IReadOnlyList<InMageRcmProtectedDiskDetails>> protectedDisks = default;
-            Optional<string> isLastUpgradeSuccessful = default;
-            Optional<bool> isAgentRegistrationSuccessfulAfterFailover = default;
-            Optional<InMageRcmMobilityAgentDetails> mobilityAgentDetails = default;
-            Optional<IReadOnlyList<InMageRcmLastAgentUpgradeErrorDetails>> lastAgentUpgradeErrorDetails = default;
-            Optional<IReadOnlyList<InMageRcmAgentUpgradeBlockingErrorDetails>> agentUpgradeBlockingErrorDetails = default;
-            Optional<IReadOnlyList<InMageRcmNicDetails>> vmNics = default;
-            Optional<InMageRcmDiscoveredProtectedVmDetails> discoveredVmDetails = default;
+            string internalIdentifier = default;
+            string fabricDiscoveryMachineId = default;
+            string multiVmGroupName = default;
+            string discoveryType = default;
+            Guid? processServerId = default;
+            int? processorCoreCount = default;
+            double? allocatedMemoryInMB = default;
+            string processServerName = default;
+            string runAsAccountId = default;
+            string osType = default;
+            string firmwareType = default;
+            IPAddress primaryNicIPAddress = default;
+            string targetGeneration = default;
+            string licenseType = default;
+            ResourceIdentifier storageAccountId = default;
+            string targetVmName = default;
+            string targetVmSize = default;
+            ResourceIdentifier targetResourceGroupId = default;
+            string targetLocation = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            ResourceIdentifier targetBootDiagnosticsStorageAccountId = default;
+            ResourceIdentifier targetNetworkId = default;
+            ResourceIdentifier testNetworkId = default;
+            ResourceIdentifier failoverRecoveryPointId = default;
+            DateTimeOffset? lastRecoveryPointReceived = default;
+            long? lastRpoInSeconds = default;
+            DateTimeOffset? lastRpoCalculatedTime = default;
+            ResourceIdentifier lastRecoveryPointId = default;
+            int? initialReplicationProgressPercentage = default;
+            long? initialReplicationProcessedBytes = default;
+            long? initialReplicationTransferredBytes = default;
+            VmReplicationProgressHealth? initialReplicationProgressHealth = default;
+            int? resyncProgressPercentage = default;
+            long? resyncProcessedBytes = default;
+            long? resyncTransferredBytes = default;
+            VmReplicationProgressHealth? resyncProgressHealth = default;
+            string resyncRequired = default;
+            SiteRecoveryResyncState? resyncState = default;
+            MobilityAgentUpgradeState? agentUpgradeState = default;
+            string lastAgentUpgradeType = default;
+            string agentUpgradeJobId = default;
+            string agentUpgradeAttemptToVersion = default;
+            IReadOnlyList<InMageRcmProtectedDiskDetails> protectedDisks = default;
+            string isLastUpgradeSuccessful = default;
+            bool? isAgentRegistrationSuccessfulAfterFailover = default;
+            InMageRcmMobilityAgentDetails mobilityAgentDetails = default;
+            IReadOnlyList<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = default;
+            IReadOnlyList<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = default;
+            IReadOnlyList<InMageRcmNicDetails> vmNics = default;
+            InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmProtectedDiskDetails> array = new List<InMageRcmProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmProtectedDiskDetails.DeserializeInMageRcmProtectedDiskDetails(item));
+                        array.Add(InMageRcmProtectedDiskDetails.DeserializeInMageRcmProtectedDiskDetails(item, options));
                     }
                     protectedDisks = array;
                     continue;
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    mobilityAgentDetails = InMageRcmMobilityAgentDetails.DeserializeInMageRcmMobilityAgentDetails(property.Value);
+                    mobilityAgentDetails = InMageRcmMobilityAgentDetails.DeserializeInMageRcmMobilityAgentDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastAgentUpgradeErrorDetails"u8))
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmLastAgentUpgradeErrorDetails> array = new List<InMageRcmLastAgentUpgradeErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmLastAgentUpgradeErrorDetails.DeserializeInMageRcmLastAgentUpgradeErrorDetails(item));
+                        array.Add(InMageRcmLastAgentUpgradeErrorDetails.DeserializeInMageRcmLastAgentUpgradeErrorDetails(item, options));
                     }
                     lastAgentUpgradeErrorDetails = array;
                     continue;
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmAgentUpgradeBlockingErrorDetails> array = new List<InMageRcmAgentUpgradeBlockingErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmAgentUpgradeBlockingErrorDetails.DeserializeInMageRcmAgentUpgradeBlockingErrorDetails(item));
+                        array.Add(InMageRcmAgentUpgradeBlockingErrorDetails.DeserializeInMageRcmAgentUpgradeBlockingErrorDetails(item, options));
                     }
                     agentUpgradeBlockingErrorDetails = array;
                     continue;
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmNicDetails> array = new List<InMageRcmNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmNicDetails.DeserializeInMageRcmNicDetails(item));
+                        array.Add(InMageRcmNicDetails.DeserializeInMageRcmNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    discoveredVmDetails = InMageRcmDiscoveredProtectedVmDetails.DeserializeInMageRcmDiscoveredProtectedVmDetails(property.Value);
+                    discoveredVmDetails = InMageRcmDiscoveredProtectedVmDetails.DeserializeInMageRcmDiscoveredProtectedVmDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))
@@ -827,7 +827,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmReplicationDetails(instanceType, serializedAdditionalRawData, internalIdentifier.Value, fabricDiscoveryMachineId.Value, multiVmGroupName.Value, discoveryType.Value, Optional.ToNullable(processServerId), Optional.ToNullable(processorCoreCount), Optional.ToNullable(allocatedMemoryInMB), processServerName.Value, runAsAccountId.Value, osType.Value, firmwareType.Value, primaryNicIPAddress.Value, targetGeneration.Value, licenseType.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetLocation.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, failoverRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToNullable(lastRpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), lastRecoveryPointId.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToNullable(agentUpgradeState), lastAgentUpgradeType.Value, agentUpgradeJobId.Value, agentUpgradeAttemptToVersion.Value, Optional.ToList(protectedDisks), isLastUpgradeSuccessful.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover), mobilityAgentDetails.Value, Optional.ToList(lastAgentUpgradeErrorDetails), Optional.ToList(agentUpgradeBlockingErrorDetails), Optional.ToList(vmNics), discoveredVmDetails.Value);
+            return new InMageRcmReplicationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                internalIdentifier,
+                fabricDiscoveryMachineId,
+                multiVmGroupName,
+                discoveryType,
+                processServerId,
+                processorCoreCount,
+                allocatedMemoryInMB,
+                processServerName,
+                runAsAccountId,
+                osType,
+                firmwareType,
+                primaryNicIPAddress,
+                targetGeneration,
+                licenseType,
+                storageAccountId,
+                targetVmName,
+                targetVmSize,
+                targetResourceGroupId,
+                targetLocation,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                targetBootDiagnosticsStorageAccountId,
+                targetNetworkId,
+                testNetworkId,
+                failoverRecoveryPointId,
+                lastRecoveryPointReceived,
+                lastRpoInSeconds,
+                lastRpoCalculatedTime,
+                lastRecoveryPointId,
+                initialReplicationProgressPercentage,
+                initialReplicationProcessedBytes,
+                initialReplicationTransferredBytes,
+                initialReplicationProgressHealth,
+                resyncProgressPercentage,
+                resyncProcessedBytes,
+                resyncTransferredBytes,
+                resyncProgressHealth,
+                resyncRequired,
+                resyncState,
+                agentUpgradeState,
+                lastAgentUpgradeType,
+                agentUpgradeJobId,
+                agentUpgradeAttemptToVersion,
+                protectedDisks ?? new ChangeTrackingList<InMageRcmProtectedDiskDetails>(),
+                isLastUpgradeSuccessful,
+                isAgentRegistrationSuccessfulAfterFailover,
+                mobilityAgentDetails,
+                lastAgentUpgradeErrorDetails ?? new ChangeTrackingList<InMageRcmLastAgentUpgradeErrorDetails>(),
+                agentUpgradeBlockingErrorDetails ?? new ChangeTrackingList<InMageRcmAgentUpgradeBlockingErrorDetails>(),
+                vmNics ?? new ChangeTrackingList<InMageRcmNicDetails>(),
+                discoveredVmDetails);
         }
 
         BinaryData IPersistableModel<InMageRcmReplicationDetails>.Write(ModelReaderWriterOptions options)
@@ -839,7 +893,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -855,7 +909,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmReplicationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

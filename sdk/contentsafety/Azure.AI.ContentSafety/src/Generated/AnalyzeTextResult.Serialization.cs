@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
@@ -23,7 +22,7 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.AI.ContentSafety
                 writer.WriteStartArray();
                 foreach (var item in BlocklistsMatch)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TextBlocklistMatch>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +40,7 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartArray();
             foreach (var item in CategoriesAnalysis)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<TextCategoriesAnalysis>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -67,7 +66,7 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +81,7 @@ namespace Azure.AI.ContentSafety
             {
                 return null;
             }
-            Optional<IReadOnlyList<TextBlocklistMatch>> blocklistsMatch = default;
+            IReadOnlyList<TextBlocklistMatch> blocklistsMatch = default;
             IReadOnlyList<TextCategoriesAnalysis> categoriesAnalysis = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +96,7 @@ namespace Azure.AI.ContentSafety
                     List<TextBlocklistMatch> array = new List<TextBlocklistMatch>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextBlocklistMatch.DeserializeTextBlocklistMatch(item));
+                        array.Add(TextBlocklistMatch.DeserializeTextBlocklistMatch(item, options));
                     }
                     blocklistsMatch = array;
                     continue;
@@ -107,7 +106,7 @@ namespace Azure.AI.ContentSafety
                     List<TextCategoriesAnalysis> array = new List<TextCategoriesAnalysis>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextCategoriesAnalysis.DeserializeTextCategoriesAnalysis(item));
+                        array.Add(TextCategoriesAnalysis.DeserializeTextCategoriesAnalysis(item, options));
                     }
                     categoriesAnalysis = array;
                     continue;
@@ -118,7 +117,7 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalyzeTextResult(Optional.ToList(blocklistsMatch), categoriesAnalysis, serializedAdditionalRawData);
+            return new AnalyzeTextResult(blocklistsMatch ?? new ChangeTrackingList<TextBlocklistMatch>(), categoriesAnalysis, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzeTextResult>.Write(ModelReaderWriterOptions options)
@@ -130,7 +129,7 @@ namespace Azure.AI.ContentSafety
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +145,7 @@ namespace Azure.AI.ContentSafety
                         return DeserializeAnalyzeTextResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -164,7 +163,7 @@ namespace Azure.AI.ContentSafety
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AnalyzeTextResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

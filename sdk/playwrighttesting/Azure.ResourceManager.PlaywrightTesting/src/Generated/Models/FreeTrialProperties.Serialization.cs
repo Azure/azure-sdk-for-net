@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<FreeTrialProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<FreeTrialProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,15 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FreeTrialProperties(accountId, createdAt, expiryAt, allocatedValue, usedValue, percentageUsed, state, serializedAdditionalRawData);
+            return new FreeTrialProperties(
+                accountId,
+                createdAt,
+                expiryAt,
+                allocatedValue,
+                usedValue,
+                percentageUsed,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FreeTrialProperties>.Write(ModelReaderWriterOptions options)
@@ -163,7 +171,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +187,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                         return DeserializeFreeTrialProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

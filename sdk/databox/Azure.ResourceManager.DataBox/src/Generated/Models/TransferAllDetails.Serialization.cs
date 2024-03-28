@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransferAllDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferAllDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferAllDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransferAllDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferAllDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferAllDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataAccountType dataAccountType = default;
-            Optional<bool> transferAllBlobs = default;
-            Optional<bool> transferAllFiles = default;
+            bool? transferAllBlobs = default;
+            bool? transferAllFiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferAllDetails(dataAccountType, Optional.ToNullable(transferAllBlobs), Optional.ToNullable(transferAllFiles), serializedAdditionalRawData);
+            return new TransferAllDetails(dataAccountType, transferAllBlobs, transferAllFiles, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferAllDetails>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TransferAllDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferAllDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeTransferAllDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransferAllDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferAllDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

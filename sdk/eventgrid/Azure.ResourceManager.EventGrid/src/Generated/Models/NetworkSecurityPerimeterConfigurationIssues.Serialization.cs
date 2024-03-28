@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationIssues>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationIssues)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationIssues)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationIssues>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationIssues)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationIssues)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<NetworkSecurityPerimeterConfigurationIssueType> issueType = default;
-            Optional<NetworkSecurityPerimeterConfigurationIssueSeverity> severity = default;
-            Optional<string> description = default;
-            Optional<IList<string>> suggestedResourceIds = default;
-            Optional<IList<string>> suggestedAccessRules = default;
+            string name = default;
+            NetworkSecurityPerimeterConfigurationIssueType? issueType = default;
+            NetworkSecurityPerimeterConfigurationIssueSeverity? severity = default;
+            string description = default;
+            IList<string> suggestedResourceIds = default;
+            IList<string> suggestedAccessRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityPerimeterConfigurationIssues(name.Value, Optional.ToNullable(issueType), Optional.ToNullable(severity), description.Value, Optional.ToList(suggestedResourceIds), Optional.ToList(suggestedAccessRules), serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterConfigurationIssues(
+                name,
+                issueType,
+                severity,
+                description,
+                suggestedResourceIds ?? new ChangeTrackingList<string>(),
+                suggestedAccessRules ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationIssues>.Write(ModelReaderWriterOptions options)
@@ -203,7 +210,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationIssues)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationIssues)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +226,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeNetworkSecurityPerimeterConfigurationIssues(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationIssues)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationIssues)} does not support reading '{options.Format}' format.");
             }
         }
 

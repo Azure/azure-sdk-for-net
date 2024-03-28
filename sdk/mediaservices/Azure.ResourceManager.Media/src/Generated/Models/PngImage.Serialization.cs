@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<PngImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PngImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PngImage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PngLayer>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<PngImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PngImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PngImage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,15 +108,15 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<PngLayer>> layers = default;
+            IList<PngLayer> layers = default;
             string start = default;
-            Optional<string> step = default;
-            Optional<string> range = default;
-            Optional<TimeSpan> keyFrameInterval = default;
-            Optional<InputVideoStretchMode> stretchMode = default;
-            Optional<VideoSyncMode> syncMode = default;
+            string step = default;
+            string range = default;
+            TimeSpan? keyFrameInterval = default;
+            InputVideoStretchMode? stretchMode = default;
+            VideoSyncMode? syncMode = default;
             string odataType = default;
-            Optional<string> label = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<PngLayer> array = new List<PngLayer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PngLayer.DeserializePngLayer(item));
+                        array.Add(PngLayer.DeserializePngLayer(item, options));
                     }
                     layers = array;
                     continue;
@@ -193,7 +193,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PngImage(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), start, step.Value, range.Value, Optional.ToList(layers));
+            return new PngImage(
+                odataType,
+                label,
+                serializedAdditionalRawData,
+                keyFrameInterval,
+                stretchMode,
+                syncMode,
+                start,
+                step,
+                range,
+                layers ?? new ChangeTrackingList<PngLayer>());
         }
 
         BinaryData IPersistableModel<PngImage>.Write(ModelReaderWriterOptions options)
@@ -205,7 +215,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PngImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PngImage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +231,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializePngImage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PngImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PngImage)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceOperationSteps>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in StepsList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UpsertManagedServerOperationStep>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceOperationSteps>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +86,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> totalSteps = default;
-            Optional<int> currentStep = default;
-            Optional<IReadOnlyList<UpsertManagedServerOperationStep>> stepsList = default;
+            string totalSteps = default;
+            int? currentStep = default;
+            IReadOnlyList<UpsertManagedServerOperationStep> stepsList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<UpsertManagedServerOperationStep> array = new List<UpsertManagedServerOperationStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpsertManagedServerOperationStep.DeserializeUpsertManagedServerOperationStep(item));
+                        array.Add(UpsertManagedServerOperationStep.DeserializeUpsertManagedServerOperationStep(item, options));
                     }
                     stepsList = array;
                     continue;
@@ -125,7 +127,80 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceOperationSteps(totalSteps.Value, Optional.ToNullable(currentStep), Optional.ToList(stepsList), serializedAdditionalRawData);
+            return new ManagedInstanceOperationSteps(totalSteps, currentStep, stepsList ?? new ChangeTrackingList<UpsertManagedServerOperationStep>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalSteps), out propertyOverride);
+            if (Optional.IsDefined(TotalSteps) || hasPropertyOverride)
+            {
+                builder.Append("  totalSteps: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (TotalSteps.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TotalSteps}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TotalSteps}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentStep), out propertyOverride);
+            if (Optional.IsDefined(CurrentStep) || hasPropertyOverride)
+            {
+                builder.Append("  currentStep: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{CurrentStep.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepsList), out propertyOverride);
+            if (Optional.IsCollectionDefined(StepsList) || hasPropertyOverride)
+            {
+                if (StepsList.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  stepsList: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in StepsList)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  stepsList: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ManagedInstanceOperationSteps>.Write(ModelReaderWriterOptions options)
@@ -136,8 +211,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +230,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedInstanceOperationSteps(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support reading '{options.Format}' format.");
             }
         }
 

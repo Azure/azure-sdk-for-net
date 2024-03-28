@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthEventLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthEventLink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (Optional.IsDefined(DisplayText))
             {
                 writer.WritePropertyName("displayText"u8);
-                writer.WriteObjectValue(DisplayText);
+                writer.WriteObjectValue<ResourceHealthEventLinkDisplayText>(DisplayText, options);
             }
             if (Optional.IsDefined(ExtensionName))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthEventLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthEventLink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<ResourceHealthEventLinkTypeValue> type = default;
-            Optional<ResourceHealthEventLinkDisplayText> displayText = default;
-            Optional<string> extensionName = default;
-            Optional<string> bladeName = default;
-            Optional<BinaryData> parameters = default;
+            ResourceHealthEventLinkTypeValue? type = default;
+            ResourceHealthEventLinkDisplayText displayText = default;
+            string extensionName = default;
+            string bladeName = default;
+            BinaryData parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    displayText = ResourceHealthEventLinkDisplayText.DeserializeResourceHealthEventLinkDisplayText(property.Value);
+                    displayText = ResourceHealthEventLinkDisplayText.DeserializeResourceHealthEventLinkDisplayText(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensionName"u8))
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventLink(Optional.ToNullable(type), displayText.Value, extensionName.Value, bladeName.Value, parameters.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventLink(
+                type,
+                displayText,
+                extensionName,
+                bladeName,
+                parameters,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventLink>.Write(ModelReaderWriterOptions options)
@@ -160,7 +166,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthEventLink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +182,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeResourceHealthEventLink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthEventLink)} does not support reading '{options.Format}' format.");
             }
         }
 

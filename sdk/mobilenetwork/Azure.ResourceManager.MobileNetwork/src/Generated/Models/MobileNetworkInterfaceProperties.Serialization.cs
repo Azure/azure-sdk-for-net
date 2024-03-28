@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> ipv4Address = default;
-            Optional<string> ipv4Subnet = default;
-            Optional<string> ipv4Gateway = default;
+            string name = default;
+            string ipv4Address = default;
+            string ipv4Subnet = default;
+            string ipv4Gateway = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkInterfaceProperties(name.Value, ipv4Address.Value, ipv4Subnet.Value, ipv4Gateway.Value, serializedAdditionalRawData);
+            return new MobileNetworkInterfaceProperties(name, ipv4Address, ipv4Subnet, ipv4Gateway, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkInterfaceProperties>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkInterfaceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

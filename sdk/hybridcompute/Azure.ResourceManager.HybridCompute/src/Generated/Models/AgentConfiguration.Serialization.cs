@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ExtensionsAllowList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HybridComputeConfigurationExtension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ExtensionsBlockList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HybridComputeConfigurationExtension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<Uri> proxyUrl = default;
-            Optional<IReadOnlyList<string>> incomingConnectionsPorts = default;
-            Optional<IReadOnlyList<HybridComputeConfigurationExtension>> extensionsAllowList = default;
-            Optional<IReadOnlyList<HybridComputeConfigurationExtension>> extensionsBlockList = default;
-            Optional<IReadOnlyList<string>> proxyBypass = default;
-            Optional<string> extensionsEnabled = default;
-            Optional<string> guestConfigurationEnabled = default;
-            Optional<AgentConfigurationMode> configMode = default;
+            Uri proxyUrl = default;
+            IReadOnlyList<string> incomingConnectionsPorts = default;
+            IReadOnlyList<HybridComputeConfigurationExtension> extensionsAllowList = default;
+            IReadOnlyList<HybridComputeConfigurationExtension> extensionsBlockList = default;
+            IReadOnlyList<string> proxyBypass = default;
+            string extensionsEnabled = default;
+            string guestConfigurationEnabled = default;
+            AgentConfigurationMode? configMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeConfigurationExtension> array = new List<HybridComputeConfigurationExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item));
+                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item, options));
                     }
                     extensionsAllowList = array;
                     continue;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeConfigurationExtension> array = new List<HybridComputeConfigurationExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item));
+                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item, options));
                     }
                     extensionsBlockList = array;
                     continue;
@@ -226,7 +226,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentConfiguration(proxyUrl.Value, Optional.ToList(incomingConnectionsPorts), Optional.ToList(extensionsAllowList), Optional.ToList(extensionsBlockList), Optional.ToList(proxyBypass), extensionsEnabled.Value, guestConfigurationEnabled.Value, Optional.ToNullable(configMode), serializedAdditionalRawData);
+            return new AgentConfiguration(
+                proxyUrl,
+                incomingConnectionsPorts ?? new ChangeTrackingList<string>(),
+                extensionsAllowList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(),
+                extensionsBlockList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(),
+                proxyBypass ?? new ChangeTrackingList<string>(),
+                extensionsEnabled,
+                guestConfigurationEnabled,
+                configMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentConfiguration>.Write(ModelReaderWriterOptions options)
@@ -238,7 +247,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -254,7 +263,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeAgentConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmTagSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmTagSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmTagSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmTagSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmTagSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmTagSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, IList<string>>> tags = default;
-            Optional<VmTagOperator> filterOperator = default;
+            IDictionary<string, IList<string>> tags = default;
+            VmTagOperator? filterOperator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmTagSettings(Optional.ToDictionary(tags), Optional.ToNullable(filterOperator), serializedAdditionalRawData);
+            return new VmTagSettings(tags ?? new ChangeTrackingDictionary<string, IList<string>>(), filterOperator, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmTagSettings>.Write(ModelReaderWriterOptions options)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmTagSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmTagSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                         return DeserializeVmTagSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmTagSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmTagSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

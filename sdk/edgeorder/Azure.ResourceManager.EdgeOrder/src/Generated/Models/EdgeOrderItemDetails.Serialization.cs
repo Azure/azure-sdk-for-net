@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
@@ -23,18 +22,18 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("productDetails"u8);
-            writer.WriteObjectValue(ProductDetails);
+            writer.WriteObjectValue<ProductDetails>(ProductDetails, options);
             writer.WritePropertyName("orderItemType"u8);
             writer.WriteStringValue(OrderItemType.ToString());
             if (options.Format != "W" && Optional.IsDefined(CurrentStage))
             {
                 writer.WritePropertyName("currentStage"u8);
-                writer.WriteObjectValue(CurrentStage);
+                writer.WriteObjectValue<EdgeOrderStageDetails>(CurrentStage, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OrderItemStageHistory))
             {
@@ -42,24 +41,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in OrderItemStageHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdgeOrderStageDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
+                writer.WriteObjectValue<OrderItemPreferences>(Preferences, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ForwardShippingDetails))
             {
                 writer.WritePropertyName("forwardShippingDetails"u8);
-                writer.WriteObjectValue(ForwardShippingDetails);
+                writer.WriteObjectValue<ForwardShippingDetails>(ForwardShippingDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails);
+                writer.WriteObjectValue<ReverseShippingDetails>(ReverseShippingDetails, options);
             }
             if (Optional.IsCollectionDefined(NotificationEmailList))
             {
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(FirstOrDefaultManagement))
             {
                 writer.WritePropertyName("managementRpDetails"u8);
-                writer.WriteObjectValue(FirstOrDefaultManagement);
+                writer.WriteObjectValue<ResourceProviderDetails>(FirstOrDefaultManagement, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ManagementRPDetailsList))
             {
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagementRPDetailsList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceProviderDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,27 +155,27 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             ProductDetails productDetails = default;
             OrderItemType orderItemType = default;
-            Optional<EdgeOrderStageDetails> currentStage = default;
-            Optional<IReadOnlyList<EdgeOrderStageDetails>> orderItemStageHistory = default;
-            Optional<OrderItemPreferences> preferences = default;
-            Optional<ForwardShippingDetails> forwardShippingDetails = default;
-            Optional<ReverseShippingDetails> reverseShippingDetails = default;
-            Optional<IList<string>> notificationEmailList = default;
-            Optional<string> cancellationReason = default;
-            Optional<OrderItemCancellationStatus> cancellationStatus = default;
-            Optional<EdgeOrderActionStatus> deletionStatus = default;
-            Optional<string> returnReason = default;
-            Optional<OrderItemReturnStatus> returnStatus = default;
-            Optional<ResourceProviderDetails> managementRPDetails = default;
-            Optional<IReadOnlyList<ResourceProviderDetails>> managementRPDetailsList = default;
-            Optional<ResponseError> error = default;
+            EdgeOrderStageDetails currentStage = default;
+            IReadOnlyList<EdgeOrderStageDetails> orderItemStageHistory = default;
+            OrderItemPreferences preferences = default;
+            ForwardShippingDetails forwardShippingDetails = default;
+            ReverseShippingDetails reverseShippingDetails = default;
+            IList<string> notificationEmailList = default;
+            string cancellationReason = default;
+            OrderItemCancellationStatus? cancellationStatus = default;
+            EdgeOrderActionStatus? deletionStatus = default;
+            string returnReason = default;
+            OrderItemReturnStatus? returnStatus = default;
+            ResourceProviderDetails managementRPDetails = default;
+            IReadOnlyList<ResourceProviderDetails> managementRPDetailsList = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productDetails"u8))
                 {
-                    productDetails = ProductDetails.DeserializeProductDetails(property.Value);
+                    productDetails = ProductDetails.DeserializeProductDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("orderItemType"u8))
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    currentStage = EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(property.Value);
+                    currentStage = EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("orderItemStageHistory"u8))
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<EdgeOrderStageDetails> array = new List<EdgeOrderStageDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(item));
+                        array.Add(EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(item, options));
                     }
                     orderItemStageHistory = array;
                     continue;
@@ -213,7 +212,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    preferences = OrderItemPreferences.DeserializeOrderItemPreferences(property.Value);
+                    preferences = OrderItemPreferences.DeserializeOrderItemPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("forwardShippingDetails"u8))
@@ -222,7 +221,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    forwardShippingDetails = ForwardShippingDetails.DeserializeForwardShippingDetails(property.Value);
+                    forwardShippingDetails = ForwardShippingDetails.DeserializeForwardShippingDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reverseShippingDetails"u8))
@@ -231,7 +230,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value);
+                    reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("notificationEmailList"u8))
@@ -291,7 +290,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    managementRPDetails = ResourceProviderDetails.DeserializeResourceProviderDetails(property.Value);
+                    managementRPDetails = ResourceProviderDetails.DeserializeResourceProviderDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managementRpDetailsList"u8))
@@ -303,7 +302,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ResourceProviderDetails> array = new List<ResourceProviderDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceProviderDetails.DeserializeResourceProviderDetails(item));
+                        array.Add(ResourceProviderDetails.DeserializeResourceProviderDetails(item, options));
                     }
                     managementRPDetailsList = array;
                     continue;
@@ -323,7 +322,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderItemDetails(productDetails, orderItemType, currentStage.Value, Optional.ToList(orderItemStageHistory), preferences.Value, forwardShippingDetails.Value, reverseShippingDetails.Value, Optional.ToList(notificationEmailList), cancellationReason.Value, Optional.ToNullable(cancellationStatus), Optional.ToNullable(deletionStatus), returnReason.Value, Optional.ToNullable(returnStatus), managementRPDetails.Value, Optional.ToList(managementRPDetailsList), error.Value, serializedAdditionalRawData);
+            return new EdgeOrderItemDetails(
+                productDetails,
+                orderItemType,
+                currentStage,
+                orderItemStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>(),
+                preferences,
+                forwardShippingDetails,
+                reverseShippingDetails,
+                notificationEmailList ?? new ChangeTrackingList<string>(),
+                cancellationReason,
+                cancellationStatus,
+                deletionStatus,
+                returnReason,
+                returnStatus,
+                managementRPDetails,
+                managementRPDetailsList ?? new ChangeTrackingList<ResourceProviderDetails>(),
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderItemDetails>.Write(ModelReaderWriterOptions options)
@@ -335,7 +351,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -351,7 +367,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeEdgeOrderItemDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

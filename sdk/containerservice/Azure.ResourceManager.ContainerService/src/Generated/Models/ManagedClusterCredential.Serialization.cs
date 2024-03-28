@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterCredential)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterCredential)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<byte[]> value = default;
+            string name = default;
+            byte[] value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterCredential(name.Value, value.Value, serializedAdditionalRawData);
+            return new ManagedClusterCredential(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterCredential>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterCredential)} does not support reading '{options.Format}' format.");
             }
         }
 

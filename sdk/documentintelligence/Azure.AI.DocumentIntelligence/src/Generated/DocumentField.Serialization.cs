@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentField>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentField)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentField)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,15 +48,15 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("valuePhoneNumber"u8);
                 writer.WriteStringValue(ValuePhoneNumber);
             }
-            if (Optional.IsDefined(ValueNumber))
+            if (Optional.IsDefined(ValueDouble))
             {
                 writer.WritePropertyName("valueNumber"u8);
-                writer.WriteNumberValue(ValueNumber.Value);
+                writer.WriteNumberValue(ValueDouble.Value);
             }
-            if (Optional.IsDefined(ValueInteger))
+            if (Optional.IsDefined(ValueLong))
             {
                 writer.WritePropertyName("valueInteger"u8);
-                writer.WriteNumberValue(ValueInteger.Value);
+                writer.WriteNumberValue(ValueLong.Value);
             }
             if (Optional.IsDefined(ValueSelectionMark))
             {
@@ -74,41 +73,51 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("valueCountryRegion"u8);
                 writer.WriteStringValue(ValueCountryRegion);
             }
-            if (Optional.IsCollectionDefined(ValueArray))
+            if (Optional.IsCollectionDefined(ValueList))
             {
                 writer.WritePropertyName("valueArray"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValueArray)
+                foreach (var item in ValueList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentField>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValueObject))
+            if (Optional.IsCollectionDefined(ValueDictionary))
             {
                 writer.WritePropertyName("valueObject"u8);
                 writer.WriteStartObject();
-                foreach (var item in ValueObject)
+                foreach (var item in ValueDictionary)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DocumentField>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(ValueCurrency))
             {
                 writer.WritePropertyName("valueCurrency"u8);
-                writer.WriteObjectValue(ValueCurrency);
+                writer.WriteObjectValue<CurrencyValue>(ValueCurrency, options);
             }
             if (Optional.IsDefined(ValueAddress))
             {
                 writer.WritePropertyName("valueAddress"u8);
-                writer.WriteObjectValue(ValueAddress);
+                writer.WriteObjectValue<AddressValue>(ValueAddress, options);
             }
             if (Optional.IsDefined(ValueBoolean))
             {
                 writer.WritePropertyName("valueBoolean"u8);
                 writer.WriteBooleanValue(ValueBoolean.Value);
+            }
+            if (Optional.IsCollectionDefined(ValueSelectionGroup))
+            {
+                writer.WritePropertyName("valueSelectionGroup"u8);
+                writer.WriteStartArray();
+                foreach (var item in ValueSelectionGroup)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Content))
             {
@@ -121,7 +130,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in BoundingRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BoundingRegion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +140,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Spans)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentSpan>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +172,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentField>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentField)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentField)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,24 +188,25 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             DocumentFieldType type = default;
-            Optional<string> valueString = default;
-            Optional<DateTimeOffset> valueDate = default;
-            Optional<TimeSpan> valueTime = default;
-            Optional<string> valuePhoneNumber = default;
-            Optional<double> valueNumber = default;
-            Optional<long> valueInteger = default;
-            Optional<DocumentSelectionMarkState> valueSelectionMark = default;
-            Optional<DocumentSignatureType> valueSignature = default;
-            Optional<string> valueCountryRegion = default;
-            Optional<IReadOnlyList<DocumentField>> valueArray = default;
-            Optional<IReadOnlyDictionary<string, DocumentField>> valueObject = default;
-            Optional<CurrencyValue> valueCurrency = default;
-            Optional<AddressValue> valueAddress = default;
-            Optional<bool> valueBoolean = default;
-            Optional<string> content = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
-            Optional<IReadOnlyList<DocumentSpan>> spans = default;
-            Optional<float> confidence = default;
+            string valueString = default;
+            DateTimeOffset? valueDate = default;
+            TimeSpan? valueTime = default;
+            string valuePhoneNumber = default;
+            double? valueNumber = default;
+            long? valueInteger = default;
+            DocumentSelectionMarkState? valueSelectionMark = default;
+            DocumentSignatureType? valueSignature = default;
+            string valueCountryRegion = default;
+            IReadOnlyList<DocumentField> valueArray = default;
+            IReadOnlyDictionary<string, DocumentField> valueObject = default;
+            CurrencyValue valueCurrency = default;
+            AddressValue valueAddress = default;
+            bool? valueBoolean = default;
+            IReadOnlyList<string> valueSelectionGroup = default;
+            string content = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
+            IReadOnlyList<DocumentSpan> spans = default;
+            float? confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -284,7 +294,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentField> array = new List<DocumentField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeDocumentField(item));
+                        array.Add(DeserializeDocumentField(item, options));
                     }
                     valueArray = array;
                     continue;
@@ -298,7 +308,7 @@ namespace Azure.AI.DocumentIntelligence
                     Dictionary<string, DocumentField> dictionary = new Dictionary<string, DocumentField>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeDocumentField(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeDocumentField(property0.Value, options));
                     }
                     valueObject = dictionary;
                     continue;
@@ -309,7 +319,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    valueCurrency = CurrencyValue.DeserializeCurrencyValue(property.Value);
+                    valueCurrency = CurrencyValue.DeserializeCurrencyValue(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("valueAddress"u8))
@@ -318,7 +328,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    valueAddress = AddressValue.DeserializeAddressValue(property.Value);
+                    valueAddress = AddressValue.DeserializeAddressValue(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("valueBoolean"u8))
@@ -328,6 +338,20 @@ namespace Azure.AI.DocumentIntelligence
                         continue;
                     }
                     valueBoolean = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("valueSelectionGroup"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    valueSelectionGroup = array;
                     continue;
                 }
                 if (property.NameEquals("content"u8))
@@ -344,7 +368,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<BoundingRegion> array = new List<BoundingRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BoundingRegion.DeserializeBoundingRegion(item));
+                        array.Add(BoundingRegion.DeserializeBoundingRegion(item, options));
                     }
                     boundingRegions = array;
                     continue;
@@ -358,7 +382,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
@@ -378,7 +402,28 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, Optional.ToList(valueArray), Optional.ToDictionary(valueObject), valueCurrency.Value, valueAddress.Value, Optional.ToNullable(valueBoolean), content.Value, Optional.ToList(boundingRegions), Optional.ToList(spans), Optional.ToNullable(confidence), serializedAdditionalRawData);
+            return new DocumentField(
+                type,
+                valueString,
+                valueDate,
+                valueTime,
+                valuePhoneNumber,
+                valueNumber,
+                valueInteger,
+                valueSelectionMark,
+                valueSignature,
+                valueCountryRegion,
+                valueArray ?? new ChangeTrackingList<DocumentField>(),
+                valueObject ?? new ChangeTrackingDictionary<string, DocumentField>(),
+                valueCurrency,
+                valueAddress,
+                valueBoolean,
+                valueSelectionGroup ?? new ChangeTrackingList<string>(),
+                content,
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans ?? new ChangeTrackingList<DocumentSpan>(),
+                confidence,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentField>.Write(ModelReaderWriterOptions options)
@@ -390,7 +435,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentField)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentField)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -406,7 +451,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentField(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentField)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentField)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -424,7 +469,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentField>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

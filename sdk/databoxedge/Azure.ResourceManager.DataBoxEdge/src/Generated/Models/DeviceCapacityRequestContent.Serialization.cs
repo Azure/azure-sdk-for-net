@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceCapacityRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceCapacityRequestContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceCapacityRequestContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in VmPlacementResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VmPlacementRequestResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceCapacityRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceCapacityRequestContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceCapacityRequestContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             IList<IList<string>> vmPlacementQuery = default;
-            Optional<IList<VmPlacementRequestResult>> vmPlacementResults = default;
+            IList<VmPlacementRequestResult> vmPlacementResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             List<VmPlacementRequestResult> array = new List<VmPlacementRequestResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VmPlacementRequestResult.DeserializeVmPlacementRequestResult(item));
+                                array.Add(VmPlacementRequestResult.DeserializeVmPlacementRequestResult(item, options));
                             }
                             vmPlacementResults = array;
                             continue;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceCapacityRequestContent(vmPlacementQuery, Optional.ToList(vmPlacementResults), serializedAdditionalRawData);
+            return new DeviceCapacityRequestContent(vmPlacementQuery, vmPlacementResults ?? new ChangeTrackingList<VmPlacementRequestResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceCapacityRequestContent>.Write(ModelReaderWriterOptions options)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceCapacityRequestContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceCapacityRequestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDeviceCapacityRequestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceCapacityRequestContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceCapacityRequestContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<AudioTrack>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioTrack)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioTrack)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(HlsSettings))
             {
                 writer.WritePropertyName("hlsSettings"u8);
-                writer.WriteObjectValue(HlsSettings);
+                writer.WriteObjectValue<HlsSettings>(HlsSettings, options);
             }
             if (Optional.IsDefined(DashSettings))
             {
                 writer.WritePropertyName("dashSettings"u8);
-                writer.WriteObjectValue(DashSettings);
+                writer.WriteObjectValue<TrackDashSettings>(DashSettings, options);
             }
             if (Optional.IsDefined(Mpeg4TrackId))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<AudioTrack>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioTrack)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioTrack)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> fileName = default;
-            Optional<string> displayName = default;
-            Optional<string> languageCode = default;
-            Optional<HlsSettings> hlsSettings = default;
-            Optional<TrackDashSettings> dashSettings = default;
-            Optional<int?> mpeg4TrackId = default;
-            Optional<int> bitRate = default;
+            string fileName = default;
+            string displayName = default;
+            string languageCode = default;
+            HlsSettings hlsSettings = default;
+            TrackDashSettings dashSettings = default;
+            int? mpeg4TrackId = default;
+            int? bitRate = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value);
+                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dashSettings"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    dashSettings = TrackDashSettings.DeserializeTrackDashSettings(property.Value);
+                    dashSettings = TrackDashSettings.DeserializeTrackDashSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mpeg4TrackId"u8))
@@ -183,7 +183,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTrack(odataType, serializedAdditionalRawData, fileName.Value, displayName.Value, languageCode.Value, hlsSettings.Value, dashSettings.Value, Optional.ToNullable(mpeg4TrackId), Optional.ToNullable(bitRate));
+            return new AudioTrack(
+                odataType,
+                serializedAdditionalRawData,
+                fileName,
+                displayName,
+                languageCode,
+                hlsSettings,
+                dashSettings,
+                mpeg4TrackId,
+                bitRate);
         }
 
         BinaryData IPersistableModel<AudioTrack>.Write(ModelReaderWriterOptions options)
@@ -195,7 +204,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AudioTrack)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioTrack)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +220,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeAudioTrack(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AudioTrack)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioTrack)} does not support reading '{options.Format}' format.");
             }
         }
 

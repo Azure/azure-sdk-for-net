@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabelCategory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelCategory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabelCategory)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Classes)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<LabelClass>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabelCategory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelCategory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabelCategory)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, LabelClass>> classes = default;
-            Optional<string> displayName = default;
-            Optional<LabelCategoryMultiSelect> multiSelect = default;
+            IDictionary<string, LabelClass> classes = default;
+            string displayName = default;
+            LabelCategoryMultiSelect? multiSelect = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, LabelClass> dictionary = new Dictionary<string, LabelClass>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, LabelClass.DeserializeLabelClass(property0.Value));
+                        dictionary.Add(property0.Name, LabelClass.DeserializeLabelClass(property0.Value, options));
                     }
                     classes = dictionary;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelCategory(Optional.ToDictionary(classes), displayName.Value, Optional.ToNullable(multiSelect), serializedAdditionalRawData);
+            return new LabelCategory(classes ?? new ChangeTrackingDictionary<string, LabelClass>(), displayName, multiSelect, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabelCategory>.Write(ModelReaderWriterOptions options)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabelCategory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabelCategory)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeLabelCategory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabelCategory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabelCategory)} does not support reading '{options.Format}' format.");
             }
         }
 

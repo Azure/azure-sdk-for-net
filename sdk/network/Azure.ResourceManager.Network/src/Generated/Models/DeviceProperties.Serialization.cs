@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> deviceVendor = default;
-            Optional<string> deviceModel = default;
-            Optional<int> linkSpeedInMbps = default;
+            string deviceVendor = default;
+            string deviceModel = default;
+            int? linkSpeedInMbps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceProperties(deviceVendor.Value, deviceModel.Value, Optional.ToNullable(linkSpeedInMbps), serializedAdditionalRawData);
+            return new DeviceProperties(deviceVendor, deviceModel, linkSpeedInMbps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceProperties>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeDeviceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

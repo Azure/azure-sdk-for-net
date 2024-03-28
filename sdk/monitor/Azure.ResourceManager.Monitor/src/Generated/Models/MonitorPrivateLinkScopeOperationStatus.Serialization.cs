@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorPrivateLinkScopeOperationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorPrivateLinkScopeOperationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorPrivateLinkScopeOperationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorPrivateLinkScopeOperationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,12 +115,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<string> status = default;
-            Optional<ResponseError> error = default;
+            string id = default;
+            string name = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string status = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +176,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorPrivateLinkScopeOperationStatus(id.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, error.Value, serializedAdditionalRawData);
+            return new MonitorPrivateLinkScopeOperationStatus(
+                id,
+                name,
+                startTime,
+                endTime,
+                status,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorPrivateLinkScopeOperationStatus>.Write(ModelReaderWriterOptions options)
@@ -189,7 +195,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorPrivateLinkScopeOperationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorPrivateLinkScopeOperationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +211,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorPrivateLinkScopeOperationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorPrivateLinkScopeOperationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorPrivateLinkScopeOperationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

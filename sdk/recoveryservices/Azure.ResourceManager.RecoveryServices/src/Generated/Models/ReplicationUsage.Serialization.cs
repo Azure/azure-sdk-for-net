@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationUsage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(MonitoringSummary))
             {
                 writer.WritePropertyName("monitoringSummary"u8);
-                writer.WriteObjectValue(MonitoringSummary);
+                writer.WriteObjectValue<VaultMonitoringSummary>(MonitoringSummary, options);
             }
             if (Optional.IsDefined(JobsSummary))
             {
                 writer.WritePropertyName("jobsSummary"u8);
-                writer.WriteObjectValue(JobsSummary);
+                writer.WriteObjectValue<ReplicationJobSummary>(JobsSummary, options);
             }
             if (Optional.IsDefined(ProtectedItemCount))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<VaultMonitoringSummary> monitoringSummary = default;
-            Optional<ReplicationJobSummary> jobsSummary = default;
-            Optional<int> protectedItemCount = default;
-            Optional<int> recoveryPlanCount = default;
-            Optional<int> registeredServersCount = default;
-            Optional<int> recoveryServicesProviderAuthType = default;
+            VaultMonitoringSummary monitoringSummary = default;
+            ReplicationJobSummary jobsSummary = default;
+            int? protectedItemCount = default;
+            int? recoveryPlanCount = default;
+            int? registeredServersCount = default;
+            int? recoveryServicesProviderAuthType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    monitoringSummary = VaultMonitoringSummary.DeserializeVaultMonitoringSummary(property.Value);
+                    monitoringSummary = VaultMonitoringSummary.DeserializeVaultMonitoringSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("jobsSummary"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    jobsSummary = ReplicationJobSummary.DeserializeReplicationJobSummary(property.Value);
+                    jobsSummary = ReplicationJobSummary.DeserializeReplicationJobSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectedItemCount"u8))
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationUsage(monitoringSummary.Value, jobsSummary.Value, Optional.ToNullable(protectedItemCount), Optional.ToNullable(recoveryPlanCount), Optional.ToNullable(registeredServersCount), Optional.ToNullable(recoveryServicesProviderAuthType), serializedAdditionalRawData);
+            return new ReplicationUsage(
+                monitoringSummary,
+                jobsSummary,
+                protectedItemCount,
+                recoveryPlanCount,
+                registeredServersCount,
+                recoveryServicesProviderAuthType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationUsage>.Write(ModelReaderWriterOptions options)
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeReplicationUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationUsage)} does not support reading '{options.Format}' format.");
             }
         }
 

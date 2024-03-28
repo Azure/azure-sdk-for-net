@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ListCredentialResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListCredentialResponseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ListCredentialResponseProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HybridContainerServiceCredential>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ListCredentialResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListCredentialResponseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ListCredentialResponseProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridContainerServiceCredential>> kubeconfigs = default;
+            IReadOnlyList<HybridContainerServiceCredential> kubeconfigs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridContainerServiceCredential> array = new List<HybridContainerServiceCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceCredential.DeserializeHybridContainerServiceCredential(item));
+                        array.Add(HybridContainerServiceCredential.DeserializeHybridContainerServiceCredential(item, options));
                     }
                     kubeconfigs = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListCredentialResponseProperties(Optional.ToList(kubeconfigs), serializedAdditionalRawData);
+            return new ListCredentialResponseProperties(kubeconfigs ?? new ChangeTrackingList<HybridContainerServiceCredential>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListCredentialResponseProperties>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ListCredentialResponseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListCredentialResponseProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeListCredentialResponseProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListCredentialResponseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListCredentialResponseProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

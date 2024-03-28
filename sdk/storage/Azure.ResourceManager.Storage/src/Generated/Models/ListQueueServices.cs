@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -63,6 +61,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> List of queue services returned. </summary>
+        [WirePath("value")]
         public IReadOnlyList<QueueServiceData> Value { get; }
     }
 }

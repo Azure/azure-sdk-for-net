@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SolutionMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SolutionMetadataProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionMetadataProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SolutionMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SolutionMetadataProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionMetadataProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> solutionId = default;
-            Optional<SolutionType> solutionType = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<string>> requiredInputs = default;
+            string solutionId = default;
+            SolutionType? solutionType = default;
+            string description = default;
+            IReadOnlyList<string> requiredInputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionMetadataProperties(solutionId.Value, Optional.ToNullable(solutionType), description.Value, Optional.ToList(requiredInputs), serializedAdditionalRawData);
+            return new SolutionMetadataProperties(solutionId, solutionType, description, requiredInputs ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionMetadataProperties>.Write(ModelReaderWriterOptions options)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SolutionMetadataProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionMetadataProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeSolutionMetadataProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SolutionMetadataProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionMetadataProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

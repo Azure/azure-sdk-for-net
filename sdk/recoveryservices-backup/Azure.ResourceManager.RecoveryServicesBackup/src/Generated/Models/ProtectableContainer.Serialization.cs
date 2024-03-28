@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtectableContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectableContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectableContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtectableContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectableContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectableContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "StorageContainer": return StorageProtectableContainer.DeserializeStorageProtectableContainer(element);
-                    case "VMAppContainer": return VmAppContainerProtectableContainer.DeserializeVmAppContainerProtectableContainer(element);
+                    case "StorageContainer": return StorageProtectableContainer.DeserializeStorageProtectableContainer(element, options);
+                    case "VMAppContainer": return VmAppContainerProtectableContainer.DeserializeVmAppContainerProtectableContainer(element, options);
                 }
             }
-            return UnknownProtectableContainer.DeserializeUnknownProtectableContainer(element);
+            return UnknownProtectableContainer.DeserializeUnknownProtectableContainer(element, options);
         }
 
         BinaryData IPersistableModel<ProtectableContainer>.Write(ModelReaderWriterOptions options)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProtectableContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectableContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeProtectableContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProtectableContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectableContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

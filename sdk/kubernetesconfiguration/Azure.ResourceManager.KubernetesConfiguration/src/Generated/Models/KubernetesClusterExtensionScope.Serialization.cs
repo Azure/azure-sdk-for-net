@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (Cluster != null)
                 {
                     writer.WritePropertyName("cluster"u8);
-                    writer.WriteObjectValue(Cluster);
+                    writer.WriteObjectValue<ScopeCluster>(Cluster, options);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (Namespace != null)
                 {
                     writer.WritePropertyName("namespace"u8);
-                    writer.WriteObjectValue(Namespace);
+                    writer.WriteObjectValue<ScopeNamespace>(Namespace, options);
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<ScopeCluster> cluster = default;
-            Optional<ScopeNamespace> @namespace = default;
+            ScopeCluster cluster = default;
+            ScopeNamespace @namespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         cluster = null;
                         continue;
                     }
-                    cluster = ScopeCluster.DeserializeScopeCluster(property.Value);
+                    cluster = ScopeCluster.DeserializeScopeCluster(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("namespace"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         @namespace = null;
                         continue;
                     }
-                    @namespace = ScopeNamespace.DeserializeScopeNamespace(property.Value);
+                    @namespace = ScopeNamespace.DeserializeScopeNamespace(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterExtensionScope(cluster.Value, @namespace.Value, serializedAdditionalRawData);
+            return new KubernetesClusterExtensionScope(cluster, @namespace, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterExtensionScope>.Write(ModelReaderWriterOptions options)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesClusterExtensionScope(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support reading '{options.Format}' format.");
             }
         }
 

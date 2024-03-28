@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkableEnvironmentResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkableEnvironmentResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkableEnvironmentResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData);
+                writer.WriteObjectValue<DynatraceBillingPlanInfo>(PlanData, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkableEnvironmentResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkableEnvironmentResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkableEnvironmentResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> environmentId = default;
-            Optional<string> environmentName = default;
-            Optional<DynatraceBillingPlanInfo> planData = default;
+            string environmentId = default;
+            string environmentName = default;
+            DynatraceBillingPlanInfo planData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    planData = DynatraceBillingPlanInfo.DeserializeDynatraceBillingPlanInfo(property.Value);
+                    planData = DynatraceBillingPlanInfo.DeserializeDynatraceBillingPlanInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkableEnvironmentResult(environmentId.Value, environmentName.Value, planData.Value, serializedAdditionalRawData);
+            return new LinkableEnvironmentResult(environmentId, environmentName, planData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkableEnvironmentResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinkableEnvironmentResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkableEnvironmentResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeLinkableEnvironmentResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkableEnvironmentResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkableEnvironmentResult)} does not support reading '{options.Format}' format.");
             }
         }
 

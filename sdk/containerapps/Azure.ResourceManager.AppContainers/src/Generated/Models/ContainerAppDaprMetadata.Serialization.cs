@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDaprMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDaprMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDaprMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDaprMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDaprMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDaprMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<string> secretRef = default;
+            string name = default;
+            string value = default;
+            string secretRef = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDaprMetadata(name.Value, value.Value, secretRef.Value, serializedAdditionalRawData);
+            return new ContainerAppDaprMetadata(name, value, secretRef, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDaprMetadata>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDaprMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDaprMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppDaprMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDaprMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDaprMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobRefreshConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobRefreshConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> pathPattern = default;
-            Optional<string> dateFormat = default;
-            Optional<string> timeFormat = default;
-            Optional<string> refreshInterval = default;
-            Optional<DataRefreshType> refreshType = default;
+            string pathPattern = default;
+            string dateFormat = default;
+            string timeFormat = default;
+            string refreshInterval = default;
+            DataRefreshType? refreshType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobRefreshConfiguration(pathPattern.Value, dateFormat.Value, timeFormat.Value, refreshInterval.Value, Optional.ToNullable(refreshType), serializedAdditionalRawData);
+            return new StreamingJobRefreshConfiguration(
+                pathPattern,
+                dateFormat,
+                timeFormat,
+                refreshInterval,
+                refreshType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobRefreshConfiguration>.Write(ModelReaderWriterOptions options)
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamingJobRefreshConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

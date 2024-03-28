@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlServerAdministratorListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlServerAdministratorListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlServerAdministratorListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MySqlServerAdministratorData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlServerAdministratorListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlServerAdministratorListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlServerAdministratorListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlServerAdministratorData>> value = default;
+            IReadOnlyList<MySqlServerAdministratorData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlServerAdministratorData> array = new List<MySqlServerAdministratorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlServerAdministratorData.DeserializeMySqlServerAdministratorData(item));
+                        array.Add(MySqlServerAdministratorData.DeserializeMySqlServerAdministratorData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerAdministratorListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MySqlServerAdministratorListResult(value ?? new ChangeTrackingList<MySqlServerAdministratorData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerAdministratorListResult>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlServerAdministratorListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlServerAdministratorListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlServerAdministratorListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlServerAdministratorListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlServerAdministratorListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

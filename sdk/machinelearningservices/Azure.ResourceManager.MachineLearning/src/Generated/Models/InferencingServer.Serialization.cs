@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<InferencingServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InferencingServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InferencingServer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<InferencingServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InferencingServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InferencingServer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureMLBatch": return AzureMLBatchInferencingServer.DeserializeAzureMLBatchInferencingServer(element);
-                    case "AzureMLOnline": return AzureMLOnlineInferencingServer.DeserializeAzureMLOnlineInferencingServer(element);
-                    case "Custom": return CustomInferencingServer.DeserializeCustomInferencingServer(element);
-                    case "Triton": return TritonInferencingServer.DeserializeTritonInferencingServer(element);
+                    case "AzureMLBatch": return AzureMLBatchInferencingServer.DeserializeAzureMLBatchInferencingServer(element, options);
+                    case "AzureMLOnline": return AzureMLOnlineInferencingServer.DeserializeAzureMLOnlineInferencingServer(element, options);
+                    case "Custom": return CustomInferencingServer.DeserializeCustomInferencingServer(element, options);
+                    case "Triton": return TritonInferencingServer.DeserializeTritonInferencingServer(element, options);
                 }
             }
-            return UnknownInferencingServer.DeserializeUnknownInferencingServer(element);
+            return UnknownInferencingServer.DeserializeUnknownInferencingServer(element, options);
         }
 
         BinaryData IPersistableModel<InferencingServer>.Write(ModelReaderWriterOptions options)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InferencingServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InferencingServer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeInferencingServer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InferencingServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InferencingServer)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceTrialQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceTrialQuota)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceTrialQuota)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceTrialQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceTrialQuota)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceTrialQuota)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<AvailablePromotion> availablePromotion = default;
-            Optional<ResourceIdentifier> grafanaResourceId = default;
-            Optional<DateTimeOffset> trialStartAt = default;
-            Optional<DateTimeOffset> trialEndAt = default;
+            AvailablePromotion? availablePromotion = default;
+            ResourceIdentifier grafanaResourceId = default;
+            DateTimeOffset? trialStartAt = default;
+            DateTimeOffset? trialEndAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceTrialQuota(Optional.ToNullable(availablePromotion), grafanaResourceId.Value, Optional.ToNullable(trialStartAt), Optional.ToNullable(trialEndAt), serializedAdditionalRawData);
+            return new MarketplaceTrialQuota(availablePromotion, grafanaResourceId, trialStartAt, trialEndAt, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceTrialQuota>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceTrialQuota)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceTrialQuota)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Grafana.Models
                         return DeserializeMarketplaceTrialQuota(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceTrialQuota)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceTrialQuota)} does not support reading '{options.Format}' format.");
             }
         }
 

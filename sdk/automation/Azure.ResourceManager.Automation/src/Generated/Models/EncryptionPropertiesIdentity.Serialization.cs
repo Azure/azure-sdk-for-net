@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionPropertiesIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionPropertiesIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<BinaryData> userAssignedIdentity = default;
+            BinaryData userAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionPropertiesIdentity(userAssignedIdentity.Value, serializedAdditionalRawData);
+            return new EncryptionPropertiesIdentity(userAssignedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionPropertiesIdentity>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeEncryptionPropertiesIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

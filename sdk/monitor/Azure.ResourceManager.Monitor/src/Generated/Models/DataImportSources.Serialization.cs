@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataImportSources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataImportSources)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataImportSources)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(EventHub))
             {
                 writer.WritePropertyName("eventHub"u8);
-                writer.WriteObjectValue(EventHub);
+                writer.WriteObjectValue<DataImportSourcesEventHub>(EventHub, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataImportSources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataImportSources)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataImportSources)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<DataImportSourcesEventHub> eventHub = default;
+            DataImportSourcesEventHub eventHub = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    eventHub = DataImportSourcesEventHub.DeserializeDataImportSourcesEventHub(property.Value);
+                    eventHub = DataImportSourcesEventHub.DeserializeDataImportSourcesEventHub(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataImportSources(eventHub.Value, serializedAdditionalRawData);
+            return new DataImportSources(eventHub, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataImportSources>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataImportSources)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataImportSources)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDataImportSources(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataImportSources)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataImportSources)} does not support reading '{options.Format}' format.");
             }
         }
 

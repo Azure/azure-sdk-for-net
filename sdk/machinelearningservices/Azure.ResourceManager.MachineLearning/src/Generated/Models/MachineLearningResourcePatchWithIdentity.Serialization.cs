@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningResourcePatchWithIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningResourcePatchWithIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningResourcePatchWithIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<MachineLearningPartialManagedServiceIdentity>(Identity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningResourcePatchWithIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningResourcePatchWithIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningResourcePatchWithIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningPartialManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            MachineLearningPartialManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    identity = MachineLearningPartialManagedServiceIdentity.DeserializeMachineLearningPartialManagedServiceIdentity(property.Value);
+                    identity = MachineLearningPartialManagedServiceIdentity.DeserializeMachineLearningPartialManagedServiceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningResourcePatchWithIdentity(Optional.ToDictionary(tags), serializedAdditionalRawData, identity.Value);
+            return new MachineLearningResourcePatchWithIdentity(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity);
         }
 
         BinaryData IPersistableModel<MachineLearningResourcePatchWithIdentity>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningResourcePatchWithIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningResourcePatchWithIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningResourcePatchWithIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningResourcePatchWithIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningResourcePatchWithIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

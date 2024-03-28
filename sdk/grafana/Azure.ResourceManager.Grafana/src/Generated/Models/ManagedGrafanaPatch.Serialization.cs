@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedGrafanaPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedGrafanaPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ManagedGrafanaSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ManagedGrafanaPatchProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedGrafanaPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedGrafanaPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<ManagedGrafanaSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedGrafanaPatchProperties> properties = default;
+            ManagedGrafanaSku sku = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            ManagedGrafanaPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    sku = ManagedGrafanaSku.DeserializeManagedGrafanaSku(property.Value);
+                    sku = ManagedGrafanaSku.DeserializeManagedGrafanaSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    properties = ManagedGrafanaPatchProperties.DeserializeManagedGrafanaPatchProperties(property.Value);
+                    properties = ManagedGrafanaPatchProperties.DeserializeManagedGrafanaPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedGrafanaPatch(sku.Value, identity, Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new ManagedGrafanaPatch(sku, identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedGrafanaPatch>.Write(ModelReaderWriterOptions options)
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedGrafanaPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedGrafanaPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Grafana.Models
                         return DeserializeManagedGrafanaPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedGrafanaPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedGrafanaPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

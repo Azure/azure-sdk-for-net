@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWorkloadProtectableItem(document.RootElement, options);
+            return DeserializeWorkloadProtectableItem(document.RootElement, options);
         }
 
         internal static UnknownWorkloadProtectableItem DeserializeUnknownWorkloadProtectableItem(JsonElement element, ModelReaderWriterOptions options = null)
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> backupManagementType = default;
-            Optional<string> workloadType = default;
+            string backupManagementType = default;
+            string workloadType = default;
             string protectableItemType = "Unknown";
-            Optional<string> friendlyName = default;
-            Optional<BackupProtectionStatus> protectionState = default;
+            string friendlyName = default;
+            BackupProtectionStatus? protectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownWorkloadProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData);
+            return new UnknownWorkloadProtectableItem(
+                backupManagementType,
+                workloadType,
+                protectableItemType,
+                friendlyName,
+                protectionState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadProtectableItem>.Write(ModelReaderWriterOptions options)
@@ -142,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,10 +161,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownWorkloadProtectableItem(document.RootElement, options);
+                        return DeserializeWorkloadProtectableItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadProtectableItem)} does not support reading '{options.Format}' format.");
             }
         }
 

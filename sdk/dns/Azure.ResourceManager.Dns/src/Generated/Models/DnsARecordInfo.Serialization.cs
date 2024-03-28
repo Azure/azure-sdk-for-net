@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsARecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsARecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsARecordInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsARecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsARecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsARecordInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipv4Address = default;
+            IPAddress ipv4Address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsARecordInfo(ipv4Address.Value, serializedAdditionalRawData);
+            return new DnsARecordInfo(ipv4Address, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsARecordInfo>.Write(ModelReaderWriterOptions options)
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Dns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsARecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsARecordInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Dns.Models
                         return DeserializeDnsARecordInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsARecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsARecordInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

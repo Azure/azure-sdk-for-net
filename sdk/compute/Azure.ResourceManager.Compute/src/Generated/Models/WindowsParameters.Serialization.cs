@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<VmGuestPatchClassificationForWindows>> classificationsToInclude = default;
-            Optional<IList<string>> kbNumbersToInclude = default;
-            Optional<IList<string>> kbNumbersToExclude = default;
-            Optional<bool> excludeKbsRequiringReboot = default;
-            Optional<DateTimeOffset> maxPatchPublishDate = default;
+            IList<VmGuestPatchClassificationForWindows> classificationsToInclude = default;
+            IList<string> kbNumbersToInclude = default;
+            IList<string> kbNumbersToExclude = default;
+            bool? excludeKbsRequiringReboot = default;
+            DateTimeOffset? maxPatchPublishDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsParameters(Optional.ToList(classificationsToInclude), Optional.ToList(kbNumbersToInclude), Optional.ToList(kbNumbersToExclude), Optional.ToNullable(excludeKbsRequiringReboot), Optional.ToNullable(maxPatchPublishDate), serializedAdditionalRawData);
+            return new WindowsParameters(
+                classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationForWindows>(),
+                kbNumbersToInclude ?? new ChangeTrackingList<string>(),
+                kbNumbersToExclude ?? new ChangeTrackingList<string>(),
+                excludeKbsRequiringReboot,
+                maxPatchPublishDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsParameters>.Write(ModelReaderWriterOptions options)
@@ -191,7 +197,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +213,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeWindowsParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

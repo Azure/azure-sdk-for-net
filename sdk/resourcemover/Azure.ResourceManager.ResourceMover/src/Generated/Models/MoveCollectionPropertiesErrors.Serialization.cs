@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoveCollectionPropertiesErrors>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoveCollectionPropertiesErrors)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoveCollectionPropertiesErrors)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoveCollectionPropertiesErrors>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoveCollectionPropertiesErrors)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoveCollectionPropertiesErrors)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<ResponseError> properties = default;
+            ResponseError properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoveCollectionPropertiesErrors(properties.Value, serializedAdditionalRawData);
+            return new MoveCollectionPropertiesErrors(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoveCollectionPropertiesErrors>.Write(ModelReaderWriterOptions options)
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoveCollectionPropertiesErrors)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoveCollectionPropertiesErrors)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoveCollectionPropertiesErrors(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoveCollectionPropertiesErrors)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoveCollectionPropertiesErrors)} does not support reading '{options.Format}' format.");
             }
         }
 

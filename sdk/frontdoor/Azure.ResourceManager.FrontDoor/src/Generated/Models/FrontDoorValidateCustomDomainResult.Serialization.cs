@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorValidateCustomDomainResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorValidateCustomDomainResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorValidateCustomDomainResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorValidateCustomDomainResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorValidateCustomDomainResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorValidateCustomDomainResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<bool> customDomainValidated = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            bool? customDomainValidated = default;
+            string reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorValidateCustomDomainResult(Optional.ToNullable(customDomainValidated), reason.Value, message.Value, serializedAdditionalRawData);
+            return new FrontDoorValidateCustomDomainResult(customDomainValidated, reason, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorValidateCustomDomainResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorValidateCustomDomainResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorValidateCustomDomainResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeFrontDoorValidateCustomDomainResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorValidateCustomDomainResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorValidateCustomDomainResult)} does not support reading '{options.Format}' format.");
             }
         }
 

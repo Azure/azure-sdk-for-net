@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ModelPerformanceSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DataSegment != null)
                 {
                     writer.WritePropertyName("dataSegment"u8);
-                    writer.WriteObjectValue(DataSegment);
+                    writer.WriteObjectValue<MonitoringDataSegment>(DataSegment, options);
                 }
                 else
                 {
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("metricThreshold"u8);
-            writer.WriteObjectValue(MetricThreshold);
+            writer.WriteObjectValue<ModelPerformanceMetricThresholdBase>(MetricThreshold, options);
             writer.WritePropertyName("productionData"u8);
             writer.WriteStartArray();
             foreach (var item in ProductionData)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MonitoringInputDataBase>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData);
+            writer.WriteObjectValue<MonitoringInputDataBase>(ReferenceData, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ModelPerformanceSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MonitoringDataSegment> dataSegment = default;
+            MonitoringDataSegment dataSegment = default;
             ModelPerformanceMetricThresholdBase metricThreshold = default;
             IList<MonitoringInputDataBase> productionData = default;
             MonitoringInputDataBase referenceData = default;
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dataSegment = null;
                         continue;
                     }
-                    dataSegment = MonitoringDataSegment.DeserializeMonitoringDataSegment(property.Value);
+                    dataSegment = MonitoringDataSegment.DeserializeMonitoringDataSegment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricThreshold"u8))
                 {
-                    metricThreshold = ModelPerformanceMetricThresholdBase.DeserializeModelPerformanceMetricThresholdBase(property.Value);
+                    metricThreshold = ModelPerformanceMetricThresholdBase.DeserializeModelPerformanceMetricThresholdBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("productionData"u8))
@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MonitoringInputDataBase> array = new List<MonitoringInputDataBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item));
+                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item, options));
                     }
                     productionData = array;
                     continue;
                 }
                 if (property.NameEquals("referenceData"u8))
                 {
-                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPerformanceSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, dataSegment.Value, metricThreshold, productionData, referenceData);
+            return new ModelPerformanceSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                dataSegment,
+                metricThreshold,
+                productionData,
+                referenceData);
         }
 
         BinaryData IPersistableModel<ModelPerformanceSignal>.Write(ModelReaderWriterOptions options)
@@ -200,7 +208,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +224,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeModelPerformanceSignal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support reading '{options.Format}' format.");
             }
         }
 

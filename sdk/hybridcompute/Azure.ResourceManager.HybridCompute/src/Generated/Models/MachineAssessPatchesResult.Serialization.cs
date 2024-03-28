@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineAssessPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(AvailablePatchCountByClassification))
             {
                 writer.WritePropertyName("availablePatchCountByClassification"u8);
-                writer.WriteObjectValue(AvailablePatchCountByClassification);
+                writer.WriteObjectValue<AvailablePatchCountByClassification>(AvailablePatchCountByClassification, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineAssessPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,16 +114,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<MachineOperationStatus> status = default;
-            Optional<Guid> assessmentActivityId = default;
-            Optional<bool> rebootPending = default;
-            Optional<AvailablePatchCountByClassification> availablePatchCountByClassification = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<PatchOperationStartedBy> startedBy = default;
-            Optional<PatchServiceUsed> patchServiceUsed = default;
-            Optional<HybridComputeOSType> osType = default;
-            Optional<ResponseError> errorDetails = default;
+            MachineOperationStatus? status = default;
+            Guid? assessmentActivityId = default;
+            bool? rebootPending = default;
+            AvailablePatchCountByClassification availablePatchCountByClassification = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? lastModifiedDateTime = default;
+            PatchOperationStartedBy? startedBy = default;
+            PatchServiceUsed? patchServiceUsed = default;
+            HybridComputeOSType? osType = default;
+            ResponseError errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    availablePatchCountByClassification = AvailablePatchCountByClassification.DeserializeAvailablePatchCountByClassification(property.Value);
+                    availablePatchCountByClassification = AvailablePatchCountByClassification.DeserializeAvailablePatchCountByClassification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startDateTime"u8))
@@ -225,7 +224,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineAssessPatchesResult(Optional.ToNullable(status), Optional.ToNullable(assessmentActivityId), Optional.ToNullable(rebootPending), availablePatchCountByClassification.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(startedBy), Optional.ToNullable(patchServiceUsed), Optional.ToNullable(osType), errorDetails.Value, serializedAdditionalRawData);
+            return new MachineAssessPatchesResult(
+                status,
+                assessmentActivityId,
+                rebootPending,
+                availablePatchCountByClassification,
+                startDateTime,
+                lastModifiedDateTime,
+                startedBy,
+                patchServiceUsed,
+                osType,
+                errorDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineAssessPatchesResult>.Write(ModelReaderWriterOptions options)
@@ -237,7 +247,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -253,7 +263,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeMachineAssessPatchesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

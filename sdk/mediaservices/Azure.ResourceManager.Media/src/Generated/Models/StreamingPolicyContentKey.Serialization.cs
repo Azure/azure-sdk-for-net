@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyContentKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyContentKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Tracks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaTrackSelection>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyContentKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyContentKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> label = default;
-            Optional<string> policyName = default;
-            Optional<IList<MediaTrackSelection>> tracks = default;
+            string label = default;
+            string policyName = default;
+            IList<MediaTrackSelection> tracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item, options));
                     }
                     tracks = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPolicyContentKey(label.Value, policyName.Value, Optional.ToList(tracks), serializedAdditionalRawData);
+            return new StreamingPolicyContentKey(label, policyName, tracks ?? new ChangeTrackingList<MediaTrackSelection>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPolicyContentKey>.Write(ModelReaderWriterOptions options)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyContentKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyContentKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingPolicyContentKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyContentKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyContentKey)} does not support reading '{options.Format}' format.");
             }
         }
 

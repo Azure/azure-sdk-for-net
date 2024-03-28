@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsistencyCheckTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsistencyCheckTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsistencyCheckTaskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InconsistentVmDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsistencyCheckTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsistencyCheckTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsistencyCheckTaskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InconsistentVmDetails>> vmDetails = default;
+            IReadOnlyList<InconsistentVmDetails> vmDetails = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InconsistentVmDetails> array = new List<InconsistentVmDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InconsistentVmDetails.DeserializeInconsistentVmDetails(item));
+                        array.Add(InconsistentVmDetails.DeserializeInconsistentVmDetails(item, options));
                     }
                     vmDetails = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsistencyCheckTaskDetails(instanceType, serializedAdditionalRawData, Optional.ToList(vmDetails));
+            return new ConsistencyCheckTaskDetails(instanceType, serializedAdditionalRawData, vmDetails ?? new ChangeTrackingList<InconsistentVmDetails>());
         }
 
         BinaryData IPersistableModel<ConsistencyCheckTaskDetails>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsistencyCheckTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsistencyCheckTaskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeConsistencyCheckTaskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsistencyCheckTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsistencyCheckTaskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

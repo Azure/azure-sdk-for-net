@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiDeploymentParameterMetadataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(PackageContentLink))
             {
                 writer.WritePropertyName("packageContentLink"u8);
-                writer.WriteObjectValue(PackageContentLink);
+                writer.WriteObjectValue<LogicApiDeploymentParameterMetadata>(PackageContentLink, options);
             }
             if (Optional.IsDefined(RedisCacheConnectionString))
             {
                 writer.WritePropertyName("redisCacheConnectionString"u8);
-                writer.WriteObjectValue(RedisCacheConnectionString);
+                writer.WriteObjectValue<LogicApiDeploymentParameterMetadata>(RedisCacheConnectionString, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiDeploymentParameterMetadataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicApiDeploymentParameterMetadata> packageContentLink = default;
-            Optional<LogicApiDeploymentParameterMetadata> redisCacheConnectionString = default;
+            LogicApiDeploymentParameterMetadata packageContentLink = default;
+            LogicApiDeploymentParameterMetadata redisCacheConnectionString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    packageContentLink = LogicApiDeploymentParameterMetadata.DeserializeLogicApiDeploymentParameterMetadata(property.Value);
+                    packageContentLink = LogicApiDeploymentParameterMetadata.DeserializeLogicApiDeploymentParameterMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("redisCacheConnectionString"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    redisCacheConnectionString = LogicApiDeploymentParameterMetadata.DeserializeLogicApiDeploymentParameterMetadata(property.Value);
+                    redisCacheConnectionString = LogicApiDeploymentParameterMetadata.DeserializeLogicApiDeploymentParameterMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiDeploymentParameterMetadataSet(packageContentLink.Value, redisCacheConnectionString.Value, serializedAdditionalRawData);
+            return new LogicApiDeploymentParameterMetadataSet(packageContentLink, redisCacheConnectionString, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiDeploymentParameterMetadataSet>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicApiDeploymentParameterMetadataSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support reading '{options.Format}' format.");
             }
         }
 

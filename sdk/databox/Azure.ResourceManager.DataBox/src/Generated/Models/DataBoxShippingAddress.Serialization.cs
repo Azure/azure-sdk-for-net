@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxShippingAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxShippingAddress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxShippingAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxShippingAddress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,17 +116,17 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             string streetAddress1 = default;
-            Optional<string> streetAddress2 = default;
-            Optional<string> streetAddress3 = default;
-            Optional<string> city = default;
-            Optional<string> stateOrProvince = default;
+            string streetAddress2 = default;
+            string streetAddress3 = default;
+            string city = default;
+            string stateOrProvince = default;
             string country = default;
             string postalCode = default;
-            Optional<string> zipExtendedCode = default;
-            Optional<string> companyName = default;
-            Optional<DataBoxShippingAddressType> addressType = default;
-            Optional<bool> skipAddressValidation = default;
-            Optional<string> taxIdentificationNumber = default;
+            string zipExtendedCode = default;
+            string companyName = default;
+            DataBoxShippingAddressType? addressType = default;
+            bool? skipAddressValidation = default;
+            string taxIdentificationNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,20 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxShippingAddress(streetAddress1, streetAddress2.Value, streetAddress3.Value, city.Value, stateOrProvince.Value, country, postalCode, zipExtendedCode.Value, companyName.Value, Optional.ToNullable(addressType), Optional.ToNullable(skipAddressValidation), taxIdentificationNumber.Value, serializedAdditionalRawData);
+            return new DataBoxShippingAddress(
+                streetAddress1,
+                streetAddress2,
+                streetAddress3,
+                city,
+                stateOrProvince,
+                country,
+                postalCode,
+                zipExtendedCode,
+                companyName,
+                addressType,
+                skipAddressValidation,
+                taxIdentificationNumber,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxShippingAddress>.Write(ModelReaderWriterOptions options)
@@ -217,7 +230,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxShippingAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxShippingAddress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +246,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxShippingAddress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxShippingAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxShippingAddress)} does not support reading '{options.Format}' format.");
             }
         }
 

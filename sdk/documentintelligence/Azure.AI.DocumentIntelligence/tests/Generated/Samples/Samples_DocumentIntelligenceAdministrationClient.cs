@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
-using Azure.AI.DocumentIntelligence;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -266,6 +264,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
         }
 
         [Test]
@@ -299,6 +300,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
         }
 
         [Test]
@@ -493,6 +497,142 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_OperationDetails_GetOperation_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            Response response = client.GetOperation("<operationId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("operationId").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("resourceLocation").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_OperationDetails_GetOperation_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            Response response = await client.GetOperationAsync("<operationId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("operationId").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("resourceLocation").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_OperationDetails_GetOperation_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            Response<OperationDetails> response = client.GetOperation("<operationId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_OperationDetails_GetOperation_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            Response<OperationDetails> response = await client.GetOperationAsync("<operationId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_OperationDetails_GetOperation_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            Response response = client.GetOperation("<operationId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("operationId").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("percentCompleted").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("resourceLocation").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_OperationDetails_GetOperation_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            Response response = await client.GetOperationAsync("<operationId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("operationId").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("percentCompleted").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("resourceLocation").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_OperationDetails_GetOperation_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            Response<OperationDetails> response = client.GetOperation("<operationId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_OperationDetails_GetOperation_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            Response<OperationDetails> response = await client.GetOperationAsync("<operationId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DocumentClassifierDetails_GetClassifier_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -563,11 +703,15 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
         }
 
         [Test]
@@ -586,11 +730,15 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
         }
 
         [Test]
@@ -756,6 +904,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
             }
         }
 
@@ -790,6 +941,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
             }
         }
 
@@ -1045,11 +1199,15 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
                 Console.WriteLine(result.GetProperty("apiVersion").ToString());
+                Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
             }
         }
 
@@ -1069,11 +1227,15 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
                 Console.WriteLine(result.GetProperty("apiVersion").ToString());
+                Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
                 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
             }
         }
 
@@ -1101,6 +1263,694 @@ namespace Azure.AI.DocumentIntelligence.Samples
             await foreach (DocumentClassifierDetails item in client.GetClassifiersAsync())
             {
             }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceAdministrationClient_BuildDocumentModel_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                modelId = "<modelId>",
+                buildMode = "template",
+            });
+            Operation<BinaryData> operation = client.BuildDocumentModel(WaitUntil.Completed, content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceAdministrationClient_BuildDocumentModel_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                modelId = "<modelId>",
+                buildMode = "template",
+            });
+            Operation<BinaryData> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceAdministrationClient_BuildDocumentModel_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId>", DocumentBuildMode.Template);
+            Operation<DocumentModelDetails> operation = client.BuildDocumentModel(WaitUntil.Completed, buildRequest);
+            DocumentModelDetails responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceAdministrationClient_BuildDocumentModel_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId>", DocumentBuildMode.Template);
+            Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
+            DocumentModelDetails responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceAdministrationClient_BuildDocumentModel_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                modelId = "<modelId>",
+                description = "<description>",
+                buildMode = "template",
+                azureBlobSource = new
+                {
+                    containerUrl = "http://localhost:3000",
+                    prefix = "<prefix>",
+                },
+                azureBlobFileListSource = new
+                {
+                    containerUrl = "http://localhost:3000",
+                    fileList = "<fileList>",
+                },
+                tags = new
+                {
+                    key = "<tags>",
+                },
+            });
+            Operation<BinaryData> operation = client.BuildDocumentModel(WaitUntil.Completed, content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("buildMode").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceAdministrationClient_BuildDocumentModel_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                modelId = "<modelId>",
+                description = "<description>",
+                buildMode = "template",
+                azureBlobSource = new
+                {
+                    containerUrl = "http://localhost:3000",
+                    prefix = "<prefix>",
+                },
+                azureBlobFileListSource = new
+                {
+                    containerUrl = "http://localhost:3000",
+                    fileList = "<fileList>",
+                },
+                tags = new
+                {
+                    key = "<tags>",
+                },
+            });
+            Operation<BinaryData> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("buildMode").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceAdministrationClient_BuildDocumentModel_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId>", DocumentBuildMode.Template)
+            {
+                Description = "<description>",
+                AzureBlobSource = new AzureBlobContentSource(new Uri("http://localhost:3000"))
+                {
+                    Prefix = "<prefix>",
+                },
+                AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("http://localhost:3000"), "<fileList>"),
+                Tags =
+{
+["key"] = "<tags>"
+},
+            };
+            Operation<DocumentModelDetails> operation = client.BuildDocumentModel(WaitUntil.Completed, buildRequest);
+            DocumentModelDetails responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceAdministrationClient_BuildDocumentModel_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId>", DocumentBuildMode.Template)
+            {
+                Description = "<description>",
+                AzureBlobSource = new AzureBlobContentSource(new Uri("http://localhost:3000"))
+                {
+                    Prefix = "<prefix>",
+                },
+                AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("http://localhost:3000"), "<fileList>"),
+                Tags =
+{
+["key"] = "<tags>"
+},
+            };
+            Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
+            DocumentModelDetails responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceAdministrationClient_ComposeModel_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                modelId = "<modelId>",
+                componentModels = new object[]
+            {
+new
+{
+modelId = "<modelId>",
+}
+            },
+            });
+            Operation<BinaryData> operation = client.ComposeModel(WaitUntil.Completed, content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceAdministrationClient_ComposeModel_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                modelId = "<modelId>",
+                componentModels = new object[]
+            {
+new
+{
+modelId = "<modelId>",
+}
+            },
+            });
+            Operation<BinaryData> operation = await client.ComposeModelAsync(WaitUntil.Completed, content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceAdministrationClient_ComposeModel_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", new ComponentDocumentModelDetails[]
+            {
+new ComponentDocumentModelDetails("<modelId>")
+            });
+            Operation<DocumentModelDetails> operation = client.ComposeModel(WaitUntil.Completed, composeRequest);
+            DocumentModelDetails responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceAdministrationClient_ComposeModel_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", new ComponentDocumentModelDetails[]
+            {
+new ComponentDocumentModelDetails("<modelId>")
+            });
+            Operation<DocumentModelDetails> operation = await client.ComposeModelAsync(WaitUntil.Completed, composeRequest);
+            DocumentModelDetails responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceAdministrationClient_ComposeModel_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                modelId = "<modelId>",
+                description = "<description>",
+                componentModels = new object[]
+            {
+new
+{
+modelId = "<modelId>",
+}
+            },
+                tags = new
+                {
+                    key = "<tags>",
+                },
+            });
+            Operation<BinaryData> operation = client.ComposeModel(WaitUntil.Completed, content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("buildMode").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceAdministrationClient_ComposeModel_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                modelId = "<modelId>",
+                description = "<description>",
+                componentModels = new object[]
+            {
+new
+{
+modelId = "<modelId>",
+}
+            },
+                tags = new
+                {
+                    key = "<tags>",
+                },
+            });
+            Operation<BinaryData> operation = await client.ComposeModelAsync(WaitUntil.Completed, content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("buildMode").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceAdministrationClient_ComposeModel_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", new ComponentDocumentModelDetails[]
+            {
+new ComponentDocumentModelDetails("<modelId>")
+            })
+            {
+                Description = "<description>",
+                Tags =
+{
+["key"] = "<tags>"
+},
+            };
+            Operation<DocumentModelDetails> operation = client.ComposeModel(WaitUntil.Completed, composeRequest);
+            DocumentModelDetails responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceAdministrationClient_ComposeModel_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", new ComponentDocumentModelDetails[]
+            {
+new ComponentDocumentModelDetails("<modelId>")
+            })
+            {
+                Description = "<description>",
+                Tags =
+{
+["key"] = "<tags>"
+},
+            };
+            Operation<DocumentModelDetails> operation = await client.ComposeModelAsync(WaitUntil.Completed, composeRequest);
+            DocumentModelDetails responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceAdministrationClient_CopyModelTo_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                targetResourceId = "<targetResourceId>",
+                targetResourceRegion = "<targetResourceRegion>",
+                targetModelId = "<targetModelId>",
+                targetModelLocation = "http://localhost:3000",
+                accessToken = "<accessToken>",
+                expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+            });
+            Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceAdministrationClient_CopyModelTo_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                targetResourceId = "<targetResourceId>",
+                targetResourceRegion = "<targetResourceRegion>",
+                targetModelId = "<targetModelId>",
+                targetModelLocation = "http://localhost:3000",
+                accessToken = "<accessToken>",
+                expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+            });
+            Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceAdministrationClient_CopyModelTo_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            CopyAuthorization copyToRequest = new CopyAuthorization(
+                "<targetResourceId>",
+                "<targetResourceRegion>",
+                "<targetModelId>",
+                new Uri("http://localhost:3000"),
+                "<accessToken>",
+                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
+            DocumentModelDetails responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceAdministrationClient_CopyModelTo_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            CopyAuthorization copyToRequest = new CopyAuthorization(
+                "<targetResourceId>",
+                "<targetResourceRegion>",
+                "<targetModelId>",
+                new Uri("http://localhost:3000"),
+                "<accessToken>",
+                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
+            DocumentModelDetails responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceAdministrationClient_CopyModelTo_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                targetResourceId = "<targetResourceId>",
+                targetResourceRegion = "<targetResourceRegion>",
+                targetModelId = "<targetModelId>",
+                targetModelLocation = "http://localhost:3000",
+                accessToken = "<accessToken>",
+                expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+            });
+            Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("buildMode").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceAdministrationClient_CopyModelTo_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                targetResourceId = "<targetResourceId>",
+                targetResourceRegion = "<targetResourceRegion>",
+                targetModelId = "<targetModelId>",
+                targetModelLocation = "http://localhost:3000",
+                accessToken = "<accessToken>",
+                expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+            });
+            Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("buildMode").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+            Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+            Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceAdministrationClient_CopyModelTo_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            CopyAuthorization copyToRequest = new CopyAuthorization(
+                "<targetResourceId>",
+                "<targetResourceRegion>",
+                "<targetModelId>",
+                new Uri("http://localhost:3000"),
+                "<accessToken>",
+                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
+            DocumentModelDetails responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceAdministrationClient_CopyModelTo_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+            CopyAuthorization copyToRequest = new CopyAuthorization(
+                "<targetResourceId>",
+                "<targetResourceRegion>",
+                "<targetModelId>",
+                new Uri("http://localhost:3000"),
+                "<accessToken>",
+                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
+            DocumentModelDetails responseData = operation.Value;
         }
 
         [Test]
@@ -1199,6 +2049,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             {
                 classifierId = "<classifierId>",
                 description = "<description>",
+                baseClassifierId = "<baseClassifierId>",
                 docTypes = new
                 {
                     key = new
@@ -1226,11 +2077,15 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
         }
 
         [Test]
@@ -1245,6 +2100,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             {
                 classifierId = "<classifierId>",
                 description = "<description>",
+                baseClassifierId = "<baseClassifierId>",
                 docTypes = new
                 {
                     key = new
@@ -1272,11 +2128,15 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("apiVersion").ToString());
+            Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
             Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
         }
 
         [Test]
@@ -1301,6 +2161,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             })
             {
                 Description = "<description>",
+                BaseClassifierId = "<baseClassifierId>",
             };
             Operation<DocumentClassifierDetails> operation = client.BuildClassifier(WaitUntil.Completed, buildRequest);
             DocumentClassifierDetails responseData = operation.Value;
@@ -1328,6 +2189,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             })
             {
                 Description = "<description>",
+                BaseClassifierId = "<baseClassifierId>",
             };
             Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, buildRequest);
             DocumentClassifierDetails responseData = operation.Value;

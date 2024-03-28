@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<B2BPartnerContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(B2BPartnerContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(B2BPartnerContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in BusinessIdentities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IntegrationAccountBusinessIdentity>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<B2BPartnerContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(B2BPartnerContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(B2BPartnerContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IList<IntegrationAccountBusinessIdentity>> businessIdentities = default;
+            IList<IntegrationAccountBusinessIdentity> businessIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountBusinessIdentity> array = new List<IntegrationAccountBusinessIdentity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(item));
+                        array.Add(IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(item, options));
                     }
                     businessIdentities = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new B2BPartnerContent(Optional.ToList(businessIdentities), serializedAdditionalRawData);
+            return new B2BPartnerContent(businessIdentities ?? new ChangeTrackingList<IntegrationAccountBusinessIdentity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<B2BPartnerContent>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(B2BPartnerContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(B2BPartnerContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeB2BPartnerContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(B2BPartnerContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(B2BPartnerContent)} does not support reading '{options.Format}' format.");
             }
         }
 

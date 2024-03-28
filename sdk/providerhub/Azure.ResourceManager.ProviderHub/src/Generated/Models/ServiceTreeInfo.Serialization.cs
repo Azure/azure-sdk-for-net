@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTreeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTreeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTreeInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTreeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTreeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTreeInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<string> serviceId = default;
-            Optional<string> componentId = default;
+            string serviceId = default;
+            string componentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTreeInfo(serviceId.Value, componentId.Value, serializedAdditionalRawData);
+            return new ServiceTreeInfo(serviceId, componentId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTreeInfo>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTreeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTreeInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeServiceTreeInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTreeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTreeInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

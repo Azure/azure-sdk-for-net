@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeliveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue"u8);
-                writer.WriteObjectValue(Queue);
+                writer.WriteObjectValue<QueueInfo>(Queue, options);
             }
             if (Optional.IsDefined(Push))
             {
                 writer.WritePropertyName("push"u8);
-                writer.WriteObjectValue(Push);
+                writer.WriteObjectValue<PushInfo>(Push, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeliveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<DeliveryMode> deliveryMode = default;
-            Optional<QueueInfo> queue = default;
-            Optional<PushInfo> push = default;
+            DeliveryMode? deliveryMode = default;
+            QueueInfo queue = default;
+            PushInfo push = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    queue = QueueInfo.DeserializeQueueInfo(property.Value);
+                    queue = QueueInfo.DeserializeQueueInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("push"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    push = PushInfo.DeserializePushInfo(property.Value);
+                    push = PushInfo.DeserializePushInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeliveryConfiguration(Optional.ToNullable(deliveryMode), queue.Value, push.Value, serializedAdditionalRawData);
+            return new DeliveryConfiguration(deliveryMode, queue, push, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeliveryConfiguration>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeDeliveryConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

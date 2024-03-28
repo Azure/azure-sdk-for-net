@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<CompletionsOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CompletionsOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CompletionsOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,6 +67,11 @@ namespace Azure.AI.OpenAI
             {
                 writer.WritePropertyName("logprobs"u8);
                 writer.WriteNumberValue(LogProbabilityCount.Value);
+            }
+            if (Optional.IsDefined(Suffix))
+            {
+                writer.WritePropertyName("suffix"u8);
+                writer.WriteStringValue(Suffix);
             }
             if (Optional.IsDefined(Echo))
             {
@@ -132,7 +136,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<CompletionsOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CompletionsOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CompletionsOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,20 +152,21 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             IList<string> prompt = default;
-            Optional<int> maxTokens = default;
-            Optional<float> temperature = default;
-            Optional<float> topP = default;
-            Optional<IDictionary<int, int>> logitBias = default;
-            Optional<string> user = default;
-            Optional<int> n = default;
-            Optional<int> logprobs = default;
-            Optional<bool> echo = default;
-            Optional<IList<string>> stop = default;
-            Optional<float> presencePenalty = default;
-            Optional<float> frequencyPenalty = default;
-            Optional<int> bestOf = default;
-            Optional<bool> stream = default;
-            Optional<string> model = default;
+            int? maxTokens = default;
+            float? temperature = default;
+            float? topP = default;
+            IDictionary<int, int> logitBias = default;
+            string user = default;
+            int? n = default;
+            int? logprobs = default;
+            string suffix = default;
+            bool? echo = default;
+            IList<string> stop = default;
+            float? presencePenalty = default;
+            float? frequencyPenalty = default;
+            int? bestOf = default;
+            bool? stream = default;
+            string model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,6 +234,11 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                     logprobs = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("suffix"u8))
+                {
+                    suffix = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("echo"u8))
@@ -301,7 +311,24 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CompletionsOptions(prompt, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user.Value, Optional.ToNullable(n), Optional.ToNullable(logprobs), Optional.ToNullable(echo), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(bestOf), Optional.ToNullable(stream), model.Value, serializedAdditionalRawData);
+            return new CompletionsOptions(
+                prompt,
+                maxTokens,
+                temperature,
+                topP,
+                logitBias ?? new ChangeTrackingDictionary<int, int>(),
+                user,
+                n,
+                logprobs,
+                suffix,
+                echo,
+                stop ?? new ChangeTrackingList<string>(),
+                presencePenalty,
+                frequencyPenalty,
+                bestOf,
+                stream,
+                model,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CompletionsOptions>.Write(ModelReaderWriterOptions options)
@@ -313,7 +340,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CompletionsOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CompletionsOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -329,7 +356,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeCompletionsOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CompletionsOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CompletionsOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -347,7 +374,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<CompletionsOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

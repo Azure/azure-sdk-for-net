@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureIaasVM": return IaasVmProtectionPolicy.DeserializeIaasVmProtectionPolicy(element);
-                    case "AzureSql": return SqlProtectionPolicy.DeserializeSqlProtectionPolicy(element);
-                    case "AzureStorage": return FileShareProtectionPolicy.DeserializeFileShareProtectionPolicy(element);
-                    case "AzureWorkload": return VmWorkloadProtectionPolicy.DeserializeVmWorkloadProtectionPolicy(element);
-                    case "GenericProtectionPolicy": return GenericProtectionPolicy.DeserializeGenericProtectionPolicy(element);
-                    case "MAB": return MabProtectionPolicy.DeserializeMabProtectionPolicy(element);
+                    case "AzureIaasVM": return IaasVmProtectionPolicy.DeserializeIaasVmProtectionPolicy(element, options);
+                    case "AzureSql": return SqlProtectionPolicy.DeserializeSqlProtectionPolicy(element, options);
+                    case "AzureStorage": return FileShareProtectionPolicy.DeserializeFileShareProtectionPolicy(element, options);
+                    case "AzureWorkload": return VmWorkloadProtectionPolicy.DeserializeVmWorkloadProtectionPolicy(element, options);
+                    case "GenericProtectionPolicy": return GenericProtectionPolicy.DeserializeGenericProtectionPolicy(element, options);
+                    case "MAB": return MabProtectionPolicy.DeserializeMabProtectionPolicy(element, options);
                 }
             }
-            return UnknownProtectionPolicy.DeserializeUnknownProtectionPolicy(element);
+            return UnknownProtectionPolicy.DeserializeUnknownProtectionPolicy(element, options);
         }
 
         BinaryData IPersistableModel<BackupGenericProtectionPolicy>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupGenericProtectionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

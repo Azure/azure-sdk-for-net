@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HybridComputeNetworkInterface>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridComputeNetworkInterface>> networkInterfaces = default;
+            IReadOnlyList<HybridComputeNetworkInterface> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeNetworkInterface> array = new List<HybridComputeNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeNetworkInterface.DeserializeHybridComputeNetworkInterface(item));
+                        array.Add(HybridComputeNetworkInterface.DeserializeHybridComputeNetworkInterface(item, options));
                     }
                     networkInterfaces = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeNetworkProfile(Optional.ToList(networkInterfaces), serializedAdditionalRawData);
+            return new HybridComputeNetworkProfile(networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeNetworkProfile>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputeNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

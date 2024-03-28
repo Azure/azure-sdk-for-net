@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubFallbackRouteProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubFallbackRouteProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubFallbackRouteProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubFallbackRouteProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubFallbackRouteProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubFallbackRouteProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IotHubRoutingSource source = default;
-            Optional<string> condition = default;
+            string condition = default;
             IList<string> endpointNames = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubFallbackRouteProperties(name.Value, source, condition.Value, endpointNames, isEnabled, serializedAdditionalRawData);
+            return new IotHubFallbackRouteProperties(
+                name,
+                source,
+                condition,
+                endpointNames,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubFallbackRouteProperties>.Write(ModelReaderWriterOptions options)
@@ -142,7 +148,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubFallbackRouteProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubFallbackRouteProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +164,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubFallbackRouteProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubFallbackRouteProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubFallbackRouteProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

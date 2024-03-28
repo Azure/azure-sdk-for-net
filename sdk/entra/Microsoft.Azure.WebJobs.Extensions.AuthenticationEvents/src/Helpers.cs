@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
 
@@ -43,7 +44,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 }
 
                 throw new InvalidOperationException(
-                    string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Comparable_Not_Found, comparable));
+                    string.Format(
+                        provider: CultureInfo.CurrentCulture,
+                        format: AuthenticationEventResource.Ex_Comparable_Not_Found,
+                        arg0: comparable));
             }
             catch (Exception ex)
             {
@@ -55,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             var response = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
             {
-                Content = new StringContent(GetFailedRequestPayload(ex))
+                Content = new StringContent(GetFailedResponsePayload(ex))
             };
 
             // Set the metrics on header
@@ -64,7 +68,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return response;
         }
 
-        internal static string GetFailedRequestPayload(Exception ex)
+        /// <summary>
+        /// Joins the exception messages into a json payload.
+        /// </summary>
+        /// <param name="ex">The exception thrown. If the exception message is null, then a generic 'Failed' message is passed.</param>
+        /// <returns>A json string containing the error messages</returns>
+        internal static string GetFailedResponsePayload(Exception ex)
         {
             List<string> errors = new List<string>();
             if (ex != null)

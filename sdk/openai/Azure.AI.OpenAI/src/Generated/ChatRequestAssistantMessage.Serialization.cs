@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatRequestAssistantMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatRequestAssistantMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatRequestAssistantMessage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,14 +46,14 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in ToolCalls)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChatCompletionsToolCall>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(FunctionCall))
             {
                 writer.WritePropertyName("function_call"u8);
-                writer.WriteObjectValue(FunctionCall);
+                writer.WriteObjectValue<FunctionCall>(FunctionCall, options);
             }
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
@@ -81,7 +80,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatRequestAssistantMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatRequestAssistantMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatRequestAssistantMessage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,9 +96,9 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string content = default;
-            Optional<string> name = default;
-            Optional<IList<ChatCompletionsToolCall>> toolCalls = default;
-            Optional<FunctionCall> functionCall = default;
+            string name = default;
+            IList<ChatCompletionsToolCall> toolCalls = default;
+            FunctionCall functionCall = default;
             ChatRole role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +128,7 @@ namespace Azure.AI.OpenAI
                     List<ChatCompletionsToolCall> array = new List<ChatCompletionsToolCall>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatCompletionsToolCall.DeserializeChatCompletionsToolCall(item));
+                        array.Add(ChatCompletionsToolCall.DeserializeChatCompletionsToolCall(item, options));
                     }
                     toolCalls = array;
                     continue;
@@ -140,7 +139,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    functionCall = FunctionCall.DeserializeFunctionCall(property.Value);
+                    functionCall = FunctionCall.DeserializeFunctionCall(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("role"u8))
@@ -154,7 +153,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatRequestAssistantMessage(role, serializedAdditionalRawData, content, name.Value, Optional.ToList(toolCalls), functionCall.Value);
+            return new ChatRequestAssistantMessage(
+                role,
+                serializedAdditionalRawData,
+                content,
+                name,
+                toolCalls ?? new ChangeTrackingList<ChatCompletionsToolCall>(),
+                functionCall);
         }
 
         BinaryData IPersistableModel<ChatRequestAssistantMessage>.Write(ModelReaderWriterOptions options)
@@ -166,7 +171,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChatRequestAssistantMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatRequestAssistantMessage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +187,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeChatRequestAssistantMessage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatRequestAssistantMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatRequestAssistantMessage)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -200,7 +205,7 @@ namespace Azure.AI.OpenAI
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ChatRequestAssistantMessage>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

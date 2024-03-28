@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Orbital.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalContactProfileLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrbitalContactProfileLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrbitalContactProfileLink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteStartArray();
             foreach (var item in Channels)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<OrbitalContactProfileLinkChannel>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Orbital.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalContactProfileLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrbitalContactProfileLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrbitalContactProfileLink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Orbital.Models
             string name = default;
             OrbitalLinkPolarization polarization = default;
             OrbitalLinkDirection direction = default;
-            Optional<float> gainOverTemperature = default;
-            Optional<float> eirpdBW = default;
+            float? gainOverTemperature = default;
+            float? eirpdBW = default;
             IList<OrbitalContactProfileLinkChannel> channels = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<OrbitalContactProfileLinkChannel> array = new List<OrbitalContactProfileLinkChannel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalContactProfileLinkChannel.DeserializeOrbitalContactProfileLinkChannel(item));
+                        array.Add(OrbitalContactProfileLinkChannel.DeserializeOrbitalContactProfileLinkChannel(item, options));
                     }
                     channels = array;
                     continue;
@@ -146,7 +146,14 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactProfileLink(name, polarization, direction, Optional.ToNullable(gainOverTemperature), Optional.ToNullable(eirpdBW), channels, serializedAdditionalRawData);
+            return new OrbitalContactProfileLink(
+                name,
+                polarization,
+                direction,
+                gainOverTemperature,
+                eirpdBW,
+                channels,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactProfileLink>.Write(ModelReaderWriterOptions options)
@@ -158,7 +165,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrbitalContactProfileLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrbitalContactProfileLink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +181,7 @@ namespace Azure.ResourceManager.Orbital.Models
                         return DeserializeOrbitalContactProfileLink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrbitalContactProfileLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrbitalContactProfileLink)} does not support reading '{options.Format}' format.");
             }
         }
 

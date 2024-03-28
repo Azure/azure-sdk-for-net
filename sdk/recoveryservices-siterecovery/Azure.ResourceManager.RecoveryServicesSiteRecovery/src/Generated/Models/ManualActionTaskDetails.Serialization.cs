@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManualActionTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManualActionTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManualActionTaskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManualActionTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManualActionTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManualActionTaskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> instructions = default;
-            Optional<string> observation = default;
+            string name = default;
+            string instructions = default;
+            string observation = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManualActionTaskDetails(instanceType, serializedAdditionalRawData, name.Value, instructions.Value, observation.Value);
+            return new ManualActionTaskDetails(instanceType, serializedAdditionalRawData, name, instructions, observation);
         }
 
         BinaryData IPersistableModel<ManualActionTaskDetails>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManualActionTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManualActionTaskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeManualActionTaskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManualActionTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManualActionTaskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

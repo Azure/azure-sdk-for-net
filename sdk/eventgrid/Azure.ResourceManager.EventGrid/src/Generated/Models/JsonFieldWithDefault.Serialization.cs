@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<JsonFieldWithDefault>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<JsonFieldWithDefault>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> sourceField = default;
-            Optional<string> defaultValue = default;
+            string sourceField = default;
+            string defaultValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JsonFieldWithDefault(sourceField.Value, defaultValue.Value, serializedAdditionalRawData);
+            return new JsonFieldWithDefault(sourceField, defaultValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JsonFieldWithDefault>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeJsonFieldWithDefault(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support reading '{options.Format}' format.");
             }
         }
 

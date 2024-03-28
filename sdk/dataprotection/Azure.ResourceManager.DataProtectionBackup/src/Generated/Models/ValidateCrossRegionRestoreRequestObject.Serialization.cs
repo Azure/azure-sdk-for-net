@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ValidateCrossRegionRestoreRequestObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ValidateCrossRegionRestoreRequestObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ValidateCrossRegionRestoreRequestObject)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("restoreRequestObject"u8);
-            writer.WriteObjectValue(RestoreRequestObject);
+            writer.WriteObjectValue<BackupRestoreContent>(RestoreRequestObject, options);
             writer.WritePropertyName("crossRegionRestoreDetails"u8);
-            writer.WriteObjectValue(CrossRegionRestoreDetails);
+            writer.WriteObjectValue<CrossRegionRestoreDetails>(CrossRegionRestoreDetails, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ValidateCrossRegionRestoreRequestObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ValidateCrossRegionRestoreRequestObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ValidateCrossRegionRestoreRequestObject)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("restoreRequestObject"u8))
                 {
-                    restoreRequestObject = BackupRestoreContent.DeserializeBackupRestoreContent(property.Value);
+                    restoreRequestObject = BackupRestoreContent.DeserializeBackupRestoreContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("crossRegionRestoreDetails"u8))
                 {
-                    crossRegionRestoreDetails = CrossRegionRestoreDetails.DeserializeCrossRegionRestoreDetails(property.Value);
+                    crossRegionRestoreDetails = CrossRegionRestoreDetails.DeserializeCrossRegionRestoreDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ValidateCrossRegionRestoreRequestObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ValidateCrossRegionRestoreRequestObject)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeValidateCrossRegionRestoreRequestObject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ValidateCrossRegionRestoreRequestObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ValidateCrossRegionRestoreRequestObject)} does not support reading '{options.Format}' format.");
             }
         }
 

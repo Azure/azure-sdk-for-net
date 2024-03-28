@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnomalySecurityMLAnalyticsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredDataConnectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityMLAnalyticsSettingsDataSource>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnomalySecurityMLAnalyticsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,25 +188,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             SecurityMLAnalyticsSettingsKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<IList<SecurityMLAnalyticsSettingsDataSource>> requiredDataConnectors = default;
-            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
-            Optional<IList<string>> techniques = default;
-            Optional<string> anomalyVersion = default;
-            Optional<BinaryData> customizableObservations = default;
-            Optional<TimeSpan> frequency = default;
-            Optional<AnomalySecurityMLAnalyticsSettingsStatus> settingsStatus = default;
-            Optional<bool> isDefaultSettings = default;
-            Optional<int> anomalySettingsVersion = default;
-            Optional<Guid> settingsDefinitionId = default;
+            SystemData systemData = default;
+            string description = default;
+            string displayName = default;
+            bool? enabled = default;
+            DateTimeOffset? lastModifiedUtc = default;
+            IList<SecurityMLAnalyticsSettingsDataSource> requiredDataConnectors = default;
+            IList<SecurityInsightsAttackTactic> tactics = default;
+            IList<string> techniques = default;
+            string anomalyVersion = default;
+            BinaryData customizableObservations = default;
+            TimeSpan? frequency = default;
+            AnomalySecurityMLAnalyticsSettingsStatus? settingsStatus = default;
+            bool? isDefaultSettings = default;
+            int? anomalySettingsVersion = default;
+            Guid? settingsDefinitionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityMLAnalyticsSettingsDataSource> array = new List<SecurityMLAnalyticsSettingsDataSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityMLAnalyticsSettingsDataSource.DeserializeSecurityMLAnalyticsSettingsDataSource(item));
+                                array.Add(SecurityMLAnalyticsSettingsDataSource.DeserializeSecurityMLAnalyticsSettingsDataSource(item, options));
                             }
                             requiredDataConnectors = array;
                             continue;
@@ -397,7 +396,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnomalySecurityMLAnalyticsSettings(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), Optional.ToList(requiredDataConnectors), Optional.ToList(tactics), Optional.ToList(techniques), anomalyVersion.Value, customizableObservations.Value, Optional.ToNullable(frequency), Optional.ToNullable(settingsStatus), Optional.ToNullable(isDefaultSettings), Optional.ToNullable(anomalySettingsVersion), Optional.ToNullable(settingsDefinitionId));
+            return new AnomalySecurityMLAnalyticsSettings(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData,
+                description,
+                displayName,
+                enabled,
+                lastModifiedUtc,
+                requiredDataConnectors ?? new ChangeTrackingList<SecurityMLAnalyticsSettingsDataSource>(),
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                techniques ?? new ChangeTrackingList<string>(),
+                anomalyVersion,
+                customizableObservations,
+                frequency,
+                settingsStatus,
+                isDefaultSettings,
+                anomalySettingsVersion,
+                settingsDefinitionId);
         }
 
         BinaryData IPersistableModel<AnomalySecurityMLAnalyticsSettings>.Write(ModelReaderWriterOptions options)
@@ -409,7 +429,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -425,7 +445,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeAnomalySecurityMLAnalyticsSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

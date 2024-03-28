@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppContainerResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppContainerResources)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppContainerResources)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppContainerResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppContainerResources)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppContainerResources)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<double> cpu = default;
-            Optional<string> memory = default;
-            Optional<string> ephemeralStorage = default;
+            double? cpu = default;
+            string memory = default;
+            string ephemeralStorage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppContainerResources(Optional.ToNullable(cpu), memory.Value, ephemeralStorage.Value, serializedAdditionalRawData);
+            return new AppContainerResources(cpu, memory, ephemeralStorage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppContainerResources>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppContainerResources)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppContainerResources)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeAppContainerResources(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppContainerResources)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppContainerResources)} does not support reading '{options.Format}' format.");
             }
         }
 

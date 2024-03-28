@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             string name = default;
-            Optional<string> city = default;
-            Optional<string> district = default;
-            Optional<string> countryOrRegion = default;
+            string city = default;
+            string district = default;
+            string countryOrRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeLocation(name, city.Value, district.Value, countryOrRegion.Value, serializedAdditionalRawData);
+            return new HybridComputeLocation(name, city, district, countryOrRegion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeLocation>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputeLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

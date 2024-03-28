@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdvancedFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvancedFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdvancedFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvancedFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAdvancedFilter(document.RootElement, options);
+            return DeserializeAdvancedFilter(document.RootElement, options);
         }
 
         internal static UnknownAdvancedFilter DeserializeUnknownAdvancedFilter(JsonElement element, ModelReaderWriterOptions options = null)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             AdvancedFilterOperatorType operatorType = "Unknown";
-            Optional<string> key = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownAdvancedFilter(operatorType, key.Value, serializedAdditionalRawData);
+            return new UnknownAdvancedFilter(operatorType, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdvancedFilter>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdvancedFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvancedFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAdvancedFilter(document.RootElement, options);
+                        return DeserializeAdvancedFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdvancedFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvancedFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

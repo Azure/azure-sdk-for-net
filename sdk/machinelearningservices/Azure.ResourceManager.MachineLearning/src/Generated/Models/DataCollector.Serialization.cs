@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollector)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollector)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             foreach (var item in Collections)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<DataCollectionConfiguration>(item.Value, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(RequestLogging))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RequestLogging != null)
                 {
                     writer.WritePropertyName("requestLogging"u8);
-                    writer.WriteObjectValue(RequestLogging);
+                    writer.WriteObjectValue<RequestLogging>(RequestLogging, options);
                 }
                 else
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollector)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollector)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IDictionary<string, DataCollectionConfiguration> collections = default;
-            Optional<RequestLogging> requestLogging = default;
-            Optional<RollingRateType> rollingRate = default;
+            RequestLogging requestLogging = default;
+            RollingRateType? rollingRate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, DataCollectionConfiguration> dictionary = new Dictionary<string, DataCollectionConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DataCollectionConfiguration.DeserializeDataCollectionConfiguration(property0.Value));
+                        dictionary.Add(property0.Name, DataCollectionConfiguration.DeserializeDataCollectionConfiguration(property0.Value, options));
                     }
                     collections = dictionary;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         requestLogging = null;
                         continue;
                     }
-                    requestLogging = RequestLogging.DeserializeRequestLogging(property.Value);
+                    requestLogging = RequestLogging.DeserializeRequestLogging(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rollingRate"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollector(collections, requestLogging.Value, Optional.ToNullable(rollingRate), serializedAdditionalRawData);
+            return new DataCollector(collections, requestLogging, rollingRate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollector>.Write(ModelReaderWriterOptions options)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCollector)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollector)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeDataCollector(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCollector)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollector)} does not support reading '{options.Format}' format.");
             }
         }
 

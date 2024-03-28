@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSiblingSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in NicInfoList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NicInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSiblingSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> networkSiblingSetId = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<string> networkSiblingSetStateId = default;
-            Optional<NetAppNetworkFeature> networkFeatures = default;
-            Optional<NetworkSiblingSetProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<NicInfo>> nicInfoList = default;
+            string networkSiblingSetId = default;
+            ResourceIdentifier subnetId = default;
+            string networkSiblingSetStateId = default;
+            NetAppNetworkFeature? networkFeatures = default;
+            NetworkSiblingSetProvisioningState? provisioningState = default;
+            IReadOnlyList<NicInfo> nicInfoList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NicInfo> array = new List<NicInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NicInfo.DeserializeNicInfo(item));
+                        array.Add(NicInfo.DeserializeNicInfo(item, options));
                     }
                     nicInfoList = array;
                     continue;
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSiblingSet(networkSiblingSetId.Value, subnetId.Value, networkSiblingSetStateId.Value, Optional.ToNullable(networkFeatures), Optional.ToNullable(provisioningState), Optional.ToList(nicInfoList), serializedAdditionalRawData);
+            return new NetworkSiblingSet(
+                networkSiblingSetId,
+                subnetId,
+                networkSiblingSetStateId,
+                networkFeatures,
+                provisioningState,
+                nicInfoList ?? new ChangeTrackingList<NicInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSiblingSet>.Write(ModelReaderWriterOptions options)
@@ -178,7 +185,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +201,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetworkSiblingSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSiblingSet)} does not support reading '{options.Format}' format.");
             }
         }
 

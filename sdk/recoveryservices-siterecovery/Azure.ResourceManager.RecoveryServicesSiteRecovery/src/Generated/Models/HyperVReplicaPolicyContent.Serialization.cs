@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,19 +120,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVReplica2012R2": return HyperVReplicaBluePolicyContent.DeserializeHyperVReplicaBluePolicyContent(element);
+                    case "HyperVReplica2012R2": return HyperVReplicaBluePolicyContent.DeserializeHyperVReplicaBluePolicyContent(element, options);
                 }
             }
-            Optional<int> recoveryPoints = default;
-            Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
-            Optional<string> compression = default;
-            Optional<string> initialReplicationMethod = default;
-            Optional<string> onlineReplicationStartTime = default;
-            Optional<string> offlineReplicationImportPath = default;
-            Optional<string> offlineReplicationExportPath = default;
-            Optional<int> replicationPort = default;
-            Optional<int> allowedAuthenticationType = default;
-            Optional<string> replicaDeletion = default;
+            int? recoveryPoints = default;
+            int? applicationConsistentSnapshotFrequencyInHours = default;
+            string compression = default;
+            string initialReplicationMethod = default;
+            string onlineReplicationStartTime = default;
+            string offlineReplicationImportPath = default;
+            string offlineReplicationExportPath = default;
+            int? replicationPort = default;
+            int? allowedAuthenticationType = default;
+            string replicaDeletion = default;
             string instanceType = "HyperVReplica2012";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -215,7 +215,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaPolicyContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPoints), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), compression.Value, initialReplicationMethod.Value, onlineReplicationStartTime.Value, offlineReplicationImportPath.Value, offlineReplicationExportPath.Value, Optional.ToNullable(replicationPort), Optional.ToNullable(allowedAuthenticationType), replicaDeletion.Value);
+            return new HyperVReplicaPolicyContent(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryPoints,
+                applicationConsistentSnapshotFrequencyInHours,
+                compression,
+                initialReplicationMethod,
+                onlineReplicationStartTime,
+                offlineReplicationImportPath,
+                offlineReplicationExportPath,
+                replicationPort,
+                allowedAuthenticationType,
+                replicaDeletion);
         }
 
         BinaryData IPersistableModel<HyperVReplicaPolicyContent>.Write(ModelReaderWriterOptions options)
@@ -227,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +255,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeHyperVReplicaPolicyContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support reading '{options.Format}' format.");
             }
         }
 

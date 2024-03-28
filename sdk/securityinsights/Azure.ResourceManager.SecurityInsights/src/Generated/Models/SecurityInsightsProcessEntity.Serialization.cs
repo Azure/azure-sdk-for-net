@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsProcessEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsProcessEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,18 +167,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> accountEntityId = default;
-            Optional<string> commandLine = default;
-            Optional<DateTimeOffset> creationTimeUtc = default;
-            Optional<SecurityInsightsProcessElevationToken> elevationToken = default;
-            Optional<string> hostEntityId = default;
-            Optional<string> hostLogonSessionEntityId = default;
-            Optional<string> imageFileEntityId = default;
-            Optional<string> parentProcessEntityId = default;
-            Optional<string> processId = default;
+            SystemData systemData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
+            string friendlyName = default;
+            string accountEntityId = default;
+            string commandLine = default;
+            DateTimeOffset? creationTimeUtc = default;
+            SecurityInsightsProcessElevationToken? elevationToken = default;
+            string hostEntityId = default;
+            string hostLogonSessionEntityId = default;
+            string imageFileEntityId = default;
+            string parentProcessEntityId = default;
+            string processId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -309,7 +309,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsProcessEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, accountEntityId.Value, commandLine.Value, Optional.ToNullable(creationTimeUtc), Optional.ToNullable(elevationToken), hostEntityId.Value, hostLogonSessionEntityId.Value, imageFileEntityId.Value, parentProcessEntityId.Value, processId.Value);
+            return new SecurityInsightsProcessEntity(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName,
+                accountEntityId,
+                commandLine,
+                creationTimeUtc,
+                elevationToken,
+                hostEntityId,
+                hostLogonSessionEntityId,
+                imageFileEntityId,
+                parentProcessEntityId,
+                processId);
         }
 
         BinaryData IPersistableModel<SecurityInsightsProcessEntity>.Write(ModelReaderWriterOptions options)
@@ -321,7 +338,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -337,7 +354,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsProcessEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

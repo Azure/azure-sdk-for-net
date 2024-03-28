@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RulesEngineRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RulesEngineRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RulesEngineRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action);
+            writer.WriteObjectValue<RulesEngineAction>(Action, options);
             if (Optional.IsCollectionDefined(MatchConditions))
             {
                 if (MatchConditions != null)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteStartArray();
                     foreach (var item in MatchConditions)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<RulesEngineMatchCondition>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RulesEngineRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RulesEngineRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RulesEngineRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string name = default;
             int priority = default;
             RulesEngineAction action = default;
-            Optional<IList<RulesEngineMatchCondition>> matchConditions = default;
-            Optional<MatchProcessingBehavior?> matchProcessingBehavior = default;
+            IList<RulesEngineMatchCondition> matchConditions = default;
+            MatchProcessingBehavior? matchProcessingBehavior = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (property.NameEquals("action"u8))
                 {
-                    action = RulesEngineAction.DeserializeRulesEngineAction(property.Value);
+                    action = RulesEngineAction.DeserializeRulesEngineAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("matchConditions"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<RulesEngineMatchCondition> array = new List<RulesEngineMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RulesEngineMatchCondition.DeserializeRulesEngineMatchCondition(item));
+                        array.Add(RulesEngineMatchCondition.DeserializeRulesEngineMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesEngineRule(name, priority, action, Optional.ToList(matchConditions), Optional.ToNullable(matchProcessingBehavior), serializedAdditionalRawData);
+            return new RulesEngineRule(
+                name,
+                priority,
+                action,
+                matchConditions ?? new ChangeTrackingList<RulesEngineMatchCondition>(),
+                matchProcessingBehavior,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesEngineRule>.Write(ModelReaderWriterOptions options)
@@ -166,7 +172,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RulesEngineRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RulesEngineRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +188,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeRulesEngineRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RulesEngineRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RulesEngineRule)} does not support reading '{options.Format}' format.");
             }
         }
 

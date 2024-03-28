@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteLimits)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteLimits)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteLimits)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteLimits)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<double> maxPercentageCpu = default;
-            Optional<long> maxMemoryInMb = default;
-            Optional<long> maxDiskSizeInMb = default;
+            double? maxPercentageCpu = default;
+            long? maxMemoryInMb = default;
+            long? maxDiskSizeInMb = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,64 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteLimits(Optional.ToNullable(maxPercentageCpu), Optional.ToNullable(maxMemoryInMb), Optional.ToNullable(maxDiskSizeInMb), serializedAdditionalRawData);
+            return new SiteLimits(maxPercentageCpu, maxMemoryInMb, maxDiskSizeInMb, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxPercentageCpu), out propertyOverride);
+            if (Optional.IsDefined(MaxPercentageCpu) || hasPropertyOverride)
+            {
+                builder.Append("  maxPercentageCpu: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MaxPercentageCpu.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxMemoryInMb), out propertyOverride);
+            if (Optional.IsDefined(MaxMemoryInMb) || hasPropertyOverride)
+            {
+                builder.Append("  maxMemoryInMb: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MaxMemoryInMb.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxDiskSizeInMb), out propertyOverride);
+            if (Optional.IsDefined(MaxDiskSizeInMb) || hasPropertyOverride)
+            {
+                builder.Append("  maxDiskSizeInMb: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MaxDiskSizeInMb.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SiteLimits>.Write(ModelReaderWriterOptions options)
@@ -130,8 +188,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteLimits)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteLimits)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +207,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeSiteLimits(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteLimits)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteLimits)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverSummaryItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverSummaryItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<string> item = default;
+            int? count = default;
+            string item = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverSummaryItemInfo(Optional.ToNullable(count), item.Value, serializedAdditionalRawData);
+            return new MoverSummaryItemInfo(count, item, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverSummaryItemInfo>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverSummaryItemInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

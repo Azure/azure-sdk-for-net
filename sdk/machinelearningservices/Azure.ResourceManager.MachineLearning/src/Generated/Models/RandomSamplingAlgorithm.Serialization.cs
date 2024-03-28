@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RandomSamplingAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RandomSamplingAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> logbase = default;
-            Optional<RandomSamplingAlgorithmRule> rule = default;
-            Optional<int?> seed = default;
+            string logbase = default;
+            RandomSamplingAlgorithmRule? rule = default;
+            int? seed = default;
             SamplingAlgorithmType samplingAlgorithmType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, logbase.Value, Optional.ToNullable(rule), Optional.ToNullable(seed));
+            return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, logbase, rule, seed);
         }
 
         BinaryData IPersistableModel<RandomSamplingAlgorithm>.Write(ModelReaderWriterOptions options)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeRandomSamplingAlgorithm(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificFailoverContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificFailoverContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificFailoverContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificFailoverContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificFailoverContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificFailoverContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return RecoveryPlanA2AFailoverContent.DeserializeRecoveryPlanA2AFailoverContent(element);
-                    case "HyperVReplicaAzure": return RecoveryPlanHyperVReplicaAzureFailoverContent.DeserializeRecoveryPlanHyperVReplicaAzureFailoverContent(element);
-                    case "HyperVReplicaAzureFailback": return RecoveryPlanHyperVReplicaAzureFailbackContent.DeserializeRecoveryPlanHyperVReplicaAzureFailbackContent(element);
-                    case "InMage": return RecoveryPlanInMageFailoverContent.DeserializeRecoveryPlanInMageFailoverContent(element);
-                    case "InMageAzureV2": return RecoveryPlanInMageAzureV2FailoverContent.DeserializeRecoveryPlanInMageAzureV2FailoverContent(element);
-                    case "InMageRcm": return RecoveryPlanInMageRcmFailoverContent.DeserializeRecoveryPlanInMageRcmFailoverContent(element);
-                    case "InMageRcmFailback": return RecoveryPlanInMageRcmFailbackFailoverContent.DeserializeRecoveryPlanInMageRcmFailbackFailoverContent(element);
+                    case "A2A": return RecoveryPlanA2AFailoverContent.DeserializeRecoveryPlanA2AFailoverContent(element, options);
+                    case "HyperVReplicaAzure": return RecoveryPlanHyperVReplicaAzureFailoverContent.DeserializeRecoveryPlanHyperVReplicaAzureFailoverContent(element, options);
+                    case "HyperVReplicaAzureFailback": return RecoveryPlanHyperVReplicaAzureFailbackContent.DeserializeRecoveryPlanHyperVReplicaAzureFailbackContent(element, options);
+                    case "InMage": return RecoveryPlanInMageFailoverContent.DeserializeRecoveryPlanInMageFailoverContent(element, options);
+                    case "InMageAzureV2": return RecoveryPlanInMageAzureV2FailoverContent.DeserializeRecoveryPlanInMageAzureV2FailoverContent(element, options);
+                    case "InMageRcm": return RecoveryPlanInMageRcmFailoverContent.DeserializeRecoveryPlanInMageRcmFailoverContent(element, options);
+                    case "InMageRcmFailback": return RecoveryPlanInMageRcmFailbackFailoverContent.DeserializeRecoveryPlanInMageRcmFailbackFailoverContent(element, options);
                 }
             }
-            return UnknownRecoveryPlanProviderSpecificFailoverContent.DeserializeUnknownRecoveryPlanProviderSpecificFailoverContent(element);
+            return UnknownRecoveryPlanProviderSpecificFailoverContent.DeserializeUnknownRecoveryPlanProviderSpecificFailoverContent(element, options);
         }
 
         BinaryData IPersistableModel<RecoveryPlanProviderSpecificFailoverContent>.Write(ModelReaderWriterOptions options)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificFailoverContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificFailoverContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeRecoveryPlanProviderSpecificFailoverContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificFailoverContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificFailoverContent)} does not support reading '{options.Format}' format.");
             }
         }
 

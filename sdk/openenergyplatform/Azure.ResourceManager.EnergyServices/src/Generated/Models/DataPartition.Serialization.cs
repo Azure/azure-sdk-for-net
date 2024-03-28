@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataPartition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPartition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPartition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataPartition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPartition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPartition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EnergyServices.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> provisioningState = default;
+            string name = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataPartition(name.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new DataPartition(name, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataPartition>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataPartition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPartition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                         return DeserializeDataPartition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataPartition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPartition)} does not support reading '{options.Format}' format.");
             }
         }
 

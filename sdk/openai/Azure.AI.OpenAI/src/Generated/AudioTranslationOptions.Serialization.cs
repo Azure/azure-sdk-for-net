@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AudioTranslationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioTranslationOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioTranslationOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +76,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AudioTranslationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioTranslationOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioTranslationOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,11 +92,11 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             BinaryData file = default;
-            Optional<string> filename = default;
-            Optional<AudioTranslationFormat> responseFormat = default;
-            Optional<string> prompt = default;
-            Optional<float> temperature = default;
-            Optional<string> model = default;
+            string filename = default;
+            AudioTranslationFormat? responseFormat = default;
+            string prompt = default;
+            float? temperature = default;
+            string model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +145,14 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTranslationOptions(file, filename.Value, Optional.ToNullable(responseFormat), prompt.Value, Optional.ToNullable(temperature), model.Value, serializedAdditionalRawData);
+            return new AudioTranslationOptions(
+                file,
+                filename,
+                responseFormat,
+                prompt,
+                temperature,
+                model,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AudioTranslationOptions>.Write(ModelReaderWriterOptions options)
@@ -158,7 +164,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AudioTranslationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioTranslationOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +180,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeAudioTranslationOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AudioTranslationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioTranslationOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

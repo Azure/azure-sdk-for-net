@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkHttpsServerCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkHttpsServerCertificate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkHttpsServerCertificate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (options.Format != "W" && Optional.IsDefined(Provisioning))
             {
                 writer.WritePropertyName("provisioning"u8);
-                writer.WriteObjectValue(Provisioning);
+                writer.WriteObjectValue<MobileNetworkCertificateProvisioning>(Provisioning, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkHttpsServerCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkHttpsServerCertificate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkHttpsServerCertificate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             Uri certificateUrl = default;
-            Optional<MobileNetworkCertificateProvisioning> provisioning = default;
+            MobileNetworkCertificateProvisioning provisioning = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    provisioning = MobileNetworkCertificateProvisioning.DeserializeMobileNetworkCertificateProvisioning(property.Value);
+                    provisioning = MobileNetworkCertificateProvisioning.DeserializeMobileNetworkCertificateProvisioning(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkHttpsServerCertificate(certificateUrl, provisioning.Value, serializedAdditionalRawData);
+            return new MobileNetworkHttpsServerCertificate(certificateUrl, provisioning, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkHttpsServerCertificate>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkHttpsServerCertificate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkHttpsServerCertificate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkHttpsServerCertificate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkHttpsServerCertificate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkHttpsServerCertificate)} does not support reading '{options.Format}' format.");
             }
         }
 

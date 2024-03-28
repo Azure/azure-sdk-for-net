@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdministrativeCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdministrativeCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdministrativeCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdministrativeCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdministrativeCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdministrativeCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> password = default;
+            string password = default;
             string username = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdministrativeCredentials(password.Value, username, serializedAdditionalRawData);
+            return new AdministrativeCredentials(password, username, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdministrativeCredentials>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdministrativeCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdministrativeCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeAdministrativeCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdministrativeCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdministrativeCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

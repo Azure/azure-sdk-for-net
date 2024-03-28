@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             AnalyzeTextLROTaskKind kind = "Unknown";
-            Optional<string> taskName = default;
+            string taskName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -46,7 +46,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new UnknownAnalyzeTextLROTask(taskName.Value, kind);
+            return new UnknownAnalyzeTextLROTask(taskName, kind);
         }
     }
 }

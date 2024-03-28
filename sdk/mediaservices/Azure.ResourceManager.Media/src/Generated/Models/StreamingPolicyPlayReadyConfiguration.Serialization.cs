@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyPlayReadyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyPlayReadyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> customLicenseAcquisitionUriTemplate = default;
-            Optional<string> playReadyCustomAttributes = default;
+            string customLicenseAcquisitionUriTemplate = default;
+            string playReadyCustomAttributes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPolicyPlayReadyConfiguration(customLicenseAcquisitionUriTemplate.Value, playReadyCustomAttributes.Value, serializedAdditionalRawData);
+            return new StreamingPolicyPlayReadyConfiguration(customLicenseAcquisitionUriTemplate, playReadyCustomAttributes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPolicyPlayReadyConfiguration>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingPolicyPlayReadyConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

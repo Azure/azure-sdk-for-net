@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomHttpsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomHttpsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             FrontDoorCertificateSource certificateSource = default;
             FrontDoorTlsProtocolType protocolType = default;
             FrontDoorRequiredMinimumTlsVersion minimumTlsVersion = default;
-            Optional<FrontDoorEndpointConnectionCertificateType> certificateType = default;
-            Optional<WritableSubResource> vault = default;
-            Optional<string> secretName = default;
-            Optional<string> secretVersion = default;
+            FrontDoorEndpointConnectionCertificateType? certificateType = default;
+            WritableSubResource vault = default;
+            string secretName = default;
+            string secretVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomHttpsConfiguration(certificateSource, protocolType, minimumTlsVersion, Optional.ToNullable(certificateType), vault, secretName.Value, secretVersion.Value, serializedAdditionalRawData);
+            return new CustomHttpsConfiguration(
+                certificateSource,
+                protocolType,
+                minimumTlsVersion,
+                certificateType,
+                vault,
+                secretName,
+                secretVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomHttpsConfiguration>.Write(ModelReaderWriterOptions options)
@@ -193,7 +201,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +217,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeCustomHttpsConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

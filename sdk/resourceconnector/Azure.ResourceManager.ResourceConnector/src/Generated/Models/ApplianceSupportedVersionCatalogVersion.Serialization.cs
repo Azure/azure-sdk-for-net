@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersionCatalogVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceSupportedVersionCatalogVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceSupportedVersionCatalogVersion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteObjectValue(Data);
+                writer.WriteObjectValue<ApplianceSupportedVersionCatalogVersionProperties>(Data, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersionCatalogVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceSupportedVersionCatalogVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceSupportedVersionCatalogVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<ApplianceSupportedVersionCatalogVersionProperties> data = default;
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
+            ApplianceSupportedVersionCatalogVersionProperties data = default;
+            string name = default;
+            string @namespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    data = ApplianceSupportedVersionCatalogVersionProperties.DeserializeApplianceSupportedVersionCatalogVersionProperties(property.Value);
+                    data = ApplianceSupportedVersionCatalogVersionProperties.DeserializeApplianceSupportedVersionCatalogVersionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceSupportedVersionCatalogVersion(data.Value, name.Value, @namespace.Value, serializedAdditionalRawData);
+            return new ApplianceSupportedVersionCatalogVersion(data, name, @namespace, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceSupportedVersionCatalogVersion>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceSupportedVersionCatalogVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceSupportedVersionCatalogVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                         return DeserializeApplianceSupportedVersionCatalogVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceSupportedVersionCatalogVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceSupportedVersionCatalogVersion)} does not support reading '{options.Format}' format.");
             }
         }
 

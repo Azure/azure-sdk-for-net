@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActionList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in ActionGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActivityLogAlertActionGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActionList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<ActivityLogAlertActionGroup>> actionGroups = default;
+            IList<ActivityLogAlertActionGroup> actionGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<ActivityLogAlertActionGroup> array = new List<ActivityLogAlertActionGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityLogAlertActionGroup.DeserializeActivityLogAlertActionGroup(item));
+                        array.Add(ActivityLogAlertActionGroup.DeserializeActivityLogAlertActionGroup(item, options));
                     }
                     actionGroups = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionList(Optional.ToList(actionGroups), serializedAdditionalRawData);
+            return new ActionList(actionGroups ?? new ChangeTrackingList<ActivityLogAlertActionGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionList>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActionList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeActionList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionList)} does not support reading '{options.Format}' format.");
             }
         }
 

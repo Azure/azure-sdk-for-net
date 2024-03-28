@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverUnresolvedDependencyList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MoverUnresolvedDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (options.Format != "W" && Optional.IsDefined(SummaryCollection))
             {
                 writer.WritePropertyName("summaryCollection"u8);
-                writer.WriteObjectValue(SummaryCollection);
+                writer.WriteObjectValue<MoverSummaryList>(SummaryCollection, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TotalCount))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverUnresolvedDependencyList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MoverUnresolvedDependency>> value = default;
-            Optional<string> nextLink = default;
-            Optional<MoverSummaryList> summaryCollection = default;
-            Optional<long> totalCount = default;
+            IReadOnlyList<MoverUnresolvedDependency> value = default;
+            string nextLink = default;
+            MoverSummaryList summaryCollection = default;
+            long? totalCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverUnresolvedDependency> array = new List<MoverUnresolvedDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency(item));
+                        array.Add(MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency(item, options));
                     }
                     value = array;
                     continue;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value);
+                    summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("totalCount"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverUnresolvedDependencyList(Optional.ToList(value), nextLink.Value, summaryCollection.Value, Optional.ToNullable(totalCount), serializedAdditionalRawData);
+            return new MoverUnresolvedDependencyList(value ?? new ChangeTrackingList<MoverUnresolvedDependency>(), nextLink, summaryCollection, totalCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverUnresolvedDependencyList>.Write(ModelReaderWriterOptions options)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverUnresolvedDependencyList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPropertiesForDefaultCreate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlServerPropertiesForDefaultCreate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlServerPropertiesForDefaultCreate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MySql.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<MySqlStorageProfile>(StorageProfile, options);
             }
             writer.WritePropertyName("createMode"u8);
             writer.WriteStringValue(CreateMode.ToString());
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPropertiesForDefaultCreate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlServerPropertiesForDefaultCreate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlServerPropertiesForDefaultCreate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.MySql.Models
             }
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            Optional<MySqlServerVersion> version = default;
-            Optional<MySqlSslEnforcementEnum> sslEnforcement = default;
-            Optional<MySqlMinimalTlsVersionEnum> minimalTlsVersion = default;
-            Optional<MySqlInfrastructureEncryption> infrastructureEncryption = default;
-            Optional<MySqlPublicNetworkAccessEnum> publicNetworkAccess = default;
-            Optional<MySqlStorageProfile> storageProfile = default;
+            MySqlServerVersion? version = default;
+            MySqlSslEnforcementEnum? sslEnforcement = default;
+            MySqlMinimalTlsVersionEnum? minimalTlsVersion = default;
+            MySqlInfrastructureEncryption? infrastructureEncryption = default;
+            MySqlPublicNetworkAccessEnum? publicNetworkAccess = default;
+            MySqlStorageProfile storageProfile = default;
             MySqlCreateMode createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property.Value);
+                    storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))
@@ -188,7 +188,17 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerPropertiesForDefaultCreate(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, serializedAdditionalRawData, administratorLogin, administratorLoginPassword);
+            return new MySqlServerPropertiesForDefaultCreate(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                createMode,
+                serializedAdditionalRawData,
+                administratorLogin,
+                administratorLoginPassword);
         }
 
         BinaryData IPersistableModel<MySqlServerPropertiesForDefaultCreate>.Write(ModelReaderWriterOptions options)
@@ -200,7 +210,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForDefaultCreate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForDefaultCreate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +226,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlServerPropertiesForDefaultCreate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForDefaultCreate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForDefaultCreate)} does not support reading '{options.Format}' format.");
             }
         }
 

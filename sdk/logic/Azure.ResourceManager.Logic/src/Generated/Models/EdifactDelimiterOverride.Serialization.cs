@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactDelimiterOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactDelimiterOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> messageId = default;
-            Optional<string> messageVersion = default;
-            Optional<string> messageRelease = default;
+            string messageId = default;
+            string messageVersion = default;
+            string messageRelease = default;
             int dataElementSeparator = default;
             int componentSeparator = default;
             int segmentTerminator = default;
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Logic.Models
             SegmentTerminatorSuffix segmentTerminatorSuffix = default;
             EdifactDecimalIndicator decimalPointIndicator = default;
             int releaseIndicator = default;
-            Optional<string> messageAssociationAssignedCode = default;
-            Optional<string> targetNamespace = default;
+            string messageAssociationAssignedCode = default;
+            string targetNamespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,20 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactDelimiterOverride(messageId.Value, messageVersion.Value, messageRelease.Value, dataElementSeparator, componentSeparator, segmentTerminator, repetitionSeparator, segmentTerminatorSuffix, decimalPointIndicator, releaseIndicator, messageAssociationAssignedCode.Value, targetNamespace.Value, serializedAdditionalRawData);
+            return new EdifactDelimiterOverride(
+                messageId,
+                messageVersion,
+                messageRelease,
+                dataElementSeparator,
+                componentSeparator,
+                segmentTerminator,
+                repetitionSeparator,
+                segmentTerminatorSuffix,
+                decimalPointIndicator,
+                releaseIndicator,
+                messageAssociationAssignedCode,
+                targetNamespace,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactDelimiterOverride>.Write(ModelReaderWriterOptions options)
@@ -197,7 +210,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -213,7 +226,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeEdifactDelimiterOverride(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support reading '{options.Format}' format.");
             }
         }
 

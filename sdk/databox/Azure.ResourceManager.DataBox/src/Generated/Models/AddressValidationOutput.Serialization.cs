@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<AddressValidationOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxShippingAddress>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<AddressValidationOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,10 +92,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxValidationInputDiscriminator> validationType = default;
-            Optional<ResponseError> error = default;
-            Optional<AddressValidationStatus> validationStatus = default;
-            Optional<IReadOnlyList<DataBoxShippingAddress>> alternateAddresses = default;
+            DataBoxValidationInputDiscriminator? validationType = default;
+            ResponseError error = default;
+            AddressValidationStatus? validationStatus = default;
+            IReadOnlyList<DataBoxShippingAddress> alternateAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             List<DataBoxShippingAddress> array = new List<DataBoxShippingAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxShippingAddress.DeserializeDataBoxShippingAddress(item));
+                                array.Add(DataBoxShippingAddress.DeserializeDataBoxShippingAddress(item, options));
                             }
                             alternateAddresses = array;
                             continue;
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddressValidationOutput(Optional.ToNullable(validationType), error.Value, Optional.ToNullable(validationStatus), Optional.ToList(alternateAddresses), serializedAdditionalRawData);
+            return new AddressValidationOutput(validationType, error, validationStatus, alternateAddresses ?? new ChangeTrackingList<DataBoxShippingAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AddressValidationOutput>.Write(ModelReaderWriterOptions options)
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeAddressValidationOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

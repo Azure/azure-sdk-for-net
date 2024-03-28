@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeySetUser>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeySetUser)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeySetUser)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("sshPublicKey"u8);
-            writer.WriteObjectValue(SshPublicKey);
+            writer.WriteObjectValue<NetworkCloudSshPublicKey>(SshPublicKey, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeySetUser>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeySetUser)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeySetUser)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string azureUserName = default;
-            Optional<string> description = default;
+            string description = default;
             NetworkCloudSshPublicKey sshPublicKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("sshPublicKey"u8))
                 {
-                    sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property.Value);
+                    sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeySetUser(azureUserName, description.Value, sshPublicKey, serializedAdditionalRawData);
+            return new KeySetUser(azureUserName, description, sshPublicKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeySetUser>.Write(ModelReaderWriterOptions options)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeySetUser)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeySetUser)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeKeySetUser(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeySetUser)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeySetUser)} does not support reading '{options.Format}' format.");
             }
         }
 

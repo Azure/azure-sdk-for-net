@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwitchProtectionJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwitchProtectionJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwitchProtectionJobDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwitchProtectionJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwitchProtectionJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwitchProtectionJobDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> newReplicationProtectedItemId = default;
+            ResourceIdentifier newReplicationProtectedItemId = default;
             string instanceType = default;
-            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            IReadOnlyDictionary<string, string> affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwitchProtectionJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails), serializedAdditionalRawData, newReplicationProtectedItemId.Value);
+            return new SwitchProtectionJobDetails(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, newReplicationProtectedItemId);
         }
 
         BinaryData IPersistableModel<SwitchProtectionJobDetails>.Write(ModelReaderWriterOptions options)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SwitchProtectionJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwitchProtectionJobDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSwitchProtectionJobDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SwitchProtectionJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwitchProtectionJobDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

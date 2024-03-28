@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationServiceGitProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationServiceGitProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationServiceGitProperty)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationServiceGitRepositories)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformConfigurationServiceGitRepository>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationServiceGitProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationServiceGitProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationServiceGitProperty)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<AppPlatformConfigurationServiceGitRepository>> repositories = default;
+            IList<AppPlatformConfigurationServiceGitRepository> repositories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformConfigurationServiceGitRepository> array = new List<AppPlatformConfigurationServiceGitRepository>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformConfigurationServiceGitRepository.DeserializeAppPlatformConfigurationServiceGitRepository(item));
+                        array.Add(AppPlatformConfigurationServiceGitRepository.DeserializeAppPlatformConfigurationServiceGitRepository(item, options));
                     }
                     repositories = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationServiceGitProperty(Optional.ToList(repositories), serializedAdditionalRawData);
+            return new ConfigurationServiceGitProperty(repositories ?? new ChangeTrackingList<AppPlatformConfigurationServiceGitRepository>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationServiceGitProperty>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationServiceGitProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationServiceGitProperty)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeConfigurationServiceGitProperty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationServiceGitProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationServiceGitProperty)} does not support reading '{options.Format}' format.");
             }
         }
 

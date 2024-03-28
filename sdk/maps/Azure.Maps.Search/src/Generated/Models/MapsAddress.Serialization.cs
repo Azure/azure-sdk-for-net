@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -19,27 +19,27 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<string> buildingNumber = default;
-            Optional<string> street = default;
-            Optional<string> crossStreet = default;
-            Optional<string> streetNumber = default;
-            Optional<IReadOnlyList<string>> routeNumbers = default;
-            Optional<string> streetName = default;
-            Optional<string> streetNameAndNumber = default;
-            Optional<string> municipality = default;
-            Optional<string> municipalitySubdivision = default;
-            Optional<string> countryTertiarySubdivision = default;
-            Optional<string> countrySecondarySubdivision = default;
-            Optional<string> countrySubdivision = default;
-            Optional<string> postalCode = default;
-            Optional<string> extendedPostalCode = default;
-            Optional<string> countryCode = default;
-            Optional<string> country = default;
-            Optional<string> countryCodeISO3 = default;
-            Optional<string> freeformAddress = default;
-            Optional<string> countrySubdivisionName = default;
-            Optional<string> localName = default;
-            Optional<BoundingBoxCompassNotation> boundingBox = default;
+            string buildingNumber = default;
+            string street = default;
+            string crossStreet = default;
+            string streetNumber = default;
+            IReadOnlyList<string> routeNumbers = default;
+            string streetName = default;
+            string streetNameAndNumber = default;
+            string municipality = default;
+            string municipalitySubdivision = default;
+            string countryTertiarySubdivision = default;
+            string countrySecondarySubdivision = default;
+            string countrySubdivision = default;
+            string postalCode = default;
+            string extendedPostalCode = default;
+            string countryCode = default;
+            string country = default;
+            string countryCodeISO3 = default;
+            string freeformAddress = default;
+            string countrySubdivisionName = default;
+            string localName = default;
+            BoundingBoxCompassNotation boundingBox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("buildingNumber"u8))
@@ -161,7 +161,28 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new MapsAddress(buildingNumber.Value, street.Value, crossStreet.Value, streetNumber.Value, Optional.ToList(routeNumbers), streetName.Value, streetNameAndNumber.Value, municipality.Value, municipalitySubdivision.Value, countryTertiarySubdivision.Value, countrySecondarySubdivision.Value, countrySubdivision.Value, postalCode.Value, extendedPostalCode.Value, countryCode.Value, country.Value, countryCodeISO3.Value, freeformAddress.Value, countrySubdivisionName.Value, localName.Value, boundingBox.Value);
+            return new MapsAddress(
+                buildingNumber,
+                street,
+                crossStreet,
+                streetNumber,
+                routeNumbers ?? new ChangeTrackingList<string>(),
+                streetName,
+                streetNameAndNumber,
+                municipality,
+                municipalitySubdivision,
+                countryTertiarySubdivision,
+                countrySecondarySubdivision,
+                countrySubdivision,
+                postalCode,
+                extendedPostalCode,
+                countryCode,
+                country,
+                countryCodeISO3,
+                freeformAddress,
+                countrySubdivisionName,
+                localName,
+                boundingBox);
         }
     }
 }

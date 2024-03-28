@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationSwapProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationSwapProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationSwapProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationSwapProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationSwapProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationSwapProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> swapSource = default;
-            Optional<string> swapDestination = default;
+            string swapSource = default;
+            string swapDestination = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationSwapProperties(swapSource.Value, swapDestination.Value, serializedAdditionalRawData);
+            return new ReservationSwapProperties(swapSource, swapDestination, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationSwapProperties>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationSwapProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationSwapProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationSwapProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationSwapProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationSwapProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

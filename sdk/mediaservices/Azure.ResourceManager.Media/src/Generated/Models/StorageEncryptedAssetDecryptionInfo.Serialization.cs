@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageEncryptedAssetDecryptionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageEncryptedAssetDecryptionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageEncryptedAssetDecryptionInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in AssetFileEncryptionMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaAssetFileEncryptionMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageEncryptedAssetDecryptionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageEncryptedAssetDecryptionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageEncryptedAssetDecryptionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<byte[]> key = default;
-            Optional<IReadOnlyList<MediaAssetFileEncryptionMetadata>> assetFileEncryptionMetadata = default;
+            byte[] key = default;
+            IReadOnlyList<MediaAssetFileEncryptionMetadata> assetFileEncryptionMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaAssetFileEncryptionMetadata> array = new List<MediaAssetFileEncryptionMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaAssetFileEncryptionMetadata.DeserializeMediaAssetFileEncryptionMetadata(item));
+                        array.Add(MediaAssetFileEncryptionMetadata.DeserializeMediaAssetFileEncryptionMetadata(item, options));
                     }
                     assetFileEncryptionMetadata = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageEncryptedAssetDecryptionInfo(key.Value, Optional.ToList(assetFileEncryptionMetadata), serializedAdditionalRawData);
+            return new StorageEncryptedAssetDecryptionInfo(key, assetFileEncryptionMetadata ?? new ChangeTrackingList<MediaAssetFileEncryptionMetadata>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageEncryptedAssetDecryptionInfo>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageEncryptedAssetDecryptionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageEncryptedAssetDecryptionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStorageEncryptedAssetDecryptionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageEncryptedAssetDecryptionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageEncryptedAssetDecryptionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

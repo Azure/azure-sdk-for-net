@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<TroubleshootingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RecommendedActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TroubleshootingRecommendedActions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<TroubleshootingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> reasonType = default;
-            Optional<string> summary = default;
-            Optional<string> detail = default;
-            Optional<IReadOnlyList<TroubleshootingRecommendedActions>> recommendedActions = default;
+            string id = default;
+            string reasonType = default;
+            string summary = default;
+            string detail = default;
+            IReadOnlyList<TroubleshootingRecommendedActions> recommendedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<TroubleshootingRecommendedActions> array = new List<TroubleshootingRecommendedActions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TroubleshootingRecommendedActions.DeserializeTroubleshootingRecommendedActions(item));
+                        array.Add(TroubleshootingRecommendedActions.DeserializeTroubleshootingRecommendedActions(item, options));
                     }
                     recommendedActions = array;
                     continue;
@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshootingDetails(id.Value, reasonType.Value, summary.Value, detail.Value, Optional.ToList(recommendedActions), serializedAdditionalRawData);
+            return new TroubleshootingDetails(
+                id,
+                reasonType,
+                summary,
+                detail,
+                recommendedActions ?? new ChangeTrackingList<TroubleshootingRecommendedActions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshootingDetails>.Write(ModelReaderWriterOptions options)
@@ -155,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeTroubleshootingDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

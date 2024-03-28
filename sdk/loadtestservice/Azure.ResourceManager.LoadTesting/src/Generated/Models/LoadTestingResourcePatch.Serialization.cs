@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 if (Encryption != null)
                 {
                     writer.WritePropertyName("encryption"u8);
-                    writer.WriteObjectValue(Encryption);
+                    writer.WriteObjectValue<LoadTestingCmkEncryptionProperties>(Encryption, options);
                 }
                 else
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> description = default;
-            Optional<LoadTestingCmkEncryptionProperties> encryption = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            string description = default;
+            LoadTestingCmkEncryptionProperties encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                                 encryption = null;
                                 continue;
                             }
-                            encryption = LoadTestingCmkEncryptionProperties.DeserializeLoadTestingCmkEncryptionProperties(property0.Value);
+                            encryption = LoadTestingCmkEncryptionProperties.DeserializeLoadTestingCmkEncryptionProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingResourcePatch(Optional.ToDictionary(tags), identity, description.Value, encryption.Value, serializedAdditionalRawData);
+            return new LoadTestingResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, description, encryption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingResourcePatch>.Write(ModelReaderWriterOptions options)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         return DeserializeLoadTestingResourcePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

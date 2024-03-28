@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabPolicySetResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabPolicySetResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabPolicySetResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyViolations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabPolicyViolation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabPolicySetResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabPolicySetResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabPolicySetResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<bool> hasError = default;
-            Optional<IReadOnlyList<DevTestLabPolicyViolation>> policyViolations = default;
+            bool? hasError = default;
+            IReadOnlyList<DevTestLabPolicyViolation> policyViolations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabPolicyViolation> array = new List<DevTestLabPolicyViolation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabPolicyViolation.DeserializeDevTestLabPolicyViolation(item));
+                        array.Add(DevTestLabPolicyViolation.DeserializeDevTestLabPolicyViolation(item, options));
                     }
                     policyViolations = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabPolicySetResult(Optional.ToNullable(hasError), Optional.ToList(policyViolations), serializedAdditionalRawData);
+            return new DevTestLabPolicySetResult(hasError, policyViolations ?? new ChangeTrackingList<DevTestLabPolicyViolation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabPolicySetResult>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabPolicySetResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabPolicySetResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabPolicySetResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabPolicySetResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabPolicySetResult)} does not support reading '{options.Format}' format.");
             }
         }
 

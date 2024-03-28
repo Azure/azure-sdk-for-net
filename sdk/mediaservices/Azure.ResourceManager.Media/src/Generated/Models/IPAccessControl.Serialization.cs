@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPAccessControl>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAccessControl)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAccessControl)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedIPs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPRange>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPAccessControl>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAccessControl)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAccessControl)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<IPRange>> allow = default;
+            IList<IPRange> allow = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<IPRange> array = new List<IPRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPRange.DeserializeIPRange(item));
+                        array.Add(IPRange.DeserializeIPRange(item, options));
                     }
                     allow = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPAccessControl(Optional.ToList(allow), serializedAdditionalRawData);
+            return new IPAccessControl(allow ?? new ChangeTrackingList<IPRange>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPAccessControl>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPAccessControl)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAccessControl)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeIPAccessControl(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPAccessControl)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAccessControl)} does not support reading '{options.Format}' format.");
             }
         }
 

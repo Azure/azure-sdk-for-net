@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerCapabilities)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (options.Format != "W" && Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities);
+                writer.WriteObjectValue<ContainerSupportedCapabilities>(Capabilities, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerCapabilities)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> osType = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> ipAddressType = default;
-            Optional<string> gpu = default;
-            Optional<ContainerSupportedCapabilities> capabilities = default;
+            string resourceType = default;
+            string osType = default;
+            AzureLocation? location = default;
+            string ipAddressType = default;
+            string gpu = default;
+            ContainerSupportedCapabilities capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    capabilities = ContainerSupportedCapabilities.DeserializeContainerSupportedCapabilities(property.Value);
+                    capabilities = ContainerSupportedCapabilities.DeserializeContainerSupportedCapabilities(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerCapabilities(resourceType.Value, osType.Value, Optional.ToNullable(location), ipAddressType.Value, gpu.Value, capabilities.Value, serializedAdditionalRawData);
+            return new ContainerCapabilities(
+                resourceType,
+                osType,
+                location,
+                ipAddressType,
+                gpu,
+                capabilities,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerCapabilities>.Write(ModelReaderWriterOptions options)
@@ -160,7 +167,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerCapabilities)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerCapabilities(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerCapabilities)} does not support reading '{options.Format}' format.");
             }
         }
 

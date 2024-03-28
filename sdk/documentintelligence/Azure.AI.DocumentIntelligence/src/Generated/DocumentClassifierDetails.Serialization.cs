@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentClassifierDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentClassifierDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentClassifierDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,22 +34,37 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("createdDateTime"u8);
-            writer.WriteStringValue(CreatedDateTime, "O");
-            if (Optional.IsDefined(ExpirationDateTime))
+            writer.WriteStringValue(CreatedOn, "O");
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
-                writer.WriteStringValue(ExpirationDateTime.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             writer.WritePropertyName("apiVersion"u8);
             writer.WriteStringValue(ApiVersion);
+            if (Optional.IsDefined(BaseClassifierId))
+            {
+                writer.WritePropertyName("baseClassifierId"u8);
+                writer.WriteStringValue(BaseClassifierId);
+            }
             writer.WritePropertyName("docTypes"u8);
             writer.WriteStartObject();
             foreach (var item in DocTypes)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<ClassifierDocumentTypeDetails>(item.Value, options);
             }
             writer.WriteEndObject();
+            if (Optional.IsCollectionDefined(Warnings))
+            {
+                writer.WritePropertyName("warnings"u8);
+                writer.WriteStartArray();
+                foreach (var item in Warnings)
+                {
+                    writer.WriteObjectValue<DocumentIntelligenceWarning>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -74,7 +88,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentClassifierDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentClassifierDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentClassifierDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,11 +104,13 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string classifierId = default;
-            Optional<string> description = default;
+            string description = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
             string apiVersion = default;
+            string baseClassifierId = default;
             IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes = default;
+            IReadOnlyList<DocumentIntelligenceWarning> warnings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,14 +144,33 @@ namespace Azure.AI.DocumentIntelligence
                     apiVersion = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("baseClassifierId"u8))
+                {
+                    baseClassifierId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("docTypes"u8))
                 {
                     Dictionary<string, ClassifierDocumentTypeDetails> dictionary = new Dictionary<string, ClassifierDocumentTypeDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ClassifierDocumentTypeDetails.DeserializeClassifierDocumentTypeDetails(property0.Value));
+                        dictionary.Add(property0.Name, ClassifierDocumentTypeDetails.DeserializeClassifierDocumentTypeDetails(property0.Value, options));
                     }
                     docTypes = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("warnings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DocumentIntelligenceWarning> array = new List<DocumentIntelligenceWarning>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentIntelligenceWarning.DeserializeDocumentIntelligenceWarning(item, options));
+                    }
+                    warnings = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +179,16 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentClassifierDetails(classifierId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion, docTypes, serializedAdditionalRawData);
+            return new DocumentClassifierDetails(
+                classifierId,
+                description,
+                createdDateTime,
+                expirationDateTime,
+                apiVersion,
+                baseClassifierId,
+                docTypes,
+                warnings ?? new ChangeTrackingList<DocumentIntelligenceWarning>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentClassifierDetails>.Write(ModelReaderWriterOptions options)
@@ -156,7 +200,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentClassifierDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentClassifierDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,17 +216,25 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentClassifierDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentClassifierDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentClassifierDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         string IPersistableModel<DocumentClassifierDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentClassifierDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentClassifierDetails(document.RootElement);
+        }
+
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentClassifierDetails>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

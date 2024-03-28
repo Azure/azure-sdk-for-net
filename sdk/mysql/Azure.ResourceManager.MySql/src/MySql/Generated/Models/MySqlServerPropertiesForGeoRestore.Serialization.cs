@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPropertiesForGeoRestore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlServerPropertiesForGeoRestore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlServerPropertiesForGeoRestore)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MySql.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<MySqlStorageProfile>(StorageProfile, options);
             }
             writer.WritePropertyName("createMode"u8);
             writer.WriteStringValue(CreateMode.ToString());
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPropertiesForGeoRestore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlServerPropertiesForGeoRestore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlServerPropertiesForGeoRestore)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.MySql.Models
                 return null;
             }
             ResourceIdentifier sourceServerId = default;
-            Optional<MySqlServerVersion> version = default;
-            Optional<MySqlSslEnforcementEnum> sslEnforcement = default;
-            Optional<MySqlMinimalTlsVersionEnum> minimalTlsVersion = default;
-            Optional<MySqlInfrastructureEncryption> infrastructureEncryption = default;
-            Optional<MySqlPublicNetworkAccessEnum> publicNetworkAccess = default;
-            Optional<MySqlStorageProfile> storageProfile = default;
+            MySqlServerVersion? version = default;
+            MySqlSslEnforcementEnum? sslEnforcement = default;
+            MySqlMinimalTlsVersionEnum? minimalTlsVersion = default;
+            MySqlInfrastructureEncryption? infrastructureEncryption = default;
+            MySqlPublicNetworkAccessEnum? publicNetworkAccess = default;
+            MySqlStorageProfile storageProfile = default;
             MySqlCreateMode createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property.Value);
+                    storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))
@@ -180,7 +180,16 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerPropertiesForGeoRestore(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, serializedAdditionalRawData, sourceServerId);
+            return new MySqlServerPropertiesForGeoRestore(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                createMode,
+                serializedAdditionalRawData,
+                sourceServerId);
         }
 
         BinaryData IPersistableModel<MySqlServerPropertiesForGeoRestore>.Write(ModelReaderWriterOptions options)
@@ -192,7 +201,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForGeoRestore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForGeoRestore)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +217,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlServerPropertiesForGeoRestore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForGeoRestore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForGeoRestore)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -23,7 +22,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<PatientDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatientDocument)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatientDocument)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +46,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStringValue(CreatedDateTime.Value, "O");
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            writer.WriteObjectValue<DocumentContent>(Content, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -71,7 +70,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<PatientDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatientDocument)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatientDocument)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +86,10 @@ namespace Azure.Health.Insights.ClinicalMatching
                 return null;
             }
             DocumentType type = default;
-            Optional<ClinicalDocumentType> clinicalType = default;
+            ClinicalDocumentType? clinicalType = default;
             string id = default;
-            Optional<string> language = default;
-            Optional<DateTimeOffset> createdDateTime = default;
+            string language = default;
+            DateTimeOffset? createdDateTime = default;
             DocumentContent content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +130,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (property.NameEquals("content"u8))
                 {
-                    content = DocumentContent.DeserializeDocumentContent(property.Value);
+                    content = DocumentContent.DeserializeDocumentContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +139,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatientDocument(type, Optional.ToNullable(clinicalType), id, language.Value, Optional.ToNullable(createdDateTime), content, serializedAdditionalRawData);
+            return new PatientDocument(
+                type,
+                clinicalType,
+                id,
+                language,
+                createdDateTime,
+                content,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientDocument>.Write(ModelReaderWriterOptions options)
@@ -152,7 +158,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PatientDocument)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatientDocument)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +174,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                         return DeserializePatientDocument(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PatientDocument)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatientDocument)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -186,7 +192,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<PatientDocument>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

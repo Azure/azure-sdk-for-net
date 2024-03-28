@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<InitContainerPropertiesDefinitionInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InitContainerPropertiesDefinitionInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InitContainerPropertiesDefinitionInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentState))
             {
                 writer.WritePropertyName("currentState"u8);
-                writer.WriteObjectValue(CurrentState);
+                writer.WriteObjectValue<ContainerState>(CurrentState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PreviousState))
             {
                 writer.WritePropertyName("previousState"u8);
-                writer.WriteObjectValue(PreviousState);
+                writer.WriteObjectValue<ContainerState>(PreviousState, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Events))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerEvent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<InitContainerPropertiesDefinitionInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InitContainerPropertiesDefinitionInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InitContainerPropertiesDefinitionInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<int> restartCount = default;
-            Optional<ContainerState> currentState = default;
-            Optional<ContainerState> previousState = default;
-            Optional<IReadOnlyList<ContainerEvent>> events = default;
+            int? restartCount = default;
+            ContainerState currentState = default;
+            ContainerState previousState = default;
+            IReadOnlyList<ContainerEvent> events = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    currentState = ContainerState.DeserializeContainerState(property.Value);
+                    currentState = ContainerState.DeserializeContainerState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("previousState"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    previousState = ContainerState.DeserializeContainerState(property.Value);
+                    previousState = ContainerState.DeserializeContainerState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("events"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerEvent> array = new List<ContainerEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerEvent.DeserializeContainerEvent(item));
+                        array.Add(ContainerEvent.DeserializeContainerEvent(item, options));
                     }
                     events = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InitContainerPropertiesDefinitionInstanceView(Optional.ToNullable(restartCount), currentState.Value, previousState.Value, Optional.ToList(events), serializedAdditionalRawData);
+            return new InitContainerPropertiesDefinitionInstanceView(restartCount, currentState, previousState, events ?? new ChangeTrackingList<ContainerEvent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InitContainerPropertiesDefinitionInstanceView>.Write(ModelReaderWriterOptions options)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InitContainerPropertiesDefinitionInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InitContainerPropertiesDefinitionInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeInitContainerPropertiesDefinitionInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InitContainerPropertiesDefinitionInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InitContainerPropertiesDefinitionInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkRetryHistory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkRetryHistory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkRetryHistory)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<LogicErrorResponse>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkRetryHistory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkRetryHistory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkRetryHistory)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> code = default;
-            Optional<string> clientRequestId = default;
-            Optional<string> serviceRequestId = default;
-            Optional<LogicErrorResponse> error = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string code = default;
+            string clientRequestId = default;
+            string serviceRequestId = default;
+            LogicErrorResponse error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = LogicErrorResponse.DeserializeLogicErrorResponse(property.Value);
+                    error = LogicErrorResponse.DeserializeLogicErrorResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkRetryHistory(Optional.ToNullable(startTime), Optional.ToNullable(endTime), code.Value, clientRequestId.Value, serviceRequestId.Value, error.Value, serializedAdditionalRawData);
+            return new LogicWorkRetryHistory(
+                startTime,
+                endTime,
+                code,
+                clientRequestId,
+                serviceRequestId,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkRetryHistory>.Write(ModelReaderWriterOptions options)
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkRetryHistory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkRetryHistory)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicWorkRetryHistory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkRetryHistory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkRetryHistory)} does not support reading '{options.Format}' format.");
             }
         }
 

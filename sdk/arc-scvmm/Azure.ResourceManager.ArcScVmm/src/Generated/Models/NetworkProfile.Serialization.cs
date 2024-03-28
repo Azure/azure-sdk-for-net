@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkInterfaces>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<IList<NetworkInterfaces>> networkInterfaces = default;
+            IList<NetworkInterfaces> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<NetworkInterfaces> array = new List<NetworkInterfaces>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.NetworkInterfaces.DeserializeNetworkInterfaces(item));
+                        array.Add(Models.NetworkInterfaces.DeserializeNetworkInterfaces(item, options));
                     }
                     networkInterfaces = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkProfile(Optional.ToList(networkInterfaces), serializedAdditionalRawData);
+            return new NetworkProfile(networkInterfaces ?? new ChangeTrackingList<NetworkInterfaces>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkProfile>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

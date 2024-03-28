@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LldpNeighbor)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LldpNeighbor)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LldpNeighbor)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LldpNeighbor)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> portDescription = default;
-            Optional<string> portName = default;
-            Optional<string> systemDescription = default;
-            Optional<string> systemName = default;
+            string portDescription = default;
+            string portName = default;
+            string systemDescription = default;
+            string systemName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LldpNeighbor(portDescription.Value, portName.Value, systemDescription.Value, systemName.Value, serializedAdditionalRawData);
+            return new LldpNeighbor(portDescription, portName, systemDescription, systemName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LldpNeighbor>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LldpNeighbor)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LldpNeighbor)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeLldpNeighbor(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LldpNeighbor)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LldpNeighbor)} does not support reading '{options.Format}' format.");
             }
         }
 

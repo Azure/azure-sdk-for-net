@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCorePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<AutoScaleVCoreSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCorePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<AutoScaleVCoreSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<int> capacityLimit = default;
+            AutoScaleVCoreSku sku = default;
+            IDictionary<string, string> tags = default;
+            int? capacityLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     {
                         continue;
                     }
-                    sku = AutoScaleVCoreSku.DeserializeAutoScaleVCoreSku(property.Value);
+                    sku = AutoScaleVCoreSku.DeserializeAutoScaleVCoreSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoScaleVCorePatch(sku.Value, Optional.ToDictionary(tags), Optional.ToNullable(capacityLimit), serializedAdditionalRawData);
+            return new AutoScaleVCorePatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), capacityLimit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoScaleVCorePatch>.Write(ModelReaderWriterOptions options)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                         return DeserializeAutoScaleVCorePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

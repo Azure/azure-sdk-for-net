@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsSubscriptionQuotasListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsSubscriptionQuotasListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsSubscriptionQuotasListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamAnalyticsSubscriptionQuota>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsSubscriptionQuotasListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsSubscriptionQuotasListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsSubscriptionQuotasListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamAnalyticsSubscriptionQuota>> value = default;
+            IReadOnlyList<StreamAnalyticsSubscriptionQuota> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsSubscriptionQuota> array = new List<StreamAnalyticsSubscriptionQuota>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota(item));
+                        array.Add(StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsSubscriptionQuotasListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new StreamAnalyticsSubscriptionQuotasListResult(value ?? new ChangeTrackingList<StreamAnalyticsSubscriptionQuota>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsSubscriptionQuotasListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsSubscriptionQuotasListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsSubscriptionQuotasListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamAnalyticsSubscriptionQuotasListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsSubscriptionQuotasListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsSubscriptionQuotasListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

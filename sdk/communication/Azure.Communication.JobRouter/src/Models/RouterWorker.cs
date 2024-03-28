@@ -4,12 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RouterWorker : IUtf8JsonSerializable
+    public partial class RouterWorker
     {
         /// <summary> Initializes a new instance of a worker. </summary>
         /// <param name="workerId"> Id of a worker. </param>
@@ -45,6 +44,9 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> A flag indicating whether this worker is open to receive offers or not. </summary>
         public bool? AvailableForOffers { get; set; }
+
+        /// <summary> If this is set, the worker will only receive up to this many new offers at a time. </summary>
+        public int? MaxConcurrentOffers { get; set; }
 
         [CodeGenMember("Labels")]
         internal IDictionary<string, BinaryData> _labels
@@ -91,79 +93,6 @@ namespace Azure.Communication.JobRouter
         /// <summary> The entity tag for this resource. </summary>
         [CodeGenMember("Etag")]
         public ETag ETag { get; }
-
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Queues))
-            {
-                writer.WritePropertyName("queues"u8);
-                writer.WriteStartArray();
-                foreach (var item in Queues)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Capacity))
-            {
-                writer.WritePropertyName("capacity"u8);
-                writer.WriteNumberValue(Capacity.Value);
-            }
-            if (Optional.IsCollectionDefined(_labels))
-            {
-                writer.WritePropertyName("labels"u8);
-                writer.WriteStartObject();
-                foreach (var item in _labels)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteObjectValue(item.Value.ToObjectFromJson());
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(_tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in _tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteObjectValue(item.Value.ToObjectFromJson());
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Channels))
-            {
-                writer.WritePropertyName("channels"u8);
-                writer.WriteStartArray();
-                foreach (var item in Channels)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(AvailableForOffers))
-            {
-                writer.WritePropertyName("availableForOffers"u8);
-                writer.WriteBooleanValue(AvailableForOffers.Value);
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.ToString());
-            }
-            writer.WriteEndObject();
-        }
 
         internal virtual RequestContent ToRequestContent()
         {

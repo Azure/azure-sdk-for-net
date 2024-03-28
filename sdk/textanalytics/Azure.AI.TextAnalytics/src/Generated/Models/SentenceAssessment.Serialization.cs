@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment);
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores);
+            writer.WriteObjectValue<TargetConfidenceScoreLabel>(ConfidenceScores);
             writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);
@@ -75,7 +75,13 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentenceAssessment(sentiment, confidenceScores, offset, length, text, isNegated);
+            return new SentenceAssessment(
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                text,
+                isNegated);
         }
     }
 }

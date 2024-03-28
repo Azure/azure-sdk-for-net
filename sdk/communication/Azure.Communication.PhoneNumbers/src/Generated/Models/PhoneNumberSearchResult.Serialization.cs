@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -27,8 +26,8 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberCapabilities capabilities = default;
             PhoneNumberCost cost = default;
             DateTimeOffset searchExpiresBy = default;
-            Optional<int> errorCode = default;
-            Optional<PhoneNumberSearchResultError> error = default;
+            int? errorCode = default;
+            PhoneNumberSearchResultError? error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("searchId"u8))
@@ -90,7 +89,16 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PhoneNumberSearchResult(searchId, phoneNumbers, phoneNumberType, assignmentType, capabilities, cost, searchExpiresBy, Optional.ToNullable(errorCode), Optional.ToNullable(error));
+            return new PhoneNumberSearchResult(
+                searchId,
+                phoneNumbers,
+                phoneNumberType,
+                assignmentType,
+                capabilities,
+                cost,
+                searchExpiresBy,
+                errorCode,
+                error);
         }
     }
 }

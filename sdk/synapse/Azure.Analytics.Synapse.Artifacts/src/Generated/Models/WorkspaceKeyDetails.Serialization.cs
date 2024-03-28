@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> keyVaultUrl = default;
+            string name = default;
+            string keyVaultUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,14 +52,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new WorkspaceKeyDetails(name.Value, keyVaultUrl.Value);
+            return new WorkspaceKeyDetails(name, keyVaultUrl);
         }
 
         internal partial class WorkspaceKeyDetailsConverter : JsonConverter<WorkspaceKeyDetails>
         {
             public override void Write(Utf8JsonWriter writer, WorkspaceKeyDetails model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<WorkspaceKeyDetails>(model);
             }
             public override WorkspaceKeyDetails Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

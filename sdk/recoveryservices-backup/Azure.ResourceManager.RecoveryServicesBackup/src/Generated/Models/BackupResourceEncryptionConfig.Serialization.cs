@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupEncryptionAtRestType> encryptionAtRestType = default;
-            Optional<Uri> keyUri = default;
-            Optional<string> subscriptionId = default;
-            Optional<LastUpdateStatus> lastUpdateStatus = default;
-            Optional<InfrastructureEncryptionState> infrastructureEncryptionState = default;
+            BackupEncryptionAtRestType? encryptionAtRestType = default;
+            Uri keyUri = default;
+            string subscriptionId = default;
+            LastUpdateStatus? lastUpdateStatus = default;
+            InfrastructureEncryptionState? infrastructureEncryptionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupResourceEncryptionConfig(Optional.ToNullable(encryptionAtRestType), keyUri.Value, subscriptionId.Value, Optional.ToNullable(lastUpdateStatus), Optional.ToNullable(infrastructureEncryptionState), serializedAdditionalRawData);
+            return new BackupResourceEncryptionConfig(
+                encryptionAtRestType,
+                keyUri,
+                subscriptionId,
+                lastUpdateStatus,
+                infrastructureEncryptionState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupResourceEncryptionConfig>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupResourceEncryptionConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

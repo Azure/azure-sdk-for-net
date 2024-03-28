@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<PerfCounterDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerfCounterDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PerfCounterDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<PerfCounterDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerfCounterDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PerfCounterDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<PerfCounterDataSourceStream>> streams = default;
-            Optional<int> samplingFrequencyInSeconds = default;
-            Optional<IList<string>> counterSpecifiers = default;
-            Optional<string> name = default;
+            IList<PerfCounterDataSourceStream> streams = default;
+            int? samplingFrequencyInSeconds = default;
+            IList<string> counterSpecifiers = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PerfCounterDataSource(Optional.ToList(streams), Optional.ToNullable(samplingFrequencyInSeconds), Optional.ToList(counterSpecifiers), name.Value, serializedAdditionalRawData);
+            return new PerfCounterDataSource(streams ?? new ChangeTrackingList<PerfCounterDataSourceStream>(), samplingFrequencyInSeconds, counterSpecifiers ?? new ChangeTrackingList<string>(), name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PerfCounterDataSource>.Write(ModelReaderWriterOptions options)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PerfCounterDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PerfCounterDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializePerfCounterDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PerfCounterDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PerfCounterDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

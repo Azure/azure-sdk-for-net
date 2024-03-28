@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoringInputDataBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoringInputDataBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMonitoringInputDataBase(document.RootElement, options);
+            return DeserializeMonitoringInputDataBase(document.RootElement, options);
         }
 
         internal static UnknownMonitoringInputDataBase DeserializeUnknownMonitoringInputDataBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> columns = default;
-            Optional<string> dataContext = default;
+            IDictionary<string, string> columns = default;
+            string dataContext = default;
             MonitoringInputDataType inputDataType = "Unknown";
             JobInputType jobInputType = default;
             Uri uri = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownMonitoringInputDataBase(Optional.ToDictionary(columns), dataContext.Value, inputDataType, jobInputType, uri, serializedAdditionalRawData);
+            return new UnknownMonitoringInputDataBase(
+                columns ?? new ChangeTrackingDictionary<string, string>(),
+                dataContext,
+                inputDataType,
+                jobInputType,
+                uri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringInputDataBase>.Write(ModelReaderWriterOptions options)
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,10 +186,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMonitoringInputDataBase(document.RootElement, options);
+                        return DeserializeMonitoringInputDataBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringInputDataBase)} does not support reading '{options.Format}' format.");
             }
         }
 

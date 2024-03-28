@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlTempDBSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlTempDBSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<int> dataFileSize = default;
-            Optional<int> dataGrowth = default;
-            Optional<int> logFileSize = default;
-            Optional<int> logGrowth = default;
-            Optional<int> dataFileCount = default;
-            Optional<bool> persistFolder = default;
-            Optional<string> persistFolderPath = default;
-            Optional<IList<int>> luns = default;
-            Optional<string> defaultFilePath = default;
+            int? dataFileSize = default;
+            int? dataGrowth = default;
+            int? logFileSize = default;
+            int? logGrowth = default;
+            int? dataFileCount = default;
+            bool? persistFolder = default;
+            string persistFolderPath = default;
+            IList<int> luns = default;
+            string defaultFilePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlTempDBSettings(Optional.ToNullable(dataFileSize), Optional.ToNullable(dataGrowth), Optional.ToNullable(logFileSize), Optional.ToNullable(logGrowth), Optional.ToNullable(dataFileCount), Optional.ToNullable(persistFolder), persistFolderPath.Value, Optional.ToList(luns), defaultFilePath.Value, serializedAdditionalRawData);
+            return new SqlTempDBSettings(
+                dataFileSize,
+                dataGrowth,
+                logFileSize,
+                logGrowth,
+                dataFileCount,
+                persistFolder,
+                persistFolderPath,
+                luns ?? new ChangeTrackingList<int>(),
+                defaultFilePath,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlTempDBSettings>.Write(ModelReaderWriterOptions options)
@@ -223,7 +233,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -239,7 +249,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeSqlTempDBSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProofOfPossessionNonceResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProofOfPossessionNonceResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            Optional<string> certificate = default;
-            Optional<SphereCertificateStatus> status = default;
-            Optional<string> subject = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> expiryUtc = default;
-            Optional<DateTimeOffset> notBeforeUtc = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            string certificate = default;
+            SphereCertificateStatus? status = default;
+            string subject = default;
+            string thumbprint = default;
+            DateTimeOffset? expiryUtc = default;
+            DateTimeOffset? notBeforeUtc = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProofOfPossessionNonceResponse(certificate.Value, Optional.ToNullable(status), subject.Value, thumbprint.Value, Optional.ToNullable(expiryUtc), Optional.ToNullable(notBeforeUtc), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ProofOfPossessionNonceResponse(
+                certificate,
+                status,
+                subject,
+                thumbprint,
+                expiryUtc,
+                notBeforeUtc,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProofOfPossessionNonceResponse>.Write(ModelReaderWriterOptions options)
@@ -179,7 +187,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +203,7 @@ namespace Azure.ResourceManager.Sphere.Models
                         return DeserializeProofOfPossessionNonceResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

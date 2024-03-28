@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<CatalogOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CatalogOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CatalogOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Hive)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HiveCatalogOption>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<CatalogOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CatalogOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CatalogOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<IList<HiveCatalogOption>> hive = default;
+            IList<HiveCatalogOption> hive = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<HiveCatalogOption> array = new List<HiveCatalogOption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HiveCatalogOption.DeserializeHiveCatalogOption(item));
+                        array.Add(HiveCatalogOption.DeserializeHiveCatalogOption(item, options));
                     }
                     hive = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CatalogOptions(Optional.ToList(hive), serializedAdditionalRawData);
+            return new CatalogOptions(hive ?? new ChangeTrackingList<HiveCatalogOption>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CatalogOptions>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CatalogOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CatalogOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeCatalogOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CatalogOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CatalogOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

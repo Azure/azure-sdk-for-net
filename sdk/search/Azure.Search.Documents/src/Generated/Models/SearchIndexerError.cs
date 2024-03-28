@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents an item- or document-level indexing error. </summary>
@@ -16,11 +13,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="SearchIndexerError"/>. </summary>
         /// <param name="errorMessage"> The message describing the error that occurred while processing the item. </param>
         /// <param name="statusCode"> The status code indicating why the indexing operation failed. Possible values include: 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="errorMessage"/> is null. </exception>
         internal SearchIndexerError(string errorMessage, int statusCode)
         {
-            Argument.AssertNotNull(errorMessage, nameof(errorMessage));
-
             ErrorMessage = errorMessage;
             StatusCode = statusCode;
         }

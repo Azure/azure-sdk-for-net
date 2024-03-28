@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationAuthentication)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationAuthentication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> value = default;
+            string type = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationAuthentication(type.Value, value.Value, serializedAdditionalRawData);
+            return new CustomLocationAuthentication(type, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationAuthentication>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationAuthentication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                         return DeserializeCustomLocationAuthentication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationAuthentication)} does not support reading '{options.Format}' format.");
             }
         }
 

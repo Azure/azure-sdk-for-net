@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<VideoAnalyzerPreset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoAnalyzerPreset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VideoAnalyzerPreset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<VideoAnalyzerPreset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoAnalyzerPreset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VideoAnalyzerPreset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<InsightsType> insightsToExtract = default;
-            Optional<string> audioLanguage = default;
-            Optional<AudioAnalysisMode> mode = default;
-            Optional<IDictionary<string, string>> experimentalOptions = default;
+            InsightsType? insightsToExtract = default;
+            string audioLanguage = default;
+            AudioAnalysisMode? mode = default;
+            IDictionary<string, string> experimentalOptions = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VideoAnalyzerPreset(odataType, serializedAdditionalRawData, audioLanguage.Value, Optional.ToNullable(mode), Optional.ToDictionary(experimentalOptions), Optional.ToNullable(insightsToExtract));
+            return new VideoAnalyzerPreset(
+                odataType,
+                serializedAdditionalRawData,
+                audioLanguage,
+                mode,
+                experimentalOptions ?? new ChangeTrackingDictionary<string, string>(),
+                insightsToExtract);
         }
 
         BinaryData IPersistableModel<VideoAnalyzerPreset>.Write(ModelReaderWriterOptions options)
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VideoAnalyzerPreset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VideoAnalyzerPreset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeVideoAnalyzerPreset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VideoAnalyzerPreset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VideoAnalyzerPreset)} does not support reading '{options.Format}' format.");
             }
         }
 

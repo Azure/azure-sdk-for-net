@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatusCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatusCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastTransitionTime = default;
-            Optional<string> message = default;
-            Optional<string> reason = default;
-            Optional<string> status = default;
-            Optional<string> type = default;
+            DateTimeOffset? lastTransitionTime = default;
+            string message = default;
+            string reason = default;
+            string status = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesObjectStatusCondition(Optional.ToNullable(lastTransitionTime), message.Value, reason.Value, status.Value, type.Value, serializedAdditionalRawData);
+            return new KubernetesObjectStatusCondition(
+                lastTransitionTime,
+                message,
+                reason,
+                status,
+                type,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesObjectStatusCondition>.Write(ModelReaderWriterOptions options)
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesObjectStatusCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

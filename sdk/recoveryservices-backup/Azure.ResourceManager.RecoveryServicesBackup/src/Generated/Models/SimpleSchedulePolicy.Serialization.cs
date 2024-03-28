@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SimpleSchedulePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(HourlySchedule))
             {
                 writer.WritePropertyName("hourlySchedule"u8);
-                writer.WriteObjectValue(HourlySchedule);
+                writer.WriteObjectValue<BackupHourlySchedule>(HourlySchedule, options);
             }
             if (Optional.IsDefined(ScheduleWeeklyFrequency))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SimpleSchedulePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ScheduleRunType> scheduleRunFrequency = default;
-            Optional<IList<BackupDayOfWeek>> scheduleRunDays = default;
-            Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
-            Optional<BackupHourlySchedule> hourlySchedule = default;
-            Optional<int> scheduleWeeklyFrequency = default;
+            ScheduleRunType? scheduleRunFrequency = default;
+            IList<BackupDayOfWeek> scheduleRunDays = default;
+            IList<DateTimeOffset> scheduleRunTimes = default;
+            BackupHourlySchedule hourlySchedule = default;
+            int? scheduleWeeklyFrequency = default;
             string schedulePolicyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value);
+                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scheduleWeeklyFrequency"u8))
@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimpleSchedulePolicy(schedulePolicyType, serializedAdditionalRawData, Optional.ToNullable(scheduleRunFrequency), Optional.ToList(scheduleRunDays), Optional.ToList(scheduleRunTimes), hourlySchedule.Value, Optional.ToNullable(scheduleWeeklyFrequency));
+            return new SimpleSchedulePolicy(
+                schedulePolicyType,
+                serializedAdditionalRawData,
+                scheduleRunFrequency,
+                scheduleRunDays ?? new ChangeTrackingList<BackupDayOfWeek>(),
+                scheduleRunTimes ?? new ChangeTrackingList<DateTimeOffset>(),
+                hourlySchedule,
+                scheduleWeeklyFrequency);
         }
 
         BinaryData IPersistableModel<SimpleSchedulePolicy>.Write(ModelReaderWriterOptions options)
@@ -189,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +212,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeSimpleSchedulePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

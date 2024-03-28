@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SuggestRelationshipLinksResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in SuggestedRelationships)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RelationshipsLookup>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SuggestRelationshipLinksResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> interactionName = default;
-            Optional<IReadOnlyList<RelationshipsLookup>> suggestedRelationships = default;
+            string interactionName = default;
+            IReadOnlyList<RelationshipsLookup> suggestedRelationships = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<RelationshipsLookup> array = new List<RelationshipsLookup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelationshipsLookup.DeserializeRelationshipsLookup(item));
+                        array.Add(RelationshipsLookup.DeserializeRelationshipsLookup(item, options));
                     }
                     suggestedRelationships = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SuggestRelationshipLinksResponse(interactionName.Value, Optional.ToList(suggestedRelationships), serializedAdditionalRawData);
+            return new SuggestRelationshipLinksResponse(interactionName, suggestedRelationships ?? new ChangeTrackingList<RelationshipsLookup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SuggestRelationshipLinksResponse>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeSuggestRelationshipLinksResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

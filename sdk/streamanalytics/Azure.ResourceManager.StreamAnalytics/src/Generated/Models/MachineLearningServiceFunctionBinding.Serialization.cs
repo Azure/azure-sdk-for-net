@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningServiceInputColumn>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningServiceOutputColumn>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServiceFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> endpoint = default;
-            Optional<string> apiKey = default;
-            Optional<IList<MachineLearningServiceInputColumn>> inputs = default;
-            Optional<IList<MachineLearningServiceOutputColumn>> outputs = default;
-            Optional<int> batchSize = default;
-            Optional<int> numberOfParallelRequests = default;
-            Optional<string> inputRequestName = default;
-            Optional<string> outputResponseName = default;
+            string endpoint = default;
+            string apiKey = default;
+            IList<MachineLearningServiceInputColumn> inputs = default;
+            IList<MachineLearningServiceOutputColumn> outputs = default;
+            int? batchSize = default;
+            int? numberOfParallelRequests = default;
+            string inputRequestName = default;
+            string outputResponseName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<MachineLearningServiceInputColumn> array = new List<MachineLearningServiceInputColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningServiceInputColumn.DeserializeMachineLearningServiceInputColumn(item));
+                                array.Add(MachineLearningServiceInputColumn.DeserializeMachineLearningServiceInputColumn(item, options));
                             }
                             inputs = array;
                             continue;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<MachineLearningServiceOutputColumn> array = new List<MachineLearningServiceOutputColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningServiceOutputColumn.DeserializeMachineLearningServiceOutputColumn(item));
+                                array.Add(MachineLearningServiceOutputColumn.DeserializeMachineLearningServiceOutputColumn(item, options));
                             }
                             outputs = array;
                             continue;
@@ -221,7 +221,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningServiceFunctionBinding(type, serializedAdditionalRawData, endpoint.Value, apiKey.Value, Optional.ToList(inputs), Optional.ToList(outputs), Optional.ToNullable(batchSize), Optional.ToNullable(numberOfParallelRequests), inputRequestName.Value, outputResponseName.Value);
+            return new MachineLearningServiceFunctionBinding(
+                type,
+                serializedAdditionalRawData,
+                endpoint,
+                apiKey,
+                inputs ?? new ChangeTrackingList<MachineLearningServiceInputColumn>(),
+                outputs ?? new ChangeTrackingList<MachineLearningServiceOutputColumn>(),
+                batchSize,
+                numberOfParallelRequests,
+                inputRequestName,
+                outputResponseName);
         }
 
         BinaryData IPersistableModel<MachineLearningServiceFunctionBinding>.Write(ModelReaderWriterOptions options)
@@ -233,7 +243,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -249,7 +259,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeMachineLearningServiceFunctionBinding(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningServiceFunctionBinding)} does not support reading '{options.Format}' format.");
             }
         }
 

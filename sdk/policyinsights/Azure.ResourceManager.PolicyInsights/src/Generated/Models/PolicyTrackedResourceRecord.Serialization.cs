@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyTrackedResourceRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyTrackedResourceRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyTrackedResourceRecord)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PolicyDetails))
             {
                 writer.WritePropertyName("policyDetails"u8);
-                writer.WriteObjectValue(PolicyDetails);
+                writer.WriteObjectValue<PolicyDetails>(PolicyDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                writer.WriteObjectValue<TrackedResourceModificationDetails>(CreatedBy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteObjectValue(LastModifiedBy);
+                writer.WriteObjectValue<TrackedResourceModificationDetails>(LastModifiedBy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdateOn))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyTrackedResourceRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyTrackedResourceRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyTrackedResourceRecord)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> trackedResourceId = default;
-            Optional<PolicyDetails> policyDetails = default;
-            Optional<TrackedResourceModificationDetails> createdBy = default;
-            Optional<TrackedResourceModificationDetails> lastModifiedBy = default;
-            Optional<DateTimeOffset> lastUpdateUtc = default;
+            ResourceIdentifier trackedResourceId = default;
+            PolicyDetails policyDetails = default;
+            TrackedResourceModificationDetails createdBy = default;
+            TrackedResourceModificationDetails lastModifiedBy = default;
+            DateTimeOffset? lastUpdateUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value);
+                    policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdBy"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    createdBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value);
+                    createdBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastModifiedBy"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    lastModifiedBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value);
+                    lastModifiedBy = TrackedResourceModificationDetails.DeserializeTrackedResourceModificationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateUtc"u8))
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyTrackedResourceRecord(trackedResourceId.Value, policyDetails.Value, createdBy.Value, lastModifiedBy.Value, Optional.ToNullable(lastUpdateUtc), serializedAdditionalRawData);
+            return new PolicyTrackedResourceRecord(
+                trackedResourceId,
+                policyDetails,
+                createdBy,
+                lastModifiedBy,
+                lastUpdateUtc,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyTrackedResourceRecord>.Write(ModelReaderWriterOptions options)
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyTrackedResourceRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyTrackedResourceRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicyTrackedResourceRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyTrackedResourceRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyTrackedResourceRecord)} does not support reading '{options.Format}' format.");
             }
         }
 

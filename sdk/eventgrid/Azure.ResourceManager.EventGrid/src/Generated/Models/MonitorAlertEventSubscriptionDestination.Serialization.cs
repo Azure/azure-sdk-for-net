@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorAlertEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorAlertEventSubscriptionDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorAlertEventSubscriptionDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorAlertEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorAlertEventSubscriptionDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorAlertEventSubscriptionDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<MonitorAlertSeverity> severity = default;
-            Optional<string> description = default;
-            Optional<IList<ResourceIdentifier>> actionGroups = default;
+            MonitorAlertSeverity? severity = default;
+            string description = default;
+            IList<ResourceIdentifier> actionGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorAlertEventSubscriptionDestination(endpointType, serializedAdditionalRawData, Optional.ToNullable(severity), description.Value, Optional.ToList(actionGroups));
+            return new MonitorAlertEventSubscriptionDestination(endpointType, serializedAdditionalRawData, severity, description, actionGroups ?? new ChangeTrackingList<ResourceIdentifier>());
         }
 
         BinaryData IPersistableModel<MonitorAlertEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorAlertEventSubscriptionDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorAlertEventSubscriptionDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeMonitorAlertEventSubscriptionDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorAlertEventSubscriptionDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorAlertEventSubscriptionDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

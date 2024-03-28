@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountKeys)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountKeys)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> primary = default;
-            Optional<string> secondary = default;
+            string accountName = default;
+            string primary = default;
+            string secondary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountKeys(accountName.Value, primary.Value, secondary.Value, serializedAdditionalRawData);
+            return new BatchAccountKeys(accountName, primary, secondary, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountKeys>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountKeys)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchAccountKeys(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountKeys)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentPrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentPrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             string principalId = default;
             string principalType = default;
-            Optional<IDictionary<string, string>> principalMetadata = default;
+            IDictionary<string, string> principalMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentPrincipal(principalId, principalType, Optional.ToDictionary(principalMetadata), serializedAdditionalRawData);
+            return new AssignmentPrincipal(principalId, principalType, principalMetadata ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentPrincipal>.Write(ModelReaderWriterOptions options)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeAssignmentPrincipal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support reading '{options.Format}' format.");
             }
         }
 

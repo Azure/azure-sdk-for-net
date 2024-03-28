@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -50,7 +49,13 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <returns> A new <see cref="Subscription.SubscriptionAliasData"/> instance for mocking. </returns>
         public static SubscriptionAliasData SubscriptionAliasData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionAliasProperties properties = null)
         {
-            return new SubscriptionAliasData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new SubscriptionAliasData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SubscriptionAliasProperties"/>. </summary>
@@ -76,7 +81,20 @@ namespace Azure.ResourceManager.Subscription.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SubscriptionAliasProperties(subscriptionId, displayName, provisioningState, acceptOwnershipUri, acceptOwnershipState, billingScope, workload, resellerId, subscriptionOwnerId, managementGroupId, createdOn, tags, serializedAdditionalRawData: null);
+            return new SubscriptionAliasProperties(
+                subscriptionId,
+                displayName,
+                provisioningState,
+                acceptOwnershipUri,
+                acceptOwnershipState,
+                billingScope,
+                workload,
+                resellerId,
+                subscriptionOwnerId,
+                managementGroupId,
+                createdOn,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AcceptOwnershipRequestProperties"/>. </summary>
@@ -104,7 +122,15 @@ namespace Azure.ResourceManager.Subscription.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AcceptOwnershipStatus(subscriptionId, acceptOwnershipState, provisioningState, billingOwner, subscriptionTenantId, displayName, tags, serializedAdditionalRawData: null);
+            return new AcceptOwnershipStatus(
+                subscriptionId,
+                acceptOwnershipState,
+                provisioningState,
+                billingOwner,
+                subscriptionTenantId,
+                displayName,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Subscription.TenantPolicyData"/>. </summary>
@@ -116,7 +142,13 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <returns> A new <see cref="Subscription.TenantPolicyData"/> instance for mocking. </returns>
         public static TenantPolicyData TenantPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TenantPolicyProperties properties = null)
         {
-            return new TenantPolicyData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new TenantPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TenantPolicyProperties"/>. </summary>
@@ -141,7 +173,13 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <returns> A new <see cref="Subscription.BillingAccountPolicyData"/> instance for mocking. </returns>
         public static BillingAccountPolicyData BillingAccountPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BillingAccountPolicyProperties properties = null)
         {
-            return new BillingAccountPolicyData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new BillingAccountPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BillingAccountPolicyProperties"/>. </summary>

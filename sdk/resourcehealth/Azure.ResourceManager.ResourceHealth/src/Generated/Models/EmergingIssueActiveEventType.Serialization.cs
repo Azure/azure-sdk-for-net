@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmergingIssueActiveEventType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in Impacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmergingIssueImpact>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmergingIssueActiveEventType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> trackingId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> cloud = default;
-            Optional<ResourceHealthEventSeverityLevel> severity = default;
-            Optional<ResourceHealthEventStageValue> stage = default;
-            Optional<bool> published = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<IReadOnlyList<EmergingIssueImpact>> impacts = default;
+            string title = default;
+            string description = default;
+            string trackingId = default;
+            DateTimeOffset? startTime = default;
+            string cloud = default;
+            ResourceHealthEventSeverityLevel? severity = default;
+            ResourceHealthEventStageValue? stage = default;
+            bool? published = default;
+            DateTimeOffset? lastModifiedTime = default;
+            IReadOnlyList<EmergingIssueImpact> impacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<EmergingIssueImpact> array = new List<EmergingIssueImpact>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmergingIssueImpact.DeserializeEmergingIssueImpact(item));
+                        array.Add(EmergingIssueImpact.DeserializeEmergingIssueImpact(item, options));
                     }
                     impacts = array;
                     continue;
@@ -218,7 +218,18 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmergingIssueActiveEventType(title.Value, description.Value, trackingId.Value, Optional.ToNullable(startTime), cloud.Value, Optional.ToNullable(severity), Optional.ToNullable(stage), Optional.ToNullable(published), Optional.ToNullable(lastModifiedTime), Optional.ToList(impacts), serializedAdditionalRawData);
+            return new EmergingIssueActiveEventType(
+                title,
+                description,
+                trackingId,
+                startTime,
+                cloud,
+                severity,
+                stage,
+                published,
+                lastModifiedTime,
+                impacts ?? new ChangeTrackingList<EmergingIssueImpact>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmergingIssueActiveEventType>.Write(ModelReaderWriterOptions options)
@@ -230,7 +241,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -246,7 +257,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeEmergingIssueActiveEventType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support reading '{options.Format}' format.");
             }
         }
 

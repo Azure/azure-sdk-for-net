@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,15 +134,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> armSkuName = default;
-            Optional<string> benefitId = default;
-            Optional<string> benefitOrderId = default;
-            Optional<BillingAccountBenefitKind> benefitType = default;
-            Optional<DateTimeOffset> usageDate = default;
-            Optional<decimal> avgUtilizationPercentage = default;
-            Optional<decimal> minUtilizationPercentage = default;
-            Optional<decimal> maxUtilizationPercentage = default;
+            SystemData systemData = default;
+            string armSkuName = default;
+            string benefitId = default;
+            string benefitOrderId = default;
+            BillingAccountBenefitKind? benefitType = default;
+            DateTimeOffset? usageDate = default;
+            decimal? avgUtilizationPercentage = default;
+            decimal? minUtilizationPercentage = default;
+            decimal? maxUtilizationPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,21 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanUtilizationSummary(id, name, type, systemData.Value, kind, serializedAdditionalRawData, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Optional.ToNullable(benefitType), Optional.ToNullable(usageDate), Optional.ToNullable(avgUtilizationPercentage), Optional.ToNullable(minUtilizationPercentage), Optional.ToNullable(maxUtilizationPercentage));
+            return new SavingsPlanUtilizationSummary(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                armSkuName,
+                benefitId,
+                benefitOrderId,
+                benefitType,
+                usageDate,
+                avgUtilizationPercentage,
+                minUtilizationPercentage,
+                maxUtilizationPercentage);
         }
 
         BinaryData IPersistableModel<SavingsPlanUtilizationSummary>.Write(ModelReaderWriterOptions options)
@@ -266,7 +280,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -282,7 +296,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeSavingsPlanUtilizationSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

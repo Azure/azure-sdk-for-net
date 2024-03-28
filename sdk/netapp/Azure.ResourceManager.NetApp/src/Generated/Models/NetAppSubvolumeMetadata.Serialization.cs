@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> path = default;
-            Optional<string> parentPath = default;
-            Optional<long> size = default;
-            Optional<long> bytesUsed = default;
-            Optional<string> permissions = default;
-            Optional<DateTimeOffset> creationTimeStamp = default;
-            Optional<DateTimeOffset> accessedTimeStamp = default;
-            Optional<DateTimeOffset> modifiedTimeStamp = default;
-            Optional<DateTimeOffset> changedTimeStamp = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string path = default;
+            string parentPath = default;
+            long? size = default;
+            long? bytesUsed = default;
+            string permissions = default;
+            DateTimeOffset? creationTimeStamp = default;
+            DateTimeOffset? accessedTimeStamp = default;
+            DateTimeOffset? modifiedTimeStamp = default;
+            DateTimeOffset? changedTimeStamp = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -272,7 +272,22 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppSubvolumeMetadata(id, name, type, systemData.Value, path.Value, parentPath.Value, Optional.ToNullable(size), Optional.ToNullable(bytesUsed), permissions.Value, Optional.ToNullable(creationTimeStamp), Optional.ToNullable(accessedTimeStamp), Optional.ToNullable(modifiedTimeStamp), Optional.ToNullable(changedTimeStamp), provisioningState.Value, serializedAdditionalRawData);
+            return new NetAppSubvolumeMetadata(
+                id,
+                name,
+                type,
+                systemData,
+                path,
+                parentPath,
+                size,
+                bytesUsed,
+                permissions,
+                creationTimeStamp,
+                accessedTimeStamp,
+                modifiedTimeStamp,
+                changedTimeStamp,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppSubvolumeMetadata>.Write(ModelReaderWriterOptions options)
@@ -284,7 +299,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +315,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppSubvolumeMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppSubvolumeMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

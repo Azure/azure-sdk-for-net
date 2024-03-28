@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<NfsMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<NfsMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.StorageMover.Models
                 return null;
             }
             string host = default;
-            Optional<NfsVersion> nfsVersion = default;
+            NfsVersion? nfsVersion = default;
             string export = default;
             EndpointType endpointType = default;
-            Optional<string> description = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            string description = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NfsMountEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData, host, Optional.ToNullable(nfsVersion), export);
+            return new NfsMountEndpointProperties(
+                endpointType,
+                description,
+                provisioningState,
+                serializedAdditionalRawData,
+                host,
+                nfsVersion,
+                export);
         }
 
         BinaryData IPersistableModel<NfsMountEndpointProperties>.Write(ModelReaderWriterOptions options)
@@ -151,7 +158,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +174,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                         return DeserializeNfsMountEndpointProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

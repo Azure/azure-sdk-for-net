@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobListResultV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobListResultV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobListResultV2)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomationJobCollectionItemData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobListResultV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobListResultV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobListResultV2)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationJobCollectionItemData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AutomationJobCollectionItemData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationJobCollectionItemData> array = new List<AutomationJobCollectionItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData(item));
+                        array.Add(AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobListResultV2(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutomationJobListResultV2(value ?? new ChangeTrackingList<AutomationJobCollectionItemData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobListResultV2>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobListResultV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobListResultV2)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationJobListResultV2(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobListResultV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobListResultV2)} does not support reading '{options.Format}' format.");
             }
         }
 

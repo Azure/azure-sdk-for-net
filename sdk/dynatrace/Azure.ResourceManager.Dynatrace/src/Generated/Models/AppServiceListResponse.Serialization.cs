@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceListResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceListResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DynatraceOneAgentEnabledAppServiceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceListResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceListResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DynatraceOneAgentEnabledAppServiceInfo>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DynatraceOneAgentEnabledAppServiceInfo> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceOneAgentEnabledAppServiceInfo> array = new List<DynatraceOneAgentEnabledAppServiceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceOneAgentEnabledAppServiceInfo.DeserializeDynatraceOneAgentEnabledAppServiceInfo(item));
+                        array.Add(DynatraceOneAgentEnabledAppServiceInfo.DeserializeDynatraceOneAgentEnabledAppServiceInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AppServiceListResponse(value ?? new ChangeTrackingList<DynatraceOneAgentEnabledAppServiceInfo>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceListResponse>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceListResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceListResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeAppServiceListResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceListResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceListResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

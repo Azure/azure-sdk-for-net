@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabServicesUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabServicesUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesUsage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<LabServicesUsageName>(Name, options);
             }
             if (Optional.IsDefined(Id))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabServicesUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabServicesUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<LabServicesUsageUnit> unit = default;
-            Optional<LabServicesUsageName> name = default;
-            Optional<ResourceIdentifier> id = default;
+            long? currentValue = default;
+            long? limit = default;
+            LabServicesUsageUnit? unit = default;
+            LabServicesUsageName name = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    name = LabServicesUsageName.DeserializeLabServicesUsageName(property.Value);
+                    name = LabServicesUsageName.DeserializeLabServicesUsageName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesUsage(Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(unit), name.Value, id.Value, serializedAdditionalRawData);
+            return new LabServicesUsage(
+                currentValue,
+                limit,
+                unit,
+                name,
+                id,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesUsage>.Write(ModelReaderWriterOptions options)
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabServicesUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabServicesUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabServicesUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesUsage)} does not support reading '{options.Format}' format.");
             }
         }
 

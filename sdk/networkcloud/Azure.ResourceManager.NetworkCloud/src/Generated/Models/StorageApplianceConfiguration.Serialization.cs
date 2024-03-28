@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageApplianceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("adminCredentials"u8);
-            writer.WriteObjectValue(AdminCredentials);
+            writer.WriteObjectValue<AdministrativeCredentials>(AdminCredentials, options);
             writer.WritePropertyName("rackSlot"u8);
             writer.WriteNumberValue(RackSlot);
             writer.WritePropertyName("serialNumber"u8);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageApplianceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,14 +78,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             AdministrativeCredentials adminCredentials = default;
             long rackSlot = default;
             string serialNumber = default;
-            Optional<string> storageApplianceName = default;
+            string storageApplianceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminCredentials"u8))
                 {
-                    adminCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value);
+                    adminCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rackSlot"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageApplianceConfiguration(adminCredentials, rackSlot, serialNumber, storageApplianceName.Value, serializedAdditionalRawData);
+            return new StorageApplianceConfiguration(adminCredentials, rackSlot, serialNumber, storageApplianceName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageApplianceConfiguration>.Write(ModelReaderWriterOptions options)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeStorageApplianceConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransferOffersResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferOffersResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferOffersResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Succeeded)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateStoreCollectionDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Failed)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateStoreCollectionDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransferOffersResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferOffersResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferOffersResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PrivateStoreCollectionDetails>> succeeded = default;
-            Optional<IReadOnlyList<PrivateStoreCollectionDetails>> failed = default;
+            IReadOnlyList<PrivateStoreCollectionDetails> succeeded = default;
+            IReadOnlyList<PrivateStoreCollectionDetails> failed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PrivateStoreCollectionDetails> array = new List<PrivateStoreCollectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item));
+                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item, options));
                     }
                     succeeded = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PrivateStoreCollectionDetails> array = new List<PrivateStoreCollectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item));
+                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item, options));
                     }
                     failed = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferOffersResult(Optional.ToList(succeeded), Optional.ToList(failed), serializedAdditionalRawData);
+            return new TransferOffersResult(succeeded ?? new ChangeTrackingList<PrivateStoreCollectionDetails>(), failed ?? new ChangeTrackingList<PrivateStoreCollectionDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferOffersResult>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TransferOffersResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferOffersResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeTransferOffersResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransferOffersResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferOffersResult)} does not support reading '{options.Format}' format.");
             }
         }
 

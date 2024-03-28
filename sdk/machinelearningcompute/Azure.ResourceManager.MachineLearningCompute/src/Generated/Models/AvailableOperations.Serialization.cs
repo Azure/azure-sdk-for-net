@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableOperations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableOperations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableOperations)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceOperation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableOperations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableOperations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableOperations)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceOperation>> value = default;
+            IReadOnlyList<ResourceOperation> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     List<ResourceOperation> array = new List<ResourceOperation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceOperation.DeserializeResourceOperation(item));
+                        array.Add(ResourceOperation.DeserializeResourceOperation(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableOperations(Optional.ToList(value), serializedAdditionalRawData);
+            return new AvailableOperations(value ?? new ChangeTrackingList<ResourceOperation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableOperations>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableOperations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableOperations)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                         return DeserializeAvailableOperations(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableOperations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableOperations)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<GraphicalRunbookContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
                 if (RawContent != null)
                 {
                     writer.WritePropertyName("rawContent"u8);
-                    writer.WriteObjectValue(RawContent);
+                    writer.WriteObjectValue<RawGraphicalRunbookContent>(RawContent, options);
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<GraphicalRunbookContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<RawGraphicalRunbookContent> rawContent = default;
-            Optional<string> graphRunbookJson = default;
+            RawGraphicalRunbookContent rawContent = default;
+            string graphRunbookJson = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
                         rawContent = null;
                         continue;
                     }
-                    rawContent = RawGraphicalRunbookContent.DeserializeRawGraphicalRunbookContent(property.Value);
+                    rawContent = RawGraphicalRunbookContent.DeserializeRawGraphicalRunbookContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("graphRunbookJson"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GraphicalRunbookContent(rawContent.Value, graphRunbookJson.Value, serializedAdditionalRawData);
+            return new GraphicalRunbookContent(rawContent, graphRunbookJson, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GraphicalRunbookContent>.Write(ModelReaderWriterOptions options)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeGraphicalRunbookContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support reading '{options.Format}' format.");
             }
         }
 

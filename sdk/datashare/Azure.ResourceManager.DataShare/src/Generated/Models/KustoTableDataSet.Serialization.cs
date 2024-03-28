@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoTableDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoTableDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoTableDataSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("tableLevelSharingProperties"u8);
-            writer.WriteObjectValue(TableLevelSharingProperties);
+            writer.WriteObjectValue<TableLevelSharingProperties>(TableLevelSharingProperties, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoTableDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoTableDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoTableDataSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataSetId = default;
+            SystemData systemData = default;
+            Guid? dataSetId = default;
             ResourceIdentifier kustoDatabaseResourceId = default;
-            Optional<AzureLocation> location = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            AzureLocation? location = default;
+            DataShareProvisioningState? provisioningState = default;
             TableLevelSharingProperties tableLevelSharingProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         }
                         if (property0.NameEquals("tableLevelSharingProperties"u8))
                         {
-                            tableLevelSharingProperties = TableLevelSharingProperties.DeserializeTableLevelSharingProperties(property0.Value);
+                            tableLevelSharingProperties = TableLevelSharingProperties.DeserializeTableLevelSharingProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -207,7 +207,18 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoTableDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(dataSetId), kustoDatabaseResourceId, Optional.ToNullable(location), Optional.ToNullable(provisioningState), tableLevelSharingProperties);
+            return new KustoTableDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                dataSetId,
+                kustoDatabaseResourceId,
+                location,
+                provisioningState,
+                tableLevelSharingProperties);
         }
 
         BinaryData IPersistableModel<KustoTableDataSet>.Write(ModelReaderWriterOptions options)
@@ -219,7 +230,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoTableDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoTableDataSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +246,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeKustoTableDataSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoTableDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoTableDataSet)} does not support reading '{options.Format}' format.");
             }
         }
 

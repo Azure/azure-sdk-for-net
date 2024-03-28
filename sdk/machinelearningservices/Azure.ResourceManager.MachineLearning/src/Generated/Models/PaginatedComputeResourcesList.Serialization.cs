@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaginatedComputeResourcesList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaginatedComputeResourcesList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaginatedComputeResourcesList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningComputeData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaginatedComputeResourcesList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaginatedComputeResourcesList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaginatedComputeResourcesList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningComputeData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MachineLearningComputeData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningComputeData> array = new List<MachineLearningComputeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningComputeData.DeserializeMachineLearningComputeData(item));
+                        array.Add(MachineLearningComputeData.DeserializeMachineLearningComputeData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaginatedComputeResourcesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PaginatedComputeResourcesList(value ?? new ChangeTrackingList<MachineLearningComputeData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaginatedComputeResourcesList>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PaginatedComputeResourcesList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaginatedComputeResourcesList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializePaginatedComputeResourcesList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PaginatedComputeResourcesList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaginatedComputeResourcesList)} does not support reading '{options.Format}' format.");
             }
         }
 

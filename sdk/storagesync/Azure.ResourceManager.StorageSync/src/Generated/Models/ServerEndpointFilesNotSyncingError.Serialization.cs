@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointFilesNotSyncingError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointFilesNotSyncingError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<int> errorCode = default;
-            Optional<long> persistentCount = default;
-            Optional<long> transientCount = default;
+            int? errorCode = default;
+            long? persistentCount = default;
+            long? transientCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointFilesNotSyncingError(Optional.ToNullable(errorCode), Optional.ToNullable(persistentCount), Optional.ToNullable(transientCount), serializedAdditionalRawData);
+            return new ServerEndpointFilesNotSyncingError(errorCode, persistentCount, transientCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointFilesNotSyncingError>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeServerEndpointFilesNotSyncingError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MISqlConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MISqlConnectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MISqlConnectionInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MISqlConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MISqlConnectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MISqlConnectionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             string managedInstanceResourceId = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MISqlConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, managedInstanceResourceId);
+            return new MISqlConnectionInfo(type, userName, password, serializedAdditionalRawData, managedInstanceResourceId);
         }
 
         BinaryData IPersistableModel<MISqlConnectionInfo>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MISqlConnectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MISqlConnectionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMISqlConnectionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MISqlConnectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MISqlConnectionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

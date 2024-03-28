@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(CompanyInfo))
             {
                 writer.WritePropertyName("companyInfo"u8);
-                writer.WriteObjectValue(CompanyInfo);
+                writer.WriteObjectValue<CompanyInfo>(CompanyInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> firstName = default;
-            Optional<string> lastName = default;
-            Optional<string> companyName = default;
-            Optional<string> emailAddress = default;
-            Optional<CompanyInfo> companyInfo = default;
+            string firstName = default;
+            string lastName = default;
+            string companyName = default;
+            string emailAddress = default;
+            CompanyInfo companyInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    companyInfo = CompanyInfo.DeserializeCompanyInfo(property.Value);
+                    companyInfo = CompanyInfo.DeserializeCompanyInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserInfo(firstName.Value, lastName.Value, companyName.Value, emailAddress.Value, companyInfo.Value, serializedAdditionalRawData);
+            return new UserInfo(
+                firstName,
+                lastName,
+                companyName,
+                emailAddress,
+                companyInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserInfo>.Write(ModelReaderWriterOptions options)
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeUserInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

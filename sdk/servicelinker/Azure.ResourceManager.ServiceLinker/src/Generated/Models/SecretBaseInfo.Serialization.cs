@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecretBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecretBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "keyVaultSecretReference": return KeyVaultSecretReferenceSecretInfo.DeserializeKeyVaultSecretReferenceSecretInfo(element);
-                    case "keyVaultSecretUri": return KeyVaultSecretUriSecretInfo.DeserializeKeyVaultSecretUriSecretInfo(element);
-                    case "rawValue": return RawValueSecretInfo.DeserializeRawValueSecretInfo(element);
+                    case "keyVaultSecretReference": return KeyVaultSecretReferenceSecretInfo.DeserializeKeyVaultSecretReferenceSecretInfo(element, options);
+                    case "keyVaultSecretUri": return KeyVaultSecretUriSecretInfo.DeserializeKeyVaultSecretUriSecretInfo(element, options);
+                    case "rawValue": return RawValueSecretInfo.DeserializeRawValueSecretInfo(element, options);
                 }
             }
-            return UnknownSecretInfoBase.DeserializeUnknownSecretInfoBase(element);
+            return UnknownSecretInfoBase.DeserializeUnknownSecretInfoBase(element, options);
         }
 
         BinaryData IPersistableModel<SecretBaseInfo>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         return DeserializeSecretBaseInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

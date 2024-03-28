@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingLocatorContentKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Tracks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaTrackSelection>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingLocatorContentKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             Guid id = default;
-            Optional<StreamingLocatorContentKeyType> type = default;
-            Optional<string> labelReferenceInStreamingPolicy = default;
-            Optional<string> value = default;
-            Optional<string> policyName = default;
-            Optional<IReadOnlyList<MediaTrackSelection>> tracks = default;
+            StreamingLocatorContentKeyType? type = default;
+            string labelReferenceInStreamingPolicy = default;
+            string value = default;
+            string policyName = default;
+            IReadOnlyList<MediaTrackSelection> tracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item, options));
                     }
                     tracks = array;
                     continue;
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingLocatorContentKey(id, Optional.ToNullable(type), labelReferenceInStreamingPolicy.Value, value.Value, policyName.Value, Optional.ToList(tracks), serializedAdditionalRawData);
+            return new StreamingLocatorContentKey(
+                id,
+                type,
+                labelReferenceInStreamingPolicy,
+                value,
+                policyName,
+                tracks ?? new ChangeTrackingList<MediaTrackSelection>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingLocatorContentKey>.Write(ModelReaderWriterOptions options)
@@ -167,7 +174,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +190,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingLocatorContentKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support reading '{options.Format}' format.");
             }
         }
 

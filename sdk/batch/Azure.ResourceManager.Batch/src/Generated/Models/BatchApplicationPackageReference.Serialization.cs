@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchApplicationPackageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchApplicationPackageReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchApplicationPackageReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchApplicationPackageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchApplicationPackageReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchApplicationPackageReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Optional<string> version = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchApplicationPackageReference(id, version.Value, serializedAdditionalRawData);
+            return new BatchApplicationPackageReference(id, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchApplicationPackageReference>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchApplicationPackageReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchApplicationPackageReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchApplicationPackageReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchApplicationPackageReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchApplicationPackageReference)} does not support reading '{options.Format}' format.");
             }
         }
 

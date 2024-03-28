@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudToDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudToDeviceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudToDeviceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Feedback))
             {
                 writer.WritePropertyName("feedback"u8);
-                writer.WriteObjectValue(Feedback);
+                writer.WriteObjectValue<CloudToDeviceFeedbackQueueProperties>(Feedback, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudToDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudToDeviceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudToDeviceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<int> maxDeliveryCount = default;
-            Optional<TimeSpan> defaultTtlAsIso8601 = default;
-            Optional<CloudToDeviceFeedbackQueueProperties> feedback = default;
+            int? maxDeliveryCount = default;
+            TimeSpan? defaultTtlAsIso8601 = default;
+            CloudToDeviceFeedbackQueueProperties feedback = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    feedback = CloudToDeviceFeedbackQueueProperties.DeserializeCloudToDeviceFeedbackQueueProperties(property.Value);
+                    feedback = CloudToDeviceFeedbackQueueProperties.DeserializeCloudToDeviceFeedbackQueueProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudToDeviceProperties(Optional.ToNullable(maxDeliveryCount), Optional.ToNullable(defaultTtlAsIso8601), feedback.Value, serializedAdditionalRawData);
+            return new CloudToDeviceProperties(maxDeliveryCount, defaultTtlAsIso8601, feedback, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudToDeviceProperties>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudToDeviceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudToDeviceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeCloudToDeviceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudToDeviceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudToDeviceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

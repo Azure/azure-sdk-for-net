@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmDiscoveredProtectedVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmDiscoveredProtectedVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmDiscoveredProtectedVmDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmDiscoveredProtectedVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmDiscoveredProtectedVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmDiscoveredProtectedVmDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,18 +140,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vCenterId = default;
-            Optional<string> vCenterFqdn = default;
-            Optional<IReadOnlyList<string>> datastores = default;
-            Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
-            Optional<string> vmwareToolsStatus = default;
-            Optional<string> powerStatus = default;
-            Optional<string> vmFqdn = default;
-            Optional<string> osName = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> updatedTimestamp = default;
-            Optional<bool> isDeleted = default;
-            Optional<DateTimeOffset> lastDiscoveryTimeInUtc = default;
+            string vCenterId = default;
+            string vCenterFqdn = default;
+            IReadOnlyList<string> datastores = default;
+            IReadOnlyList<IPAddress> ipAddresses = default;
+            string vmwareToolsStatus = default;
+            string powerStatus = default;
+            string vmFqdn = default;
+            string osName = default;
+            DateTimeOffset? createdTimestamp = default;
+            DateTimeOffset? updatedTimestamp = default;
+            bool? isDeleted = default;
+            DateTimeOffset? lastDiscoveryTimeInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmDiscoveredProtectedVmDetails(vCenterId.Value, vCenterFqdn.Value, Optional.ToList(datastores), Optional.ToList(ipAddresses), vmwareToolsStatus.Value, powerStatus.Value, vmFqdn.Value, osName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), Optional.ToNullable(isDeleted), Optional.ToNullable(lastDiscoveryTimeInUtc), serializedAdditionalRawData);
+            return new InMageRcmDiscoveredProtectedVmDetails(
+                vCenterId,
+                vCenterFqdn,
+                datastores ?? new ChangeTrackingList<string>(),
+                ipAddresses ?? new ChangeTrackingList<IPAddress>(),
+                vmwareToolsStatus,
+                powerStatus,
+                vmFqdn,
+                osName,
+                createdTimestamp,
+                updatedTimestamp,
+                isDeleted,
+                lastDiscoveryTimeInUtc,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmDiscoveredProtectedVmDetails>.Write(ModelReaderWriterOptions options)
@@ -275,7 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmDiscoveredProtectedVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmDiscoveredProtectedVmDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -291,7 +304,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmDiscoveredProtectedVmDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmDiscoveredProtectedVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmDiscoveredProtectedVmDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

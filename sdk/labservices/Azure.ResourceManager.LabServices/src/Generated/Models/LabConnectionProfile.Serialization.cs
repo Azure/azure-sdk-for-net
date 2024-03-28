@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabConnectionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabConnectionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<LabVirtualMachineConnectionType> webSshAccess = default;
-            Optional<LabVirtualMachineConnectionType> webRdpAccess = default;
-            Optional<LabVirtualMachineConnectionType> clientSshAccess = default;
-            Optional<LabVirtualMachineConnectionType> clientRdpAccess = default;
+            LabVirtualMachineConnectionType? webSshAccess = default;
+            LabVirtualMachineConnectionType? webRdpAccess = default;
+            LabVirtualMachineConnectionType? clientSshAccess = default;
+            LabVirtualMachineConnectionType? clientRdpAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabConnectionProfile(Optional.ToNullable(webSshAccess), Optional.ToNullable(webRdpAccess), Optional.ToNullable(clientSshAccess), Optional.ToNullable(clientRdpAccess), serializedAdditionalRawData);
+            return new LabConnectionProfile(webSshAccess, webRdpAccess, clientSshAccess, clientRdpAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabConnectionProfile>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabConnectionProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

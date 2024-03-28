@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<MonitorLocalizableString>(Name, options);
             }
             if (Optional.IsDefined(DisplayDescription))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricAvailabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorMetricAvailability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorLocalizableString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,19 +144,19 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<bool> isDimensionRequired = default;
-            Optional<string> resourceId = default;
-            Optional<string> @namespace = default;
-            Optional<MonitorLocalizableString> name = default;
-            Optional<string> displayDescription = default;
-            Optional<string> category = default;
-            Optional<MonitorMetricClass> metricClass = default;
-            Optional<MonitorMetricUnit> unit = default;
-            Optional<MonitorAggregationType> primaryAggregationType = default;
-            Optional<IReadOnlyList<MonitorAggregationType>> supportedAggregationTypes = default;
-            Optional<IReadOnlyList<MonitorMetricAvailability>> metricAvailabilities = default;
-            Optional<string> id = default;
-            Optional<IReadOnlyList<MonitorLocalizableString>> dimensions = default;
+            bool? isDimensionRequired = default;
+            string resourceId = default;
+            string @namespace = default;
+            MonitorLocalizableString name = default;
+            string displayDescription = default;
+            string category = default;
+            MonitorMetricClass? metricClass = default;
+            MonitorMetricUnit? unit = default;
+            MonitorAggregationType? primaryAggregationType = default;
+            IReadOnlyList<MonitorAggregationType> supportedAggregationTypes = default;
+            IReadOnlyList<MonitorMetricAvailability> metricAvailabilities = default;
+            string id = default;
+            IReadOnlyList<MonitorLocalizableString> dimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayDescription"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricAvailability> array = new List<MonitorMetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricAvailability.DeserializeMonitorMetricAvailability(item));
+                        array.Add(MonitorMetricAvailability.DeserializeMonitorMetricAvailability(item, options));
                     }
                     metricAvailabilities = array;
                     continue;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorLocalizableString> array = new List<MonitorLocalizableString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item));
+                        array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item, options));
                     }
                     dimensions = array;
                     continue;
@@ -279,7 +279,21 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorMetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), Optional.ToList(supportedAggregationTypes), Optional.ToList(metricAvailabilities), id.Value, Optional.ToList(dimensions), serializedAdditionalRawData);
+            return new MonitorMetricDefinition(
+                isDimensionRequired,
+                resourceId,
+                @namespace,
+                name,
+                displayDescription,
+                category,
+                metricClass,
+                unit,
+                primaryAggregationType,
+                supportedAggregationTypes ?? new ChangeTrackingList<MonitorAggregationType>(),
+                metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>(),
+                id,
+                dimensions ?? new ChangeTrackingList<MonitorLocalizableString>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorMetricDefinition>.Write(ModelReaderWriterOptions options)
@@ -291,7 +305,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -307,7 +321,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorMetricDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRuleRunPlaybookAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionConfiguration))
             {
                 writer.WritePropertyName("actionConfiguration"u8);
-                writer.WriteObjectValue(ActionConfiguration);
+                writer.WriteObjectValue<AutomationRuleRunPlaybookActionProperties>(ActionConfiguration, options);
             }
             writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRuleRunPlaybookAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRuleRunPlaybookActionProperties> actionConfiguration = default;
+            AutomationRuleRunPlaybookActionProperties actionConfiguration = default;
             int order = default;
             ActionType actionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    actionConfiguration = AutomationRuleRunPlaybookActionProperties.DeserializeAutomationRuleRunPlaybookActionProperties(property.Value);
+                    actionConfiguration = AutomationRuleRunPlaybookActionProperties.DeserializeAutomationRuleRunPlaybookActionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("order"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRuleRunPlaybookAction(order, actionType, serializedAdditionalRawData, actionConfiguration.Value);
+            return new AutomationRuleRunPlaybookAction(order, actionType, serializedAdditionalRawData, actionConfiguration);
         }
 
         BinaryData IPersistableModel<AutomationRuleRunPlaybookAction>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeAutomationRuleRunPlaybookAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRuleRunPlaybookAction)} does not support reading '{options.Format}' format.");
             }
         }
 

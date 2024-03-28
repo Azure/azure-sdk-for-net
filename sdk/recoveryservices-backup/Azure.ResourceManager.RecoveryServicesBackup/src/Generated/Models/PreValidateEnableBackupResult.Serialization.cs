@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreValidateEnableBackupResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreValidateEnableBackupResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreValidateEnableBackupResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreValidateEnableBackupResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreValidateEnableBackupResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreValidateEnableBackupResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupValidationStatus> status = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> recommendation = default;
-            Optional<string> containerName = default;
-            Optional<string> protectedItemName = default;
+            BackupValidationStatus? status = default;
+            string errorCode = default;
+            string errorMessage = default;
+            string recommendation = default;
+            string containerName = default;
+            string protectedItemName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreValidateEnableBackupResult(Optional.ToNullable(status), errorCode.Value, errorMessage.Value, recommendation.Value, containerName.Value, protectedItemName.Value, serializedAdditionalRawData);
+            return new PreValidateEnableBackupResult(
+                status,
+                errorCode,
+                errorMessage,
+                recommendation,
+                containerName,
+                protectedItemName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreValidateEnableBackupResult>.Write(ModelReaderWriterOptions options)
@@ -156,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PreValidateEnableBackupResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreValidateEnableBackupResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializePreValidateEnableBackupResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PreValidateEnableBackupResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreValidateEnableBackupResult)} does not support reading '{options.Format}' format.");
             }
         }
 

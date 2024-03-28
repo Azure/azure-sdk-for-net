@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubUserSubscriptionQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubUserSubscriptionQuota)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubUserSubscriptionQuota)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<IotHubTypeName>(Name, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubUserSubscriptionQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubUserSubscriptionQuota)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubUserSubscriptionQuota)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> type = default;
-            Optional<string> unit = default;
-            Optional<int> currentValue = default;
-            Optional<int> limit = default;
-            Optional<IotHubTypeName> name = default;
+            string id = default;
+            string type = default;
+            string unit = default;
+            int? currentValue = default;
+            int? limit = default;
+            IotHubTypeName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    name = IotHubTypeName.DeserializeIotHubTypeName(property.Value);
+                    name = IotHubTypeName.DeserializeIotHubTypeName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubUserSubscriptionQuota(id.Value, type.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new IotHubUserSubscriptionQuota(
+                id,
+                type,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubUserSubscriptionQuota>.Write(ModelReaderWriterOptions options)
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubUserSubscriptionQuota)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubUserSubscriptionQuota)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubUserSubscriptionQuota(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubUserSubscriptionQuota)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubUserSubscriptionQuota)} does not support reading '{options.Format}' format.");
             }
         }
 

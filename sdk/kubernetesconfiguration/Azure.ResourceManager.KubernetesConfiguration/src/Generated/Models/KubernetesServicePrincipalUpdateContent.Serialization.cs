@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesServicePrincipalUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesServicePrincipalUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesServicePrincipalUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesServicePrincipalUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesServicePrincipalUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesServicePrincipalUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<Guid?> clientId = default;
-            Optional<Guid?> tenantId = default;
-            Optional<string> clientSecret = default;
-            Optional<string> clientCertificate = default;
-            Optional<string> clientCertificatePassword = default;
-            Optional<bool> clientCertificateSendChain = default;
+            Guid? clientId = default;
+            Guid? tenantId = default;
+            string clientSecret = default;
+            string clientCertificate = default;
+            string clientCertificatePassword = default;
+            bool? clientCertificateSendChain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesServicePrincipalUpdateContent(Optional.ToNullable(clientId), Optional.ToNullable(tenantId), clientSecret.Value, clientCertificate.Value, clientCertificatePassword.Value, Optional.ToNullable(clientCertificateSendChain), serializedAdditionalRawData);
+            return new KubernetesServicePrincipalUpdateContent(
+                clientId,
+                tenantId,
+                clientSecret,
+                clientCertificate,
+                clientCertificatePassword,
+                clientCertificateSendChain,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesServicePrincipalUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -216,7 +223,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesServicePrincipalUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesServicePrincipalUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +239,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesServicePrincipalUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesServicePrincipalUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesServicePrincipalUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

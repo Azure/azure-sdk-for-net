@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentReportResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentReportResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentReportResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Reasons)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AssignmentReportResourceComplianceReason>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentReportResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentReportResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentReportResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Optional<string> resourceId = default;
-            Optional<IList<AssignmentReportResourceComplianceReason>> reasons = default;
-            Optional<BinaryData> properties = default;
+            AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
+            string resourceId = default;
+            IList<AssignmentReportResourceComplianceReason> reasons = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<AssignmentReportResourceComplianceReason> array = new List<AssignmentReportResourceComplianceReason>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentReportResourceComplianceReason.DeserializeAssignmentReportResourceComplianceReason(item));
+                        array.Add(AssignmentReportResourceComplianceReason.DeserializeAssignmentReportResourceComplianceReason(item, options));
                     }
                     reasons = array;
                     continue;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentReportResourceInfo(Optional.ToNullable(complianceStatus), resourceId.Value, Optional.ToList(reasons), properties.Value, serializedAdditionalRawData);
+            return new AssignmentReportResourceInfo(complianceStatus, resourceId, reasons ?? new ChangeTrackingList<AssignmentReportResourceComplianceReason>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentReportResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentReportResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentReportResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeAssignmentReportResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentReportResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentReportResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

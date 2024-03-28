@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolStartTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchResourceFile>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchEnvironmentSetting>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
-                writer.WriteObjectValue(UserIdentity);
+                writer.WriteObjectValue<BatchUserIdentity>(UserIdentity, options);
             }
             if (Optional.IsDefined(MaxTaskRetryCount))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings);
+                writer.WriteObjectValue<BatchTaskContainerSettings>(ContainerSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolStartTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> commandLine = default;
-            Optional<IList<BatchResourceFile>> resourceFiles = default;
-            Optional<IList<BatchEnvironmentSetting>> environmentSettings = default;
-            Optional<BatchUserIdentity> userIdentity = default;
-            Optional<int> maxTaskRetryCount = default;
-            Optional<bool> waitForSuccess = default;
-            Optional<BatchTaskContainerSettings> containerSettings = default;
+            string commandLine = default;
+            IList<BatchResourceFile> resourceFiles = default;
+            IList<BatchEnvironmentSetting> environmentSettings = default;
+            BatchUserIdentity userIdentity = default;
+            int? maxTaskRetryCount = default;
+            bool? waitForSuccess = default;
+            BatchTaskContainerSettings containerSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchResourceFile> array = new List<BatchResourceFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchResourceFile.DeserializeBatchResourceFile(item));
+                        array.Add(BatchResourceFile.DeserializeBatchResourceFile(item, options));
                     }
                     resourceFiles = array;
                     continue;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchEnvironmentSetting> array = new List<BatchEnvironmentSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchEnvironmentSetting.DeserializeBatchEnvironmentSetting(item));
+                        array.Add(BatchEnvironmentSetting.DeserializeBatchEnvironmentSetting(item, options));
                     }
                     environmentSettings = array;
                     continue;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    userIdentity = BatchUserIdentity.DeserializeBatchUserIdentity(property.Value);
+                    userIdentity = BatchUserIdentity.DeserializeBatchUserIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maxTaskRetryCount"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value);
+                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -195,7 +195,15 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPoolStartTask(commandLine.Value, Optional.ToList(resourceFiles), Optional.ToList(environmentSettings), userIdentity.Value, Optional.ToNullable(maxTaskRetryCount), Optional.ToNullable(waitForSuccess), containerSettings.Value, serializedAdditionalRawData);
+            return new BatchAccountPoolStartTask(
+                commandLine,
+                resourceFiles ?? new ChangeTrackingList<BatchResourceFile>(),
+                environmentSettings ?? new ChangeTrackingList<BatchEnvironmentSetting>(),
+                userIdentity,
+                maxTaskRetryCount,
+                waitForSuccess,
+                containerSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPoolStartTask>.Write(ModelReaderWriterOptions options)
@@ -207,7 +215,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +231,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchAccountPoolStartTask(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support reading '{options.Format}' format.");
             }
         }
 

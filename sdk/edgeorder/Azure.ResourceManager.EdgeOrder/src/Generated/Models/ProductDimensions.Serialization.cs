@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductDimensions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductDimensions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductDimensions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductDimensions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductDimensions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductDimensions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<double> length = default;
-            Optional<double> height = default;
-            Optional<double> width = default;
-            Optional<ProductLengthHeightWidthUnit> lengthHeightUnit = default;
-            Optional<double> weight = default;
-            Optional<double> depth = default;
-            Optional<ProductWeightMeasurementUnit> weightUnit = default;
+            double? length = default;
+            double? height = default;
+            double? width = default;
+            ProductLengthHeightWidthUnit? lengthHeightUnit = default;
+            double? weight = default;
+            double? depth = default;
+            ProductWeightMeasurementUnit? weightUnit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductDimensions(Optional.ToNullable(length), Optional.ToNullable(height), Optional.ToNullable(width), Optional.ToNullable(lengthHeightUnit), Optional.ToNullable(weight), Optional.ToNullable(depth), Optional.ToNullable(weightUnit), serializedAdditionalRawData);
+            return new ProductDimensions(
+                length,
+                height,
+                width,
+                lengthHeightUnit,
+                weight,
+                depth,
+                weightUnit,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductDimensions>.Write(ModelReaderWriterOptions options)
@@ -191,7 +199,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProductDimensions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductDimensions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +215,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeProductDimensions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProductDimensions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductDimensions)} does not support reading '{options.Format}' format.");
             }
         }
 

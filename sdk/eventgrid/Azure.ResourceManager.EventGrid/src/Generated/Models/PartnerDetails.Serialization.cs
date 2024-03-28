@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartnerDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartnerDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> longDescription = default;
-            Optional<Uri> setupUri = default;
+            string description = default;
+            string longDescription = default;
+            Uri setupUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerDetails(description.Value, longDescription.Value, setupUri.Value, serializedAdditionalRawData);
+            return new PartnerDetails(description, longDescription, setupUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerDetails>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PartnerDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializePartnerDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartnerDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

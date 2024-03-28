@@ -52,7 +52,7 @@ namespace Azure.Containers.ContainerRegistry
                 if (Annotations != null)
                 {
                     writer.WritePropertyName("annotations"u8);
-                    writer.WriteObjectValue(Annotations);
+                    writer.WriteObjectValue<OciAnnotations>(Annotations);
                 }
                 else
                 {
@@ -68,11 +68,11 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> mediaType = default;
-            Optional<long> size = default;
-            Optional<string> digest = default;
-            Optional<IList<Uri>> urls = default;
-            Optional<OciAnnotations> annotations = default;
+            string mediaType = default;
+            long? size = default;
+            string digest = default;
+            IList<Uri> urls = default;
+            OciAnnotations annotations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -126,7 +126,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new OciDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
+            return new OciDescriptor(mediaType, size, digest, urls ?? new ChangeTrackingList<Uri>(), annotations);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AddressPrefixItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddressPrefixItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AddressPrefixItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AddressPrefixItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddressPrefixItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AddressPrefixItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> addressPrefix = default;
-            Optional<AddressPrefixType> addressPrefixType = default;
+            string addressPrefix = default;
+            AddressPrefixType? addressPrefixType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddressPrefixItem(addressPrefix.Value, Optional.ToNullable(addressPrefixType), serializedAdditionalRawData);
+            return new AddressPrefixItem(addressPrefix, addressPrefixType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AddressPrefixItem>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AddressPrefixItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddressPrefixItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAddressPrefixItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AddressPrefixItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddressPrefixItem)} does not support reading '{options.Format}' format.");
             }
         }
 

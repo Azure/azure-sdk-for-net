@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Virtual IP address. </summary>
+        [WirePath("virtualIP")]
         public string VirtualIP { get; set; }
         /// <summary> Internal HTTP port. </summary>
+        [WirePath("internalHttpPort")]
         public int? InternalHttpPort { get; set; }
         /// <summary> Internal HTTPS port. </summary>
+        [WirePath("internalHttpsPort")]
         public int? InternalHttpsPort { get; set; }
         /// <summary> Is virtual IP mapping in use. </summary>
+        [WirePath("inUse")]
         public bool? IsInUse { get; set; }
         /// <summary> name of the service that virtual IP is assigned to. </summary>
+        [WirePath("serviceName")]
         public string ServiceName { get; set; }
     }
 }

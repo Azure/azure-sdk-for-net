@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<OptionBProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OptionBProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OptionBProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(RouteTargets))
             {
                 writer.WritePropertyName("routeTargets"u8);
-                writer.WriteObjectValue(RouteTargets);
+                writer.WriteObjectValue<RouteTargetInformation>(RouteTargets, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<OptionBProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OptionBProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OptionBProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<string>> importRouteTargets = default;
-            Optional<IList<string>> exportRouteTargets = default;
-            Optional<RouteTargetInformation> routeTargets = default;
+            IList<string> importRouteTargets = default;
+            IList<string> exportRouteTargets = default;
+            RouteTargetInformation routeTargets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    routeTargets = RouteTargetInformation.DeserializeRouteTargetInformation(property.Value);
+                    routeTargets = RouteTargetInformation.DeserializeRouteTargetInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OptionBProperties(Optional.ToList(importRouteTargets), Optional.ToList(exportRouteTargets), routeTargets.Value, serializedAdditionalRawData);
+            return new OptionBProperties(importRouteTargets ?? new ChangeTrackingList<string>(), exportRouteTargets ?? new ChangeTrackingList<string>(), routeTargets, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OptionBProperties>.Write(ModelReaderWriterOptions options)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OptionBProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptionBProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeOptionBProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OptionBProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptionBProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

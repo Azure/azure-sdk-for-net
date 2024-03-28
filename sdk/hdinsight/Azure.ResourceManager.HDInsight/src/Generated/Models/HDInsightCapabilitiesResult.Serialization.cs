@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightCapabilitiesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 foreach (var item in Versions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<HDInsightVersionsCapability>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 foreach (var item in Regions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<RegionsCapability>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (options.Format != "W" && Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
-                writer.WriteObjectValue(Quota);
+                writer.WriteObjectValue<QuotaCapability>(Quota, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightCapabilitiesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, HDInsightVersionsCapability>> versions = default;
-            Optional<IReadOnlyDictionary<string, RegionsCapability>> regions = default;
-            Optional<IReadOnlyList<string>> features = default;
-            Optional<QuotaCapability> quota = default;
+            IReadOnlyDictionary<string, HDInsightVersionsCapability> versions = default;
+            IReadOnlyDictionary<string, RegionsCapability> regions = default;
+            IReadOnlyList<string> features = default;
+            QuotaCapability quota = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     Dictionary<string, HDInsightVersionsCapability> dictionary = new Dictionary<string, HDInsightVersionsCapability>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, HDInsightVersionsCapability.DeserializeHDInsightVersionsCapability(property0.Value));
+                        dictionary.Add(property0.Name, HDInsightVersionsCapability.DeserializeHDInsightVersionsCapability(property0.Value, options));
                     }
                     versions = dictionary;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     Dictionary<string, RegionsCapability> dictionary = new Dictionary<string, RegionsCapability>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, RegionsCapability.DeserializeRegionsCapability(property0.Value));
+                        dictionary.Add(property0.Name, RegionsCapability.DeserializeRegionsCapability(property0.Value, options));
                     }
                     regions = dictionary;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    quota = QuotaCapability.DeserializeQuotaCapability(property.Value);
+                    quota = QuotaCapability.DeserializeQuotaCapability(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightCapabilitiesResult(Optional.ToDictionary(versions), Optional.ToDictionary(regions), Optional.ToList(features), quota.Value, serializedAdditionalRawData);
+            return new HDInsightCapabilitiesResult(versions ?? new ChangeTrackingDictionary<string, HDInsightVersionsCapability>(), regions ?? new ChangeTrackingDictionary<string, RegionsCapability>(), features ?? new ChangeTrackingList<string>(), quota, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightCapabilitiesResult>.Write(ModelReaderWriterOptions options)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightCapabilitiesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> byoaSecretAkvUrl = default;
-            Optional<string> byoaSecretName = default;
+            string byoaSecretAkvUrl = default;
+            string byoaSecretName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("byoaSecretAkvUrl"u8))
@@ -52,14 +52,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new GitHubClientSecret(byoaSecretAkvUrl.Value, byoaSecretName.Value);
+            return new GitHubClientSecret(byoaSecretAkvUrl, byoaSecretName);
         }
 
         internal partial class GitHubClientSecretConverter : JsonConverter<GitHubClientSecret>
         {
             public override void Write(Utf8JsonWriter writer, GitHubClientSecret model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<GitHubClientSecret>(model);
             }
             public override GitHubClientSecret Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

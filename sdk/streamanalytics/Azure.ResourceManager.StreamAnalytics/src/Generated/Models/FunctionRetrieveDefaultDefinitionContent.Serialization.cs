@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<FunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<FunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.MachineLearning/WebService": return MachineLearningStudioFunctionRetrieveDefaultDefinitionContent.DeserializeMachineLearningStudioFunctionRetrieveDefaultDefinitionContent(element);
-                    case "Microsoft.MachineLearningServices": return MachineLearningServiceFunctionRetrieveDefaultDefinitionContent.DeserializeMachineLearningServiceFunctionRetrieveDefaultDefinitionContent(element);
-                    case "Microsoft.StreamAnalytics/CLRUdf": return CSharpFunctionRetrieveDefaultDefinitionContent.DeserializeCSharpFunctionRetrieveDefaultDefinitionContent(element);
-                    case "Microsoft.StreamAnalytics/JavascriptUdf": return JavaScriptFunctionRetrieveDefaultDefinitionContent.DeserializeJavaScriptFunctionRetrieveDefaultDefinitionContent(element);
+                    case "Microsoft.MachineLearning/WebService": return MachineLearningStudioFunctionRetrieveDefaultDefinitionContent.DeserializeMachineLearningStudioFunctionRetrieveDefaultDefinitionContent(element, options);
+                    case "Microsoft.MachineLearningServices": return MachineLearningServiceFunctionRetrieveDefaultDefinitionContent.DeserializeMachineLearningServiceFunctionRetrieveDefaultDefinitionContent(element, options);
+                    case "Microsoft.StreamAnalytics/CLRUdf": return CSharpFunctionRetrieveDefaultDefinitionContent.DeserializeCSharpFunctionRetrieveDefaultDefinitionContent(element, options);
+                    case "Microsoft.StreamAnalytics/JavascriptUdf": return JavaScriptFunctionRetrieveDefaultDefinitionContent.DeserializeJavaScriptFunctionRetrieveDefaultDefinitionContent(element, options);
                 }
             }
-            return UnknownFunctionRetrieveDefaultDefinitionParameters.DeserializeUnknownFunctionRetrieveDefaultDefinitionParameters(element);
+            return UnknownFunctionRetrieveDefaultDefinitionParameters.DeserializeUnknownFunctionRetrieveDefaultDefinitionParameters(element, options);
         }
 
         BinaryData IPersistableModel<FunctionRetrieveDefaultDefinitionContent>.Write(ModelReaderWriterOptions options)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeFunctionRetrieveDefaultDefinitionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

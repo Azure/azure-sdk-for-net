@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportJobDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportJobDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<Uri> blobUri = default;
-            Optional<string> sasToken = default;
+            Uri blobUri = default;
+            string sasToken = default;
             string instanceType = default;
-            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            IReadOnlyDictionary<string, string> affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails), serializedAdditionalRawData, blobUri.Value, sasToken.Value);
+            return new ExportJobDetails(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, blobUri, sasToken);
         }
 
         BinaryData IPersistableModel<ExportJobDetails>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportJobDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeExportJobDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportJobDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

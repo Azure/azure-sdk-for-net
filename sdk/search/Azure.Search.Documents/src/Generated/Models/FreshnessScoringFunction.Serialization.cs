@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("freshness"u8);
-            writer.WriteObjectValue(Parameters);
+            writer.WriteObjectValue<FreshnessScoringParameters>(Parameters);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("fieldName"u8);
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string type = default;
             string fieldName = default;
             double boost = default;
-            Optional<ScoringFunctionInterpolation> interpolation = default;
+            ScoringFunctionInterpolation? interpolation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("freshness"u8))
@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new FreshnessScoringFunction(type, fieldName, boost, Optional.ToNullable(interpolation), freshness);
+            return new FreshnessScoringFunction(type, fieldName, boost, interpolation, freshness);
         }
     }
 }

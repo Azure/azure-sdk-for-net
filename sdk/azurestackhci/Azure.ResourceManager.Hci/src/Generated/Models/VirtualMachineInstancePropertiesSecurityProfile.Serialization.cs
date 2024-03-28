@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
-                writer.WriteObjectValue(UefiSettings);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>(UefiSettings, options);
             }
             if (Optional.IsDefined(SecurityType))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<bool> enableTPM = default;
-            Optional<VirtualMachineInstancePropertiesSecurityProfileUefiSettings> uefiSettings = default;
-            Optional<SecurityType> securityType = default;
+            bool? enableTPM = default;
+            VirtualMachineInstancePropertiesSecurityProfileUefiSettings uefiSettings = default;
+            SecurityType? securityType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    uefiSettings = VirtualMachineInstancePropertiesSecurityProfileUefiSettings.DeserializeVirtualMachineInstancePropertiesSecurityProfileUefiSettings(property.Value);
+                    uefiSettings = VirtualMachineInstancePropertiesSecurityProfileUefiSettings.DeserializeVirtualMachineInstancePropertiesSecurityProfileUefiSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securityType"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesSecurityProfile(Optional.ToNullable(enableTPM), uefiSettings.Value, Optional.ToNullable(securityType), serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesSecurityProfile(enableTPM, uefiSettings, securityType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesSecurityProfile>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeVirtualMachineInstancePropertiesSecurityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

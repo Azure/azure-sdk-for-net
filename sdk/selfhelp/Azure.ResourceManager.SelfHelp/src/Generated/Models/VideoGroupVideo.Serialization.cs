@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<VideoGroupVideo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoGroupVideo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VideoGroupVideo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<VideoGroupVideo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoGroupVideo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VideoGroupVideo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> src = default;
-            Optional<string> title = default;
+            string src = default;
+            string title = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VideoGroupVideo(src.Value, title.Value, serializedAdditionalRawData);
+            return new VideoGroupVideo(src, title, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VideoGroupVideo>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VideoGroupVideo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VideoGroupVideo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeVideoGroupVideo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VideoGroupVideo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VideoGroupVideo)} does not support reading '{options.Format}' format.");
             }
         }
 

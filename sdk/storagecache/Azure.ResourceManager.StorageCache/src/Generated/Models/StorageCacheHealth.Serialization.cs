@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OutstandingCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<StorageCacheHealthStateType> state = default;
-            Optional<string> statusDescription = default;
-            Optional<IReadOnlyList<OutstandingCondition>> conditions = default;
+            StorageCacheHealthStateType? state = default;
+            string statusDescription = default;
+            IReadOnlyList<OutstandingCondition> conditions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<OutstandingCondition> array = new List<OutstandingCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutstandingCondition.DeserializeOutstandingCondition(item));
+                        array.Add(OutstandingCondition.DeserializeOutstandingCondition(item, options));
                     }
                     conditions = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheHealth(Optional.ToNullable(state), statusDescription.Value, Optional.ToList(conditions), serializedAdditionalRawData);
+            return new StorageCacheHealth(state, statusDescription, conditions ?? new ChangeTrackingList<OutstandingCondition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheHealth>.Write(ModelReaderWriterOptions options)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeStorageCacheHealth(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheHealth)} does not support reading '{options.Format}' format.");
             }
         }
 

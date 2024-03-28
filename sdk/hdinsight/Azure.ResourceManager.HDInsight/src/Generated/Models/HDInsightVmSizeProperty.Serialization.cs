@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> cores = default;
-            Optional<string> dataDiskStorageTier = default;
-            Optional<string> label = default;
-            Optional<long> maxDataDiskCount = default;
-            Optional<long> memoryInMB = default;
-            Optional<bool> supportedByVirtualMachines = default;
-            Optional<bool> supportedByWebWorkerRoles = default;
-            Optional<long> virtualMachineResourceDiskSizeInMB = default;
-            Optional<long> webWorkerResourceDiskSizeInMB = default;
+            string name = default;
+            int? cores = default;
+            string dataDiskStorageTier = default;
+            string label = default;
+            long? maxDataDiskCount = default;
+            long? memoryInMB = default;
+            bool? supportedByVirtualMachines = default;
+            bool? supportedByWebWorkerRoles = default;
+            long? virtualMachineResourceDiskSizeInMB = default;
+            long? webWorkerResourceDiskSizeInMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightVmSizeProperty(name.Value, Optional.ToNullable(cores), dataDiskStorageTier.Value, label.Value, Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(memoryInMB), Optional.ToNullable(supportedByVirtualMachines), Optional.ToNullable(supportedByWebWorkerRoles), Optional.ToNullable(virtualMachineResourceDiskSizeInMB), Optional.ToNullable(webWorkerResourceDiskSizeInMB), serializedAdditionalRawData);
+            return new HDInsightVmSizeProperty(
+                name,
+                cores,
+                dataDiskStorageTier,
+                label,
+                maxDataDiskCount,
+                memoryInMB,
+                supportedByVirtualMachines,
+                supportedByWebWorkerRoles,
+                virtualMachineResourceDiskSizeInMB,
+                webWorkerResourceDiskSizeInMB,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightVmSizeProperty>.Write(ModelReaderWriterOptions options)
@@ -224,7 +235,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -240,7 +251,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightVmSizeProperty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support reading '{options.Format}' format.");
             }
         }
 

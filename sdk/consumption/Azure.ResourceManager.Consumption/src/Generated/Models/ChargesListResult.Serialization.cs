@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChargesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChargesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChargesListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConsumptionChargeSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChargesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChargesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChargesListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionChargeSummary>> value = default;
+            IReadOnlyList<ConsumptionChargeSummary> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionChargeSummary> array = new List<ConsumptionChargeSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionChargeSummary.DeserializeConsumptionChargeSummary(item));
+                        array.Add(ConsumptionChargeSummary.DeserializeConsumptionChargeSummary(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChargesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ChargesListResult(value ?? new ChangeTrackingList<ConsumptionChargeSummary>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChargesListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChargesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChargesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeChargesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChargesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChargesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<long> id = default;
-            Optional<string> code = default;
-            Optional<string> summaryMessage = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> message = default;
-            Optional<string> possibleCauses = default;
-            Optional<string> recommendedAction = default;
-            Optional<string> severity = default;
-            Optional<DateTimeOffset> updatedTimeStamp = default;
+            long? id = default;
+            string code = default;
+            string summaryMessage = default;
+            string runAsAccountId = default;
+            string message = default;
+            string possibleCauses = default;
+            string recommendedAction = default;
+            string severity = default;
+            DateTimeOffset? updatedTimeStamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootSiteError(Optional.ToNullable(id), code.Value, summaryMessage.Value, runAsAccountId.Value, message.Value, possibleCauses.Value, recommendedAction.Value, severity.Value, Optional.ToNullable(updatedTimeStamp), serializedAdditionalRawData);
+            return new SpringBootSiteError(
+                id,
+                code,
+                summaryMessage,
+                runAsAccountId,
+                message,
+                possibleCauses,
+                recommendedAction,
+                severity,
+                updatedTimeStamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootSiteError>.Write(ModelReaderWriterOptions options)
@@ -193,7 +203,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +219,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         return DeserializeSpringBootSiteError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteError)} does not support reading '{options.Format}' format.");
             }
         }
 

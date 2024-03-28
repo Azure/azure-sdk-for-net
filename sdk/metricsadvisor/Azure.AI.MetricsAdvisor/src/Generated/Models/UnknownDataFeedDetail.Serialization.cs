@@ -44,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataFeedMetric>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Dimension))
@@ -53,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimension)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFeedDimension>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -169,35 +169,35 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             DataFeedSourceKind dataSourceType = "Unknown";
-            Optional<string> dataFeedId = default;
+            string dataFeedId = default;
             string dataFeedName = default;
-            Optional<string> dataFeedDescription = default;
+            string dataFeedDescription = default;
             DataFeedGranularityType granularityName = default;
-            Optional<int?> granularityAmount = default;
+            int? granularityAmount = default;
             IList<DataFeedMetric> metrics = default;
-            Optional<IList<DataFeedDimension>> dimension = default;
-            Optional<string> timestampColumn = default;
+            IList<DataFeedDimension> dimension = default;
+            string timestampColumn = default;
             DateTimeOffset dataStartFrom = default;
-            Optional<long> startOffsetInSeconds = default;
-            Optional<int> maxConcurrency = default;
-            Optional<long> minRetryIntervalInSeconds = default;
-            Optional<long> stopRetryAfterInSeconds = default;
-            Optional<DataFeedRollupType> needRollup = default;
-            Optional<DataFeedAutoRollupMethod> rollUpMethod = default;
-            Optional<IList<string>> rollUpColumns = default;
-            Optional<string> allUpIdentification = default;
-            Optional<DataFeedMissingDataPointFillType> fillMissingPointType = default;
-            Optional<double> fillMissingPointValue = default;
-            Optional<DataFeedAccessMode> viewMode = default;
-            Optional<IList<string>> admins = default;
-            Optional<IList<string>> viewers = default;
-            Optional<bool> isAdmin = default;
-            Optional<string> creator = default;
-            Optional<DataFeedStatus> status = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<string> actionLinkTemplate = default;
-            Optional<AuthenticationTypeEnum> authenticationType = default;
-            Optional<string> credentialId = default;
+            long? startOffsetInSeconds = default;
+            int? maxConcurrency = default;
+            long? minRetryIntervalInSeconds = default;
+            long? stopRetryAfterInSeconds = default;
+            DataFeedRollupType? needRollup = default;
+            DataFeedAutoRollupMethod? rollUpMethod = default;
+            IList<string> rollUpColumns = default;
+            string allUpIdentification = default;
+            DataFeedMissingDataPointFillType? fillMissingPointType = default;
+            double? fillMissingPointValue = default;
+            DataFeedAccessMode? viewMode = default;
+            IList<string> admins = default;
+            IList<string> viewers = default;
+            bool? isAdmin = default;
+            string creator = default;
+            DataFeedStatus? status = default;
+            DateTimeOffset? createdTime = default;
+            string actionLinkTemplate = default;
+            AuthenticationTypeEnum? authenticationType = default;
+            string credentialId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSourceType"u8))
@@ -449,7 +449,37 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new UnknownDataFeedDetail(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, Optional.ToNullable(authenticationType), credentialId.Value);
+            return new UnknownDataFeedDetail(
+                dataSourceType,
+                dataFeedId,
+                dataFeedName,
+                dataFeedDescription,
+                granularityName,
+                granularityAmount,
+                metrics,
+                dimension ?? new ChangeTrackingList<DataFeedDimension>(),
+                timestampColumn,
+                dataStartFrom,
+                startOffsetInSeconds,
+                maxConcurrency,
+                minRetryIntervalInSeconds,
+                stopRetryAfterInSeconds,
+                needRollup,
+                rollUpMethod,
+                rollUpColumns ?? new ChangeTrackingList<string>(),
+                allUpIdentification,
+                fillMissingPointType,
+                fillMissingPointValue,
+                viewMode,
+                admins ?? new ChangeTrackingList<string>(),
+                viewers ?? new ChangeTrackingList<string>(),
+                isAdmin,
+                creator,
+                status,
+                createdTime,
+                actionLinkTemplate,
+                authenticationType,
+                credentialId);
         }
     }
 }
